@@ -19,6 +19,8 @@
                 src="../icons/avatares/avatar3.png"
                 alt="avatar"
             />
+        </div>
+        <div class="avatar-line">
             <img class="avatar"
                 @click="changeAvatar"
                 id="a4"
@@ -69,9 +71,10 @@ export default {
     margin: 10px;
 }
 .avatar{
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
+    margin-left: 10px;
 }
 .avatares-container{
     width: 100%;

@@ -26,6 +26,7 @@
     </div>
     <editar-contato
       class="editar-dados-contato"
+      :phones="phone"
     />
     <Formacao
       v-if="exibirFormacao"
@@ -80,7 +81,7 @@ export default {
      email : ['insira seu email aqui @teste.com',
      ],
       phone : [
-        '51997415104'
+        'telefone'
       ],
     adress: 'rua Taquari 116, Vila Rica, S.S do Caí RS',
     grade : ['Pós-Graduação em Ciência de dados',
@@ -103,6 +104,16 @@ export default {
      }
      if(localStorage.getItem('useremail2')){
        this.email[2] = localStorage.getItem('useremail2')
+     }
+
+     // phones
+
+     let arrayP = localStorage.getItem('phones')
+     if(arrayP){
+       this.phone = []
+        arrayP.split(',').forEach(element => {
+          this.phone.push(element)
+        });
      }
    },
     getStyle(){

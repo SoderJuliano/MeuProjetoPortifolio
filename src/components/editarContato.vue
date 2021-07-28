@@ -9,39 +9,61 @@
                 <span>{{item}}</span><img @click="removeEmail" v-if="item" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
             </div>
         </div>
-        
+        <div class="telefoneAdd">
+            <span>Telefone</span><input type="tel" id="phone"/><button @click="adicionarEmail" id="telBnt" class="bnt-plus">+</button>
+            <div class="email-list" v-if="arrayPhones">
+            <div v-for='item in arrayPhones' :key="item">
+                <span>{{item}}</span><img v-if="item" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+            </div>
+        </div>
+        </div>
     </div>
 </template>
 <script>
 export default {
     name: 'editar-contato',
+    props:{
+        phones: Array,
+    },
     data(){
         return{
-            emails: [localStorage.getItem('useremail0'), localStorage.getItem('useremail1'), localStorage.getItem('useremail2')]
+            emails: [localStorage.getItem('useremail0'), localStorage.getItem('useremail1'), localStorage.getItem('useremail2')],
+            arrayPhones: this.phones,
         }
     },
     methods:{
-        adicionarEmail(){
-
-            let email = document.getElementById('email').value
-            if(localStorage.getItem('useremail0')!=null && localStorage.getItem('useremail1')!=null && localStorage.getItem('useremail2')!=null){
-                alert('You can insert only 3 emails :)')
-            }
-            else if(localStorage.getItem('useremail0')==null && !this.emails.includes(email)){
-                localStorage.setItem('useremail0', email)
-                this.emails[0] = email
-            }else if(localStorage.getItem('useremail1')==null && !this.emails.includes(email)){
-                localStorage.setItem('useremail1', email)
-                this.emails[1] = email
-            }else if(localStorage.getItem('useremail2')==null && !this.emails.includes(email)){
-                localStorage.setItem('useremail2', email)
-                this.emails[2] = email
+        adicionarEmail(event){
+            console.log(this.arrayPhones)
+            let pne = document.getElementById('phone').value
+            if(event.target.id=='telBnt' && (!this.arrayPhones.includes(pne))){
+                this.arrayPhones.push(pne)
+                this.$emit('update:phone', this.arrayPhones)
+                document.getElementById('phone').value = ''
+                localStorage.setItem('phones', this.arrayPhones)
             }else{
-                alert('inválido')
+
+                let email = document.getElementById('email').value
+
+                if(localStorage.getItem('useremail0')!=null && localStorage.getItem('useremail1')!=null && localStorage.getItem('useremail2')!=null){
+                    alert('You can insert only 3 emails :)')
+                }
+                else if(localStorage.getItem('useremail0')==null && !this.emails.includes(email)){
+                    localStorage.setItem('useremail0', email)
+                    this.emails[0] = email
+                }else if(localStorage.getItem('useremail1')==null && !this.emails.includes(email)){
+                    localStorage.setItem('useremail1', email)
+                    this.emails[1] = email
+                }else if(localStorage.getItem('useremail2')==null && !this.emails.includes(email)){
+                    localStorage.setItem('useremail2', email)
+                    this.emails[2] = email
+                }else{
+                    alert('inválido')
+                }
+                document.getElementById('email').value = ''
+                location.reload()
+                this.closeBox
             }
-            document.getElementById('email').value = ''
-            location.reload()
-            this.closeBox
+           
         },
         closeBox(){
             document.getElementsByClassName('editar-contato-container')[0].style.display = 'none'
@@ -58,6 +80,7 @@ export default {
                 console.log('value '+value+' index '+index-1)
             });
             console.log(this.emails)
+            location.reload()
         }
     }
 }
@@ -74,7 +97,7 @@ export default {
 @media only screen and (min-width:1001px) {
    .editar-contato-container{
         width: 300px;
-        height: 100px;
+        max-height: 100%;
         border-radius: 20px;
         box-shadow: gray -2px 2px 2px;
         display: none;
@@ -93,10 +116,11 @@ export default {
 }
 .editar-contato-container{
     display: none;
-    height: 100px;
+    min-height: 100px;
 }
-#email{
-    border-radius: 10px;
+
+.editar-contato-container input{
+     border-radius: 10px;
     padding: 5px;
     margin-left: 10px;
     margin-right: 10px;
