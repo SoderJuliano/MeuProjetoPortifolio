@@ -27,6 +27,7 @@
     <editar-contato
       class="editar-dados-contato"
       :phones="phone"
+      :endereco="adress"
     />
     <Formacao
       v-if="exibirFormacao"
@@ -83,7 +84,7 @@ export default {
       phone : [
         'telefone'
       ],
-    adress: 'rua Taquari 116, Vila Rica, S.S do Caí RS',
+    adress: 'seu Endereço',
     grade : ['Pós-Graduação em Ciência de dados',
              'Graduação em Análise E Desenvolvimento de Sistemas'
    ],
@@ -114,6 +115,13 @@ export default {
         arrayP.split(',').forEach(element => {
           this.phone.push(element)
         });
+     }
+
+     // adress
+
+     let adressStorage = localStorage.getItem('adress')
+     if(adressStorage){
+       this.adress = adressStorage
      }
    },
     getStyle(){

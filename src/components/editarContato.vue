@@ -12,10 +12,16 @@
         <div class="telefoneAdd">
             <span>Telefone</span><input type="tel" id="phone"/><button @click="adicionarEmail" id="telBnt" class="bnt-plus">+</button>
             <div class="email-list" v-if="arrayPhones">
-            <div v-for='item in arrayPhones' :key="item">
-                <span>{{item}}</span><img v-if="item" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+                <div v-for='item in arrayPhones' :key="item">
+                    <span>{{item}}</span><img v-if="item" :id="`${item}`" @click="removeTel" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+                </div>
             </div>
         </div>
+        <div class="endereco-container">
+            <span>Endereco</span><textarea type="text" id="endereco"/><button @click="adicionarEnd" class="bnt-plus">+</button>
+            <div class="email-list" v-if="myAdress">
+                <p>{{myAdress}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -24,14 +30,26 @@ export default {
     name: 'editar-contato',
     props:{
         phones: Array,
+        endereco: String,
     },
     data(){
         return{
             emails: [localStorage.getItem('useremail0'), localStorage.getItem('useremail1'), localStorage.getItem('useremail2')],
             arrayPhones: this.phones,
+            myAdress: this.endereco,
         }
     },
     methods:{
+        removeTel(event){
+            this.arrayPhones.splice(this.arrayPhones.indexOf(event.target.id), 1)
+            localStorage.setItem('phones', this.arrayPhones)
+        },
+        adicionarEnd(){
+            this.myAdress = document.getElementById('endereco').value
+            localStorage.setItem('adress', this.myAdress)
+            document.getElementById('endereco').value = ''
+            location.reload()
+        },
         adicionarEmail(event){
             console.log(this.arrayPhones)
             let pne = document.getElementById('phone').value
@@ -120,12 +138,35 @@ export default {
 }
 
 .editar-contato-container input{
-     border-radius: 10px;
+    border-radius: 5px;
+    border-top: 0ch;
+    border-left: 1px;
+    border-right: 1px;
     padding: 5px;
     margin-left: 10px;
     margin-right: 10px;
     font-size: small;
     width: 150px;
+}
+.editar-contato-container textarea{
+    border-radius: 5px;
+    border-top: 0ch;
+    border-left: 1px;
+    border-right: 1px;
+    padding: 5px;
+    margin-left: 50px;
+    margin-right: 10px;
+    font-size: small;
+    width: 150px;
+    margin-top: 3px;
+}
+.endereco-container span{
+    position: absolute;
+    padding-top: 5px;
+}
+.endereco-container button{
+    position: absolute;
+    margin-top: 15px;
 }
 .email-list{
     overflow-y: scroll;
