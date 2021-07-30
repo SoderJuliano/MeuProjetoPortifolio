@@ -36,6 +36,10 @@
       backgroundColor="#808080"
       :formacao="grade"
     />
+     <editarFormacao
+      class="editar-dados-escolares"
+      :grade="grade"
+    />
     <Habilidade
       v-if="exibirHabilidade"
       class="template-data"
@@ -52,6 +56,7 @@
       :insta="instagram"
       :twitt="twitter"
       :you="youtube"
+      :stof="stackoverflow"
     />
 </div>
 </template>
@@ -60,6 +65,7 @@ import Formacao from "./Formacao.vue";
 import Habilidade from "./Habilidade.vue";
 import Social from "./Social.vue"
 import editarContato from './editarContato.vue'
+import editarFormacao from './editarFormacao.vue'
 
 export default {
  components: {
@@ -67,6 +73,7 @@ export default {
     Habilidade,
     Social,
     editarContato,
+    editarFormacao
   },
   props:{
     cor: String,
@@ -84,15 +91,14 @@ export default {
       phone : [
         'telefone'
       ],
-    adress: 'seu Endereço',
-    grade : ['Pós-Graduação em Ciência de dados',
-             'Graduação em Análise E Desenvolvimento de Sistemas'
-   ],
+   adress: 'seu Endereço',
+   grade : ['Seus dados escolares'],
    hability : "HTML5, CSS, GITHUB, JAVASCRIPT, VUE.JS, NODE.JS, JQUERY, REACT.JS, PHP, JAVA, JAVA SPRING BOOT, MYSQL, LINUXS SYSTEMS, R",
    facebook : 'juliano.soder.3',
    lin : null,
    twitter : null,
-   youtube : 'channel/UCWPp8ClgK-Ln2u1mdhfpFGQ'
+   youtube : 'channel/UCWPp8ClgK-Ln2u1mdhfpFGQ',
+   stackoverflow : 'stackoverflow.com/users/16555987/juliano-soder'
    }
  },
  methods: {
@@ -122,6 +128,14 @@ export default {
      let adressStorage = localStorage.getItem('adress')
      if(adressStorage){
        this.adress = adressStorage
+     }
+
+     // grade
+
+     const gradeStorage = localStorage.getItem('grade')
+     if(gradeStorage){
+       this.grade = []
+       this.grade = gradeStorage.split(',')
      }
    },
     getStyle(){
@@ -198,6 +212,19 @@ export default {
     align-self: center;
     margin: 0 auto;
   }
+  .editar-dados-escolares{
+    width: 300px;
+    max-height: 100%;
+    border-radius: 20px;
+    box-shadow: gray -2px 2px 2px;
+    display: none;
+    background-color: whitesmoke;
+    margin-top: -200px;
+    margin-left: 200px;
+    opacity: 90%;
+    padding: 10px;
+    position: absolute;
+  }
 }
 @media print {
 .side{
@@ -218,6 +245,10 @@ export default {
   }
 
   .editar{
+    display: none;
+  }
+
+  .editar-dados-escolares{
     display: none;
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="formacao">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}</p>
+      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}<img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarFormacao"/></p>
       <div v-for="(item, index) in formacao " :key="index" class="formacao-container">
           <img src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
@@ -15,6 +15,11 @@ export default {
     titulo: String,
     backgroundColor: String,
     formacao: Array,
+  },
+  methods:{
+    showEditarFormacao(){
+      document.getElementsByClassName('editar-dados-escolares')[0].style.display = 'block'
+    }
   }
 }
 </script>

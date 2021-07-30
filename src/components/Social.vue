@@ -18,7 +18,10 @@
               <img src="../icons/youtube.png" class="social-icon"/>
               <span class="data-container">{{you}}</span>
           </div>
-          
+          <div v-if="stof" class="social-row">
+              <img src="../icons/stof.jpeg" class="social-icon"/>
+              <span class="data-container">{{stof}}</span>
+          </div>
       </div>
     </div>
 </template>
@@ -32,6 +35,7 @@ export default {
         insta: String,
         twitt: String,
         you: String,
+        stof: String
     }
 }
 </script>
@@ -55,5 +59,9 @@ export default {
     display: flex;
     padding: 10px;
     width: 100%;
+}
+.social-row span{
+    padding-top: 20px;
+    word-break: break-all;
 }
 </style>

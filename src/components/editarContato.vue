@@ -1,8 +1,9 @@
 <template>
     <div class="editar-contato-container">
+        <span>EDITAR DADOS DE CONTATO</span>
+        <button @click="closeBox" class="close">X</button>
         <div class="emailAdd">
-            <span>Email</span><input id="email" type="email"><button @click="adicionarEmail" class="bnt-plus">+</button>
-            <button @click="closeBox" class="close">X</button>
+            <span>Email</span><input placeholder="seuemail@mail.com.br" id="email" type="email"><button @click="adicionarEmail" class="bnt-plus">+</button>
         </div>
         <div class="email-list" v-if="emails">
             <div v-for='item in emails' :key="item">
@@ -10,7 +11,7 @@
             </div>
         </div>
         <div class="telefoneAdd">
-            <span>Telefone</span><input type="tel" id="phone"/><button @click="adicionarEmail" id="telBnt" class="bnt-plus">+</button>
+            <span>Telefone</span><input placeholder="Ex. (51)99999-9999" type="tel" id="phone"/><button @click="adicionarEmail" id="telBnt" class="bnt-plus">+</button>
             <div class="email-list" v-if="arrayPhones">
                 <div v-for='item in arrayPhones' :key="item">
                     <span>{{item}}</span><img v-if="item" :id="`${item}`" @click="removeTel" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
@@ -18,7 +19,7 @@
             </div>
         </div>
         <div class="endereco-container">
-            <span>Endereco</span><textarea type="text" id="endereco"/><button @click="adicionarEnd" class="bnt-plus">+</button>
+            <span>Endereço</span><textarea placeholder="Insira o novo endereço completo aqui dentro" type="text" id="endereco"/><button @click="adicionarEnd" class="bnt-plus">+</button>
             <div class="email-list" v-if="myAdress">
                 <p>{{myAdress}}</p>
             </div>
@@ -103,7 +104,7 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style>
 @media only screen and (max-width: 1000px) {
 .editar-contato-container{
     width: 100%;
@@ -131,6 +132,9 @@ export default {
     .editar-contato-container{
         display: none;
     }
+}
+.emailAdd{
+    margin-top: 10px;
 }
 .editar-contato-container{
     display: none;
