@@ -47,6 +47,10 @@
       backgroundColor="#808080"
       :hability="hability"
     />
+    <editar-habilidade 
+      class="editar-habilidade"
+      :habilidade="hability"
+    />
     <Social
       v-if="exibirSocial"
       class="template-data"
@@ -66,6 +70,7 @@ import Habilidade from "./Habilidade.vue";
 import Social from "./Social.vue"
 import editarContato from './editarContato.vue'
 import editarFormacao from './editarFormacao.vue'
+import editarHabilidade from './editarHabilidade.vue'
 
 export default {
  components: {
@@ -73,7 +78,8 @@ export default {
     Habilidade,
     Social,
     editarContato,
-    editarFormacao
+    editarFormacao,
+    editarHabilidade,
   },
   props:{
     cor: String,
@@ -93,7 +99,7 @@ export default {
       ],
    adress: 'seu Endereço',
    grade : ['Seus dados escolares'],
-   hability : "HTML5, CSS, GITHUB, JAVASCRIPT, VUE.JS, NODE.JS, JQUERY, REACT.JS, PHP, JAVA, JAVA SPRING BOOT, MYSQL, LINUXS SYSTEMS, R",
+   hability : "Suas habilidades",
    facebook : 'juliano.soder.3',
    lin : null,
    twitter : null,
@@ -136,6 +142,13 @@ export default {
      if(gradeStorage){
        this.grade = []
        this.grade = gradeStorage.split(',')
+     }
+
+     // habilitys
+
+     const habilityStorage = localStorage.getItem('hability')
+     if(habilityStorage){
+       this.hability = habilityStorage
      }
    },
     getStyle(){
@@ -193,6 +206,16 @@ export default {
     align-self: center;
     margin: 0 auto;
   }
+  .editar-dados-escolares{
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+  .editar-habilidade{
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
 }
 @media screen and (min-width:1001px) {
   .side{
@@ -214,6 +237,19 @@ export default {
   }
   .editar-dados-escolares{
     width: 300px;
+    max-height: 100%;
+    border-radius: 20px;
+    box-shadow: gray -2px 2px 2px;
+    display: none;
+    background-color: whitesmoke;
+    margin-top: -200px;
+    margin-left: 200px;
+    opacity: 90%;
+    padding: 10px;
+    position: absolute;
+  }
+  .editar-habilidade{
+     width: 300px;
     max-height: 100%;
     border-radius: 20px;
     box-shadow: gray -2px 2px 2px;

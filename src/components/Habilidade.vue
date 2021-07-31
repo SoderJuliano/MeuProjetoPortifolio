@@ -1,6 +1,8 @@
 <template>
   <div class="habilidade">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}</p>
+      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarHabilidade"/>
+      </p>
       <div class="habilidade-container">
           <img src="../icons/html.png" class="habilidade-icon"/>
               <span contenteditable="true" class="data-text-habilidades">{{hability}}</span> 
@@ -16,6 +18,11 @@ export default {
     titulo: String,
     backgroundColor: String,
     hability: String,
+  },
+  methods:{
+    showEditarHabilidade(){
+      document.getElementsByClassName('editar-habilidade')[0].style.display = 'block'
+    }
   }
 }
 </script>
@@ -24,7 +31,8 @@ export default {
 <style scoped>
 .habilidade-container{
   width: 80%;
-  height: 150px;
+  min-height: 100px;
+  max-height: 100%;
   align-self: center;
   margin: 0 auto;
   padding-top: 20px;
