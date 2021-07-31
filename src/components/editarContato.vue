@@ -111,7 +111,14 @@ export default {
     height: 100%;
     display: none;
     background-color: whitesmoke;
+    padding: 50px;
 }    
+.close{
+    margin-right: 60px;
+    width: 50px !important;
+    height: 50px !important;
+    text-shadow: whitesmoke -1px 1px;
+}
 }
 @media only screen and (min-width:1001px) {
    .editar-contato-container{

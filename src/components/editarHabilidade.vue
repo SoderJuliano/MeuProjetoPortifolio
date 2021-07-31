@@ -1,6 +1,6 @@
 <template>
     <div class="editar-habilidade-container">
-        <h4>INSERIR HABILIDADES</h4>
+        <span>INSERIR HABILIDADES</span>
         <button @click="closeBox" class="close">X</button>
         <div class="endereco-container">
             <textarea 

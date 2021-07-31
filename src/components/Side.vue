@@ -210,11 +210,15 @@ export default {
     width: 100%;
     height: 100%;
     display: none;
+    padding: 50px;
+    background-color: whitesmoke;
   }
   .editar-habilidade{
     width: 100%;
     height: 100%;
     display: none;
+    padding: 50px;
+    background-color: whitesmoke;
   }
 }
 @media screen and (min-width:1001px) {
