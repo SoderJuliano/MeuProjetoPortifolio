@@ -57,10 +57,18 @@
       titulo="SOCIAL LINKS"
       backgroundColor="#808080"
       :face="facebook"
-      :insta="instagram"
+      :lin="lin"
       :twitt="twitter"
       :you="youtube"
       :stof="stackoverflow"
+    />
+    <editar-social 
+      class="editar-social"
+      :face="facebook"
+      :lin="lin"
+      :twit="twitter"
+      :you="youtube"
+      :stof="stackoverflow"  
     />
 </div>
 </template>
@@ -71,6 +79,7 @@ import Social from "./Social.vue"
 import editarContato from './editarContato.vue'
 import editarFormacao from './editarFormacao.vue'
 import editarHabilidade from './editarHabilidade.vue'
+import editarSocial from './editarSocial.vue'
 
 export default {
  components: {
@@ -80,6 +89,7 @@ export default {
     editarContato,
     editarFormacao,
     editarHabilidade,
+    editarSocial
   },
   props:{
     cor: String,
@@ -100,11 +110,11 @@ export default {
    adress: 'seu Endereço',
    grade : ['Seus dados escolares'],
    hability : "Suas habilidades",
-   facebook : 'juliano.soder.3',
+   facebook : null,
    lin : null,
    twitter : null,
-   youtube : 'channel/UCWPp8ClgK-Ln2u1mdhfpFGQ',
-   stackoverflow : 'stackoverflow.com/users/16555987/juliano-soder'
+   youtube : null,
+   stackoverflow : null,
    }
  },
  methods: {
@@ -149,6 +159,29 @@ export default {
      const habilityStorage = localStorage.getItem('hability')
      if(habilityStorage){
        this.hability = habilityStorage
+     }
+
+     //social in links
+
+     const lin = localStorage.getItem('in')
+     if(lin){
+       this.lin = lin
+     }
+     const you = localStorage.getItem('you')
+     if(you){
+       this.youtube = you
+     }
+     const stof = localStorage.getItem('stof')
+     if(stof){
+       this.stackoverflow = stof
+     }
+     const face = localStorage.getItem('face')
+     if(face){
+       this.facebook = face
+     }
+     const twit = localStorage.getItem('twit')
+     if(twit){
+       this.twitter = twit
      }
    },
     getStyle(){
@@ -220,6 +253,13 @@ export default {
     padding: 50px;
     background-color: whitesmoke;
   }
+  .editar-social{
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 50px;
+    background-color: whitesmoke;
+  }
 }
 @media screen and (min-width:1001px) {
   .side{
@@ -253,7 +293,20 @@ export default {
     position: absolute;
   }
   .editar-habilidade{
-     width: 300px;
+    width: 300px;
+    max-height: 100%;
+    border-radius: 20px;
+    box-shadow: gray -2px 2px 2px;
+    display: none;
+    background-color: whitesmoke;
+    margin-top: -200px;
+    margin-left: 200px;
+    opacity: 90%;
+    padding: 10px;
+    position: absolute;
+  }
+  .editar-social{
+    width: 400px;
     max-height: 100%;
     border-radius: 20px;
     box-shadow: gray -2px 2px 2px;

@@ -1,6 +1,7 @@
 <template>
     <div class="social">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}</p>
+      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}} 
+          <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarHabilidade"/></p>
       <div class="social-container">
           <div v-if="face" class="social-row">
               <img src="../icons/face.png" class="social-icon"/>
@@ -32,10 +33,15 @@ export default {
         titulo: String,
         backgroundColor: String,
         face: String,
-        insta: String,
+        lin: String,
         twitt: String,
         you: String,
         stof: String
+    },
+    methods:{
+        showEditarHabilidade(){
+        document.getElementsByClassName('editar-social')[0].style.display = 'block'
+        }
     }
 }
 </script>
