@@ -2,8 +2,8 @@
     <div class="main-container">
         <div  :style="getStyle()" class="page-header">
             <span @click="insertName" class="name-title">{{user.name}}</span>
-            <input @change="newName" type="text" :value="`${user.name}`" id="nname" class="input-name">
-            <p contenteditable="true" @change="newProfession" class="profession">{{user.profession}}</p>    
+            <input @change="newName" @mouseleave="newName" type="text" :value="`${user.name}`" id="nname" class="input-name">
+            <p contenteditable="true" @input="newProfession" class="profession">{{user.profession}}</p>    
         </div>    
         <Resumo
             class="data-container"
@@ -81,22 +81,32 @@ export default{
         },
         newName(){
             const nname = document.getElementById('nname').value
-            console.log(nname)
             if(nname){
+                console.log('nname '+nname)
                 localStorage.setItem('user-name', nname)
                 this.name = nname
+                document.getElementsByClassName('name-title')[0].textContent = this.name
                // location.reload() doenst need reload
             }
             document.getElementsByClassName('name-title')[0].style.display = 'block'
             document.getElementById('nname').style.display = 'none'
         },
         newProfession(){
-
+            const prof = document.getElementsByClassName('profession')[0].textContent
+            console.log(prof)
+            if(prof){
+                this.user.profession = prof
+                localStorage.setItem('profession', prof)           
+            }
         },
         getContatoDataPage(){ 
             const nname = localStorage.getItem('user-name')
             if(nname){
                 this.user.name = nname
+            }
+            const prof = localStorage.getItem('profession')
+            if(prof){
+                this.user.profession = prof
             }
         }
     },
