@@ -2,7 +2,7 @@
   <div class="resumo">
       <p class="title" :style="getStyle()">{{titulo}}</p>
       <div class="resumo-container">
-         <span contenteditable="true" class="data-container-page">{{user.resume}}</span>
+         <span @input="saveContent" id='resume' contenteditable="true" class="data-container-page">{{user.resume}}</span>
       </div>
   </div>
 </template>
@@ -21,6 +21,10 @@ export default {
           return{
               'background-color': `${this.cor}`
           }
+      },
+      saveContent(){
+        const content = document.getElementById('resume').textContent
+        localStorage.setItem('about', content)
       }
   }
 }

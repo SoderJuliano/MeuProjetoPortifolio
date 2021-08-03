@@ -7,7 +7,7 @@
         </div>
         <div class="grade-list" v-if="mygrade">
             <div v-for='item in mygrade' :key="item">
-                <span v-if="item!='Seus dados escolares'">{{item}}</span><img v-if="item && item!='Seus dados escolares'" @click="removeGrade" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+                <span class="itens" v-if="item!='Seus dados escolares'">{{item}}</span><img v-if="item && item!='Seus dados escolares'" @click="removeGrade" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
             </div>
         </div>
 
@@ -67,5 +67,9 @@ export default {
 }
 .grade-list{
     margin-top: 10px;
+}
+.itens{
+    font-weight: bold;
+    font-size: 14px;
 }
 </style>

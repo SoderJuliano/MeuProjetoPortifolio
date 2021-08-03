@@ -17,6 +17,10 @@
             :cor="cor"
             :user="user"
         />
+        <editar-competencias
+            :user="user"
+            class="editar-competencais"
+        />
         <Experiencias
             class="data-container"
             titulo="EXPERIÊNCIAS"
@@ -31,20 +35,22 @@
 import Resumo from "./Resumo.vue"
 import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
+import editarCompetencias from "./editarCompetencias.vue"
 
 export default{
     name:"Page",
     components:{
         Resumo,
         Competencias,
-        Experiencias
+        Experiencias,
+        editarCompetencias
     },
     data(){
         return{
             user: {
                 name: 'Digite nome',
                 profession: 'Desenvolvedor',
-                resume: 'Sou um amante de tecnologia e adoro estar conectado com o mundo e as pessoas, sempre inovando e buscando o que há de mais novo nas áreas de atuação. Outras grandes paixões são os livros de ficção e drama, filmes e histórias das mais váriadas que aparecem nos games que jogo, em certa ocasião desenvolvi dois minegames, no entanto não os distribui em nenhuma plataforma.',
+                resume: 'Digite aqui um resumo sobre você.',
                 competence: ['Trabalho em time', 'Organização de tarefas', 'Liderança Servidora', 'Engajamento', 'Boas práticas para desenvolvimento', 'Duas experiências de trabalho no EUA']
             },
             userExperience: {
@@ -108,6 +114,10 @@ export default{
             if(prof){
                 this.user.profession = prof
             }
+            const about = localStorage.getItem('about')
+            if(about){
+                this.user.resume = about
+            }
         }
     },
     beforeMount(){
@@ -130,7 +140,9 @@ export default{
         padding-left: 30px;
         font-size: 12px;
     }
-
+    .editar-competencais{
+        display: none;
+    }
 }
 @media screen and (min-width: 1001px) {
  .main-container{
@@ -139,6 +151,19 @@ export default{
     width: 50%;
     padding-left: 30px;
  }
+ .editar-competencais{
+    width: 300px;
+    max-height: 100%;
+    border-radius: 20px;
+    box-shadow: gray -2px 2px 2px;
+    display: none;
+    background-color: whitesmoke;
+    top: 50%;
+    left: 500px;
+    opacity: 90%;
+    padding: 10px;
+    position: absolute;
+ }
 }
 @media screen and(max-width: 1000px) {
  .main-container{
@@ -146,6 +171,13 @@ export default{
     height: 100%;
     width: 100%;
     padding-left: 30px;
+ }
+ .editar-competencais{
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 50px;
+    background-color: whitesmoke;
  }
 }
 
