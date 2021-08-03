@@ -344,6 +344,10 @@ export default {
   .editar-dados-escolares{
     display: none;
   }
+
+  .editar-habilidade{
+    display: none;
+  }
 }
 
 .title{
