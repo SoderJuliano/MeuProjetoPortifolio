@@ -1,8 +1,9 @@
 <template>
     <div class="main-container">
         <div  :style="getStyle()" class="page-header">
-            <span contenteditable="true" class="name-titlle">{{user.name}}</span>
-            <p contenteditable="true" class="profession">{{user.profession}}</p>    
+            <span @click="insertName" class="name-title">{{user.name}}</span>
+            <input @change="newName" type="text" :value="`${user.name}`" id="nname" class="input-name">
+            <p contenteditable="true" @change="newProfession" class="profession">{{user.profession}}</p>    
         </div>    
         <Resumo
             class="data-container"
@@ -41,7 +42,7 @@ export default{
     data(){
         return{
             user: {
-                name: 'JULIANO SODER',
+                name: 'Digite nome',
                 profession: 'Desenvolvedor',
                 resume: 'Sou um amante de tecnologia e adoro estar conectado com o mundo e as pessoas, sempre inovando e buscando o que há de mais novo nas áreas de atuação. Outras grandes paixões são os livros de ficção e drama, filmes e histórias das mais váriadas que aparecem nos games que jogo, em certa ocasião desenvolvi dois minegames, no entanto não os distribui em nenhuma plataforma.',
                 competence: ['Trabalho em time', 'Organização de tarefas', 'Liderança Servidora', 'Engajamento', 'Boas práticas para desenvolvimento', 'Duas experiências de trabalho no EUA']
@@ -72,12 +73,45 @@ export default{
             return {'background-color': `${this.cor}`,
                     
             }
+        },
+        insertName(){
+            document.getElementsByClassName('name-title')[0].style.display = 'none'
+            document.getElementById('nname').style.display = 'block'
+            
+        },
+        newName(){
+            const nname = document.getElementById('nname').value
+            console.log(nname)
+            if(nname){
+                localStorage.setItem('user-name', nname)
+                this.name = nname
+               // location.reload() doenst need reload
+            }
+            document.getElementsByClassName('name-title')[0].style.display = 'block'
+            document.getElementById('nname').style.display = 'none'
+        },
+        newProfession(){
+
+        },
+        getContatoDataPage(){ 
+            const nname = localStorage.getItem('user-name')
+            if(nname){
+                this.user.name = nname
+            }
         }
+    },
+    beforeMount(){
+        this.getContatoDataPage()
     }
 }
 </script>
 <style scoped>
-
+.input-name{
+    display: none;
+    width: 50%;
+    height: 30px;
+    margin-left: 100px;
+}
 @media print {
     .main-container{
         display: block;
@@ -122,7 +156,7 @@ export default{
     align-self: center;
 }
 
-.name-titlle{
+.name-title{
     font-size: 40px;
     letter-spacing: 1px;
     font-weight: bold;
