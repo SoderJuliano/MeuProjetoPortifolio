@@ -63,15 +63,15 @@ export default{
                 lastJob: {
                     title: 'Desenvolvedor Web',
                     company: 'As freeLancer',
-                    hired: '20/02/2021',
-                    end: 'Emprego Atual',
+                    hired: '2021-02-21',
+                    end: '',
                     description: "Estou trabalhando em uma serie de templates para uma empresa de SP, desenvolvendo o front end de um site que auxilia o usuário a criar e personalizar seu próprio currículo."
                 },
                 job: {
                    title: 'Preparador de Máquinas',
                     company: 'Fras-le S/A',
-                    hired: '21/07/2008',
-                    end: '11/02/2021',
+                    hired: '2008-07-21',
+                    end: '2021-02-11',
                     description: "Como preparador de máquinas eu organizava e liderava uma equipe de 20 operadores de prensas, delegando atividades, participando reuniões para melhorar as estratégias de produção, controlando e fazendo relatórios diários."
                 }
             }
@@ -128,6 +128,9 @@ export default{
             if(competencias){
                 this.user.competence = competencias
             }
+        },
+        getExperienceData(){
+            
         }
     },
     beforeMount(){

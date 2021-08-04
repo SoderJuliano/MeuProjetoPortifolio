@@ -5,12 +5,12 @@
       </p>
       <div class="experiencias-container">
          <span class="data-container-page-title">{{lastJob.title}} - {{lastJob.company}}</span>
-         <li>de {{lastJob.hired}} à {{lastJob.end}}</li>
+         <li>de {{lasJobHired}} à {{lastJobEnd}}</li>
          <p>{{lastJob.description}}</p>
       </div>
       <div class="experiencias-container">
          <span class="data-container-page-title">{{job.title}} - {{job.company}}</span>
-         <li>de {{job.hired}} à {{job.end}}</li>
+         <li>de {{jobHired}} à {{jobEnd}}</li>
          <p>{{job.description}}</p>
       </div>
   </div>
@@ -25,6 +25,14 @@ export default {
     job: Object,
     cor: String
   },
+  data(){
+    return{
+      jobHired: null,
+      jobEnd: null,
+      lasJobHired: null,
+      lastJobEnd: null
+    }
+  },
   methods:{
       getStyle(){
           return{
@@ -34,6 +42,31 @@ export default {
       showEditarExperiencias(){
         document.getElementsByClassName('editar-experiencias')[0].style.display = 'block'
       }
+  },
+  beforeMount(){
+     
+     // converting data to array strings
+
+      let d = this.job.hired
+      const newD = d.split('-')
+      const stng = newD[2]+"/"+newD[1]+"/"+newD[0]
+      
+      let de = this.job.end.split('-')
+      const newDe = de[2]+"/"+de[1]+"/"+de[0]
+
+      const lasd = this.lastJob.hired.split('-')
+      const lasthired = lasd[2]+"/"+lasd[1]+"/"+lasd[0]
+
+      if(!this.lastJob.end){
+        this.lastJobEnd = 'emprego atual'
+      }else{
+        const lastend = this.lastJob.end.split('-')
+        this.lastJobEnd = lastend[2]+"/"+lastend[1]+"/"+lastend[0]
+      } 
+
+      this.lasJobHired = lasthired
+      this.jobEnd = newDe
+      this.jobHired = stng
   }
 }
 </script>
