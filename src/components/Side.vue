@@ -320,6 +320,9 @@ export default {
   }
 }
 @media print {
+.editar-social{
+  display: none;
+}
 .side{
     height: 100%;
     width: 37%;

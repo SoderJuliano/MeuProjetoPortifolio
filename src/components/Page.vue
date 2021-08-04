@@ -28,6 +28,10 @@
             :lastJob="userExperience.lastJob"
             :job="userExperience.job"
         />
+        <editar-experiencias
+            class="editar-experiencias"
+            :userExperience="userExperience"
+        />
     </div>
         
 </template>
@@ -36,6 +40,7 @@ import Resumo from "./Resumo.vue"
 import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
 import editarCompetencias from "./editarCompetencias.vue"
+import editarExperiencias from './editarExperiencias.vue'
 
 export default{
     name:"Page",
@@ -43,7 +48,8 @@ export default{
         Resumo,
         Competencias,
         Experiencias,
-        editarCompetencias
+        editarCompetencias,
+        editarExperiencias
     },
     data(){
         return{
@@ -51,7 +57,7 @@ export default{
                 name: 'Digite nome',
                 profession: 'Sua profissão',
                 resume: 'Digite aqui um resumo sobre você.',
-                competence: ['Trabalho em time', 'Organização de tarefas', 'Liderança Servidora', 'Engajamento', 'Boas práticas para desenvolvimento', 'Duas experiências de trabalho no EUA']
+                competence: []
             },
             userExperience: {
                 lastJob: {
@@ -147,6 +153,9 @@ export default{
     .editar-competencais{
         display: none;
     }
+    .editar-experiencias{
+        display: none;
+    }
 }
 @media screen and (min-width: 1001px) {
  .main-container{
@@ -168,6 +177,19 @@ export default{
     padding: 10px;
     position: absolute;
  }
+  .editar-experiencias{
+    width: 300px;
+    max-height: 100%;
+    border-radius: 20px;
+    box-shadow: gray -2px 2px 2px;
+    display: none;
+    background-color: whitesmoke;
+    top: 50%;
+    left: 500px;
+    opacity: 90%;
+    padding: 10px;
+    position: absolute;
+ }
 }
 @media screen and(max-width: 1000px) {
  .main-container{
@@ -177,6 +199,13 @@ export default{
     padding-left: 30px;
  }
  .editar-competencais{
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 50px;
+    background-color: whitesmoke;
+ }
+  .editar-experiencias{
     width: 100%;
     height: 100%;
     display: none;
