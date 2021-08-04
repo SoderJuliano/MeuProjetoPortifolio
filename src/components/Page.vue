@@ -49,7 +49,7 @@ export default{
         return{
             user: {
                 name: 'Digite nome',
-                profession: 'Desenvolvedor',
+                profession: 'Sua profissão',
                 resume: 'Digite aqui um resumo sobre você.',
                 competence: ['Trabalho em time', 'Organização de tarefas', 'Liderança Servidora', 'Engajamento', 'Boas práticas para desenvolvimento', 'Duas experiências de trabalho no EUA']
             },
@@ -117,6 +117,10 @@ export default{
             const about = localStorage.getItem('about')
             if(about){
                 this.user.resume = about
+            }
+            const competencias = localStorage.getItem('cpta').split(',')
+            if(competencias){
+                this.user.competence = competencias
             }
         }
     },

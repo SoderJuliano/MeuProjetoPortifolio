@@ -35,8 +35,10 @@ export default {
             }
             document.getElementById('competencia-input').value = ''
         },
-        removeCompetence(){
-
+        removeCompetence(event){
+            this.competencias.splice(this.competencias.indexOf(event.target.id),1)
+            this.$emit('update: user.competence', this.competencias)
+            localStorage.setItem('cpta', this.competencias)
         }
     }
 }
