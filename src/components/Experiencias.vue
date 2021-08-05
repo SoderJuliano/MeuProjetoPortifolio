@@ -5,12 +5,12 @@
       </p>
       <div class="experiencias-container">
          <span class="data-container-page-title">{{lastJob.title}} - {{lastJob.company}}</span>
-         <li>de {{lasJobHired}} à {{lastJobEnd}}</li>
+         <li id='lastjob-dates'>de {{lasJobHired}} à {{lastJobEnd}}</li>
          <p>{{lastJob.description}}</p>
       </div>
       <div class="experiencias-container">
-         <span class="data-container-page-title">{{job.title}} - {{job.company}}</span>
-         <li>de {{jobHired}} à {{jobEnd}}</li>
+         <span id="job-title" class="data-container-page-title">{{job.title}} - {{job.company}}</span>
+         <li id="job-dates">de {{jobHired}} à {{jobEnd}}</li>
          <p>{{job.description}}</p>
       </div>
   </div>

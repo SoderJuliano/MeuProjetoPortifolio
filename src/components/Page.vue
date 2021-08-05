@@ -61,18 +61,18 @@ export default{
             },
             userExperience: {
                 lastJob: {
-                    title: 'Desenvolvedor Web',
-                    company: 'As freeLancer',
-                    hired: '2021-02-21',
+                    title: '',
+                    company: '',
+                    hired: '',
                     end: '',
-                    description: "Estou trabalhando em uma serie de templates para uma empresa de SP, desenvolvendo o front end de um site que auxilia o usuário a criar e personalizar seu próprio currículo."
+                    description: ""
                 },
                 job: {
-                   title: 'Preparador de Máquinas',
-                    company: 'Fras-le S/A',
-                    hired: '2008-07-21',
-                    end: '2021-02-11',
-                    description: "Como preparador de máquinas eu organizava e liderava uma equipe de 20 operadores de prensas, delegando atividades, participando reuniões para melhorar as estratégias de produção, controlando e fazendo relatórios diários."
+                   title: '',
+                    company: '',
+                    hired: '',
+                    end: '',
+                    description: ""
                 }
             }
         }
@@ -130,11 +130,46 @@ export default{
             }
         },
         getExperienceData(){
+            let ljob = localStorage.getItem('lastjob')
+            if(ljob){
+                let lastjob = ljob.split(',')
+                const lastjobDescription = localStorage.getItem('lastjobDescription')
+                lastjob.push(lastjobDescription)
+                //console.log(lastjob)
+                this.userExperience.lastJob.title = lastjob[0]
+                this.userExperience.lastJob.company = lastjob[1]
+                this.userExperience.lastJob.hired = lastjob[2]
+                this.userExperience.lastJob.end = lastjob[3]
+                this.userExperience.lastJob.description = lastjob[4]
+            }
+            let jobE = localStorage.getItem('job')
+            if(jobE){
+                let job = jobE.split(',')
+                const lastjobDescription = localStorage.getItem('jobDescription')
+                job.push(lastjobDescription)
+                console.log(job)
+                this.userExperience.job.title = job[0]
+                this.userExperience.job.company = job[1]
+                this.userExperience.job.hired = job[2]
+                this.userExperience.job.end = job[3]
+                this.userExperience.job.description = job[4]
+            }
             
+            /*
+            
+            lastJob: {
+                    title: 'Desenvolvedor Web',
+                    company: 'As freeLancer',
+                    hired: '2021-02-21',
+                    end: '',
+                    description: "Estou trabalhando em uma serie de templates para uma empresa de SP, desenvolvendo o front end de um site que auxilia o usuário a criar e personalizar seu próprio currículo."
+                },
+                */
         }
     },
     beforeMount(){
         this.getContatoDataPage()
+        this.getExperienceData()
     }
 }
 </script>
@@ -192,6 +227,7 @@ export default{
     opacity: 90%;
     padding: 10px;
     position: absolute;
+    overflow: scroll;
  }
 }
 @media screen and(max-width: 1000px) {
