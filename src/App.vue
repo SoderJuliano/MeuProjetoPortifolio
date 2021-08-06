@@ -135,6 +135,7 @@ export default {
     height: 100%;
     transform: scaleY(.7);
     margin-top: -20%;
+    -webkit-print-color-adjust: exact;
   } 
 
   .right{
