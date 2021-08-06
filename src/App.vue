@@ -135,7 +135,7 @@ export default {
     width: 100%;
     height: 100%;
     transform: scaleY(.7);
-    margin-top: -10%;
+    margin-top: -20%;
   } 
 
   .right{
