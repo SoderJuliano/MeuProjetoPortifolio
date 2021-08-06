@@ -106,7 +106,6 @@ export default {
     width: 100%;
     height: 40px;    
     text-align: start;
-    line-height: 100px;
     display: flex;
   }
 

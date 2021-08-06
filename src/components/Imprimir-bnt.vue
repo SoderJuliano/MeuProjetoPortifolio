@@ -15,19 +15,33 @@ export default {
 }
 </script>
 <style scoped>
+@media screen and(max-width: 1000px) {
+    .print-icon{
+        width: 30px;
+        height: 25px;
+    }
+    .impreimir-text{
+        color: black !important;
+        font-weight: bold;
+    }
+}
+@media screen and(min-width: 1001px) {
+    .print-icon{
+        width: 30px;
+        height: 25px;
+        padding: 10px;
+    }
+    
+}
 .print-div{
     display: flex;
     width: 120px;
     height: 40px;
-    border: solid black 2px;
+    border: solid black 1px;
     border-radius: 20px;
-}
-.print-icon{
-    width: 30px;
-    height: 25px;
-    padding: 10px;
+    
 }
 .impreimir-text{
-    padding-top: 10px;
+        padding: 3%;
 }
 </style>

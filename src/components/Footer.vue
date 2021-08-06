@@ -8,15 +8,21 @@
         <img v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
+        <imprimir
+          class="imprimirbotao"
+        />
     </div>
 </template>
 
 <script>
 import MultiMenu from './MultiMenu.vue'
+import imprimir from './Imprimir-bnt.vue'
+
 export default {
     name: 'footermenu',
     components:{
         MultiMenu,
+        imprimir
     },
     data(){
         return{
@@ -47,6 +53,13 @@ export default {
 }
 </script>
 <style scoped>
+.imprimirbotao{
+    margin-top: 2%;
+    margin-left: 20%;
+    height: 25px !important;
+    width: 100px !important;
+}
+
 img{
     width: 25px;
 }

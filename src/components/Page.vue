@@ -155,16 +155,6 @@ export default{
                 this.userExperience.job.description = job[4]
             }
             
-            /*
-            
-            lastJob: {
-                    title: 'Desenvolvedor Web',
-                    company: 'As freeLancer',
-                    hired: '2021-02-21',
-                    end: '',
-                    description: "Estou trabalhando em uma serie de templates para uma empresa de SP, desenvolvendo o front end de um site que auxilia o usuário a criar e personalizar seu próprio currículo."
-                },
-                */
         }
     },
     beforeMount(){
