@@ -174,6 +174,12 @@ export default{
 }
 </script>
 <style scoped>
+.editar-competencais{
+    display: none;
+}
+.editar-experiencias{
+    display: none;
+}
 .input-name{
     display: none;
     width: 50%;
