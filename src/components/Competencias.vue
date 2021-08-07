@@ -48,7 +48,7 @@ export default {
     width: 100%;
     height: 100%;
 }
-@print{
+@media print{
   .editar{
     display: none;
   }
