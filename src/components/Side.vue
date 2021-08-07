@@ -351,6 +351,13 @@ export default {
   .editar-habilidade{
     display: none;
   }
+
+  .editar-dados-contato{
+    display:  none !important;
+  }
+  .editar-social{
+    display: none !important;
+  }
 }
 
 .title{

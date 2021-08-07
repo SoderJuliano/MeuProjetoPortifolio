@@ -25,8 +25,6 @@ export default {
           }
       },
       showEditarCompetencias(){
-        console.log('teste')
-        document.getElementById('editarCompetencias').style.display = 'block'
         document.getElementsByClassName('editar-competencais')[0].style.display = 'block'
       }
   }

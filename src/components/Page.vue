@@ -166,12 +166,7 @@ export default{
 }
 </script>
 <style scoped>
-.editar-competencais{
-    display: none;
-}
-.editar-experiencias{
-    display: none;
-}
+
 .input-name{
     display: none;
     width: 50%;
@@ -187,10 +182,10 @@ export default{
         font-size: 12px;
     }
     .editar-competencais{
-        display: none;
+        display: none !important;
     }
     .editar-experiencias{
-        display: none;
+        display: none !important;
     }
 }
 @media screen and (min-width: 1001px) {
