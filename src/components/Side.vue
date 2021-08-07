@@ -197,6 +197,7 @@ export default {
     },
     showEditarContato(){
       document.getElementsByClassName('editar-contato-container')[0].style.display= 'block'
+      document.getElementsByClassName('editar-contato-container')[0].style.opacity= '90%'
     }
   },
   beforeMount(){
