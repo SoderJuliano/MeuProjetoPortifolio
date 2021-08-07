@@ -136,7 +136,7 @@ export default {
     width: 100%;
     height: 100%;
     transform: scaleY(.7);
-    margin-top: -20%;
+    margin-top: -25%;
     -webkit-print-color-adjust: exact;
   } 
 
