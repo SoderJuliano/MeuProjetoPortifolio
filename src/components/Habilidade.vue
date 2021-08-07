@@ -22,6 +22,7 @@ export default {
   methods:{
     showEditarHabilidade(){
       document.getElementsByClassName('editar-habilidade')[0].style.display = 'block'
+      document.getElementsByClassName('editar-habilidade')[0].style.opacity = '90%'
     }
   }
 }

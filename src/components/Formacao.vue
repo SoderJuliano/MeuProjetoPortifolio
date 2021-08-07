@@ -19,6 +19,7 @@ export default {
   methods:{
     showEditarFormacao(){
       document.getElementsByClassName('editar-dados-escolares')[0].style.display = 'block'
+      document.getElementsByClassName('editar-dados-escolares')[0].style.opacity = '90%'
     }
   }
 }

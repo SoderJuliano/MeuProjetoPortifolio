@@ -40,7 +40,8 @@ export default {
     },
     methods:{
         showEditarHabilidade(){
-        document.getElementsByClassName('editar-social')[0].style.display = 'block'
+            document.getElementsByClassName('editar-social')[0].style.display = 'block'
+            document.getElementsByClassName('editar-social')[0].style.opacity = '90%'
         }
     }
 }
