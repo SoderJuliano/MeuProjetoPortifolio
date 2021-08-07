@@ -2,7 +2,7 @@
     <div class="multiMenu-options">
         <fonts />
         <Colors />
-        <page-color />
+        <pageColor />
         <Avatares />
     </div>
 </template>
@@ -24,9 +24,20 @@ export default {
 }
 </script>
 <style scoped>
-.multiMenu-options{
-    height: 100%;
-    width: 80%;
-    background-color: white;
+
+@media only screen and(min-width:1001px) {
+    .multiMenu-options{
+        max-height: 100%;
+        width: 80%;
+        background-color: white;
+    }
+}
+@media only screen and(max-width:1000px) {
+     .multiMenu-options{
+        height: 200px;
+        overflow: scroll;
+        width: 80%;
+        background-color: white;
+    }
 }
 </style>

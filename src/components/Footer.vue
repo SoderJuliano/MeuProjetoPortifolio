@@ -31,24 +31,31 @@ export default {
     },
     methods:{
         changefontM(p){
-        if(p.target.textContent.includes('#')==true){
+        if(p.target.textContent.includes('pag-')==true){
+          console.log(p.target.id)
+          document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[8].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[9].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[10].style.backgroundColor = p.target.id
+        }
+        else if(p.target.textContent.includes('#')==true){
           document.getElementsByClassName("side")[0].style.backgroundColor = p.target.textContent
+        }else{
+            switch(p.target.textContent){ 
+                case 'Oswald':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Oswald', sans-serif" 
+                    break
+                case 'Zen Loop':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Zen Loop', cursive" 
+                    break
+                case 'Fuggles':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Fuggles', cursive"
+                    break
+                default:
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'STIX Two Math', serif"
+            }
         }
-        
-        switch(p.target.textContent){ 
-            case 'Oswald':
-                document.getElementsByClassName("main")[0].style.fontFamily = "'Oswald', sans-serif" 
-                break
-            case 'Zen Loop':
-                document.getElementsByClassName("main")[0].style.fontFamily = "'Zen Loop', cursive" 
-                break
-            case 'Fuggles':
-                document.getElementsByClassName("main")[0].style.fontFamily = "'Fuggles', cursive"
-                break
-            default:
-                document.getElementsByClassName("main")[0].style.fontFamily = "'STIX Two Math', serif"
-        }
-        },
+    },
     }
 }
 </script>

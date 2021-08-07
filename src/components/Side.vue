@@ -33,7 +33,7 @@
       v-if="exibirFormacao"
       class="template-data"
       titulo="FORMAÇÃO"
-      backgroundColor="#808080"
+      :backgroundColor="cor"
       :formacao="grade"
     />
      <editarFormacao

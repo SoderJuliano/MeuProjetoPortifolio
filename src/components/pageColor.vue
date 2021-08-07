@@ -2,10 +2,10 @@
     <div class="colors-container">
         <p class="title">TIPOS DE COR PRINCIPAL</p>
         <div class="dots-container">
-            <div class="dot" style="background-color: #FFA07A">pag-#FFA07A</div>
-            <div class="dot" style="background-color: #FFB6C1" >pag-#FFB6C1</div>
-            <div class="dot" style="background-color: #F08080" >pag-#F08080</div>
-            <div class="dot" style="background-color: #87CEEB" >pag-#87CEEB</div>
+            <div class="dot" id="#FFA07A" style="background-color: #FFA07A">pag-#FFA07A</div>
+            <div class="dot" id="#FFB6C1" style="background-color: #FFB6C1" >pag-#FFB6C1</div>
+            <div class="dot" id="#F08080" style="background-color: #F08080" >pag-#F08080</div>
+            <div class="dot" id="#87CEEB" style="background-color: #87CEEB" >pag-#87CEEB</div>
         </div>
     </div>
 </template>

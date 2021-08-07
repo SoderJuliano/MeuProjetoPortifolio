@@ -18,11 +18,21 @@ export default {
 </script>
 
 <style scoped>
-.fonts-container{
+@media screen and(min-width: 1001px) {
+    .fonts-container{
     min-height: 100px;
     max-height: 100%;
     width: 100%;
     background-color: white;
+}
+}
+@media screen and(max-width: 1000px) {
+    .fonts-container{
+        min-height: 50px;
+        overflow: scroll;
+        width: 100%;
+        background-color: white;
+    }
 }
 .list-container{
     padding: 1px;

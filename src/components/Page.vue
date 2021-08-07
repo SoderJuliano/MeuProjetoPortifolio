@@ -1,6 +1,6 @@
 <template>
     <div class="main-container">
-        <div  :style="getStyle()" class="page-header">
+        <div :style="getStyle()" class="page-header">
             <span @click="insertName" class="name-title">{{user.name}}</span>
             <input @change="newName" @mouseleave="newName" type="text" :value="`${user.name}`" id="nname" class="input-name">
             <p contenteditable="true" @input="newProfession" class="profession">{{user.profession}}</p>    

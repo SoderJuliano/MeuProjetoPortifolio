@@ -17,7 +17,7 @@ export default {
     cor: String
   },
   methods:{
-      getStyle(){
+      getStyle(){ console.log(this.cor +' corrr')
           return{
               'background-color': `${this.cor}`
           }

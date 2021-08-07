@@ -50,13 +50,15 @@ export default {
     },
     changefont(p){
         if(p.target.textContent.includes('pag-')==true){
-          this.mainColor = p.target.textContent.split('-')[1]
+          console.log(p.target.id)
+          this.mainColor = p.target.id
         }
         else if(p.target.textContent.includes('#')==true){
           this.sideColor = p.target.textContent;
+        }else{
+            this.font = p.target.textContent
         }
-         console.log(p)
-         this.font = p.target.textContent
+         console.log(p.target.textContent)
     },
     getStyle(){ console.log(this.font)
       switch(this.font){ 
