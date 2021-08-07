@@ -124,14 +124,15 @@ export default{
             if(about){
                 this.user.resume = about
             }
-            const competencias = localStorage.getItem('cpta').split(',')
+            const competencias = localStorage.getItem('cpta')
             if(competencias){
-                this.user.competence = competencias
+                const arr = competencias.split(',')
+                this.user.competence = arr
             }
         },
         getExperienceData(){
             let ljob = localStorage.getItem('lastjob')
-            if(ljob){
+            if(ljob && ljob!=null &&ljob!=''){
                 let lastjob = ljob.split(',')
                 const lastjobDescription = localStorage.getItem('lastjobDescription')
                 lastjob.push(lastjobDescription)
@@ -143,7 +144,7 @@ export default{
                 this.userExperience.lastJob.description = lastjob[4]
             }
             let jobE = localStorage.getItem('job')
-            if(jobE){
+            if(jobE && jobE!=null && jobE!=''){
                 let job = jobE.split(',')
                 const lastjobDescription = localStorage.getItem('jobDescription')
                 job.push(lastjobDescription)
