@@ -142,19 +142,19 @@ export default{
                 this.userExperience.lastJob.company = lastjob[1]
                 this.userExperience.lastJob.hired = lastjob[2]
                 this.userExperience.lastJob.end = lastjob[3]
-                this.userExperience.lastJob.description = lastjob[4]
+                this.userExperience.lastJob.description = lastjobDescription
             }
             let jobE = localStorage.getItem('job')
             if(jobE && jobE!=null && jobE!=''){
                 let job = jobE.split(',')
-                const lastjobDescription = localStorage.getItem('jobDescription')
-                job.push(lastjobDescription)
+                const jobDescription = localStorage.getItem('jobDescription')
+                job.push(jobDescription)
                 console.log(job)
                 this.userExperience.job.title = job[0]
                 this.userExperience.job.company = job[1]
                 this.userExperience.job.hired = job[2]
                 this.userExperience.job.end = job[3]
-                this.userExperience.job.description = job[4]
+                this.userExperience.job.description = jobDescription
             }
             
         }
