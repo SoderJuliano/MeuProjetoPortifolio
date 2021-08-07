@@ -20,6 +20,7 @@
         <editar-competencias
             :user="user"
             class="editar-competencais"
+            id="editarCompetencias"
         />
         <Experiencias
             class="data-container"
