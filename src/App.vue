@@ -6,7 +6,6 @@
       />
     </div>
     <Side
-      class="side"
       :cor="sideColor"
     />
     <Page
@@ -137,7 +136,7 @@ export default {
     width: 100%;
     height: 100%;
     transform: scaleY(.7);
-    margin-top: -25%;
+    margin-top: -20%;
     -webkit-print-color-adjust: exact;
   } 
 
