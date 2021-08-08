@@ -135,7 +135,7 @@ export default {
     display: flex;
     width: 100%;
     height: 100%;
-    transform: scaleY(.7);
+    transform: scaleY(.75);
     margin-top: -20%;
     -webkit-print-color-adjust: exact;
   } 
