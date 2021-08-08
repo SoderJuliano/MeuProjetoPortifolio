@@ -39,6 +39,12 @@ export default {
   padding-top: 20px;
   display: flex;
 }
+@media print{
+  .habilidade-container{
+    padding-top: 0px !important;
+  }
+}
+
 .habilidade-icon{
   width: 25px;
   height: 25px;

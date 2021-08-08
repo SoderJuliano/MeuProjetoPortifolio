@@ -71,4 +71,15 @@ export default {
     padding-top: 20px;
     word-break: break-all;
 }
+@media print{
+    .social-row{
+        display: flex;
+        padding: 1px !important;
+        width: 100%;
+    }
+    .social-container{
+        margin: 0 auto;
+        padding-top: 0px;
+    }
+}
 </style>
