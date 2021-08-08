@@ -328,7 +328,7 @@ export default {
     height: 100%;
     width: 37%;
     justify-content: center;
-    padding-top: 50px;
+    padding-top: 35px;
     font-size: 10px;
     overflow: hidden;
   }
@@ -358,6 +358,18 @@ export default {
   }
   .editar-social{
     display: none !important;
+  }
+  .title{
+    margin-top: 10px !important;
+  }
+  .formacao-container{
+    padding-top: 0px !important;
+  }
+  .habilidade-container{
+    padding-top: 0px !important;
+  }
+  .social-container{
+     padding-top: 0px !important;
   }
 }
 
