@@ -380,9 +380,9 @@ export default {
   font-weight: bolder;
   width: 80%;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 10px;
   text-align: center;
-  padding: 10px;
+  padding: 5px;
 }
 .data-container{
   display: flex;

@@ -34,7 +34,7 @@ export default {
 }
 @media only screen and(max-width:1000px) {
      .multiMenu-options{
-        height: 200px;
+        height: 150px;
         overflow: scroll;
         width: 80%;
         background-color: white;
