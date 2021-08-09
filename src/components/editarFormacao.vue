@@ -29,8 +29,9 @@ export default {
             document.getElementsByClassName('editar-dados-escolares')[0].style.display= 'none'
         },
         adicionarFormacao(){
-            const curso = document.getElementById('curso').value
+            let curso = document.getElementById('curso').value
             if(curso){
+                curso = curso.replace(',', '-')
                 if(this.mygrade[0]=='Seus dados escolares'){
                     this.mygrade[0] = curso
                 }else{
