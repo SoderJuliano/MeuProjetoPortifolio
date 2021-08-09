@@ -32,12 +32,14 @@ export default {
   height: 100%;
   align-self: center;
   margin: 0 auto;
-  padding-top: 20px;
   display: flex;
 }
 .formacao-icon{
   width: 40px;
   height: 40px;
+  padding-top: 20px;
+}
+.formacao span{
   padding-top: 20px;
 }
 </style>

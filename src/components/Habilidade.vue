@@ -36,7 +36,6 @@ export default {
   max-height: 100%;
   align-self: center;
   margin: 0 auto;
-  padding-top: 20px;
   display: flex;
 }
 @media print{
@@ -53,6 +52,7 @@ export default {
 .data-text-habilidades{
   height: 20px;
   display: block;
-  padding: 10px;
+  padding-top: 16px;
+  padding-left: 10px;
 }
 </style>

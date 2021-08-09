@@ -53,7 +53,6 @@ export default {
   height: 100%;
   align-self: center;
   margin: 0 auto;
-  padding-top: 20px;
   display: block;
 }
 .social-icon{
