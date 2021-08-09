@@ -56,6 +56,7 @@ export default {
             localStorage.setItem('lastjobDescription', ljobdesciption)
             document.getElementsByClassName('data-container-page-title')[0].textContent = this.lastJobTitle +" - "+ ljobcompany
             document.getElementById('lastjob-dates').textContent = "de "+this.convertingDates(ljobhired) + " à " +this.convertingDates(ljobend)
+            document.getElementById('lastjob-description').textContent = ljobdesciption
             console.log(ljobhired + " a " +ljobend)
         },
         updateJob(){
@@ -68,6 +69,7 @@ export default {
             localStorage.setItem('jobDescription', jobdesciption)
             document.getElementById('job-title').textContent = jobtitle +" - "+ jobcompany
             document.getElementById('job-dates').textContent = "de "+this.convertingDates(jobhired) + " à " +this.convertingDates(jobend)
+            document.getElementById('job-description').textContent = jobdesciption
             console.log(jobhired + " a " +jobend)
         }
     }

@@ -6,12 +6,12 @@
       <div class="experiencias-container">
          <span class="data-container-page-title">{{lastJob.title}} - {{lastJob.company}}</span>
          <li id='lastjob-dates'>de {{lasJobHired}} à {{lastJobEnd}}</li>
-         <p>{{lastJob.description}}</p>
+         <p id="lastjob-description">{{lastJob.description}}</p>
       </div>
       <div class="experiencias-container">
          <span id="job-title" class="data-container-page-title">{{job.title}} - {{job.company}}</span>
          <li id="job-dates">de {{jobHired}} à {{jobEnd}}</li>
-         <p>{{job.description}}</p>
+         <p id="job-description">{{job.description}}</p>
       </div>
   </div>
 </template>
