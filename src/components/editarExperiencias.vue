@@ -48,29 +48,46 @@ export default {
         },
         updateLastJob(){
             this.lastJobTitle = document.getElementsByClassName('input-value')[0].value
-            const ljobcompany = document.getElementsByClassName('input-value')[1].value
+            let ljobcompany = document.getElementsByClassName('input-value')[1].value
             const ljobhired = document.getElementsByClassName('input-value')[2].value
             const ljobend = document.getElementsByClassName('input-value')[3].value
             const ljobdesciption = document.getElementsByClassName('input-value')[4].value
             localStorage.setItem('lastjob', this.lastJobTitle+","+ljobcompany+","+ljobhired+","+ljobend)
             localStorage.setItem('lastjobDescription', ljobdesciption)
-            document.getElementsByClassName('data-container-page-title')[0].textContent = this.lastJobTitle +" - "+ ljobcompany
-            document.getElementById('lastjob-dates').textContent = "de "+this.convertingDates(ljobhired) + " à " +this.convertingDates(ljobend)
-            document.getElementById('lastjob-description').textContent = ljobdesciption
+            if(this.lastJobTitle){
+               if(!ljobcompany){
+                   ljobcompany = ''
+               }
+               document.getElementsByClassName('data-container-page-title')[0].textContent = this.lastJobTitle +" - "+ ljobcompany
+            }
+            if(ljobhired){
+                document.getElementById('lastjob-dates').textContent = "de "+this.convertingDates(ljobhired) + " à " +this.convertingDates(ljobend)
+            }
+            if(ljobdesciption){
+                document.getElementById('lastjob-description').textContent = ljobdesciption
+            }
             console.log(ljobhired + " a " +ljobend)
         },
         updateJob(){
             const jobtitle = document.getElementsByClassName('input-value')[5].value
-            const jobcompany = document.getElementsByClassName('input-value')[6].value
+            let jobcompany = document.getElementsByClassName('input-value')[6].value
             const jobhired = document.getElementsByClassName('input-value')[7].value
             const jobend = document.getElementsByClassName('input-value')[8].value
             const jobdesciption = document.getElementsByClassName('input-value')[9].value
             localStorage.setItem('job', jobtitle+","+jobcompany+","+jobhired+","+jobend)
             localStorage.setItem('jobDescription', jobdesciption)
-            document.getElementById('job-title').textContent = jobtitle +" - "+ jobcompany
-            document.getElementById('job-dates').textContent = "de "+this.convertingDates(jobhired) + " à " +this.convertingDates(jobend)
-            document.getElementById('job-description').textContent = jobdesciption
-            console.log(jobhired + " a " +jobend)
+            if(jobtitle){
+               if(!jobcompany){
+                   jobcompany = ''
+               }
+              document.getElementById('job-title').textContent = jobtitle +" - "+ jobcompany
+            }
+            if(jobhired){
+                document.getElementById('job-dates').textContent = "de "+this.convertingDates(jobhired) + " à " +this.convertingDates(jobend)
+            }
+            if(jobdesciption){
+                document.getElementById('job-description').textContent = jobdesciption
+           }
         }
     }
 }
