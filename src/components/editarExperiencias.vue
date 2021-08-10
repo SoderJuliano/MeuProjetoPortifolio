@@ -66,7 +66,7 @@ export default {
             if(ljobdesciption){
                 document.getElementById('lastjob-description').textContent = ljobdesciption
             }
-            console.log(ljobhired + " a " +ljobend)
+           document.getElementsByClassName('experiencias-container')[0].style.opacity = '100%'
         },
         updateJob(){
             const jobtitle = document.getElementsByClassName('input-value')[5].value
@@ -88,6 +88,7 @@ export default {
             if(jobdesciption){
                 document.getElementById('job-description').textContent = jobdesciption
            }
+           document.getElementsByClassName('experiencias-container')[1].style.opacity = '100%'
         }
     }
 }

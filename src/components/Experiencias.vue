@@ -3,13 +3,13 @@
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarExperiencias"/>
       </p>
-      <div class="experiencias-container">
+      <div :style="getOpacity2()" class="experiencias-container">
          <span class="data-container-page-title">{{lastJob.title}} - {{lastJob.company}}</span>
          <li  id='lastjob-dates'>de {{lasJobHired}} à {{lastJobEnd}}</li>
          <p id="lastjob-description">{{lastJob.description}}</p>
       </div>
-      <div class="experiencias-container">
-         <span id="job-title" class="data-container-page-title">{{job.title}} - {{job.company}}</span>
+      <div :style="getOpacity()" class="experiencias-container">
+         <span  id="job-title" class="data-container-page-title">{{job.title}} - {{job.company}}</span>
          <li id="job-dates">de {{jobHired}} à {{jobEnd}}</li>
          <p id="job-description">{{job.description}}</p>
       </div>
@@ -38,6 +38,20 @@ export default {
           return{
               'background-color': `${this.cor}`
           }
+      },
+      getOpacity(){
+        if(this.job.title){
+          return {'opacity': '100%'}
+        }else{
+          return {'opacity': '0%'}
+        }
+      },
+      getOpacity2(){
+        if(this.lastJob.title){
+          return {'opacity': '100%'}
+        }else{
+          return {'opacity': '0%'}
+        }
       },
       showEditarExperiencias(){
         document.getElementsByClassName('editar-experiencias')[0].style.display = 'block'

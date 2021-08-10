@@ -334,7 +334,7 @@ export default {
   }
   .pic{
     width: 140px;
-    height: 180px;
+    height: 150px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
