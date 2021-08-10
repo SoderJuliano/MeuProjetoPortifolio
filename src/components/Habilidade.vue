@@ -50,7 +50,7 @@ export default {
   padding-top: 20px;
 }
 .data-text-habilidades{
-  height: 20px;
+  min-height: 20px;
   display: block;
   padding-top: 16px;
   padding-left: 10px;
