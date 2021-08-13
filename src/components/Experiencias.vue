@@ -107,6 +107,11 @@ export default {
 #job-description{
   max-width: 100%;
   max-height: 100%;
-  word-break: break-all;
+  word-break: keep-all;
+}
+#lastjob-description{
+  max-width: 100%;
+  max-height: 100%;
+  word-break: keep-all;
 }
 </style>
