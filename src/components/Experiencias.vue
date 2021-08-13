@@ -104,4 +104,9 @@ export default {
     font-weight: bold;
     text-transform: uppercase;
 }
+#job-description{
+  max-width: 100%;
+  max-height: 100%;
+  word-break: break-all;
+}
 </style>

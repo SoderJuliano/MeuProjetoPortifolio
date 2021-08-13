@@ -99,13 +99,19 @@ input{
     height: 30px;
     font-size: 14px;
     font-weight: bold;
-    margin: 10px;
+    margin: 5px;
 }
 textarea{
     width: 100%;
-    height: 100px;
+    height: 110px;
+    border: black solid 2px;
+    box-shadow: black 2px 2px 2px;
+    overflow: scroll;
 }
 .editar-experiencias-container{
     height: 100%;
+    position: absolute;
+    top: 30%;
+    background-color: whitesmoke;
 }
 </style>
