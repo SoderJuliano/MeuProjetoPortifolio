@@ -27,6 +27,11 @@
             <input id="stofString" type="text" :value="myStof"/>
             <button @click="addStof">+</button>
         </div>
+         <div class="social-container">
+            <img src="../icons/git.png" alt="GitHub"/>
+            <input id="gitString" type="text" :value="myGit"/>
+            <button @click="addGit">+</button>
+        </div>
     </div>
 </template>
 <script>
@@ -37,7 +42,8 @@ export default {
         lin: String,
         twit: String,
         you: String,
-        stof: String
+        stof: String,
+        git: String
     },
     data(){
         return{
@@ -45,7 +51,8 @@ export default {
             myIn: this.lin,
             myTwit: this.twit,
             myYou: this.you,
-            myStof: this.stof
+            myStof: this.stof,
+            myGit: this.git,
         }
     },
     methods:{
@@ -108,6 +115,19 @@ export default {
             }else{
                 this.myStof = null
                 localStorage.removeItem('stof')
+                location.reload()
+            }
+
+        },
+        addGit(){
+            let String = document.getElementById('gitString').value
+            if(String){
+                this.myGit = String
+                localStorage.setItem('git', this.myGit)
+                location.reload()
+            }else{
+                this.myStof = null
+                localStorage.removeItem('git')
                 location.reload()
             }
 

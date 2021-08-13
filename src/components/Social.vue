@@ -23,6 +23,10 @@
               <img src="../icons/stof.jpeg" class="social-icon"/>
               <span class="data-container">{{stof}}</span>
           </div>
+          <div v-if="git" class="social-row">
+              <img src="../icons/git.png" class="social-icon"/>
+              <span class="data-container">{{git}}</span>
+          </div>
       </div>
     </div>
 </template>
@@ -36,7 +40,8 @@ export default {
         lin: String,
         twitt: String,
         you: String,
-        stof: String
+        stof: String,
+        git: String
     },
     methods:{
         showEditarHabilidade(){
@@ -56,8 +61,8 @@ export default {
   display: block;
 }
 .social-icon{
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   padding-top: 20px;
   margin-right: 10px;
 }
@@ -73,7 +78,7 @@ export default {
 @media print{
     .social-row{
         display: flex;
-        padding: 1px !important;
+        padding: 0px !important;
         width: 100%;
     }
     .social-container{

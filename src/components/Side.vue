@@ -61,6 +61,7 @@
       :twitt="twitter"
       :you="youtube"
       :stof="stackoverflow"
+      :git="github"
     />
     <editar-social 
       class="editar-social"
@@ -69,6 +70,7 @@
       :twit="twitter"
       :you="youtube"
       :stof="stackoverflow"  
+      :git="github"
     />
 </div>
 </template>
@@ -115,6 +117,7 @@ export default {
    twitter : null,
    youtube : null,
    stackoverflow : null,
+   github: null,
    }
  },
  methods: {
@@ -182,6 +185,10 @@ export default {
      const twit = localStorage.getItem('twit')
      if(twit){
        this.twitter = twit
+     }
+     const git = localStorage.getItem('git')
+     if(git){
+       this.github = git
      }
    },
     getStyle(){
