@@ -260,6 +260,7 @@ export default {
     display: none;
     padding: 50px;
     background-color: whitesmoke;
+    z-index: 1000;
   }
 }
 @media screen and (min-width:1001px) {
@@ -318,6 +319,7 @@ export default {
     opacity: 90%;
     padding: 10px;
     position: absolute;
+    z-index: 1000;
   }
 }
 @media print {

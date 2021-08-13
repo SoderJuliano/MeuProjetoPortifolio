@@ -63,7 +63,7 @@ export default {
 }
 .social-row{
     display: flex;
-    padding: 10px;
+    padding: 5px;
     width: 100%;
 }
 .social-row span{
