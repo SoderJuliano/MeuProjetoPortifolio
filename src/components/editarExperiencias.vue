@@ -111,7 +111,7 @@ textarea{
 .editar-experiencias-container{
     height: 100%;
     position: absolute;
-    top: 30%;
+    top: 40%;
     background-color: whitesmoke;
 }
 </style>
