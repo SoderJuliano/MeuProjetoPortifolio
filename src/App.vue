@@ -80,9 +80,26 @@ export default {
             'font-weight': 'bold'
           }
           
-        default:
+        case 'STIX Two Math':
           return{
             'font-family': "'STIX Two Math', serif"
+          }
+
+        case 'Hina Mincho':
+          return{
+            'font-family': "'Hina Mincho', serif"
+          }
+        case 'Inconsolata':
+          return{
+            'font-family': "'Inconsolata', monospace"
+          }
+        case 'Kaisei Decol':
+          return{
+            'font-family': "'Kaisei Decol', serif"
+          }
+        case 'Teko':
+          return{
+            'font-family': "'Teko', sans-serif"
           }
       }
     }

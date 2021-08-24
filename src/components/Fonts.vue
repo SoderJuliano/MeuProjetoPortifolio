@@ -1,13 +1,18 @@
 <template>
     <div class="fonts-container">
-        <p class="title">TIPOS DE FONTES</p>
-        <div class="list-container">
-            <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' class="pFont">Oswald</p>
-            <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' class="pFont">Zen Loop</p>
-            <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click='$emit("changefont")' class="pFont">Fuggles</p>
-            <p style="font-family': 'STIX Two Math', serif; font-weight: bold" @click='$emit("changefont")' class="pFont">STIX Two Math</p>
+        <div class="dropdown">
+            <p>TIPOS DE FONTES</p>
+            <div class="dropdown-content">
+                <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' >Oswald</p>
+                <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' >Zen Loop</p>
+                <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click='$emit("changefont")' >Fuggles</p>
+                <p style="font-family': 'STIX Two Math', serif; font-weight: bold" @click='$emit("changefont")' >STIX Two Math</p>
+                <p style="font-family: 'Hina Mincho', serif;" @click='$emit("changefont")' >Hina Mincho</p>
+                <p style="font-family: 'Inconsolata', monospace;" @click='$emit("changefont")' >Inconsolata</p>
+                <p style="font-family: 'Kaisei Decol', serif;" @click='$emit("changefont")' >Kaisei Decol</p>
+                <p style="font-family: 'Teko', sans-serif;" @click='$emit("changefont")' >Teko</p>
+            </div>
         </div>
-        
     </div>
 </template>
 
@@ -34,24 +39,7 @@ export default {
         background-color: white;
     }
 }
-.list-container{
-    padding: 1px;
-    display: flex;
-    width: 90%;
-    height: 50px;
-    margin-left: 10px;
-}
-.pFont{
-    width: 30%;
-    height: 35px;
-    border: solid 2px gray;
-    text-align: center;
-    box-shadow: gray -1px 1px 1px 1px;
-    font-size: 10px;
-    margin-left: 10px;
-    background-color: whitesmoke;
-    overflow: hidden;
-}
+
 .pFont:hover{
     background-color: gray;
     color: white;
@@ -60,5 +48,26 @@ export default {
 .pFont:active{
     background-color: black;
     color:white;
+}
+.dropdown p{
+    font-weight: bolder;
+    margin-left: 20px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 </style>
