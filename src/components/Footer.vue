@@ -51,8 +51,21 @@ export default {
                 case 'Fuggles':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Fuggles', cursive"
                     break
-                default:
+                case 'STIX Two Math':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'STIX Two Math', serif"
+                    break
+                case 'Hina Mincho':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Hina Mincho', serif"
+                    break
+                case 'Inconsolata':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Inconsolata', monospace"
+                    break
+                case 'Kaisei Decol':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Kaisei Decol', serif"
+                    break
+                case 'Teko':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Teko', sans-serif"
+                    break
             }
         }
     },
@@ -82,5 +95,6 @@ img{
     position: fixed;
     bottom: 20px;
     background-color: white;
+    top: 50px;
 }
 </style>
