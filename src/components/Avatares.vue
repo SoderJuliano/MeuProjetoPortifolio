@@ -19,21 +19,46 @@
                 src="../icons/avatares/avatar3.png"
                 alt="avatar"
             />
-        </div>
-        <div class="avatar-line">
             <img class="avatar"
                 @click="changeAvatar"
                 id="a4"
                 src="../icons/avatares/avatar4.png"
                 alt="avatar"
             />
+        </div>
+        <div class="avatar-line">
             <img class="avatar"
+                @click="changeAvatar"
+                id="a8"
+                src="../icons/avatares/avatar8.png"
+                alt="avatar"
+            />
+            <img class="avatar"
+                @click="changeAvatar"
+                id="a5.1"
+                src="../icons/avatares/avatar5.png"
+                alt="avatar"
+            />
+            <img class="avatar"
+                @click="changeAvatar"
+                id="a6"
+                src="../icons/avatares/avatar6.png"
+                alt="avatar"
+            />
+            <img class="avatar"
+                @click="changeAvatar"
+                id="a7"
+                src="../icons/avatares/avatar7.png"
+                alt="avatar"
+            />
+            
+        </div>
+        <img class="avatar"
                 @click="changeAvatar"
                 id="a5"
                 src="../icons/avatares/no-img.png"
                 alt="avatar"
-            />
-         </div>
+        />
         
     </div>
 </template>
@@ -60,6 +85,22 @@ export default {
             }
             else if(id.target.id=="a5"){
                 document.getElementsByClassName("pic")[0].style.display = "none"
+            }
+             else if(id.target.id=="a5.1"){
+                document.getElementsByClassName("pic")[0].style.display = "block"
+                document.getElementsByClassName("img-pic")[0].src = "../img/avatar5.e57e5808.png"
+            }
+             else if(id.target.id=="a6"){
+                document.getElementsByClassName("pic")[0].style.display = "block"
+                document.getElementsByClassName("img-pic")[0].src = "../img/avatar6.94999127.png"
+            }
+             else if(id.target.id=="a7"){
+                document.getElementsByClassName("pic")[0].style.display = "block"
+                document.getElementsByClassName("img-pic")[0].src = "../img/avatar7.02252c9f.png"
+            }
+             else if(id.target.id=="a8"){
+                document.getElementsByClassName("pic")[0].style.display = "block"
+                document.getElementsByClassName("img-pic")[0].src = "../img/avatar8.60347a72.png"
             }
         }
     }
