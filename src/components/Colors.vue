@@ -7,6 +7,18 @@
             <div class="dot" style="background-color: #ffc266" >#ffc266</div>
             <div class="dot" style="background-color: #B0C4DE" >#B0C4DE</div>
         </div>
+        <div class="dots-container">
+            <div class="dot" style="background-color: #E6EBE0">#E6EBE0</div>
+            <div class="dot" style="background-color: #909590" >#909590</div>
+            <div class="dot" style="background-color: #9AE19D" >#9AE19D</div>
+            <div class="dot" style="background-color: #537A5A" >#537A5A</div>
+        </div>
+         <div class="dots-container">
+            <div class="dot" style="background-color: #FCEADE">#FCEADE</div>
+            <div class="dot" style="background-color: #B49A67" >#B49A67</div>
+            <div class="dot" style="background-color: #C4C6E7" >#C4C6E7</div>
+            <div class="dot" style="background-color: #BAA5FF" >#BAA5FF</div>
+        </div>
     </div>
 </template>
 <script>
@@ -20,11 +32,10 @@ export default {
     width: 90%;
     margin-left: 20px;
     margin-right: 50px;
-    min-height: 100px;
 }
 .dot{
     width: 50px;
-    height: 50px;
+    height:30px;
     border: solid gray 1px;
     margin: 1px;
     font-size: 10px;
