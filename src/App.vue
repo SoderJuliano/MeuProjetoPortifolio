@@ -49,7 +49,27 @@ export default {
       document.getElementsByClassName('editar-contato-container')[0].style.display= 'none'
     },
     changefont(p){
-        if(p.target.textContent.includes('pag-')==true){
+        if(p.target.id=="square"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '0px';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '0px';
+          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+        }else if(p.target.id=="triangleUp"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '11px';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '11px';   
+          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+        }else if(p.target.id=="circle"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+        }else if(p.target.id=="colorfull-circle"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
+           document.getElementsByClassName("pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
+            document.getElementsByClassName("pic")[0].style['border-right'] = '5px solid rgb(0, 158, 61)';
+             document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
+        }
+        else if(p.target.textContent.includes('pag-')==true){
           console.log(p.target.id)
           this.mainColor = p.target.id
         }
@@ -60,7 +80,7 @@ export default {
         }
          console.log(p.target.textContent)
     },
-    getStyle(){ console.log(this.font)
+    getStyle(){
       switch(this.font){ 
         case 'Oswald':
           return{

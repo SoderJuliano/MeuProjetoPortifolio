@@ -4,6 +4,7 @@
         <Colors />
         <pageColor />
         <Avatares />
+        <PicureShape />
     </div>
 </template>
 
@@ -12,6 +13,7 @@ import Fonts from './Fonts.vue'
 import Colors from './Colors.vue'
 import pageColor from './pageColor.vue'
 import Avatares from './Avatares.vue'
+import PicureShape from './PictureShape.vue'
 
 export default {
     name: 'multi-menu',
@@ -20,6 +22,7 @@ export default {
         Colors,
         pageColor,
         Avatares,
+        PicureShape,
     },
 }
 </script>
