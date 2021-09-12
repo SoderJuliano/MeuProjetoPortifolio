@@ -70,7 +70,28 @@ export default {
              document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
         }
         else if(p.target.textContent.includes('pag-')==true){
-          console.log(p.target.id)
+          let i = 0;
+          let all;
+          //console.log(p.target.id)
+          if(p.target.textContent=="pag-#1F271B"){
+            all = document.getElementsByClassName('title');
+            for (i; i < all.length; i++) {
+              all[i].style.color = 'white';
+              document.getElementsByClassName('title')[4].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[5].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[6].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[7].style.backgroundColor = "#1F271B"
+            }
+          }else{
+            all = document.getElementsByClassName('title');
+            for (i; i < all.length; i++) {
+              all[i].style.color = 'black';
+              document.getElementsByClassName('title')[4].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[5].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[6].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[7].style.backgroundColor = "white"
+            }
+          }
           this.mainColor = p.target.id
         }
         else if(p.target.textContent.includes('#')==true){
