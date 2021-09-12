@@ -95,7 +95,7 @@ export default{
         newName(){
             const nname = document.getElementById('nname').value
             if(nname){
-                console.log('nname '+nname)
+                //console.log('nname '+nname)
                 localStorage.setItem('user-name', nname)
                 this.name = nname
                 document.getElementsByClassName('name-title')[0].textContent = this.name
@@ -149,7 +149,7 @@ export default{
                 let job = jobE.split(',')
                 const jobDescription = localStorage.getItem('jobDescription')
                 job.push(jobDescription)
-                console.log(job)
+                //console.log(job)
                 this.userExperience.job.title = job[0]
                 this.userExperience.job.company = job[1]
                 this.userExperience.job.hired = job[2]
