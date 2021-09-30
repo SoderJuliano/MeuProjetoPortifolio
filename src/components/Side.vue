@@ -333,6 +333,10 @@ export default {
 .editar-social{
   display: none;
 }
+body{
+  -webkit-print-color-adjust: exact !important;   /* Chrome, Safari, Edge */
+  color-adjust: exact !important;                 /*Firefox*/
+}
 .side{
     height: 100%;
     width: 37%;
