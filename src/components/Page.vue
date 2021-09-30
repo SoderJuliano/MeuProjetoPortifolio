@@ -208,6 +208,7 @@ export default{
     opacity: 90%;
     padding: 10px;
     position: absolute;
+    z-index: 5;
  }
   .editar-experiencias{
     width: 300px;
@@ -237,6 +238,7 @@ export default{
     display: none;
     padding: 50px;
     background-color: whitesmoke;
+    z-index: 5;
  }
   .editar-experiencias{
     width: 100%;
