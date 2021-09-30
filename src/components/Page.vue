@@ -194,6 +194,7 @@ export default{
     height: 100%;
     width: 50%;
     padding-left: 30px;
+    box-shadow: 0 0 50px #ccc;
  }
  .editar-competencais{
     width: 300px;

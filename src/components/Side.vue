@@ -226,6 +226,7 @@ export default {
 }
 .side{
   display: block;
+  box-shadow: 0 0 50px #ccc;
 }
 .template-data{
   width: 100%;
@@ -332,6 +333,10 @@ export default {
 @media print {
 .editar-social{
   display: none;
+}
+body{
+  -webkit-print-color-adjust: exact !important;   /* Chrome, Safari, Edge */
+  color-adjust: exact !important;                 /*Firefox*/
 }
 .side{
     height: 100%;
