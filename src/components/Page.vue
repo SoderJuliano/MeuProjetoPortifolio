@@ -197,33 +197,44 @@ export default{
     box-shadow: 0 0 50px #ccc;
  }
  .editar-competencais{
-    width: 300px;
+    width: 40%;
+    min-height: 200px;
     max-height: 100%;
     border-radius: 20px;
     box-shadow: gray -2px 2px 2px;
     display: none;
     background-color: whitesmoke;
-    top: 50%;
-    left: 500px;
-    opacity: 90%;
+    top: 100px;
+    left: 40%;
+    opacity: 99% !important;
     padding: 10px;
     position: absolute;
     z-index: 5;
  }
   .editar-experiencias{
-    width: 300px;
+    width: 40%;
+    min-height: 200px;
     max-height: 100%;
     border-radius: 20px;
+    border: white solid 2px;
     box-shadow: gray -2px 2px 2px;
     display: none;
-    background-color: whitesmoke;
-    top: 50%;
-    left: 500px;
-    opacity: 90%;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgb(33, 134, 120) 0%, rgb(163, 163, 243) 43%, rgba(0,212,255,1) 100%);
+    color:black;
+    top: 100px;
+    left: 40%;
+    opacity: 99% !important ;
     padding: 10px;
     position: absolute;
     overflow: scroll;
+    scrollbar-width: 0px;
+    z-index: 5;
  }
+ ::-webkit-scrollbar { 
+    display: none; 
+}
+
 }
 @media screen and(max-width: 1000px) {
  .main-container{

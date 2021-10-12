@@ -3,21 +3,56 @@
         <span>EDITAR EXPERIÊNCIAS</span>
         <button  @click="closeBox" class="close">X</button>
         <div v-if="userExperience.lastJob" class="experience-list">
-            <p>ÚLTIMO EMPREGO/ATUAL</p>
-            <input class="input-value" placeholder="título" type="text" @change="updateLastJob" :value="`${lastJobTitle}`">
-            <input class="input-value" placeholder="empresa" type="text" @change="updateLastJob" :value="`${userExperience.lastJob.company}`">
-            <input class="input-value" placeholder="data da contratação" type="date" @change="updateLastJob" :value="`${userExperience.lastJob.hired}`">
-            <input class="input-value" placeholder="data da demissão" type="date" @change="updateLastJob" :value="`${userExperience.lastJob.end}`">
-            <textarea class="input-value" placeholder="descrição" type="text" @change="updateLastJob" :value="`${userExperience.lastJob.description}`"/>
+            <h2>ÚLTIMO EMPREGO/ATUAL</h2>
+            <div class="inputbox">
+                <input required="required" class="input-value" type="text" @change="updateLastJob" :value="`${lastJobTitle}`">
+                <span>Título</span>
+            </div>
+            <div class="inputbox">
+                <input required="required" class="input-value" type="text" @change="updateLastJob" :value="`${userExperience.lastJob.company}`">
+                <span>Empresa</span>
+            </div>
+            <div class="inputbox">
+                <textarea required="required" class="input-value" type="text" @change="updateLastJob" :value="`${userExperience.lastJob.description}`"/>
+                <span>Descrição</span>
+            </div>
+            <div class="data-input">
+                <div class="inputbox">
+                    <input class="input-value" type="date" @change="updateLastJob" :value="`${userExperience.lastJob.hired}`">
+                    <span>Data de Adminção</span>
+                </div>
+                <div class="inputbox">
+                    <input class="input-value" type="date" @change="updateLastJob" :value="`${userExperience.lastJob.end}`">
+                    <span>Data de Demissão</span>
+                </div>
+            </div>
+            
         </div>
         
         <div v-if="userExperience.job" class="experience-list">
             <p>PENÚLTIMO EMPREGO</p>
-            <input class="input-value" type="text" @change="updateJob" :value="`${userExperience.job.title}`">
-            <input class="input-value" type="text" @change="updateJob" :value="`${userExperience.job.company}`">
-            <input class="input-value" type="date" @change="updateJob" :value="`${userExperience.job.hired}`">
-            <input class="input-value" type="date" @change="updateJob" :value="`${userExperience.job.end}`">
-            <textarea class="input-value" type="text" @change="updateJob" :value="`${userExperience.job.description}`"/>
+            <div class="inputbox">
+                <input required="required" class="input-value" type="text" @change="updateJob" :value="`${userExperience.job.title}`">
+                <span>Título</span>
+            </div>
+            <div class="inputbox">
+                <input required="required" class="input-value" type="text" @change="updateJob" :value="`${userExperience.job.company}`">
+                <span>Empresa</span>
+            </div>
+            <div class="inputbox">
+                <textarea required="required" class="input-value" type="text" @change="updateJob" :value="`${userExperience.job.description}`"/>
+                <span>Descrição</span>
+            </div>
+            <div class="data-input">
+                <div class="inputbox">
+                    <input required="required" class="input-value" type="date" @change="updateJob" :value="`${userExperience.job.hired}`">
+                    <span>Data de Admição</span>
+                </div>
+                <div class="inputbox">
+                    <input required="required" class="input-value" type="date" @change="updateJob" :value="`${userExperience.job.end}`">
+                    <span>Data de Demissão</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -49,9 +84,9 @@ export default {
         updateLastJob(){
             this.lastJobTitle = document.getElementsByClassName('input-value')[0].value
             let ljobcompany = document.getElementsByClassName('input-value')[1].value
-            const ljobhired = document.getElementsByClassName('input-value')[2].value
-            const ljobend = document.getElementsByClassName('input-value')[3].value
-            const ljobdesciption = document.getElementsByClassName('input-value')[4].value
+            const ljobhired = document.getElementsByClassName('input-value')[3].value
+            const ljobend = document.getElementsByClassName('input-value')[4].value
+            const ljobdesciption = document.getElementsByClassName('input-value')[2].value
             localStorage.setItem('lastjob', this.lastJobTitle+","+ljobcompany+","+ljobhired+","+ljobend)
             localStorage.setItem('lastjobDescription', ljobdesciption)
             if(this.lastJobTitle){
@@ -71,9 +106,9 @@ export default {
         updateJob(){
             const jobtitle = document.getElementsByClassName('input-value')[5].value
             let jobcompany = document.getElementsByClassName('input-value')[6].value
-            const jobhired = document.getElementsByClassName('input-value')[7].value
-            const jobend = document.getElementsByClassName('input-value')[8].value
-            const jobdesciption = document.getElementsByClassName('input-value')[9].value
+            const jobhired = document.getElementsByClassName('input-value')[8].value
+            const jobend = document.getElementsByClassName('input-value')[9].value
+            const jobdesciption = document.getElementsByClassName('input-value')[7].value
             localStorage.setItem('job', jobtitle+","+jobcompany+","+jobhired+","+jobend)
             localStorage.setItem('jobDescription', jobdesciption)
             if(jobtitle){
@@ -94,6 +129,10 @@ export default {
 }
 </script>
 <style  scoped>
+.data-input{
+    display: flex;
+    margin-top: 120px;
+}
 input{
     width: 200px;
     height: 30px;
@@ -102,16 +141,89 @@ input{
     margin: 5px;
 }
 textarea{
-    width: 100%;
+    width: 90% !important;
     height: 110px;
     border: black solid 2px;
     box-shadow: black 2px 2px 2px;
     overflow: scroll;
+    background-color: #fff;
 }
 .editar-experiencias-container{
-    height: 100%;
+    opacity: 100%;
+    width: 95%;
+    margin-left: 1%;
     position: absolute;
-    top: 40%;
-    background-color: whitesmoke;
+    top: 10px;
+    background: linear-gradient(45deg, greenyellow, dodgerblue);
+}
+</style>
+<style>
+.experience-list{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: 450px;
+}
+.inputbox {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 50px;
+}
+.inputbox input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80%;
+  border: 2px solid #000;
+  outline: none;
+  background: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+.inputbox:last-child {
+  margin-bottom: 0;
+}
+.inputbox span {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-size: 1em;
+  transition: 0.6s;
+  font-family: sans-serif;
+}
+ .inputbox input:focus ~ span,
+ .inputbox input:valid ~ span {
+  transform: translateX(-13px) translateY(-35px);
+  font-size: 1em;
+}
+ .inputbox [type="button"] {
+  width: 50%;
+  background: dodgerblue;
+  color: #fff;
+  border: #fff;
+}
+ .inputbox:hover [type="button"] {
+  background: linear-gradient(45deg, greenyellow, dodgerblue);
+}
+
+ .inputbox textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: 2px solid #000;
+  outline: none;
+  background: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  color:white;
+  overflow-x: hidden;
+}
+ .inputbox textarea:focus ~ span,
+ .inputbox textarea:valid ~ span {
+  transform: translateX(-13px) translateY(-35px);
+  font-size: 1em;
 }
 </style>

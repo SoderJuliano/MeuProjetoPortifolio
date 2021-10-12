@@ -1,8 +1,13 @@
 <template>
     <div class="editar-competencias-container">
         <span>EDITAR COMPETÊNCAIS</span><button  @click="closeBox" class="close">X</button>
-        <p>Nova Competencia</p> <input type="text" id="competencia-input" placeholder="digite aqui no que você é competente"/>
-        <button @click="adicionarCompetencia" class="bnt-plus">+</button>
+        <div class="editar-add">
+            <div class="inputbox">
+                <input required="required" type="text" id="competencia-input" />
+                <span>Nova Competencia</span>
+            </div>
+            <button @click="adicionarCompetencia" class="bnt-plus">+</button>
+        </div>
         <div class="competencia-list" v-for="(item, index) in competencias" :key="index">
             <span class="itens">{{item}}</span>
             <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
@@ -44,9 +49,22 @@ export default {
 }
 </script>
 <style scoped>
+
+@media screen and (min-width:1001px) {
 .editar-competencias-container{
     width: 300px;
     display: block;
+    background: linear-gradient(45deg, greenyellow, dodgerblue);
+    border: 2px solid white;
+}    
+}
+@media screen and (max-width:1000px) {
+ .editar-competencias-container{
+    width: 100%;
+    display: block;
+    background: linear-gradient(45deg, greenyellow, dodgerblue);
+    border: 2px solid white;
+ }
 }
 #competencia-input{
     width: 250px;
@@ -70,5 +88,20 @@ export default {
 }
 img{
     padding-left: 10px;
+}
+</style>
+<style>
+.editar-add{
+    margin-top: 40px;
+    display: flex;
+}
+.editar-add button{
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    box-shadow: 6px 7px 10px 4px #5a5549,
+        inset 2px 2px 2px 1px #4C4023,
+        inset -2px -2px 2px 1px #8C8083;
+    z-index: 5px;
 }
 </style>
