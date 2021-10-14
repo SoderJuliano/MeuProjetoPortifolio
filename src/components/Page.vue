@@ -182,10 +182,10 @@ export default{
         font-size: 12px;
     }
     .editar-competencais{
-        display: none !important;
+        display: none;
     }
     .editar-experiencias{
-        display: none !important;
+        display: none;
     }
 }
 @media screen and (min-width: 1001px) {
@@ -206,7 +206,6 @@ export default{
     background-color: whitesmoke;
     top: 100px;
     left: 40%;
-    opacity: 99% !important;
     padding: 10px;
     position: absolute;
     z-index: 5;
@@ -224,7 +223,6 @@ export default{
     color:black;
     top: 100px;
     left: 40%;
-    opacity: 99% !important ;
     padding: 10px;
     position: absolute;
     overflow: scroll;
