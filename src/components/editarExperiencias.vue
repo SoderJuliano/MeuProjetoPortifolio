@@ -149,7 +149,6 @@ textarea{
     background-color: #fff;
 }
 .editar-experiencias-container{
-    opacity: 100%;
     width: 95%;
     margin-left: 1%;
     position: absolute;
