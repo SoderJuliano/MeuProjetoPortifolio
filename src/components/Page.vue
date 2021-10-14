@@ -18,6 +18,7 @@
             :user="user"
         />
         <editar-competencias
+            :cor="cor"
             :user="user"
             class="editar-competencais"
             id="editarCompetencias"
@@ -30,6 +31,7 @@
             :job="userExperience.job"
         />
         <editar-experiencias
+            :cor="cor"
             class="editar-experiencias"
             :userExperience="userExperience"
         />
@@ -218,8 +220,6 @@ export default{
     border: white solid 2px;
     box-shadow: gray -2px 2px 2px;
     display: none;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgb(33, 134, 120) 0%, rgb(163, 163, 243) 43%, rgba(0,212,255,1) 100%);
     color:black;
     top: 100px;
     left: 40%;

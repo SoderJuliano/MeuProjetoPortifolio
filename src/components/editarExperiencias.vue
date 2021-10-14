@@ -61,11 +61,11 @@ export default {
     name : 'editar-experiencias',
     props:{
         userExperience : Object,
+        cor: String
     },
     data(){
         return{
-            lastJobTitle: this.userExperience.lastJob.title,
-
+            lastJobTitle: this.userExperience.lastJob.title
         }
     },
     methods:{
@@ -125,6 +125,14 @@ export default {
            }
            document.getElementsByClassName('experiencias-container')[1].style.opacity = '100%'
         }
+    },
+    mounted(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-experiencias-container')[0].style.backgroundColor = this.cor
+    },
+    updated(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-experiencias-container')[0].style.backgroundColor = this.cor
     }
 }
 </script>
@@ -149,11 +157,11 @@ textarea{
     background-color: #fff;
 }
 .editar-experiencias-container{
+     color: white;
     width: 95%;
     margin-left: 1%;
     position: absolute;
     top: 10px;
-    background: linear-gradient(45deg, greenyellow, dodgerblue);
 }
 </style>
 <style>

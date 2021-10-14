@@ -18,7 +18,8 @@
 export default {
     name: 'editar-competencias',
     props:{
-        user: Object
+        user: Object,
+        cor: String
     },
     data(){
         return{
@@ -45,6 +46,14 @@ export default {
             this.$emit('update: user.competence', this.competencias)
             localStorage.setItem('cpta', this.competencias)
         }
+    },
+     mounted(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-competencias-container')[0].style.backgroundColor = this.cor
+    },
+    updated(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-competencias-container')[0].style.backgroundColor = this.cor
     }
 }
 </script>
@@ -54,16 +63,16 @@ export default {
 .editar-competencias-container{
     width: 300px;
     display: block;
-    background: linear-gradient(45deg, greenyellow, dodgerblue);
     border: 2px solid white;
+    color: white;
 }    
 }
 @media screen and (max-width:1000px) {
  .editar-competencias-container{
     width: 100%;
     display: block;
-    background: linear-gradient(45deg, greenyellow, dodgerblue);
     border: 2px solid white;
+     color: white;
  }
 }
 #competencia-input{
