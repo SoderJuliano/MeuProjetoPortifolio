@@ -43,7 +43,8 @@ export default {
         twit: String,
         you: String,
         stof: String,
-        git: String
+        git: String,
+        cor: String
     },
     data(){
         return{
@@ -135,6 +136,15 @@ export default {
          closeBox(){
             document.getElementsByClassName('editar-social')[0].style.display = 'none'
         },
+    },
+    mounted(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-social')[0].style.backgroundColor = this.cor
+        document.getElementsByClassName('editar-social')[0].style.display = "none"
+    },
+    updated(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-social')[0].style.backgroundColor = this.cor
     }
 }
 </script>
@@ -147,6 +157,7 @@ export default {
     padding: 10px;
     height: 40px;
     width: 40px;
+    border-radius: 20px;
     margin: 10px;
 }
 .social-container{
@@ -166,7 +177,7 @@ export default {
     padding: 1px;
     margin-top: 10px;
     letter-spacing: 0;
-    font-size: 10px;
+    font-size: 16px;
     font-weight: bold;
 }
 </style>

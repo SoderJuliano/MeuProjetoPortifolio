@@ -71,6 +71,7 @@
       :you="youtube"
       :stof="stackoverflow"  
       :git="github"
+      :cor="cor"
     />
 </div>
 </template>
@@ -328,6 +329,9 @@ export default {
     padding: 10px;
     position: absolute;
     z-index: 1000;
+    border: 2px solid white;
+    color: white;
+    font-size: 16px;
   }
 }
 @media print {

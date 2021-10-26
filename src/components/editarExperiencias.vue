@@ -129,6 +129,7 @@ export default {
     mounted(){
         console.log(this.cor);
         document.getElementsByClassName('editar-experiencias-container')[0].style.backgroundColor = this.cor
+        document.getElementsByClassName('editar-experiencias-container')[0].style.display = "none"
     },
     updated(){
         console.log(this.cor);
