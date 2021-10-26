@@ -47,6 +47,7 @@ export default {
         showEditarHabilidade(){
             document.getElementsByClassName('editar-social')[0].style.display = 'block'
             document.getElementsByClassName('editar-social')[0].style.opacity = '90%'
+            window.scrollTo(0,0)
         }
     }
 }

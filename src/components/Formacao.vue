@@ -20,6 +20,7 @@ export default {
     showEditarFormacao(){
       document.getElementsByClassName('editar-dados-escolares')[0].style.display = 'block'
       document.getElementsByClassName('editar-dados-escolares')[0].style.opacity = '90%'
+      window.scrollTo(0,0)
     }
   }
 }

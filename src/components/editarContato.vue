@@ -3,7 +3,7 @@
         <span>EDITAR DADOS DE CONTATO</span>
         <button @click="closeBox" class="close">X</button>
         <div class="emailAdd">
-            <span>Email</span><input placeholder="seuemail@mail.com.br" id="email" type="email"><button @click="adicionarEmail" class="bnt-plus">+</button>
+            <p>Email</p><input placeholder="seuemail@mail.com.br" id="email" type="email"><button @click="adicionarEmail" class="bnt-plus">+</button>
         </div>
         <div class="email-list" v-if="emails">
             <div v-for='item in emails' :key="item">
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="telefoneAdd">
-            <span>Telefone</span><input placeholder="Ex. (51)99999-9999" type="tel" id="phone"/><button @click="adicionarEmail" id="telBnt" class="bnt-plus">+</button>
+            <p>Telefone</p><input placeholder="Ex. (51)99999-9999" type="tel" id="phone"/><button @click="adicionarEmail" id="telBnt" class="bnt-plus">+</button>
             <div class="email-list" v-if="arrayPhones">
                 <div v-for='item in arrayPhones' :key="item">
                     <span>{{item}}</span><img v-if="item" :id="`${item}`" @click="removeTel" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="endereco-container">
-            <span>Endereço</span><textarea placeholder="Insira o novo endereço completo aqui dentro" type="text" id="endereco"/><button @click="adicionarEnd" class="bnt-plus">+</button>
+            <p>Endereço</p><textarea placeholder="Insira o novo endereço completo aqui dentro" type="text" id="endereco"/><button @click="adicionarEnd" class="bnt-plus">+</button>
             <div class="email-list" v-if="myAdress">
                 <p>{{myAdress}}</p>
             </div>
@@ -32,6 +32,7 @@ export default {
     props:{
         phones: Array,
         endereco: String,
+        cor: String
     },
     data(){
         return{
@@ -101,17 +102,33 @@ export default {
             console.log(this.emails)
             location.reload()
         }
+    },
+    mounted(){
+       // console.log(this.cor);
+        document.getElementsByClassName('editar-contato-container')[0].style.backgroundColor = this.cor
+        document.getElementsByClassName('editar-contato-container')[0].style.display = "none"
+    },
+    updated(){
+        //console.log(this.cor);
+        document.getElementsByClassName('editar-contato-container')[0].style.backgroundColor = this.cor
     }
 }
 </script>
 <style>
+.bnt-plus{
+    font-size: 25px;
+    height: 30px;
+    width: 30px;
+    border-radius: 15px;
+    position: relative;
+    margin-top: 5px;
+}
 @media only screen and (max-width: 1000px) {
 .editar-contato-container{
-    width: 100%;
-    height: 100%;
+    width: 95%;
     display: none;
-    background-color: whitesmoke;
-    padding: 50px;
+    padding: 1px;
+    font-weight: bold;
 }    
 .close{
     margin-right: 60px;

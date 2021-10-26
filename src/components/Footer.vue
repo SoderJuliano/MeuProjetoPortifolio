@@ -47,9 +47,11 @@ export default {
                     break
                 case 'Zen Loop':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Zen Loop', cursive" 
+                    document.getElementsByClassName("main")[0].style.fontWeight = "bold";
                     break
                 case 'Fuggles':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Fuggles', cursive"
+                    document.getElementsByClassName("main")[0].style.fontWeight = "bold";
                     break
                 case 'STIX Two Math':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'STIX Two Math', serif"

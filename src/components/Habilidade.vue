@@ -5,7 +5,7 @@
       </p>
       <div class="habilidade-container">
           <img src="../icons/html.png" class="habilidade-icon"/>
-              <span contenteditable="true" class="data-text-habilidades">{{hability}}</span> 
+              <span  class="data-text-habilidades">{{hability}}</span> 
         
       </div>
   </div>
@@ -23,6 +23,7 @@ export default {
     showEditarHabilidade(){
       document.getElementsByClassName('editar-habilidade')[0].style.display = 'block'
       document.getElementsByClassName('editar-habilidade')[0].style.opacity = '90%'
+      window.scrollTo(0,0)
     }
   }
 }

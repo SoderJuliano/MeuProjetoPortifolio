@@ -13,21 +13,22 @@
         <p class="title">CONTATO<img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarContato"/></p><br>
         <div v-for="(item, index) in email " :key="index" class="data-container">
             <img v-if="item" src="../icons/envelope.svg" class="email-icon"/>
-            <span contenteditable="true" class="email-text">{{item}}</span>
+            <span class="email-text">{{item}}</span>
         </div>
         <div v-for="(item, index) in phone" :key="index" class="data-container">
             <img v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon">
-            <span contenteditable="true" class="phone-text">{{item}}</span>
+            <span class="phone-text">{{item}}</span>
         </div>
         <div class="data-container">
             <img v-if="adress" src="../icons/adress.png" alt="adress" class="adress-icon">
-            <span contenteditable="true" class="endereco-text">{{adress}}</span>
+            <span class="endereco-text">{{adress}}</span>
         </div>
     </div>
     <editar-contato
       class="editar-dados-contato"
       :phones="phone"
       :endereco="adress"
+      :cor="cor"
     />
     <Formacao
       v-if="exibirFormacao"
@@ -39,6 +40,7 @@
      <editarFormacao
       class="editar-dados-escolares"
       :grade="grade"
+      :cor="cor"
     />
     <Habilidade
       v-if="exibirHabilidade"
@@ -50,6 +52,7 @@
     <editar-habilidade 
       class="editar-habilidade"
       :habilidade="hability"
+      :cor="cor"
     />
     <Social
       v-if="exibirSocial"
@@ -198,7 +201,7 @@ export default {
       }
     },
     onIMGChange(img){
-      console.log(URL.createObjectURL(img.target.files[0]))
+      //console.log(URL.createObjectURL(img.target.files[0]))
       this.imageURL = URL.createObjectURL(img.target.files[0])
       // the two codes works as well
       // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
@@ -249,27 +252,42 @@ export default {
     align-self: center;
     margin: 0 auto;
   }
+  .editar-dados-contato{
+    width: 95%;
+    position: absolute;
+    top: 10%;
+    border: 2px solid white;
+  }
   .editar-dados-escolares{
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    position: absolute;
+    border: 2px solid white;
+    top: 10%;
     display: none;
-    padding: 50px;
-    background-color: whitesmoke;
+    padding: 1px;
   }
   .editar-habilidade{
-    width: 100%;
-    height: 100%;
+    width: 95%;
     display: none;
-    padding: 50px;
-    background-color: whitesmoke;
+    padding: 1px;
+    position: absolute;
+    top: 10%;
+    margin-right: 1%;
+    border: 2px solid white;
+    font-weight: bold;
+
   }
   .editar-social{
-    width: 100%;
-    height: 100%;
+    width: 95%;
     display: none;
-    padding: 50px;
+    margin-right: 1%;
+    padding: 1px;
     background-color: whitesmoke;
     z-index: 1000;
+    position: absolute;
+    top: 10%;
+    border: 2px solid white;
+    font-weight: bold;
   }
 }
 @media screen and (min-width:1001px) {

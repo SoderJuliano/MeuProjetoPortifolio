@@ -17,7 +17,8 @@
 export default {
     name: 'editar-habilidade',
     props:{
-        habilidade: String
+        habilidade: String,
+        cor: String
     },
     data(){
         return{
@@ -36,16 +37,31 @@ export default {
                 location.reload()
             }
         }
+    },
+    mounted(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-habilidade')[0].style.backgroundColor = this.cor
+        document.getElementsByClassName('editar-habilidade')[0].style.display = "none"
+    },
+    updated(){
+        console.log(this.cor);
+        document.getElementsByClassName('editar-habilidade')[0].style.backgroundColor = this.cor
     }
 }
 </script>
 <style scoped>
     textarea{
         height: 100px;
+        width: 65%;
+        border-radius: 15px;
+        padding: 10px;
     }
     .bnt-plus{
-        height: 80px;
-        font-size: 50px;
+        margin-top: 30px;
+        font-size: 25px;
         margin-left: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
     }
 </style>
