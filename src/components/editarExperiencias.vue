@@ -162,6 +162,7 @@ textarea{
     margin-left: 1%;
     position: absolute;
     top: 10px;
+    text-shadow: -1px 1px black;
 }
 </style>
 <style>
