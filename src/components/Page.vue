@@ -220,7 +220,7 @@ export default{
     border: white solid 2px;
     box-shadow: gray -2px 2px 2px;
     display: none;
-    color:black;
+    color:white;
     top: 100px;
     left: 40%;
     padding: 10px;

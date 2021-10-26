@@ -187,11 +187,14 @@ export default {
     min-height: 50%;
 }
 .close{
+    border-radius: 10px;
+    margin-right: 15px;
     width: 25px;
     height: 20px;
     background-color: red;
     color:white;
     float: right;
+    border: 2px solid white;
 }
 .remove-bnt{
     width: 15px;

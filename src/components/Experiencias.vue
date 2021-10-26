@@ -56,6 +56,8 @@ export default {
       showEditarExperiencias(){
         document.getElementsByClassName('editar-experiencias')[0].style.display = 'block'
         document.getElementsByClassName('editar-experiencias')[0].style.opacity = '100% !important'
+        //abre o componente e faz scroll to the top
+        window.scrollTo(0,0)
       }
   },
   beforeMount(){

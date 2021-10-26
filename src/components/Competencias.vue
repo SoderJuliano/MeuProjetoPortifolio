@@ -27,6 +27,8 @@ export default {
       showEditarCompetencias(){
         document.getElementsByClassName('editar-competencais')[0].style.display = 'block'
         document.getElementsByClassName('editar-competencais')[0].style.opacity = '100% !important'
+        //abre o componente e faz scroll to the top
+        window.scrollTo(0,0)
       }
   }
 }

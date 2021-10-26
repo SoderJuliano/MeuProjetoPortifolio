@@ -157,7 +157,7 @@ textarea{
     background-color: #fff;
 }
 .editar-experiencias-container{
-     color: white;
+    color: white;
     width: 95%;
     margin-left: 1%;
     position: absolute;
@@ -187,6 +187,8 @@ textarea{
   padding: 10px;
   border-radius: 10px;
   font-size: 1.2em;
+  color: white;
+  font: 16px;
 }
 .inputbox:last-child {
   margin-bottom: 0;
@@ -224,7 +226,7 @@ textarea{
   background: none;
   padding: 10px;
   border-radius: 10px;
-  font-size: 1.2em;
+  font-size: 16px;
   color:white;
   overflow-x: hidden;
 }
@@ -232,5 +234,8 @@ textarea{
  .inputbox textarea:valid ~ span {
   transform: translateX(-13px) translateY(-35px);
   font-size: 1em;
+}
+::-webkit-scrollbar{
+    display: none;
 }
 </style>

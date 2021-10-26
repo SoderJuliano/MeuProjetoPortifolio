@@ -58,7 +58,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.editar-competencias-container{
+    text-shadow: -1px 1px black;
+}
 @media screen and (min-width:1001px) {
 .editar-competencias-container{
     width: 300px;
@@ -72,7 +74,9 @@ export default {
     width: 100%;
     display: block;
     border: 2px solid white;
-     color: white;
+    color: white;
+    position: absolute;
+    top: 10%;
  }
 }
 #competencia-input{
@@ -82,9 +86,8 @@ export default {
     font-weight: bold;
     margin-left: 10px;
     border-radius: 10px;
-    border-top: 0px;
-    border-right: 1px;
-    margin-right: 10px;
+    color: white;
+    font-size: 16px;
 }
 .competencia-list{
     display: block;
@@ -108,9 +111,9 @@ img{
     width: 40px;
     height: 40px;
     margin: 10px;
-    box-shadow: 6px 7px 10px 4px #5a5549,
-        inset 2px 2px 2px 1px #4C4023,
-        inset -2px -2px 2px 1px #8C8083;
+    border-radius: 25px;
+    border: 4px solid white;
+    box-shadow: 1px 2px 5px 0px;
     z-index: 5px;
 }
 </style>
