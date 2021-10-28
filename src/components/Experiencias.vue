@@ -99,7 +99,7 @@ export default {
   display: block;
 }
 .title{
-    width: 95%;
+    width: 98%;
 }
 .data-container-page-title{
     width: 50%;

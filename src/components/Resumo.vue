@@ -41,7 +41,7 @@ export default {
   display: flex;
 }
 .title{
-    width: 95%;
+    width: 98%;
 }
 .data-container-page{
     width: 100%;

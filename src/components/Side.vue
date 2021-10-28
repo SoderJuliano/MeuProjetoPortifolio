@@ -218,9 +218,17 @@ export default {
 </script>
 <style>
 .editar{
+  width: 20px;
+  height: 20px;
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+.side .editar{
   width: 15px;
   height: 15px;
   float: right;
+  margin-top: 1px;
 }
 .img-pic{
   width: 100%;
