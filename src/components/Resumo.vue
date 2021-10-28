@@ -2,7 +2,7 @@
   <div class="resumo">
       <p class="title" :style="getStyle()">{{titulo}}</p>
       <div class="resumo-container">
-         <span @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
+         <span contenteditable="true" @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
       </div>
   </div>
 </template>
