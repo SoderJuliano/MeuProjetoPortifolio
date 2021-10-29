@@ -1,7 +1,7 @@
 <template>
     <div class="fonts-container">
+      <p class="tside">TIPOS DE FONTES</p>
         <div class="dropdown">
-            <p>TIPOS DE FONTES</p>
             <div class="dropdown-content">
                 <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' >Oswald</p>
                 <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' >Zen Loop</p>
@@ -67,7 +67,7 @@ export default {
   padding: 12px 16px;
   z-index: 1;
 }
-.dropdown:hover .dropdown-content {
+.fonts-container:hover .dropdown-content {
   display: block;
 }
 /* ----------------------------------------------

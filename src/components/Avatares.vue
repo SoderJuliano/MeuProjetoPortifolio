@@ -1,6 +1,6 @@
 <template>
     <div class="avatares-container">
-        <p class="title">ESCOLHA UM AVATAR</p>
+        <p class="tside">ESCOLHA UM AVATAR</p>
         <div class="avatar-line">
             <img class="avatar" id="a1"
                 @click="changeAvatar"
@@ -121,5 +121,17 @@ export default {
     width: 100%;
     display: block;
     min-height: 80px;
+}
+</style>
+<style>
+.tside{
+    width: 60%;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: whitesmoke;
+}
+.tside:hover{
+    background-color: black;
+    color: white;
 }
 </style>
