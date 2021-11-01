@@ -31,8 +31,31 @@ export default {
     },
     methods:{
         changefontM(p){
+            
+        if(p.target.id=="square"){
+          console.log("teste")
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '0px';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '0px';
+          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+        }else if(p.target.id=="triangleUp"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '11px';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '11px';   
+          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+        }else if(p.target.id=="circle"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+        }else if(p.target.id=="colorfull-circle"){
+          document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
+          document.getElementsByClassName("pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
+           document.getElementsByClassName("pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
+            document.getElementsByClassName("pic")[0].style['border-right'] = '5px solid rgb(0, 158, 61)';
+             document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
+        }
+
         if(p.target.textContent.includes('pag-')==true){
-          console.log("trocou a fonte "+p.target.id)
+          //console.log("trocou a fonte "+p.target.id)
           document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id
          /* document.getElementsByClassName('title')[0].style.backgroundColor = p.target.id
           document.getElementsByClassName('title')[1].style.backgroundColor = p.target.id
