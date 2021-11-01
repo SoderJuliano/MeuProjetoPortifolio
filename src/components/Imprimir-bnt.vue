@@ -16,17 +16,17 @@ export default {
 </script>
 <style scoped>
 .print-icon{
-    width: 20px;
+    width: 25%;
     height: 15px;
     padding-top: 7%;
-    padding-left: 5%;
+    padding-left: 10%;
 }
 .print-div{
     display: flex;
     width: 120px;
-    height: 40px;
+    height: 30px;
     border: solid black 1px;
-    border-radius: 20px; 
+    border-radius: 20px;
 }
 .impreimir-text{
         padding: 3%;

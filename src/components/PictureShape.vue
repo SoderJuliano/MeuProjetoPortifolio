@@ -1,6 +1,6 @@
 <template>
     <div class="shape-container">
-        <p class="title">TIPO DE IMAGEM CONTAINER</p>
+        <p class="tside">TIPO DE IMAGEM CONTAINER</p>
         <div class="shapes">
             <div id="square" class="square"></div>
             <div id="triangleUp" class="triangle-up"></div>
@@ -15,6 +15,9 @@ export default {
 }
 </script>
 <style scoped>
+.shape-container{
+  width: 80%;
+}
 .shapes{
     display: flex;
     margin-left: 10px;
