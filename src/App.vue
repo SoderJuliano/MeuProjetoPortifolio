@@ -50,6 +50,7 @@ export default {
     },
     changefont(p){
         if(p.target.id=="square"){
+          console.log("teste")
           document.getElementsByClassName("pic")[0].style['border-radius'] = '0px';
           document.getElementsByClassName("img-pic")[0].style['border-radius'] = '0px';
           document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';

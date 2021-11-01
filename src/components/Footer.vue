@@ -32,11 +32,19 @@ export default {
     methods:{
         changefontM(p){
         if(p.target.textContent.includes('pag-')==true){
-          console.log(p.target.id)
+          console.log("trocou a fonte "+p.target.id)
           document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[8].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[9].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[10].style.backgroundColor = p.target.id
+         /* document.getElementsByClassName('title')[0].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[1].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[2].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[3].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id*/
+          document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[6].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[7].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[5].style.textShadow = "1px 1px 2px white"
+          document.getElementsByClassName('title')[6].style.textShadow = "1px 1px 2px white"
+          document.getElementsByClassName('title')[7].style.textShadow = "1px 1px 2px white"
         }
         else if(p.target.textContent.includes('#')==true){
           document.getElementsByClassName("side")[0].style.backgroundColor = p.target.textContent
