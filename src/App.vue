@@ -77,6 +77,10 @@ export default {
             all = document.getElementsByClassName('title');
             for (i; i < all.length; i++) {
               all[i].style.color = 'white';
+              document.getElementsByClassName('title')[0].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[1].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[2].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[3].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[4].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[5].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[6].style.backgroundColor = "#1F271B"
@@ -86,6 +90,10 @@ export default {
             all = document.getElementsByClassName('title');
             for (i; i < all.length; i++) {
               all[i].style.color = 'black';
+              document.getElementsByClassName('title')[0].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[1].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[2].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[3].style.backgroundColor = "white"
               document.getElementsByClassName('title')[4].style.backgroundColor = "white"
               document.getElementsByClassName('title')[5].style.backgroundColor = "white"
               document.getElementsByClassName('title')[6].style.backgroundColor = "white"
