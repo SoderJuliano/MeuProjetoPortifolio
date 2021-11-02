@@ -1,5 +1,7 @@
 <template>
+<nav-bar class="nav-bar-container"></nav-bar>
   <div :style="getStyle()" class="main">
+    
     <div class="main-left" @click="closeEditarContato">
       <multi-menu 
         @click="changefont"
@@ -27,6 +29,7 @@ import Page from './components/Page.vue'
 import MultiMenu from './components/MultiMenu.vue'
 import Footer from './components/Footer.vue'
 import Imprimir from './components/Imprimir-bnt.vue'
+import navBar from './components/navBar.vue'
 
 export default {
   name: 'App',
@@ -42,7 +45,8 @@ export default {
     Page,
     MultiMenu,
     Footer,
-    Imprimir
+    Imprimir,
+    navBar
   },
   methods: {
     closeEditarContato(){
@@ -78,27 +82,27 @@ export default {
             all = document.getElementsByClassName('title');
             for (i; i < all.length; i++) {
               all[i].style.color = 'white';
-              document.getElementsByClassName('title')[0].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[1].style.backgroundColor = "#1F271B"
+              all[i].style.backgroundColor = "#1F271B"
+             /* document.getElementsByClassName('title')[1].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[2].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[3].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[4].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[5].style.backgroundColor = "#1F271B"
               document.getElementsByClassName('title')[6].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[7].style.backgroundColor = "#1F271B"
+              document.getElementsByClassName('title')[7].style.backgroundColor = "#1F271B"*/
             }
           }else{
             all = document.getElementsByClassName('title');
             for (i; i < all.length; i++) {
               all[i].style.color = 'black';
-              document.getElementsByClassName('title')[0].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[1].style.backgroundColor = "white"
+              all[i].style.backgroundColor = "white"
+              /*document.getElementsByClassName('title')[1].style.backgroundColor = "white"
               document.getElementsByClassName('title')[2].style.backgroundColor = "white"
               document.getElementsByClassName('title')[3].style.backgroundColor = "white"
               document.getElementsByClassName('title')[4].style.backgroundColor = "white"
               document.getElementsByClassName('title')[5].style.backgroundColor = "white"
               document.getElementsByClassName('title')[6].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[7].style.backgroundColor = "white"
+              document.getElementsByClassName('title')[7].style.backgroundColor = "white"*/
             }
           }
           this.mainColor = p.target.id
@@ -217,9 +221,13 @@ export default {
   .footer{
     display: none;
   }
+  .nav-bar-container{
+    display: none;
+  }
 }
 .main-left{
   width: 20%;
   height: 100vh;
 }
+
 </style>

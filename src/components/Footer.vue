@@ -62,12 +62,12 @@ export default {
           document.getElementsByClassName('title')[2].style.backgroundColor = p.target.id
           document.getElementsByClassName('title')[3].style.backgroundColor = p.target.id
           document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id*/
+          document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id
           document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id
           document.getElementsByClassName('title')[6].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[7].style.backgroundColor = p.target.id
+          document.getElementsByClassName('title')[4].style.textShadow = "1px 1px 2px white"
           document.getElementsByClassName('title')[5].style.textShadow = "1px 1px 2px white"
           document.getElementsByClassName('title')[6].style.textShadow = "1px 1px 2px white"
-          document.getElementsByClassName('title')[7].style.textShadow = "1px 1px 2px white"
         }
         else if(p.target.textContent.includes('#')==true){
           document.getElementsByClassName("side")[0].style.backgroundColor = p.target.textContent
