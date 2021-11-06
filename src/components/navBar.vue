@@ -2,12 +2,14 @@
     <div class="grad-bar">
         <nav class="navbar">
            <ul class="nav no-search">
-                <a>Juliano Soder</a>
-                <li v-on:click="abaut" class="nav-item"><a href="#">Sobre esse Site</a></li>
-                <li class="nav-item"><a href="#">Sobre Mim</a></li>
-                <li class="nav-item"><a href="#">Apoiar este Projeto</a></li>
-                <li class="nav-item"><a href="#">Mais Exemplos</a></li>
-                <li class="nav-item"><a href="#">Entre em contato</a></li>
+                <imprimir
+                  class="imprimirbotao"
+                />
+                <li v-on:click="about" class="nav-item"><a href="#">Sobre o Site</a></li>
+                <li v-on:click="aboutMe" class="nav-item"><a href="#">Sobre Mim</a></li>
+                <li v-on:click="support" class="nav-item"><a href="#">Apoiar este Projeto</a></li>
+                <li v-on:click="more" class="nav-item"><a href="#">Mais Exemplos</a></li>
+                <li v-on:click="contact" class="nav-item"><a href="#">Entre em contato</a></li>
             </ul>
         </nav> 
     </div>
@@ -15,11 +17,31 @@
 </template>
 
 <script>
+import imprimir from './Imprimir-bnt.vue'
 export default {
     name: 'nav-bar',
+    components:{
+      imprimir
+    },
     methods:{
-      abaut(){
-        alert("sobre este site");
+      about(){
+        alert("Este site foi desenvolvido para suprir a necessidade de montar cvs ou atualizar currículos de forma rápida, pratica e de forma gratuíta, gerando um cv bonito e profissional altamente configurável.");
+        alert("Este site não utiliza cookies e também não guarda nenhuma informação pessoal. Todas as suas informações estão no cache do navegador e no seu localStorage, para apagá-los, deve apagar os dados do navegador.")
+        alert("Na maioria dos navegadores utilizasse o atalho Cntrl+Shift+Del para limpar os dados de navegação.")
+      },
+      aboutMe(){
+        alert("Sou desenvolvedor de software. Trabalho na industria privada como desenvolvedor desde fevereiro de 2021, porém minha caminhada como programador começou em 2015. Procuro apoiar o software livre com projetos como esse, e também busco responder dúvidas de outros programadores sempre que posso, tenho conta no stackoverflow. Sou formado em ADS pela Fael e em Ciência de Dados pela Uniasselvi.");
+      },
+      support(){
+        alert("Apoie este projeto financeiramente com um pix de qualquer valor para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba");
+        alert("Todo o trabalho emprenhado nestes projeto sempre traz custos, energia, equipamento, disposição, tempo etc... Ficarei muito contente em receber qualquer ajuda.")
+        alert("Este projeto está no github e pode ser baixado e alterado e mesmo utilizado de qualquer forma que lhê convém :)")
+      },
+      more(){
+        alert("Ainda em desenvolvimento.  Apoie este projeto ;)")
+      },
+      contact(){
+        alert("Email de contato: juliano_soder@hotmail.com")
       }
     }
 }
@@ -31,7 +53,7 @@ export default {
   height: 50px;
   background-color: whitesmoke;
   margin-bottom: 20px;
-  box-shadow: 0px 1px 5px 0px;
+  box-shadow: 0 0 50px #ccc;
 }
 
 .navbar {

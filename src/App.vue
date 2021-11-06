@@ -18,7 +18,7 @@
       class="footer"
     />
     <div class="right">
-      <Imprimir />
+      
     </div>
   </div>
 </template>
@@ -28,7 +28,6 @@ import Side from './components/Side.vue'
 import Page from './components/Page.vue'
 import MultiMenu from './components/MultiMenu.vue'
 import Footer from './components/Footer.vue'
-import Imprimir from './components/Imprimir-bnt.vue'
 import navBar from './components/navBar.vue'
 
 export default {
@@ -45,7 +44,6 @@ export default {
     Page,
     MultiMenu,
     Footer,
-    Imprimir,
     navBar
   },
   methods: {

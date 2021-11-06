@@ -200,6 +200,7 @@ export default{
  }
  .editar-competencais{
     width: 40%;
+    max-width: 380px;
     min-height: 200px;
     max-height: 100%;
     border-radius: 20px;

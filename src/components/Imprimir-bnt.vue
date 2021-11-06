@@ -24,9 +24,10 @@ export default {
 .print-div{
     display: flex;
     width: 120px;
-    height: 30px;
     border: solid black 1px;
     border-radius: 20px;
+    position: relative;
+    bottom: 4px;
 }
 .impreimir-text{
         padding: 3%;
