@@ -99,6 +99,24 @@ export default {
                 case 'Teko':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Teko', sans-serif"
                     break
+                case 'Crimson':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Crimson Text', serif"
+                    break
+                case 'Dongle':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Dongle', sans-serif"
+                    break
+                case 'Mochiy':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Mochiy Pop One', sans-serif"
+                    break
+                case 'Roboto':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Roboto Mono', monospace"
+                    break
+                case 'verdana':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "verdana"
+                    break
+                case 'Courier New':
+                    document.getElementsByClassName("main")[0].style.fontFamily = "'Courier New'"
+                    break
             }
         }
     },

@@ -153,6 +153,32 @@ export default {
           return{
             'font-family': "'Teko', sans-serif"
           }
+
+
+        case 'Crimson':
+          return{
+            'font-family': "'Crimson Text', serif"
+          }
+        case 'Dongle':
+          return{
+            'font-family':  "'Dongle', sans-serif"
+          }
+        case 'Mochiy':
+          return{
+            'font-family': "'Mochiy Pop One', sans-serif"
+          }
+        case 'Roboto':
+          return{
+            'font-family': "'Roboto Mono', monospace"
+          }
+        case 'verdana':
+          return{
+            'font-family':  "verdana"
+          }
+        case 'Courier New':
+           return{
+            'font-family': "'Courier New'"
+          }
       }
     }
   }

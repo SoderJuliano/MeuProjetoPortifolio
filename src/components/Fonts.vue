@@ -11,6 +11,14 @@
                 <p style="font-family: 'Inconsolata', monospace;" @click='$emit("changefont")' >Inconsolata</p>
                 <p style="font-family: 'Kaisei Decol', serif;" @click='$emit("changefont")' >Kaisei Decol</p>
                 <p style="font-family: 'Teko', sans-serif;" @click='$emit("changefont")' >Teko</p>
+
+
+                <p style="font-family: 'Crimson Text', serif;" @click='$emit("changefont")' >Crimson</p>
+                <p style="font-family: 'Dongle', sans-serif;" @click='$emit("changefont")' >Dongle</p>
+                <p style="font-family: 'Mochiy Pop One', sans-serif;" @click='$emit("changefont")' >Mochiy</p>
+                <p style="font-family: 'Roboto Mono', monospace;" @click='$emit("changefont")' >Roboto</p>
+                <p style="font-family: verdana" @click='$emit("changefont")'>verdana</p>
+                <p style="font-family:'Courier New'" @click='$emit("changefont")'>Courier New</p>
             </div>
         </div>
     </div>
@@ -24,12 +32,12 @@ export default {
 
 <style scoped>
 @media screen and(min-width: 1001px) {
-    .fonts-container{
+  .fonts-container{
     min-height: 100px;
     max-height: 100%;
     width: 100%;
     background-color: white;
-}
+  }
 }
 @media screen and(max-width: 1000px) {
     .fonts-container{
@@ -66,6 +74,8 @@ export default {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
   z-index: 1;
+  margin-top: -50px;
+  overflow-y: scroll;
 }
 .fonts-container:hover .dropdown-content {
   display: block;
