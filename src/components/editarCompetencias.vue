@@ -83,7 +83,6 @@ export default {
 #competencia-input{
     width: 250px;
     height: 30px;
-    font-size: 10px;
     font-weight: bold;
     margin-left: 10px;
     border-radius: 10px;

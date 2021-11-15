@@ -181,7 +181,6 @@ export default{
         height: 100%;
         width: 100%;
         padding-left: 30px;
-        font-size: 12px;
     }
     .editar-competencais{
         display: none;

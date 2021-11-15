@@ -305,8 +305,9 @@ export default {
     background-color: gray;
     justify-content: center;
     padding-top: 50px;
-    font-size: 10px;
+    font-size: 14px;
     overflow: hidden;
+    word-break: break-all;
   }
   .pic{
     width: 150px;
@@ -373,7 +374,7 @@ body{
     width: 37%;
     justify-content: center;
     padding-top: 35px;
-    font-size: 10px;
+    font-size: 12px;
     overflow: hidden;
   }
   .pic{

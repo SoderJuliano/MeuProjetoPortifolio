@@ -67,7 +67,6 @@ export default {
     margin-right: 5px;
     width: 75%;
     margin-top: 10px;
-    font-size: 11px;
     height: 20px;
 }
 .edit-grade-container{

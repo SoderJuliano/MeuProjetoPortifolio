@@ -40,7 +40,6 @@ export default {
     height:30px;
     border: solid gray 2px;
     margin: 1px;
-    font-size: 10px;
 }
 .dot:hover{
     border: 2px solid black;
