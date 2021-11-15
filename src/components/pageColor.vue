@@ -28,17 +28,23 @@ export default {
     name: 'page-cores',
 }
 </script>
-<style scoped>
+<style>
 .dots-container{
     display: flex;
-    width: 90%;
-    margin-right: 50px;
+    width: 100%;
+    justify-content: space-around;
+}
+.colors-container:hover .tside{
+    background-color: black;
+    color: white;
 }
 .dot{
-    width: 50px;
+    width: 40%;
     height: 30px;
     border: solid gray 1px;
-    margin: 1px;
+    margin: 2px;
+    overflow-y: hidden;
+    font-size: 10px;
 }
 .dot:hover{
     border: 2px solid black;
@@ -46,16 +52,18 @@ export default {
 }
 .colors{
     display: none;
-    left: 20px;
-    margin-top: -5%;
+    width: 65%;
+    margin-top: -1%;
+    padding: 10px;
+    box-shadow: 0 0 50px #ccc;
+    color: white;
+    justify-content: space-around;
 }
 .colors-container:hover .colors{
     display: block;
-    position: absolute;
-    left: 20px;
+    position: relative;
 }
 .colors-container{
-    margin-top: 5px;
     display: block;
     background-color: white;
     margin-top: 10px;

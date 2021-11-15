@@ -28,37 +28,3 @@ export default {
     name: 'cores',
 }
 </script>
-<style scoped>
-.dots-container{
-    display: flex;
-    width: 90%;
-    margin-left: 20px;
-    margin-right: 50px;
-}
-.dot{
-    width: 50px;
-    height:30px;
-    border: solid gray 2px;
-    margin: 1px;
-}
-.dot:hover{
-    border: 2px solid black;
-    box-shadow: 0px 1px 1px 1px;
-}
-.colors-container{
-    margin-top: 10px;
-    display: block;
-    background-color: white;
-    text-align: initial;
-    margin-top: 10px;
-}
-.colors-container:hover .colors{
-    display: block;
-    position: absolute;
-    margin-top: -5%;
-}
-.colors{
-    display: none;
-    left: 20px;
-}
-</style>
