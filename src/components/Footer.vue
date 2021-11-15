@@ -55,22 +55,24 @@ export default {
         }
 
         if(p.target.textContent.includes('pag-')==true){
-          //console.log("trocou a fonte "+p.target.id)
-          document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id
-         /* document.getElementsByClassName('title')[0].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[1].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[2].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[3].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id*/
-          document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[6].style.backgroundColor = p.target.id
-          document.getElementsByClassName('title')[4].style.textShadow = "1px 1px 2px white"
-          document.getElementsByClassName('title')[5].style.textShadow = "1px 1px 2px white"
-          document.getElementsByClassName('title')[6].style.textShadow = "1px 1px 2px white"
+          p.target.id != '' && p.target.id != null ? 
+          (
+            document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id, 
+            document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id,
+            document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id,
+            document.getElementsByClassName('title')[6].style.backgroundColor = p.target.id,
+            document.getElementsByClassName('title')[4].style.textShadow = "1px 1px 2px white",
+            document.getElementsByClassName('title')[5].style.textShadow = "1px 1px 2px white",
+            document.getElementsByClassName('title')[6].style.textShadow = "1px 1px 2px white",
+            localStorage.setItem("mainColor", p.target.id)
+          ) : '';
+         
         }
         else if(p.target.textContent.includes('#')==true){
-          document.getElementsByClassName("side")[0].style.backgroundColor = p.target.textContent
+          if(p.target.textContent.split('').length>0 && p.target.textContent.split('').length<8){
+            document.getElementsByClassName("side")[0].style.backgroundColor = p.target.textContent
+            localStorage.setItem("sideColor",  p.target.textContent)
+          }
         }else{
             switch(p.target.textContent){ 
                 case 'Oswald':
