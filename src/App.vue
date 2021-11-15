@@ -81,32 +81,25 @@ export default {
             for (i; i < all.length; i++) {
               all[i].style.color = 'white';
               all[i].style.backgroundColor = "#1F271B"
-             /* document.getElementsByClassName('title')[1].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[2].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[3].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[4].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[5].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[6].style.backgroundColor = "#1F271B"
-              document.getElementsByClassName('title')[7].style.backgroundColor = "#1F271B"*/
             }
           }else{
             all = document.getElementsByClassName('title');
             for (i; i < all.length; i++) {
               all[i].style.color = 'black';
               all[i].style.backgroundColor = "white"
-              /*document.getElementsByClassName('title')[1].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[2].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[3].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[4].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[5].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[6].style.backgroundColor = "white"
-              document.getElementsByClassName('title')[7].style.backgroundColor = "white"*/
             }
           }
-          this.mainColor = p.target.id
+          p.target.id.split('').length<8 && p.target.id.split('').length>1 ?
+          (this.mainColor = p.target.id,
+          localStorage.setItem("mainColor", p.target.id)) :
+          localStorage.getItem('mainColor') ?
+            this.mainColor = localStorage.getItem('mainColor') : this.mainColor = "#87CEEB"
         }
         else if(p.target.textContent.includes('#')==true){
-          this.sideColor = p.target.textContent;
+          if(p.target.textContent.split('').length>0 && p.target.textContent.split('').length<8){
+            this.sideColor = p.target.textContent;
+            localStorage.setItem("sideColor",  p.target.textContent)
+          }
         }else{
             this.font = p.target.textContent
         }
@@ -180,7 +173,20 @@ export default {
             'font-family': "'Courier New'"
           }
       }
+    },
+    getColors(){
+      const mc = localStorage.getItem("mainColor")
+      const sc = localStorage.getItem("sideColor")
+      if(mc){
+        this.mainColor = mc
+      }
+      if(sc){
+        this.sideColor = sc
+      }
     }
+  }, 
+  beforeMount(){
+    this.getColors()
   }
 }
 </script>
