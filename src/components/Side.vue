@@ -335,7 +335,7 @@ export default {
     margin-right: 1%;
     border: 2px solid white;
     font-weight: bold;
-
+    z-index: 10;
   }
   .editar-social{
     width: 95%;
@@ -394,6 +394,7 @@ export default {
     opacity: 90%;
     padding: 10px;
     position: absolute;
+    z-index: 10;
   }
   .editar-social{
     width: 400px;
