@@ -27,7 +27,7 @@ export default {
     },
     methods:{
         closeBox(){
-            document.getElementsByClassName('editar-habilidade')[0].style.display = 'none'
+            document.getElementsByClassName('editar-habilidade-container')[0].style.display = 'none'
         },
         adicionarHab(){
             const hab = document.getElementById('habilidade').value
@@ -41,7 +41,7 @@ export default {
     mounted(){
         console.log(this.cor);
         document.getElementsByClassName('editar-habilidade')[0].style.backgroundColor = this.cor
-        document.getElementsByClassName('editar-habilidade')[0].style.display = "none"
+        document.getElementsByClassName('editar-habilidade-container')[0].style.display = "none"
     },
     updated(){
         console.log(this.cor);
