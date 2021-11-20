@@ -7,12 +7,10 @@
         @click="changefont"
       />
     </div>
-    <Side
-      :cor="sideColor"
-    />
-    <Page
-      @click="closeEditarContato"
-      :cor="mainColor"
+    <template1 
+       :style="getStyle()"
+       :mainColor=mainColor
+       :sideColor=sideColor
     />
     <Footer 
       class="footer"
@@ -24,8 +22,7 @@
 </template>
 
 <script>
-import Side from './components/Side.vue'
-import Page from './components/Page.vue'
+import Template1 from './templates/Template1.vue'
 import MultiMenu from './components/MultiMenu.vue'
 import Footer from './components/Footer.vue'
 import navBar from './components/navBar.vue'
@@ -40,11 +37,10 @@ export default {
     }
   },
   components: {
-    Side,
-    Page,
     MultiMenu,
     Footer,
-    navBar
+    navBar,
+    Template1
   },
   methods: {
     closeEditarContato(){
