@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-start">
+  <div class="custom-container">
       <Side
         :cor="sideColor"
       />
@@ -29,7 +29,20 @@ export default {
 }
 </script>
 <style scoped>
-.d-flex.justify-content-center{
-  width: 100%;
+@media screen and (min-width: 1001px){
+  .custom-container{
+    width: 50%;
+    justify-content: start;
+    height: calc(100vh - 35px) ;
+    display: flex;
+  }
+}
+
+@media print {
+ .custom-container{
+    display: flex;
+    width: 100vw !important;
+    height: calc(100vh - 35px) ;
+  }
 }
 </style>

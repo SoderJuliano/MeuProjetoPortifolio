@@ -1,10 +1,11 @@
 <template>
-    <div class="grad-bar">
+    <div class="container-fluid">
         <nav class="navbar">
+         <!-- <imprimir
+                  class="navbar-toggler"
+                /> -->
            <ul class="nav no-search">
-                <imprimir
-                  class="imprimirbotao"
-                />
+             
                 <li v-on:click="about" class="nav-item"><a href="#">Sobre o Site</a></li>
                 <li v-on:click="aboutMe" class="nav-item"><a href="#">Sobre Mim</a></li>
                 <li v-on:click="support" class="nav-item"><a href="#">Apoiar este Projeto</a></li>
@@ -17,11 +18,11 @@
 </template>
 
 <script>
-import imprimir from './Imprimir-bnt.vue'
+//import imprimir from './Imprimir-bnt.vue'
 export default {
     name: 'nav-bar',
     components:{
-      imprimir
+     // imprimir
     },
     methods:{
       about(){

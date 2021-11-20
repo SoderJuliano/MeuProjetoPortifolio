@@ -1,7 +1,6 @@
 <template>
-<nav-bar class="nav-bar-container"></nav-bar>
+<nav-bar id="navbar" class="navbar navbar-expand-lg navbar-light bg-light"></nav-bar>
   <div :style="getStyle()" class="main">
-    
     <div class="main-left" @click="closeEditarContato">
       <multi-menu 
         @click="changefont"
@@ -214,46 +213,47 @@ export default {
 
 }
 @media screen and (min-width:1001px) {
+
  .main{
     display: flex;
     width: 100%;
     height: 100%;
+    justify-content: start;
   } 
   .footer{
     display: none;
   }
-
+  .main-left{
+    width: 24%;
+    height: 100vh;
+    margin-left: 5%;
+  }
   .right{
-    padding: 10px;
+      display: 24%;
   }
 }
 @media print {
   .main{
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     transform: scaleY(.9);
     margin-top: -5%;
     -webkit-print-color-adjust: exact;
   } 
 
   .right{
-    display: none;
+    display: none !important;
   }
 
   .main-left{
-    display: none;
+    display: none !important;
   }
   .footer{
-    display: none;
+    display: none !important;
   }
-  .nav-bar-container{
-    display: none;
+  #navbar{
+    display: none !important;
   }
 }
-.main-left{
-  width: 20%;
-  height: 100vh;
-}
-
 </style>
