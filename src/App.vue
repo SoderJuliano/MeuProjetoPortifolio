@@ -1,5 +1,5 @@
 <template>
-<nav-bar id="navbar" class="navbar navbar-expand-lg navbar-light bg-light"></nav-bar>
+<nav-bar :style="getStyle()" id="navbar" class="navbar navbar-expand-lg navbar-light bg-light"></nav-bar>
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu 

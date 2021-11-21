@@ -15,14 +15,14 @@ export default {
 }
 </script>
 <style scoped>
-.shape-container{
-  width: 80%;
+.shape-container:hover .shapes{
+  display: flex;
 }
 .shapes{
-    display: flex;
     margin-left: 10px;
     margin-top: 10px;
     justify-content: space-around;
+    display: none;
 }
 .square {
   width: 25px;

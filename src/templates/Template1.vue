@@ -35,6 +35,7 @@ export default {
     justify-content: start;
     height: calc(100vh - 35px) ;
     display: flex;
+    margin-top: 20px;
   }
 }
 
