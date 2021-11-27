@@ -1,65 +1,67 @@
 <template>
     <div class="avatares-container">
         <p class="tside">ESCOLHA UM AVATAR</p>
-        <div class="avatar-line">
-            <img class="avatar" id="a1"
-                @click="changeAvatar"
-                src="../icons/avatares/avatar1.png"
-                alt="avatar"
-            />
+        <div class="avatares-subcontainer">
+            <div class="avatar-line">
+                <img class="avatar" id="a1"
+                    @click="changeAvatar"
+                    src="../icons/avatares/avatar1.png"
+                    alt="avatar"
+                />
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a2"
+                    src="../icons/avatares/avatar2.png"
+                    alt="avatar"
+                />
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a3"
+                    src="../icons/avatares/avatar3.png"
+                    alt="avatar"
+                />
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a4"
+                    src="../icons/avatares/avatar4.png"
+                    alt="avatar"
+                />
+            </div>
+            <div class="avatar-line">
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a8"
+                    src="../icons/avatares/avatar8.png"
+                    alt="avatar"
+                />
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a5.1"
+                    src="../icons/avatares/avatar5.png"
+                    alt="avatar"
+                />
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a6"
+                    src="../icons/avatares/avatar6.png"
+                    alt="avatar"
+                />
+                <img class="avatar"
+                    @click="changeAvatar"
+                    id="a7"
+                    src="../icons/avatares/avatar7.png"
+                    alt="avatar"
+                />
+                
+            </div>
             <img class="avatar"
-                @click="changeAvatar"
-                id="a2"
-                src="../icons/avatares/avatar2.png"
-                alt="avatar"
-            />
-             <img class="avatar"
-                @click="changeAvatar"
-                id="a3"
-                src="../icons/avatares/avatar3.png"
-                alt="avatar"
-            />
-            <img class="avatar"
-                @click="changeAvatar"
-                id="a4"
-                src="../icons/avatares/avatar4.png"
-                alt="avatar"
-            />
-        </div>
-        <div class="avatar-line">
-            <img class="avatar"
-                @click="changeAvatar"
-                id="a8"
-                src="../icons/avatares/avatar8.png"
-                alt="avatar"
-            />
-            <img class="avatar"
-                @click="changeAvatar"
-                id="a5.1"
-                src="../icons/avatares/avatar5.png"
-                alt="avatar"
-            />
-            <img class="avatar"
-                @click="changeAvatar"
-                id="a6"
-                src="../icons/avatares/avatar6.png"
-                alt="avatar"
-            />
-            <img class="avatar"
-                @click="changeAvatar"
-                id="a7"
-                src="../icons/avatares/avatar7.png"
-                alt="avatar"
+                    @click="changeAvatar"
+                    id="a5"
+                    src="../icons/avatares/no-img.png"
+                    alt="avatar"
             />
             
-        </div>
-        <img class="avatar"
-                @click="changeAvatar"
-                id="a5"
-                src="../icons/avatares/no-img.png"
-                alt="avatar"
-        />
-        
+            </div>
     </div>
 </template>
 <script>
@@ -139,6 +141,9 @@ export default {
     display: block;
     min-height: 80px;
 }
+.avatares-container:hover .avatares-subcontainer{
+    display: block;
+}
 </style>
 <style>
 .tside{
@@ -150,5 +155,8 @@ export default {
 .tside:hover{
     background-color: black;
     color: white;
+}
+.avatares-subcontainer{
+    display: none;
 }
 </style>
