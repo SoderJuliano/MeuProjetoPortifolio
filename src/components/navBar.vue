@@ -1,15 +1,32 @@
 <template>
-    <div class="grad-bar">
+    <div class="container-fluid">
         <nav class="navbar">
+         <!-- <imprimir
+                  class="navbar-toggler"
+                /> -->
            <ul class="nav no-search">
-                <imprimir
-                  class="imprimirbotao"
-                />
-                <li v-on:click="about" class="nav-item"><a href="#">Sobre o Site</a></li>
-                <li v-on:click="aboutMe" class="nav-item"><a href="#">Sobre Mim</a></li>
-                <li v-on:click="support" class="nav-item"><a href="#">Apoiar este Projeto</a></li>
-                <li v-on:click="more" class="nav-item"><a href="#">Mais Exemplos</a></li>
-                <li v-on:click="contact" class="nav-item"><a href="#">Entre em contato</a></li>
+             <li v-on:click="imprimir" class="nav-item" id="inprimir-item"><a href="#">IMPRIMIR</a></li>
+              <li class="nav-item" id="navbarDropdown">
+                <a class="nav-link" href="#" >
+                  Informações
+                </a>
+                <div class="dropdown-menu" >
+                  <a v-on:click="about" class="dropdown-item" href="#">Sobre o Site</a>
+                  <a v-on:click="more" class="dropdown-item" href="#">Mais Exemplos</a>
+                  <a v-on:click="support" class="dropdown-item" href="#">Apoiar este Projeto</a>
+                </div>
+              </li>
+
+               
+              <li class="nav-item" id="navbarDropdown">
+                <a class="nav-link" href="#" >
+                  Sobre mim
+                </a>
+                 <div class="dropdown-menu" >
+                  <li v-on:click="aboutMe" class="nav-item"><a href="#">Sobre Mim</a></li>
+                  <li v-on:click="contact" class="nav-item"><a href="#">Entre em contato</a></li>
+                </div>
+              </li>
             </ul>
         </nav> 
     </div>
@@ -17,11 +34,11 @@
 </template>
 
 <script>
-import imprimir from './Imprimir-bnt.vue'
+//import imprimir from './Imprimir-bnt.vue'
 export default {
     name: 'nav-bar',
     components:{
-      imprimir
+     // imprimir
     },
     methods:{
       about(){
@@ -33,7 +50,7 @@ export default {
         alert("Sou desenvolvedor de software. Trabalho na industria privada como desenvolvedor desde fevereiro de 2021, porém minha caminhada como programador começou em 2015. Procuro apoiar o software livre com projetos como esse, e também busco responder dúvidas de outros programadores sempre que posso, tenho conta no stackoverflow. Sou formado em ADS pela Fael e em Ciência de Dados pela Uniasselvi.");
       },
       support(){
-        alert("Apoie este projeto financeiramente com um pix de qualquer valor para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba");
+        alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba");
         alert("Todo o trabalho emprenhado nestes projeto sempre traz custos, energia, equipamento, disposição, tempo etc... Ficarei muito contente em receber qualquer ajuda.")
         alert("Este projeto está no github e pode ser baixado e alterado e mesmo utilizado de qualquer forma que lhê convém :)")
       },
@@ -42,23 +59,27 @@ export default {
       },
       contact(){
         alert("Email de contato: juliano_soder@hotmail.com")
+      },
+      imprimir(){
+        window.print()
       }
     }
 }
 </script>
 
 <style scoped>
-.grad-bar {
+.container-fluid {
   width: 100%;
   height: 50px;
-  background-color: whitesmoke;
   margin-bottom: 20px;
-  box-shadow: 0 0 50px #ccc;
+  justify-content: center;
+  padding-top: 1px;
 }
 
 .navbar {
   justify-content: space-around;
-  padding-top: 1px;
+  float: right;
+  margin: 0 auto;
 }
 .navbar ul {
   list-style: none;
@@ -67,20 +88,40 @@ export default {
   justify-self: end;
   
 }
-
+.nav-item{
+  width: 100px;
+}
 .nav-item a {
   color: #000;
   font-size: 0.9rem;
   font-weight: 400;
   text-decoration: none;
   transition: color 0.3s ease-out;
+  text-shadow: .5px -1px slategray;
+  font-size: 16px;
 }
 
 .nav-item a:hover {
   color: #3498db;
 }
-
+.dropdown-menu{
+  z-index: 10;
+  position: absolute;
+  background-color: whitesmoke;
+  display: none;
+}
+.dropdown-item:hover{
+  background-color: gray;
+}
+.dropdown-item{
+  padding: 10px;
+}
+#navbarDropdown:hover .dropdown-menu{
+  display: block;
+}
+#inprimir-item{
+}
 @media only screen and (max-width: 720px) { 
- .grad-bar{display: none;}
+ .container-fluid{display: none;}
 }
 </style>

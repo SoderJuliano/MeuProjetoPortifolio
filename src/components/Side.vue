@@ -424,7 +424,7 @@ body{
 }
 .side{
     height: 100%;
-    width: 37%;
+    width: 40%;
     justify-content: center;
     padding-top: 35px;
     font-size: 12px;

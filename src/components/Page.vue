@@ -197,6 +197,7 @@ export default{
     display: block;
     height: 100%;
     width: 50%;
+    min-width: 600px;
     padding-left: 30px;
     box-shadow: 0 0 50px #ccc;
  }
@@ -263,7 +264,6 @@ export default{
 
 .data-container{
     width: 100%;
-    height: 100%;
     display: block;
 }
 
