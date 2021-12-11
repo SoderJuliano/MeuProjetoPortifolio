@@ -1,12 +1,22 @@
 <template>
-<nav-bar :style="getStyle()" id="navbar" class="navbar navbar-expand-lg navbar-light bg-light"></nav-bar>
+  <nav-bar  
+    :showthis=show
+    @close="close" 
+    :style="getStyle()" 
+    id="navbar" 
+    class="navbar navbar-expand-lg navbar-light bg-light"
+  >
+  </nav-bar>
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu 
+        class="multi-menu-class"
         @click="changefont"
+        @close="close"
       />
     </div>
     <template1 
+        class="template"
        :style="getStyle()"
        :mainColor=mainColor
        :sideColor=sideColor
@@ -28,11 +38,13 @@ import navBar from './components/navBar.vue'
 
 export default {
   name: 'App',
+  emits:['close'],
   data(){
     return{
       font: 'Oswald',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
+      show: false,
     }
   },
   components: {
@@ -44,6 +56,12 @@ export default {
   methods: {
     closeEditarContato(){
       document.getElementsByClassName('editar-contato-container')[0].style.display= 'none'
+    },
+    close(){
+        document.getElementsByClassName("multi-menu-class")[0].style.opacity = "0"
+        document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "-1"
+        this.show = false;
+        console.log(this.show)
     },
     changefont(p){
         if(p.target.id=="square"){
@@ -187,6 +205,12 @@ export default {
 </script>
 
 <style>
+.multi-menu-class{
+  opacity: 0;
+  z-index: -1;
+  -webkit-transition-duration: 450ms;
+  transition-duration: 450ms;
+}
 @media screen and (max-width:1000px) {
  .main{
   display: block;
@@ -213,32 +237,41 @@ export default {
 
 }
 @media screen and (min-width:1001px) {
-
+  .template{
+    width: 50%;
+    margin: 0 auto;
+  }
  .main{
     display: flex;
     width: 100%;
     height: 100%;
-    justify-content: start;
+    justify-content: space-around;
   } 
   .footer{
     display: none;
   }
   .main-left{
-    width: 24%;
+    width: 25%;
     height: 100vh;
-    margin-left: 5%;
   }
   .right{
-      display: 24%;
+      width: 25%;
+      margin: 0 auto;
   }
 }
 @media print {
+  #navbar{
+    display: none !important;
+  }
+  .navbar{
+    display: none !important;
+  }
   .main{
     display: flex;
     width: 100vw;
     height: 100vh;
-    transform: scaleY(.9);
-    margin-top: -5%;
+    position: absolute;
+    top: 0 !important;
     -webkit-print-color-adjust: exact;
   } 
 

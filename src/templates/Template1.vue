@@ -31,7 +31,6 @@ export default {
 <style scoped>
 @media screen and (min-width: 1001px){
   .custom-container{
-    width: 50%;
     justify-content: start;
     height: calc(100vh - 35px) ;
     display: flex;
