@@ -49,7 +49,7 @@ export default {
     name: 'nav-bar',
     data(){
       return{
-        show: this.showthis,
+        show: false,
         myInfo: false,
         info: false
       }

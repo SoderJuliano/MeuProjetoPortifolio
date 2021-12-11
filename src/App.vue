@@ -1,6 +1,5 @@
 <template>
   <nav-bar  
-    :showthis=show
     @close="close" 
     :style="getStyle()" 
     id="navbar" 
@@ -46,7 +45,6 @@ export default {
       fontSizeTitles: '16px',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
-      show: false,
     }
   },
   components: {
@@ -62,8 +60,6 @@ export default {
     close(){
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "0"
         document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "-1"
-        this.show = false;
-        console.log(this.show)
     },
     changefont(p){
         if(p.target.id=="square"){
