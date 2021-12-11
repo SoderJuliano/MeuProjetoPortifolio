@@ -352,7 +352,6 @@ export default {
 }
 @media screen and (min-width:1001px) {
   .side{
-    height: calc(100% +200px);
     width: 30%;
     min-width: 250px;
     background-color: gray;

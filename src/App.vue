@@ -237,7 +237,6 @@ export default {
 }
 @media screen and (min-width:1001px) {
   .template{
-    width: 50%;
     margin: 0 auto;
   }
  .main{
