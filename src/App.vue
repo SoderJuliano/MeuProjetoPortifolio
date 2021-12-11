@@ -6,20 +6,10 @@
         @click="changefont"
       />
     </div>
-<<<<<<< HEAD
-    <Side
-      :cor="sideColor"
-    />
-    <Page
-      @click="closeEditarContato"
-      :cor="mainColor"
-      :fontSize="fontSize"
-=======
     <template1 
        :style="getStyle()"
        :mainColor=mainColor
        :sideColor=sideColor
->>>>>>> 507d05399d377ca5aa60bc65a9cf8fd53e2c93b6
     />
     <Footer 
       class="footer"
@@ -248,10 +238,11 @@ export default {
 @media print {
   .main{
     display: flex;
+    position: absolute;
     width: 100vw;
     height: 100vh;
     transform: scaleY(.9);
-    margin-top: -5%;
+    top: -5%;
     -webkit-print-color-adjust: exact;
   } 
 
@@ -266,6 +257,9 @@ export default {
     display: none !important;
   }
   #navbar{
+    display: none !important;
+  }
+  .navbar{
     display: none !important;
   }
 }
