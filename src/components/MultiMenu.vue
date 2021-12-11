@@ -1,5 +1,12 @@
 <template>
     <div class="multiMenu-options">
+        <div class="header">
+            <h3>OPÇÕES</h3>
+            <button  @click="$emit('close')">
+                <ion-icon name="close" ></ion-icon>
+            </button>
+        </div>
+        
         <fonts />
         <Colors />
         <pageColor />
@@ -27,7 +34,17 @@ export default {
 }
 </script>
 <style scoped>
-
+.bnt-close{
+    position: relative;
+    right: 10px;
+    top: 10px;
+}
+.header{
+    display: flex;
+    width: 50%;
+    height: 30px;
+    justify-content: space-between;
+}
 @media only screen and(min-width:1001px) {
     .multiMenu-options{
         max-height: 100%;
