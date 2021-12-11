@@ -29,6 +29,9 @@ export default {
             hover: false,
         }
     },
+    props:{
+       // mainColor:String
+    },
     methods:{
         changefontM(p){
             
@@ -57,6 +60,7 @@ export default {
         if(p.target.textContent.includes('pag-')==true){
           p.target.id != '' && p.target.id != null ? 
           (
+           // this.mainColor = p.target.id,
             document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id, 
             document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id,
             document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id,

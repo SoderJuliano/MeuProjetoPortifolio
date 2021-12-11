@@ -38,6 +38,10 @@
                 </div>
         </nav> 
     </div>
+  <options-menu 
+    @close="closeMenu"
+    :show = show
+  />
 </template>
 
 <script>
@@ -50,9 +54,7 @@ export default {
         info: false
       }
     },
-    props:{
-      showthis: Boolean
-    },
+    emits:['close'],
     methods:{
       close(){
         this.$emit('close')
@@ -82,6 +84,9 @@ export default {
         this.show = true
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "1"
         document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "1"
+      },
+      closeMenu(){
+        this.show = false
       },
       about(){
         alert("Este site foi desenvolvido para suprir a necessidade de montar cvs ou atualizar currículos de forma rápida, pratica e de forma gratuíta, gerando um cv bonito e profissional altamente configurável.");

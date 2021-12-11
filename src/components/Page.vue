@@ -81,12 +81,15 @@ export default{
         }
     },
     props:{
-        cor:String
+        cor:String,
+        fontSize: String
     },
     methods:{
         getStyle(){
-            return {'background-color': `${this.cor}`,
-                    
+            return {
+                'background-color': `${this.cor}`,
+                'font-size': `${this.fontSize}`,
+                'font-weiht': 'bold'
             }
         },
         insertName(){

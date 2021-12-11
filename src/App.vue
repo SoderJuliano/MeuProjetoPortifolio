@@ -42,6 +42,8 @@ export default {
   data(){
     return{
       font: 'Oswald',
+      fontSize: '14px',
+      fontSizeTitles: '16px',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
       show: false,
@@ -103,7 +105,8 @@ export default {
             }
           }
           p.target.id.split('').length<8 && p.target.id.split('').length>1 ?
-          (this.mainColor = p.target.id,
+          (
+          this.mainColor = p.target.id,
           localStorage.setItem("mainColor", p.target.id)) :
           localStorage.getItem('mainColor') ?
             this.mainColor = localStorage.getItem('mainColor') : this.mainColor = "#87CEEB"
@@ -268,6 +271,7 @@ export default {
   }
   .main{
     display: flex;
+    position: absolute;
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -286,6 +290,9 @@ export default {
     display: none !important;
   }
   #navbar{
+    display: none !important;
+  }
+  .navbar{
     display: none !important;
   }
 }
