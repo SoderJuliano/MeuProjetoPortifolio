@@ -2,9 +2,6 @@
     <div class="multiMenu-options">
         <div class="header">
             <h3>OPÇÕES</h3>
-            <button  @click="$emit('close')">
-                <ion-icon name="close" ></ion-icon>
-            </button>
         </div>
         
         <fonts />
@@ -43,7 +40,7 @@ export default {
     display: flex;
     width: 50%;
     height: 30px;
-    justify-content: space-between;
+    text-align: center;
 }
 @media only screen and(min-width:1001px) {
     .multiMenu-options{
