@@ -205,12 +205,13 @@ export default {
 
 <style>
 .multi-menu-class{
+  padding: 30px;
   opacity: 0;
   z-index: -1;
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
   -webkit-box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray, 5px 5px 15px 5px gray; 
-box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray, 5px 5px 15px 5px gray;
+  box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray, 5px 5px 15px 5px gray;
 }
 @media screen and (max-width:1000px) {
  .main{
@@ -253,6 +254,8 @@ box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray, 5px 5px 15px 5px
   .main-left{
     width: 25%;
     height: 100vh;
+    padding: 10px;
+    margin-right: 10px;
   }
   .right{
       width: 25%;
