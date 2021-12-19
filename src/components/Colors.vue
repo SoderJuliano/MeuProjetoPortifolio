@@ -1,6 +1,6 @@
 <template>
     <div class="colors-container">
-        <p class="tside">TIPOS DE COR LATERAL</p>
+        <p class="tside">COR LATERAL</p>
         <div class="colors">
             <div class="dots-container">
                 <div class="dot" style="background-color: #ff8533">#ff8533</div>

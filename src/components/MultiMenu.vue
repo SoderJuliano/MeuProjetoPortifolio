@@ -3,7 +3,6 @@
         <div class="header">
             <h3>OPÇÕES</h3>
         </div>
-        
         <fonts />
         <Colors />
         <pageColor />

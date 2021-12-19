@@ -136,13 +136,9 @@ export default {
     border-radius: 50%;
     margin-left: 10px;
 }
-.avatares-container{
-    width: 100%;
-    display: block;
-    min-height: 80px;
-}
 .avatares-container:hover .avatares-subcontainer{
     display: block;
+    position: absolute;
 }
 </style>
 <style>
@@ -158,5 +154,16 @@ export default {
 }
 .avatares-subcontainer{
     display: none;
+    padding: 15px;
+    height: 150px;
+    width: 300px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgba(245, 245, 245, 0.514);
+    margin-left: 15px;
+    margin-top: -15px;
+    justify-content: space-around;
+    display: none;
+    overflow-y: scroll;
 }
 </style>

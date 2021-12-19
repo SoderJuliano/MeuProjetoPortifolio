@@ -17,10 +17,17 @@ export default {
 <style scoped>
 .shape-container:hover .shapes{
   display: flex;
+  position: absolute;
 }
 .shapes{
-    margin-left: 10px;
-    margin-top: 10px;
+    padding: 15px;
+    height: 100px;
+    width: 300px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgba(245, 245, 245, 0.514);
+    margin-left: 15px;
+    margin-top: -15px;
     justify-content: space-around;
     display: none;
 }

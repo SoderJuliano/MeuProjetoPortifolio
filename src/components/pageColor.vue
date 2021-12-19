@@ -1,6 +1,6 @@
 <template>
     <div class="colors-container">
-        <p class="tside">TIPOS DE COR PRINCIPAL</p>
+        <p class="tside">COR PRINCIPAL</p>
         <div class="colors">
             <div class="dots-container">
                 <div class="dot" id="#FFA07A" style="background-color: #FFA07A">pag-#FFA07A</div>
@@ -52,16 +52,20 @@ export default {
 }
 .colors{
     display: none;
-    width: 65%;
-    margin-top: -1%;
-    padding: 10px;
-    box-shadow: 0 0 50px #ccc;
-    color: white;
+    padding: 15px;
+    height: 100px;
+    width: 300px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgba(245, 245, 245, 0.514);
+    margin-left: 15px;
+    margin-top: -15px;
     justify-content: space-around;
+    display: none;
 }
 .colors-container:hover .colors{
     display: block;
-    position: relative;
+    position: absolute;
 }
 .colors-container{
     display: block;
