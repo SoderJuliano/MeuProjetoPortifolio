@@ -44,6 +44,7 @@ import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
 import editarCompetencias from "./editarCompetencias.vue"
 import editarExperiencias from './editarExperiencias.vue'
+import editorInformacoes from './editorIformacoes.vue'
 
 export default{
     name:"Page",
@@ -52,7 +53,8 @@ export default{
         Competencias,
         Experiencias,
         editarCompetencias,
-        editarExperiencias
+        editarExperiencias,
+        editorInformacoes
     },
     data(){
         return{
