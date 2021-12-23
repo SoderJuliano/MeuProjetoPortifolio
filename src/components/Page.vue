@@ -36,7 +36,11 @@
             :userExperience="userExperience"
         />
     </div>
-        
+     <editorInformacoes 
+        mainTitle="Informacoes de usuario"
+        title="Name"
+        placeholder="Digite seu nome aqui"
+     />
 </template>
 <script>
 import Resumo from "./Resumo.vue"
