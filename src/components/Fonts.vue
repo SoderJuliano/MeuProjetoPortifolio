@@ -3,22 +3,30 @@
       <p class="tside">FONTES</p>
         <div class="dropdown">
             <div class="dropdown-content">
-                <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' >Oswald</p>
-                <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' >Zen Loop</p>
-                <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click='$emit("changefont")' >Fuggles</p>
+              <div class="row">
+                  <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' >Oswald</p>
+                  <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' >Zen Loop</p>
+                  <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click='$emit("changefont")' >Fuggles</p>
+              </div>
+              <div class="row">
                 <p style="font-family': 'STIX Two Math', serif; font-weight: bold" @click='$emit("changefont")' >STIX Two Math</p>
                 <p style="font-family: 'Hina Mincho', serif;" @click='$emit("changefont")' >Hina Mincho</p>
                 <p style="font-family: 'Inconsolata', monospace;" @click='$emit("changefont")' >Inconsolata</p>
+              </div>
+              <div class="row">
                 <p style="font-family: 'Kaisei Decol', serif;" @click='$emit("changefont")' >Kaisei Decol</p>
                 <p style="font-family: 'Teko', sans-serif;" @click='$emit("changefont")' >Teko</p>
-
-
                 <p style="font-family: 'Crimson Text', serif;" @click='$emit("changefont")' >Crimson</p>
+              </div>
+              <div class="row">
                 <p style="font-family: 'Dongle', sans-serif;" @click='$emit("changefont")' >Dongle</p>
                 <p style="font-family: 'Mochiy Pop One', sans-serif;" @click='$emit("changefont")' >Mochiy</p>
                 <p style="font-family: 'Roboto Mono', monospace;" @click='$emit("changefont")' >Roboto</p>
+              </div>
+              <div class="row">
                 <p style="font-family: verdana" @click='$emit("changefont")'>verdana</p>
                 <p style="font-family:'Courier New'" @click='$emit("changefont")'>Courier New</p>
+              </div>
             </div>
         </div>
     </div>
@@ -31,6 +39,10 @@ export default {
 </script>
 
 <style scoped>
+.row{
+  display: flex;
+  justify-content: space-around;
+}
 @media screen and(min-width: 1001px) {
   .fonts-container{
     min-height: 100px;
@@ -69,7 +81,7 @@ export default {
 .dropdown-content {
   display: none;
   position: absolute;
-  min-width: 160px;
+  min-width: 300px;
   z-index: 1;
   overflow-y: scroll;
   padding: 15px;
@@ -81,7 +93,7 @@ export default {
   justify-content: space-around;
 }
 .fonts-container:hover .dropdown-content {
-  display: block;
+  display: grid;
   position: absolute;
 }
 
