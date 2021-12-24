@@ -4,9 +4,9 @@
         <div class="body-modal-container">
                 <div v-if="title != null">
                     {{title}}
-                    <input id="{{title}}" type="text" :placeholder="`${this.placeholder}`">
+                    <input :id="`${title}`" type="text" :placeholder="`${this.placeholder}`">
                     <br><br>
-                    <button >Salvar</button><button v-on:click="cancelar">Cancelar</button>
+                    <button v-on:click=add(title)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
                 </div>
         </div>
     </div>
@@ -24,6 +24,7 @@ export default {
         add(title){
             //title as string
             this.registerValues('nome', document.getElementById(title).value)
+            document.getElementById(title).value = ""
         },
         registerValues(name, value){
             localStorage.setItem(name, value)
@@ -48,6 +49,8 @@ export default {
     background-color: rgb(74, 74, 74);
     justify-content: center;
     text-align: center;
+    transition-duration: 1500ms;
+    transition-delay: 200ms;
 }
 .body-modal-container{
     width: 80vw;
