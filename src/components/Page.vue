@@ -1,9 +1,15 @@
 <template>
     <div class="main-container">
         <div :style="getStyle()" class="page-header">
-            <span @click="insertName" class="name-title">{{user.name}}</span>
-            <input @change="newName" @mouseleave="newName" type="text" :value="`${user.name}`" id="nname" class="input-name">
-            <p contenteditable="true" @input="newProfession" class="profession">{{user.profession}}</p>    
+            <div style="width: 100%; text-align: center;">
+                <span class="name-title">{{user.name}}</span>
+                <img src="../icons/editar.png" alt="editar" class="editar" @click="showModal('nome')"/>
+            </div>
+            <div style="width: 100%; text-align: center; padding-top: 20px;">
+                <span contenteditable="true" @input="newProfession" class="profession">{{user.profession}}</span>
+                <img src="../icons/editar.png" alt="editar" class="editar" @click="showModal('profissao')"/>
+            </div>
+                
         </div>    
         <Resumo
             class="data-container"
@@ -37,9 +43,9 @@
         />
     </div>
      <editorInformacoes 
-        mainTitle="Informacoes de usuario"
-        title="Name"
-        placeholder="Digite seu nome aqui"
+        :mainTitle="modal.mainTitle"
+        :title="modal.title1"
+        :placeholder="modal.placeholder1"
      />
 </template>
 <script>
@@ -62,6 +68,11 @@ export default{
     },
     data(){
         return{
+            modal: {
+                mainTitle: "",
+                title1: "",
+                placeholder1: "",
+            },
             user: {
                 name: 'Digite nome',
                 profession: 'Sua profissão',
@@ -91,29 +102,36 @@ export default{
         fontSize: String
     },
     methods:{
+        showDivModal(){
+            document.getElementsByClassName("main-modal-container")[0].style.width = "100vw";
+            document.getElementsByClassName("main-modal-container")[0].style.heigth = "100vh";
+            document.getElementsByClassName("main-modal-container")[0].style.opacity = "100";
+            document.getElementsByClassName("main-modal-container")[0].style.zIndex = "10";
+        },
+        showModal(qual){
+            switch (qual) {
+                case 'nome':
+                    this.modal.mainTitle = "Informacoes pessoais"
+                    this.modal.title1 = "Nome"
+                    this.modal.placeholder1 = "digite seu nome aqui"
+                    this.showDivModal()
+                    break;
+                case 'profissao':
+                    this.modal.mainTitle = "Informacoes pessoais"
+                    this.modal.title1 = "Profissao"
+                    this.modal.placeholder1 = "digite seu cargo/profissao"
+                    this.showDivModal()
+                    break;
+                default:
+                    break;
+            }
+        },
         getStyle(){
             return {
                 'background-color': `${this.cor}`,
                 'font-size': `${this.fontSize}`,
                 'font-weiht': 'bold'
             }
-        },
-        insertName(){
-            document.getElementsByClassName('name-title')[0].style.display = 'none'
-            document.getElementById('nname').style.display = 'block'
-            
-        },
-        newName(){
-            const nname = document.getElementById('nname').value
-            if(nname){
-                //console.log('nname '+nname)
-                localStorage.setItem('user-name', nname)
-                this.name = nname
-                document.getElementsByClassName('name-title')[0].textContent = this.name
-               // location.reload() doenst need reload
-            }
-            document.getElementsByClassName('name-title')[0].style.display = 'block'
-            document.getElementById('nname').style.display = 'none'
         },
         newProfession(){
             const prof = document.getElementsByClassName('profession')[0].textContent
@@ -177,12 +195,9 @@ export default{
 }
 </script>
 <style scoped>
-
-.input-name{
-    display: none;
-    width: 50%;
-    height: 30px;
-    margin-left: 100px;
+.editar{
+    padding-top: 15px;
+    margin: 10px;
 }
 @media print {
     .main-container{
@@ -195,6 +210,9 @@ export default{
         display: none;
     }
     .editar-experiencias{
+        display: none;
+    }
+    .editar{
         display: none;
     }
 }

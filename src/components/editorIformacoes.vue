@@ -4,7 +4,7 @@
         <div class="body-modal-container">
                 <div v-if="title != null">
                     {{title}}
-                    <input :id="`${title}`" type="text" :placeholder="`${this.placeholder}`">
+                    <input id="modal-input" type="text" :placeholder="`${this.placeholder}`">
                     <br><br>
                     <button v-on:click=add(title)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
                 </div>
@@ -23,16 +23,32 @@ export default {
     methods:{
         add(title){
             //title as string
-            this.registerValues('nome', document.getElementById(title).value)
-            document.getElementById(title).value = ""
+            alert(title)
+            switch(title) {
+                case 'Nome':
+                    this.registerValues('user-name', document.getElementById('modal-input').value);
+                    document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value;
+                    this.cancelar();
+                    break;
+                case 'Profissao':
+                    this.registerValues('profession', document.getElementById('modal-input').value);
+                    document.getElementsByClassName("profession")[0].textContent = document.getElementById('modal-input').value;
+                    this.cancelar();
+                    break;
+                default:
+                    break;
+            }
+            
         },
         registerValues(name, value){
             localStorage.setItem(name, value)
         },
         cancelar(){
+            document.getElementsByClassName("main-modal-container")[0].style.width = "2%";
+            document.getElementsByClassName("main-modal-container")[0].style.heigth = "2%";
             document.getElementsByClassName("main-modal-container")[0].style.opacity = "0";
             document.getElementsByClassName("main-modal-container")[0].style.zIndex = "-1";
-        }
+        },
     }
 }
 </script>
@@ -45,7 +61,8 @@ export default {
     display: block;
     width: 100vw;
     height: 100vh;
-    z-index: 10;
+    opacity: 0;
+    z-index: -1;
     background-color: rgb(74, 74, 74);
     justify-content: center;
     text-align: center;
