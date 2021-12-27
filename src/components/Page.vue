@@ -18,6 +18,7 @@
             :user="user"
         />
         <Competencias
+            @add-competencia="editarCompetencias"
             class="data-container"
             titulo="COMPETÊNCIAS"
             :cor="cor"
@@ -46,6 +47,7 @@
         :mainTitle="modal.mainTitle"
         :title="modal.title1"
         :placeholder="modal.placeholder1"
+        :competencia="user.competence"
      />
 </template>
 <script>
@@ -72,6 +74,7 @@ export default{
                 mainTitle: "",
                 title1: "",
                 placeholder1: "",
+                list: [],
             },
             user: {
                 name: 'Digite nome',
@@ -102,6 +105,9 @@ export default{
         fontSize: String
     },
     methods:{
+        editarCompetencias(){
+            this.showModal('competencias')
+        },
         showDivModal(){
             document.getElementsByClassName("main-modal-container")[0].style.width = "100vw";
             document.getElementsByClassName("main-modal-container")[0].style.heigth = "100vh";
@@ -114,12 +120,21 @@ export default{
                     this.modal.mainTitle = "Informacoes pessoais"
                     this.modal.title1 = "Nome"
                     this.modal.placeholder1 = "digite seu nome aqui"
+                    this.modal.list = []
                     this.showDivModal()
                     break;
                 case 'profissao':
                     this.modal.mainTitle = "Informacoes pessoais"
                     this.modal.title1 = "Profissao"
                     this.modal.placeholder1 = "digite seu cargo/profissao"
+                    this.modal.list = []
+                    this.showDivModal()
+                    break;
+                case 'competencias':
+                    this.modal.mainTitle = "Competencias"
+                    this.modal.title1 = "Nova competencia"
+                    this.modal.placeholder1 = "escreva uma hasbilidade sua"
+                    this.modal.list = this.user.competence
                     this.showDivModal()
                     break;
                 default:

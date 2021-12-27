@@ -15,10 +15,16 @@
 <script>
 export default {
     name: 'modal-input',
+    data(){
+        return{
+            competencias : this.competencia,
+        }
+    },
     props:{
         mainTitle: String,
         title: String,
-        placeholder: String
+        placeholder: String,
+        competencia: Array,
     },
     methods:{
         add(title){
@@ -35,10 +41,29 @@ export default {
                     document.getElementsByClassName("profession")[0].textContent = document.getElementById('modal-input').value;
                     this.cancelar();
                     break;
+                case 'Nova competencia':
+                    if(document.getElementById('modal-input').value){
+                        this.competencias.push(document.getElementById('modal-input').value)
+                    }
+                    this.$emit('update: user.competence', this.competencias)
+                    localStorage.setItem('cpta', this.competencias)
+                    this.cancelar();
+                    break;    
                 default:
                     break;
             }
             
+        },
+        adicionarCompetencia(){
+            const cpta = document.getElementById('competencia-input').value
+            console.log('cpta '+cpta)
+            if(cpta){
+                this.competencias.push(cpta)
+                console.log('array '+  this.competencias)
+                this.$emit('update: user.competence', this.competencias)
+                localStorage.setItem('cpta', this.competencias)
+            }
+            document.getElementById('competencia-input').value = ''
         },
         registerValues(name, value){
             localStorage.setItem(name, value)

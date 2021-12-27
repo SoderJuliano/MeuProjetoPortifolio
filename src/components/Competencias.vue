@@ -1,10 +1,13 @@
 <template>
   <div class="competencias">
       <p class="title" :style="getStyle()">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarCompetencias"/>
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
       </p>
-      <div v-for="(item, index) in user.competence " :key="index" class="competencias-container">
-         <li class="data-container-page">{{item}}</li>
+      <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
+         <li class="data-container-page">{{item}}
+           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
+         </li>
+         
       </div>
   </div>
 </template>
@@ -18,18 +21,23 @@ export default {
     user: Object,
     cor: String
   },
+  data(){
+    return{
+      competencias : this.user.competence
+    }
+  },
+  emits: ['add-competencia'],
   methods:{
       getStyle(){
           return{
               'background-color': `${this.cor}`
           }
       },
-      showEditarCompetencias(){
-        document.getElementsByClassName('editar-competencais')[0].style.display = 'block'
-        document.getElementsByClassName('editar-competencais')[0].style.opacity = '100% !important'
-        //abre o componente e faz scroll to the top
-        window.scrollTo(0,0)
-      }
+      removeCompetence(event){
+        this.competencias.splice(this.competencias.indexOf(event.target.id),1)
+        this.$emit('update: user.competence', this.competencias)
+        localStorage.setItem('cpta', this.competencias)
+      },
   }
 }
 </script>
@@ -53,6 +61,9 @@ export default {
 }
 @media print{
   .editar{
+    display: none;
+  }
+  .remove-bnt{
     display: none;
   }
 }
