@@ -41,8 +41,8 @@ export default {
   data(){
     return{
       font: 'Oswald',
-      fontSize: '14px',
-      fontSizeTitles: '16px',
+      fontSize: '15px',
+      fontSizeTitles: '17px',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
     }

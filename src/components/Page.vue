@@ -12,6 +12,7 @@
                 
         </div>    
         <Resumo
+            @add-resumo="editarResumo"
             class="data-container"
             titulo="SOBRE"
             :cor="cor"
@@ -23,12 +24,6 @@
             titulo="COMPETÊNCIAS"
             :cor="cor"
             :user="user"
-        />
-        <editar-competencias
-            :cor="cor"
-            :user="user"
-            class="editar-competencais"
-            id="editarCompetencias"
         />
         <Experiencias
             class="data-container"
@@ -54,7 +49,6 @@
 import Resumo from "./Resumo.vue"
 import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
-import editarCompetencias from "./editarCompetencias.vue"
 import editarExperiencias from './editarExperiencias.vue'
 import editorInformacoes from './editorIformacoes.vue'
 
@@ -64,7 +58,6 @@ export default{
         Resumo,
         Competencias,
         Experiencias,
-        editarCompetencias,
         editarExperiencias,
         editorInformacoes
     },
@@ -108,6 +101,9 @@ export default{
         editarCompetencias(){
             this.showModal('competencias')
         },
+        editarResumo(){
+            this.showModal('resumo')
+        },
         showDivModal(){
             document.getElementsByClassName("main-modal-container")[0].style.width = "100vw";
             document.getElementsByClassName("main-modal-container")[0].style.heigth = "100vh";
@@ -134,6 +130,13 @@ export default{
                     this.modal.mainTitle = "Competencias"
                     this.modal.title1 = "Nova competencia"
                     this.modal.placeholder1 = "escreva uma hasbilidade sua"
+                    this.modal.list = this.user.competence
+                    this.showDivModal()
+                    break;
+                case 'resumo':
+                    this.modal.mainTitle = "Resumo profissional"
+                    this.modal.title1 = "Sobre voce"
+                    this.modal.placeholder1 = "Descreva que tipo de profficional voce e..."
                     this.modal.list = this.user.competence
                     this.showDivModal()
                     break;

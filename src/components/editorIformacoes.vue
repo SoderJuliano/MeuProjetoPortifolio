@@ -3,8 +3,9 @@
         <h3>{{mainTitle}}</h3>
         <div class="body-modal-container">
                 <div v-if="title != null">
-                    {{title}}
-                    <input id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    <span :style="title=='Sobre voce' ? 'position: absolute; margin-bottom:50px; margin-left: -70px' : ''">{{title}}</span>
+                    <textarea v-if="title=='Sobre voce'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                    <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
                     <br><br>
                     <button v-on:click=add(title)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
                 </div>
@@ -29,7 +30,6 @@ export default {
     methods:{
         add(title){
             //title as string
-            alert(title)
             switch(title) {
                 case 'Nome':
                     this.registerValues('user-name', document.getElementById('modal-input').value);
@@ -47,6 +47,11 @@ export default {
                     }
                     this.$emit('update: user.competence', this.competencias)
                     localStorage.setItem('cpta', this.competencias)
+                    this.cancelar();
+                    break; 
+                case 'Sobre voce':
+                    localStorage.setItem('about', document.getElementById('modal-input').value)
+                    document.getElementById('resume').textContent = document.getElementById('modal-input').value
                     this.cancelar();
                     break;    
                 default:

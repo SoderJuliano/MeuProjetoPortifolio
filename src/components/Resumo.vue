@@ -2,7 +2,9 @@
   <div class="resumo">
       <p class="title" :style="getStyle()">{{titulo}}</p>
       <div class="resumo-container">
-         <span contenteditable="true" @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
+         <ion-icon name="book" size="large"></ion-icon>
+         <span @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
+         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
       </div>
   </div>
 </template>
@@ -16,6 +18,7 @@ export default {
     user: Object,
     cor: String
   },
+  emits:['add-resumo'],
   methods:{
       getStyle(){ //console.log(this.cor +' corrr')
           return{
@@ -33,17 +36,19 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .resumo-container{
-  width: 100%;
+  max-width: 100%;
   height: 100%;
   align-self: center;
   margin: 0 auto;
   padding-top: 20px;
   display: flex;
+  padding: 10px;
 }
 .title{
     width: 98.35%;
 }
 .data-container-page{
+    margin-left: 10px;
     width: 100%;
     height: 100%;
 }

@@ -4,10 +4,10 @@
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
-         <li class="data-container-page">{{item}}
+        <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
+         <span class="data-container-page">{{item}}
            <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
-         </li>
-         
+         </span>
       </div>
   </div>
 </template>
