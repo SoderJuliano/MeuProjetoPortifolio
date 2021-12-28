@@ -3,7 +3,7 @@
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
       </p>
-      <div :id="item.function" v-for="(item, index) in experiences " :key="index" class="experiencias-container">
+      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" class="experiencias-container">
         <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
           <h3>{{item.function}}</h3>
           <div style="display: flex">
@@ -59,29 +59,6 @@ export default {
         },
   },
   beforeMount(){
-     
-     // converting data to array strings
-/*
-      let d = this.job.hired
-      const newD = d.split('-')
-      const stng = newD[2]+"/"+newD[1]+"/"+newD[0]
-      
-      let de = this.job.end.split('-')
-      const newDe = de[2]+"/"+de[1]+"/"+de[0]
-
-      const lasd = this.lastJob.hired.split('-')
-      const lasthired = lasd[2]+"/"+lasd[1]+"/"+lasd[0]
-
-      if(!this.lastJob.end){
-        this.lastJobEnd = 'emprego atual'
-      }else{
-        const lastend = this.lastJob.end.split('-')
-        this.lastJobEnd = lastend[2]+"/"+lastend[1]+"/"+lastend[0]
-      } 
-
-      this.lasJobHired = lasthired
-      this.jobEnd = newDe
-      this.jobHired = stng*/
   }
 }
 </script>
@@ -101,12 +78,14 @@ export default {
 }
 .experiencias-container{
   color: black !important;
-  width: 100%;
   height: 100%;
   align-self: center;
   margin: 0 auto;
   padding-top: 20px;
   display: block;
+  background-color: whitesmoke;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 .title{
     width: 98.35%;
