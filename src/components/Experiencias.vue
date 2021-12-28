@@ -1,17 +1,12 @@
 <template>
   <div class="experiencias">
       <p class="title" :style="getStyle()">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarExperiencias"/>
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
       </p>
-      <div :style="getOpacity2()" class="experiencias-container">
-         <span class="data-container-page-title">{{lastJob.title}} - {{lastJob.company}}</span>
-         <li  id='lastjob-dates'>de {{lasJobHired}} à {{lastJobEnd}}</li>
-         <p id="lastjob-description">{{lastJob.description}}</p>
-      </div>
-      <div :style="getOpacity()" class="experiencias-container">
-         <span  id="job-title" class="data-container-page-title">{{job.title}} - {{job.company}}</span>
-         <li id="job-dates">de {{jobHired}} à {{jobEnd}}</li>
-         <p id="job-description">{{job.description}}</p>
+      <div v-for="(item, index) in experiences " :key="index" class="experiencias-container">
+          <h3>{{item.function}}</h3>
+          <h4>{{item.company}}</h4>
+          <span>{{item.dateHired}}</span> ate <span v-if="item.dateFired">{{item.dateFired}}</span><span v-else> hoje</span>
       </div>
   </div>
 </template>
@@ -19,18 +14,18 @@
 <script>
 export default {
   name: 'Experiencias',
+  emits: ['add-experiencia'],
   props:{
     titulo: String,
-    lastJob: Object,
-    job: Object,
-    cor: String
+    cor: String,
+    experiences: Array,
   },
   data(){
     return{
-      jobHired: null,
-      jobEnd: null,
-      lasJobHired: null,
-      lastJobEnd: null
+      jobHired: '',
+      jobEnd: '',
+      lasJobHired: '',
+      lastJobEnd: ''
     }
   },
   methods:{
@@ -39,31 +34,31 @@ export default {
               'background-color': `${this.cor}`
           }
       },
-      getOpacity(){
+      getOpacity(){/*
         if(this.job.title){
           return {'opacity': '100%'}
         }else{
           return {'opacity': '0%'}
-        }
+        }*/
       },
-      getOpacity2(){
+      getOpacity2(){/*
         if(this.lastJob.title){
           return {'opacity': '100%'}
         }else{
           return {'opacity': '0%'}
-        }
+        }*/
       },
-      showEditarExperiencias(){
+      /*showEditarExperiencias(){
         document.getElementsByClassName('editar-experiencias')[0].style.display = 'block'
         document.getElementsByClassName('editar-experiencias')[0].style.opacity = '100% !important'
         //abre o componente e faz scroll to the top
         window.scrollTo(0,0)
-      }
+      }*/
   },
   beforeMount(){
      
      // converting data to array strings
-
+/*
       let d = this.job.hired
       const newD = d.split('-')
       const stng = newD[2]+"/"+newD[1]+"/"+newD[0]
@@ -83,7 +78,7 @@ export default {
 
       this.lasJobHired = lasthired
       this.jobEnd = newDe
-      this.jobHired = stng
+      this.jobHired = stng*/
   }
 }
 </script>

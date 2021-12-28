@@ -26,16 +26,11 @@
             :user="user"
         />
         <Experiencias
+            @add-experiencia="editarExperiencias"
             class="data-container"
             titulo="EXPERIÊNCIAS"
             :cor="cor"
-            :lastJob="userExperience.lastJob"
-            :job="userExperience.job"
-        />
-        <editar-experiencias
-            :cor="cor"
-            class="editar-experiencias"
-            :userExperience="userExperience"
+            :experiences="userExperiences"
         />
     </div>
      <editorInformacoes 
@@ -43,13 +38,15 @@
         :title="modal.title1"
         :placeholder="modal.placeholder1"
         :competencia="user.competence"
+        :title2="modal.title2"
+        :placeholder2="modal.placeholder2"
+        :experiences="userExperiences"
      />
 </template>
 <script>
 import Resumo from "./Resumo.vue"
 import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
-import editarExperiencias from './editarExperiencias.vue'
 import editorInformacoes from './editorIformacoes.vue'
 
 export default{
@@ -58,7 +55,6 @@ export default{
         Resumo,
         Competencias,
         Experiencias,
-        editarExperiencias,
         editorInformacoes
     },
     data(){
@@ -67,6 +63,8 @@ export default{
                 mainTitle: "",
                 title1: "",
                 placeholder1: "",
+                title2: "",
+                placeholder2: "",
                 list: [],
             },
             user: {
@@ -75,29 +73,17 @@ export default{
                 resume: 'Digite aqui um resumo sobre você.',
                 competence: []
             },
-            userExperience: {
-                lastJob: {
-                    title: '',
-                    company: '',
-                    hired: '',
-                    end: '',
-                    description: ""
-                },
-                job: {
-                   title: '',
-                    company: '',
-                    hired: '',
-                    end: '',
-                    description: ""
-                }
-            }
+            userExperiences: [],
         }
     },
     props:{
-        cor:String,
+        cor: String,
         fontSize: String
     },
     methods:{
+        editarExperiencias(){
+            this.showModal('experiencias')
+        },
         editarCompetencias(){
             this.showModal('competencias')
         },
@@ -136,8 +122,16 @@ export default{
                 case 'resumo':
                     this.modal.mainTitle = "Resumo profissional"
                     this.modal.title1 = "Sobre voce"
-                    this.modal.placeholder1 = "Descreva que tipo de profficional voce e..."
+                    this.modal.placeholder1 = "Descreva que tipo de proficional voce e..."
                     this.modal.list = this.user.competence
+                    this.showDivModal()
+                    break;
+                case 'experiencias':
+                    this.modal.mainTitle = "Experiencia profissional"
+                    this.modal.title1 = "Nome da empresa"
+                    this.modal.placeholder1 = "Digite aqui"
+                    this.modal.title2 = "Cargo que ocupava"
+                    this.modal.placeholder2 = "Digite aqui"
                     this.showDivModal()
                     break;
                 default:
@@ -179,31 +173,11 @@ export default{
             }
         },
         getExperienceData(){
-            let ljob = localStorage.getItem('lastjob')
-            if(ljob && ljob!=null &&ljob!=''){
-                let lastjob = ljob.split(',')
-                const lastjobDescription = localStorage.getItem('lastjobDescription')
-                lastjob.push(lastjobDescription)
-                //console.log(lastjob)
-                this.userExperience.lastJob.title = lastjob[0]
-                this.userExperience.lastJob.company = lastjob[1]
-                this.userExperience.lastJob.hired = lastjob[2]
-                this.userExperience.lastJob.end = lastjob[3]
-                this.userExperience.lastJob.description = lastjobDescription
+            let jobs = JSON.parse(localStorage.getItem('jobs'))
+            if(jobs){
+                console.log(jobs)
+                this.userExperiences = jobs
             }
-            let jobE = localStorage.getItem('job')
-            if(jobE && jobE!=null && jobE!=''){
-                let job = jobE.split(',')
-                const jobDescription = localStorage.getItem('jobDescription')
-                job.push(jobDescription)
-                //console.log(job)
-                this.userExperience.job.title = job[0]
-                this.userExperience.job.company = job[1]
-                this.userExperience.job.hired = job[2]
-                this.userExperience.job.end = job[3]
-                this.userExperience.job.description = jobDescription
-            }
-            
         }
     },
     beforeMount(){

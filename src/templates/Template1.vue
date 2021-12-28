@@ -32,7 +32,8 @@ export default {
 @media screen and (min-width: 1001px){
   .custom-container{
     justify-content: start;
-    height: calc(100vh - 35px) ;
+    min-height: calc(100vh - 35px);
+    max-height: 100%;
     display: flex;
     margin-top: 20px;
   }
