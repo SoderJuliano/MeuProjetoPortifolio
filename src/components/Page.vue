@@ -97,6 +97,11 @@ export default{
             document.getElementsByClassName("main-modal-container")[0].style.zIndex = "10";
         },
         showModal(qual){
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
             switch (qual) {
                 case 'nome':
                     this.modal.mainTitle = "Informacoes pessoais"
