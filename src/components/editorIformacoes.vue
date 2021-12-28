@@ -3,7 +3,7 @@
         <h3>{{mainTitle}}</h3>
         <div class="body-modal-container">
                 <div v-if="title != null">
-                    <span :style="title=='Sobre voce' ? 'position: absolute; margin-bottom:50px; margin-left: -70px' : ''">{{title}}</span>
+                    <span :style="title=='Sobre voce' ? 'position: absolute; margin-bottom:50px; margin-left: -70px' : 'margin-right: 10px'">{{title}}</span>
                     <textarea v-if="title=='Sobre voce'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                     <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
                     <br><br>

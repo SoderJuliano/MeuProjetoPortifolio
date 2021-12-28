@@ -6,7 +6,7 @@
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="showModal('nome')"/>
             </div>
             <div style="width: 100%; text-align: center; padding-top: 20px;">
-                <span contenteditable="true" @input="newProfession" class="profession">{{user.profession}}</span>
+                <span @input="newProfession" class="profession">{{user.profession}}</span>
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="showModal('profissao')"/>
             </div>
                 
