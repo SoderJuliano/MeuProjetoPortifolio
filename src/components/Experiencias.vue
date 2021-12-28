@@ -3,10 +3,17 @@
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
       </p>
-      <div v-for="(item, index) in experiences " :key="index" class="experiencias-container">
+      <div :id="item.function" v-for="(item, index) in experiences " :key="index" class="experiencias-container">
+        <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
           <h3>{{item.function}}</h3>
-          <h4>{{item.company}}</h4>
-          <span>{{item.dateHired}}</span> ate <span v-if="item.dateFired">{{item.dateFired}}</span><span v-else> hoje</span>
+          <div style="display: flex">
+            <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
+            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span> 
+              ate 
+            <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
+            <span style="margin-top: 0; margin-left:10px;" v-else> hoje</span>
+          </div>
+          <p>{{item.description}}</p>
       </div>
   </div>
 </template>
@@ -34,26 +41,22 @@ export default {
               'background-color': `${this.cor}`
           }
       },
-      getOpacity(){/*
-        if(this.job.title){
-          return {'opacity': '100%'}
-        }else{
-          return {'opacity': '0%'}
-        }*/
+      removeJob(item){
+        document.getElementById(item.function).style.display = "none"
+        this.removerJobs(item)
       },
-      getOpacity2(){/*
-        if(this.lastJob.title){
-          return {'opacity': '100%'}
-        }else{
-          return {'opacity': '0%'}
-        }*/
-      },
-      /*showEditarExperiencias(){
-        document.getElementsByClassName('editar-experiencias')[0].style.display = 'block'
-        document.getElementsByClassName('editar-experiencias')[0].style.opacity = '100% !important'
-        //abre o componente e faz scroll to the top
-        window.scrollTo(0,0)
-      }*/
+      removerJobs(item){
+            let j = localStorage.getItem('jobs')
+            if(j){
+                let objarray = JSON.parse(j)
+                objarray.map(function(val, index){
+                  if(val.function==item.function){
+                    objarray.splice(index, 1)
+                  }
+                })
+                localStorage.setItem('jobs', JSON.stringify(objarray))
+            }
+        },
   },
   beforeMount(){
      
@@ -85,6 +88,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media print{
+  .remove-bnt{
+    display: none;
+  }
+}
+.remove-bnt{
+  float: right;
+  position: relative;
+  margin-top: 20px;
+  margin-right: 20px;
+}
 .experiencias-container{
   color: black !important;
   width: 100%;

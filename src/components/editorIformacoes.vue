@@ -125,6 +125,7 @@ export default {
                 this.jobs.push(this.job)
                 localStorage.setItem('jobs', JSON.stringify(this.jobs))
             }
+            this.$emit('update:userExperiences', this.jobs)
         },
         adicionarCompetencia(){
             const cpta = document.getElementById('competencia-input').value
