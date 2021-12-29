@@ -1,12 +1,22 @@
 <template>
   <div class="custom-container">
       <Side
+        @add-info="$emit('add-info')"
+        @add-info2="addInfo"
         :cor="sideColor"
       />
       <Page
+        @add-resumo="$emit('add-resumo')"
+        @add-competencia="$emit('add-competencia')"
+        @add-experiencia="$emit('add-experiencia')"
+        @add-nome="$emit('add-nome')"
+        @add-profissao="$emit('add-profissao')"
         @click="closeEditarContato"
         :cor="mainColor"
+        :user="user"
+        :userExperiences="uExperiences"
       />
+      
   </div>
 </template>
 
@@ -16,13 +26,22 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
+  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao'],
+  data(){
+    return{
+      u: this.user,
+      uExperiences: this.userExperiences
+    }
+  },
   components: {
     Side,
-    Page
+    Page,
   },
   props:{
     mainColor: String,
-    sideColor : String
+    sideColor : String,
+    user: Object,
+    userExperiences: Array,
   },
   methods: {
   }

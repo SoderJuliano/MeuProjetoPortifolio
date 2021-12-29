@@ -1,31 +1,46 @@
 <template>
     <div class="main-modal-container">
         <h3>{{mainTitle}}</h3>
-        <div class="body-modal-container">
+        <div v-if="title!='Email'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
-                    <span :style="title=='Sobre voce' ? 'position: absolute; margin-bottom:50px; margin-left: -70px' : 'margin-right: 10px'">{{title}}</span>
+                    <span :style="title=='Sobre voce' ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
                     <textarea v-if="title=='Sobre voce'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                     <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    
                     <br><br>
+                    
                     <span style="margin-right: 10px" v-if="title == 'Nome da empresa'">{{title2}}</span>
                     <input id="modal-input2" v-if="title == 'Nome da empresa'" type="text" :placeholder="`${this.placeholder2}`">
+                    
                     <br v-if="title == 'Nome da empresa'"><br v-if="title == 'Nome da empresa'">
+                    
                     <button v-if="title == 'Nome da empresa'" @click="proximo(title)">Proximo</button>
                     <button v-else v-on:click=add(title)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
                 </div>
                 <div v-else>
                     <span v-if="ptitle" style="margin-right: 10px">{{ptitle}}</span>
                     <input v-if="ptitle" id="input-value-date1" type="date">
+                    
                     <br v-if="ptitle"><br v-if="ptitle">
+                    
                     <span v-if="ptitle2" style="margin-right: 10px">{{ptitle2}}</span>
                     <input v-if="ptitle2" id="input-value-date2" type="date">
                     <br v-if="title2"><br v-if="title2">
                     <span v-if="ptitle3" style="margin-left: -70px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
                     <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" placeholder="faca uma descricao resumida"></textarea>
+                    
                     <br v-if="ptitle3"><br v-if="ptitle3">
+                    
                     <button v-if="ptitle" @click="proximo(title)">Proximo</button>
                     <button v-else v-on:click=add(ptitle3)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
                 </div>
+        </div>
+        <div v-if="title=='Email'" class="body-modal-container">
+            <span style="margin-right: 10px;">{{title}}</span>
+            <input id="modal-input" type="email" :placeholder="`${this.placeholder}`">
+            <br><br>
+            <button @click="proximo(title)">Proximo</button>
+            <button v-on:click="cancelar">Cancelar</button>
         </div>
     </div>
 </template>

@@ -2,147 +2,63 @@
     <div class="main-container">
         <div :style="getStyle()" class="page-header">
             <div style="width: 100%; text-align: center;">
-                <span class="name-title">{{user.name}}</span>
-                <img src="../icons/editar.png" alt="editar" class="editar" @click="showModal('nome')"/>
+                <span class="name-title">{{u.name}}</span>
+                <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-nome')"/>
             </div>
             <div style="width: 100%; text-align: center; padding-top: 20px;">
-                <span @input="newProfession" class="profession">{{user.profession}}</span>
-                <img src="../icons/editar.png" alt="editar" class="editar" @click="showModal('profissao')"/>
+                <span @input="newProfession" class="profession">{{u.profession}}</span>
+                <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-profissao')"/>
             </div>
                 
         </div>    
         <Resumo
-            @add-resumo="editarResumo"
+            @add-resumo="$emit('add-resumo')"
             class="data-container"
             titulo="SOBRE"
             :cor="cor"
-            :user="user"
+            :user="u"
         />
         <Competencias
-            @add-competencia="editarCompetencias"
+            @add-competencia="$emit('add-competencia')"
             class="data-container"
             titulo="COMPETÊNCIAS"
             :cor="cor"
-            :user="user"
+            :user="u"
         />
         <Experiencias
-            @add-experiencia="editarExperiencias"
+            @add-experiencia="$emit('add-experiencia')"
             class="data-container"
             titulo="EXPERIÊNCIAS"
             :cor="cor"
             :experiences="userExperiences"
         />
     </div>
-     <editorInformacoes 
-        :mainTitle="modal.mainTitle"
-        :title="modal.title1"
-        :placeholder="modal.placeholder1"
-        :competencia="user.competence"
-        :title2="modal.title2"
-        :placeholder2="modal.placeholder2"
-        :experiences="userExperiences"
-     />
 </template>
 <script>
 import Resumo from "./Resumo.vue"
 import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
-import editorInformacoes from './editorIformacoes.vue'
 
 export default{
     name:"Page",
+    emits:['add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao'],
+    data(){
+        return{
+            u: this.user
+        }
+    },
     components:{
         Resumo,
         Competencias,
         Experiencias,
-        editorInformacoes
-    },
-    data(){
-        return{
-            modal: {
-                mainTitle: "",
-                title1: "",
-                placeholder1: "",
-                title2: "",
-                placeholder2: "",
-                list: [],
-            },
-            user: {
-                name: 'Digite nome',
-                profession: 'Sua profissão',
-                resume: 'Digite aqui um resumo sobre você.',
-                competence: []
-            },
-            userExperiences: [],
-        }
     },
     props:{
         cor: String,
-        fontSize: String
+        fontSize: String,
+        user: Object,
+        userExperiences: Array,
     },
     methods:{
-        editarExperiencias(){
-            this.showModal('experiencias')
-        },
-        editarCompetencias(){
-            this.showModal('competencias')
-        },
-        editarResumo(){
-            this.showModal('resumo')
-        },
-        showDivModal(){
-            document.getElementsByClassName("main-modal-container")[0].style.width = "100vw";
-            document.getElementsByClassName("main-modal-container")[0].style.heigth = "100vh";
-            document.getElementsByClassName("main-modal-container")[0].style.opacity = "100";
-            document.getElementsByClassName("main-modal-container")[0].style.zIndex = "10";
-        },
-        showModal(qual){
-            window.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: 'smooth'
-            });
-            switch (qual) {
-                case 'nome':
-                    this.modal.mainTitle = "Informacoes pessoais"
-                    this.modal.title1 = "Nome"
-                    this.modal.placeholder1 = "digite seu nome aqui"
-                    this.modal.list = []
-                    this.showDivModal()
-                    break;
-                case 'profissao':
-                    this.modal.mainTitle = "Informacoes pessoais"
-                    this.modal.title1 = "Profissao"
-                    this.modal.placeholder1 = "digite seu cargo/profissao"
-                    this.modal.list = []
-                    this.showDivModal()
-                    break;
-                case 'competencias':
-                    this.modal.mainTitle = "Competencias"
-                    this.modal.title1 = "Nova competencia"
-                    this.modal.placeholder1 = "escreva uma hasbilidade sua"
-                    this.modal.list = this.user.competence
-                    this.showDivModal()
-                    break;
-                case 'resumo':
-                    this.modal.mainTitle = "Resumo profissional"
-                    this.modal.title1 = "Sobre voce"
-                    this.modal.placeholder1 = "Descreva que tipo de proficional voce e..."
-                    this.modal.list = this.user.competence
-                    this.showDivModal()
-                    break;
-                case 'experiencias':
-                    this.modal.mainTitle = "Experiencia profissional"
-                    this.modal.title1 = "Nome da empresa"
-                    this.modal.placeholder1 = "Digite aqui"
-                    this.modal.title2 = "Cargo que ocupava"
-                    this.modal.placeholder2 = "Digite aqui"
-                    this.showDivModal()
-                    break;
-                default:
-                    break;
-            }
-        },
         getStyle(){
             return {
                 'background-color': `${this.cor}`,
@@ -154,41 +70,11 @@ export default{
             const prof = document.getElementsByClassName('profession')[0].textContent
             console.log(prof)
             if(prof){
-                this.user.profession = prof
+                this.u.profession = prof
                 localStorage.setItem('profession', prof)           
             }
         },
-        getContatoDataPage(){ 
-            const nname = localStorage.getItem('user-name')
-            if(nname){
-                this.user.name = nname
-            }
-            const prof = localStorage.getItem('profession')
-            if(prof){
-                this.user.profession = prof
-            }
-            const about = localStorage.getItem('about')
-            if(about){
-                this.user.resume = about
-            }
-            const competencias = localStorage.getItem('cpta')
-            if(competencias){
-                const arr = competencias.split(',')
-                this.user.competence = arr
-            }
-        },
-        getExperienceData(){
-            let jobs = JSON.parse(localStorage.getItem('jobs'))
-            if(jobs){
-                console.log(jobs)
-                this.userExperiences = jobs
-            }
-        }
     },
-    beforeMount(){
-        this.getContatoDataPage()
-        this.getExperienceData()
-    }
 }
 </script>
 <style scoped>

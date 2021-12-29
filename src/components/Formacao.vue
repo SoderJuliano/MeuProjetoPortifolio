@@ -1,6 +1,7 @@
 <template>
   <div class="formacao">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}<img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarFormacao"/></p>
+      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-info2')"/></p>
       <div v-for="(item, index) in formacao " :key="index" class="formacao-container">
           <img src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
@@ -11,6 +12,7 @@
 <script>
 export default {
   name: 'Formacao',
+  emits: ['add-info2'],
   props:{
     titulo: String,
     backgroundColor: String,
