@@ -116,6 +116,8 @@ export default {
                     this.modal.mainTitle = "Informacoes pessoais"
                     this.modal.title1 = "Email"
                     this.modal.placeholder1 = "digite seu email aqui"
+                     this.modal.title2 = "Telefone"
+                    this.modal.placeholder2 = "(99) 999999999"
                     this.modal.list = []
                     this.showDivModal()
                     break;

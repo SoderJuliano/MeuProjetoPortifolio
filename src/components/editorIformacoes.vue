@@ -36,11 +36,27 @@
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
-            <span style="margin-right: 10px;">{{title}}</span>
-            <input id="modal-input" type="email" :placeholder="`${this.placeholder}`">
-            <br><br>
-            <button @click="proximo(title)">Proximo</button>
-            <button v-on:click="cancelar">Cancelar</button>
+            <div v-if="title=='Email' && ptitle!='Endereco'">
+                <span style="margin-right: 10px;">{{title}}</span>
+                <input id="modal-input" type="email" :placeholder="`${this.placeholder}`">
+                <br><br>
+                <span style="margin-right: 10px;">{{title2}}</span>
+                <input id="modal-input2" type="text" :placeholder="`${this.placeholder2}`">
+                <br><br>
+                <button @click="proximo(title)">Proximo</button>
+                <button v-on:click="cancelar">Cancelar</button>
+            </div>
+            <div v-else>
+                <span>{{ptitle}}</span><br><br>
+                <input id="modal-input1" type="text" placeholder="RUA">
+                <input id="modal-input2" type="text" placeholder="Numero">
+                <input id="modal-input3" type="text" placeholder="Bairro">
+                <input id="modal-input4" type="text" placeholder="Cidade">
+                <input id="modal-input5" type="text" placeholder="Estado/Provincia">
+                <input id="modal-input6" type="text" placeholder="Pais">
+                <br><br>
+                <button v-on:click=add(ptitle)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
+            </div>
         </div>
     </div>
 </template>
@@ -62,6 +78,11 @@ export default {
                 dateFired: ''
             },
             jobs: this.experiences,
+            contato: {
+                email: '',
+                telefone: '',
+                endereco: '',
+            }
         }
     },
     props:{
@@ -75,23 +96,26 @@ export default {
     },
     methods:{
         proximo(title){
-            if(title=="Nome da empresa" && this.ptitle == ''){
-                this.changePage();
+            this.changePage();
+            if(title == "Email"){
+                this.contato.email = document.getElementById('modal-input').value
+                this.contato.telefone = document.getElementById('modal-input2').value
+                this.ptitle = 'Endereco'
+            }
+            else if(title=="Nome da empresa" && this.ptitle == ''){
                 this.job.company = document.getElementById('modal-input').value
                 this.job.function = document.getElementById('modal-input2').value
                 this.ptitle = 'Data de admicao'
                 this.ptitle2 = 'Data de demicao'
-                this.changePage2();
             }else{
                 this.job.dateHired = document.getElementById('input-value-date1').value
                 this.job.dateFired = document.getElementById('input-value-date2').value
 
-                this.changePage();
                 this.ptitle3 = 'Descricao'
                 this.ptitle = ''
                 this.ptitle2 = ''
-                this.changePage2();
             }
+            this.changePage2();
         },
         add(title){
             //title as string
@@ -124,11 +148,22 @@ export default {
                     this.adicionarJobs(this.job)
                     this.cancelar();
                     break; 
+                case 'Endereco':
+                    this.adicionarEndereco();
+                    this.cancelar();
+                    break;
                 default:
                     break;
             }
             this.ptitle = '';
             this.ptitle2 = '';
+        },
+        adicionarEndereco(){
+            this.contato.endereco += document.getElementById("modal-input1").value+", "+document.getElementById("modal-input2").value+", "
+            +document.getElementById("modal-input3").value+", "+document.getElementById("modal-input4").value+", "
+            +document.getElementById("modal-input5").value+" - "+document.getElementById("modal-input6").value;
+
+            localStorage.setItem('contato', JSON.stringify(this.contato))
         },
         adicionarJobs(job){
             let j = localStorage.getItem('jobs')

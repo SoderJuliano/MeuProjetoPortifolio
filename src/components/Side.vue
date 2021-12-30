@@ -130,33 +130,15 @@ export default {
  },
  methods: {
    getContatoData(){
-     //email
 
-     if(localStorage.getItem('useremail0')){
-       this.email[0] = localStorage.getItem('useremail0')
-     }
-     if(localStorage.getItem('useremail1')){
-       this.email[1] = localStorage.getItem('useremail1')
-     }
-     if(localStorage.getItem('useremail2')){
-       this.email[2] = localStorage.getItem('useremail2')
-     }
+     let contato = JSON.parse(localStorage.getItem('contato'))
 
-     // phones
+     
 
-     let arrayP = localStorage.getItem('phones')
-     if(arrayP){
-       this.phone = []
-        arrayP.split(',').forEach(element => {
-          this.phone.push(element)
-        });
-     }
-
-     // adress
-
-     let adressStorage = localStorage.getItem('adress')
-     if(adressStorage){
-       this.adress = adressStorage
+     if(contato){
+       this.email[0] = contato.email
+       this.phone[0] = contato.telefone
+       this.adress = contato.endereco
      }
 
      // grade
