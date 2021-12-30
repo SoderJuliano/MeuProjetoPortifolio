@@ -30,6 +30,7 @@
         @add-experiencia="editarExperiencias"
         @add-nome="this.showModal('nome')"
         @add-profissao="this.showModal('profissao')"
+        @add-formacao="this.showModal('formacao')"
         class="template"
        :style="getStyle()"
        :mainColor=mainColor
@@ -155,6 +156,12 @@ export default {
                     this.modal.placeholder1 = "Digite aqui"
                     this.modal.title2 = "Cargo que ocupava"
                     this.modal.placeholder2 = "Digite aqui"
+                    this.showDivModal()
+                    break;
+                case 'formacao':
+                    this.modal.mainTitle = "Escolaridade"
+                    this.modal.title1 = "Formacao"
+                    this.modal.placeholder1 = "Digite aqui"
                     this.showDivModal()
                     break;
                 default:

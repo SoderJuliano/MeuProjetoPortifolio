@@ -2,7 +2,7 @@
   <div class="custom-container">
       <Side
         @add-info="$emit('add-info')"
-        @add-info2="addInfo"
+        @add-formacao="$emit('add-formacao')"
         :cor="sideColor"
       />
       <Page
@@ -26,7 +26,7 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao'],
+  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 'add-formacao'],
   data(){
     return{
       u: this.user,

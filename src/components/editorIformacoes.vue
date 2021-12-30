@@ -152,11 +152,21 @@ export default {
                     this.adicionarEndereco();
                     this.cancelar();
                     break;
+                case 'Formacao':
+                    this.adicionarFormacao()
+                    this.cancelar()
+                    break
                 default:
                     break;
             }
             this.ptitle = '';
             this.ptitle2 = '';
+        },
+        adicionarFormacao(){
+            let g = localStorage.getItem('grade')
+            g ? localStorage.setItem('grade', g+","+document.getElementById('modal-input').value)
+                : localStorage.setItem('grade', document.getElementById('modal-input').value)
+            //this.$emit('update:grade', this.mygrade)
         },
         adicionarEndereco(){
             this.contato.endereco += document.getElementById("modal-input1").value+", "+document.getElementById("modal-input2").value+", "
