@@ -1,12 +1,12 @@
 <template>
   <div class="habilidade">
       <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarHabilidade"/>
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
       </p>
       <div class="habilidade-container">
           <img src="../icons/html.png" class="habilidade-icon"/>
               <span  class="data-text-habilidades">{{hability}}</span> 
-        
+        <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
@@ -14,16 +14,16 @@
 <script>
 export default {
   name: 'Habilidade',
+  emits: ['add-habilidade'],
   props:{
     titulo: String,
     backgroundColor: String,
     hability: String,
   },
   methods:{
-    showEditarHabilidade(){
-      document.getElementsByClassName('editar-habilidade')[0].style.display = 'block'
-      document.getElementsByClassName('editar-habilidade')[0].style.opacity = '90%'
-      window.scrollTo(0,0)
+    removeHabilidades(){
+      localStorage.removeItem("hability")
+      window.location.reload()
     }
   }
 }
@@ -55,5 +55,16 @@ export default {
   display: block;
   padding-top: 16px;
   padding-left: 10px;
+}
+
+.remove-bnt{
+  position: absolute;
+  margin-left: 190px;
+  margin-top: 10px;
+}
+@media print{
+  .remove-bnt{
+    display: none;
+  }
 }
 </style>

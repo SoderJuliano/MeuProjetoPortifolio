@@ -156,11 +156,20 @@ export default {
                     this.adicionarFormacao()
                     this.cancelar()
                     break
+                case 'Habilidade':
+                    this.adicionarHabilidade()
+                    this.cancelar()
+                    break
                 default:
                     break;
             }
             this.ptitle = '';
             this.ptitle2 = '';
+        },
+        adicionarHabilidade(){
+            let h = localStorage.getItem('hability')
+            const nh = document.getElementById('modal-input').value
+            h ? localStorage.setItem("hability", h+", "+nh) : localStorage.setItem("hability", nh) 
         },
         adicionarFormacao(){
             let g = localStorage.getItem('grade')

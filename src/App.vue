@@ -31,6 +31,7 @@
         @add-nome="this.showModal('nome')"
         @add-profissao="this.showModal('profissao')"
         @add-formacao="this.showModal('formacao')"
+        @add-habilidade="this.showModal('habilidade')"
         class="template"
        :style="getStyle()"
        :mainColor=mainColor
@@ -161,6 +162,12 @@ export default {
                 case 'formacao':
                     this.modal.mainTitle = "Escolaridade"
                     this.modal.title1 = "Formacao"
+                    this.modal.placeholder1 = "Digite aqui"
+                    this.showDivModal()
+                    break;
+                case 'habilidade':
+                    this.modal.mainTitle = "Habilidades"
+                    this.modal.title1 = "Habilidade"
                     this.modal.placeholder1 = "Digite aqui"
                     this.showDivModal()
                     break;

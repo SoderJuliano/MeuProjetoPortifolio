@@ -3,6 +3,7 @@
       <Side
         @add-info="$emit('add-info')"
         @add-formacao="$emit('add-formacao')"
+        @add-habilidade="$emit('add-habilidade')"
         :cor="sideColor"
       />
       <Page
@@ -26,7 +27,7 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 'add-formacao'],
+  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 'add-formacao', 'add-habilidade'],
   data(){
     return{
       u: this.user,
