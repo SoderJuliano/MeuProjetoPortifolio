@@ -160,11 +160,20 @@ export default {
                     this.adicionarHabilidade()
                     this.cancelar()
                     break
+                case 'Add link':
+                    this.addSocialLink()
+                    this.cancelar()
+                    break
                 default:
                     break;
             }
             this.ptitle = '';
             this.ptitle2 = '';
+        },
+        addSocialLink(){
+            let ls = localStorage.getItem('redesociais')
+            const rs = document.getElementById('modal-input').value
+            ls ? ls.includes(rs) ? alert('Esta rede ja foi insirida') : localStorage.setItem('redesociais' , ls+","+rs) : localStorage.setItem('redesociais', rs)
         },
         adicionarHabilidade(){
             let h = localStorage.getItem('hability')

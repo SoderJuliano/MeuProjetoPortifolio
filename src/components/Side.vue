@@ -59,16 +59,17 @@
       :cor="cor"
     />
     <Social
+      @add-SocialLink="$emit('add-SocialLink')"
       v-if="exibirSocial"
       class="template-data"
       titulo="SOCIAL LINKS"
       backgroundColor="#808080"
-      :face="facebook"
-      :lin="lin"
-      :twitt="twitter"
-      :you="youtube"
-      :stof="stackoverflow"
-      :git="github"
+      :face="social.facebook"
+      :lin="social.lin"
+      :twitt="social.twitter"
+      :you="social.youtube"
+      :stof="social.stackoverflow"
+      :git="social.github"
     />
     <editar-social 
       class="editar-social"
@@ -105,7 +106,7 @@ export default {
     cor: String,
   },
  name:'Side',
- emits: ['add-info', 'add-formacao', 'add-habilidade'],
+ emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink'],
  data(){
    return{
     imageURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAES0lEQVR4nO2dy4scVRTGf92jxJBEoogaH1mI2QiuogaJEUWjIeBCJaKICxEkKzdu3Iivv0CRLELIKggGF1mpEMRIxEfQuNFRENHB1yg6EzJGMokz7eL2QNlO6UzVvfc7t/r84Oyq6nznfF2vW1W3wXEcx3Ecx3EcJy89tYAI9ICNwCXDmAdmhnFWqKsRJRpyNXAfcCtwI3ADsKZm2a+BY8BR4AhwPofAcaAP7AE+BBaBQYOYAnbnFt5FtgOTNDNhNBaAx/LK7w494EXgL+KYsRRngFeBR4HLs1VTOD1gH3GNWC7OAgeAa/KUVS7PkN6MavyGn19q2Ua4GsppyIBwuXx3hvqK4zj5zViKGfy88g/uQmfGUuxPXmVBHEJvyDxwWepCS2AN8Ad6QwbA3sS11tJXJV6GrcA6tYghd6gSWzLkFrWACttUiS0Zcr1aQIVrgQsViS0ZYulueQK4QpHYkiEb1QJGWKtIasmQC9QCRpDosWSItYdlkqeNlgyZUwsY4ZQiqSVDTqsFVJgDZhWJLRkyrRZQ4TtVYkuGTKkFVJBpsWTIN2oBFb5UJbZkyEm1gAofqwVY4Sf0I70DhKMGlvYQgE/UAoAfhiHBmiEn1AKAt5TJ3ZB/44ZUuF8tANipFmCFXehP5ktxb+Jaa7G0hzyoFlBBpsWSIZbe9JBpsWTIGbWACn+qElsy5Au1gAqfqxJbMuRdtYAKlrTI6BHvw5w2MYm9p5cy7gHOoTPj3FCDU2EnYbQ1txkf4TeFtWwivyFXZqmsYKbJZ8YvmWr6XyxdZY3yTkdz/SeWDXk9Y643MuYqlgngW9IfrqYRvVi9HJb3kAXCJ8upOYhPubFiLibtc/bThCs6ZxU8TjpDns5YR2foAW8T34wTGDp3lMYG4APimfEVRr9Ht3xSrzIHfBpxe5PArxG3F41SDIHwy47FYsRtRWVcDYm5rai4IcYoyZCYH2FeFHFbUSnJkPVGtxUVN8QYbojTiEsJH2HGujGcB67LWkHHeIX4QyeHs1bQIfaSbnDxuYx1FM8E8ALhuUgqQwbAy9RPVe4M2Qq8T1ojqvEZsCNLZYVxE/Aa6feKujgC3Ja8SuP0Cf92cBSNCcvFSeBJRFM0qbgKeBb4Hr0BdfEz8BKwOVEP5PQJs0cfRvsO72pjgbAH78HevF6NWA88RZg+Q93ctjFFeBa/IWqHMrGOcFj6HX0jY8cs8DyFDMP0gCcIx2B141LHNOECwOw3JZuxdcWUK45ja6pbIMwIPYO+OaqYBe5s3cVIPEyYOFLdFHXMA4+07GVrbh8KUTfDSpxH+OcwWxjvw1RdzCA6p6R4zbMr8WaLvjZidyThXY5djbvbgPcSFdGlOLaahra5mdlEmAqvpBclFCwS7s1+XMnCbZr5UMv1x4U+8MBqFm7KzS3WHTdW3Ks2hmxpse64seJetTHE3LiNYfzH6ziO4ziO4ziO4zhF8jeb7W7hC+joGwAAAABJRU5ErkJggg==",
@@ -121,12 +122,15 @@ export default {
    adress: 'seu Endereço',
    grade : ['Seus dados escolares'],
    hability : "Suas habilidades",
-   facebook : null,
-   lin : null,
-   twitter : null,
-   youtube : null,
-   stackoverflow : null,
-   github: null,
+    social : {
+      facebook : '',
+      lin : '',
+      twitter : '',
+      youtube : '',
+      stackoverflow : '',
+      github: '',
+      insta: ''
+    }
    }
  },
  methods: {
@@ -158,31 +162,108 @@ export default {
      }
 
      //social in links
+     //facebook
+    const ls = localStorage.getItem('redesociais')
+    let arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            //facebook
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6]+item.split("")[i+7] == 'facebook'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.facebook = element
+        }
+      }); 
+      //linkedin
+      arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6]+item.split("")[i+7] == 'linkedin'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.lin = element
+        }
+      }); 
+      //instagram
+      arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6]+item.split("")[i+7]+item.split("")[i+8] == 'instagram'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.insta = element
+        }
+      });
+      //stackoverflow
+      arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6]+item.split("")[i+7]+
+              item.split("")[i+8]+item.split("")[i+9]+item.split("")[i+10]+item.split("")[i+11]+item.split("")[i+12] == 'stackoverflow'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.stackoverflow = element
+        }
+      });
 
-     const lin = localStorage.getItem('in')
-     if(lin){
-       this.lin = lin
-     }
-     const you = localStorage.getItem('you')
-     if(you){
-       this.youtube = you
-     }
-     const stof = localStorage.getItem('stof')
-     if(stof){
-       this.stackoverflow = stof
-     }
-     const face = localStorage.getItem('face')
-     if(face){
-       this.facebook = face
-     }
-     const twit = localStorage.getItem('twit')
-     if(twit){
-       this.twitter = twit
-     }
-     const git = localStorage.getItem('git')
-     if(git){
-       this.github = git
-     }
+      //youtube
+      arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6] == 'youtube'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.youtube = element
+        }
+      });
+       //github
+      arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5] == 'github'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.github = element
+        }
+      });
+      //twitter
+      arr = ls.split(',').map(function (item) {
+          for(let i=0; i<item.split("").length; i++){
+            if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6] == 'twitter'){
+              return item
+            }
+          }
+          
+        });
+      arr.forEach(element => {
+        if(element){
+          this.social.twitter = element
+        }
+      });
    },
     getStyle(){
       return{

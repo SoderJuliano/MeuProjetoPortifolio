@@ -1,7 +1,7 @@
 <template>
     <div class="social">
       <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}} 
-          <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarHabilidade"/></p>
+          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/></p>
       <div class="social-container">
           <div v-if="face" class="social-row">
               <img src="../icons/face.png" class="social-icon"/>
@@ -43,6 +43,7 @@ export default {
         stof: String,
         git: String
     },
+    emits:['add-SocialLink'],
     methods:{
         showEditarHabilidade(){
             document.getElementsByClassName('editar-social')[0].style.display = 'block'
@@ -64,16 +65,15 @@ export default {
 .social-icon{
   width: 30px;
   height: 30px;
-  padding-top: 20px;
+  padding-top: 10px;
   margin-right: 10px;
 }
 .social-row{
     display: flex;
-    padding: 5px;
     width: 100%;
 }
 .social-row span{
-    padding-top: 20px;
+    padding-top: 10px;
     word-break: break-all;
 }
 @media print{

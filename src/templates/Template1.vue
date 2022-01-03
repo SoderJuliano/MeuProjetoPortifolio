@@ -4,6 +4,7 @@
         @add-info="$emit('add-info')"
         @add-formacao="$emit('add-formacao')"
         @add-habilidade="$emit('add-habilidade')"
+        @add-SocialLink="$emit('add-SocialLink')"
         :cor="sideColor"
       />
       <Page
@@ -27,7 +28,7 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 'add-formacao', 'add-habilidade'],
+  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 'add-formacao', 'add-habilidade', 'add-SocialLink'],
   data(){
     return{
       u: this.user,

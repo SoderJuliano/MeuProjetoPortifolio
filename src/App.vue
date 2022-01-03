@@ -32,6 +32,7 @@
         @add-profissao="this.showModal('profissao')"
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
+        @add-SocialLink="this.showModal('socialLink')"
         class="template"
        :style="getStyle()"
        :mainColor=mainColor
@@ -169,6 +170,12 @@ export default {
                     this.modal.mainTitle = "Habilidades"
                     this.modal.title1 = "Habilidade"
                     this.modal.placeholder1 = "Digite aqui"
+                    this.showDivModal()
+                    break;
+                case 'socialLink':
+                    this.modal.mainTitle = 'Redes sociais'
+                    this.modal.title1 = "Add link"
+                    this.modal.placeholder1 = 'link da rede (https://www...)'
                     this.showDivModal()
                     break;
                 default:
