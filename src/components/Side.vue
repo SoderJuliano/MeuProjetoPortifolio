@@ -364,7 +364,6 @@ export default {
 }
 @media only screen and (max-width:1000px) {
   .side{
-    height: calc(100% +40px);
     width: 100%;
     background-color: rgb(214, 86, 86);
     justify-content: center;
