@@ -1,9 +1,11 @@
 <template>
   <div class="formacao">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}<img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarFormacao"/></p>
-      <div v-for="(item, index) in formacao " :key="index" class="formacao-container">
+      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/></p>
+      <div v-for="(item, index) in mygrade " :key="index" class="formacao-container">
           <img src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
+          <img @click="removeGrade($event)" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
@@ -11,16 +13,21 @@
 <script>
 export default {
   name: 'Formacao',
+  emits: ['add-formacao'],
+  data(){
+    return{
+      mygrade: this.formacao,
+    }
+  },
   props:{
     titulo: String,
     backgroundColor: String,
     formacao: Array,
   },
   methods:{
-    showEditarFormacao(){
-      document.getElementsByClassName('editar-dados-escolares')[0].style.display = 'block'
-      document.getElementsByClassName('editar-dados-escolares')[0].style.opacity = '90%'
-      window.scrollTo(0,0)
+    removeGrade(event){
+      this.mygrade.splice(this.mygrade.indexOf(event.target.id), 1)
+      localStorage.setItem('grade', this.mygrade)
     }
   }
 }
@@ -42,5 +49,15 @@ export default {
 }
 .formacao span{
   padding-top: 20px;
+}
+.remove-bnt{
+  position: absolute;
+  margin-top: 20px;
+  margin-left: 190px;
+}
+@media print {
+  .remove-bnt{
+    display: none;
+  }
 }
 </style>

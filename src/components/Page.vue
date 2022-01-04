@@ -1,88 +1,62 @@
 <template>
     <div class="main-container">
         <div :style="getStyle()" class="page-header">
-            <span @click="insertName" class="name-title">{{user.name}}</span>
-            <input @change="newName" @mouseleave="newName" type="text" :value="`${user.name}`" id="nname" class="input-name">
-            <p contenteditable="true" @input="newProfession" class="profession">{{user.profession}}</p>    
+            <div style="width: 100%; text-align: center;">
+                <span class="name-title">{{u.name}}</span>
+                <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-nome')"/>
+            </div>
+            <div style="width: 100%; text-align: center; padding-top: 20px;">
+                <span @input="newProfession" class="profession">{{u.profession}}</span>
+                <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-profissao')"/>
+            </div>
+                
         </div>    
         <Resumo
+            @add-resumo="$emit('add-resumo')"
             class="data-container"
             titulo="SOBRE"
             :cor="cor"
-            :user="user"
+            :user="u"
         />
         <Competencias
+            @add-competencia="$emit('add-competencia')"
             class="data-container"
             titulo="COMPETÊNCIAS"
             :cor="cor"
-            :user="user"
-        />
-        <editar-competencias
-            :cor="cor"
-            :user="user"
-            class="editar-competencais"
-            id="editarCompetencias"
+            :user="u"
         />
         <Experiencias
+            @add-experiencia="$emit('add-experiencia')"
             class="data-container"
             titulo="EXPERIÊNCIAS"
             :cor="cor"
-            :lastJob="userExperience.lastJob"
-            :job="userExperience.job"
-        />
-        <editar-experiencias
-            :cor="cor"
-            class="editar-experiencias"
-            :userExperience="userExperience"
+            :experiences="userExperiences"
         />
     </div>
-        
 </template>
 <script>
 import Resumo from "./Resumo.vue"
 import Competencias from "./Competencias.vue"
 import Experiencias from "./Experiencias.vue"
-import editarCompetencias from "./editarCompetencias.vue"
-import editarExperiencias from './editarExperiencias.vue'
 
 export default{
     name:"Page",
+    emits:['add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao'],
+    data(){
+        return{
+            u: this.user
+        }
+    },
     components:{
         Resumo,
         Competencias,
         Experiencias,
-        editarCompetencias,
-        editarExperiencias
-    },
-    data(){
-        return{
-            user: {
-                name: 'Digite nome',
-                profession: 'Sua profissão',
-                resume: 'Digite aqui um resumo sobre você.',
-                competence: []
-            },
-            userExperience: {
-                lastJob: {
-                    title: '',
-                    company: '',
-                    hired: '',
-                    end: '',
-                    description: ""
-                },
-                job: {
-                   title: '',
-                    company: '',
-                    hired: '',
-                    end: '',
-                    description: ""
-                }
-            }
-        }
     },
     props:{
-        cor:String,
-        fontSize: String
+        cor: String,
+        fontSize: String,
+        user: Object,
+        userExperiences: Array,
     },
     methods:{
         getStyle(){
@@ -92,91 +66,21 @@ export default{
                 'font-weiht': 'bold'
             }
         },
-        insertName(){
-            document.getElementsByClassName('name-title')[0].style.display = 'none'
-            document.getElementById('nname').style.display = 'block'
-            
-        },
-        newName(){
-            const nname = document.getElementById('nname').value
-            if(nname){
-                //console.log('nname '+nname)
-                localStorage.setItem('user-name', nname)
-                this.name = nname
-                document.getElementsByClassName('name-title')[0].textContent = this.name
-               // location.reload() doenst need reload
-            }
-            document.getElementsByClassName('name-title')[0].style.display = 'block'
-            document.getElementById('nname').style.display = 'none'
-        },
         newProfession(){
             const prof = document.getElementsByClassName('profession')[0].textContent
             console.log(prof)
             if(prof){
-                this.user.profession = prof
+                this.u.profession = prof
                 localStorage.setItem('profession', prof)           
             }
         },
-        getContatoDataPage(){ 
-            const nname = localStorage.getItem('user-name')
-            if(nname){
-                this.user.name = nname
-            }
-            const prof = localStorage.getItem('profession')
-            if(prof){
-                this.user.profession = prof
-            }
-            const about = localStorage.getItem('about')
-            if(about){
-                this.user.resume = about
-            }
-            const competencias = localStorage.getItem('cpta')
-            if(competencias){
-                const arr = competencias.split(',')
-                this.user.competence = arr
-            }
-        },
-        getExperienceData(){
-            let ljob = localStorage.getItem('lastjob')
-            if(ljob && ljob!=null &&ljob!=''){
-                let lastjob = ljob.split(',')
-                const lastjobDescription = localStorage.getItem('lastjobDescription')
-                lastjob.push(lastjobDescription)
-                //console.log(lastjob)
-                this.userExperience.lastJob.title = lastjob[0]
-                this.userExperience.lastJob.company = lastjob[1]
-                this.userExperience.lastJob.hired = lastjob[2]
-                this.userExperience.lastJob.end = lastjob[3]
-                this.userExperience.lastJob.description = lastjobDescription
-            }
-            let jobE = localStorage.getItem('job')
-            if(jobE && jobE!=null && jobE!=''){
-                let job = jobE.split(',')
-                const jobDescription = localStorage.getItem('jobDescription')
-                job.push(jobDescription)
-                //console.log(job)
-                this.userExperience.job.title = job[0]
-                this.userExperience.job.company = job[1]
-                this.userExperience.job.hired = job[2]
-                this.userExperience.job.end = job[3]
-                this.userExperience.job.description = jobDescription
-            }
-            
-        }
     },
-    beforeMount(){
-        this.getContatoDataPage()
-        this.getExperienceData()
-    }
 }
 </script>
 <style scoped>
-
-.input-name{
-    display: none;
-    width: 50%;
-    height: 30px;
-    margin-left: 100px;
+.editar{
+    padding-top: 15px;
+    margin: 10px;
 }
 @media print {
     .main-container{
@@ -189,6 +93,9 @@ export default{
         display: none;
     }
     .editar-experiencias{
+        display: none;
+    }
+    .editar{
         display: none;
     }
 }

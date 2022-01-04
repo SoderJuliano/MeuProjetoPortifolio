@@ -1,4 +1,13 @@
 <template>
+  <editorInformacoes 
+        :mainTitle="modal.mainTitle"
+        :title="modal.title1"
+        :placeholder="modal.placeholder1"
+        :competencia="user.competence"
+        :title2="modal.title2"
+        :placeholder2="modal.placeholder2"
+        :experiences="userExperiences"
+  />
   <nav-bar  
     @close="close" 
     :style="getStyle()" 
@@ -15,16 +24,26 @@
       />
     </div>
     <template1 
+        @add-info="addInfo"
+        @add-resumo="editarResumo"
+        @add-competencia="editarCompetencias"
+        @add-experiencia="editarExperiencias"
+        @add-nome="this.showModal('nome')"
+        @add-profissao="this.showModal('profissao')"
+        @add-formacao="this.showModal('formacao')"
+        @add-habilidade="this.showModal('habilidade')"
+        @add-SocialLink="this.showModal('socialLink')"
         class="template"
        :style="getStyle()"
        :mainColor=mainColor
        :sideColor=sideColor
+       :user="user"
+       :userExperiences="userExperiences"
     />
     <Footer 
       class="footer"
     />
     <div class="right">
-      
     </div>
   </div>
 </template>
@@ -34,6 +53,7 @@ import Template1 from './templates/Template1.vue'
 import MultiMenu from './components/MultiMenu.vue'
 import Footer from './components/Footer.vue'
 import navBar from './components/navBar.vue'
+import editorInformacoes from './components/editorIformacoes.vue'
 
 export default {
   name: 'App',
@@ -41,19 +61,127 @@ export default {
   data(){
     return{
       font: 'Oswald',
-      fontSize: '14px',
-      fontSizeTitles: '16px',
+      fontSize: '15px',
+      fontSizeTitles: '17px',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
+      modal: {
+                mainTitle: "",
+                title1: "",
+                placeholder1: "",
+                title2: "",
+                placeholder2: "",
+                list: [],
+            },
+      user: {
+        name: 'Digite nome',
+        profession: 'Sua profissão',
+        resume: 'Digite aqui um resumo sobre você.',
+        competence: []
+      },
+      userExperiences: [],
     }
   },
   components: {
     MultiMenu,
     Footer,
     navBar,
-    Template1
+    Template1,
+    editorInformacoes,
   },
   methods: {
+    addInfo(){
+      this.showModal('email')
+    },
+    editarExperiencias(){
+      this.showModal('experiencias')
+    },
+    editarCompetencias(){
+      this.showModal('competencias')
+    },
+    editarResumo(){
+      this.showModal('resumo')
+    },
+    showDivModal(){
+            document.getElementsByClassName("main-modal-container")[0].style.width = "100vw";
+            document.getElementsByClassName("main-modal-container")[0].style.heigth = "100vh";
+            document.getElementsByClassName("main-modal-container")[0].style.opacity = "100";
+            document.getElementsByClassName("main-modal-container")[0].style.zIndex = "10";
+        },
+        showModal(qual){
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
+            switch (qual) {
+                case 'email':
+                    this.modal.mainTitle = "Informacoes pessoais"
+                    this.modal.title1 = "Email"
+                    this.modal.placeholder1 = "digite seu email aqui"
+                     this.modal.title2 = "Telefone"
+                    this.modal.placeholder2 = "(99) 999999999"
+                    this.modal.list = []
+                    this.showDivModal()
+                    break;
+                case 'nome':
+                    this.modal.mainTitle = "Informacoes pessoais"
+                    this.modal.title1 = "Nome"
+                    this.modal.placeholder1 = "digite seu nome aqui"
+                    this.modal.list = []
+                    this.showDivModal()
+                    break;
+                case 'profissao':
+                    this.modal.mainTitle = "Informacoes pessoais"
+                    this.modal.title1 = "Profissao"
+                    this.modal.placeholder1 = "digite seu cargo/profissao"
+                    this.modal.list = []
+                    this.showDivModal()
+                    break;
+                case 'competencias':
+                    this.modal.mainTitle = "Competencias"
+                    this.modal.title1 = "Nova competencia"
+                    this.modal.placeholder1 = "escreva uma hasbilidade sua"
+                    this.modal.list = this.user.competence
+                    this.showDivModal()
+                    break;
+                case 'resumo':
+                    this.modal.mainTitle = "Resumo profissional"
+                    this.modal.title1 = "Sobre voce"
+                    this.modal.placeholder1 = "Descreva que tipo de proficional voce e..."
+                    this.modal.list = this.user.competence
+                    this.showDivModal()
+                    break;
+                case 'experiencias':
+                    this.modal.mainTitle = "Experiencia profissional"
+                    this.modal.title1 = "Nome da empresa"
+                    this.modal.placeholder1 = "Digite aqui"
+                    this.modal.title2 = "Cargo que ocupava"
+                    this.modal.placeholder2 = "Digite aqui"
+                    this.showDivModal()
+                    break;
+                case 'formacao':
+                    this.modal.mainTitle = "Escolaridade"
+                    this.modal.title1 = "Formacao"
+                    this.modal.placeholder1 = "Digite aqui"
+                    this.showDivModal()
+                    break;
+                case 'habilidade':
+                    this.modal.mainTitle = "Habilidades"
+                    this.modal.title1 = "Habilidade"
+                    this.modal.placeholder1 = "Digite aqui"
+                    this.showDivModal()
+                    break;
+                case 'socialLink':
+                    this.modal.mainTitle = 'Redes sociais'
+                    this.modal.title1 = "Add link"
+                    this.modal.placeholder1 = 'link da rede (https://www...)'
+                    this.showDivModal()
+                    break;
+                default:
+                    break;
+            }
+        },
     closeEditarContato(){
       document.getElementsByClassName('editar-contato-container')[0].style.display= 'none'
     },
@@ -195,10 +323,38 @@ export default {
       if(sc){
         this.sideColor = sc
       }
-    }
+    },
+        getContatoDataPage(){ 
+            const nname = localStorage.getItem('user-name')
+            if(nname){
+                this.user.name = nname
+            }
+            const prof = localStorage.getItem('profession')
+            if(prof){
+                this.user.profession = prof
+            }
+            const about = localStorage.getItem('about')
+            if(about){
+                this.user.resume = about
+            }
+            const competencias = localStorage.getItem('cpta')
+            if(competencias){
+                const arr = competencias.split(',')
+                this.user.competence = arr
+            }
+        },
+        getExperienceData(){
+            let jobs = JSON.parse(localStorage.getItem('jobs'))
+            if(jobs){
+                console.log(jobs)
+                this.userExperiences = jobs
+            }
+        }
   }, 
   beforeMount(){
     this.getColors()
+    this.getContatoDataPage()
+    this.getExperienceData()
   }
 }
 </script>

@@ -115,10 +115,6 @@ export default {
 </script>
 
 <style scoped>
-.navbar button{
-  width: 35px;
-  height: 35px;
-}
 .container-fluid {
   width: 100%;
   height: 50px;

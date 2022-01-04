@@ -1,17 +1,19 @@
 <template>
   <div class="experiencias">
       <p class="title" :style="getStyle()">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="showEditarExperiencias"/>
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
       </p>
-      <div :style="getOpacity2()" class="experiencias-container">
-         <span class="data-container-page-title">{{lastJob.title}} - {{lastJob.company}}</span>
-         <li  id='lastjob-dates'>de {{lasJobHired}} à {{lastJobEnd}}</li>
-         <p id="lastjob-description">{{lastJob.description}}</p>
-      </div>
-      <div :style="getOpacity()" class="experiencias-container">
-         <span  id="job-title" class="data-container-page-title">{{job.title}} - {{job.company}}</span>
-         <li id="job-dates">de {{jobHired}} à {{jobEnd}}</li>
-         <p id="job-description">{{job.description}}</p>
+      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" class="experiencias-container">
+        <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
+          <h3>{{item.function}}</h3>
+          <div style="display: flex">
+            <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
+            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span> 
+              ate 
+            <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
+            <span style="margin-top: 0; margin-left:10px;" v-else> hoje</span>
+          </div>
+          <p>{{item.description}}</p>
       </div>
   </div>
 </template>
@@ -19,18 +21,18 @@
 <script>
 export default {
   name: 'Experiencias',
+  emits: ['add-experiencia'],
   props:{
     titulo: String,
-    lastJob: Object,
-    job: Object,
-    cor: String
+    cor: String,
+    experiences: Array,
   },
   data(){
     return{
-      jobHired: null,
-      jobEnd: null,
-      lasJobHired: null,
-      lastJobEnd: null
+      jobHired: '',
+      jobEnd: '',
+      lasJobHired: '',
+      lastJobEnd: ''
     }
   },
   methods:{
@@ -39,65 +41,51 @@ export default {
               'background-color': `${this.cor}`
           }
       },
-      getOpacity(){
-        if(this.job.title){
-          return {'opacity': '100%'}
-        }else{
-          return {'opacity': '0%'}
-        }
+      removeJob(item){
+        document.getElementById(item.function).style.display = "none"
+        this.removerJobs(item)
       },
-      getOpacity2(){
-        if(this.lastJob.title){
-          return {'opacity': '100%'}
-        }else{
-          return {'opacity': '0%'}
-        }
-      },
-      showEditarExperiencias(){
-        document.getElementsByClassName('editar-experiencias')[0].style.display = 'block'
-        document.getElementsByClassName('editar-experiencias')[0].style.opacity = '100% !important'
-        //abre o componente e faz scroll to the top
-        window.scrollTo(0,0)
-      }
+      removerJobs(item){
+            let j = localStorage.getItem('jobs')
+            if(j){
+                let objarray = JSON.parse(j)
+                objarray.map(function(val, index){
+                  if(val.function==item.function){
+                    objarray.splice(index, 1)
+                  }
+                })
+                localStorage.setItem('jobs', JSON.stringify(objarray))
+            }
+        },
   },
   beforeMount(){
-     
-     // converting data to array strings
-
-      let d = this.job.hired
-      const newD = d.split('-')
-      const stng = newD[2]+"/"+newD[1]+"/"+newD[0]
-      
-      let de = this.job.end.split('-')
-      const newDe = de[2]+"/"+de[1]+"/"+de[0]
-
-      const lasd = this.lastJob.hired.split('-')
-      const lasthired = lasd[2]+"/"+lasd[1]+"/"+lasd[0]
-
-      if(!this.lastJob.end){
-        this.lastJobEnd = 'emprego atual'
-      }else{
-        const lastend = this.lastJob.end.split('-')
-        this.lastJobEnd = lastend[2]+"/"+lastend[1]+"/"+lastend[0]
-      } 
-
-      this.lasJobHired = lasthired
-      this.jobEnd = newDe
-      this.jobHired = stng
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@media print{
+  .remove-bnt{
+    display: none;
+  }
+}
+.remove-bnt{
+  float: right;
+  position: relative;
+  margin-top: 20px;
+  margin-right: 20px;
+}
 .experiencias-container{
   color: black !important;
-  width: 100%;
   height: 100%;
   align-self: center;
   margin: 0 auto;
   padding-top: 20px;
   display: block;
+  background-color: whitesmoke;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 .title{
     width: 98.35%;
