@@ -289,7 +289,6 @@ export default {
     this.$nextTick(function () {
       // Code that will run only after the
       // entire view has been rendered
-
         //img
 
     const pimg = localStorage.getItem("profileimg")

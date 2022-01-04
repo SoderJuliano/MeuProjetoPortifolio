@@ -169,6 +169,7 @@ export default {
             }
             this.ptitle = '';
             this.ptitle2 = '';
+            window.location.reload()
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')

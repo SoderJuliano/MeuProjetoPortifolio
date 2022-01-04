@@ -3,29 +3,35 @@
       <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}} 
           <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/></p>
       <div class="social-container">
-          <div v-if="face" class="social-row">
+          <div :id="`${face}`" v-if="face" class="social-row">
               <img src="../icons/face.png" class="social-icon"/>
               <span class="data-container">{{face}}</span>
+              <img @click="remove(face)" :id="`${face}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
-          <div v-if="lin" class="social-row">
+          <div :id="`${lin}`" v-if="lin" class="social-row">
               <img src="../icons/in.png" class="social-icon"/>
               <span class="data-container">{{lin}}</span>
+              <img @click="remove(lin)" :id="`${lin}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
-          <div v-if="twitt" class="social-row">
+          <div :id="`${twitt}`" v-if="twitt" class="social-row">
               <img src="../icons/twit.png" class="social-icon"/>
               <span class="data-container">{{twitt}}</span>
+              <img @click="remove(twitt)" :id="`${twitt}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
-          <div v-if="you" class="social-row">
+          <div :id="`${you}`" v-if="you" class="social-row">
               <img src="../icons/youtube.png" class="social-icon"/>
               <span class="data-container">{{you}}</span>
+              <img @click="remove(you)" :id="`${you}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
-          <div v-if="stof" class="social-row">
+          <div :id="`${stof}`" v-if="stof" class="social-row">
               <img src="../icons/stof.jpeg" class="social-icon"/>
               <span class="data-container">{{stof}}</span>
+              <img @click="remove(stof)" :id="`${stof}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
-          <div v-if="git" class="social-row">
+          <div :id="`${git}`" v-if="git" class="social-row">
               <img src="../icons/git.png" class="social-icon"/>
               <span class="data-container">{{git}}</span>
+              <img @click="remove(git)" :id="`${git}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
       </div>
     </div>
@@ -45,10 +51,12 @@ export default {
     },
     emits:['add-SocialLink'],
     methods:{
-        showEditarHabilidade(){
-            document.getElementsByClassName('editar-social')[0].style.display = 'block'
-            document.getElementsByClassName('editar-social')[0].style.opacity = '90%'
-            window.scrollTo(0,0)
+        remove(id){
+            document.getElementById(id).style.display = "none"
+            let rs = localStorage.getItem('redesociais')
+            let newarray = rs.split(",")
+            newarray.splice(rs.split(",").indexOf(id), 1)
+            localStorage.setItem('redesociais', newarray)
         }
     }
 }
@@ -85,6 +93,9 @@ export default {
     .social-container{
         margin: 0 auto;
         padding-top: 0px;
+    }
+    .remove-bnt{
+        display: none;
     }
 }
 </style>
