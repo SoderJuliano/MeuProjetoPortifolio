@@ -61,6 +61,14 @@ export default {
     }
 }
 </script>
+<style>
+@media screen and (max-width: 1000px) {
+    .remove-bnt{
+        position: absolute;
+        right: 40px;
+    }
+}
+</style>
 <style scoped>
 
 .social-container{
