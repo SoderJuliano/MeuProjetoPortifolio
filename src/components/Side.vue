@@ -164,7 +164,8 @@ export default {
      //social in links
      //facebook
     const ls = localStorage.getItem('redesociais')
-    let arr = ls.split(',').map(function (item) {
+    if(ls){
+      let arr = ls.split(',').map(function (item) {
           for(let i=0; i<item.split("").length; i++){
             //facebook
             if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6]+item.split("")[i+7] == 'facebook'){
@@ -264,6 +265,7 @@ export default {
           this.social.twitter = element
         }
       });
+    }
    },
     getStyle(){
       return{
