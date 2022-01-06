@@ -42,6 +42,7 @@
     />
     <Footer 
       class="footer"
+      @font-changed="setFont"
     />
     <div class="right">
     </div>
@@ -90,6 +91,9 @@ export default {
     editorInformacoes,
   },
   methods: {
+    setFont(fnt){
+      this.font = fnt
+    },
     addInfo(){
       this.showModal('email')
     },

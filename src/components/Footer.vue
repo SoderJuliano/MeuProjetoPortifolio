@@ -32,6 +32,7 @@ export default {
     props:{
        // mainColor:String
     },
+    emits:["font-changed"],
     methods:{
         changefontM(p){
             
@@ -81,47 +82,61 @@ export default {
             switch(p.target.textContent){ 
                 case 'Oswald':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Oswald', sans-serif" 
+                    this.$emit('font-changed', 'Oswald')
                     break
                 case 'Zen Loop':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Zen Loop', cursive" 
                     document.getElementsByClassName("main")[0].style.fontWeight = "bold";
+                    this.$emit('font-changed', 'Zen Loop')
                     break
                 case 'Fuggles':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Fuggles', cursive"
                     document.getElementsByClassName("main")[0].style.fontWeight = "bold";
+                    this.$emit('font-changed', 'Fuggles')
                     break
                 case 'STIX Two Math':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'STIX Two Math', serif"
+                    this.$emit('font-changed', 'Oswald')
                     break
                 case 'Hina Mincho':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Hina Mincho', serif"
+                    this.$emit('font-changed', 'Hina Mincho')
                     break
                 case 'Inconsolata':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Inconsolata', monospace"
+                    this.$emit('font-changed', 'Inconsolata')
                     break
                 case 'Kaisei Decol':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Kaisei Decol', serif"
+                    this.$emit('font-changed', 'Kaisei Decol')
                     break
                 case 'Teko':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Teko', sans-serif"
+                    this.$emit('font-changed', 'Teko')
                     break
                 case 'Crimson':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Crimson Text', serif"
+                    this.$emit('font-changed', 'Crimson Text')
                     break
                 case 'Dongle':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Dongle', sans-serif"
+                    this.$emit('font-changed', 'Dongle')
                     break
                 case 'Mochiy':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Mochiy Pop One', sans-serif"
+                    this.$emit('font-changed', 'Mochiy Pop One')
                     break
                 case 'Roboto':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Roboto Mono', monospace"
+                    this.$emit('font-changed', 'Roboto Mono')
                     break
                 case 'verdana':
                     document.getElementsByClassName("main")[0].style.fontFamily = "verdana"
+                    this.$emit('font-changed', 'verdana')
                     break
                 case 'Courier New':
                     document.getElementsByClassName("main")[0].style.fontFamily = "'Courier New'"
+                    this.$emit('font-changed', 'Courier New')
                     break
             }
         }
