@@ -26,7 +26,7 @@
                     <span v-if="ptitle2" style="margin-right: 10px">{{ptitle2}}</span>
                     <input v-if="ptitle2" id="input-value-date2" type="date">
                     <br v-if="title2"><br v-if="title2">
-                    <span v-if="ptitle3" style="margin-left: -70px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
+                    <span v-if="ptitle3" style="margin-left: -100px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
                     <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" placeholder="faca uma descricao resumida"></textarea>
                     
                     <br v-if="ptitle3"><br v-if="ptitle3">

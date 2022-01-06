@@ -53,11 +53,6 @@
       backgroundColor="#808080"
       :hability="hability"
     />
-    <editar-habilidade 
-      class="editar-habilidade"
-      :habilidade="hability"
-      :cor="cor"
-    />
     <Social
       @add-SocialLink="$emit('add-SocialLink')"
       v-if="exibirSocial"
@@ -71,36 +66,18 @@
       :stof="social.stackoverflow"
       :git="social.github"
     />
-    <editar-social 
-      class="editar-social"
-      :face="facebook"
-      :lin="lin"
-      :twit="twitter"
-      :you="youtube"
-      :stof="stackoverflow"  
-      :git="github"
-      :cor="cor"
-    />
 </div>
 </template>
 <script>
 import Formacao from "./Formacao.vue";
 import Habilidade from "./Habilidade.vue";
 import Social from "./Social.vue"
-import editarContato from './editarContato.vue'
-import editarFormacao from './editarFormacao.vue'
-import editarHabilidade from './editarHabilidade.vue'
-import editarSocial from './editarSocial.vue'
 
 export default {
  components: {
     Formacao,
     Habilidade,
     Social,
-    editarContato,
-    editarFormacao,
-    editarHabilidade,
-    editarSocial
   },
   props:{
     cor: String,

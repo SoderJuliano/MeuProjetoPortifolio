@@ -392,7 +392,9 @@ export default {
   .right{
     display: none;
   }
-
+  #navbar{
+    display: none;
+  }
 }
 @media screen and (min-width:1001px) {
   .template{

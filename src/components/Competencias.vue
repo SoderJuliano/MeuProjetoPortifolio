@@ -67,4 +67,24 @@ export default {
     display: none;
   }
 }
+.remove-bnt{
+  float: right;
+  margin-right: 30px;
+}
+</style>
+<style>
+.remove-bnt{
+  max-width: 20px;
+  max-height: 20px;
+  padding-top: 8px;
+}
+
+@media print{
+  .editar{
+    display: none;
+  }
+  .remove-bnt{
+    display: none;
+  }
+}
 </style>
