@@ -105,4 +105,10 @@ export default {
   max-height: 100%;
   word-break: keep-all;
 }
+@media screen and (max-width: 1000px) {
+  .experiencias{
+    min-height: 60px;
+  }
+  
+}
 </style>

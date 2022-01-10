@@ -468,7 +468,7 @@ body{
   color-adjust: exact !important;                 /*Firefox*/
 }
 .side{
-    height: 100%;
+    max-height: 100%;
     width: 40%;
     justify-content: center;
     padding-top: 35px;
