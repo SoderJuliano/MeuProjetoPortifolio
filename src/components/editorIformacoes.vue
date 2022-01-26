@@ -98,8 +98,11 @@ export default {
         proximo(title){
             this.changePage();
             if(title == "Email"){
-                this.contato.email = document.getElementById('modal-input').value
-                this.contato.telefone = document.getElementById('modal-input2').value
+                const email = document.getElementById('modal-input').value
+                const telefone = document.getElementById('modal-input2').value
+
+                this.contato.email = email ? email : ''
+                this.contato.telefone = telefone ? telefone : ''
                 this.ptitle = 'Endereco'
             }
             else if(title=="Nome da empresa" && this.ptitle == ''){
@@ -188,10 +191,19 @@ export default {
             //this.$emit('update:grade', this.mygrade)
         },
         adicionarEndereco(){
-            this.contato.endereco += document.getElementById("modal-input1").value+", "+document.getElementById("modal-input2").value+", "
-            +document.getElementById("modal-input3").value+", "+document.getElementById("modal-input4").value+", "
-            +document.getElementById("modal-input5").value+" - "+document.getElementById("modal-input6").value;
+            const rua = document.getElementById("modal-input1").value
+            const numero = document.getElementById("modal-input2").value
+            const bairro = document.getElementById("modal-input3").value
+            const cidade = document.getElementById("modal-input4").value
+            const estado = document.getElementById("modal-input5").value
+            const pais = document.getElementById("modal-input6").value
 
+            this.contato.endereco += rua ? rua+", " : ""
+            this.contato.endereco += numero ? numero+", " : ""
+            this.contato.endereco += bairro ? bairro+", " : ""
+            this.contato.endereco += cidade ? cidade+", " : ""
+            this.contato.endereco += estado ? estado+", " : ""
+            this.contato.endereco += pais ? pais+"." : "."
             localStorage.setItem('contato', JSON.stringify(this.contato))
         },
         adicionarJobs(job){
