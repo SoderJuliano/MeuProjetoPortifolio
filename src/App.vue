@@ -246,6 +246,7 @@ export default {
           }
         }else{
             this.font = p.target.textContent
+            localStorage.setItem("font", p.target.textContent)
         }
          console.log(p.target.textContent)
     },
@@ -359,6 +360,9 @@ export default {
     this.getColors()
     this.getContatoDataPage()
     this.getExperienceData()
+    localStorage.getItem('font') ? 
+    this.font = localStorage.getItem('font')
+    : this.font = 'Oswald'
   }
 }
 </script>
