@@ -326,6 +326,10 @@ export default {
            return{
             'font-family': "'Courier New'"
           }
+        default:
+          return{
+            'font-family': this.font
+          }
       }
     },
     getColors(){
