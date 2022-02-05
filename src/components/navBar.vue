@@ -2,8 +2,8 @@
     <div class="container-fluid">
         <nav class="navbar">
             <div class="nav-item is-right">
-                <img v-if="show==false" @click="showMenu"  src="../icons/menustatic.png" alt="menu">
-                 <button v-else @click="close">
+                <img id="showMenu" v-if="show==false" @click="showMenu"  src="../icons/menustatic.png" alt="menu">
+                 <button class="bnt-close" v-else @click="close">
                    X
                 </button>
             </div>
@@ -84,6 +84,15 @@ export default {
         this.show = true
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "1"
         document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "1"
+        document.getElementsByClassName("multi-menu-class")[0].animate([
+            // keyframes
+            { transform: 'translateY(-300px) scale(0.1)', marginLeft:'150px', opacity: '0.5'},
+            { transform: 'translateY(0px) scale(0.8)', opacity: '1'}
+          ], {
+            // timing options
+            duration: 330,
+            iterations: 1
+          });
       },
       closeMenu(){
         this.show = false
@@ -198,5 +207,8 @@ li{
   width: 340px;
   display: flex;
   right: -270px;
+}
+.bnt-close{
+  min-width: 40px;
 }
 </style>

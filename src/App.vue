@@ -192,6 +192,15 @@ export default {
     close(){
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "0"
         document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "-1"
+        document.getElementsByClassName("multi-menu-class")[0].animate([
+            // keyframes
+            { transform: 'translateY(0px) scale(0.9) perspective(400px) rotateY(25deg)', opacity: '1'},
+            { transform: 'translateY(-300px) scale(0.1) perspective(400px) rotateY(-35deg)', marginLeft:'150px', opacity: '0.2'}
+          ], {
+            // timing options
+            duration: 300,
+            iterations: 1
+          });
     },
     changefont(p){
         if(p.target.id=="square"){
@@ -368,10 +377,14 @@ export default {
 </script>
 
 <style>
+.multi-menu-class:hover{
+  transform: perspective(400px) rotateY(5deg);
+}
 .multi-menu-class{
   padding: 30px;
   opacity: 0;
   z-index: -1;
+  transform: perspective(400px) rotateY(35deg);
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
   -webkit-box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray, 5px 5px 15px 5px gray; 
