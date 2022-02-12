@@ -23,7 +23,7 @@
         @close="close"
       />
     </div>
-    <template1 
+    <template1 v-if="template==1"
         @add-info="addInfo"
         @add-resumo="editarResumo"
         @add-competencia="editarCompetencias"
@@ -40,6 +40,9 @@
        :user="user"
        :userExperiences="userExperiences"
     />
+    <template2 v-if="template==2"
+       
+    />
     <Footer 
       class="footer"
       @font-changed="setFont"
@@ -55,12 +58,14 @@ import MultiMenu from './components/MultiMenu.vue'
 import Footer from './components/Footer.vue'
 import navBar from './components/navBar.vue'
 import editorInformacoes from './components/editorIformacoes.vue'
+import Template2 from './templates/Template2.vue'
 
 export default {
   name: 'App',
   emits:['close'],
   data(){
     return{
+      template: 2,
       font: 'Oswald',
       fontSize: '15px',
       fontSizeTitles: '17px',
@@ -89,6 +94,7 @@ export default {
     navBar,
     Template1,
     editorInformacoes,
+    Template2,
   },
   methods: {
     setFont(fnt){
