@@ -1,7 +1,9 @@
 <template>
     <div class="main">
         <div class="header">
-              <Header />
+              <Header 
+                :imgURL="imgURL"
+              />
         </div>
         <div class="main-body">
             
@@ -16,6 +18,17 @@ export default {
     name: 'template2',
     components: {
         Header,
+    },
+    props:{
+        imageURL: String
+    },
+    data(){
+        return{
+            imgURL: this.imageURL
+        }
+    },
+    mounted(){
+        console.log(this.imgURL)
     }
 }
 </script>
@@ -28,7 +41,6 @@ export default {
     display: flex;
     justify-content:center;
     text-align: center;
-    padding-top: 40px;
 }
 .main-body{
     display:flex;
