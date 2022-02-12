@@ -252,7 +252,7 @@ export default {
     onIMGChange(img){
       //console.log(URL.createObjectURL(img.target.files[0]))
       this.imageURL = URL.createObjectURL(img.target.files[0])
-      localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
+      localStorage.setItem("profie-photo-url", this.imageURL.createObjectURL(img.target.files[0]))
       // the two codes works as well
       // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
     },
