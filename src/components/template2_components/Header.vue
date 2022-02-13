@@ -31,7 +31,7 @@ export default{
 .container {
     width: 100%;
     min-height: 200px;
-    background-color: blueviolet;
+    background-color: gray;
 }
 .pic{
     width: 120px;

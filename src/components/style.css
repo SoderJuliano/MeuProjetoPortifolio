@@ -1,0 +1,11 @@
+.contact-template1{
+
+}
+.contact-template2 .title{
+    align-items: start;
+    text-align: start !important;
+}
+.contact-template2{
+    padding: 0px;
+    margin: 0px;
+}

@@ -6,18 +6,23 @@
               />
         </div>
         <div class="main-body">
-            
+            <Left />
+            <Right />
         </div>
     </div>
 </template>
 
 <script>
 import Header from '../components/template2_components/Header.vue'
+import Left from '../components/template2_components/Left.vue'
+import Right from '../components/template2_components/Right.vue'
 
 export default {
     name: 'template2',
     components: {
         Header,
+        Left,
+        Right
     },
     props:{
         imageURL: String
