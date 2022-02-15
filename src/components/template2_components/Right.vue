@@ -1,9 +1,16 @@
 <template>
     <div class="container">
         <Contact
+            @add-info="$emit('add-info')"
             template="template2"
+            :user="user"
          />
-        <Social />
+        <Social 
+            @add-SocialLink="$emit('add-SocialLink')"
+            template="template2"
+            titulo="SOCIAL"
+            :user="user"
+        />
     </div>
 </template>
 <script>
@@ -14,6 +21,10 @@ export default {
     components: {
         Social,
         Contact
+    },
+    emits:["add-info", "add-SocialLink"],
+    props:{
+        user: Object
     }
 }
 </script>

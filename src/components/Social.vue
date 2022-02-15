@@ -1,11 +1,12 @@
 <template>
     <div class="social">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}} 
-          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/></p>
-      <div class="social-container">
+      <h3 :class="templateClass" style="background-color:`{{backgroundColor}}`">{{titulo}} 
+          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/></h3>
+      <div class="social-container" v-if="template=='template1'">
           <div :id="`${face}`" v-if="face" class="social-row">
               <img src="../icons/face.png" class="social-icon"/>
               <span class="data-container">{{face}}</span>
+              
               <img @click="remove(face)" :id="`${face}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
           <div :id="`${lin}`" v-if="lin" class="social-row">
@@ -34,12 +35,16 @@
               <img @click="remove(git)" :id="`${git}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
       </div>
+      <div class="social-container" v-if="template=='template2'">
+          //continuar
+      </div>
     </div>
 </template>
 <script>
 export default {
     name: "Social",
     props:{
+        template: String,
         titulo: String,
         backgroundColor: String,
         face: String,
@@ -50,6 +55,11 @@ export default {
         git: String
     },
     emits:['add-SocialLink'],
+    data(){
+        return{
+            templateClass: "social-"+this.template
+        }
+    },
     methods:{
         remove(id){
             document.getElementById(id).style.display = "none"

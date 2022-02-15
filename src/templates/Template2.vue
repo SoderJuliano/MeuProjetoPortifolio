@@ -7,7 +7,11 @@
         </div>
         <div class="main-body">
             <Left />
-            <Right />
+            <Right
+                @add-info="$emit('add-info')"
+                @add-SocialLink="$emit('add-SocialLink')"
+                :user="user"
+             />
         </div>
     </div>
 </template>
@@ -24,8 +28,11 @@ export default {
         Left,
         Right
     },
+    emits:["add-info", "add-SocialLink"],
     props:{
-        imageURL: String
+        imageURL: String,
+        user: Object,
+        redesociais: Array,
     },
     data(){
         return{
@@ -33,7 +40,6 @@ export default {
         }
     },
     mounted(){
-        console.log(this.imgURL)
     }
 }
 </script>

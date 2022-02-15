@@ -23,12 +23,20 @@ export default {
     name: 'contact',
     props:{
         template: String,
-        
+        user: Object,
     },
+    emits:["add-info"],
     data(){
         return {
-            tstyle: "contact-"+this.template
+            email: [],
+            phone: [],
+            adress: this.user.adress,
+            tstyle: "contact-"+this.template,
         }
+    },
+    mounted(){
+        this.email = this.user.email;
+        this.phone = this.user.phone;
     }
 }
 </script>

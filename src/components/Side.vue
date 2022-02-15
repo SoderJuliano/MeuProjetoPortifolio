@@ -93,7 +93,7 @@ export default {
     exibirSocial: true,
      email : ['insira seu email aqui @teste.com',
      ],
-      phone : [
+     phone : [
         'telefone'
       ],
    adress: 'seu Endereço',
@@ -112,7 +112,6 @@ export default {
  },
  methods: {
    getContatoData(){
-
      let contato = JSON.parse(localStorage.getItem('contato'))
 
      

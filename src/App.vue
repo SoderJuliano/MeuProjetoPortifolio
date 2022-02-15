@@ -42,6 +42,19 @@
     />
     <template2 v-if="template==2"
        :imageURL="imageURL"
+        @add-info="addInfo"
+
+        @add-nome="this.showModal('nome')"
+        @add-profissao="this.showModal('profissao')"
+        @add-formacao="this.showModal('formacao')"
+        @add-habilidade="this.showModal('habilidade')"
+        @add-SocialLink="this.showModal('socialLink')"
+        class="template"
+       :style="getStyle()"
+       :mainColor=mainColor
+       :sideColor=sideColor
+       :user="user"
+       :userExperiences="userExperiences"
     />
     <Footer 
       class="footer"
@@ -84,7 +97,14 @@ export default {
         name: 'Digite nome',
         profession: 'Sua profissão',
         resume: 'Digite aqui um resumo sobre você.',
-        competence: []
+        competence: [],
+        email : ['insira seu email aqui @teste.com',
+        ],
+        phone : [
+            'telefone'
+          ],
+        adress: 'seu Endereço',
+        social : []
       },
       userExperiences: [],
     }
@@ -375,6 +395,16 @@ export default {
                 this.userExperiences = jobs
             }
         },
+        getContactData(){
+          let contato = JSON.parse(localStorage.getItem('contato'))
+          this.social = localStorage.getItem('social').split(',')
+
+          if(contato){
+            this.user.email[0] = contato.email
+            this.user.phone[0] = contato.telefone
+            this.user.adress = contato.endereco
+          }
+        },
       getUserProfileIMG(){
           const pimg = localStorage.getItem("profileimg")
           if(pimg && pimg.includes('av')){
@@ -414,8 +444,13 @@ export default {
   }, 
   beforeMount(){
     this.getColors()
+    
     this.getContatoDataPage()
+    
     this.getExperienceData()
+    
+    this.getContactData()
+    
     localStorage.getItem('font') ? 
     this.font = localStorage.getItem('font')
     : this.font = 'Oswald'
