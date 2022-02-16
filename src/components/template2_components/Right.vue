@@ -9,7 +9,7 @@
             @add-SocialLink="$emit('add-SocialLink')"
             template="template2"
             titulo="SOCIAL"
-            :user="user"
+            :user="userData"
         />
     </div>
 </template>
@@ -25,6 +25,11 @@ export default {
     emits:["add-info", "add-SocialLink"],
     props:{
         user: Object
+    },
+    data() {
+        return{
+            userData: this.user
+        }
     }
 }
 </script>

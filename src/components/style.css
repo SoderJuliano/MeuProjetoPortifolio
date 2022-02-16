@@ -1,6 +1,3 @@
-.contact-template1{
-
-}
 .contact-template2 .title{
     align-items: start;
     text-align: start !important;
@@ -20,4 +17,54 @@
     padding: 0px;
     margin: 0px;
     border-bottom: 1px solid gray;
+}
+.social-itens-template2{
+    display: block;
+    width: 80%;
+    margin-left: 25px;
+}
+.social-item-template2{
+    padding-left: 10px;
+}
+.social-item-template2 img {
+    top: 5px;
+    position: relative;
+}
+
+
+
+/* global itens  */
+.remove-bnt{
+    float: right;
+    margin-right: -10px;
+}
+
+.remove-bnt-delete{
+    position: relative;
+    width: 20px;
+    display: none;
+    float: right;
+    margin-top: 3px;
+    margin-right: 20px;
+}
+.social-item-template2:hover .remove-bnt-delete{
+    display: block;
+    width: 30px;
+}
+.social-item-template2:hover .remove-bnt{
+    display: none;
+}
+.editar-animado{
+    width: 20px;
+    position: relative;
+    float: right;
+    display: none;
+    margin-left: 10px;
+}
+h3:hover .editar-animado{
+    display: block;
+    width: 30px;
+}
+h3:hover .editar{
+    display: none;
 }

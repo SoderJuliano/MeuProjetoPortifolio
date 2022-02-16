@@ -10,7 +10,7 @@
             <Right
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
-                :user="user"
+                :user="userData"
              />
         </div>
     </div>
@@ -36,10 +36,12 @@ export default {
     },
     data(){
         return{
-            imgURL: this.imageURL
+            imgURL: this.imageURL,
+            userData: this.user
         }
     },
     mounted(){
+        console.log(this.userData)
     }
 }
 </script>

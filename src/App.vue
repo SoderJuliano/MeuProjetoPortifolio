@@ -396,8 +396,8 @@ export default {
             }
         },
         getContactData(){
-          let contato = JSON.parse(localStorage.getItem('contato'))
-          this.social = localStorage.getItem('social').split(',')
+          let contato = localStorage.getItem('contato') ? JSON.parse(localStorage.getItem('contato')) : ""
+          this.user.social = localStorage.getItem('redesociais') ? localStorage.getItem('redesociais').split(',') : ""
 
           if(contato){
             this.user.email[0] = contato.email
