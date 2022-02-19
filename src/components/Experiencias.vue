@@ -1,5 +1,5 @@
 <template>
-  <div class="experiencias">
+  <div :class="tstyle">
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
       </p>
@@ -23,6 +23,7 @@ export default {
   name: 'Experiencias',
   emits: ['add-experiencia'],
   props:{
+    template: String,
     titulo: String,
     cor: String,
     experiences: Array,
@@ -32,7 +33,8 @@ export default {
       jobHired: '',
       jobEnd: '',
       lasJobHired: '',
-      lastJobEnd: ''
+      lastJobEnd: '',
+      tstyle: 'experiences-'+this.template+'-title',
     }
   },
   methods:{
@@ -59,6 +61,7 @@ export default {
         },
   },
   beforeMount(){
+    console.log(this.experiencias)
   }
 }
 </script>

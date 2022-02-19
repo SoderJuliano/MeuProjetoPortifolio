@@ -11,20 +11,30 @@
             titulo="SOCIAL"
             :user="userData"
         />
+        <Experiencias
+            @add-Experiencias="$emit('add-Experiencias')"
+            template="template2"
+            titulo="EXPERIÊNCIAS"
+            :user="userData"
+            :experiences="userExperiences"
+        />
     </div>
 </template>
 <script>
 import Contact from '../Contact.vue'
 import Social from '../Social.vue'
+import Experiencias from '../Experiencias.vue'
 
 export default {
     components: {
         Social,
-        Contact
+        Contact,
+        Experiencias
     },
     emits:["add-info", "add-SocialLink"],
     props:{
-        user: Object
+        user: Object,
+        userExperiences: Array
     },
     data() {
         return{

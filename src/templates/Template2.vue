@@ -11,6 +11,7 @@
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
                 :user="userData"
+                :userExperiences="userExperiences"
              />
         </div>
     </div>
@@ -33,6 +34,7 @@ export default {
         imageURL: String,
         user: Object,
         redesociais: Array,
+        userExperiences: Array,
     },
     data(){
         return{

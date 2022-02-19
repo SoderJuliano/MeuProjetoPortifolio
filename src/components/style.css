@@ -82,7 +82,18 @@ h3:hover .editar{
 .title:hover .editar-contact-animado{
     display: block;
 }
-
+.experiences-template2-title .title{
+    align-items: start;
+    text-align: start !important;
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 1px solid gray !important;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.experiences-template2-title{
+    width: 80%;
+}
 @media print {
     .editar-contact-animado{
         display: none;
