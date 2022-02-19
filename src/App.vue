@@ -43,13 +43,12 @@
     <template2 v-if="template==2"
        :imageURL="imageURL"
         @add-info="addInfo"
-
+        class="template"
         @add-nome="this.showModal('nome')"
         @add-profissao="this.showModal('profissao')"
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
         @add-SocialLink="this.showModal('socialLink')"
-        class="template"
        :style="getStyle()"
        :mainColor=mainColor
        :sideColor=sideColor

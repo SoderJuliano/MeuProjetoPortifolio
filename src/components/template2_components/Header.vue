@@ -66,4 +66,12 @@ export default{
         right: 159px;
     }
 }
+@media print{
+    .l2{
+        left: 161px;
+    }
+    .l1{
+        right: 160px;
+    }
+}
 </style>

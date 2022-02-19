@@ -68,3 +68,32 @@ h3:hover .editar-animado{
 h3:hover .editar{
     display: none;
 }
+.editar-contact{
+    width: 20px;
+    float: right;
+}
+.editar-contact-animado{
+    width:30px;
+    float: right;
+    display: none;
+    right: -20px;
+    position: relative;
+}
+.title:hover .editar-contact-animado{
+    display: block;
+}
+
+@media print {
+    .editar-contact-animado{
+        display: none;
+    }
+    .editar-contact{
+        display: none;
+    }
+    .editar{
+        display: none;
+    }
+    .editar-animado{
+        display: none;
+    }
+}

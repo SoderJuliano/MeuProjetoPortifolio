@@ -46,7 +46,6 @@
               <img v-if="item.includes('twitter')" src="../icons/twit.png" class="social-icon"/>
 
                <span>{{item}}</span> <!-- fazer um componente para este botao -->
-              <img :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
               <img @click="remove(item)" :id="`${item}`" class="remove-bnt-delete" src="../icons/animados/lixeira.gif" alt="remove-bnt"/>
           </div>
       </div>
