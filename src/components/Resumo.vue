@@ -5,6 +5,7 @@
          <ion-icon name="book" size="large"></ion-icon>
          <span @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
+         <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-SocialLink')"/>
       </div>
   </div>
 </template>
@@ -35,6 +36,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.editar-animado{
+  width: 30px;
+}
 .resumo-container{
   max-width: 100%;
   height: 100%;

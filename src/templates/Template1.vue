@@ -6,6 +6,7 @@
         @add-habilidade="$emit('add-habilidade')"
         @add-SocialLink="$emit('add-SocialLink')"
         :cor="sideColor"
+        :user="user"
       />
       <Page
         @add-resumo="$emit('add-resumo')"

@@ -65,6 +65,7 @@
       :you="social.youtube"
       :stof="social.stackoverflow"
       :git="social.github"
+      :user="social"
     />
 </div>
 </template>
@@ -81,6 +82,7 @@ export default {
   },
   props:{
     cor: String,
+    user: Object
   },
  name:'Side',
  emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink'],

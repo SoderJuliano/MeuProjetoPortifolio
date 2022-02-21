@@ -43,12 +43,15 @@
     <template2 v-if="template==2"
        :imageURL="imageURL"
         @add-info="addInfo"
+        @add-resumo="editarResumo"
         class="template"
+        @add-experiencia="editarExperiencias"
         @add-nome="this.showModal('nome')"
         @add-profissao="this.showModal('profissao')"
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
         @add-SocialLink="this.showModal('socialLink')"
+
        :style="getStyle()"
        :mainColor=mainColor
        :sideColor=sideColor
@@ -78,7 +81,7 @@ export default {
   data(){
     return{
       imageURL: "",
-      template: 2,
+      template: 1,
       font: 'Oswald',
       fontSize: '15px',
       fontSizeTitles: '17px',
@@ -391,7 +394,7 @@ export default {
             let jobs = JSON.parse(localStorage.getItem('jobs'))
             if(jobs){
                 console.log(jobs)
-                this.userExperiences = jobs
+                this.userExperiences = jobs.slice(0).reverse()
             }
         },
         getContactData(){

@@ -6,10 +6,14 @@
               />
         </div>
         <div class="main-body">
-            <Left />
+            <Left 
+                :user="userData"
+                @add-resumo="$emit('add-resumo')"
+            />
             <Right
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
+                @add-experiencia="$emit('add-experiencia')"
                 :user="userData"
                 :userExperiences="userExperiences"
              />
@@ -29,7 +33,7 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink"],
+    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo"],
     props:{
         imageURL: String,
         user: Object,

@@ -6,7 +6,7 @@
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-nome')"/>
             </div>
             <div style="width: 100%; text-align: center; padding-top: 20px;">
-                <span @input="newProfession" class="profession">{{u.profession}}</span>
+                <span  @input="newProfession" class="profession">{{u.profession}}</span>
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-profissao')"/>
             </div>
                 

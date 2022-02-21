@@ -72,6 +72,9 @@ export default {
   .remove-bnt{
     display: none;
   }
+  .title{
+    break-before: always;
+  }
 }
 .remove-bnt{
   float: right;

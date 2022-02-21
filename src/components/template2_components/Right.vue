@@ -12,7 +12,7 @@
             :user="userData"
         />
         <Experiencias
-            @add-Experiencias="$emit('add-Experiencias')"
+            @add-Experiencia="$emit('add-Experiencia')"
             template="template2"
             titulo="EXPERIÊNCIAS"
             :user="userData"
@@ -31,7 +31,7 @@ export default {
         Contact,
         Experiencias
     },
-    emits:["add-info", "add-SocialLink"],
+    emits:["add-info", "add-SocialLink", "add-Experiencia"],
     props:{
         user: Object,
         userExperiences: Array
