@@ -38,6 +38,7 @@ export default {
 <style scoped>
 .editar-animado-resumo{
   width: 30px;
+  height: 30px;
   float: right;
   display: none;
 }
