@@ -4,8 +4,8 @@
       <div class="resumo-container">
          <ion-icon name="book" size="large"></ion-icon>
          <span @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
-         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
-         <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-SocialLink')"/>
+         <img src="../icons/editar.png" alt="editar" class="editar" />
+         <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </div>
   </div>
 </template>
@@ -36,9 +36,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.editar-animado{
+.editar-animado-resumo{
   width: 30px;
+  float: right;
+  display: none;
 }
+.resumo-container:hover .editar-animado-resumo{
+  display: block;
+} 
+.resumo-container:hover .editar{
+  display: none;
+} 
+
 .resumo-container{
   max-width: 100%;
   height: 100%;

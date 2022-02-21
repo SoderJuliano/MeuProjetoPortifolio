@@ -81,7 +81,7 @@ export default {
   data(){
     return{
       imageURL: "",
-      template: 1,
+      template: 2,
       font: 'Oswald',
       fontSize: '15px',
       fontSizeTitles: '17px',
