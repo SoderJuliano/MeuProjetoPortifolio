@@ -9,6 +9,8 @@
             <Left 
                 :user="userData"
                 @add-resumo="$emit('add-resumo')"
+                @add-competencia="$emit('add-competencia')"
+                @add-formacao="$emit('add-formacao')"
             />
             <Right
                 @add-info="$emit('add-info')"

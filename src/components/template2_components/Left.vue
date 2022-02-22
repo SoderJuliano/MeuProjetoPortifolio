@@ -11,11 +11,13 @@
             :user="user"
             titulo="COMPETÊNCIAS"
             templete="templete2"
+            @add-competencia="$emit('add-competencia')"
         />
         <Formacao 
             titulo="FORMAÇÃO ACADÊMICA"
-            :formacao="user.formacao"
+            :formacao="user.grade"
             templete="templete2"
+            @add-formacao="$emit('add-formacao')"
         />
     </div>
 </template>

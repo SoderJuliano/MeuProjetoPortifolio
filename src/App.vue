@@ -46,6 +46,7 @@
         @add-resumo="editarResumo"
         class="template"
         @add-experiencia="editarExperiencias"
+        @add-competencia="editarCompetencias"
         @add-nome="this.showModal('nome')"
         @add-profissao="this.showModal('profissao')"
         @add-formacao="this.showModal('formacao')"
@@ -106,7 +107,8 @@ export default {
             'telefone'
           ],
         adress: 'seu Endereço',
-        social : []
+        social : [],
+        grade : [],
       },
       userExperiences: [],
     }
@@ -398,14 +400,22 @@ export default {
             }
         },
         getContactData(){
-          let contato = localStorage.getItem('contato') ? JSON.parse(localStorage.getItem('contato')) : ""
-          this.user.social = localStorage.getItem('redesociais') ? localStorage.getItem('redesociais').split(',') : ""
+            let contato = localStorage.getItem('contato') ? JSON.parse(localStorage.getItem('contato')) : ""
+            this.user.social = localStorage.getItem('redesociais') ? localStorage.getItem('redesociais').split(',') : ""
 
-          if(contato){
-            this.user.email[0] = contato.email
-            this.user.phone[0] = contato.telefone
-            this.user.adress = contato.endereco
-          }
+            if(contato){
+              this.user.email[0] = contato.email
+              this.user.phone[0] = contato.telefone
+              this.user.adress = contato.endereco
+            }
+
+            // grade
+
+            const gradeStorage = localStorage.getItem('grade')
+            if(gradeStorage){
+              this.user.grade = []
+              this.user.grade = gradeStorage.split(',')
+            }     
         },
       getUserProfileIMG(){
           const pimg = localStorage.getItem("profileimg")
