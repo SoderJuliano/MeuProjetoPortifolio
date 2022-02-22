@@ -1,5 +1,5 @@
 <template>
-  <div class="competencias">
+  <div :class="conteinerstyle">
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
       </p>
@@ -19,11 +19,13 @@ export default {
     titulo: String,
     backgroundColor: String,
     user: Object,
-    cor: String
+    cor: String,
+    templete: String
   },
   data(){
     return{
-      competencias : this.user.competence
+      competencias : this.user.competence,
+      conteinerstyle : this.templete+"-competencias"
     }
   },
   emits: ['add-competencia'],
@@ -44,6 +46,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.templete2-competencias{
+  width: 82% !important;
+}
+.templete2-competencias .title{
+  text-align: start !important;
+  padding-left: 10px !important;
+  margin: 0 !important;
+}
 .competencias-container{
   width: 100%;
   height: 100%;
@@ -58,6 +68,9 @@ export default {
 .data-container-page{
     width: 100%;
     height: 100%;
+}
+.editar{
+  float: right;
 }
 @media print{
   .editar{

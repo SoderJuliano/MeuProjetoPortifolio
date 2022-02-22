@@ -1,6 +1,6 @@
 <template>
-  <div class="formacao">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
+  <div :class="conteinerstyle">
+      <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/></p>
       <div v-for="(item, index) in mygrade " :key="index" class="formacao-container">
           <img src="../icons/livros.png" class="formacao-icon"/>
@@ -17,9 +17,12 @@ export default {
   data(){
     return{
       mygrade: this.formacao,
+      tstyle: this.templete+"-formacao-title",
+      containerstyle: this.templete+"-formacao"
     }
   },
   props:{
+    templete: String,
     titulo: String,
     backgroundColor: String,
     formacao: Array,
@@ -47,13 +50,22 @@ export default {
   height: 40px;
   padding-top: 20px;
 }
-.formacao span{
+.templete1-formacao span{
   padding-top: 20px;
+}
+.templete2-formacao{
+  width: 80%;
+  padding-left: 20px;
 }
 .remove-bnt{
   position: absolute;
   margin-top: 20px;
   margin-left: 190px;
+}
+.templete2-formacao-title{
+  text-align: start;
+  padding-left: 10px;
+  width: 80%;
 }
 @media print {
   .remove-bnt{
