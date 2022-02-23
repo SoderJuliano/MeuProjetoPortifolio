@@ -51,7 +51,8 @@
       class="template-data"
       titulo="HABILIDADES"
       backgroundColor="#808080"
-      :hability="hability"
+      :user="suer"
+      templete="templete1"
     />
     <Social
       @add-SocialLink="$emit('add-SocialLink')"

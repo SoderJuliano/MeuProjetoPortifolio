@@ -1,11 +1,11 @@
 <template>
-  <div class="habilidade">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
+  <div :class="cstyle">
+      <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
       </p>
-      <div class="habilidade-container">
+      <div :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
-              <span  class="data-text-habilidades">{{hability}}</span> 
+              <span  class="data-text-habilidades">{{user.hability}}</span> 
         <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
@@ -15,10 +15,18 @@
 export default {
   name: 'Habilidade',
   emits: ['add-habilidade'],
+  data(){
+    return {
+      tstyle : this.templete+"-title",
+      cstyle : this.templete+"-container",
+      hcstyle : this.templete+"-habilidade-container"
+    }
+  },
   props:{
     titulo: String,
     backgroundColor: String,
-    hability: String,
+    user: Object,
+    templete: String,
   },
   methods:{
     removeHabilidades(){
@@ -31,13 +39,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.habilidade-container{
+.templete1-habilidade-container{
   width: 80%;
   min-height: 100px;
   max-height: 100%;
   align-self: center;
   margin: 0 auto;
   display: flex;
+}
+.templete2-habilidade-container{
+  display: flex !important;
+  width: 100%;
+  min-height: 100px;
+  max-height: 100%;
 }
 @media print{
   .habilidade-container{
@@ -61,6 +75,15 @@ export default {
   position: absolute;
   margin-left: 190px;
   margin-top: 10px;
+}
+.templete2-title{
+  text-align: start;
+  border-bottom: 1px solid black;
+
+}
+.templete2-container{
+  width: 80%;
+  padding-left: 10px;
 }
 @media print{
   .remove-bnt{

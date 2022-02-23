@@ -19,18 +19,30 @@
             templete="templete2"
             @add-formacao="$emit('add-formacao')"
         />
+         <Habilidade
+            @add-habilidade="$emit('add-habilidade')"
+            class="template-data"
+            titulo="HABILIDADES"
+            backgroundColor="#808080"
+            :hability="hability"
+            templete="templete2"
+            :user="user"
+        />
     </div>
 </template>
 <script>
 import Competencias from '../Competencias.vue'
 import Resumo from '../Resumo.vue'
 import Formacao from '../Formacao.vue'
+import Habilidade from '../Habilidade.vue'
+
 export default {
     name: 'left',
     components: {
         Resumo,
         Competencias,
         Formacao,
+        Habilidade
     },
     props: {
         user: Object

@@ -109,6 +109,7 @@ export default {
         adress: 'seu Endereço',
         social : [],
         grade : [],
+        hability: 'abilidades'
       },
       userExperiences: [],
     }
@@ -415,7 +416,16 @@ export default {
             if(gradeStorage){
               this.user.grade = []
               this.user.grade = gradeStorage.split(',')
-            }     
+            }
+            
+            
+            // habilitys
+
+            const habilityStorage = localStorage.getItem('hability')
+            if(habilityStorage){
+              this.user.hability = habilityStorage
+            }
+
         },
       getUserProfileIMG(){
           const pimg = localStorage.getItem("profileimg")
