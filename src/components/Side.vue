@@ -38,7 +38,7 @@
       class="template-data"
       titulo="FORMAÇÃO"
       :backgroundColor="cor"
-      :formacao="grade"
+      :user="user"
     />
      <editarFormacao
       class="editar-dados-escolares"

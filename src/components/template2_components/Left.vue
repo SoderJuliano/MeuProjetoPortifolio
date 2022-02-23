@@ -15,7 +15,7 @@
         />
         <Formacao 
             titulo="FORMAÇÃO ACADÊMICA"
-            :formacao="user.grade"
+            :user="user"
             templete="templete2"
             @add-formacao="$emit('add-formacao')"
         />

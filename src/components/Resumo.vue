@@ -1,9 +1,9 @@
 <template>
   <div class="resumo">
-      <p class="title" :style="getStyle()">{{titulo}}</p>
+      <p :class="tstyle" :style="getStyle()">{{titulo}}</p>
       <div class="resumo-container">
          <ion-icon name="book" size="large"></ion-icon>
-         <span @input="saveContent" id='resume' class="data-container-page">{{user.resume}}</span>
+         <span @input="saveContent" id='resume' :class="datacontainerpage">{{user.resume}}</span>
          <img src="../icons/editar.png" alt="editar" class="editar" />
          <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </div>
@@ -13,18 +13,27 @@
 <script>
 export default {
   name: 'Resumo',
+  data(){
+    return {
+      tstyle: this.templete+"-resumo-titulo",
+    }
+  },
   props:{
     titulo: String,
     backgroundColor: String,
     user: Object,
-    cor: String
+    cor: String,
+    templete: String,
   },
   emits:['add-resumo'],
   methods:{
       getStyle(){ //console.log(this.cor +' corrr')
-          return{
-              'background-color': `${this.cor}`
-          }
+      return this.templete == "templete2" ?
+          {
+              'text-align': 'start',
+              'font-weight': 'bolder !important',
+              'margin-left': '10px !important'
+          } : { 'background-color': `${this.cor}` }
       },
       saveContent(){
         const content = document.getElementById('resume').textContent
