@@ -11,6 +11,7 @@
                 @add-resumo="$emit('add-resumo')"
                 @add-competencia="$emit('add-competencia')"
                 @add-formacao="$emit('add-formacao')"
+                @add-habilidade="$emit('add-habilidade')"
             />
             <Right
                 @add-info="$emit('add-info')"
@@ -35,7 +36,7 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo"],
+    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade"],
     props:{
         imageURL: String,
         user: Object,

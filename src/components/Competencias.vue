@@ -2,6 +2,7 @@
   <div :class="conteinerstyle">
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
+        <img v-if="templete=='templete2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
@@ -46,6 +47,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.editar-competencias-animado{
+  float: right;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+.title:hover .editar-competencias-animado{
+  display: block;
+}
+.title:hover .editar{
+  display: none;
+}
 .templete2-competencias{
   width: 82% !important;
 }

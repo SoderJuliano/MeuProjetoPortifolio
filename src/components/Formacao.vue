@@ -1,7 +1,9 @@
 <template>
   <div :class="conteinerstyle">
       <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/></p>
+        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
+         <img v-if="templete=='templete2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
+      </p>
       <div v-for="(item, index) in mygrade " :key="index" :class="conteinerdata">
           <img src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
@@ -40,6 +42,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.editar-animado-habilidade{
+  width: 30px;
+  height: 30px;
+  float: right;
+  display: none;
+}
+.templete2-formacao-title:hover .editar-animado-habilidade{
+  display: block;
+}
+.templete2-formacao-title:hover .editar{
+  display: none;
+}
 .templete1-formacao-container{
   width: 80%;
   height: 100%;

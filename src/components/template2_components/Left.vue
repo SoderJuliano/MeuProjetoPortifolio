@@ -47,7 +47,7 @@ export default {
     props: {
         user: Object
     },
-    emits:["add-resumo"]
+    emits:["add-resumo", "add-habilidade"]
 }
 </script>
 <style scoped>
