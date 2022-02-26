@@ -9,6 +9,7 @@
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
             <h2>Name Here</h2>
+             <img v-if="template=='template2'" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
             <h3>profissao</h3>   
 
             <input type="file"
@@ -55,6 +56,12 @@ export default{
     width: 100%;
     min-height: 200px;
     background-color: gray;
+}
+.container:hover .editar-animado-nome{
+    display: block;
+}
+.editar-animado-nome{
+    display: none;
 }
 .pic{
     width: 150px;
