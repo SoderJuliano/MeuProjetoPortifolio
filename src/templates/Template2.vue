@@ -3,6 +3,7 @@
         <div class="header">
               <Header 
                 :imgURL="imgURL"
+                :mainColor="mainColor"
               />
         </div>
         <div class="main-body">
@@ -12,6 +13,8 @@
                 @add-competencia="$emit('add-competencia')"
                 @add-formacao="$emit('add-formacao')"
                 @add-habilidade="$emit('add-habilidade')"
+                :mainColor="mainColor"
+                :sideColor="sideColor"
             />
             <Right
                 @add-info="$emit('add-info')"
@@ -19,6 +22,8 @@
                 @add-experiencia="$emit('add-experiencia')"
                 :user="userData"
                 :userExperiences="userExperiences"
+                :mainColor="mainColor"
+                :sideColor="sideColor"
              />
         </div>
     </div>
@@ -38,6 +43,8 @@ export default {
     },
     emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade"],
     props:{
+        mainColor: String,
+        sideColor: String,
         imageURL: String,
         user: Object,
         redesociais: Array,

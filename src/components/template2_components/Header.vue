@@ -1,5 +1,5 @@
 <template>
-    <div class="container">  
+    <div class="container" :style="getStyle()">  
         <div class="profile-style">
             <div class="line">
                 <div class="l1"></div>
@@ -25,6 +25,7 @@ export default{
     name: "header",
     props:{
         imgURL: String,
+        mainColor: String
     },
     data(){
         return{
@@ -37,6 +38,11 @@ export default{
         //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
         // the two codes works as well
         // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
+        },
+        getStyle(){
+            return{
+                "background-color":this.mainColor
+            }
         }
     },
     beforeMount(){
