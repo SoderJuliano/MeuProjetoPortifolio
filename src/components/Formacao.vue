@@ -1,6 +1,6 @@
 <template>
   <div :class="conteinerstyle">
-      <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
+      <p :class="tstyle()" style="background-color:`{{backgroundColor}}`">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
@@ -30,11 +30,17 @@ export default {
     titulo: String,
     backgroundColor: String,
     user: Object,
+    sideColor: String,
   },
   methods:{
     removeGrade(event){
       this.mygrade.splice(this.mygrade.indexOf(event.target.id), 1)
       localStorage.setItem('grade', this.mygrade)
+    },
+    getStyle(){
+      return{
+        'border-bottom':'1px solid '+this.sideColor 
+      }
     }
   }
 }

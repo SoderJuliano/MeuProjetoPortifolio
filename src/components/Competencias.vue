@@ -21,7 +21,8 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
-    template: String
+    template: String,
+    sideColor: String,
   },
   data(){
     return{
@@ -37,7 +38,7 @@ export default {
               'background-color': `${this.cor}`
           }
           : {
-            'border-bottom': '1px solid black',
+            'border-bottom': '1px solid '+this.sideColor+ '!important',
             'margin-left': '10px !important'
           }
       },

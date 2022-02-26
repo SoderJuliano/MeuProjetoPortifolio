@@ -6,18 +6,21 @@
             title="Resumo"
             @add-resumo="$emit('add-resumo')"
             template="template2"
+            :sideColor="sideColor"
         />
         <Competencias 
             :user="user"
             titulo="COMPETÊNCIAS"
             template="template2"
             @add-competencia="$emit('add-competencia')"
+            :sideColor="sideColor"
         />
         <Formacao 
             titulo="FORMAÇÃO ACADÊMICA"
             :user="user"
             template="template2"
             @add-formacao="$emit('add-formacao')"
+            :sideColor="sideColor"
         />
          <Habilidade
             @add-habilidade="$emit('add-habilidade')"
@@ -27,6 +30,7 @@
             :hability="hability"
             template="template2"
             :user="user"
+            :sideColor="sideColor"
         />
     </div>
 </template>
@@ -45,7 +49,8 @@ export default {
         Habilidade
     },
     props: {
-        user: Object
+        user: Object,
+        sideColor: String
     },
     emits:["add-resumo", "add-habilidade"]
 }

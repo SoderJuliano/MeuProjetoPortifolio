@@ -1,6 +1,6 @@
 <template>
   <div :class="cstyle">
-      <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
+      <p :class="tstyle" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
@@ -28,11 +28,18 @@ export default {
     backgroundColor: String,
     user: Object,
     template: String,
+    sideColor: String,
   },
   methods:{
     removeHabilidades(){
       localStorage.removeItem("hability")
       window.location.reload()
+    },
+    getStyle(){
+
+      return this.template == "template2" ? {
+        'border-bottom': '1px solid '+this.sideColor,
+      } : { 'background-color': this.backgroundColor }
     }
   }
 }

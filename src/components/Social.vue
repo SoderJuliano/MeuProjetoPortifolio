@@ -1,6 +1,6 @@
 <template>
     <div class="social">
-      <h3 :class="templateClass" style="background-color:`{{backgroundColor}}`">{{titulo}} 
+      <h3 :class="templateClass" :style="getStyle()">{{titulo}} 
           <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
           <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
       <div class="social-container" v-if="template=='template1'">
@@ -64,7 +64,8 @@ export default {
         you: String,
         stof: String,
         git: String,
-        user: Object
+        user: Object,
+        sideColor: String,
     },
     emits:['add-SocialLink'],
     data(){
@@ -86,6 +87,12 @@ export default {
             newarray.splice(rs.split(",").indexOf(id), 1)
             this.social = newarray
             localStorage.setItem('redesociais', newarray)
+        },
+        getStyle(){
+            return{
+                "border-bottom": "1px solid "+this.sideColor,
+                "background-color": this.backgroundColor
+            }
         }
     }
 }

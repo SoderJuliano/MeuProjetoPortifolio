@@ -24,6 +24,7 @@ export default {
     user: Object,
     cor: String,
     template: String,
+    sideColor: String,
   },
   emits:['add-resumo'],
   methods:{
@@ -32,7 +33,9 @@ export default {
           {
               'text-align': 'start',
               'font-weight': 'bolder !important',
-              'margin-left': '10px !important'
+              'margin-left': '10px !important',
+              'border-bottom': '1px solid '+this.sideColor,
+              'width': '85%'
           } : { 'background-color': `${this.cor}` }
       },
       saveContent(){

@@ -1,15 +1,17 @@
 <template>
-    <div class="container">
+    <div class="container" :style="getStyle()">
         <Contact
             @add-info="$emit('add-info')"
             template="template2"
             :user="user"
+            :sideColor="sideColor"
          />
         <Social 
             @add-SocialLink="$emit('add-SocialLink')"
             template="template2"
             titulo="SOCIAL"
             :user="userData"
+            :sideColor="sideColor"
         />
         <Experiencias
             @add-Experiencia="$emit('add-Experiencia')"
@@ -17,6 +19,7 @@
             titulo="EXPERIÊNCIAS"
             :user="userData"
             :experiences="userExperiences"
+            :sideColor="sideColor"
         />
     </div>
 </template>
@@ -34,7 +37,15 @@ export default {
     emits:["add-info", "add-SocialLink", "add-Experiencia"],
     props:{
         user: Object,
-        userExperiences: Array
+        userExperiences: Array,
+        sideColor: String
+    },
+    methods:{
+        getStyle(){
+            return{
+                "border-left": "2px solid "+this.sideColor,
+            }
+        }
     },
     data() {
         return{
@@ -47,7 +58,6 @@ export default {
 <style scoped>
 .container {
     width: 50%;
-    border-left: 1px solid black;
     padding: 10px;
 }
 </style>

@@ -27,6 +27,7 @@ export default {
     template: String,
     titulo: String,
     cor: String,
+    sideColor: String,
     experiences: Array,
   },
   data(){
@@ -41,7 +42,8 @@ export default {
   methods:{
       getStyle(){
           return{
-              'background-color': `${this.cor}`
+              'background-color': `${this.cor}`,
+              "border-bottom": "1px solid "+this.sideColor
           }
       },
       removeJob(item){

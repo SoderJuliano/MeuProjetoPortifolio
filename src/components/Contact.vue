@@ -1,6 +1,6 @@
 <template>
     <div :class="tstyle">
-        <p class="title">CONTATO
+        <p class="title" :style="getStyle()">CONTATO
         <img src="../icons/editar.png" alt="editar" class="editar-contact"/>
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
         </p><br>
@@ -25,6 +25,7 @@ export default {
     props:{
         template: String,
         user: Object,
+        sideColor: String,
     },
     emits:["add-info"],
     data(){
@@ -38,6 +39,13 @@ export default {
     mounted(){
         this.email = this.user.email;
         this.phone = this.user.phone;
+    },
+    methods:{
+        getStyle(){
+            return {
+                "border-bottom": "1px solid "+this.sideColor
+            }
+        }
     }
 }
 </script>
