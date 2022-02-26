@@ -5,25 +5,42 @@
                 <div class="l1"></div>
                 <div class="l2"></div>
             </div>
-            <div @click="$refs.fileInput.click()" class="pic">
-                <img :src="imgURL" alt="perfil" class="img-pic"/>
+            <div @click="$refs.imgInput.click()" class="pic">
+                <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
             <h2>Name Here</h2>
-            <h3>profissao</h3>    
+            <h3>profissao</h3>   
+
+            <input type="file"
+                id="input"
+                ref="imgInput"  
+                style="display:none;"
+                @change="onIMGChange"
+            />
         </div> 
     </div>
-    <input type="file"
-        id="input"
-        ref="fileInput"  
-        style="display:none;"
-        @change="onIMGChange"
-    />
 </template>
 <script>
 export default{
     name: "header",
     props:{
         imgURL: String,
+    },
+    data(){
+        return{
+            imageURL: ""
+        }
+    },
+    methods:{
+        onIMGChange(img){
+        this.imageURL = URL.createObjectURL(img.target.files[0])
+        //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
+        // the two codes works as well
+        // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
+        }
+    },
+    beforeMount(){
+        this.imageURL = this.imgURL
     }
 }
 </script>
@@ -34,8 +51,8 @@ export default{
     background-color: gray;
 }
 .pic{
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     margin-top: 40px;
 }
 .line {
@@ -43,7 +60,7 @@ export default{
     display:flax;
     width: 100%;
     position: absolute;
-    margin-top: 60px;
+    margin-top: 74px;
     justify-content: center;
 }
 .l1, .l2{
@@ -52,26 +69,26 @@ export default{
     height: 4px;
     background-color: black;
     margin: 0 auto;
-    right: 145px;
+    right: 160px;
     z-index: 1;
 }
 .l2{
-    left: 175px;
+    left: 190px;
 }
 @media screen and (max-width: 1050px){
     .l2{
-        left: 161px;
+        left: 175px;
     }
     .l1{
-        right: 159px;
+        right: 175px;
     }
 }
 @media print{
     .l2{
-        left: 161px;
+        left: 175px;
     }
     .l1{
-        right: 160px;
+        right: 175px;
     }
 }
 </style>

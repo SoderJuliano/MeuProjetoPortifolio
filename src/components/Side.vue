@@ -52,7 +52,7 @@
       titulo="HABILIDADES"
       backgroundColor="#808080"
       :user="suer"
-      templete="templete1"
+      template="template1"
     />
     <Social
       @add-SocialLink="$emit('add-SocialLink')"

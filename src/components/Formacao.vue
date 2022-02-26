@@ -2,7 +2,7 @@
   <div :class="conteinerstyle">
       <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
-         <img v-if="templete=='templete2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
+         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
       <div v-for="(item, index) in mygrade " :key="index" :class="conteinerdata">
           <img src="../icons/livros.png" class="formacao-icon"/>
@@ -19,14 +19,14 @@ export default {
   data(){
     return{
       mygrade: this.user.grade,
-      tstyle: this.templete+"-formacao-title",
-      containerstyle: this.templete+"-formacao",
-      conteinerdata: this.templete+"-formacao-container",
-      remove: this.templete+"-remove-bnt"
+      tstyle: this.template+"-formacao-title",
+      containerstyle: this.template+"-formacao",
+      conteinerdata: this.template+"-formacao-container",
+      remove: this.template+"-remove-bnt"
     }
   },
   props:{
-    templete: String,
+    template: String,
     titulo: String,
     backgroundColor: String,
     user: Object,
@@ -48,20 +48,20 @@ export default {
   float: right;
   display: none;
 }
-.templete2-formacao-title:hover .editar-animado-habilidade{
+.template2-formacao-title:hover .editar-animado-habilidade{
   display: block;
 }
-.templete2-formacao-title:hover .editar{
+.template2-formacao-title:hover .editar{
   display: none;
 }
-.templete1-formacao-container{
+.template1-formacao-container{
   width: 80%;
   height: 100%;
   align-self: center;
   margin: 0 auto;
   display: flex;
 }
-.templete2-formacao-container{
+.template2-formacao-container{
   width: 80%;
   margin-left: 20px; 
   display: flex;
@@ -71,36 +71,36 @@ export default {
   height: 40px;
   padding-top: 20px;
 }
-.templete1-formacao span{
+.template1-formacao span{
   padding-top: 20px;
 }
-.templete2-formacao{
+.template2-formacao{
   width: 80%;
   padding-left: 20px;
 }
-.templete1-remove-bnt{
+.template1-remove-bnt{
   position: absolute;
   margin-top: 20px;
   margin-left: 190px;
 }
-.templete2-remove-bnt{
+.template2-remove-bnt{
   float: right;
   width: 20px;
   height: 20px;
   margin-top: 20px;
   margin-right: 35px;
 }
-.templete2-formacao-title{
+.template2-formacao-title{
   text-align: start;
   padding-left: 10px;
   width: 80%;
   font-weight: bolder;
 }
 @media print {
-  .templete1-remove-bnt{
+  .template1-remove-bnt{
     display: none;
   }
-  .templete2-remove-bnt{
+  .template2-remove-bnt{
     display: none;
   }
 }

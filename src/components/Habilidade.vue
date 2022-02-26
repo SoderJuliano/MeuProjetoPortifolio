@@ -2,7 +2,7 @@
   <div :class="cstyle">
       <p :class="tstyle" style="background-color:`{{backgroundColor}}`">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
-         <img v-if="templete=='templete2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
+         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
@@ -18,16 +18,16 @@ export default {
   emits: ['add-habilidade'],
   data(){
     return {
-      tstyle : this.templete+"-title",
-      cstyle : this.templete+"-container",
-      hcstyle : this.templete+"-habilidade-container"
+      tstyle : this.template+"-title",
+      cstyle : this.template+"-container",
+      hcstyle : this.template+"-habilidade-container"
     }
   },
   props:{
     titulo: String,
     backgroundColor: String,
     user: Object,
-    templete: String,
+    template: String,
   },
   methods:{
     removeHabilidades(){
@@ -46,7 +46,7 @@ export default {
   float: right;
   display: none;
 }
-.templete1-habilidade-container{
+.template1-habilidade-container{
   width: 80%;
   min-height: 100px;
   max-height: 100%;
@@ -54,7 +54,7 @@ export default {
   margin: 0 auto;
   display: flex;
 }
-.templete2-habilidade-container{
+.template2-habilidade-container{
   display: flex !important;
   width: 100%;
   min-height: 100px;
@@ -86,18 +86,18 @@ export default {
   margin-left: 190px;
   margin-top: 10px;
 }
-.templete2-title{
+.template2-title{
   text-align: start;
   border-bottom: 1px solid black;
 
 }
-.templete2-title:hover .editar-animado-habilidade{
+.template2-title:hover .editar-animado-habilidade{
   display: block;
 }
-.templete2-title:hover .editar{
+.template2-title:hover .editar{
   display: none;
 }
-.templete2-container{
+.template2-container{
   width: 80%;
   padding-left: 10px;
 }

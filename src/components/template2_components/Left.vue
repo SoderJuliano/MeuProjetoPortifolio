@@ -5,18 +5,18 @@
             :user="user"
             title="Resumo"
             @add-resumo="$emit('add-resumo')"
-            templete="templete2"
+            template="template2"
         />
         <Competencias 
             :user="user"
             titulo="COMPETÊNCIAS"
-            templete="templete2"
+            template="template2"
             @add-competencia="$emit('add-competencia')"
         />
         <Formacao 
             titulo="FORMAÇÃO ACADÊMICA"
             :user="user"
-            templete="templete2"
+            template="template2"
             @add-formacao="$emit('add-formacao')"
         />
          <Habilidade
@@ -25,7 +25,7 @@
             titulo="HABILIDADES"
             backgroundColor="#808080"
             :hability="hability"
-            templete="templete2"
+            template="template2"
             :user="user"
         />
     </div>

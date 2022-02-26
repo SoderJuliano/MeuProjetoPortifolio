@@ -2,7 +2,7 @@
   <div :class="conteinerstyle">
       <p class="title" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
-        <img v-if="templete=='templete2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
+        <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
@@ -21,19 +21,24 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
-    templete: String
+    template: String
   },
   data(){
     return{
       competencias : this.user.competence,
-      conteinerstyle : this.templete+"-competencias"
+      conteinerstyle : this.template+"-competencias"
     }
   },
   emits: ['add-competencia'],
   methods:{
       getStyle(){
-          return{
+        return this.template == "template1" ?
+          {
               'background-color': `${this.cor}`
+          }
+          : {
+            'border-bottom': '1px solid black',
+            'margin-left': '10px !important'
           }
       },
       removeCompetence(event){
@@ -59,10 +64,10 @@ export default {
 .title:hover .editar{
   display: none;
 }
-.templete2-competencias{
+.template2-competencias{
   width: 82% !important;
 }
-.templete2-competencias .title{
+.template2-competencias .title{
   text-align: start !important;
   padding-left: 10px !important;
   margin: 0 !important;

@@ -486,6 +486,14 @@ export default {
 </script>
 
 <style>
+@media print {
+  .template{
+    width:100vw !important;
+  }
+}
+.main.template{
+  width: 66%;
+}
 .multi-menu-class:hover{
   transform: perspective(400px) rotateY(5deg);
 }

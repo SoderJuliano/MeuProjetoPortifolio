@@ -15,7 +15,7 @@ export default {
   name: 'Resumo',
   data(){
     return {
-      tstyle: this.templete+"-resumo-titulo",
+      tstyle: this.template+"-resumo-titulo",
     }
   },
   props:{
@@ -23,12 +23,12 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
-    templete: String,
+    template: String,
   },
   emits:['add-resumo'],
   methods:{
       getStyle(){ //console.log(this.cor +' corrr')
-      return this.templete == "templete2" ?
+      return this.template == "template2" ?
           {
               'text-align': 'start',
               'font-weight': 'bolder !important',

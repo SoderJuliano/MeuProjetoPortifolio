@@ -53,6 +53,7 @@ export default {
 <style scoped>
 @media screen and (min-width: 1001px){
   .custom-container{
+    width: 100%;
     justify-content: start;
     min-height: calc(100vh - 35px);
     max-height: 100%;
