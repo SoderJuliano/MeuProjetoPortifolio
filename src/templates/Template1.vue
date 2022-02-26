@@ -66,7 +66,8 @@ export default {
  .custom-container{
     display: flex;
     width: 100vw !important;
-    height: calc(100vh - 35px) ;
+    height: calc(100vh - 35px);
+    overflow: hidden;
   }
 }
 </style>

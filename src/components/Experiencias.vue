@@ -71,10 +71,10 @@ export default {
 @media print{
   .remove-bnt{
     display: none;
-  }
+  }/* 
   .title{
     break-before: always;
-  }
+  } */
 }
 .editar-animado-resumo{
   width:30px;

@@ -493,6 +493,7 @@ export default {
 }
 .main.template{
   width: 66%;
+  height: 100%;
 }
 .multi-menu-class:hover{
   transform: perspective(400px) rotateY(5deg);
