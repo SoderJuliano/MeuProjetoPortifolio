@@ -97,7 +97,7 @@ export default {
 }
 .template2-formacao-title{
   text-align: start;
-  padding-left: 10px;
+  margin-left: 10px !important;
   width: 80%;
   font-weight: bolder;
 }
