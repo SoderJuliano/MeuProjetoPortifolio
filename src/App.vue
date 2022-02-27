@@ -8,6 +8,7 @@
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
         @update-name="updateName"
+        @add-profissao="this.showModal('profissao')"
   />
   <nav-bar  
     @close="close" 
