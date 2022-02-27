@@ -4,6 +4,8 @@
               <Header 
                 :imgURL="imgURL"
                 :mainColor="mainColor"
+                :user="user"
+                @add-nome="$emit('add-nome')"
               />
         </div>
         <div class="main-body">
@@ -41,7 +43,7 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade"],
+    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome"],
     props:{
         mainColor: String,
         sideColor: String,

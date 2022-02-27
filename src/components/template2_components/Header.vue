@@ -8,9 +8,9 @@
             <div @click="$refs.imgInput.click()" class="pic">
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
-            <h2>Name Here</h2>
-             <img v-if="template=='template2'" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
-            <h3>profissao</h3>   
+            <h2>{{this.user.name}}</h2>
+             <img src="../../icons/editar.png" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
+            <h3>{{this.user.profession}}</h3>   
 
             <input type="file"
                 id="input"
@@ -24,9 +24,11 @@
 <script>
 export default{
     name: "header",
+    emits: ["add-nome"],
     props:{
         imgURL: String,
-        mainColor: String
+        mainColor: String,
+        user: Object
     },
     data(){
         return{
@@ -57,11 +59,15 @@ export default{
     min-height: 200px;
     background-color: gray;
 }
-.container:hover .editar-animado-nome{
+.profile-style:hover .editar-animado-nome{
     display: block;
+    width: 30px;
 }
 .editar-animado-nome{
     display: none;
+    z-index: 5;
+    position: absolute;
+    left: 60%;
 }
 .pic{
     width: 150px;

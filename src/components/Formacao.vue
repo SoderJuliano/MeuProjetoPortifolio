@@ -1,6 +1,6 @@
 <template>
   <div :class="conteinerstyle">
-      <p :class="tstyle()" :style="getStyle()">{{titulo}}
+      <p :class="tstyle" :style="getStyle()">{{titulo}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>

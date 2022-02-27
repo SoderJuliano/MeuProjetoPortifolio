@@ -93,7 +93,9 @@ export default {
         experiences: Array,
         title2: String,
         placeholder2: String,
+        template: String,
     },
+    emits:["update-name"],
     methods:{
         proximo(title){
             this.changePage();
@@ -125,7 +127,9 @@ export default {
             switch(title) {
                 case 'Nome':
                     this.registerValues('user-name', document.getElementById('modal-input').value);
-                    document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value;
+                    this.template == "template1" 
+                    ? document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value
+                    : this.$emit("update-name", document.getElementById('modal-input').value) 
                     this.cancelar();
                     break;
                 case 'Profissao':

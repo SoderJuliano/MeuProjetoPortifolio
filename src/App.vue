@@ -7,6 +7,7 @@
         :title2="modal.title2"
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
+        @update-name="updateName"
   />
   <nav-bar  
     @close="close" 
@@ -123,6 +124,9 @@ export default {
     Template2,
   },
   methods: {
+    updateName(name){
+      this.user.name = name;
+    },
     setFont(fnt){
       this.font = fnt
     },
