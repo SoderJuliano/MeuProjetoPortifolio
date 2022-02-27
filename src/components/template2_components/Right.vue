@@ -5,13 +5,13 @@
             template="template2"
             :user="user"
             :sideColor="sideColor"
-            :languages="language"
+            :language="language"
             :titulo="titulo.contato"
          />
         <Social 
             @add-SocialLink="$emit('add-SocialLink')"
             template="template2"
-            :languages="language"
+            :language="language"
             :titulo="titulo.social"
             :user="userData"
             :sideColor="sideColor"
@@ -19,7 +19,7 @@
         <Experiencias
             @add-Experiencia="$emit('add-Experiencia')"
             template="template2"
-            :languages="language"
+            :language="language"
             :titulo="titulo.experiencias"
             :user="userData"
             :experiences="userExperiences"

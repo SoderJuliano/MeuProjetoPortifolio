@@ -12,6 +12,7 @@
   />
   <nav-bar  
     @close="close" 
+    @language-update="lupdate"
     :style="getStyle()" 
     id="navbar" 
     class="navbar navbar-expand-lg navbar-light bg-light"
@@ -128,6 +129,9 @@ export default {
     Template2,
   },
   methods: {
+    lupdate(lng){
+      this.language = lng
+    },
     updateName(name){
       this.user.name = name;
     },

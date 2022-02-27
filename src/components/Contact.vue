@@ -1,6 +1,6 @@
 <template>
     <div :class="tstyle">
-        <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+        <p class="title" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar-contact"/>
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
         </p><br>
