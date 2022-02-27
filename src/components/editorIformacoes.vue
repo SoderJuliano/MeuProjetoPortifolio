@@ -175,10 +175,10 @@ export default {
                 default:
                     break;
             }
-            const tt = this.ptitle
+            const tt = this.title
             this.ptitle = '';
             this.ptitle2 = '';
-            this.template == "template1" && tt != "Nome" ? window.location.reload() : ''
+            this.template == "template1" || tt != "Nome" ? window.location.reload() : ''
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')
