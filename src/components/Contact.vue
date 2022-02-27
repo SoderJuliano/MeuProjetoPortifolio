@@ -1,6 +1,6 @@
 <template>
     <div :class="tstyle">
-        <p class="title" :style="getStyle()">CONTATO
+        <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar-contact"/>
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
         </p><br>
@@ -23,6 +23,8 @@ import "./style.css"
 export default {
     name: 'contact',
     props:{
+        language: String,
+        titulo: Array,
         template: String,
         user: Object,
         sideColor: String,

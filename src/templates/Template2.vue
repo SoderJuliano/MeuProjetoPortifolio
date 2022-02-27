@@ -17,6 +17,7 @@
                 @add-habilidade="$emit('add-habilidade')"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
+                :language="language"
             />
             <Right
                 @add-info="$emit('add-info')"
@@ -26,6 +27,7 @@
                 :userExperiences="userExperiences"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
+                :language="language"
              />
         </div>
     </div>
@@ -51,6 +53,7 @@ export default {
         user: Object,
         redesociais: Array,
         userExperiences: Array,
+        language: String,
     },
     data(){
         return{

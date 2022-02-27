@@ -1,6 +1,6 @@
 <template>
   <div class="resumo">
-      <p :class="tstyle" :style="getStyle()">{{titulo}}</p>
+      <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}</p>
       <div class="resumo-container">
          <ion-icon name="book" size="large"></ion-icon>
          <span @input="saveContent" id='resume' :class="datacontainerpage">{{user.resume}}</span>
@@ -19,12 +19,13 @@ export default {
     }
   },
   props:{
-    titulo: String,
+    titulo: Array,
     backgroundColor: String,
     user: Object,
     cor: String,
     template: String,
     sideColor: String,
+    language: String,
   },
   emits:['add-resumo'],
   methods:{

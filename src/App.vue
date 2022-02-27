@@ -26,6 +26,7 @@
       />
     </div>
     <template1 v-if="template==1"
+        :language="language"
         @add-info="addInfo"
         @add-resumo="editarResumo"
         @add-competencia="editarCompetencias"
@@ -43,7 +44,8 @@
        :userExperiences="userExperiences"
     />
     <template2 v-if="template==2"
-       :imageURL="imageURL"
+        :language="language"
+        :imageURL="imageURL"
         @add-info="addInfo"
         @add-resumo="editarResumo"
         class="template"
@@ -83,6 +85,7 @@ export default {
   emits:['close'],
   data(){
     return{
+      language: "pt-br",
       imageURL: "",
       template: 2,
       font: 'Oswald',

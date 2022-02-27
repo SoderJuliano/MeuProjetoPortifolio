@@ -1,6 +1,6 @@
 <template>
   <div :class="conteinerstyle">
-      <p class="title" :style="getStyle()">{{titulo}}
+      <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
@@ -17,7 +17,8 @@
 export default {
   name: 'Competencias',
   props:{
-    titulo: String,
+    titulo: Array,
+    language: String,
     backgroundColor: String,
     user: Object,
     cor: String,

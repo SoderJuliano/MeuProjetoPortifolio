@@ -5,18 +5,22 @@
             template="template2"
             :user="user"
             :sideColor="sideColor"
+            :languages="language"
+            :titulo="titulo.contato"
          />
         <Social 
             @add-SocialLink="$emit('add-SocialLink')"
             template="template2"
-            titulo="SOCIAL"
+            :languages="language"
+            :titulo="titulo.social"
             :user="userData"
             :sideColor="sideColor"
         />
         <Experiencias
             @add-Experiencia="$emit('add-Experiencia')"
             template="template2"
-            titulo="EXPERIÊNCIAS"
+            :languages="language"
+            :titulo="titulo.experiencias"
             :user="userData"
             :experiences="userExperiences"
             :sideColor="sideColor"
@@ -38,7 +42,8 @@ export default {
     props:{
         user: Object,
         userExperiences: Array,
-        sideColor: String
+        sideColor: String,
+        language: String,
     },
     methods:{
         getStyle(){
@@ -49,7 +54,12 @@ export default {
     },
     data() {
         return{
-            userData: this.user
+            userData: this.user,
+            titulo: {
+                contato: ["CONTATO", "CONTACT"],
+                social: ["SOCIAL", "SOCIAL"],
+                experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
+            }
         }
     }
 }

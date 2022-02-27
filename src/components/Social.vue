@@ -1,6 +1,6 @@
 <template>
     <div class="social">
-      <h3 :class="templateClass" :style="getStyle()">{{titulo}} 
+      <h3 :class="templateClass" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}} 
           <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
           <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
       <div class="social-container" v-if="template=='template1'">
@@ -56,7 +56,8 @@ export default {
     name: "Social",
     props:{
         template: String,
-        titulo: String,
+        titulo: Array,
+        language: String,
         backgroundColor: String,
         face: String,
         lin: String,

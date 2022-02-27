@@ -1,6 +1,6 @@
 <template>
   <div :class="tstyle">
-      <p class="title" :style="getStyle()">{{titulo}}
+      <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
@@ -25,7 +25,8 @@ export default {
   emits: ['add-experiencia'],
   props:{
     template: String,
-    titulo: String,
+    titulo: Array,
+    language: String,
     cor: String,
     sideColor: String,
     experiences: Array,

@@ -1,6 +1,6 @@
 <template>
   <div :class="cstyle">
-      <p :class="tstyle" :style="getStyle()">{{titulo}}
+      <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
@@ -24,7 +24,8 @@ export default {
     }
   },
   props:{
-    titulo: String,
+    language: String,
+    titulo: Array,
     backgroundColor: String,
     user: Object,
     template: String,

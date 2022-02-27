@@ -28,7 +28,7 @@ export default{
     props:{
         imgURL: String,
         mainColor: String,
-        user: Object
+        user: Object,
     },
     data(){
         return{

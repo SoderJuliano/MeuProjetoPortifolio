@@ -57,6 +57,7 @@ export default{
         fontSize: String,
         user: Object,
         userExperiences: Array,
+        language: String,
     },
     methods:{
         getStyle(){
