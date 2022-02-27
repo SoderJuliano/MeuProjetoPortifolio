@@ -38,7 +38,16 @@ export default{
     methods:{
         onIMGChange(img){
         this.imageURL = URL.createObjectURL(img.target.files[0])
-        //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
+       
+    /*  pra salvar no servidor  
+        var formData = new FormData();
+       formData.append('file', img.files[0], 'yourFileName.jpg');
+    
+        var xhr = new XMLHttpRequest();
+        xhr.onload = callback; // assuming you've got a callback function
+        xhr.open('POST', yourServerSideFileHandlerScript);
+        xhr.send(formData);
+     */    //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
         // the two codes works as well
         // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
         },

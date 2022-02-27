@@ -178,7 +178,7 @@ export default {
             const tt = this.title
             this.ptitle = '';
             this.ptitle2 = '';
-            this.template == "template1" || tt != "Nome" ? window.location.reload() : ''
+            this.template == "template1" || tt != "Nome" ? window.location.reload() :  document.getElementById('modal-input').value = ''
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')

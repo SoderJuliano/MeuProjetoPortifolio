@@ -64,6 +64,11 @@ export default {
 }
 </script>
 <style scoped>
+@media print {
+    .main{
+        box-shadow: none !important;
+    }
+}
 .main{
     display: block;
     box-shadow: 0px 0px 30px 1px;

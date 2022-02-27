@@ -4,7 +4,7 @@
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
-      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" class="experiencias-container">
+      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" :class="cstyle">
         <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
           <h3>{{item.function}}</h3>
           <div style="display: flex">
@@ -37,6 +37,7 @@ export default {
       lasJobHired: '',
       lastJobEnd: '',
       tstyle: 'experiences-'+this.template+'-title',
+      cstyle: this.template+'-experiencias-container'
     }
   },
   methods:{
@@ -95,7 +96,7 @@ export default {
   margin-top: 20px;
   margin-right: 20px;
 }
-.experiencias-container{
+.templete1-experiencias-container{
   color: black !important;
   height: 100%;
   align-self: center;
