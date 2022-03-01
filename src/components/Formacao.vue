@@ -7,7 +7,7 @@
       <div v-for="(item, index) in mygrade " :key="index" :class="conteinerdata">
           <img src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
-          <img @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../icons/remove.png" alt="remove-bnt"/>
+          <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
@@ -84,6 +84,7 @@ export default {
   padding-left: 20px;
 }
 .template1-remove-bnt{
+  width: 20px;
   position: absolute;
   margin-top: 20px;
   margin-left: 190px;

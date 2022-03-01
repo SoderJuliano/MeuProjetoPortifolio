@@ -7,6 +7,7 @@
         @add-SocialLink="$emit('add-SocialLink')"
         :cor="sideColor"
         :user="user"
+        :titles="titles"
       />
       <Page
         @add-resumo="$emit('add-resumo')"
@@ -33,7 +34,16 @@ export default {
   data(){
     return{
       u: this.user,
-      uExperiences: this.userExperiences
+      uExperiences: this.userExperiences,
+      titles: {
+                competencias: ["COMPETÊNCIAS", "COMPETENCE"],
+                resumo: ["RESUMO", "SUMMARY"],
+                formacao: ["FORMAÇÃO ACADÊMICA", "EDUCATION"],
+                habilidades: ["HABILIDADES", "SKILLS"],
+                contato: ["CONTATO", "CONTACT"],
+                social: ["SOCIAL", "SOCIAL"],
+                experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
+            }
     }
   },
   components: {

@@ -14,23 +14,26 @@
         <Resumo
             @add-resumo="$emit('add-resumo')"
             class="data-container"
-            titulo="SOBRE"
             :cor="cor"
             :user="u"
+             template="template1"
+             :titulo="titles.resumo"
         />
         <Competencias
             @add-competencia="$emit('add-competencia')"
             class="data-container"
-            titulo="COMPETÊNCIAS"
             :cor="cor"
             :user="u"
+             template="template1"
+             :titulo="titles.competencias"
         />
         <Experiencias
             @add-experiencia="$emit('add-experiencia')"
             class="data-container"
-            titulo="EXPERIÊNCIAS"
             :cor="cor"
             :experiences="userExperiences"
+            template="template1"
+            :titulo="titles.experiencias"
         />
     </div>
 </template>
@@ -44,7 +47,16 @@ export default{
     emits:['add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao'],
     data(){
         return{
-            u: this.user
+            u: this.user,
+            titles: {
+                competencias: ["COMPETÊNCIAS", "COMPETENCE"],
+                resumo: ["RESUMO", "SUMMARY"],
+                formacao: ["FORMAÇÃO ACADÊMICA", "EDUCATION"],
+                habilidades: ["HABILIDADES", "SKILLS"],
+                contato: ["CONTATO", "CONTACT"],
+                social: ["SOCIAL", "SOCIAL"],
+                experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
+            }
         }
     },
     components:{

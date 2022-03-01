@@ -31,14 +31,16 @@
       :phones="phone"
       :endereco="adress"
       :cor="cor"
+       template="template1"
     />
     <Formacao
       @add-formacao="$emit('add-formacao')"
       v-if="exibirFormacao"
       class="template-data"
-      titulo="FORMAÇÃO"
+      :titulo="titles.formacao"
       :backgroundColor="cor"
       :user="user"
+      template="template1"
     />
      <editarFormacao
       class="editar-dados-escolares"
@@ -49,16 +51,15 @@
       @add-habilidade="$emit('add-habilidade')"
       v-if="exibirHabilidade"
       class="template-data"
-      titulo="HABILIDADES"
+      :titulo="titles.habilidades"
       backgroundColor="#808080"
-      :user="suer"
+      :user="user"
       template="template1"
     />
     <Social
       @add-SocialLink="$emit('add-SocialLink')"
       v-if="exibirSocial"
       class="template-data"
-      titulo="SOCIAL LINKS"
       backgroundColor="#808080"
       :face="social.facebook"
       :lin="social.lin"
@@ -67,6 +68,8 @@
       :stof="social.stackoverflow"
       :git="social.github"
       :user="social"
+      template="template1"
+      :titulo="titles.social"
     />
 </div>
 </template>
@@ -83,7 +86,8 @@ export default {
   },
   props:{
     cor: String,
-    user: Object
+    user: Object,
+    titles: Object,
   },
  name:'Side',
  emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink'],
