@@ -73,4 +73,9 @@ export default {
 .container {
     width: 50%;
 }
+@media screen and (max-width: 1000px){
+    .container{
+        width: 100%;
+    }
+}
 </style>

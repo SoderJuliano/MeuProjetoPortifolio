@@ -10,9 +10,9 @@
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
             <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span> 
-              ate 
+              {{this.language=='pt-br'? 'ate' : 'until' }} 
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
-            <span style="margin-top: 0; margin-left:10px;" v-else> hoje</span>
+            <span style="margin-top: 0; margin-left:10px;" v-else>{{this.language=='pt-br'? 'hoje' : 'today'}}</span>
           </div>
           <p>{{item.description}}</p>
       </div>

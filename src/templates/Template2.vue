@@ -87,4 +87,14 @@ export default {
     min-height: 400px;
     height: 100%;
 }
+
+@media screen and (max-width: 1000px) {
+.main-body{
+    display:block;
+    width: 100%;
+    min-height: 400px;
+    height: 100%;
+}
+    
+}
 </style>

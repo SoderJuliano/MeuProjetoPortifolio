@@ -526,6 +526,9 @@ export default {
   width: 100%;
   height: 100%;
 } 
+.main.template{
+  width: 100vw;
+}
  .main-left{
    display: none;
  }
