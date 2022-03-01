@@ -103,12 +103,32 @@ export default{
 .l2{
     left: 190px;
 }
-@media screen and (max-width: 1050px){
+@media screen and (max-width: 400px){
     .l2{
-        left: 175px;
+        left: 111px;
+        width: 15%;
     }
     .l1{
-        right: 175px;
+        width: 15%;
+        right: 95px;
+    }
+}
+@media screen and (max-width: 700px) and (min-width: 401px) {
+    .l2{
+        display: none;
+    }
+    .l1{
+        display: none;
+    }
+}
+@media screen and (min-width: 701px) and (max-width: 1024px) {
+    .l2{
+        left: 150px;
+        width: 15%;
+    }
+    .l1{
+        width: 15%;
+        right: 135px;
     }
 }
 @media print{
