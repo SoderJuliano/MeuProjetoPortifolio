@@ -30,10 +30,12 @@ export default {
   emits:['add-resumo'],
   methods:{
       hovert(){
-        document.getElementById("edit-re").style.display = "none";
+        this.template == "template2" ?
+        document.getElementById("edit-re").style.display = "none" : ''
       },
       leavehovert(){
-        document.getElementById("edit-re").style.display = "block";
+        this.template == "template2" ?
+        document.getElementById("edit-re").style.display = "block" : ''
       },
      getStyle(){ //console.log(this.cor +' corrr')
         return this.template == "template2" ?

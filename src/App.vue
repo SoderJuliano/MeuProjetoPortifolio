@@ -88,7 +88,7 @@ export default {
     return{
       language: "pt-br",
       imageURL: "",
-      template: 2,
+      template: 1,
       font: 'Oswald',
       fontSize: '15px',
       fontSizeTitles: '17px',

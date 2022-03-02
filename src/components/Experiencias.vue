@@ -43,10 +43,12 @@ export default {
   },
   methods:{
       hovert(){
-        document.getElementById("edit-exp").style.display = "none";
+        this.template == "template2" ?
+        document.getElementById("edit-exp").style.display = "none" : ''
       },
       leavehovert(){
-        document.getElementById("edit-exp").style.display = "block";
+        this.template == "template2" ?
+        document.getElementById("edit-exp").style.display = "block" : ''
       },
       getStyle(){
           return{

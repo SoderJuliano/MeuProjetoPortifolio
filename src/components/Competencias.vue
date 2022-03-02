@@ -34,10 +34,12 @@ export default {
   emits: ['add-competencia'],
   methods:{
      hovert(){
-        document.getElementById("edit-com").style.display = "none";
+       this.template == "template2" ?
+        document.getElementById("edit-com").style.display = "none" : ''
       },
       leavehovert(){
-        document.getElementById("edit-com").style.display = "block";
+        this.template == "template2" ?
+        document.getElementById("edit-com").style.display = "block" : ''
       },
      
       getStyle(){
