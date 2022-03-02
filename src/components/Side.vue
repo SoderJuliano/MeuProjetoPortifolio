@@ -10,7 +10,7 @@
         style="display:none;"
         @change="onIMGChange"
         />
-        <p class="title">CONTATO
+        <p class="title">{{language == "pt-br" ? "CONTATO" : "CONTACT"}}
           <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-info')"/>
         </p><br>
         <div v-for="(item, index) in email " :key="index" class="data-container">
@@ -26,13 +26,13 @@
             <span class="endereco-text">{{adress}}</span>
         </div>
     </div>
-    <editar-contato
+    <!-- <editar-contato
       class="editar-dados-contato"
       :phones="phone"
       :endereco="adress"
       :cor="cor"
        template="template1"
-    />
+    /> -->
     <Formacao
       @add-formacao="$emit('add-formacao')"
       v-if="exibirFormacao"
@@ -41,12 +41,13 @@
       :backgroundColor="cor"
       :user="user"
       template="template1"
-    />
+      :language="language"
+    /><!-- 
      <editarFormacao
       class="editar-dados-escolares"
       :grade="grade"
       :cor="cor"
-    />
+    /> -->
     <Habilidade
       @add-habilidade="$emit('add-habilidade')"
       v-if="exibirHabilidade"
@@ -55,6 +56,7 @@
       backgroundColor="#808080"
       :user="user"
       template="template1"
+      :language="language"
     />
     <Social
       @add-SocialLink="$emit('add-SocialLink')"
@@ -70,6 +72,7 @@
       :user="social"
       template="template1"
       :titulo="titles.social"
+      :language="language"
     />
 </div>
 </template>
@@ -88,6 +91,7 @@ export default {
     cor: String,
     user: Object,
     titles: Object,
+    language: String,
   },
  name:'Side',
  emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink'],
@@ -258,7 +262,7 @@ export default {
     onIMGChange(img){
       //console.log(URL.createObjectURL(img.target.files[0]))
       this.imageURL = URL.createObjectURL(img.target.files[0])
-      localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
+      //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
       // the two codes works as well
       // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
     },

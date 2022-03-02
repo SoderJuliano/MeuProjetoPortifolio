@@ -109,6 +109,18 @@ export default {
   width: 80%;
   padding-left: 10px;
 }
+.template1-title{
+  align-self: center;
+  background-color: white !important;
+  color: black;
+  font-weight: bolder;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 0px;
+  margin-top: 10px;
+  text-align: center;
+  padding: 5px;
+}
 @media print{
   .remove-bnt{
     display: none;

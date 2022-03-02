@@ -1,8 +1,8 @@
 <template>
     <div class="social">
-      <h3 :class="templateClass" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}} 
-          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
-          <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+      <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}} 
+          <img id='edit' src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
+          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
       <div class="social-container" v-if="template=='template1'">
           <div :id="`${face}`" v-if="face" class="social-row">
               <img src="../icons/face.png" class="social-icon"/>
@@ -94,6 +94,12 @@ export default {
                 "border-bottom": "1px solid "+this.sideColor,
                 "background-color": this.backgroundColor
             }
+        },
+        hovert(){
+            document.getElementById("edit").style.display = "none";
+        },
+        leavehovert(){
+            document.getElementById("edit").style.display = "block";
         }
     }
 }
@@ -107,7 +113,18 @@ export default {
 }
 </style>
 <style scoped>
-
+.social-template1{
+    align-self: center;
+  background-color: white !important;
+  color: black;
+  font-weight: bolder;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 0px;
+  margin-top: 10px;
+  text-align: center;
+  padding: 5px;
+}
 .social-container{
   width: 80%;
   height: 100%;

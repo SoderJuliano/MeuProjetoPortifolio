@@ -2,7 +2,7 @@
   <div :class="tstyle">
       <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
-        <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" :class="cstyle">
         <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
@@ -87,9 +87,6 @@ export default {
 }
 .title:hover .editar-animado-resumo{
   display: block;
-}
-.title:hover .editar{
-  display: none;
 }
 .remove-bnt{
   float: right;

@@ -63,9 +63,6 @@ export default {
 .title:hover .editar-competencias-animado{
   display: block;
 }
-.title:hover .editar{
-  display: none;
-}
 .template2-competencias{
   width: 82% !important;
 }

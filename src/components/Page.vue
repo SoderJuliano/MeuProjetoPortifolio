@@ -16,16 +16,18 @@
             class="data-container"
             :cor="cor"
             :user="u"
-             template="template1"
-             :titulo="titles.resumo"
+            template="template1"
+            :titulo="titles.resumo"
+            :language="language"
         />
         <Competencias
             @add-competencia="$emit('add-competencia')"
             class="data-container"
             :cor="cor"
             :user="u"
-             template="template1"
-             :titulo="titles.competencias"
+            template="template1"
+            :titulo="titles.competencias"
+            :language="language"
         />
         <Experiencias
             @add-experiencia="$emit('add-experiencia')"
@@ -34,6 +36,7 @@
             :experiences="userExperiences"
             template="template1"
             :titulo="titles.experiencias"
+            :language="language"
         />
     </div>
 </template>

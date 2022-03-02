@@ -8,6 +8,7 @@
         :cor="sideColor"
         :user="user"
         :titles="titles"
+        :language="language"
       />
       <Page
         @add-resumo="$emit('add-resumo')"
@@ -19,6 +20,7 @@
         :cor="mainColor"
         :user="user"
         :userExperiences="uExperiences"
+        :language="language"
       />
       
   </div>
@@ -55,6 +57,7 @@ export default {
     sideColor : String,
     user: Object,
     userExperiences: Array,
+    language: String,
   },
   methods: {
   }

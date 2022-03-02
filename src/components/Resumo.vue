@@ -4,8 +4,8 @@
       <div class="resumo-container">
          <ion-icon name="book" size="large"></ion-icon>
          <span @input="saveContent" id='resume' :class="datacontainerpage">{{user.resume}}</span>
-         <img src="../icons/editar.png" alt="editar" class="editar" />
-         <img src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
+         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
+         <img v-if="this.template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </div>
   </div>
 </template>
@@ -59,9 +59,19 @@ export default {
   display: block;
 } 
 .resumo-container:hover .editar{
-  display: none;
+ 
 } 
-
+.template1-resumo-titulo{
+  align-self: center;
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+  width: 98.35%;
+  margin-top: 0px;
+  margin-top: 10px;
+  text-align: center;
+  padding: 5px;
+}
 .resumo-container{
   max-width: 100%;
   height: 100%;

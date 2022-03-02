@@ -102,6 +102,18 @@ export default {
   width: 80%;
   font-weight: bolder;
 }
+.template1-formacao-title{
+  align-self: center;
+  background-color: white !important;
+  color: black;
+  font-weight: bolder;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 0px;
+  margin-top: 10px;
+  text-align: center;
+  padding: 5px;
+}
 @media print {
   .template1-remove-bnt{
     display: none;
