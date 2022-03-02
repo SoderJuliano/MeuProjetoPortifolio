@@ -1,7 +1,7 @@
 <template>
   <div :class="tstyle">
-      <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
+      <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+        <img id="edit-exp" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" :class="cstyle">
@@ -42,6 +42,12 @@ export default {
     }
   },
   methods:{
+      hovert(){
+        document.getElementById("edit-exp").style.display = "none";
+      },
+      leavehovert(){
+        document.getElementById("edit-exp").style.display = "block";
+      },
       getStyle(){
           return{
               'background-color': `${this.cor}`,

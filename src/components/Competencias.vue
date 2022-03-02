@@ -1,7 +1,7 @@
 <template>
   <div :class="conteinerstyle">
-      <p class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
+      <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+        <img id="edit-com" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
@@ -33,6 +33,13 @@ export default {
   },
   emits: ['add-competencia'],
   methods:{
+     hovert(){
+        document.getElementById("edit-com").style.display = "none";
+      },
+      leavehovert(){
+        document.getElementById("edit-com").style.display = "block";
+      },
+     
       getStyle(){
         return this.template == "template1" ?
           {

@@ -1,10 +1,10 @@
 <template>
-  <div class="resumo">
+  <div @mouseover="hovert" @mouseleave="leavehovert" class="resumo">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}</p>
       <div class="resumo-container">
          <ion-icon name="book" size="large"></ion-icon>
          <span @input="saveContent" id='resume' :class="datacontainerpage">{{user.resume}}</span>
-         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
+         <img id="edit-re" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
          <img v-if="this.template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </div>
   </div>
@@ -29,8 +29,14 @@ export default {
   },
   emits:['add-resumo'],
   methods:{
-      getStyle(){ //console.log(this.cor +' corrr')
-      return this.template == "template2" ?
+      hovert(){
+        document.getElementById("edit-re").style.display = "none";
+      },
+      leavehovert(){
+        document.getElementById("edit-re").style.display = "block";
+      },
+     getStyle(){ //console.log(this.cor +' corrr')
+        return this.template == "template2" ?
           {
               'text-align': 'start',
               'font-weight': 'bolder !important',
