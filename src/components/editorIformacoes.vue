@@ -93,7 +93,9 @@ export default {
         experiences: Array,
         title2: String,
         placeholder2: String,
+        template: String,
     },
+    emits:["update-name", "add-profissao"],
     methods:{
         proximo(title){
             this.changePage();
@@ -125,12 +127,15 @@ export default {
             switch(title) {
                 case 'Nome':
                     this.registerValues('user-name', document.getElementById('modal-input').value);
-                    document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value;
-                    this.cancelar();
+                    this.template == "template1" 
+                    ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
+                    : (this.$emit("update-name", document.getElementById('modal-input').value),  this.$emit('add-profissao'))
                     break;
                 case 'Profissao':
                     this.registerValues('profession', document.getElementById('modal-input').value);
-                    document.getElementsByClassName("profession")[0].textContent = document.getElementById('modal-input').value;
+                    this.template == "template1" ?
+                    document.getElementsByClassName("profession")[0].textContent = document.getElementById('modal-input').value
+                    : this.$emit("add-profissao", document.getElementById('modal-input').value)
                     this.cancelar();
                     break;
                 case 'Nova competencia':
@@ -170,9 +175,10 @@ export default {
                 default:
                     break;
             }
+            const tt = this.title
             this.ptitle = '';
             this.ptitle2 = '';
-            window.location.reload()
+            this.template == "template1" || tt != "Nome" ? window.location.reload() :  document.getElementById('modal-input').value = ''
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')

@@ -1,17 +1,18 @@
 <template>
-  <div class="experiencias">
-      <p class="title" :style="getStyle()">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
+  <div :class="tstyle">
+      <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+        <img id="edit-exp" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
+        <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
-      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" class="experiencias-container">
+      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" :class="cstyle">
         <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
           <h3>{{item.function}}</h3>
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
             <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span> 
-              ate 
+              {{this.language=='pt-br'? 'ate' : 'until' }} 
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
-            <span style="margin-top: 0; margin-left:10px;" v-else> hoje</span>
+            <span style="margin-top: 0; margin-left:10px;" v-else>{{this.language=='pt-br'? 'hoje' : 'today'}}</span>
           </div>
           <p>{{item.description}}</p>
       </div>
@@ -23,8 +24,11 @@ export default {
   name: 'Experiencias',
   emits: ['add-experiencia'],
   props:{
-    titulo: String,
+    template: String,
+    titulo: Array,
+    language: String,
     cor: String,
+    sideColor: String,
     experiences: Array,
   },
   data(){
@@ -32,13 +36,24 @@ export default {
       jobHired: '',
       jobEnd: '',
       lasJobHired: '',
-      lastJobEnd: ''
+      lastJobEnd: '',
+      tstyle: 'experiences-'+this.template+'-title',
+      cstyle: this.template+'-experiencias-container'
     }
   },
   methods:{
+      hovert(){
+        this.template == "template2" ?
+        document.getElementById("edit-exp").style.display = "none" : ''
+      },
+      leavehovert(){
+        this.template == "template2" ?
+        document.getElementById("edit-exp").style.display = "block" : ''
+      },
       getStyle(){
           return{
-              'background-color': `${this.cor}`
+              'background-color': `${this.cor}`,
+              "border-bottom": "1px solid "+this.sideColor
           }
       },
       removeJob(item){
@@ -68,7 +83,18 @@ export default {
 @media print{
   .remove-bnt{
     display: none;
-  }
+  }/* 
+  .title{
+    break-before: always;
+  } */
+}
+.editar-animado-resumo{
+  width:30px;
+  display: none;
+  float:right;
+}
+.title:hover .editar-animado-resumo{
+  display: block;
 }
 .remove-bnt{
   float: right;
@@ -76,7 +102,7 @@ export default {
   margin-top: 20px;
   margin-right: 20px;
 }
-.experiencias-container{
+.templete1-experiencias-container{
   color: black !important;
   height: 100%;
   align-self: center;

@@ -6,7 +6,7 @@
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-nome')"/>
             </div>
             <div style="width: 100%; text-align: center; padding-top: 20px;">
-                <span @input="newProfession" class="profession">{{u.profession}}</span>
+                <span  @input="newProfession" class="profession">{{u.profession}}</span>
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-profissao')"/>
             </div>
                 
@@ -14,23 +14,29 @@
         <Resumo
             @add-resumo="$emit('add-resumo')"
             class="data-container"
-            titulo="SOBRE"
             :cor="cor"
             :user="u"
+            template="template1"
+            :titulo="titles.resumo"
+            :language="language"
         />
         <Competencias
             @add-competencia="$emit('add-competencia')"
             class="data-container"
-            titulo="COMPETÊNCIAS"
             :cor="cor"
             :user="u"
+            template="template1"
+            :titulo="titles.competencias"
+            :language="language"
         />
         <Experiencias
             @add-experiencia="$emit('add-experiencia')"
             class="data-container"
-            titulo="EXPERIÊNCIAS"
             :cor="cor"
             :experiences="userExperiences"
+            template="template1"
+            :titulo="titles.experiencias"
+            :language="language"
         />
     </div>
 </template>
@@ -44,7 +50,16 @@ export default{
     emits:['add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao'],
     data(){
         return{
-            u: this.user
+            u: this.user,
+            titles: {
+                competencias: ["COMPETÊNCIAS", "COMPETENCE"],
+                resumo: ["RESUMO", "SUMMARY"],
+                formacao: ["FORMAÇÃO ACADÊMICA", "EDUCATION"],
+                habilidades: ["HABILIDADES", "SKILLS"],
+                contato: ["CONTATO", "CONTACT"],
+                social: ["SOCIAL", "SOCIAL"],
+                experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
+            }
         }
     },
     components:{
@@ -57,6 +72,7 @@ export default{
         fontSize: String,
         user: Object,
         userExperiences: Array,
+        language: String,
     },
     methods:{
         getStyle(){

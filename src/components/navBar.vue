@@ -6,8 +6,15 @@
                  <button class="bnt-close" v-else @click="close">
                    X
                 </button>
+                <template-chooser 
+                  :template="template"
+                  @now-template1="this.$emit('now-template1')"
+                  @now-template2="this.$emit('now-template2')"
+                />
             </div>
               <div class="right-options">
+                  <button @click="changeLanguage('pt-br')" class="bnt-languages">Protugues</button>
+                  <button @click="changeLanguage('us-en')" class="bnt-languages">English</button>
                   <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
                     <ion-icon name="print" size="large"></ion-icon>
                     <a href="#" class="nav-link">IMPRIMIR</a>
@@ -45,6 +52,7 @@
 </template>
 
 <script>
+import TemplateChooser from './TemplateChooser.vue'
 export default {
     name: 'nav-bar',
     data(){
@@ -54,7 +62,13 @@ export default {
         info: false
       }
     },
-    emits:['close'],
+    emits:['close', 'language-update', 'now-template1', 'now-template2'],
+    props:{
+      template: Number,
+    },
+    components: {
+      TemplateChooser
+    },
     methods:{
       close(){
         this.$emit('close')
@@ -118,12 +132,38 @@ export default {
       },
       imprimir(){
         window.print()
+      },
+      changeLanguage(lng){
+        this.$emit('language-update', lng)
+        lng == "pt-br" ? 
+        (document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "blue", 
+        document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "white", 
+        document.getElementsByClassName("bnt-languages")[1].style.color = "black",
+        document.getElementsByClassName("bnt-languages")[0].style.color = "white"
+        )
+        : (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue", 
+        document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white", 
+        document.getElementsByClassName("bnt-languages")[0].style.color = "black",
+        document.getElementsByClassName("bnt-languages")[1].style.color = "white")
       }
     }
 }
 </script>
 
 <style scoped>
+@media print {
+  .bnt-languages{
+    display: none;
+  }
+}
+.bnt-languages{
+  width: 200px !important;
+  border-radius: 20px;
+}
+.bnt-languages:first-child{
+  background-color: blue;
+  color: white;
+}
 .container-fluid {
   width: 100%;
   height: 50px;

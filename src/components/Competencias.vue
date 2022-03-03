@@ -1,7 +1,8 @@
 <template>
-  <div class="competencias">
-      <p class="title" :style="getStyle()">{{titulo}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
+  <div :class="conteinerstyle">
+      <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+        <img id="edit-com" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
+        <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
@@ -16,21 +17,39 @@
 export default {
   name: 'Competencias',
   props:{
-    titulo: String,
+    titulo: Array,
+    language: String,
     backgroundColor: String,
     user: Object,
-    cor: String
+    cor: String,
+    template: String,
+    sideColor: String,
   },
   data(){
     return{
-      competencias : this.user.competence
+      competencias : this.user.competence,
+      conteinerstyle : this.template+"-competencias"
     }
   },
   emits: ['add-competencia'],
   methods:{
+     hovert(){
+       this.template == "template2" ?
+        document.getElementById("edit-com").style.display = "none" : ''
+      },
+      leavehovert(){
+        this.template == "template2" ?
+        document.getElementById("edit-com").style.display = "block" : ''
+      },
+     
       getStyle(){
-          return{
+        return this.template == "template1" ?
+          {
               'background-color': `${this.cor}`
+          }
+          : {
+            'border-bottom': '1px solid '+this.sideColor+ '!important',
+            'margin-left': '10px !important'
           }
       },
       removeCompetence(event){
@@ -44,6 +63,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.editar-competencias-animado{
+  float: right;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+.title:hover .editar-competencias-animado{
+  display: block;
+}
+.template2-competencias{
+  width: 82% !important;
+}
+.template2-competencias .title{
+  text-align: start !important;
+  padding-left: 10px !important;
+  margin: 0 !important;
+}
 .competencias-container{
   width: 100%;
   height: 100%;
@@ -58,6 +94,9 @@ export default {
 .data-container-page{
     width: 100%;
     height: 100%;
+}
+.editar{
+  float: right;
 }
 @media print{
   .editar{

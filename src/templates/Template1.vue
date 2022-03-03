@@ -6,6 +6,9 @@
         @add-habilidade="$emit('add-habilidade')"
         @add-SocialLink="$emit('add-SocialLink')"
         :cor="sideColor"
+        :user="user"
+        :titles="titles"
+        :language="language"
       />
       <Page
         @add-resumo="$emit('add-resumo')"
@@ -17,6 +20,7 @@
         :cor="mainColor"
         :user="user"
         :userExperiences="uExperiences"
+        :language="language"
       />
       
   </div>
@@ -32,7 +36,16 @@ export default {
   data(){
     return{
       u: this.user,
-      uExperiences: this.userExperiences
+      uExperiences: this.userExperiences,
+      titles: {
+                competencias: ["COMPETÊNCIAS", "COMPETENCE"],
+                resumo: ["RESUMO", "SUMMARY"],
+                formacao: ["FORMAÇÃO ACADÊMICA", "EDUCATION"],
+                habilidades: ["HABILIDADES", "SKILLS"],
+                contato: ["CONTATO", "CONTACT"],
+                social: ["SOCIAL", "SOCIAL"],
+                experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
+            }
     }
   },
   components: {
@@ -44,6 +57,7 @@ export default {
     sideColor : String,
     user: Object,
     userExperiences: Array,
+    language: String,
   },
   methods: {
   }
@@ -52,6 +66,7 @@ export default {
 <style scoped>
 @media screen and (min-width: 1001px){
   .custom-container{
+    width: 100%;
     justify-content: start;
     min-height: calc(100vh - 35px);
     max-height: 100%;
@@ -64,7 +79,8 @@ export default {
  .custom-container{
     display: flex;
     width: 100vw !important;
-    height: calc(100vh - 35px) ;
+    height: calc(100vh - 35px);
+    overflow: hidden;
   }
 }
 </style>

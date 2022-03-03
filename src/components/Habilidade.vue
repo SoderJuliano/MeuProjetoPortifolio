@@ -1,11 +1,12 @@
 <template>
-  <div class="habilidade">
-      <p class="title" style="background-color:`{{backgroundColor}}`">{{titulo}}
+  <div :class="cstyle">
+      <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
+         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
-      <div class="habilidade-container">
+      <div :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
-              <span  class="data-text-habilidades">{{hability}}</span> 
+              <span  class="data-text-habilidades">{{user.hability}}</span> 
         <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
@@ -15,15 +16,31 @@
 export default {
   name: 'Habilidade',
   emits: ['add-habilidade'],
+  data(){
+    return {
+      tstyle : this.template+"-title",
+      cstyle : this.template+"-container",
+      hcstyle : this.template+"-habilidade-container"
+    }
+  },
   props:{
-    titulo: String,
+    language: String,
+    titulo: Array,
     backgroundColor: String,
-    hability: String,
+    user: Object,
+    template: String,
+    sideColor: String,
   },
   methods:{
     removeHabilidades(){
       localStorage.removeItem("hability")
       window.location.reload()
+    },
+    getStyle(){
+
+      return this.template == "template2" ? {
+        'border-bottom': '1px solid '+this.sideColor,
+      } : { 'background-color': this.backgroundColor }
     }
   }
 }
@@ -31,7 +48,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.habilidade-container{
+.editar-animado-habilidade{
+  width: 30px;
+  height: 30px;
+  float: right;
+  display: none;
+}
+.template1-habilidade-container{
   width: 80%;
   min-height: 100px;
   max-height: 100%;
@@ -39,9 +62,18 @@ export default {
   margin: 0 auto;
   display: flex;
 }
+.template2-habilidade-container{
+  display: flex !important;
+  width: 100%;
+  min-height: 100px;
+  max-height: 100%;
+}
 @media print{
   .habilidade-container{
     padding-top: 0px !important;
+  }
+  .editar-animado-habilidade{
+    display: none !important;
   }
 }
 
@@ -61,6 +93,33 @@ export default {
   position: absolute;
   margin-left: 190px;
   margin-top: 10px;
+}
+.template2-title{
+  text-align: start;
+  border-bottom: 1px solid black;
+
+}
+.template2-title:hover .editar-animado-habilidade{
+  display: block;
+}
+.template2-title:hover .editar{
+  display: none;
+}
+.template2-container{
+  width: 80%;
+  padding-left: 10px;
+}
+.template1-title{
+  align-self: center;
+  background-color: white !important;
+  color: black;
+  font-weight: bolder;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 0px;
+  margin-top: 10px;
+  text-align: center;
+  padding: 5px;
 }
 @media print{
   .remove-bnt{

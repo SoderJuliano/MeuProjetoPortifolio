@@ -1,0 +1,113 @@
+input{
+    padding: 5px;
+}
+
+.contact-template2 .title{
+    align-items: start;
+    text-align: start !important;
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 1px solid gray;
+}
+.contact-template2{
+    padding: 0px;
+    margin: 0px;
+}
+
+.social-template2 {
+    width: 80%;
+    align-items: start;
+    text-align: start !important;
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 1px solid gray;
+}
+.social-itens-template2{
+    display: block;
+    width: 80%;
+    margin-left: 25px;
+}
+.social-item-template2{
+    padding-left: 10px;
+}
+.social-item-template2 img {
+    top: 5px;
+    position: relative;
+}
+
+
+
+/* global itens  */
+.remove-bnt{
+    float: right;
+    margin-right: -10px;
+}
+
+.remove-bnt-delete{
+    position: relative;
+    width: 20px;
+    display: none;
+    float: right;
+    margin-top: 3px;
+    margin-right: 20px;
+}
+.social-item-template2:hover .remove-bnt-delete{
+    display: block;
+    width: 30px;
+}
+.social-item-template2:hover .remove-bnt{
+    display: none;
+}
+.editar-animado{
+    width: 20px;
+    position: relative;
+    float: right;
+    display: none;
+    margin-left: 10px;
+}
+h3:hover .editar-animado{
+    display: block;
+    width: 30px;
+}
+h3:hover .editar{
+}
+.editar-contact{
+    width: 20px;
+    float: right;
+}
+.editar-contact-animado{
+    width:30px;
+    float: right;
+    display: none;
+    right: -20px;
+    position: relative;
+}
+.title:hover .editar-contact-animado{
+    display: block;
+}
+.experiences-template2-title .title{
+    align-items: start;
+    text-align: start !important;
+    padding: 0px;
+    margin: 0px;
+    border-bottom: 1px solid gray;
+    font-weight: bolder;
+    margin-top: 20px;
+}
+.experiences-template2-title{
+    width: 81%;
+}
+@media print {
+    .editar-contact-animado{
+        display: none;
+    }
+    .editar-contact{
+        display: none;
+    }
+    .editar{
+        display: none;
+    }
+    .editar-animado{
+        display: none;
+    }
+}
