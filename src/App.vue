@@ -16,6 +16,9 @@
     :style="getStyle()" 
     id="navbar" 
     class="navbar navbar-expand-lg navbar-light bg-light"
+    :template="template"
+    @now-template1="change_template(1)"
+    @now-template2="change_template(2)"
   >
   </nav-bar>
   <div :style="getStyle()" class="main">
@@ -129,6 +132,9 @@ export default {
     Template2,
   },
   methods: {
+    change_template(template){
+      this.template = template
+    },
     lupdate(lng){
       this.language = lng
     },

@@ -6,6 +6,11 @@
                  <button class="bnt-close" v-else @click="close">
                    X
                 </button>
+                <template-chooser 
+                  :template="template"
+                  @now-template1="this.$emit('now-template1')"
+                  @now-template2="this.$emit('now-template2')"
+                />
             </div>
               <div class="right-options">
                   <button @click="changeLanguage('pt-br')" class="bnt-languages">Protugues</button>
@@ -47,6 +52,7 @@
 </template>
 
 <script>
+import TemplateChooser from './TemplateChooser.vue'
 export default {
     name: 'nav-bar',
     data(){
@@ -56,7 +62,13 @@ export default {
         info: false
       }
     },
-    emits:['close', 'language-update'],
+    emits:['close', 'language-update', 'now-template1', 'now-template2'],
+    props:{
+      template: Number,
+    },
+    components: {
+      TemplateChooser
+    },
     methods:{
       close(){
         this.$emit('close')
