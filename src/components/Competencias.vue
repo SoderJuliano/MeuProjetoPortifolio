@@ -49,7 +49,8 @@ export default {
           }
           : {
             'border-bottom': '1px solid '+this.sideColor+ '!important',
-            'margin-left': '10px !important'
+            'margin-left': '10px !important',
+            'padding-left': '0px !important'
           }
       },
       removeCompetence(event){

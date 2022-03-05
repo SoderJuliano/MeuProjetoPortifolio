@@ -97,7 +97,7 @@ export default {
 .template2-title{
   text-align: start;
   border-bottom: 1px solid black;
-
+  font-weight: bold;
 }
 .template2-title:hover .editar-animado-habilidade{
   display: block;
