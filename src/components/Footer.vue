@@ -8,6 +8,12 @@
         <img v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
+
+        <template-chooser 
+            :template="template"
+            @now-template1="this.$emit('now-template1')"
+            @now-template2="this.$emit('now-template2')"
+        />
         <imprimir
           class="imprimirbotao"
         />
@@ -17,12 +23,14 @@
 <script>
 import MultiMenu from './MultiMenu.vue'
 import imprimir from './Imprimir-bnt.vue'
+import TemplateChooser from './TemplateChooser.vue'
 
 export default {
     name: 'footermenu',
     components:{
         MultiMenu,
-        imprimir
+        imprimir,
+        TemplateChooser
     },
     data(){
         return{
@@ -31,8 +39,9 @@ export default {
     },
     props:{
        // mainColor:String
+       template: Number,
     },
-    emits:["font-changed"],
+    emits:["font-changed", "now-template2", "now-template1"],
     methods:{
         changefontM(p){
             
@@ -168,5 +177,10 @@ img{
     bottom: 20px;
     background-color: white;
     top: 50px;
+}
+@media screen and (max-width: 700px){
+ .imprimirbotao{
+      margin-left: 10px !important;
+ }
 }
 </style>
