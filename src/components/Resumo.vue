@@ -1,12 +1,13 @@
 <template>
   <div @mouseover="hovert" @mouseleave="leavehovert" class="resumo">
-      <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}</p>
+      <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+        <img id="edit-re" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
+        <img v-if="this.template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
+      </p>
       <div class="resumo-container">
          <ion-icon name="book" size="large"></ion-icon>
          <span @input="saveContent" id='resume' :class="datacontainerpage">{{user.resume}}</span>
-         <img id="edit-re" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
-         <img v-if="this.template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
-      </div>
+         </div>
   </div>
 </template>
 
@@ -63,7 +64,7 @@ export default {
   float: right;
   display: none;
 }
-.resumo-container:hover .editar-animado-resumo{
+.resumo:hover .editar-animado-resumo{
   display: block;
 } 
 .resumo-container:hover .editar{
