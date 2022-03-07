@@ -96,7 +96,8 @@ export default {
             }
         },
         hovert(){
-            document.getElementById("edit").style.display = "none";
+            this.template == "template2" ? 
+            document.getElementById("edit").style.display = "none" : '';
         },
         leavehovert(){
             document.getElementById("edit").style.display = "block";

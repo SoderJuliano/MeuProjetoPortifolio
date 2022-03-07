@@ -146,6 +146,12 @@ export default {
         document.getElementsByClassName("bnt-languages")[0].style.color = "black",
         document.getElementsByClassName("bnt-languages")[1].style.color = "white")
       }
+    },
+    mounted(){
+      localStorage.getItem("lng") == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
+        document.getElementsByClassName("bnt-languages")[1].style.color = "white", document.getElementsByClassName("bnt-languages")[0].style.color = "black",
+        document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white"
+      ) : '';
     }
 }
 </script>
