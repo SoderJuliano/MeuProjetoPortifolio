@@ -5,6 +5,7 @@
         @add-formacao="$emit('add-formacao')"
         @add-habilidade="$emit('add-habilidade')"
         @add-SocialLink="$emit('add-SocialLink')"
+        @adicionar-habilidade="$emit('adicionar-habilidade')"
         :cor="sideColor"
         :user="user"
         :titles="titles"
@@ -32,10 +33,10 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 'add-formacao', 'add-habilidade', 'add-SocialLink'],
+  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
+  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade'],
   data(){
     return{
-      u: this.user,
       uExperiences: this.userExperiences,
       titles: {
                 competencias: ["COMPETÊNCIAS", "COMPETENCE"],

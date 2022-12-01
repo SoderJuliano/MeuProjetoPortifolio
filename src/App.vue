@@ -7,6 +7,9 @@
         :title2="modal.title2"
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
+        :language="language"
+        @adicionar-formacao="adicionarNovaFormacao"
+        @adicionar-habilidade="adicionarNovaHabilidade"
         @update-name="updateName"
         @add-profissao="this.showModal('profissao')"
   />
@@ -40,12 +43,13 @@
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
         @add-SocialLink="this.showModal('socialLink')"
+        @adicionar-habilidade="adicionarNovaHabilidade"
         class="template"
-       :style="getStyle()"
-       :mainColor=mainColor
-       :sideColor=sideColor
-       :user="user"
-       :userExperiences="userExperiences"
+        :style="getStyle()"
+        :mainColor=mainColor
+        :sideColor=sideColor
+        :user="user"
+        :userExperiences="userExperiences"
     />
     <template2 v-if="template==2"
         :language="language"
@@ -61,11 +65,11 @@
         @add-habilidade="this.showModal('habilidade')"
         @add-SocialLink="this.showModal('socialLink')"
 
-       :style="getStyle()"
-       :mainColor=mainColor
-       :sideColor=sideColor
-       :user="user"
-       :userExperiences="userExperiences"
+        :style="getStyle()"
+        :mainColor=mainColor
+        :sideColor=sideColor
+        :user="user"
+        :userExperiences="userExperiences"
     />
     <Footer 
       class="footer"
@@ -86,13 +90,14 @@ import Footer from './components/Footer.vue'
 import navBar from './components/navBar.vue'
 import editorInformacoes from './components/editorIformacoes.vue'
 import Template2 from './templates/Template2.vue'
+import strings from '../src/components/configs/strings.json'
 
 export default {
   name: 'App',
   emits:['close'],
   data(){
     return{
-      language: "pt-br",
+      language: "",
       imageURL: "",
       template: 1,
       font: 'Oswald',
@@ -109,19 +114,16 @@ export default {
                 list: [],
             },
       user: {
-        name: 'Digite nome',
-        profession: 'Sua profissão',
-        resume: 'Digite aqui um resumo sobre você.',
+        name: '',
+        profession: '',
+        resume: '',
         competence: [],
-        email : ['insira seu email aqui @teste.com',
-        ],
-        phone : [
-            'telefone'
-          ],
-        adress: 'seu Endereço',
+        email : [],
+        phone : [],
+        adress: '',
         social : [],
         grade : [],
-        hability: 'abilidades'
+        hability: ''
       },
       userExperiences: [],
     }
@@ -132,9 +134,28 @@ export default {
     navBar,
     Template1,
     editorInformacoes,
-    Template2,
+    Template2
   },
   methods: {
+    adicionarNovaHabilidade(habilidade){
+      if(habilidade){
+        this.user.hability = this.user.hability ? this.user.hability+","+habilidade : habilidade
+      }else{
+        this.user.hability = null
+      }
+    },
+    adicionarNovaFormacao(formacao){
+      this.user.grade.push(formacao);
+    },
+    contatoIsEmpty(){
+      return localStorage.getItem('contato') == null;
+    },
+    aboutIsEmpty(){
+      return localStorage.getItem('about') == null;
+    },
+    languageIsEN(){
+      return this.language == 'us-en';
+    },
     change_template(template){
       template > 0 ? localStorage.setItem("template", template) : localStorage.setItem("template", 1);
       this.template = template
@@ -177,8 +198,8 @@ export default {
                 case 'email':
                     this.modal.mainTitle = "Informacoes pessoais"
                     this.modal.title1 = "Email"
-                    this.modal.placeholder1 = "digite seu email aqui"
-                     this.modal.title2 = "Telefone"
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
+                    this.modal.title2 = "Telefone"
                     this.modal.placeholder2 = "(99) 999999999"
                     this.modal.list = []
                     this.showDivModal()
@@ -186,21 +207,21 @@ export default {
                 case 'nome':
                     this.modal.mainTitle = "Informacoes pessoais"
                     this.modal.title1 = "Nome"
-                    this.modal.placeholder1 = "digite seu nome aqui"
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = []
                     this.showDivModal()
                     break;
                 case 'profissao':
                     this.modal.mainTitle = "Informacoes pessoais"
                     this.modal.title1 = "Profissao"
-                    this.modal.placeholder1 = "digite seu cargo/profissao"
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = []
                     this.showDivModal()
                     break;
                 case 'competencias':
                     this.modal.mainTitle = "Competencias"
                     this.modal.title1 = "Nova competencia"
-                    this.modal.placeholder1 = "escreva uma hasbilidade sua"
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = this.user.competence
                     this.showDivModal()
                     break;
@@ -214,21 +235,21 @@ export default {
                 case 'experiencias':
                     this.modal.mainTitle = "Experiencia profissional"
                     this.modal.title1 = "Nome da empresa"
-                    this.modal.placeholder1 = "Digite aqui"
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.title2 = "Cargo que ocupava"
-                    this.modal.placeholder2 = "Digite aqui"
+                    this.modal.placeholder2 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.showDivModal()
                     break;
                 case 'formacao':
-                    this.modal.mainTitle = "Escolaridade"
-                    this.modal.title1 = "Formacao"
-                    this.modal.placeholder1 = "Digite aqui"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].education : strings[0].education
+                    this.modal.title1 = this.languageIsEN() ? strings[1].acadamic : strings[0].acadamic
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.showDivModal()
                     break;
                 case 'habilidade':
-                    this.modal.mainTitle = "Habilidades"
-                    this.modal.title1 = "Habilidade"
-                    this.modal.placeholder1 = "Digite aqui"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].skills : strings[0].skills
+                    this.modal.title1 = this.languageIsEN() ? strings[1].skill : strings[0].skill
+                    this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.showDivModal()
                     break;
                 case 'socialLink':
@@ -312,7 +333,7 @@ export default {
             this.font = p.target.textContent
             localStorage.setItem("font", p.target.textContent)
         }
-         console.log(p.target.textContent)
+        console.log(p.target.textContent)
     },
     getStyle(){
       switch(this.font){ 
@@ -323,8 +344,8 @@ export default {
 
         case 'Zen Loop':
           return{
-             'font-family': "'Zen Loop', cursive",
-             'font-weight': 'bold'
+            'font-family': "'Zen Loop', cursive",
+            'font-weight': 'bold'
           }
           
         case 'Fuggles':
@@ -378,7 +399,7 @@ export default {
             'font-family':  "verdana"
           }
         case 'Courier New':
-           return{
+          return{
             'font-family': "'Courier New'"
           }
         default:
@@ -428,8 +449,8 @@ export default {
             this.user.social = localStorage.getItem('redesociais') ? localStorage.getItem('redesociais').split(',') : ""
 
             if(contato){
-              this.user.email[0] = contato.email
-              this.user.phone[0] = contato.telefone
+              this.user.email = contato.email
+              this.user.phone = contato.telefone
               this.user.adress = contato.endereco
             }
 
@@ -485,6 +506,32 @@ export default {
               }
               this.imageURL = av
           }
+      },
+      setToEn(){
+        if(this.contatoIsEmpty()){
+          this.user.email = [strings[1].emailSpan],
+          this.user.phone = [strings[1].phone],
+          this.user.adress = strings[1].address,
+          this.user.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
+        }
+        if(this.aboutIsEmpty()){
+          this.user.name = strings[1].yname,
+          this.user.profession = strings[1].yjob,
+          this.user.resume = strings[1].aboutSpan
+        }
+      }, 
+      setToPT(){
+        if(this.contatoIsEmpty()){
+          this.user.email = [strings[0].emailSpan],
+          this.user.phone = [strings[0].phone],
+          this.user.adress = strings[0].address,
+          this.user.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
+        }
+        if(this.aboutIsEmpty()){
+          this.user.name = strings[0].yname,
+          this.user.profession = strings[0].yjob,
+          this.user.resume = strings[0].aboutSpan
+        }
       }
   }, 
   beforeMount(){
@@ -507,6 +554,14 @@ export default {
     localStorage.getItem("profileimg") ?  this.getUserProfileIMG()
     : this.imageURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAES0lEQVR4nO2dy4scVRTGf92jxJBEoogaH1mI2QiuogaJEUWjIeBCJaKICxEkKzdu3Iivv0CRLELIKggGF1mpEMRIxEfQuNFRENHB1yg6EzJGMokz7eL2QNlO6UzVvfc7t/r84Oyq6nznfF2vW1W3wXEcx3Ecx3EcJy89tYAI9ICNwCXDmAdmhnFWqKsRJRpyNXAfcCtwI3ADsKZm2a+BY8BR4AhwPofAcaAP7AE+BBaBQYOYAnbnFt5FtgOTNDNhNBaAx/LK7w494EXgL+KYsRRngFeBR4HLs1VTOD1gH3GNWC7OAgeAa/KUVS7PkN6MavyGn19q2Ua4GsppyIBwuXx3hvqK4zj5zViKGfy88g/uQmfGUuxPXmVBHEJvyDxwWepCS2AN8Ad6QwbA3sS11tJXJV6GrcA6tYghd6gSWzLkFrWACttUiS0Zcr1aQIVrgQsViS0ZYulueQK4QpHYkiEb1QJGWKtIasmQC9QCRpDosWSItYdlkqeNlgyZUwsY4ZQiqSVDTqsFVJgDZhWJLRkyrRZQ4TtVYkuGTKkFVJBpsWTIN2oBFb5UJbZkyEm1gAofqwVY4Sf0I70DhKMGlvYQgE/UAoAfhiHBmiEn1AKAt5TJ3ZB/44ZUuF8tANipFmCFXehP5ktxb+Jaa7G0hzyoFlBBpsWSIZbe9JBpsWTIGbWACn+qElsy5Au1gAqfqxJbMuRdtYAKlrTI6BHvw5w2MYm9p5cy7gHOoTPj3FCDU2EnYbQ1txkf4TeFtWwivyFXZqmsYKbJZ8YvmWr6XyxdZY3yTkdz/SeWDXk9Y643MuYqlgngW9IfrqYRvVi9HJb3kAXCJ8upOYhPubFiLibtc/bThCs6ZxU8TjpDns5YR2foAW8T34wTGDp3lMYG4APimfEVRr9Ht3xSrzIHfBpxe5PArxG3F41SDIHwy47FYsRtRWVcDYm5rai4IcYoyZCYH2FeFHFbUSnJkPVGtxUVN8QYbojTiEsJH2HGujGcB67LWkHHeIX4QyeHs1bQIfaSbnDxuYx1FM8E8ALhuUgqQwbAy9RPVe4M2Qq8T1ojqvEZsCNLZYVxE/Aa6feKujgC3Ja8SuP0Cf92cBSNCcvFSeBJRFM0qbgKeBb4Hr0BdfEz8BKwOVEP5PQJs0cfRvsO72pjgbAH78HevF6NWA88RZg+Q93ctjFFeBa/IWqHMrGOcFj6HX0jY8cs8DyFDMP0gCcIx2B141LHNOECwOw3JZuxdcWUK45ja6pbIMwIPYO+OaqYBe5s3cVIPEyYOFLdFHXMA4+07GVrbh8KUTfDSpxH+OcwWxjvw1RdzCA6p6R4zbMr8WaLvjZidyThXY5djbvbgPcSFdGlOLaahra5mdlEmAqvpBclFCwS7s1+XMnCbZr5UMv1x4U+8MBqFm7KzS3WHTdW3Ks2hmxpse64seJetTHE3LiNYfzH6ziO4ziO4ziO4zhF8jeb7W7hC+joGwAAAABJRU5ErkJggg=="
     
+  },
+  mounted(){
+    this.languageIsEN() ? this.setToEn() : this.setToPT();
+    
+        
+       /*  this.user.social = [],
+        this.user.grade = [],
+        this.user.hability = this.languageIsEN() ? strings[1].ability : strings[0].ability */
   }
 }
 </script>

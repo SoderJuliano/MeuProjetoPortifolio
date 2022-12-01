@@ -4,7 +4,7 @@
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
-      <div :class="hcstyle">
+      <div v-if="user.hability" :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
               <span  class="data-text-habilidades">{{user.hability}}</span> 
         <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
@@ -15,7 +15,7 @@
 <script>
 export default {
   name: 'Habilidade',
-  emits: ['add-habilidade'],
+  emits: ['add-habilidade', 'adicionar-habilidade'],
   data(){
     return {
       tstyle : this.template+"-title",
@@ -34,7 +34,7 @@ export default {
   methods:{
     removeHabilidades(){
       localStorage.removeItem("hability")
-      window.location.reload()
+      this.$emit('adicionar-habilidade', null)
     },
     getStyle(){
 

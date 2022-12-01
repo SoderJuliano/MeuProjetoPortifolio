@@ -15,7 +15,7 @@
                     <br v-if="title == 'Nome da empresa'"><br v-if="title == 'Nome da empresa'">
                     
                     <button v-if="title == 'Nome da empresa'" @click="proximo(title)">Proximo</button>
-                    <button v-else v-on:click=add(title)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
+                    <button v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
                     <span v-if="ptitle" style="margin-right: 10px">{{ptitle}}</span>
@@ -32,7 +32,7 @@
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
                     <button v-if="ptitle" @click="proximo(title)">Proximo</button>
-                    <button v-else v-on:click=add(ptitle3)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
+                    <button v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
@@ -43,29 +43,31 @@
                 <span style="margin-right: 10px;">{{title2}}</span>
                 <input id="modal-input2" type="text" :placeholder="`${this.placeholder2}`">
                 <br><br>
-                <button @click="proximo(title)">Proximo</button>
-                <button v-on:click="cancelar">Cancelar</button>
+                <button @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
+                <button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
             <div v-else>
                 <span>{{ptitle}}</span><br><br>
-                <input id="modal-input1" type="text" placeholder="RUA">
-                <input id="modal-input2" type="text" placeholder="Numero">
-                <input id="modal-input3" type="text" placeholder="Bairro">
-                <input id="modal-input4" type="text" placeholder="Cidade">
-                <input id="modal-input5" type="text" placeholder="Estado/Provincia">
-                <input id="modal-input6" type="text" placeholder="Pais">
+                <input id="modal-input1" type="text" :placeholder=this.getRua() >
+                <input id="modal-input2" type="text" :placeholder=this.getNumero()>
+                <input id="modal-input3" type="text" :placeholder=this.getBairro()>
+                <input id="modal-input4" type="text" :placeholder=this.getCidade()>
+                <input id="modal-input5" type="text" :placeholder=this.getEstado()>
+                <input id="modal-input6" type="text" :placeholder=this.getPais()>
                 <br><br>
-                <button v-on:click=add(ptitle)>Salvar</button><button v-on:click="cancelar">Cancelar</button>
+                <button v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import strings from '../components/configs/strings.json'
 export default {
     name: 'modal-input',
     data(){
         return{
+            string: strings,
             competencias : this.competencia,
             ptitle: '',
             ptitle2: '',
@@ -79,8 +81,8 @@ export default {
             },
             jobs: this.experiences,
             contato: {
-                email: '',
-                telefone: '',
+                email: [],
+                telefone: [],
                 endereco: '',
             }
         }
@@ -94,17 +96,36 @@ export default {
         title2: String,
         placeholder2: String,
         template: String,
+        language: String,
     },
-    emits:["update-name", "add-profissao"],
+    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade"],
     methods:{
+        getRua(){
+            return this.language == 'pt-br' ? this.string[0].street : this.string[1].street
+        },
+        getNumero(){
+            return this.language == 'pt-br' ? this.string[0].hNumber : this.string[1].hNumber
+        },
+        getCidade(){
+            return this.language == 'pt-br' ? this.string[0].city : this.string[1].city
+        },
+        getBairro(){
+            return this.language == 'pt-br' ? this.string[0].district : this.string[1].district
+        },
+        getPais(){
+            return this.language == 'pt-br' ? this.string[0].coutry : this.string[1].coutry
+        },
+        getEstado(){
+            return this.language == 'pt-br' ? this.string[0].state : this.string[1].state
+        },
         proximo(title){
             this.changePage();
             if(title == "Email"){
                 const email = document.getElementById('modal-input').value
                 const telefone = document.getElementById('modal-input2').value
 
-                this.contato.email = email ? email : ''
-                this.contato.telefone = telefone ? telefone : ''
+                this.contato.email.push(email ? email : '')
+                this.contato.telefone.push(telefone ? telefone : '')
                 this.ptitle = 'Endereco'
             }
             else if(title=="Nome da empresa" && this.ptitle == ''){
@@ -123,6 +144,7 @@ export default {
             this.changePage2();
         },
         add(title){
+            console.log(title);
             //title as string
             switch(title) {
                 case 'Nome':
@@ -160,11 +182,19 @@ export default {
                     this.adicionarEndereco();
                     this.cancelar();
                     break;
-                case 'Formacao':
+                case 'Academic education':
+                    this.adicionarFormacao()
+                    this.cancelar()
+                    break
+                case 'Escolaridade':
                     this.adicionarFormacao()
                     this.cancelar()
                     break
                 case 'Habilidade':
+                    this.adicionarHabilidade()
+                    this.cancelar()
+                    break
+                case 'Skill':
                     this.adicionarHabilidade()
                     this.cancelar()
                     break
@@ -175,10 +205,11 @@ export default {
                 default:
                     break;
             }
-            const tt = this.title
             this.ptitle = '';
             this.ptitle2 = '';
-            this.template == "template1" || tt != "Nome" ? window.location.reload() :  document.getElementById('modal-input').value = ''
+            this.cancelar()
+            //const tt = this.title
+            /* this.template == "template1" || tt != "Nome" ? window.location.reload() : */  document.getElementById('modal-input').value = ''
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')
@@ -189,12 +220,13 @@ export default {
             let h = localStorage.getItem('hability')
             const nh = document.getElementById('modal-input').value
             h ? localStorage.setItem("hability", h+", "+nh) : localStorage.setItem("hability", nh) 
+            this.$emit('adicionar-habilidade', document.getElementById('modal-input').value)
         },
         adicionarFormacao(){
             let g = localStorage.getItem('grade')
             g ? localStorage.setItem('grade', g+","+document.getElementById('modal-input').value)
                 : localStorage.setItem('grade', document.getElementById('modal-input').value)
-            //this.$emit('update:grade', this.mygrade)
+            this.$emit('adicionar-formacao', document.getElementById('modal-input').value)
         },
         adicionarEndereco(){
             const rua = document.getElementById("modal-input1").value

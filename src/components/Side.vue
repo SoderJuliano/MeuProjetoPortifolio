@@ -13,17 +13,17 @@
         <p class="title">{{language == "pt-br" ? "CONTATO" : "CONTACT"}}
           <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-info')"/>
         </p><br>
-        <div v-for="(item, index) in email " :key="index" class="data-container">
+        <div v-for="(item, index) in this.usuario.email " :key="index" class="data-container">
             <img v-if="item" src="../icons/envelope.svg" class="email-icon"/>
             <span class="email-text">{{item}}</span>
         </div>
-        <div v-for="(item, index) in phone" :key="index" class="data-container">
+        <div v-for="(item, index) in this.usuario.phone" :key="index" class="data-container">
             <img v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon">
             <span class="phone-text">{{item}}</span>
         </div>
         <div class="data-container">
-            <img v-if="adress" src="../icons/adress.png" alt="adress" class="adress-icon">
-            <span class="endereco-text">{{adress}}</span>
+            <img v-if="this.usuario.adress" src="../icons/adress.png" alt="adress" class="adress-icon">
+            <span class="endereco-text">{{this.usuario.adress}}</span>
         </div>
     </div>
     <!-- <editar-contato
@@ -39,7 +39,7 @@
       class="template-data"
       :titulo="titles.formacao"
       :backgroundColor="cor"
-      :user="user"
+      :user="usuario"
       template="template1"
       :language="language"
     /><!-- 
@@ -50,6 +50,7 @@
     /> -->
     <Habilidade
       @add-habilidade="$emit('add-habilidade')"
+      @adicionar-habilidade="$emit('adicionar-habilidade')"
       v-if="exibirHabilidade"
       class="template-data"
       :titulo="titles.habilidades"
@@ -94,7 +95,7 @@ export default {
     language: String,
   },
  name:'Side',
- emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink'],
+ emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade'],
  data(){
    return{
     imageURL: "",
@@ -102,14 +103,7 @@ export default {
     exibirFormacao: true,
     exibirHabilidade: true,
     exibirSocial: true,
-     email : ['insira seu email aqui @teste.com',
-     ],
-     phone : [
-        'telefone'
-      ],
-   adress: 'seu Endereço',
-   grade : ['Seus dados escolares'],
-   hability : "Suas habilidades",
+    usuario: this.user,
     social : {
       facebook : '',
       lin : '',
@@ -122,17 +116,7 @@ export default {
    }
  },
  methods: {
-   getContatoData(){
-     let contato = JSON.parse(localStorage.getItem('contato'))
-
-     
-
-     if(contato){
-       this.email[0] = contato.email
-       this.phone[0] = contato.telefone
-       this.adress = contato.endereco
-     }
-
+   getContatoData(){  
      // grade
 
      const gradeStorage = localStorage.getItem('grade')
@@ -272,6 +256,7 @@ export default {
     }
   },
   beforeMount(){
+    console.log(this.user),
     this.imageURL = localStorage.getItem("profileimg")
     ?  localStorage.getItem("profileimg")
     : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAES0lEQVR4nO2dy4scVRTGf92jxJBEoogaH1mI2QiuogaJEUWjIeBCJaKICxEkKzdu3Iivv0CRLELIKggGF1mpEMRIxEfQuNFRENHB1yg6EzJGMokz7eL2QNlO6UzVvfc7t/r84Oyq6nznfF2vW1W3wXEcx3Ecx3EcJy89tYAI9ICNwCXDmAdmhnFWqKsRJRpyNXAfcCtwI3ADsKZm2a+BY8BR4AhwPofAcaAP7AE+BBaBQYOYAnbnFt5FtgOTNDNhNBaAx/LK7w494EXgL+KYsRRngFeBR4HLs1VTOD1gH3GNWC7OAgeAa/KUVS7PkN6MavyGn19q2Ua4GsppyIBwuXx3hvqK4zj5zViKGfy88g/uQmfGUuxPXmVBHEJvyDxwWepCS2AN8Ad6QwbA3sS11tJXJV6GrcA6tYghd6gSWzLkFrWACttUiS0Zcr1aQIVrgQsViS0ZYulueQK4QpHYkiEb1QJGWKtIasmQC9QCRpDosWSItYdlkqeNlgyZUwsY4ZQiqSVDTqsFVJgDZhWJLRkyrRZQ4TtVYkuGTKkFVJBpsWTIN2oBFb5UJbZkyEm1gAofqwVY4Sf0I70DhKMGlvYQgE/UAoAfhiHBmiEn1AKAt5TJ3ZB/44ZUuF8tANipFmCFXehP5ktxb+Jaa7G0hzyoFlBBpsWSIZbe9JBpsWTIGbWACn+qElsy5Au1gAqfqxJbMuRdtYAKlrTI6BHvw5w2MYm9p5cy7gHOoTPj3FCDU2EnYbQ1txkf4TeFtWwivyFXZqmsYKbJZ8YvmWr6XyxdZY3yTkdz/SeWDXk9Y643MuYqlgngW9IfrqYRvVi9HJb3kAXCJ8upOYhPubFiLibtc/bThCs6ZxU8TjpDns5YR2foAW8T34wTGDp3lMYG4APimfEVRr9Ht3xSrzIHfBpxe5PArxG3F41SDIHwy47FYsRtRWVcDYm5rai4IcYoyZCYH2FeFHFbUSnJkPVGtxUVN8QYbojTiEsJH2HGujGcB67LWkHHeIX4QyeHs1bQIfaSbnDxuYx1FM8E8ALhuUgqQwbAy9RPVe4M2Qq8T1ojqvEZsCNLZYVxE/Aa6feKujgC3Ja8SuP0Cf92cBSNCcvFSeBJRFM0qbgKeBb4Hr0BdfEz8BKwOVEP5PQJs0cfRvsO72pjgbAH78HevF6NWA88RZg+Q93ctjFFeBa/IWqHMrGOcFj6HX0jY8cs8DyFDMP0gCcIx2B141LHNOECwOw3JZuxdcWUK45ja6pbIMwIPYO+OaqYBe5s3cVIPEyYOFLdFHXMA4+07GVrbh8KUTfDSpxH+OcwWxjvw1RdzCA6p6R4zbMr8WaLvjZidyThXY5djbvbgPcSFdGlOLaahra5mdlEmAqvpBclFCwS7s1+XMnCbZr5UMv1x4U+8MBqFm7KzS3WHTdW3Ks2hmxpse64seJetTHE3LiNYfzH6ziO4ziO4ziO4zhF8jeb7W7hC+joGwAAAABJRU5ErkJggg=="

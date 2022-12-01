@@ -4,7 +4,7 @@
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
          <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
-      <div v-for="(item, index) in mygrade " :key="index" :class="conteinerdata">
+      <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
           <img src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
           <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../icons/remove.png" alt="remove-bnt"/>
@@ -41,7 +41,18 @@ export default {
     getStyle(){
       return this.template == "template1" ? {"background-color": this.backgroundColor} : {"border-bottom": "1px solid "+this.sideColor}
     }
-  }
+  },
+  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes  
+   watch: {
+    user: {
+      handler(newVal) {
+        console.log("user changed")
+        console.log(newVal)
+        this.mygrade = newVal.grade
+      },
+      deep: true,
+    },
+  }, */
 }
 </script>
 

@@ -34,13 +34,14 @@ export default {
         return {
             email: [],
             phone: [],
-            adress: this.user.adress,
+            adress: '',
             tstyle: "contact-"+this.template,
         }
     },
     mounted(){
         this.email = this.user.email;
         this.phone = this.user.phone;
+        this.adress = this.user.adress;
     },
     methods:{
         getStyle(){
