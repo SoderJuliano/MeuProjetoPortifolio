@@ -138,11 +138,7 @@ export default {
   },
   methods: {
     adicionarNovaHabilidade(habilidade){
-      if(habilidade){
-        this.user.hability = this.user.hability ? this.user.hability+","+habilidade : habilidade
-      }else{
-        this.user.hability = null
-      }
+      this.user.hability = habilidade
     },
     adicionarNovaFormacao(formacao){
       this.user.grade.push(formacao);
@@ -251,6 +247,11 @@ export default {
                     this.modal.title1 = this.languageIsEN() ? strings[1].skill : strings[0].skill
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.showDivModal()
+                    if(this.user.hability){
+                      setTimeout(() => {
+                        document.getElementById('modal-input').value = this.user.hability+","
+                      }, 800);
+                    }
                     break;
                 case 'socialLink':
                     this.modal.mainTitle = 'Redes sociais'

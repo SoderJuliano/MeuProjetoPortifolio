@@ -6,7 +6,11 @@
       </p>
       <div v-if="user.hability" :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
-              <span  class="data-text-habilidades">{{user.hability}}</span> 
+              <span  class="data-text-habilidades">
+                <div v-for="(item, index) in user.hability.split(',')" :key="index" >
+                  <li>{{item}}</li>
+                </div>
+              </span> 
         <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
@@ -86,7 +90,8 @@ export default {
   min-height: 20px;
   display: block;
   padding-top: 16px;
-  padding-left: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .remove-bnt{

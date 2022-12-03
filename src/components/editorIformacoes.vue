@@ -217,9 +217,10 @@ export default {
             ls ? ls.includes(rs) ? alert('Esta rede ja foi insirida') : localStorage.setItem('redesociais' , ls+","+rs) : localStorage.setItem('redesociais', rs)
         },
         adicionarHabilidade(){
-            let h = localStorage.getItem('hability')
+            /* let h = localStorage.getItem('hability')
             const nh = document.getElementById('modal-input').value
-            h ? localStorage.setItem("hability", h+", "+nh) : localStorage.setItem("hability", nh) 
+            h ? localStorage.setItem("hability", h+", "+nh) : localStorage.setItem("hability", nh)  */
+            localStorage.setItem("hability", document.getElementById('modal-input').value)
             this.$emit('adicionar-habilidade', document.getElementById('modal-input').value)
         },
         adicionarFormacao(){

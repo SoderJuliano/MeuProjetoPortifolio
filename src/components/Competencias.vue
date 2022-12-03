@@ -6,9 +6,9 @@
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
-         <span class="data-container-page">{{item}}
-           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
-         </span>
+        <span class="data-container-page">{{item}}
+          <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
+        </span>
       </div>
   </div>
 </template>
