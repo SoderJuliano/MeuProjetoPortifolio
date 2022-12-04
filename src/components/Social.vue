@@ -35,6 +35,15 @@
               <span class="data-container">{{git}}</span>
               <img @click="remove(git)" :id="`${git}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
           </div>
+          <div :id="`${insta}`" v-if="insta" class="social-row">
+              <img src="../icons/insta.png" class="social-icon"/>
+              <span class="data-container">{{insta}}</span>
+              <img @click="remove(git)" :id="`${insta}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+          </div>
+          <div v-for="(item, index) in other" :key="index" :id="other" class="social-row">
+            <span class="data-container">{{item}}</span>
+              <img @click="remove(other)" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+          </div>
       </div>
       <div :class="templateClassItemContainer" v-if="template=='template2'">
           <div :class="templateClassItem" v-for="(item, index) in social " :key="index" >
@@ -65,6 +74,8 @@ export default {
         you: String,
         stof: String,
         git: String,
+        insta: String,
+        other: Array,
         user: Object,
         sideColor: String,
     },

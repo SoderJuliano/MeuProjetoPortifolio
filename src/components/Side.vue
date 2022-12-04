@@ -70,6 +70,8 @@
       :you="social.youtube"
       :stof="social.stackoverflow"
       :git="social.github"
+      :insta="social.instagram"
+      :other="social.other"
       :user="social"
       template="template1"
       :titulo="titles.social"
@@ -111,7 +113,8 @@ export default {
       youtube : '',
       stackoverflow : '',
       github: '',
-      insta: ''
+      instagram: '',
+      other: []
     }
    }
  },
@@ -136,7 +139,7 @@ export default {
      //facebook
     const ls = localStorage.getItem('redesociais')
     if(ls){
-      let arr = ls.split(',').map(function (item) {
+      /* let arr = ls.split(',').map(function (item) {
           for(let i=0; i<item.split("").length; i++){
             //facebook
             if(item.split("")[i]+item.split("")[i+1]+item.split("")[i+2]+item.split("")[i+3]+item.split("")[i+4]+item.split("")[i+5]+item.split("")[i+6]+item.split("")[i+7] == 'facebook'){
@@ -234,6 +237,27 @@ export default {
       arr.forEach(element => {
         if(element){
           this.social.twitter = element
+        }
+      }); */
+
+      let arr = ls.split(',');
+      arr.forEach(item => {
+        if(item.includes("twitter")){
+          this.social.twitter = item
+        }else if(item.includes("github")){
+          this.social.github = item
+        }else if(item.includes("youtube")){
+          this.social.youtube = item
+        }else if(item.includes("stackoverflow")){
+          this.social.stackoverflow = item
+        }else if(item.includes("linkedin")){
+          this.social.linkedin = item
+        }else if(item.includes("instagram")){
+          this.social.instagram = item
+        }else if(item.includes("facebook")){
+          this.social.facebook = item
+        }else{
+          this.social.other.push(item)
         }
       });
     }
