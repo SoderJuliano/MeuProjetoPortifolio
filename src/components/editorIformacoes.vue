@@ -165,7 +165,15 @@ export default {
                     : this.$emit("add-profissao", document.getElementById('modal-input').value)
                     this.cancelar();
                     break;
-                case 'Nova competencia':
+                case 'Nova competência':
+                    if(document.getElementById('modal-input').value){
+                        this.competencias.push(document.getElementById('modal-input').value)
+                    }
+                    this.$emit('update: user.competence', this.competencias)
+                    localStorage.setItem('cpta', this.competencias)
+                    this.cancelar();
+                    break; 
+                case 'New skill':
                     if(document.getElementById('modal-input').value){
                         this.competencias.push(document.getElementById('modal-input').value)
                     }
