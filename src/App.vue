@@ -7,6 +7,7 @@
         :title2="modal.title2"
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
+        @update-experiences="adicionarExperiencias"
         :language="language"
         :template="template"
         @adicionar-formacao="adicionarNovaFormacao"
@@ -138,6 +139,11 @@ export default {
     Template2
   },
   methods: {
+    adicionarExperiencias(experiencias){
+      this.userExperiences = experiencias
+      console.log('experiencias aaaa')
+      console.log(experiencias)
+    },
     adicionarNovaHabilidade(habilidade){
       this.user.hability = habilidade
     },
@@ -231,9 +237,9 @@ export default {
                     break;
                 case 'experiencias':
                     this.modal.mainTitle = this.languageIsEN() ? strings[1].yhprofession : strings[0].yhprofession
-                    this.modal.title1 = "Nome da empresa"
+                    this.modal.title1 = this.languageIsEN() ? strings[1].companyName : strings[0].companyName
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
-                    this.modal.title2 = "Cargo que ocupava"
+                    this.modal.title2 = this.languageIsEN() ? strings[1].yourJob : strings[0].yourJob
                     this.modal.placeholder2 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.showDivModal()
                     break;

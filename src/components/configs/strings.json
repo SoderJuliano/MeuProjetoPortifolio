@@ -25,7 +25,9 @@
         "acadamic": "Escolaridade",
         "hNumber": "Numero",
         "nskill": "Nova competência",
-        "yhprofession": "Resumo profissional"
+        "yhprofession": "Resumo profissional",
+        "companyName": "Nome da empresa",
+        "yourJob": "Cargo que ocupava"
     },
     {
         "language": "en-us",
@@ -53,6 +55,8 @@
         "acadamic": "Academic education",
         "hNumber": "House number",
         "nskill": "New skill",
-        "yhprofession": "professional history"
+        "yhprofession": "professional history",
+        "companyName": "Company name",
+        "yourJob": "You used to work as"
     }
 ]

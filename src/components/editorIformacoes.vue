@@ -3,18 +3,19 @@
         <h3>{{mainTitle}}</h3>
         <div v-if="title!='Email'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
-                    <span :style="title=='Sobre voce' ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
-                    <textarea v-if="title=='Sobre voce'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                    <span :style="title=='Sobre voce' || title=='Write about you'  ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
+                    <br v-if="title=='Write about you'" />
+                    <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                     <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
                     
                     <br><br>
                     
-                    <span style="margin-right: 10px" v-if="title == 'Nome da empresa'">{{title2}}</span>
-                    <input id="modal-input2" v-if="title == 'Nome da empresa'" type="text" :placeholder="`${this.placeholder2}`">
+                    <span style="margin-right: 10px" v-if="title == 'Nome da empresa' || title == 'Company name'">{{title2}}</span>
+                    <input id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
                     
-                    <br v-if="title == 'Nome da empresa'"><br v-if="title == 'Nome da empresa'">
+                    <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
                     
-                    <button v-if="title == 'Nome da empresa'" @click="proximo(title)">Proximo</button>
+                    <button v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
                     <button v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
@@ -31,7 +32,7 @@
                     
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
-                    <button v-if="ptitle" @click="proximo(title)">Proximo</button>
+                    <button v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
                     <button v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
         </div>
@@ -62,8 +63,27 @@
 </template>
 
 <script>
+
 import strings from '../components/configs/strings.json'
 import $ from 'jquery'
+class Job {
+    company = null;
+    function = null;
+    description = null;
+    dateHired = null;
+    dateFired = null;
+    constructor() { 
+        this.company = localStorage.getItem('jobCompany');
+        this.function = localStorage.getItem('jobFunction');
+        this.description = localStorage.getItem('jobDescription');
+        this.dateHired = localStorage.getItem('jobHired');
+        this.dateFired = localStorage.getItem('jobFired');
+    }
+  }
+  function getNewJob(){
+    return new Job();
+  }
+
 export default {
     name: 'modal-input',
     data(){
@@ -73,13 +93,6 @@ export default {
             ptitle: '',
             ptitle2: '',
             ptitle3: '',
-            job: {
-                company : '',
-                function : '',
-                description : '',
-                dateHired: '',
-                dateFired: ''
-            },
             jobs: this.experiences,
             contato: {
                 email: [],
@@ -99,7 +112,7 @@ export default {
         template: Number,
         language: String,
     },
-    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade"],
+    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences"],
     methods:{
         getRua(){
             return this.language == 'pt-br' ? this.string[0].street : this.string[1].street
@@ -129,16 +142,18 @@ export default {
                 this.contato.telefone.push(telefone ? telefone : '')
                 this.ptitle = 'Endereco'
             }
-            else if(title=="Nome da empresa" && this.ptitle == ''){
-                this.job.company = document.getElementById('modal-input').value
-                this.job.function = document.getElementById('modal-input2').value
-                this.ptitle = 'Data de admicao'
-                this.ptitle2 = 'Data de demicao'
+            else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
+                localStorage.setItem('jobCompany', document.getElementById('modal-input').value)
+                localStorage.setItem('jobFunction', document.getElementById('modal-input2').value)
+                this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
+                this.ptitle2 = this.language == 'pt-br' ? 'Data de demicao' : 'Date of your last day working here'
             }else{
-                this.job.dateHired = document.getElementById('input-value-date1').value
-                this.job.dateFired = document.getElementById('input-value-date2').value
+                localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
+                localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
+               /*  this.job.dateHired = document.getElementById('input-value-date1').value
+                this.job.dateFired = document.getElementById('input-value-date2').value */
 
-                this.ptitle3 = 'Descricao'
+                this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
             }
@@ -192,10 +207,15 @@ export default {
                     this.cancelar();
                     break;   
                 case 'Descricao':
-                    this.job.description = document.getElementById('modal-input3').value
-                    this.adicionarJobs(this.job)
+                    localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
+                    this.adicionarJobs()
                     this.cancelar();
-                    break; 
+                    break;
+                case 'Description':
+                    localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
+                    this.adicionarJobs()
+                    this.cancelar();
+                    break;
                 case 'Endereco':
                     this.adicionarEndereco();
                     this.cancelar();
@@ -227,7 +247,7 @@ export default {
             this.ptitle2 = '';
             this.cancelar()
             //const tt = this.title
-            /* this.template == "template1" || tt != "Nome" ? window.location.reload() : */  document.getElementById('modal-input').value = ''
+            /* this.template == "template1" || tt != "Nome" ? window.location.reload() : */  document.getElementById('modal-input') ? document.getElementById('modal-input').value = '' : ""
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')
@@ -263,17 +283,12 @@ export default {
             this.contato.endereco += pais ? pais+"." : "."
             localStorage.setItem('contato', JSON.stringify(this.contato))
         },
-        adicionarJobs(job){
-            let j = localStorage.getItem('jobs')
-            if(j){
-                let objarray = JSON.parse(j)
-                objarray.push(job)
-                localStorage.setItem('jobs', JSON.stringify(objarray))
-            }else{
-                this.jobs.push(this.job)
-                localStorage.setItem('jobs', JSON.stringify(this.jobs))
-            }
-            this.$emit('update:userExperiences', this.jobs)
+        adicionarJobs(){
+            const job = getNewJob();
+            this.jobs.push(job)
+            localStorage.setItem('jobs', JSON.stringify(this.jobs))
+            this.$emit('update-experiences', this.jobs)
+            
         },
         adicionarCompetencia(){
             const cpta = document.getElementById('competencia-input').value
