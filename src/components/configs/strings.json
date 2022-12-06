@@ -23,7 +23,9 @@
         "skill": "Habilidade",
         "grade": "Seus dados escolares",
         "acadamic": "Escolaridade",
-        "hNumber": "Numero"
+        "hNumber": "Numero",
+        "nskill": "Nova competência",
+        "yhprofession": "Resumo profissional"
     },
     {
         "language": "en-us",
@@ -49,6 +51,8 @@
         "skill": "Skill",
         "grade": "Your education info",
         "acadamic": "Academic education",
-        "hNumber": "House number"
+        "hNumber": "House number",
+        "nskill": "New skill",
+        "yhprofession": "professional history"
     }
 ]

@@ -8,6 +8,7 @@
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
         :language="language"
+        :template="template"
         @adicionar-formacao="adicionarNovaFormacao"
         @adicionar-habilidade="adicionarNovaHabilidade"
         @update-name="updateName"
@@ -192,44 +193,44 @@ export default {
             });
             switch (qual) {
                 case 'email':
-                    this.modal.mainTitle = "Informacoes pessoais"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].yinfo : strings[0].yinfo
                     this.modal.title1 = "Email"
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
-                    this.modal.title2 = "Telefone"
+                    this.modal.title2 = this.languageIsEN() ? strings[1].phone : strings[0].phone
                     this.modal.placeholder2 = "(99) 999999999"
                     this.modal.list = []
                     this.showDivModal()
                     break;
                 case 'nome':
-                    this.modal.mainTitle = "Informacoes pessoais"
-                    this.modal.title1 = "Nome"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].yinfo : strings[0].yinfo
+                    this.modal.title1 = this.languageIsEN() ? strings[1].yname : strings[0].yname 
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = []
                     this.showDivModal()
                     break;
                 case 'profissao':
-                    this.modal.mainTitle = "Informacoes pessoais"
-                    this.modal.title1 = "Profissao"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].yinfo : strings[0].yinfo
+                    this.modal.title1 = this.languageIsEN() ? strings[1].yjob : strings[0].yjob
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = []
                     this.showDivModal()
                     break;
                 case 'competencias':
-                    this.modal.mainTitle = "Competencias"
-                    this.modal.title1 = "Nova competencia"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].skill : strings[0].skill
+                    this.modal.title1 = this.languageIsEN() ? strings[1].nskill : strings[0].nskill
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = this.user.competence
                     this.showDivModal()
                     break;
                 case 'resumo':
-                    this.modal.mainTitle = "Resumo profissional"
-                    this.modal.title1 = "Sobre voce"
-                    this.modal.placeholder1 = "Descreva que tipo de proficional voce e..."
+                    this.modal.mainTitle = this.languageIsEN() ? "About you" : "Resumo profissional"
+                    this.modal.title1 = this.languageIsEN() ? "Write about you" : "Sobre voce"
+                    this.modal.placeholder1 = this.languageIsEN() ? "Talk what kind of people you are" : "Descreva que tipo de proficional voce e..."
                     this.modal.list = this.user.competence
                     this.showDivModal()
                     break;
                 case 'experiencias':
-                    this.modal.mainTitle = "Experiencia profissional"
+                    this.modal.mainTitle = this.languageIsEN() ? strings[1].yhprofession : strings[0].yhprofession
                     this.modal.title1 = "Nome da empresa"
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.title2 = "Cargo que ocupava"

@@ -63,6 +63,7 @@
 
 <script>
 import strings from '../components/configs/strings.json'
+import $ from 'jquery'
 export default {
     name: 'modal-input',
     data(){
@@ -95,7 +96,7 @@ export default {
         experiences: Array,
         title2: String,
         placeholder2: String,
-        template: String,
+        template: Number,
         language: String,
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade"],
@@ -149,14 +150,18 @@ export default {
             switch(title) {
                 case 'Nome':
                     this.registerValues('user-name', document.getElementById('modal-input').value);
-                    this.template == "template1" 
-                    ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
+                    this.template == 1 ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
                     : (this.$emit("update-name", document.getElementById('modal-input').value),  this.$emit('add-profissao'))
                     break;
-                case 'Profissao':
+                case 'Sua profissão':
                     this.registerValues('profession', document.getElementById('modal-input').value);
-                    this.template == "template1" ?
-                    document.getElementsByClassName("profession")[0].textContent = document.getElementById('modal-input').value
+                    this.template == 1 ? $("#profession-span").text(document.getElementById('modal-input').value) 
+                    : this.$emit("add-profissao", document.getElementById('modal-input').value)
+                    this.cancelar();
+                    break;
+                case 'Your profession':
+                    this.registerValues('profession', document.getElementById('modal-input').value);
+                    this.template == 1 ? $("#profession-span").text(document.getElementById('modal-input').value) 
                     : this.$emit("add-profissao", document.getElementById('modal-input').value)
                     this.cancelar();
                     break;
@@ -169,6 +174,11 @@ export default {
                     this.cancelar();
                     break; 
                 case 'Sobre voce':
+                    localStorage.setItem('about', document.getElementById('modal-input').value)
+                    document.getElementById('resume').textContent = document.getElementById('modal-input').value
+                    this.cancelar();
+                    break;  
+                case 'Write about you':
                     localStorage.setItem('about', document.getElementById('modal-input').value)
                     document.getElementById('resume').textContent = document.getElementById('modal-input').value
                     this.cancelar();
