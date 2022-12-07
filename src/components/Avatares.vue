@@ -97,25 +97,25 @@ export default {
                 document.getElementsByClassName("pic")[0].style.display = "none"
                 localStorage.setItem("profileimg", "none")
             }
-             else if(id.target.id=="a5.1"){
+            else if(id.target.id=="a5.1"){
                 document.getElementsByClassName("pic")[0].style.display = "block"
                 const av51 = "../img/avatar5.e57e5808.png"
                 document.getElementsByClassName("img-pic")[0].src = av51
                 localStorage.setItem("profileimg", 'av51')
             }
-             else if(id.target.id=="a6"){
+            else if(id.target.id=="a6"){
                 document.getElementsByClassName("pic")[0].style.display = "block"
                 const av6 = "../img/avatar6.94999127.png"
                 document.getElementsByClassName("img-pic")[0].src = av6
                 localStorage.setItem("profileimg", 'av6')
-           }
-             else if(id.target.id=="a7"){
+        }
+            else if(id.target.id=="a7"){
                 document.getElementsByClassName("pic")[0].style.display = "block"
                 const av7 = "../img/avatar7.02252c9f.png"
                 document.getElementsByClassName("img-pic")[0].src = av7
                 localStorage.setItem("profileimg", 'av7')
             }
-             else if(id.target.id=="a8"){
+            else if(id.target.id=="a8"){
                 document.getElementsByClassName("pic")[0].style.display = "block"
                 const av8 = "../img/avatar8.60347a72.png"
                 document.getElementsByClassName("img-pic")[0].src = av8

@@ -85,7 +85,7 @@ import Habilidade from "./Habilidade.vue";
 import Social from "./Social.vue"
 
 export default {
- components: {
+components: {
     Formacao,
     Habilidade,
     Social,
@@ -96,10 +96,10 @@ export default {
     titles: Object,
     language: String,
   },
- name:'Side',
- emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade'],
- data(){
-   return{
+name:'Side',
+emits: ['add-info', 'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade'],
+data(){
+  return{
     imageURL: "",
     exibirLinks: true,
     exibirFormacao: true,
@@ -268,16 +268,37 @@ export default {
       }
     },
     onIMGChange(img){
-      //console.log(URL.createObjectURL(img.target.files[0]))
-      this.imageURL = URL.createObjectURL(img.target.files[0])
+      if(img.target.files[0].size > 2762231){
+        alert("Arquivo muito grande, tente uma img menor que 3Mb")
+      }else{
+        this.imageURL = URL.createObjectURL(img.target.files[0])
+        this.toDataURL(this.imageURL, function(data){
+          console.log(data.split("data:image/jpeg;base64,")[1])
+          localStorage.setItem('profileImg', data.split("data:image/jpeg;base64,")[1]);
+      });
+      }
+      
       //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
       // the two codes works as well
       // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
     },
-    showEditarContato(){
-      document.getElementsByClassName('editar-contato-container')[0].style.display= 'block'
-      document.getElementsByClassName('editar-contato-container')[0].style.opacity= '90%'
-    }
+    toDataURL(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+      var reader = new FileReader();
+      reader.onloadend = function() {
+        callback(reader.result);
+      }
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open('GET', url);
+    xhr.responseType = 'blob';
+    xhr.send();
+  },
+  showEditarContato(){
+    document.getElementsByClassName('editar-contato-container')[0].style.display= 'block'
+    document.getElementsByClassName('editar-contato-container')[0].style.opacity= '90%'
+  }
   },
   beforeMount(){
     console.log(this.user),
@@ -293,7 +314,10 @@ export default {
         //img
 
     const pimg = localStorage.getItem("profileimg")
-    if(pimg){
+    const img = localStorage.getItem("profileImg")
+    if(img){
+      this.imageURL = "data:image/jpeg;base64,"+img
+    }else if(pimg){
       if(pimg.includes('av')){
         let av;
         switch (pimg) {
@@ -321,17 +345,16 @@ export default {
           case 'av7':
             av = "../img/avatar7.02252c9f.png"
             break;
-           case 'av8':
+          case 'av8':
             av = "../img/avatar8.60347a72.png"
             break;
           default:
             document.getElementsByClassName("img-pic")[0].src = localStorage.getItem("profileimg")
             break;
         }
-         document.getElementsByClassName("img-pic")[0].src = av
+        document.getElementsByClassName("img-pic")[0].src = av
       }
-     }
-
+    }
     })
   }
 }
