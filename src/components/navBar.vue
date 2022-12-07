@@ -12,9 +12,11 @@
                   @now-template2="this.$emit('now-template2')"
                 />
             </div>
+              <div class="midle-options">
+                <button @click="changeLanguage('pt-br')" class="bnt-languages">Protugues</button>
+                <button @click="changeLanguage('us-en')" class="bnt-languages">English</button>
+              </div>
               <div class="right-options">
-                  <button @click="changeLanguage('pt-br')" class="bnt-languages">Protugues</button>
-                  <button @click="changeLanguage('us-en')" class="bnt-languages">English</button>
                   <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
                     <ion-icon name="print" size="large"></ion-icon>
                     <a href="#" class="nav-link">IMPRIMIR</a>
@@ -163,7 +165,8 @@ export default {
   }
 }
 .bnt-languages{
-  width: 200px !important;
+  min-width: 80px;
+  padding: 10px;
   border-radius: 20px;
 }
 .bnt-languages:first-child{
@@ -197,9 +200,6 @@ export default {
   font-size: 16px;
 }
 
-.nav-item a:hover {
-  color: #3498db;
-}
 .dropdown-menu{
   z-index: 10;
   top: 40px;
@@ -220,7 +220,7 @@ export default {
 }
 
 .nav-item {
-    width: 200px;
+    width: 100%;
     text-align: center;
     justify-content: center;
 }
@@ -244,17 +244,29 @@ li{
 }
 .nav-item.is-right{
   position: relative;
-  width: 20%;
   display: flex;
-  left: -270px;
 }
 .right-options{
   position: relative;
-  width: 340px;
+  width: 100%;
   display: flex;
-  right: -270px;
+}
+
+.right-options a{
+  font-size: 11px;
+}
+.nav-item .nav-link{
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  border-radius: 25px;
 }
 .bnt-close{
   min-width: 40px;
+}
+.midle-options{
+  justify-content: center;
+  width: 100%;
+  display: flex;
 }
 </style>
