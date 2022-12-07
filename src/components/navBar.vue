@@ -19,17 +19,17 @@
               <div class="right-options">
                   <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
                     <ion-icon name="print" size="large"></ion-icon>
-                    <a href="#" class="nav-link">IMPRIMIR</a>
+                    <a href="#" class="nav-link">{{this.printText()}}</a>
                   </li>
                     <li @click="showDropDown(1)" class="nav-item" id="navbarDropdown">
                       <ion-icon name="information-circle-outline" size="large"></ion-icon>
                       <a class="nav-link" href="#" >
-                        INFORMAÇÕES
+                        {{this.informacoesText()}}
                       </a>
                       <div v-if="info" class="dropdown-menu" >
-                        <a v-on:click="about" class="dropdown-item" href="#">Sobre o Site</a>
-                        <a v-on:click="more" class="dropdown-item" href="#">Mais Exemplos</a>
-                        <a v-on:click="support" class="dropdown-item" href="#">Apoiar este Projeto</a>
+                        <a v-on:click="about" class="dropdown-item" href="#">{{this.sobreSiteText()}}</a>
+                        <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
+                        <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                       </div>
                     </li>
 
@@ -37,11 +37,11 @@
                     <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
                       <ion-icon name="paper" size="large"></ion-icon>
                       <a class="nav-link" href="#" >
-                        SOBRE MIM
+                        {{this.sobreSiteMim().toUpperCase()}}
                       </a>
                       <div v-if="myInfo" class="dropdown-menu" >
-                        <a v-on:click="aboutMe" class="dropdown-item">Sobre Mim</a>
-                        <a v-on:click="contact" class="dropdown-item">Entre em contato</a>
+                        <a v-on:click="aboutMe" class="dropdown-item">{{this.sobreSiteMim()}}</a>
+                        <a v-on:click="contact" class="dropdown-item">{{this.contatoText()}}</a>
                       </div>
                     </li>
                 </div>
@@ -72,6 +72,28 @@ export default {
       TemplateChooser
     },
     methods:{
+      exemplesText(){
+        return this.getLanguage() == 'us-en' ? "See more" : "Mais Exemplos"
+      },
+      suportText(){
+        return this.getLanguage() == 'us-en' ? "Suport the site" : "Apoiar este Projeto"
+      },
+      contatoText(){
+        return this.getLanguage() == 'us-en' ? "Send me an e-mail" : "Entre em contato"
+      },
+      informacoesText() {
+        return this.getLanguage() == 'us-en' ? "INFO" : "INFORMAÇÕES"
+      },
+      sobreSiteMim() {
+        return this.getLanguage() == 'us-en' ? "About me" : "Sobre Min"
+      },
+      sobreSiteText(){
+        return this.getLanguage() == 'us-en' ? "About this website" : "Sobre o site"
+      },
+      printText(){
+        return this.getLanguage() == 'us-en' ? "PRINTER" : "IMPRIMIR"
+      },
+      getLanguage(){ return localStorage.getItem('lng')},
       close(){
         this.$emit('close')
         this.show = false
@@ -114,13 +136,17 @@ export default {
         this.show = false
       },
       about(){
-        alert("We are not using cookies and I do not store any information in server-side")
+        localStorage.getItem('lng') == 'us-en' 
+          ? alert("We are not using cookies and I do not store any information in server-side")
+          : alert("Não usamos cookies e não guardamos nenhuma informação sua")
       },
       aboutMe(){
         window.open("https://www.linkedin.com/in/julianosoder/");  
       },
       support(){
-        alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba");
+        localStorage.getItem('lng') != 'us-en' 
+          ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba")
+          : alert("Support this project sending money or sharing it with friends")
       },
       more(){
         alert("Ainda em desenvolvimento.  Apoie este projeto ;)")
