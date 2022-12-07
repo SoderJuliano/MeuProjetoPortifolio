@@ -3,7 +3,7 @@
         <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}} 
             <img id='edit' src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
             <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
-        <div class="social-row" v-if="template=='template1'">
+        <div class="social-row" v-if="face">
             <img src="../icons/face.png" class="social-icon"/>
             <span class="data-container">{{face}}</span>
             <img @click="remove(face)" :id="`${face}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>

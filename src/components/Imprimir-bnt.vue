@@ -9,7 +9,7 @@ export default {
     name: 'imprimir-bnt',
     methods:{
         print(){
-             window.print()
+            window.print()
         },
     }
 }
