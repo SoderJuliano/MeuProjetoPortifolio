@@ -114,23 +114,19 @@ export default {
         this.show = false
       },
       about(){
-        alert("Este site foi desenvolvido para suprir a necessidade de montar cvs ou atualizar currículos de forma rápida, pratica e de forma gratuíta, gerando um cv bonito e profissional altamente configurável.");
-        alert("Este site não utiliza cookies e também não guarda nenhuma informação pessoal. Todas as suas informações estão no cache do navegador e no seu localStorage, para apagá-los, deve apagar os dados do navegador.")
-        alert("Na maioria dos navegadores utilizasse o atalho Cntrl+Shift+Del para limpar os dados de navegação.")
+        alert("We are not using cookies and I do not store any information in server-side")
       },
       aboutMe(){
-        alert("Sou desenvolvedor de software. Trabalho na industria privada como desenvolvedor desde fevereiro de 2021, porém minha caminhada como programador começou em 2015. Procuro apoiar o software livre com projetos como esse, e também busco responder dúvidas de outros programadores sempre que posso, tenho conta no stackoverflow. Sou formado em ADS pela Fael e em Ciência de Dados pela Uniasselvi.");
+        window.open("https://www.linkedin.com/in/julianosoder/");  
       },
       support(){
         alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba");
-        alert("Todo o trabalho emprenhado nestes projeto sempre traz custos, energia, equipamento, disposição, tempo etc... Ficarei muito contente em receber qualquer ajuda.")
-        alert("Este projeto está no github e pode ser baixado e alterado e mesmo utilizado de qualquer forma que lhê convém :)")
       },
       more(){
         alert("Ainda em desenvolvimento.  Apoie este projeto ;)")
       },
       contact(){
-        alert("Email de contato: juliano_soder@hotmail.com")
+        window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
         window.print()
