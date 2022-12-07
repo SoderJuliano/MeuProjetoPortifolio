@@ -273,7 +273,6 @@ data(){
       }else{
         this.imageURL = URL.createObjectURL(img.target.files[0])
         this.toDataURL(this.imageURL, function(data){
-          console.log(data.split("data:image/jpeg;base64,")[1])
           localStorage.setItem('profileImg', data.split("data:image/jpeg;base64,")[1]);
       });
       }
