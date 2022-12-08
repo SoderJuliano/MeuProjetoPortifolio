@@ -7,6 +7,7 @@
         :title2="modal.title2"
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
+        :user="user"
         @update-experiences="adicionarExperiencias"
         :language="language"
         :template="template"
@@ -14,6 +15,7 @@
         @adicionar-habilidade="adicionarNovaHabilidade"
         @update-name="updateName"
         @add-profissao="this.showModal('profissao')"
+        @update-user="updateUser"
   />
   <nav-bar  
     @close="close" 
@@ -58,6 +60,7 @@
         :imageURL="imageURL"
         @add-info="addInfo"
         @add-resumo="editarResumo"
+        @adicionar-habilidade="adicionarNovaHabilidade"
         class="template"
         @add-experiencia="editarExperiencias"
         @add-competencia="editarCompetencias"
@@ -66,7 +69,6 @@
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
         @add-SocialLink="this.showModal('socialLink')"
-
         :style="getStyle()"
         :mainColor=mainColor
         :sideColor=sideColor
@@ -120,12 +122,14 @@ export default {
         profession: '',
         resume: '',
         competence: [],
-        email : [],
-        phone : [],
-        adress: '',
         social : [],
         grade : [],
-        hability: ''
+        hability: '',
+        contact: {
+          email : [],
+          phone : [],
+          adress: '',
+        }
       },
       userExperiences: [],
     }
@@ -139,6 +143,10 @@ export default {
     Template2
   },
   methods: {
+    updateUser(userData){
+      // futuramente salvar todo esse objeto na base 
+      this.user = userData
+    },
     adicionarExperiencias(experiencias){
       this.userExperiences = experiencias
       console.log('experiencias aaaa')
@@ -457,9 +465,9 @@ export default {
             this.user.social = localStorage.getItem('redesociais') ? localStorage.getItem('redesociais').split(',') : ""
 
             if(contato){
-              this.user.email = contato.email
-              this.user.phone = contato.telefone
-              this.user.adress = contato.endereco
+              this.user.contact.email = contato.email
+              this.user.contact.phone = contato.telefone
+              this.user.contact.adress = contato.endereco
             }
 
             // grade

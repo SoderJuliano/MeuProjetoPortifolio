@@ -15,6 +15,7 @@
                 @add-competencia="$emit('add-competencia')"
                 @add-formacao="$emit('add-formacao')"
                 @add-habilidade="$emit('add-habilidade')"
+                @adicionar-habilidade="$emit('adicionar-habilidade')"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"
@@ -45,7 +46,7 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome"],
+    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade"],
     props:{
         mainColor: String,
         sideColor: String,

@@ -28,7 +28,7 @@
                     <input v-if="ptitle2" id="input-value-date2" type="date">
                     <br v-if="title2"><br v-if="title2">
                     <span v-if="ptitle3" style="margin-left: -100px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
-                    <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" placeholder="faca uma descricao resumida"></textarea>
+                    <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
                     
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
@@ -79,10 +79,10 @@ class Job {
         this.dateHired = localStorage.getItem('jobHired');
         this.dateFired = localStorage.getItem('jobFired');
     }
-  }
-  function getNewJob(){
+}
+function getNewJob(){
     return new Job();
-  }
+}
 
 export default {
     name: 'modal-input',
@@ -94,11 +94,7 @@ export default {
             ptitle2: '',
             ptitle3: '',
             jobs: this.experiences,
-            contato: {
-                email: [],
-                telefone: [],
-                endereco: '',
-            }
+            userData: this.user
         }
     },
     props:{
@@ -111,9 +107,13 @@ export default {
         placeholder2: String,
         template: Number,
         language: String,
+        user: Object,
     },
-    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences"],
+    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        getJobDescriptionPlaceholderText(){
+            return this.language == 'pt-br' ? "Faça uma descrição resumida" : "Make a short description"
+        },
         getRua(){
             return this.language == 'pt-br' ? this.string[0].street : this.string[1].street
         },
@@ -135,11 +135,12 @@ export default {
         proximo(title){
             this.changePage();
             if(title == "Email"){
+                
                 const email = document.getElementById('modal-input').value
                 const telefone = document.getElementById('modal-input2').value
 
-                this.contato.email.push(email ? email : '')
-                this.contato.telefone.push(telefone ? telefone : '')
+                this.userData.contact.phone = telefone ? [telefone] : ''
+                this.userData.contact.email = email ? [email] : ''
                 this.ptitle = 'Endereco'
             }
             else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
@@ -150,8 +151,6 @@ export default {
             }else{
                 localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
                 localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
-               /*  this.job.dateHired = document.getElementById('input-value-date1').value
-                this.job.dateFired = document.getElementById('input-value-date2').value */
 
                 this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
@@ -275,13 +274,19 @@ export default {
             const estado = document.getElementById("modal-input5").value
             const pais = document.getElementById("modal-input6").value
 
-            this.contato.endereco += rua ? rua+", " : ""
-            this.contato.endereco += numero ? numero+", " : ""
-            this.contato.endereco += bairro ? bairro+", " : ""
-            this.contato.endereco += cidade ? cidade+", " : ""
-            this.contato.endereco += estado ? estado+", " : ""
-            this.contato.endereco += pais ? pais+"." : "."
-            localStorage.setItem('contato', JSON.stringify(this.contato))
+            let endereco = "";
+            endereco += rua ? rua+", " : ""
+            endereco += numero ? numero+", " : ""
+            endereco += bairro ? bairro+", " : ""
+            endereco += cidade ? cidade+", " : ""
+            endereco += estado ? estado+", " : ""
+            endereco += pais ? pais+"." : "."
+
+            this.userData.contact.adress = endereco
+
+            localStorage.setItem('contato', JSON.stringify(this.userData.contact))
+            // cabe uma refatoração para simplificar o código centralizando tudo em userData
+            this.$emit("update-user", this.userData)
         },
         adicionarJobs(){
             const job = getNewJob();

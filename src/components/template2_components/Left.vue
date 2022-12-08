@@ -26,6 +26,7 @@
         />
          <Habilidade
             @add-habilidade="$emit('add-habilidade')"
+            @adicionar-habilidade="$emit('adicionar-habilidade')"
             class="template-data"
             :titulo="titles.habilidades"
             :language="language"
@@ -66,7 +67,7 @@ export default {
         sideColor: String,
         language: String,
     },
-    emits:["add-resumo", "add-habilidade"]
+    emits:["add-resumo", "add-habilidade", "adicionar-habilidade"]
 }
 </script>
 <style scoped>

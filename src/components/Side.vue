@@ -162,7 +162,7 @@ export default {
       //facebook
       const redesociais = localStorage.getItem("redesociais");
       if (redesociais) {
-        let arr = ls.split(",");
+        let arr = redesociais.split(",");
         arr.forEach((item) => {
           if (item.includes("twitter")) {
             this.social.twitter = item;
