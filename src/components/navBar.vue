@@ -3,8 +3,8 @@
         <nav class="navbar">
             <div class="nav-item is-right">
                 <img id="showMenu" v-if="show==false" @click="showMenu"  src="../icons/menustatic.png" alt="menu">
-                 <button class="bnt-close" v-else @click="close">
-                   X
+                <button class="bnt-close" v-else @click="close">
+                    X
                 </button>
                 <template-chooser 
                   :template="template"

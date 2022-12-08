@@ -273,7 +273,9 @@ data(){
       }else{
         this.imageURL = URL.createObjectURL(img.target.files[0])
         this.toDataURL(this.imageURL, function(data){
-          localStorage.setItem('profileImg', data.split("data:image/jpeg;base64,")[1]);
+          console.log("Vou salvar o arquivo "+data)
+          localStorage.setItem('profileImg', data.split("data:image/")[1]);
+          console.log("Eu salvei o arquivo " + localStorage.getItem('profileImg'));
       });
       }
       
@@ -315,7 +317,7 @@ data(){
     const pimg = localStorage.getItem("profileimg")
     const img = localStorage.getItem("profileImg")
     if(img){
-      this.imageURL = "data:image/jpeg;base64,"+img
+      this.imageURL = "data:image/"+img
     }else if(pimg){
       if(pimg.includes('av')){
         let av;
