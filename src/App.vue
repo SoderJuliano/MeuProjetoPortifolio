@@ -182,6 +182,10 @@ export default {
       this.font = fnt
     },
     addInfo(){
+      setTimeout(() => {
+        document.getElementById('modal-input').value = this.user.contact?.email != 'Set your email @test.com' ? this.user.contact?.email : '';
+        document.getElementById('modal-input2').value = this.user.contact?.phone != 'Phone number' ? this.user.contact?.phone : '';
+      }, 500);
       this.showModal('email')
     },
     editarExperiencias(){
@@ -525,10 +529,10 @@ export default {
       },
       setToEn(){
         if(this.contatoIsEmpty()){
-          this.user.email = [strings[1].emailSpan],
-          this.user.phone = [strings[1].phone],
-          this.user.adress = strings[1].address,
-          this.user.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
+          this.user.contact.email = [strings[1].emailSpan],
+          this.user.contact.phone = [strings[1].phone],
+          this.user.contact.adress = strings[1].address,
+          this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
         if(this.aboutIsEmpty()){
           this.user.name = strings[1].yname,
@@ -538,10 +542,10 @@ export default {
       }, 
       setToPT(){
         if(this.contatoIsEmpty()){
-          this.user.email = [strings[0].emailSpan],
-          this.user.phone = [strings[0].phone],
-          this.user.adress = strings[0].address,
-          this.user.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
+          this.user.contact.email = [strings[0].emailSpan],
+          this.user.contact.phone = [strings[0].phone],
+          this.user.contact.adress = strings[0].address,
+          this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
         if(this.aboutIsEmpty()){
           this.user.name = strings[0].yname,
