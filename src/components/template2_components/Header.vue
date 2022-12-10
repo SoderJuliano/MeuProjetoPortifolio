@@ -8,9 +8,9 @@
             <div @click="$refs.imgInput.click()" class="pic">
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
-            <h2>{{this.user.name}}</h2>
+            <h2>{{this.user.name ? this.user.name : language == 'pt-br' ? "Seu nome" : "Your name"}}</h2>
              <img src="../../icons/editar.png" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
-            <h3>{{this.user.profession}}</h3>   
+            <h3>{{this.user.profession ? this.user.profession : language == 'pt-br' ? "Sua profissão" : "Your profession"}}</h3>   
 
             <input type="file"
                 id="input"
@@ -28,6 +28,7 @@ export default{
     props:{
         imgURL: String,
         mainColor: String,
+        language: String,
         user: Object,
     },
     data(){
