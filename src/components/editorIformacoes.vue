@@ -245,8 +245,7 @@ export default {
             this.ptitle = '';
             this.ptitle2 = '';
             this.cancelar()
-            //const tt = this.title
-            /* this.template == "template1" || tt != "Nome" ? window.location.reload() : */  document.getElementById('modal-input') ? document.getElementById('modal-input').value = '' : ""
+            document.getElementById('modal-input') ? document.getElementById('modal-input').value = '' : ""
         },
         addSocialLink(){
             let ls = localStorage.getItem('redesociais')
@@ -254,9 +253,6 @@ export default {
             ls ? ls.includes(rs) ? alert('Esta rede ja foi insirida') : localStorage.setItem('redesociais' , ls+","+rs) : localStorage.setItem('redesociais', rs)
         },
         adicionarHabilidade(){
-            /* let h = localStorage.getItem('hability')
-            const nh = document.getElementById('modal-input').value
-            h ? localStorage.setItem("hability", h+", "+nh) : localStorage.setItem("hability", nh)  */
             localStorage.setItem("hability", document.getElementById('modal-input').value)
             this.$emit('adicionar-habilidade', document.getElementById('modal-input').value)
         },
@@ -317,6 +313,7 @@ export default {
             this.ptitle = '';
             this.ptitle2 = '';
             this.ptitle3 = '';
+            document.getElementById('modal-input').value = ""
         },
         changePage(){
             document.getElementsByClassName("body-modal-container")[0].style.opacity = "0";

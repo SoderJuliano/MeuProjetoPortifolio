@@ -577,11 +577,6 @@ export default {
   },
   mounted(){
     this.languageIsEN() ? this.setToEn() : this.setToPT();
-    
-        
-       /*  this.user.social = [],
-        this.user.grade = [],
-        this.user.hability = this.languageIsEN() ? strings[1].ability : strings[0].ability */
   }
 }
 </script>
