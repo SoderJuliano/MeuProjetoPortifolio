@@ -2,11 +2,11 @@
     <div class="main-container">
         <div :style="getStyle()" class="page-header">
             <div style="width: 100%; text-align: center;">
-                <span class="name-title">{{u.name}}</span>
+                <span class="name-title">{{u.name ? u.name : language == 'pt-br' ? 'Seu nome' : 'Your name'}}</span>
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-nome')"/>
             </div>
             <div style="width: 100%; text-align: center; padding-top: 20px;">
-                <span  @input="newProfession" class="profession" id="profession-span">{{u.profession}}</span>
+                <span  @input="newProfession" class="profession" id="profession-span">{{u.profession ? u.profession : language == 'pt-br' ? 'Sua profissão' : 'Your profession'}}</span>
                 <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-profissao')"/>
             </div>
                 

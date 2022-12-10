@@ -5,6 +5,7 @@
                 :imgURL="imgURL"
                 :mainColor="mainColor"
                 :user="user"
+                :language="language"
                 @add-nome="$emit('add-nome')"
               />
         </div>
