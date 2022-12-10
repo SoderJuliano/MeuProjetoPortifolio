@@ -162,10 +162,22 @@ export default {
             console.log(title);
             //title as string
             switch(title) {
-                case 'Nome':
+                case 'Digite nome':
                     this.registerValues('user-name', document.getElementById('modal-input').value);
+                    this.$emit("update-name", document.getElementById('modal-input').value)
                     this.template == 1 ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
-                    : (this.$emit("update-name", document.getElementById('modal-input').value),  this.$emit('add-profissao'))
+                    : setTimeout(() => {
+                        this.$emit('add-profissao')    
+                    }, 800);
+                    break;
+                case 'Type your name':
+                    this.registerValues('user-name', document.getElementById('modal-input').value);
+                    this.$emit("update-name", document.getElementById('modal-input').value)
+                    this.template == 1 ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
+                    : setTimeout(() => {
+                        this.$emit('add-profissao')    
+                    }, 800);
+                    
                     break;
                 case 'Sua profissão':
                     this.registerValues('profession', document.getElementById('modal-input').value);
@@ -174,9 +186,11 @@ export default {
                     this.cancelar();
                     break;
                 case 'Your profession':
+                    this.userData.profession = document.getElementById('modal-input').value
+                    this.$emit("update-user", this.userData)
                     this.registerValues('profession', document.getElementById('modal-input').value);
                     this.template == 1 ? $("#profession-span").text(document.getElementById('modal-input').value) 
-                    : this.$emit("add-profissao", document.getElementById('modal-input').value)
+                    : ''
                     this.cancelar();
                     break;
                 case 'Nova competência':
