@@ -7,6 +7,7 @@
         :title2="modal.title2"
         :placeholder2="modal.placeholder2"
         :experiences="userExperiences"
+        :user="user"
         @update-experiences="adicionarExperiencias"
         :language="language"
         :template="template"
@@ -14,6 +15,7 @@
         @adicionar-habilidade="adicionarNovaHabilidade"
         @update-name="updateName"
         @add-profissao="this.showModal('profissao')"
+        @update-user="updateUser"
   />
   <nav-bar  
     @close="close" 
@@ -58,6 +60,7 @@
         :imageURL="imageURL"
         @add-info="addInfo"
         @add-resumo="editarResumo"
+        @adicionar-habilidade="adicionarNovaHabilidade"
         class="template"
         @add-experiencia="editarExperiencias"
         @add-competencia="editarCompetencias"
@@ -66,7 +69,6 @@
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
         @add-SocialLink="this.showModal('socialLink')"
-
         :style="getStyle()"
         :mainColor=mainColor
         :sideColor=sideColor
@@ -120,12 +122,14 @@ export default {
         profession: '',
         resume: '',
         competence: [],
-        email : [],
-        phone : [],
-        adress: '',
         social : [],
         grade : [],
-        hability: ''
+        hability: '',
+        contact: {
+          email : [],
+          phone : [],
+          adress: '',
+        }
       },
       userExperiences: [],
     }
@@ -139,6 +143,10 @@ export default {
     Template2
   },
   methods: {
+    updateUser(userData){
+      // futuramente salvar todo esse objeto na base 
+      this.user = userData
+    },
     adicionarExperiencias(experiencias){
       this.userExperiences = experiencias
       console.log('experiencias aaaa')
@@ -174,6 +182,10 @@ export default {
       this.font = fnt
     },
     addInfo(){
+      setTimeout(() => {
+        document.getElementById('modal-input').value = this.user.contact?.email != 'Set your email @test.com' ? this.user.contact?.email : '';
+        document.getElementById('modal-input2').value = this.user.contact?.phone != 'Phone number' ? this.user.contact?.phone : '';
+      }, 500);
       this.showModal('email')
     },
     editarExperiencias(){
@@ -222,7 +234,7 @@ export default {
                     this.showDivModal()
                     break;
                 case 'competencias':
-                    this.modal.mainTitle = this.languageIsEN() ? strings[1].skill : strings[0].skill
+                    this.modal.mainTitle = this.languageIsEN() ? 'Competence' : 'Competencia'
                     this.modal.title1 = this.languageIsEN() ? strings[1].nskill : strings[0].nskill
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = this.user.competence
@@ -457,9 +469,9 @@ export default {
             this.user.social = localStorage.getItem('redesociais') ? localStorage.getItem('redesociais').split(',') : ""
 
             if(contato){
-              this.user.email = contato.email
-              this.user.phone = contato.telefone
-              this.user.adress = contato.endereco
+              this.user.contact.email = contato.email
+              this.user.contact.phone = contato.telefone
+              this.user.contact.adress = contato.endereco
             }
 
             // grade
@@ -517,10 +529,10 @@ export default {
       },
       setToEn(){
         if(this.contatoIsEmpty()){
-          this.user.email = [strings[1].emailSpan],
-          this.user.phone = [strings[1].phone],
-          this.user.adress = strings[1].address,
-          this.user.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
+          this.user.contact.email = [strings[1].emailSpan],
+          this.user.contact.phone = [strings[1].phone],
+          this.user.contact.adress = strings[1].address,
+          this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
         if(this.aboutIsEmpty()){
           this.user.name = strings[1].yname,
@@ -530,10 +542,10 @@ export default {
       }, 
       setToPT(){
         if(this.contatoIsEmpty()){
-          this.user.email = [strings[0].emailSpan],
-          this.user.phone = [strings[0].phone],
-          this.user.adress = strings[0].address,
-          this.user.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
+          this.user.contact.email = [strings[0].emailSpan],
+          this.user.contact.phone = [strings[0].phone],
+          this.user.contact.adress = strings[0].address,
+          this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
         if(this.aboutIsEmpty()){
           this.user.name = strings[0].yname,
@@ -565,11 +577,6 @@ export default {
   },
   mounted(){
     this.languageIsEN() ? this.setToEn() : this.setToPT();
-    
-        
-       /*  this.user.social = [],
-        this.user.grade = [],
-        this.user.hability = this.languageIsEN() ? strings[1].ability : strings[0].ability */
   }
 }
 </script>
