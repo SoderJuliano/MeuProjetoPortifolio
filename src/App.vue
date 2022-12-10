@@ -234,7 +234,7 @@ export default {
                     this.showDivModal()
                     break;
                 case 'competencias':
-                    this.modal.mainTitle = this.languageIsEN() ? strings[1].skill : strings[0].skill
+                    this.modal.mainTitle = this.languageIsEN() ? 'Competence' : 'Competencia'
                     this.modal.title1 = this.languageIsEN() ? strings[1].nskill : strings[0].nskill
                     this.modal.placeholder1 = this.languageIsEN() ? strings[1].tHere : strings[0].tHere
                     this.modal.list = this.user.competence
