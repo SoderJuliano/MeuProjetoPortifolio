@@ -316,9 +316,9 @@ export default {
           document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
           document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
           document.getElementsByClassName("pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
-           document.getElementsByClassName("pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
-            document.getElementsByClassName("pic")[0].style['border-right'] = '5px solid rgb(0, 158, 61)';
-             document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
+          document.getElementsByClassName("pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
+          document.getElementsByClassName("pic")[0].style['border-right'] = '5px solid rgb(0, 158, 61)';
+          document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
         }
         else if(p.target.textContent.includes('pag-')==true){
           let i = 0;
@@ -491,7 +491,7 @@ export default {
             }
 
         },
-      getUserProfileIMG(){
+        getUserProfileIMG(){
           const pimg = localStorage.getItem("profileimg")
           if(pimg && pimg.includes('av')){
               let av;

@@ -81,15 +81,7 @@
       v-if="exibirSocial"
       class="template-data"
       backgroundColor="#808080"
-      :face="social.facebook"
-      :lin="social.lin"
-      :twitt="social.twitter"
-      :you="social.youtube"
-      :stof="social.stackoverflow"
-      :git="social.github"
-      :insta="social.instagram"
-      :other="social.other"
-      :user="social"
+      :user="user"
       template="template1"
       :titulo="titles.social"
       :language="language"
@@ -128,17 +120,7 @@ export default {
       exibirFormacao: true,
       exibirHabilidade: true,
       exibirSocial: true,
-      usuario: this.user,
-      social: {
-        facebook: "",
-        lin: "",
-        twitter: "",
-        youtube: "",
-        stackoverflow: "",
-        github: "",
-        instagram: "",
-        other: [],
-      },
+      usuario: this.user
     };
   },
   methods: {
@@ -156,32 +138,6 @@ export default {
       const habilityStorage = localStorage.getItem("hability");
       if (habilityStorage) {
         this.hability = habilityStorage;
-      }
-
-      //social in links
-      //facebook
-      const redesociais = localStorage.getItem("redesociais");
-      if (redesociais) {
-        let arr = redesociais.split(",");
-        arr.forEach((item) => {
-          if (item.includes("twitter")) {
-            this.social.twitter = item;
-          } else if (item.includes("github")) {
-            this.social.github = item;
-          } else if (item.includes("youtube")) {
-            this.social.youtube = item;
-          } else if (item.includes("stackoverflow")) {
-            this.social.stackoverflow = item;
-          } else if (item.includes("linkedin")) {
-            this.social.linkedin = item;
-          } else if (item.includes("instagram")) {
-            this.social.instagram = item;
-          } else if (item.includes("facebook")) {
-            this.social.facebook = item;
-          } else {
-            this.social.other.push(item);
-          }
-        });
       }
     },
     getStyle() {
@@ -236,7 +192,6 @@ export default {
     this.$nextTick(function () {
       // Code that will run only after the
       // entire view has been rendered
-      //img
 
       const pimg = localStorage.getItem("profileimg");
       const img = localStorage.getItem("profileImg");

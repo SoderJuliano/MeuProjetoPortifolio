@@ -265,6 +265,8 @@ export default {
             let ls = localStorage.getItem('redesociais')
             const rs = document.getElementById('modal-input').value
             ls ? ls.includes(rs) ? alert('Esta rede ja foi insirida') : localStorage.setItem('redesociais' , ls+","+rs) : localStorage.setItem('redesociais', rs)
+            ls.includes(rs) ? "" : this.userData.social.push(rs)
+            this.$emit("update-user", this.userData)
         },
         adicionarHabilidade(){
             localStorage.setItem("hability", document.getElementById('modal-input').value)
