@@ -4,7 +4,7 @@
             <img id='edit' src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
             <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
     </div>
-    <div :class="template == 'template-2' ? templateClassItemContainer : 'social-row'">
+    <div :class="template == 'template2' ? templateClassItemContainer : 'social-row'">
         <div :class="templateClassItem" v-for="(item, index) in this.user.social " :key="index" >
             <img v-if="item.includes('github')" src="../icons/git.png" class="social-icon"/>
             <img v-if="item.includes('youtube')" src="../icons/youtube.png" class="social-icon"/>
@@ -19,8 +19,6 @@
             <img @click="remove(item)" :id="`${item}`" class="remove-bnt-delete" src="../icons/animados/lixeira.gif" alt="remove-bnt"/>
         </div>
     </div>
-    <div :id="`${face}`" v-if="face" class="social-row">
-</div>
 </template>
 <script>
 export default {
@@ -107,7 +105,7 @@ export default {
 .social-row{
     padding: 5px;
     width: 80%;
-    margin-left: 1%;
+    margin-left: 10%;
 }
 .social-row span{
     padding-top: 10px;
