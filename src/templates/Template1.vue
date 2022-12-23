@@ -18,6 +18,7 @@
         @add-nome="$emit('add-nome')"
         @add-profissao="$emit('add-profissao')"
         @click="closeEditarContato"
+        :fontColor=fontColor
         :cor="mainColor"
         :user="user"
         :userExperiences="uExperiences"
@@ -56,6 +57,7 @@ export default {
   props:{
     mainColor: String,
     sideColor : String,
+    fontColor: String,
     user: Object,
     userExperiences: Array,
     language: String,

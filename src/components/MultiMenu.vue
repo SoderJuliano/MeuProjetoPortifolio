@@ -49,7 +49,7 @@ export default {
     }
 }
 @media only screen and(max-width:1000px) {
-     .multiMenu-options{
+    .multiMenu-options{
         height: 150px;
         overflow: scroll;
         width: 80%;

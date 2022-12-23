@@ -52,6 +52,7 @@
         :style="getStyle()"
         :mainColor=mainColor
         :sideColor=sideColor
+        :fontColor=fontColor
         :user="user"
         :userExperiences="userExperiences"
     />
@@ -71,6 +72,7 @@
         :style="getStyle()"
         :mainColor=mainColor
         :sideColor=sideColor
+        :fontColor=fontColor
         :user="user"
         :userExperiences="userExperiences"
     />
@@ -80,6 +82,8 @@
         @font-changed="setFont"
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
+        @change-main-color="changeMainColor"
+        @change-font-color="changeFontColor"
       />
     </div>
     
@@ -108,6 +112,7 @@ export default {
       font: 'Oswald',
       fontSize: '15px',
       fontSizeTitles: '17px',
+      fontColor: 'black',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
       modal: {
@@ -145,6 +150,12 @@ export default {
     Template2
   },
   methods: {
+    changeFontColor(color){
+      this.fontColor = color
+    },
+    changeMainColor(color){
+      this.mainColor = color
+    },
     updateUser(userData){
       // futuramente salvar todo esse objeto na base 
       this.user = userData
@@ -433,11 +444,15 @@ export default {
     getColors(){
       const mc = localStorage.getItem("mainColor")
       const sc = localStorage.getItem("sideColor")
+      const fntc = localStorage.getItem("fontColor")
       if(mc){
         this.mainColor = mc
       }
       if(sc){
         this.sideColor = sc
+      }
+      if(fntc){
+        this.fontColor = fntc
       }
     },
         getContatoDataPage(){ 

@@ -22,6 +22,7 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
+    fontColor: String,
     template: Number,
     sideColor: String,
   },
@@ -42,11 +43,12 @@ export default {
         document.getElementById("edit-com").style.display = "block" : ''
       },
       getStyle(){
-        return this.template == 1 ?
-          {
-              'background-color': `${this.cor}`
+        return this.template == 1 
+        ? {
+            'background-color': `${this.cor}`,
+            'color': `${this.fontColor}`
           }
-          : {
+        : {
             'border-bottom': '1px solid '+this.sideColor+ '!important',
             'margin-left': '10px !important',
             'padding-left': '0px !important'
