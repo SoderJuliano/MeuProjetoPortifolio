@@ -22,7 +22,7 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
-    template: String,
+    template: Number,
     sideColor: String,
   },
   data(){
@@ -33,8 +33,8 @@ export default {
   },
   emits: ['add-competencia'],
   methods:{
-     hovert(){
-       this.template == "template2" ?
+      hovert(){
+        this.template == "template2" ?
         document.getElementById("edit-com").style.display = "none" : ''
       },
       leavehovert(){

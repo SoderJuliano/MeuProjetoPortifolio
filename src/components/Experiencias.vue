@@ -24,7 +24,7 @@ export default {
   name: 'Experiencias',
   emits: ['add-experiencia'],
   props:{
-    template: String,
+    template: Number,
     titulo: Array,
     language: String,
     cor: String,

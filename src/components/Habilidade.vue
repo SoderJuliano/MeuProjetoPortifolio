@@ -32,7 +32,7 @@ export default {
     titulo: Array,
     backgroundColor: String,
     user: Object,
-    template: String,
+    template: Number,
     sideColor: String,
   },
   methods:{

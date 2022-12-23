@@ -5,9 +5,9 @@
         <img v-if="this.template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </p>
       <div class="resumo-container">
-         <ion-icon name="book" size="large"></ion-icon>
-         <span @input="saveContent" id='resume' :class="datacontainerpage">{{user.resume}}</span>
-         </div>
+          <ion-icon name="book" size="large"></ion-icon>
+          <span @input="saveContent" id='resume'>{{user.resume}}</span>
+          </div>
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
-    template: String,
+    template: Number,
     sideColor: String,
     language: String,
   },
@@ -66,9 +66,6 @@ export default {
 }
 .resumo:hover .editar-animado-resumo{
   display: block;
-} 
-.resumo-container:hover .editar{
- 
 } 
 .template1-resumo-titulo{
   align-self: center;

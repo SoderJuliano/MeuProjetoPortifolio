@@ -25,7 +25,7 @@ export default {
     props:{
         language: String,
         titulo: Array,
-        template: String,
+        template: Number,
         user: Object,
         sideColor: String,
     },

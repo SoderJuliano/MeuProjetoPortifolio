@@ -24,7 +24,7 @@
 export default {
     name: "Social",
     props:{
-        template: String,
+        template: Number,
         titulo: Array,
         language: String,
         backgroundColor: String,

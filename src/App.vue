@@ -74,13 +74,15 @@
         :user="user"
         :userExperiences="userExperiences"
     />
-    <Footer 
-      class="footer"
-      :template="template"
-      @font-changed="setFont"
-      @now-template1="change_template(1)"
-      @now-template2="change_template(2)"
-    />
+    <div class="footer">
+      <Footer 
+        :template="template"
+        @font-changed="setFont"
+        @now-template1="change_template(1)"
+        @now-template2="change_template(2)"
+      />
+    </div>
+    
     <div class="right">
     </div>
   </div>
