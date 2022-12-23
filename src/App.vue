@@ -140,8 +140,8 @@ export default {
     MultiMenu,
     Footer,
     navBar,
-    Template1,
     editorInformacoes,
+    Template1,
     Template2
   },
   methods: {
@@ -572,7 +572,7 @@ export default {
     this.font = localStorage.getItem('font')
     : this.font = 'Oswald'
 
-    this.template = localStorage.getItem("template") ? localStorage.getItem('template') : 1;
+    this.template = localStorage.getItem("template") ? parseInt(localStorage.getItem('template')) : 1;
 
     this.language = localStorage.getItem("lng") ? localStorage.getItem('lng') : "pt-br";
 

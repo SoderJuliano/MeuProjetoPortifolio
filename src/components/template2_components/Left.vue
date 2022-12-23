@@ -5,26 +5,26 @@
             :titulo="titles.resumo"
             :language="language"
             @add-resumo="$emit('add-resumo')"
-            template="template2"
+            template=2
             :sideColor="sideColor"
         />
         <Competencias 
             :user="user"
             :titulo="titles.competencias"
             :language="language"
-            template="template2"
+            template=2
             @add-competencia="$emit('add-competencia')"
             :sideColor="sideColor"
         />
         <Formacao 
             :user="user"
-            template="template2"
+            template=2
             @add-formacao="$emit('add-formacao')"
             :sideColor="sideColor"
             :titulo="titles.formacao"
             :language="language"
         />
-         <Habilidade
+        <Habilidade
             @add-habilidade="$emit('add-habilidade')"
             @adicionar-habilidade="$emit('adicionar-habilidade')"
             class="template-data"
@@ -32,7 +32,7 @@
             :language="language"
             backgroundColor="#808080"
             :hability="hability"
-            template="template2"
+            template=2
             :user="user"
             :sideColor="sideColor"
         />

@@ -2,15 +2,15 @@
     <div class="container" :style="getStyle()">
         <Contact
             @add-info="$emit('add-info')"
-            template="template2"
+            template=2
             :user="user"
             :sideColor="sideColor"
             :language="language"
             :titulo="titulo.contato"
-         />
+        />
         <Social 
             @add-SocialLink="$emit('add-SocialLink')"
-            template="template2"
+            template=2
             :language="language"
             :titulo="titulo.social"
             :user="userData"
@@ -18,7 +18,7 @@
         />
         <Experiencias
             @add-Experiencia="$emit('add-Experiencia')"
-            template="template2"
+            template=2
             :language="language"
             :titulo="titulo.experiencias"
             :user="userData"

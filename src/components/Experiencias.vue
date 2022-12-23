@@ -2,7 +2,7 @@
   <div :class="tstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img id="edit-exp" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
-        <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div :id="item.function" v-for="(item, index) in experiences.slice().reverse() " :key="index" :class="cstyle">
         <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
@@ -37,17 +37,17 @@ export default {
       jobEnd: '',
       lasJobHired: '',
       lastJobEnd: '',
-      tstyle: 'experiences-'+this.template+'-title',
-      cstyle: this.template+'-experiencias-container'
+      tstyle: 'experiences-template'+this.template+'-title',
+      cstyle: 'template'+this.template+'-experiencias-container'
     }
   },
   methods:{
       hovert(){
-        this.template == "template2" ?
+        this.template == 2 ?
         document.getElementById("edit-exp").style.display = "none" : ''
       },
       leavehovert(){
-        this.template == "template2" ?
+        this.template == 2 ?
         document.getElementById("edit-exp").style.display = "block" : ''
       },
       getStyle(){

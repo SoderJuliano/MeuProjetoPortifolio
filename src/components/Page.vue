@@ -16,7 +16,7 @@
             class="data-container"
             :cor="cor"
             :user="u"
-            template="template1"
+            template=1
             :titulo="titles.resumo"
             :language="language"
         />
@@ -25,7 +25,7 @@
             class="data-container"
             :cor="cor"
             :user="u"
-            template="template1"
+            template=1
             :titulo="titles.competencias"
             :language="language"
         />
@@ -34,7 +34,7 @@
             class="data-container"
             :cor="cor"
             :experiences="userExperiences"
-            template="template1"
+            template=1
             :titulo="titles.experiencias"
             :language="language"
         />

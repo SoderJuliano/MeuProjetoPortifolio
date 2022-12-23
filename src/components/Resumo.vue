@@ -2,7 +2,7 @@
   <div @mouseover="hovert" @mouseleave="leavehovert" class="resumo">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img id="edit-re" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
-        <img v-if="this.template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
+        <img v-if="this.template==2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </p>
       <div class="resumo-container">
           <ion-icon name="book" size="large"></ion-icon>
@@ -16,7 +16,7 @@ export default {
   name: 'Resumo',
   data(){
     return {
-      tstyle: this.template+"-resumo-titulo",
+      tstyle: "template"+this.template+"-resumo-titulo",
     }
   },
   props:{
@@ -31,15 +31,15 @@ export default {
   emits:['add-resumo'],
   methods:{
       hovert(){
-        this.template == "template2" ?
+        this.template == 2 ?
         document.getElementById("edit-re").style.display = "none" : ''
       },
       leavehovert(){
-        this.template == "template2" ?
+        this.template == 2 ?
         document.getElementById("edit-re").style.display = "block" : ''
       },
      getStyle(){ //console.log(this.cor +' corrr')
-        return this.template == "template2" ?
+        return this.template == 2 ?
           {
               'text-align': 'start',
               'font-weight': 'bolder !important',

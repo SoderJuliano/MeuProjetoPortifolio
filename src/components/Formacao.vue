@@ -2,7 +2,7 @@
   <div :class="conteinerstyle">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
-         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
+         <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
           <img src="../icons/livros.png" class="formacao-icon"/>
@@ -19,10 +19,10 @@ export default {
   data(){
     return{
       mygrade: this.user.grade,
-      tstyle: this.template+"-formacao-title",
-      containerstyle: this.template+"-formacao",
-      conteinerdata: this.template+"-formacao-container",
-      remove: this.template+"-remove-bnt"
+      tstyle: "template"+this.template+"-formacao-title",
+      containerstyle: "template"+this.template+"-formacao",
+      conteinerdata: "template"+this.template+"-formacao-container",
+      remove: "template"+this.template+"-remove-bnt"
     }
   },
   props:{
@@ -39,7 +39,7 @@ export default {
       localStorage.setItem('grade', this.mygrade)
     },
     getStyle(){
-      return this.template == "template1" ? {"background-color": this.backgroundColor} : {"border-bottom": "1px solid "+this.sideColor}
+      return this.template == 1 ? {"background-color": this.backgroundColor} : {"border-bottom": "1px solid "+this.sideColor}
     }
   },
   /* Este e outro jeito de observar mudancas em um objeto e executar funcoes  

@@ -39,7 +39,7 @@ export default {
     },
     props:{
        // mainColor:String
-       template: Number,
+        template: Number,
     },
     emits:["font-changed", "now-template2", "now-template1"],
     methods:{

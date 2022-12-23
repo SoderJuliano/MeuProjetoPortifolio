@@ -60,7 +60,7 @@
       :titulo="titles.formacao"
       :backgroundColor="cor"
       :user="usuario"
-      template="template1"
+      template=1
       :language="language"
     />
 
@@ -72,7 +72,7 @@
       :titulo="titles.habilidades"
       backgroundColor="#808080"
       :user="user"
-      template="template1"
+      template=1
       :language="language"
     />
 
@@ -82,7 +82,7 @@
       class="template-data"
       backgroundColor="#808080"
       :user="user"
-      template="template1"
+      template=1
       :titulo="titles.social"
       :language="language"
     />

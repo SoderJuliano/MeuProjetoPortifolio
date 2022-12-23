@@ -35,7 +35,7 @@ export default {
             email: [],
             phone: [],
             adress: '', */
-            tstyle: "contact-"+this.template,
+            tstyle: "contact-template"+this.template,
         }
     },
     /* mounted(){
