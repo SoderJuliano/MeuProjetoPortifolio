@@ -4,7 +4,7 @@
         <img src="../icons/editar.png" alt="editar" class="editar-contact"/>
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
         </p><br>
-        <div v-for="(item, index) in this.user.contact.email " :key="index" class="data-container">
+        <div v-for="(item, index) in this.user.contact.email" :key="index" class="data-container">
             <img v-if="item" src="../icons/envelope.svg" class="email-icon"/>
             <span class="email-text">{{item}}</span>
         </div>
