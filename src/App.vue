@@ -472,8 +472,8 @@ export default {
 
             if(contato){
               this.user.contact.email = contato.email
-              this.user.contact.phone = contato.telefone
-              this.user.contact.adress = contato.endereco
+              this.user.contact.phone = contato.phone
+              this.user.contact.adress = contato.adress
             }
 
             // grade
