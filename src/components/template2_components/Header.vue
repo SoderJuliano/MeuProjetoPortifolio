@@ -9,7 +9,7 @@
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
             <h2>{{this.user.name ? this.user.name : language == 'pt-br' ? "Seu nome" : "Your name"}}</h2>
-             <img src="../../icons/editar.png" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
+                <img src="../../icons/editar.png" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
             <h3>{{this.user.profession ? this.user.profession : language == 'pt-br' ? "Sua profissão" : "Your profession"}}</h3>   
 
             <input type="file"
@@ -26,7 +26,6 @@ export default{
     name: "header",
     emits: ["add-nome"],
     props:{
-        imgURL: String,
         mainColor: String,
         language: String,
         user: Object,
@@ -37,20 +36,32 @@ export default{
         }
     },
     methods:{
-        onIMGChange(img){
-        this.imageURL = URL.createObjectURL(img.target.files[0])
-       
-    /*  pra salvar no servidor  
-        var formData = new FormData();
-       formData.append('file', img.files[0], 'yourFileName.jpg');
-    
-        var xhr = new XMLHttpRequest();
-        xhr.onload = callback; // assuming you've got a callback function
-        xhr.open('POST', yourServerSideFileHandlerScript);
-        xhr.send(formData);
-     */    //localStorage.setItem("profileimg", URL.createObjectURL(img.target.files[0]))
-        // the two codes works as well
-        // document.getElementsByClassName("img-pic")[0].src = URL.createObjectURL(img.target.files[0])
+        onIMGChange(img) {
+            if (img.target.files[0].size > 2762231) {
+                alert("Arquivo muito grande, tente uma img menor que 3Mb");
+            } else {
+                this.imageURL = URL.createObjectURL(img.target.files[0]);
+                this.toDataURL(this.imageURL, function (data) {
+                    console.log("Vou salvar o arquivo " + data);
+                    localStorage.setItem("profileImg", data.split("data:image/")[1]);
+                    console.log(
+                        "Eu salvei o arquivo " + localStorage.getItem("profileImg")
+                    );
+                });
+            }
+        },
+        toDataURL(url, callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                callback(reader.result);
+                };
+                reader.readAsDataURL(xhr.response);
+            };
+            xhr.open("GET", url);
+            xhr.responseType = "blob";
+            xhr.send();
         },
         getStyle(){
             return{
@@ -59,7 +70,7 @@ export default{
         }
     },
     beforeMount(){
-        this.imageURL = this.imgURL
+        this.imageURL = this.user.img
     }
 }
 </script>

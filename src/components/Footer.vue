@@ -15,7 +15,7 @@
             @now-template2="this.$emit('now-template2')"
         />
         <imprimir
-          class="imprimirbotao"
+            class="imprimirbotao"
         />
     </div>
 </template>
@@ -39,48 +39,47 @@ export default {
     },
     props:{
        // mainColor:String
-       template: Number,
+        template: Number,
     },
     emits:["font-changed", "now-template2", "now-template1"],
     methods:{
         changefontM(p){
             
         if(p.target.id=="square"){
-          console.log("teste")
-          document.getElementsByClassName("pic")[0].style['border-radius'] = '0px';
-          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '0px';
-          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+            console.log("teste")
+            document.getElementsByClassName("pic")[0].style['border-radius'] = '0px';
+            document.getElementsByClassName("img-pic")[0].style['border-radius'] = '0px';
+            document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
         }else if(p.target.id=="triangleUp"){
-          document.getElementsByClassName("pic")[0].style['border-radius'] = '11px';
-          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '11px';   
-          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+            document.getElementsByClassName("pic")[0].style['border-radius'] = '11px';
+            document.getElementsByClassName("img-pic")[0].style['border-radius'] = '11px';   
+            document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
         }else if(p.target.id=="circle"){
-          document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
-          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
-          document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
+            document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
+            document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
+            document.getElementsByClassName("pic")[0].style['border'] = '2px solid black';
         }else if(p.target.id=="colorfull-circle"){
-          document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
-          document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
-          document.getElementsByClassName("pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
-           document.getElementsByClassName("pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
+            document.getElementsByClassName("pic")[0].style['border-radius'] = '50%';
+            document.getElementsByClassName("img-pic")[0].style['border-radius'] = '50%';
+            document.getElementsByClassName("pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
+            document.getElementsByClassName("pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
             document.getElementsByClassName("pic")[0].style['border-right'] = '5px solid rgb(0, 158, 61)';
-             document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
+            document.getElementsByClassName("pic")[0].style['border-bottom'] = '5px solid rgb(255, 0, 221)';
         }
 
         if(p.target.textContent.includes('pag-')==true){
-          p.target.id != '' && p.target.id != null ? 
-          (
+            p.target.id != '' && p.target.id != null ? 
+            (
            // this.mainColor = p.target.id,
-            document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id, 
-            document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id,
-            document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id,
-            document.getElementsByClassName('title')[6].style.backgroundColor = p.target.id,
-            document.getElementsByClassName('title')[4].style.textShadow = "1px 1px 2px white",
-            document.getElementsByClassName('title')[5].style.textShadow = "1px 1px 2px white",
-            document.getElementsByClassName('title')[6].style.textShadow = "1px 1px 2px white",
-            localStorage.setItem("mainColor", p.target.id)
-          ) : '';
-         
+                document.getElementsByClassName('page-header')[0].style.backgroundColor = p.target.id, 
+                document.getElementsByClassName('title')[4].style.backgroundColor = p.target.id,
+                document.getElementsByClassName('title')[5].style.backgroundColor = p.target.id,
+                document.getElementsByClassName('title')[6].style.backgroundColor = p.target.id,
+                document.getElementsByClassName('title')[4].style.textShadow = "1px 1px 2px white",
+                document.getElementsByClassName('title')[5].style.textShadow = "1px 1px 2px white",
+                document.getElementsByClassName('title')[6].style.textShadow = "1px 1px 2px white",
+                localStorage.setItem("mainColor", p.target.id)
+            ) : '';
         }
         else if(p.target.textContent.includes('#')==true){
           if(p.target.textContent.split('').length>0 && p.target.textContent.split('').length<8){

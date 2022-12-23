@@ -2,9 +2,9 @@
     <div class="social">
         <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}} 
             <img id='edit' src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
-            <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+            <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
     </div>
-    <div :class="template == 'template2' ? templateClassItemContainer : 'social-row'">
+    <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
         <div :class="templateClassItem" v-for="(item, index) in this.user.social " :key="index" >
             <img v-if="item.includes('github')" src="../icons/git.png" class="social-icon"/>
             <img v-if="item.includes('youtube')" src="../icons/youtube.png" class="social-icon"/>
@@ -24,7 +24,7 @@
 export default {
     name: "Social",
     props:{
-        template: String,
+        template: Number,
         titulo: Array,
         language: String,
         backgroundColor: String,
@@ -34,9 +34,9 @@ export default {
     emits:['add-SocialLink'],
     data(){
         return{
-            templateClass: "social-"+this.template,
-            templateClassItemContainer: "social-itens-"+this.template,
-            templateClassItem: "social-item-"+this.template,
+            templateClass: "social-template"+this.template,
+            templateClassItemContainer: "social-itens-template"+this.template,
+            templateClassItem: "social-item-template"+this.template,
             social: this.user.social,
             userData: this.user
         }
@@ -59,7 +59,7 @@ export default {
             }
         },
         hovert(){
-            this.template == "template2" ? 
+            this.template == 2 ? 
             document.getElementById("edit").style.display = "none" : '';
         },
         leavehovert(){
@@ -79,28 +79,28 @@ export default {
 <style scoped>
 .social-template1{
     align-self: center;
-  background-color: white !important;
-  color: black;
-  font-weight: bolder;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-top: 10px;
-  text-align: center;
-  padding: 5px;
+    background-color: white !important;
+    color: black;
+    font-weight: bolder;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 5px;
 }
 .social-container{
-  width: 80%;
-  height: 100%;
-  align-self: center;
-  margin: 0 auto;
-  display: block;
+    width: 80%;
+    height: 100%;
+    align-self: center;
+    margin: 0 auto;
+    display: block;
 }
 .social-icon{
-  width: 30px;
-  height: 30px;
-  padding-top: 10px;
-  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    padding-top: 10px;
+    margin-right: 10px;
 }
 .social-row{
     padding: 5px;

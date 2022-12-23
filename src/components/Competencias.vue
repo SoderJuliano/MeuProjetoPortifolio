@@ -2,7 +2,7 @@
   <div :class="conteinerstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <img id="edit-com" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
-        <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
+        <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
@@ -22,28 +22,27 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
-    template: String,
+    template: Number,
     sideColor: String,
   },
   data(){
     return{
       competencias : this.user.competence,
-      conteinerstyle : this.template+"-competencias"
+      conteinerstyle : "template"+this.template+"-competencias"
     }
   },
   emits: ['add-competencia'],
   methods:{
-     hovert(){
-       this.template == "template2" ?
+      hovert(){
+        this.template == 2 ?
         document.getElementById("edit-com").style.display = "none" : ''
       },
       leavehovert(){
-        this.template == "template2" ?
+        this.template == 2 ?
         document.getElementById("edit-com").style.display = "block" : ''
       },
-     
       getStyle(){
-        return this.template == "template1" ?
+        return this.template == 1 ?
           {
               'background-color': `${this.cor}`
           }

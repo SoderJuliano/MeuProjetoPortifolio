@@ -1,27 +1,24 @@
 <template>
     <div v-if="show" class="dropdown">
-       <div class="header">
-           <h4>Configurações</h4>
+        <div class="header">
+            <h4>Configurações</h4>
             <button @click="$emit('close')" style="background-color: red; color: white">X</button>
-       </div>
+        </div>
         <PictureShape />
-        
     </div>
 </template>
 
 <script>
 import PictureShape from './PictureShape.vue'
 
-
-
 export default {
-   name: 'options-menu',
-   components:{
-       PictureShape,
-   },
-   props:{
-    show: Boolean
-   }
+    name: 'options-menu',
+    components:{
+        PictureShape,
+    },
+    props:{
+        show: Boolean
+    }
 }
 </script>
 

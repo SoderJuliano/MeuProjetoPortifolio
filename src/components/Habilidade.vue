@@ -2,7 +2,7 @@
   <div :class="cstyle">
       <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
-         <img v-if="template=='template2'" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
+         <img v-if="template == 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div v-if="user.hability" :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
@@ -22,9 +22,9 @@ export default {
   emits: ['add-habilidade', 'adicionar-habilidade'],
   data(){
     return {
-      tstyle : this.template+"-title",
-      cstyle : this.template+"-container",
-      hcstyle : this.template+"-habilidade-container"
+      tstyle : "template"+this.template+"-title",
+      cstyle : "template"+this.template+"-container",
+      hcstyle : "template"+this.template+"-habilidade-container"
     }
   },
   props:{
@@ -32,7 +32,7 @@ export default {
     titulo: Array,
     backgroundColor: String,
     user: Object,
-    template: String,
+    template: Number,
     sideColor: String,
   },
   methods:{
@@ -42,7 +42,7 @@ export default {
     },
     getStyle(){
 
-      return this.template == "template2" ? {
+      return this.template == 2 ? {
         'border-bottom': '1px solid '+this.sideColor,
       } : { 'background-color': this.backgroundColor }
     }

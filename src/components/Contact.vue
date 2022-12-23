@@ -25,7 +25,7 @@ export default {
     props:{
         language: String,
         titulo: Array,
-        template: String,
+        template: Number,
         user: Object,
         sideColor: String,
     },
@@ -35,7 +35,7 @@ export default {
             email: [],
             phone: [],
             adress: '', */
-            tstyle: "contact-"+this.template,
+            tstyle: "contact-template"+this.template,
         }
     },
     /* mounted(){

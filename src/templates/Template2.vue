@@ -1,13 +1,12 @@
 <template>
     <div class="main">
         <div class="header">
-              <Header 
-                :imgURL="imgURL"
+            <Header 
                 :mainColor="mainColor"
                 :user="user"
                 :language="language"
                 @add-nome="$emit('add-nome')"
-              />
+            />
         </div>
         <div class="main-body">
             <Left 
@@ -30,7 +29,7 @@
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"
-             />
+            />
         </div>
     </div>
 </template>
@@ -51,7 +50,6 @@ export default {
     props:{
         mainColor: String,
         sideColor: String,
-        imageURL: String,
         user: Object,
         redesociais: Array,
         userExperiences: Array,
@@ -59,7 +57,6 @@ export default {
     },
     data(){
         return{
-            imgURL: this.imageURL,
             userData: this.user
         }
     },
