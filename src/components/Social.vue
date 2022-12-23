@@ -79,28 +79,28 @@ export default {
 <style scoped>
 .social-template1{
     align-self: center;
-  background-color: white !important;
-  color: black;
-  font-weight: bolder;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-top: 10px;
-  text-align: center;
-  padding: 5px;
+    background-color: white !important;
+    color: black;
+    font-weight: bolder;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 0px;
+    margin-top: 10px;
+    text-align: center;
+    padding: 5px;
 }
 .social-container{
-  width: 80%;
-  height: 100%;
-  align-self: center;
-  margin: 0 auto;
-  display: block;
+    width: 80%;
+    height: 100%;
+    align-self: center;
+    margin: 0 auto;
+    display: block;
 }
 .social-icon{
-  width: 30px;
-  height: 30px;
-  padding-top: 10px;
-  margin-right: 10px;
+    width: 30px;
+    height: 30px;
+    padding-top: 10px;
+    margin-right: 10px;
 }
 .social-row{
     padding: 5px;
