@@ -1,6 +1,6 @@
 <template>
     <div class="container" :style="getStyle()">  
-        <div class="profile-style">
+        <div :class="tstyle">
             <div class="line">
                 <div class="l1"></div>
                 <div class="l2"></div>
@@ -8,8 +8,8 @@
             <div @click="$refs.imgInput.click()" class="pic">
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
+            <ion-icon style="position: absolute; margin-left: 100px; margin-top: 50px;" eios="ios-create-outline" md="md-create" @click="$emit('add-nome')"></ion-icon>
             <h2>{{this.user.name ? this.user.name : language == 'pt-br' ? "Seu nome" : "Your name"}}</h2>
-                <img src="../../icons/editar.png" alt="editar" class="editar-animado-nome" @click="$emit('add-nome')"/>
             <h3>{{this.user.profession ? this.user.profession : language == 'pt-br' ? "Sua profissão" : "Your profession"}}</h3>   
 
             <input type="file"
@@ -27,12 +27,14 @@ export default{
     emits: ["add-nome"],
     props:{
         mainColor: String,
+        fontColor: String,
         language: String,
         user: Object,
     },
     data(){
         return{
-            imageURL: ""
+            imageURL: "",
+            tstyle: "profile-style-"+this.fontColor
         }
     },
     methods:{
@@ -65,7 +67,8 @@ export default{
         },
         getStyle(){
             return{
-                "background-color":this.mainColor
+                "background-color":this.mainColor,
+                "color": `${this.fontColor}`
             }
         }
     },
@@ -80,6 +83,15 @@ export default{
     min-height: 200px;
     background-color: gray;
 }
+
+.profile-style-white {
+    color: white;
+}
+
+.profile-style-black {
+    color: #000;
+}
+
 .profile-style:hover .editar-animado-nome{
     display: block;
     width: 30px;
