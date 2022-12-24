@@ -174,8 +174,11 @@ export default {
     contatoIsEmpty(){
       return localStorage.getItem('contato') == null;
     },
-    aboutIsEmpty(){
-      return localStorage.getItem('about') == null;
+    nameIsEmpty(){
+      return localStorage.getItem('user-name') == null;
+    },
+    professionIsEmpty(){
+      return localStorage.getItem('preofession') == null;
     },
     languageIsEN(){
       return this.language == 'us-en';
@@ -554,8 +557,10 @@ export default {
           this.user.contact.adress = strings[1].address,
           this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
-        if(this.aboutIsEmpty()){
-          this.user.name = strings[1].yname,
+        if(this.nameIsEmpty()){
+          this.user.name = strings[1].yname
+        }
+        if(this.professionIsEmpty()){
           this.user.profession = strings[1].yjob,
           this.user.resume = strings[1].aboutSpan
         }
@@ -567,8 +572,10 @@ export default {
           this.user.contact.adress = strings[0].address,
           this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
-        if(this.aboutIsEmpty()){
-          this.user.name = strings[0].yname,
+        if(this.nameIsEmpty()){
+          this.user.name = strings[0].yname
+        }
+        if(this.professionIsEmpty()){
           this.user.profession = strings[0].yjob,
           this.user.resume = strings[0].aboutSpan
         }

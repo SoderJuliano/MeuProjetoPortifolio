@@ -9,8 +9,8 @@
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
             <ion-icon style="position: absolute; margin-left: 100px; margin-top: 50px;" eios="ios-create-outline" md="md-create" @click="$emit('add-nome')"></ion-icon>
-            <h2>{{this.user.name ? this.user.name : language == 'pt-br' ? "Seu nome" : "Your name"}}</h2>
-            <h3>{{this.user.profession ? this.user.profession : language == 'pt-br' ? "Sua profissão" : "Your profession"}}</h3>   
+            <h2>{{this.user?.name}}</h2>
+            <h3>{{this.user?.profession}}</h3>   
 
             <input type="file"
                 id="input"

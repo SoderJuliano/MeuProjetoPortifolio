@@ -55,7 +55,8 @@ export default {
           return{
               'background-color': `${this.cor}`,
               'color': `${this.fontColor}`,
-              "border-bottom": "1px solid "+this.sideColor
+              "border-bottom": "1px solid "+this.sideColor,
+              "text-align": this.template == 2 ? "start" : "center"
           }
       },
       removeJob(item){
