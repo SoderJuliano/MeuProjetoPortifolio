@@ -30,6 +30,7 @@ export default {
     cor: String,
     sideColor: String,
     experiences: Array,
+    fontColor: String,
   },
   data(){
     return{
@@ -37,7 +38,7 @@ export default {
       jobEnd: '',
       lasJobHired: '',
       lastJobEnd: '',
-      tstyle: 'experiences-template'+this.template+'-title',
+      tstyle: 'experiences-template'+this.template+'-title-'+this.fontColor,
       cstyle: 'template'+this.template+'-experiencias-container'
     }
   },
@@ -53,7 +54,9 @@ export default {
       getStyle(){
           return{
               'background-color': `${this.cor}`,
-              "border-bottom": "1px solid "+this.sideColor
+              'color': `${this.fontColor}`,
+              "border-bottom": "1px solid "+this.sideColor,
+              "text-align": this.template == 2 ? "start" : "center"
           }
       },
       removeJob(item){
@@ -135,6 +138,12 @@ export default {
   .experiencias{
     min-height: 60px;
   }
-  
+}
+.experiences-template1-title-white{
+  color: white;
+}
+
+.experiences-template1-title-black{
+  color: black;
 }
 </style>

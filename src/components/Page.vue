@@ -19,11 +19,13 @@
             template=1
             :titulo="titles.resumo"
             :language="language"
+            :fontColor="fontColor"
         />
         <Competencias
             @add-competencia="$emit('add-competencia')"
             class="data-container"
             :cor="cor"
+            :fontColor="fontColor"
             :user="u"
             template=1
             :titulo="titles.competencias"
@@ -33,6 +35,7 @@
             @add-experiencia="$emit('add-experiencia')"
             class="data-container"
             :cor="cor"
+            :fontColor="fontColor"
             :experiences="userExperiences"
             template=1
             :titulo="titles.experiencias"
@@ -73,13 +76,15 @@ export default{
         user: Object,
         userExperiences: Array,
         language: String,
+        fontColor: String,
     },
     methods:{
         getStyle(){
             return {
                 'background-color': `${this.cor}`,
                 'font-size': `${this.fontSize}`,
-                'font-weiht': 'bold'
+                'font-weiht': 'bold',
+                'color': `${this.fontColor}`
             }
         },
         newProfession(){

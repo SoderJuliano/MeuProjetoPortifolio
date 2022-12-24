@@ -3,6 +3,7 @@
         <div class="header">
             <Header 
                 :mainColor="mainColor"
+                :fontColor="fontColor"
                 :user="user"
                 :language="language"
                 @add-nome="$emit('add-nome')"
@@ -51,6 +52,7 @@ export default {
         mainColor: String,
         sideColor: String,
         user: Object,
+        fontColor: String,
         redesociais: Array,
         userExperiences: Array,
         language: String,

@@ -24,6 +24,7 @@ export default {
     backgroundColor: String,
     user: Object,
     cor: String,
+    fontColor: String,
     template: Number,
     sideColor: String,
     language: String,
@@ -39,14 +40,18 @@ export default {
         document.getElementById("edit-re").style.display = "block" : ''
       },
      getStyle(){ //console.log(this.cor +' corrr')
-        return this.template == 2 ?
-          {
-              'text-align': 'start',
-              'font-weight': 'bolder !important',
-              'margin-left': '10px !important',
-              'border-bottom': '1px solid '+this.sideColor,
-              'width': '85%'
-          } : { 'background-color': `${this.cor}` }
+        return this.template == 2 
+        ? {
+            'text-align': 'start',
+            'font-weight': 'bolder !important',
+            'margin-left': '10px !important',
+            'border-bottom': '1px solid '+this.sideColor,
+            'width': '85%'
+          } 
+        : { 
+            'background-color': `${this.cor}`,
+            'color': `${this.fontColor}`
+          }
       },
       saveContent(){
         const content = document.getElementById('resume').textContent

@@ -52,6 +52,7 @@
         :style="getStyle()"
         :mainColor=mainColor
         :sideColor=sideColor
+        :fontColor=fontColor
         :user="user"
         :userExperiences="userExperiences"
     />
@@ -71,6 +72,7 @@
         :style="getStyle()"
         :mainColor=mainColor
         :sideColor=sideColor
+        :fontColor=fontColor
         :user="user"
         :userExperiences="userExperiences"
     />
@@ -80,6 +82,8 @@
         @font-changed="setFont"
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
+        @change-main-color="changeMainColor"
+        @change-font-color="changeFontColor"
       />
     </div>
     
@@ -108,6 +112,7 @@ export default {
       font: 'Oswald',
       fontSize: '15px',
       fontSizeTitles: '17px',
+      fontColor: 'black',
       sideColor: "#B0C4DE",
       mainColor:  "#87CEEB",
       modal: {
@@ -145,6 +150,12 @@ export default {
     Template2
   },
   methods: {
+    changeFontColor(color){
+      this.fontColor = color
+    },
+    changeMainColor(color){
+      this.mainColor = color
+    },
     updateUser(userData){
       // futuramente salvar todo esse objeto na base 
       this.user = userData
@@ -163,8 +174,11 @@ export default {
     contatoIsEmpty(){
       return localStorage.getItem('contato') == null;
     },
-    aboutIsEmpty(){
-      return localStorage.getItem('about') == null;
+    nameIsEmpty(){
+      return localStorage.getItem('user-name') == null;
+    },
+    professionIsEmpty(){
+      return localStorage.getItem('preofession') == null;
     },
     languageIsEN(){
       return this.language == 'us-en';
@@ -433,11 +447,15 @@ export default {
     getColors(){
       const mc = localStorage.getItem("mainColor")
       const sc = localStorage.getItem("sideColor")
+      const fntc = localStorage.getItem("fontColor")
       if(mc){
         this.mainColor = mc
       }
       if(sc){
         this.sideColor = sc
+      }
+      if(fntc){
+        this.fontColor = fntc
       }
     },
         getContatoDataPage(){ 
@@ -539,8 +557,10 @@ export default {
           this.user.contact.adress = strings[1].address,
           this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
-        if(this.aboutIsEmpty()){
-          this.user.name = strings[1].yname,
+        if(this.nameIsEmpty()){
+          this.user.name = strings[1].yname
+        }
+        if(this.professionIsEmpty()){
           this.user.profession = strings[1].yjob,
           this.user.resume = strings[1].aboutSpan
         }
@@ -552,8 +572,10 @@ export default {
           this.user.contact.adress = strings[0].address,
           this.user.contact.adress = this.languageIsEN() ? strings[1].adress : strings[0].adress
         }
-        if(this.aboutIsEmpty()){
-          this.user.name = strings[0].yname,
+        if(this.nameIsEmpty()){
+          this.user.name = strings[0].yname
+        }
+        if(this.professionIsEmpty()){
           this.user.profession = strings[0].yjob,
           this.user.resume = strings[0].aboutSpan
         }
