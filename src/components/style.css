@@ -27,9 +27,13 @@ input{
     width: 80%;
     margin-left: 25px;
 }
+
 .social-item-template2{
-    padding-left: 10px;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
 }
+
 .social-item-template2 img {
     top: 5px;
     position: relative;
@@ -40,12 +44,11 @@ input{
 /* global itens  */
 .remove-bnt{
     float: right;
-    margin-right: -10px;
+    margin-top: -10px;
 }
 
 .remove-bnt-delete{
     position: relative;
-    width: 20px;
     display: none;
     float: right;
     margin-top: 3px;
@@ -54,7 +57,16 @@ input{
 .social-item-template2:hover .remove-bnt-delete{
     display: block;
     width: 20px;
+    position: relative;
+    margin-top: -5px;
 }
+
+.social-item-template2:hover {
+    display: block;
+    background-color: #d7d7d7;
+    border-radius: 10px;
+}
+
 .social-item-template2:hover .remove-bnt{
     display: none;
 }
