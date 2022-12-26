@@ -115,10 +115,10 @@ h3:hover .editar-animado{
         display: none;
     }
     .editar{
-        display: none;
+        display: none !important;
     }
     .editar-animado{
-        display: none;
+        display: none !important;
     }
 }
 
@@ -143,4 +143,8 @@ h3:hover .editar-animado{
 .social-item-template1 img{
     width: 24px !important;
     height: 24px !important;
+}
+
+.data-container{
+    word-break: break-all;
 }

@@ -6,7 +6,7 @@
         :competencia="user.competence"
         :title2="modal.title2"
         :placeholder2="modal.placeholder2"
-        :experiences="userExperiences"
+        :experiences="user.userExperiences"
         :user="user"
         @update-experiences="adicionarExperiencias"
         :language="language"
@@ -54,7 +54,7 @@
         :sideColor=sideColor
         :fontColor=fontColor
         :user="user"
-        :userExperiences="userExperiences"
+        :userExperiences="user.userExperiences"
     />
     <template2 v-if="template==2"
         :language="language"
@@ -74,7 +74,7 @@
         :sideColor=sideColor
         :fontColor=fontColor
         :user="user"
-        :userExperiences="userExperiences"
+        :userExperiences="user.userExperiences"
     />
     <div class="footer">
       <Footer 
@@ -136,9 +136,10 @@ export default {
           email : [],
           phone : [],
           adress: '',
-        }
+        },
+        userExperiences: []
       },
-      userExperiences: [],
+      
     }
   },
   components: {
@@ -161,8 +162,7 @@ export default {
       this.user = userData
     },
     adicionarExperiencias(experiencias){
-      this.userExperiences = experiencias
-      console.log('experiencias aaaa')
+      this.user.userExperiences = experiencias
       console.log(experiencias)
     },
     adicionarNovaHabilidade(habilidade){
@@ -179,6 +179,9 @@ export default {
     },
     professionIsEmpty(){
       return localStorage.getItem('preofession') == null;
+    },
+    resumeIsEmpty(){
+      return localStorage.getItem('about') == null;
     },
     languageIsEN(){
       return this.language == 'us-en';
@@ -481,7 +484,7 @@ export default {
             let jobs = JSON.parse(localStorage.getItem('jobs'))
             if(jobs){
                 console.log(jobs)
-                this.userExperiences = jobs.slice(0).reverse()
+                this.user.userExperiences = jobs.slice(0).reverse()
             }
         },
         getContactData(){
@@ -561,7 +564,9 @@ export default {
           this.user.name = strings[1].yname
         }
         if(this.professionIsEmpty()){
-          this.user.profession = strings[1].yjob,
+          this.user.profession = strings[1].yjob
+        }
+        if(this.resumeIsEmpty()){
           this.user.resume = strings[1].aboutSpan
         }
       }, 
@@ -576,8 +581,10 @@ export default {
           this.user.name = strings[0].yname
         }
         if(this.professionIsEmpty()){
-          this.user.profession = strings[0].yjob,
-          this.user.resume = strings[0].aboutSpan
+          this.user.profession = strings[0].yjob
+        }
+        if(this.resumeIsEmpty()){
+          this.user.resume = strings[1].aboutSpan
         }
       }
   }, 
