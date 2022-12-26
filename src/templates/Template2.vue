@@ -25,6 +25,7 @@
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
                 @add-experiencia="$emit('add-experiencia')"
+                @update-experiences="$emit('update-experiences')"
                 :user="userData"
                 :userExperiences="userExperiences"
                 :mainColor="mainColor"
@@ -47,7 +48,7 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade"],
+    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences"],
     props:{
         mainColor: String,
         sideColor: String,

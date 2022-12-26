@@ -18,6 +18,7 @@
         />
         <Experiencias
             @add-Experiencia="$emit('add-Experiencia')"
+            @update-experiences="$emit('update-experiences')"
             template=2
             :language="language"
             :titulo="titulo.experiencias"
@@ -38,7 +39,7 @@ export default {
         Contact,
         Experiencias
     },
-    emits:["add-info", "add-SocialLink", "add-Experiencia"],
+    emits:["add-info", "add-SocialLink", "add-Experiencia", "update-experiences"],
     props:{
         user: Object,
         userExperiences: Array,
