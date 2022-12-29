@@ -620,6 +620,7 @@ export default {
 @media print {
   .template{
     width:100vw !important;
+    height: 100vh !important;
   }
 }
 .main.template{
