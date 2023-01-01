@@ -1,7 +1,8 @@
 <template>
     <div class="avatares-container">
-        <p class="tside">ESCOLHA UM AVATAR</p>
+        <p class="tside" @click="openContainer()">ESCOLHA UM AVATAR</p>
         <div class="avatares-subcontainer">
+            <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="avatar-line">
                 <img class="avatar" id="a1"
                     @click="changeAvatar"
@@ -65,6 +66,8 @@
     </div>
 </template>
 <script>
+import $ from 'jquery'
+
 export default {
     name: "avatares",
     methods:{
@@ -121,6 +124,12 @@ export default {
                 document.getElementsByClassName("img-pic")[0].src = av8
                 localStorage.setItem("profileimg", 'av8')
             }
+        },
+        openContainer(){
+            $(".avatares-subcontainer").css({"display": "grid", "position": "absolute"});
+        },
+        closeDiv(){
+            $(".avatares-subcontainer").css({"display": "none"});
         }
     }
 }
@@ -136,10 +145,7 @@ export default {
     border-radius: 50%;
     margin-left: 10px;
 }
-.avatares-container:hover .avatares-subcontainer{
-    display: block;
-    position: absolute;
-}
+
 </style>
 <style>
 .tside{

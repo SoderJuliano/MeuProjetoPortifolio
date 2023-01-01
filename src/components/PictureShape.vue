@@ -1,7 +1,8 @@
 <template>
     <div class="shape-container">
-        <p class="tside">TIPO DE IMAGEM CONTAINER</p>
+        <p class="tside" @click="openContainer()">TIPO DE IMAGEM CONTAINER</p>
         <div class="shapes">
+            <div class="closeDiv" @click="closeDiv()">X</div>
             <div id="square" class="square"></div>
             <div id="triangleUp" class="triangle-up"></div>
             <div id="circle" class="circle"></div>
@@ -10,15 +11,22 @@
     </div>
 </template>
 <script>
+import $ from 'jquery'
+
 export default {
     name: 'shapes',
+    methods: {
+        openContainer(){
+            $(".shapes").css({"display": "flex", "position": "absolute"});
+        },
+        closeDiv(){
+            $(".shapes").css({"display": "none"});
+        }
+    }
 }
 </script>
 <style scoped>
-.shape-container:hover .shapes{
-  display: flex;
-  position: absolute;
-}
+
 .shapes{
     padding: 15px;
     height: 100px;
