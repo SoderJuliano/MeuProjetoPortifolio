@@ -1,7 +1,8 @@
 <template>
     <div class="colors-container">
-        <p class="tside">COR LATERAL</p>
-        <div class="colors">
+        <p class="tside" @click="openContainer()">COR LATERAL</p>
+        <div class="side-colors">
+            <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="dots-container">
                 <div class="dot" style="background-color: #ff8533">#ff8533</div>
                 <div class="dot" style="background-color: #ff6699" >#ff6699</div>
@@ -24,7 +25,30 @@
     </div>
 </template>
 <script>
+import $ from 'jquery'
+
 export default {
     name: 'cores',
+    methods: {
+        openContainer(){
+            $(".side-colors").css({"display": "grid", "position": "absolute"});
+        },
+        closeDiv(){
+            $(".side-colors").css({"display": "none"});
+        }
+    }
 }
 </script>
+
+<style>
+.closeDiv{
+    border-radius: 5px;
+    border: solid 1px black;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-size: 16px !important;
+    background-color: black;
+    color: white;
+}
+</style>

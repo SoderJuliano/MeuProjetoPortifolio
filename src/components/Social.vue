@@ -113,7 +113,7 @@ export default {
 }
 @media print{
     .social-row{
-        display: flex;
+        display: block;
         padding: 0px !important;
         width: 100%;
     }

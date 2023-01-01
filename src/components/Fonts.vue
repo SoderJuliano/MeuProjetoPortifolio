@@ -1,31 +1,32 @@
 <template>
-    <div class="fonts-container">
-      <p class="tside">FONTES</p>
+    <div class="fonts-container" @click="closeFontsContainer">
+      <p class="tside" @click="openFontsContainer">FONTES</p>
         <div class="dropdown">
             <div class="dropdown-content">
+              <div class="closeFontsDiv" @click="closeFontDiv()">X</div>
               <div class="row">
-                  <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' >Oswald</p>
-                  <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' >Zen Loop</p>
-                  <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click='$emit("changefont")' >Fuggles</p>
+                  <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='this.$emit("changefont", "Oswald")' >Oswald</p>
+                  <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='this.$emit("changefont", "Zen Loop")' >Zen Loop</p>
+                  <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click='this.$emit("changefont", "Fuggles")' >Fuggles</p>
               </div>
               <div class="row">
-                <p style="font-family': 'STIX Two Math', serif; font-weight: bold" @click='$emit("changefont")' >STIX Two Math</p>
-                <p style="font-family: 'Hina Mincho', serif;" @click='$emit("changefont")' >Hina Mincho</p>
-                <p style="font-family: 'Inconsolata', monospace;" @click='$emit("changefont")' >Inconsolata</p>
+                <p style="font-family': 'STIX Two Math', serif; font-weight: bold" @click='this.$emit("changefont", "STIX Two Math")' >STIX Two Math</p>
+                <p style="font-family: 'Hina Mincho', serif;" @click='this.$emit("changefont", "Hina Mincho")' >Hina Mincho</p>
+                <p style="font-family: 'Inconsolata', monospace;" @click='this.$emit("changefont", "Inconsolata")' >Inconsolata</p>
               </div>
               <div class="row">
-                <p style="font-family: 'Kaisei Decol', serif;" @click='$emit("changefont")' >Kaisei Decol</p>
-                <p style="font-family: 'Teko', sans-serif;" @click='$emit("changefont")' >Teko</p>
-                <p style="font-family: 'Crimson Text', serif;" @click='$emit("changefont")' >Crimson</p>
+                <p style="font-family: 'Kaisei Decol', serif;" @click='this.$emit("changefont", "Kaisei Decol")' >Kaisei Decol</p>
+                <p style="font-family: 'Teko', sans-serif;" @click='this.$emit("changefont", "Teko")' >Teko</p>
+                <p style="font-family: 'Crimson Text', serif;" @click='this.$emit("changefont", "Crimson")' >Crimson</p>
               </div>
               <div class="row">
-                <p style="font-family: 'Dongle', sans-serif;" @click='$emit("changefont")' >Dongle</p>
-                <p style="font-family: 'Mochiy Pop One', sans-serif;" @click='$emit("changefont")' >Mochiy</p>
-                <p style="font-family: 'Roboto Mono', monospace;" @click='$emit("changefont")' >Roboto</p>
+                <p style="font-family: 'Dongle', sans-serif;" @click='this.$emit("changefont", "Dongle")' >Dongle</p>
+                <p style="font-family: 'Mochiy Pop One', sans-serif;" @click='this.$emit("changefont", "Mochiy")' >Mochiy</p>
+                <p style="font-family: 'Roboto Mono', monospace;" @click='this.$emit("changefont", "Roboto")' >Roboto</p>
               </div>
               <div class="row">
-                <p style="font-family: verdana" @click='$emit("changefont")'>verdana</p>
-                <p style="font-family:'Courier New'" @click='$emit("changefont")'>Courier New</p>
+                <p style="font-family: verdana" @click='this.$emit("changefont", "verdana")'>verdana</p>
+                <p style="font-family:'Courier New'" @click='this.$emit("changefont", "Courier New")'>Courier New</p>
               </div>
             </div>
         </div>
@@ -33,12 +34,34 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
- name: 'fonts',
+  name: 'fonts',
+  emits: ["changefont"],
+  methods: {
+    openFontsContainer(){
+      $(".dropdown-content").css({"display": "grid", "position": "absolute"});
+    },
+    closeFontDiv(){
+      $(".dropdown-content").css({"display": "none"});
+    }
+  }
 }
 </script>
 
 <style scoped>
+.closeFontsDiv{
+  border-radius: 5px;
+  border: solid 1px black;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-size: 16px !important;
+  background-color: black;
+  color: white;
+}
+
 .row{
   display: flex;
   justify-content: space-around;
@@ -91,10 +114,6 @@ export default {
   margin-left: 15px;
   margin-top: -15px;
   justify-content: space-around;
-}
-.fonts-container:hover .dropdown-content {
-  display: grid;
-  position: absolute;
 }
 
 @-webkit-keyframes scale-up-center {

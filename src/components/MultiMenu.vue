@@ -3,7 +3,9 @@
         <div class="header">
             <h3>OPÇÕES</h3>
         </div>
-        <fonts />
+        <fonts 
+            @changefont="$emit('changefont')"
+        />
         <Colors />
         <pageColor />
         <Avatares />
@@ -20,6 +22,7 @@ import PicureShape from './PictureShape.vue'
 
 export default {
     name: 'multi-menu',
+    emits: ['changefont'],
     components: {
         Fonts,
         Colors,

@@ -1,8 +1,8 @@
 <template>
   <div :class="conteinerstyle">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
-         <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
+          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
+          <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
           <img src="../icons/livros.png" class="formacao-icon"/>
@@ -74,7 +74,7 @@ export default {
   width: 80%;
   height: 100%;
   align-self: center;
-  margin: 0 auto;
+  margin: 0 10%;
   display: flex;
 }
 .template2-formacao-container{
