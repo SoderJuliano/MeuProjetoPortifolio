@@ -66,6 +66,7 @@
 
 import strings from '../components/configs/strings.json'
 import $ from 'jquery'
+
 class Job {
     company = null;
     function = null;

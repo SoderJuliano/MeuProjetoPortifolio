@@ -32,7 +32,8 @@
     <div class="main-left" @click="closeEditarContato">
       <multi-menu 
         class="multi-menu-class"
-        @click="changefont"
+        @changefont="changefont"
+        @click="changefontOld"
         @close="close"
       />
     </div>
@@ -100,6 +101,7 @@ import navBar from './components/navBar.vue'
 import editorInformacoes from './components/editorIformacoes.vue'
 import Template2 from './templates/Template2.vue'
 import strings from '../src/components/configs/strings.json'
+import $ from 'jquery'
 
 export default {
   name: 'App',
@@ -151,6 +153,10 @@ export default {
     Template2
   },
   methods: {
+    changefont(newFont){
+      this.font = newFont
+      localStorage.setItem("font", newFont)
+    },
     changeFontColor(color){
       this.fontColor = color
     },
@@ -302,7 +308,9 @@ export default {
             }
         },
     closeEditarContato(){
-      document.getElementsByClassName('editar-contato-container')[0].style.display= 'none'
+      $('.editar-contato-container') 
+        ? $('.editar-contato-container').css({"display": "none"}) 
+        : ""
     },
     close(){
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "0"
@@ -317,7 +325,7 @@ export default {
             iterations: 1
           });
     },
-    changefont(p){
+    changefontOld(p){
         if(p.target.id=="square"){
           console.log("teste")
           document.getElementsByClassName("pic")[0].style['border-radius'] = '0px';
@@ -368,7 +376,7 @@ export default {
             this.sideColor = p.target.textContent;
             localStorage.setItem("sideColor",  p.target.textContent)
           }
-        }else{
+      }else if(p.target.textContent.length < 20 && p.target.textContent != "X"){
             this.font = p.target.textContent
             localStorage.setItem("font", p.target.textContent)
         }
