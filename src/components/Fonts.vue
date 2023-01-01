@@ -1,8 +1,9 @@
 <template>
-    <div class="fonts-container">
-      <p class="tside">FONTES</p>
+    <div class="fonts-container" @click="closeFontsContainer()">
+      <p class="tside" @click="openFontsContainer()">FONTES</p>
         <div class="dropdown">
             <div class="dropdown-content">
+              <div class="closeFontsDiv" @click="closeFontDiv()">X</div>
               <div class="row">
                   <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold" @click='$emit("changefont")' >Oswald</p>
                   <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click='$emit("changefont")' >Zen Loop</p>
@@ -33,12 +34,33 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
- name: 'fonts',
+  name: 'fonts',
+  methods: {
+    openFontsContainer(){
+      $(".dropdown-content").css({"display": "grid", "position": "absolute"});
+    },
+    closeFontDiv(){
+      $(".dropdown-content").css({"display": "none"});
+    }
+  }
 }
 </script>
 
 <style scoped>
+.closeFontsDiv{
+  border-radius: 5px;
+  border: solid 1px black;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-size: 16px !important;
+  background-color: black;
+  color: white;
+}
+
 .row{
   display: flex;
   justify-content: space-around;
@@ -91,10 +113,6 @@ export default {
   margin-left: 15px;
   margin-top: -15px;
   justify-content: space-around;
-}
-.fonts-container:hover .dropdown-content {
-  display: grid;
-  position: absolute;
 }
 
 @-webkit-keyframes scale-up-center {

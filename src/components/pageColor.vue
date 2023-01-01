@@ -1,7 +1,8 @@
 <template>
     <div class="colors-container">
-        <p class="tside">COR PRINCIPAL</p>
+        <p class="tside" @click="openContainer()">COR PRINCIPAL</p>
         <div class="colors">
+            <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="dots-container">
                 <div class="dot" id="#FFA07A" style="background-color: #FFA07A">pag-#FFA07A</div>
                 <div class="dot" id="#FFB6C1" style="background-color: #FFB6C1" >pag-#FFB6C1</div>
@@ -24,8 +25,18 @@
     </div>
 </template>
 <script>
+import $ from 'jquery'
+
 export default {
     name: 'page-cores',
+    methods: {
+        openContainer(){
+            $(".colors").css({"display": "grid", "position": "absolute"});
+        },
+        closeDiv(){
+            $(".colors").css({"display": "none"});
+        }
+    }
 }
 </script>
 <style>
@@ -34,10 +45,7 @@ export default {
     width: 100%;
     justify-content: space-around;
 }
-.colors-container:hover .tside{
-    background-color: black;
-    color: white;
-}
+
 .dot{
     width: 40%;
     height: 30px;
@@ -53,7 +61,7 @@ export default {
 .colors{
     display: none;
     padding: 15px;
-    height: 100px;
+    height: 120px;
     width: 300px;
     border-style: solid;
     border-color: black;
@@ -62,10 +70,6 @@ export default {
     margin-top: -15px;
     justify-content: space-around;
     display: none;
-}
-.colors-container:hover .colors{
-    display: block;
-    position: absolute;
 }
 .colors-container{
     display: block;
