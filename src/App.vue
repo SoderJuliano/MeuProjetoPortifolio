@@ -189,9 +189,6 @@ export default {
     resumeIsEmpty(){
       return localStorage.getItem('about') == null;
     },
-    resumeIsEmpty(){
-      return localStorage.getItem('about') == null;
-    },
     languageIsEN(){
       return this.language == 'us-en';
     },
