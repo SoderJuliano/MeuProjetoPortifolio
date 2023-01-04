@@ -184,7 +184,7 @@ export default {
       return localStorage.getItem('user-name') == null;
     },
     professionIsEmpty(){
-      return localStorage.getItem('preofession') == null;
+      return localStorage.getItem('profession') == null;
     },
     resumeIsEmpty(){
       return localStorage.getItem('about') == null;
