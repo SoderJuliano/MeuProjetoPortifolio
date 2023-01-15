@@ -665,10 +665,11 @@ export default {
     position: fixed;
     bottom: 0;
     background-color: #FFF;
-    width: 100%;
+    width: 90%;
     height: 40px;    
     text-align: start;
     display: flex;
+    z-index: 11;
   }
 
   .right{
