@@ -4,7 +4,7 @@
         <img id="edit-exp" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
         <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
-      <div :id="item.function" v-for="(item, index) in experiences.slice().reverse()" :key="index" :class="cstyle">
+      <div :id="item.company" v-for="(item, index) in jobs.reverse()" :key="index" :class="cstyle">
         <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
           <h3>{{item.function}}</h3>
           <div style="display: flex">
@@ -39,7 +39,8 @@ export default {
       lasJobHired: '',
       lastJobEnd: '',
       tstyle: 'experiences-template'+this.template+'-title-'+this.fontColor,
-      cstyle: 'template'+this.template+'-experiencias-container'
+      cstyle: 'template'+this.template+'-experiencias-container',
+      jobs: this.experiences
     }
   },
   methods:{
@@ -60,22 +61,12 @@ export default {
           }
       },
       removeJob(item){
-        document.getElementById(item.function).style.display = "none"
-        this.removerJobs(item)
+
+        this.jobs.splice(this.jobs.indexOf(item), 1)
+          
+        localStorage.setItem('jobs', JSON.stringify(this.jobs))
+        this.$emit('update-experiences', this.jobs)
       },
-      removerJobs(item){
-            let j = localStorage.getItem('jobs')
-            if(j){
-                let objarray = JSON.parse(j)
-                objarray.map(function(val, index){
-                  if(val.function==item.function){
-                    objarray.splice(index, 1)
-                  }
-                })
-                localStorage.setItem('jobs', JSON.stringify(objarray))
-                this.$emit('update-experiences', this.jobs)
-            }
-        },
   },
   beforeMount(){
   }
