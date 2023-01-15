@@ -120,6 +120,10 @@ h3:hover .editar-animado{
     .editar-animado{
         display: none !important;
     }
+    
+    #headericon{
+        display: none;
+    }
 }
 
 .social-item-template2{
