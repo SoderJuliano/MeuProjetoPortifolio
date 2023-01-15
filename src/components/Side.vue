@@ -332,8 +332,8 @@ export default {
     justify-content: center;
     padding-top: 50px;
     font-size: 14px;
-    overflow: hidden;
-    word-break: break-all;
+    overflow-x: hidden;
+    word-wrap: break-word;
   }
   .pic {
     width: 150px;
@@ -397,12 +397,12 @@ export default {
     color-adjust: exact !important; /*Firefox*/
   }
   .side {
-    max-height: 100%;
+    min-height: 100vh !important;
+    height: calc(100% + 200px) !important;
     width: 40%;
     justify-content: center;
     padding-top: 35px;
     font-size: 12px;
-    overflow: hidden;
   }
   .pic {
     width: 140px;

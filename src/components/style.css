@@ -39,7 +39,9 @@ input{
     position: relative;
 }
 
-
+.email-text{
+    word-break: break-all !important;
+}
 
 /* global itens  */
 .remove-bnt{
@@ -124,6 +126,11 @@ h3:hover .editar-animado{
     #headericon{
         display: none;
     }
+
+    .social-item-template1 span {
+        word-break: break-all;
+        width: 60%;
+    }
 }
 
 .social-item-template2{
@@ -136,7 +143,7 @@ h3:hover .editar-animado{
 
 .social-item-template1{
     margin-bottom: 10px;
-    height: 20px;
+    height: 100%;
     display: flex;
     padding: 5px;
 }
@@ -150,5 +157,5 @@ h3:hover .editar-animado{
 }
 
 .data-container{
-    word-break: break-all;
+    word-wrap: break-word;
 }

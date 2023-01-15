@@ -119,12 +119,12 @@ export default {
 #job-description{
   max-width: 100%;
   max-height: 100%;
-  word-break: keep-all;
+  word-wrap: break-word;
 }
 #lastjob-description{
   max-width: 100%;
   max-height: 100%;
-  word-break: keep-all;
+  word-wrap: break-word;
 }
 @media screen and (max-width: 1000px) {
   .experiencias{

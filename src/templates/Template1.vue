@@ -71,19 +71,24 @@ export default {
   .custom-container{
     width: 100%;
     justify-content: start;
-    min-height: calc(100vh - 35px);
-    max-height: 100%;
+    height: 100% !important;
+    padding-bottom: 50px;
     display: flex;
     margin-top: 20px;
   }
 }
 
 @media print {
- .custom-container{
+  .custom-container{
     display: flex;
     width: 100vw !important;
     height: calc(100vh - 35px);
-    overflow: hidden;
+    overflow: visible;
+  }
+  
+  .side{
+    word-break: break-all !important;
+    height: calc(100% + 30px);
   }
 }
 </style>
