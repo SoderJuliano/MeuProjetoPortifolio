@@ -18,11 +18,11 @@
               </div>
               <div class="right-options">
                   <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
-                    <ion-icon name="print" size="large"></ion-icon>
+                    <img src="../icons/header/print.png" alt="print" class="li-img" />
                     <a href="#" class="nav-link">{{this.printText()}}</a>
                   </li>
                     <li @click="showDropDown(1)" class="nav-item" id="navbarDropdown">
-                      <ion-icon name="information-circle-outline" size="large"></ion-icon>
+                      <img src="../icons/header/info.png" alt="info" class="li-img" />
                       <a class="nav-link" href="#" >
                         {{this.informacoesText()}}
                       </a>
@@ -35,7 +35,7 @@
 
                     
                     <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
-                      <ion-icon name="paper" size="large"></ion-icon>
+                      <img src="../icons/header/paper.png" alt="paper" class="li-img" />
                       <a class="nav-link" href="#" >
                         {{this.sobreSiteMim().toUpperCase()}}
                       </a>
@@ -181,6 +181,12 @@ export default {
 </script>
 
 <style scoped>
+
+li img {
+  width: 35px;
+  height: 35px;
+}
+
 @media print {
   .bnt-languages{
     display: none;
@@ -248,11 +254,11 @@ export default {
 }
 .nav-item:hover .nav-link{
   opacity: 1;
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
-.nav-item:hover ion-icon{
+.nav-item:hover .li-img{
   transform: translateY(-30px);
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .nav-item .nav-link{
   opacity: 0;

@@ -221,6 +221,7 @@ export default {
                     this.cancelar();
                     break;   
                 case 'Descricao':
+                    // sobre experiencia de trabalho
                     localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
                     this.adicionarJobs()
                     this.cancelar();

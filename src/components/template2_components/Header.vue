@@ -8,7 +8,12 @@
             <div @click="$refs.imgInput.click()" class="pic">
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
             </div>
-            <ion-icon style="position: absolute; margin-left: 100px; margin-top: 50px;" eios="ios-create-outline" md="md-create" @click="$emit('add-nome')"></ion-icon>
+            <img 
+                src="../../icons/header/pencil.png" 
+                alt="edit" 
+                id="headericon"  
+                @click="$emit('add-nome')" 
+            />
             <h2>{{this.user?.name}}</h2>
             <h3>{{this.user?.profession}}</h3>   
 
@@ -78,6 +83,19 @@ export default{
 }
 </script>
 <style scoped>
+
+#headericon
+{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin-left: 5%;
+}
+
+#headericon:active {
+    transform: scale(1.5);
+}
+
 .container {
     width: 100%;
     min-height: 200px;

@@ -171,13 +171,20 @@ img{
     height: 100%;
 }
 .multiMenu{
-    width: 100%;
+    width: 80%;
+    background-color: whitesmoke;
     height: 100%;
     position: fixed;
     bottom: 20px;
     background-color: white;
     top: 50px;
+    z-index: 10;
 }
+
+.multiMenu:hover .l2 {
+    display: none;
+}
+
 @media screen and (max-width: 700px){
  .imprimirbotao{
       margin-left: 10px !important;
