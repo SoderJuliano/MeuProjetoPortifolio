@@ -18,11 +18,11 @@
               </div>
               <div class="right-options">
                   <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
-                    <img src="../icons/header/print.png" alt="print" />
+                    <img src="../icons/header/print.png" alt="print" class="li-img" />
                     <a href="#" class="nav-link">{{this.printText()}}</a>
                   </li>
                     <li @click="showDropDown(1)" class="nav-item" id="navbarDropdown">
-                      <img src="../icons/header/info.png" alt="info" />
+                      <img src="../icons/header/info.png" alt="info" class="li-img" />
                       <a class="nav-link" href="#" >
                         {{this.informacoesText()}}
                       </a>
@@ -35,7 +35,7 @@
 
                     
                     <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
-                      <img src="../icons/header/paper.png" alt="paper" />
+                      <img src="../icons/header/paper.png" alt="paper" class="li-img" />
                       <a class="nav-link" href="#" >
                         {{this.sobreSiteMim().toUpperCase()}}
                       </a>
@@ -256,9 +256,9 @@ li img {
   opacity: 1;
   transition: 0.3s ease-in-out;
 }
-.nav-item:hover img{
+.nav-item:hover .li-img{
   transform: translateY(-30px);
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 .nav-item .nav-link{
   opacity: 0;
