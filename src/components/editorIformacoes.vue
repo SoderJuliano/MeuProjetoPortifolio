@@ -372,7 +372,22 @@ export default {
     padding: 30px;
     transition-duration: 1500ms;
     transition-delay: 200ms;
+    border-radius: 10px;
+    font-family: 'Roboto Mono', monospace;
 }
+
+.body-modal-container input {
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+#modal-input {
+    border-radius: 10px;
+    padding: 5px;
+    font-family: 'Roboto Mono', monospace;
+}
+
 h3{
     color: white;
     margin-top: 10vh;
