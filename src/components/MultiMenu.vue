@@ -57,6 +57,7 @@ export default {
         overflow: scroll;
         width: 80%;
         background-color: white;
+        overflow: scroll;
     }
 }
 </style>

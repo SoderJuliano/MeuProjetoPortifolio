@@ -51,6 +51,10 @@ export default {
 </script>
 
 <style scoped>
+
+.fonts-container{
+  height: 40px;
+}
 .closeFontsDiv{
   border-radius: 5px;
   border: solid 1px black;
@@ -68,15 +72,12 @@ export default {
 }
 @media screen and(min-width: 1001px) {
   .fonts-container{
-    min-height: 100px;
-    max-height: 100%;
     width: 100%;
     background-color: white;
   }
 }
 @media screen and(max-width: 1000px) {
     .fonts-container{
-        min-height: 50px;
         overflow: scroll;
         width: 100%;
         background-color: white;

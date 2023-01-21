@@ -10,6 +10,7 @@
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
 
         <template-chooser 
+            v-if="hover==false"
             :template="template"
             @now-template1="this.$emit('now-template1')"
             @now-template2="this.$emit('now-template2')"

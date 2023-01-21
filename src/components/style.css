@@ -175,7 +175,18 @@ button:active {
 
 button {
     font-family: 'Roboto Mono', monospace;
-    min-width: 150px;
+}
+
+@media  screen and (max-width: 1000px) {
+    button {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1001px){
+    button {
+        min-width: 150px;
+    }   
 }
 
 .template2-experiencias-container:hover {

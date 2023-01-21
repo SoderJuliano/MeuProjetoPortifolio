@@ -1,5 +1,5 @@
 <template>
-    <div style="display:flex">
+    <div class="select-template">
         <button 
             @click="this.$emit('now-template1')"
             :style="template == 1 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
@@ -20,10 +20,15 @@ export default {
 }
 </script>
 <style scoped>
+
 button {
     border-radius: 15px;
     color: black;
     background-color: white;
     margin-left: 10px;
+}
+
+.select-template{
+    display: flex;
 }
 </style>
