@@ -24,7 +24,7 @@
 <script>
 import MultiMenu from './MultiMenu.vue'
 import imprimir from './Imprimir-bnt.vue'
-import TemplateChooser from './TemplateChooser.vue'
+import TemplateChooser from './multimenuComponentes/TemplateChooser.vue'
 import $ from 'jquery'
 
 export default {

@@ -3,16 +3,22 @@
         <button 
             @click="this.$emit('now-template1')"
             :style="template == 1 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
-            template1</button> 
+            <p>template1</p>
+            <img src="../../assets/templatesImg/template1.png" alt="templateimg" />
+        </button> 
         <button 
             @click="this.$emit('now-template2')"
             :style="template == 2 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
-        >template2</button>
+        >
+            <p>template2</p>            
+            <img src="../../assets/templatesImg/template2.png" alt="templateimg" />
+        </button>
     </div>
 </template>
+
 <script>
 export default {
-    name: "templateChooser",
+    name: "TemplateChooser",
     props:{
         template: Number
     },
@@ -26,6 +32,11 @@ button {
     color: black;
     background-color: white;
     margin-left: 10px;
+}
+
+button img {
+    width: 40px;
+    height: 80px;
 }
 
 .select-template{

@@ -6,11 +6,6 @@
                 <button class="bnt-close" v-else @click="close">
                     X
                 </button>
-                <template-chooser 
-                  :template="template"
-                  @now-template1="this.$emit('now-template1')"
-                  @now-template2="this.$emit('now-template2')"
-                />
             </div>
               <div class="midle-options">
                 <button @click="changeLanguage('pt-br')" class="bnt-languages">Protugues</button>
@@ -31,9 +26,7 @@
                         <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
                         <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                       </div>
-                    </li>
-
-                    
+                    </li>                    
                     <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
                       <img src="../icons/header/paper.png" alt="paper" class="li-img" />
                       <a class="nav-link" href="#" >
@@ -54,7 +47,7 @@
 </template>
 
 <script>
-import TemplateChooser from './TemplateChooser.vue'
+
 export default {
     name: 'nav-bar',
     data(){
@@ -65,12 +58,6 @@ export default {
       }
     },
     emits:['close', 'language-update', 'now-template1', 'now-template2'],
-    props:{
-      template: Number,
-    },
-    components: {
-      TemplateChooser
-    },
     methods:{
       exemplesText(){
         return this.getLanguage() == 'us-en' ? "See more" : "Mais Exemplos"
