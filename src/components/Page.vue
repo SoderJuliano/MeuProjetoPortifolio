@@ -130,7 +130,7 @@ export default {
   .main-container {
     display: block;
     height: 100%;
-    width: 100%;
+    width: 60%;
     padding-left: 30px;
   }
   .editar-competencais {

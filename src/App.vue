@@ -835,7 +835,6 @@ export default {
   }
   .main {
     display: flex;
-    position: absolute;
     width: 100vw;
     height: 100vh;
     position: absolute;
