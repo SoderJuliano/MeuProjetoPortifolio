@@ -19,7 +19,7 @@
                 <div class="dot" id="#A61C3C" style="background-color: #A61C3C">pag-#A61C3C</div>
                 <div class="dot" id="#279AF1" style="background-color: #279AF1" >pag-#279AF1</div>
                 <div class="dot" id="#ED6A5A" style="background-color: #ED6A5A" >pag-#ED6A5A</div>
-                <div class="dot" id="#1F271B" style="background-color: #1F271B" >pag-#1F271B</div>
+                <div class="dot" id="#1F271B" style="background-color: #1F271B; color: white;" >pag-#1F271B</div>
             </div>
         </div>
     </div>

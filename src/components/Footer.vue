@@ -10,6 +10,7 @@
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
 
         <template-chooser 
+            v-if="hover==false"
             :template="template"
             @now-template1="this.$emit('now-template1')"
             @now-template2="this.$emit('now-template2')"
@@ -23,7 +24,7 @@
 <script>
 import MultiMenu from './MultiMenu.vue'
 import imprimir from './Imprimir-bnt.vue'
-import TemplateChooser from './TemplateChooser.vue'
+import TemplateChooser from './multimenuComponentes/TemplateChooser.vue'
 import $ from 'jquery'
 
 export default {

@@ -3,9 +3,9 @@ input{
 }
 
 .contact-template2 .title{
+    width: 98%;
     align-items: start;
     text-align: start !important;
-    padding: 0px;
     margin: 0px;
     border-bottom: 1px solid gray;
 }
@@ -15,7 +15,7 @@ input{
 }
 
 .social-template2 {
-    width: 80%;
+    width: 100%;
     align-items: start;
     text-align: start !important;
     padding: 0px;
@@ -100,15 +100,11 @@ h3:hover .editar-animado{
 .experiences-template2-title .title{
     align-items: start;
     text-align: start !important;
-    padding: 0px;
     margin: 0px;
     border-bottom: 1px solid gray;
     font-weight: bolder;
     margin-top: 20px;
-}
-.experiences-template2-title{
-    width: 81%;
-}
+} 
 @media print {
     .editar-contact-animado{
         display: none;
@@ -158,4 +154,57 @@ h3:hover .editar-animado{
 
 .data-container{
     word-wrap: break-word;
+}
+
+.data-container:hover {
+    background-color: #d7d7d7;
+    border-radius: 10px;
+}
+
+.editar:active{
+    transform: scale(1.5);
+}
+
+button:active {
+    transform: scale(0.9);
+}
+
+button {
+    font-family: 'Roboto Mono', monospace;
+}
+
+@media  screen and (max-width: 1000px) {
+    button {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1001px){
+    button {
+        min-width: 150px;
+    }   
+}
+
+.template2-experiencias-container:hover {
+    background-color: #d7d7d7;
+    border-radius: 10px;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.template2-experiencias-container .remove-bnt 
+{
+    position: absolute;
+    margin-left: 24%;
+    margin-top: -10px;
+    display: none;
+    background-color: whitesmoke;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+
+.template2-experiencias-container:hover .remove-bnt 
+{
+    display: block;
 }

@@ -34,7 +34,7 @@ export default {
     emits:['add-SocialLink'],
     data(){
         return{
-            templateClass: "social-template"+this.template,
+            templateClass: "social-template"+this.template+" title",
             templateClassItemContainer: "social-itens-template"+this.template,
             templateClassItem: "social-item-template"+this.template,
             social: this.user.social,
@@ -54,8 +54,7 @@ export default {
         },
         getStyle(){
             return{
-                "border-bottom": "1px solid "+this.sideColor,
-                "background-color": this.backgroundColor
+                "border-bottom": "1px solid "+this.sideColor
             }
         },
         hovert(){
@@ -79,7 +78,7 @@ export default {
 <style scoped>
 .social-template1{
     align-self: center;
-    background-color: white !important;
+    background-color: white;
     color: black;
     font-weight: bolder;
     width: 80%;

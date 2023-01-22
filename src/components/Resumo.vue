@@ -16,7 +16,7 @@ export default {
   name: 'Resumo',
   data(){
     return {
-      tstyle: "template"+this.template+"-resumo-titulo",
+      tstyle: "template"+this.template+"-resumo-titulo title",
     }
   },
   props:{

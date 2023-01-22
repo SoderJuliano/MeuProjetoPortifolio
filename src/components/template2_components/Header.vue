@@ -14,9 +14,11 @@
                 id="headericon"  
                 @click="$emit('add-nome')" 
             />
-            <h2>{{this.user?.name}}</h2>
-            <h3>{{this.user?.profession}}</h3>   
-
+            <div id="text_header" >
+                <h2>{{this.user?.name}}</h2>
+                <h3>{{this.user?.profession}}</h3>   
+            </div>
+            
             <input type="file"
                 id="input"
                 ref="imgInput"  
