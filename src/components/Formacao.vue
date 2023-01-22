@@ -19,7 +19,7 @@ export default {
   data(){
     return{
       mygrade: this.user.grade,
-      tstyle: "template"+this.template+"-formacao-title",
+      tstyle: "template"+this.template+"-formacao-title title",
       containerstyle: "template"+this.template+"-formacao",
       conteinerdata: "template"+this.template+"-formacao-container",
       remove: "template"+this.template+"-remove-bnt"
@@ -115,7 +115,7 @@ export default {
 }
 .template1-formacao-title{
   align-self: center;
-  background-color: white !important;
+  background-color: white;
   color: black;
   font-weight: bolder;
   width: 80%;

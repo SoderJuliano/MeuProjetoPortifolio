@@ -3,9 +3,9 @@ input{
 }
 
 .contact-template2 .title{
+    width: 98%;
     align-items: start;
     text-align: start !important;
-    padding: 0px;
     margin: 0px;
     border-bottom: 1px solid gray;
 }
@@ -15,7 +15,7 @@ input{
 }
 
 .social-template2 {
-    width: 80%;
+    width: 100%;
     align-items: start;
     text-align: start !important;
     padding: 0px;
@@ -100,15 +100,11 @@ h3:hover .editar-animado{
 .experiences-template2-title .title{
     align-items: start;
     text-align: start !important;
-    padding: 0px;
     margin: 0px;
     border-bottom: 1px solid gray;
     font-weight: bolder;
     margin-top: 20px;
-}
-.experiences-template2-title{
-    width: 81%;
-}
+} 
 @media print {
     .editar-contact-animado{
         display: none;

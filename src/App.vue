@@ -442,20 +442,37 @@ export default {
           "5px solid rgb(255, 0, 221)";
       } else if (p.target.textContent.includes("pag-") == true) {
         let i = 0;
-        let all;
+        let all = document.getElementsByClassName("title");
+        let page_header = document.getElementsByClassName("page-header");
         //console.log(p.target.id)
         if (p.target.textContent == "pag-#1F271B") {
-          all = document.getElementsByClassName("title");
-          for (i; i < all.length; i++) {
-            all[i].style.color = "white";
-            all[i].style.backgroundColor = "#1F271B";
-          }
+          setTimeout(() => {
+            for (i; i < all.length; i++) {
+              all[i].style.color = "white";
+              all[i].style.backgroundColor = "#1F271B";
+              
+              if(page_header[0]){
+              page_header[0].style.color = "white"
+              }else{
+                document.getElementById("text_header").style.color = "white";
+              }
+            }  
+          }, 500);
+          
         } else {
+
+          if(page_header[0]){
+            page_header[0].style.color = "black"
+          }else{
+            document.getElementById("text_header").style.color = "black";
+          }
+
           all = document.getElementsByClassName("title");
           for (i; i < all.length; i++) {
             all[i].style.color = "black";
             all[i].style.backgroundColor = "white";
           }
+
         }
         p.target.id.split("").length < 8 && p.target.id.split("").length > 1
           ? ((this.mainColor = p.target.id),

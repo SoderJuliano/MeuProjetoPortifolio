@@ -2,7 +2,7 @@
   <div :class="cstyle">
       <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
-         <img v-if="template == 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
+        <img v-if="template == 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div v-if="user.hability" :class="hcstyle">
           <img src="../icons/html.png" class="habilidade-icon"/>
@@ -22,7 +22,7 @@ export default {
   emits: ['add-habilidade', 'adicionar-habilidade'],
   data(){
     return {
-      tstyle : "template"+this.template+"-title",
+      tstyle : "template"+this.template+"-title title",
       cstyle : "template"+this.template+"-container",
       hcstyle : "template"+this.template+"-habilidade-container"
     }
@@ -44,7 +44,7 @@ export default {
 
       return this.template == 2 ? {
         'border-bottom': '1px solid '+this.sideColor,
-      } : { 'background-color': this.backgroundColor }
+      } : ""
     }
   }
 }
@@ -103,6 +103,7 @@ export default {
   text-align: start;
   border-bottom: 1px solid black;
   font-weight: bold;
+  width: 100%;
 }
 .template2-title:hover .editar-animado-habilidade{
   display: block;
@@ -116,7 +117,7 @@ export default {
 }
 .template1-title{
   align-self: center;
-  background-color: white !important;
+  background-color: white;
   color: black;
   font-weight: bolder;
   width: 80%;
