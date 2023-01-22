@@ -39,7 +39,7 @@ export default {
       localStorage.setItem('grade', this.mygrade)
     },
     getStyle(){
-      return this.template == 1 ? {"background-color": this.backgroundColor} : {"border-bottom": "1px solid "+this.sideColor}
+      return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
     }
   },
   /* Este e outro jeito de observar mudancas em um objeto e executar funcoes  
