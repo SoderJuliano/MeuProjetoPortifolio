@@ -326,7 +326,7 @@ export default {
 }
 @media screen and (min-width: 1001px) {
   .side {
-    width: 30%;
+    width: 40%;
     min-width: 250px;
     background-color: gray;
     justify-content: center;
