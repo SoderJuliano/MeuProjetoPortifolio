@@ -302,6 +302,7 @@ export default {
           this.showDivModal();
           break;
         case "resumo":
+
           this.modal.mainTitle = this.languageIsEN()
             ? "About you"
             : "Resumo profissional";
@@ -312,7 +313,11 @@ export default {
             ? "Talk what kind of people you are"
             : "Descreva que tipo de proficional voce e...";
           this.modal.list = this.user.competence;
+
           this.showDivModal();
+          
+          $("#modal-input").val($("#resume").text())
+          
           break;
         case "experiencias":
           this.modal.mainTitle = this.languageIsEN()
@@ -598,7 +603,7 @@ export default {
       }
       const competencias = localStorage.getItem("cpta");
       if (competencias) {
-        const arr = competencias.split(",");
+        const arr = JSON.parse(competencias);
         this.user.competence = arr;
       }
     },

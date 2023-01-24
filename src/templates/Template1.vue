@@ -39,15 +39,16 @@ export default {
   data(){
     return{
       uExperiences: this.userExperiences,
-      titles: {
-                competencias: ["COMPETÊNCIAS", "COMPETENCE"],
-                resumo: ["RESUMO", "SUMMARY"],
-                formacao: ["FORMAÇÃO ACADÊMICA", "EDUCATION"],
-                habilidades: ["HABILIDADES", "SKILLS"],
-                contato: ["CONTATO", "CONTACT"],
-                social: ["SOCIAL", "SOCIAL"],
-                experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
-            }
+      titles: 
+        {
+          competencias: ["COMPETÊNCIAS", "COMPETENCE"],
+          resumo: ["RESUMO", "SUMMARY"],
+          formacao: ["FORMAÇÃO ACADÊMICA", "EDUCATION"],
+          habilidades: ["HABILIDADES", "SKILLS"],
+          contato: ["CONTATO", "CONTACT"],
+          social: ["SOCIAL", "SOCIAL"],
+          experiencias: ["EXPERIÊNCIAS", "EXPERIENCES"]
+        }
     }
   },
   components: {
@@ -87,7 +88,7 @@ export default {
   }
   
   .side{
-    word-break: break-all !important;
+    word-wrap: break-word;
     height: calc(100% + 30px);
   }
 }
