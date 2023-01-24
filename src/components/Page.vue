@@ -147,7 +147,7 @@ export default {
   .main-container {
     display: block;
     height: 100%;
-    width: 70%;
+    width: 60%;
     min-width: 600px;
     padding-left: 30px;
     box-shadow: 0 0 50px #ccc;
@@ -192,7 +192,7 @@ export default {
   .main-container {
     display: block;
     height: 100%;
-    width: 100%;
+    width: 60%;
     padding-left: 30px;
   }
   .editar-competencais {

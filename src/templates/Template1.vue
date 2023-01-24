@@ -81,7 +81,7 @@ export default {
 @media print {
   .custom-container{
     display: flex;
-    width: 100vw !important;
+    width: 100%;
     height: calc(100vh - 35px);
     overflow: visible;
   }

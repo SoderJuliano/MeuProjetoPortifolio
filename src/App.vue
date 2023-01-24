@@ -852,11 +852,15 @@ export default {
   }
   .main {
     display: flex;
-    width: 100vw;
+    width: 100% !important;
     height: 100vh;
     position: absolute;
     top: 0 !important;
     -webkit-print-color-adjust: exact;
+  }
+
+  .template{
+    width: 100% !important;
   }
 
   .right {
