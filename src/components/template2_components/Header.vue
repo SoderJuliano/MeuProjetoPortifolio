@@ -3,10 +3,10 @@
         <div :class="tstyle">
             <div class="line">
                 <div class="l1"></div>
-                <div class="l2"></div>
-            </div>
-            <div @click="$refs.imgInput.click()" class="pic">
+                <div @click="$refs.imgInput.click()" class="pic">
                 <img :src="imageURL" alt="perfil" class="img-pic"/>
+            </div>
+                <div class="l2"></div>
             </div>
             <img 
                 src="../../icons/header/pencil.png" 
@@ -122,41 +122,25 @@ export default{
     position: absolute;
     left: 60%;
 }
-.pic{
-    width: 150px;
-    height: 150px;
-    margin-top: 40px;
-}
 .line {
     left: 0px;  
-    display:flax;
+    display: flex;
     width: 100%;
-    position: absolute;
     margin-top: 74px;
     justify-content: center;
 }
 .l1, .l2{
+    margin-top: 80px;
     width: 200px;
-    position: relative;
     height: 4px;
     background-color: black;
-    margin: 0 auto;
-    right: 160px;
     z-index: 1;
 }
-.l2{
-    left: 190px;
+
+.pic {
+    margin: 0 0;
 }
-@media screen and (max-width: 400px){
-    .l2{
-        left: 111px;
-        width: 15%;
-    }
-    .l1{
-        width: 15%;
-        right: 95px;
-    }
-}
+
 @media screen and (max-width: 700px) and (min-width: 401px) {
     .l2{
         display: none;
@@ -165,22 +149,5 @@ export default{
         display: none;
     }
 }
-@media screen and (min-width: 701px) and (max-width: 1024px) {
-    .l2{
-        left: 150px;
-        width: 15%;
-    }
-    .l1{
-        width: 15%;
-        right: 135px;
-    }
-}
-@media print{
-    .l2{
-        left: 175px;
-    }
-    .l1{
-        right: 175px;
-    }
-}
+
 </style>

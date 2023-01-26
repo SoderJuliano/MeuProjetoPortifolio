@@ -199,7 +199,7 @@ export default {
                         this.competencias.push(document.getElementById('modal-input').value)
                     }
                     this.$emit('update: user.competence', this.competencias)
-                    localStorage.setItem('cpta', this.competencias)
+                    localStorage.setItem('cpta', JSON.stringify(this.competencias))
                     this.cancelar();
                     break; 
                 case 'New skill':
@@ -207,7 +207,7 @@ export default {
                         this.competencias.push(document.getElementById('modal-input').value)
                     }
                     this.$emit('update: user.competence', this.competencias)
-                    localStorage.setItem('cpta', this.competencias)
+                    localStorage.setItem('cpta', JSON.stringify(this.competencias))
                     this.cancelar();
                     break; 
                 case 'Sobre voce':
@@ -313,10 +313,10 @@ export default {
             const cpta = document.getElementById('competencia-input').value
             console.log('cpta '+cpta)
             if(cpta){
-                this.competencias.push(cpta)
+                this.competencias.push(JSON.parse(cpta))
                 console.log('array '+  this.competencias)
                 this.$emit('update: user.competence', this.competencias)
-                localStorage.setItem('cpta', this.competencias)
+                localStorage.setItem('cpta', JSON.stringify(this.competencias))
             }
             document.getElementById('competencia-input').value = ''
         },

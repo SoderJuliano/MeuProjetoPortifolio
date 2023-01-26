@@ -13,6 +13,7 @@
     "bootstrap-icons": "^1.7.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "jquery": "^3.6.3",
     "vue": "^3.0.0",
     "vue-cli": "^1.2.0"
   },
