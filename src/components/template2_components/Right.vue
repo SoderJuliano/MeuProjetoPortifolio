@@ -23,7 +23,7 @@
             :language="language"
             :titulo="titulo.experiencias"
             :user="userData"
-            :experiences="userExperiences"
+            :experiences="user.userExperiences"
             :sideColor="sideColor"
         />
     </div>
@@ -42,7 +42,6 @@ export default {
     emits:["add-info", "add-SocialLink", "add-Experiencia", "update-experiences"],
     props:{
         user: Object,
-        userExperiences: Array,
         sideColor: String,
         language: String,
     },

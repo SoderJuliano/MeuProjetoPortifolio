@@ -27,7 +27,6 @@
                 @add-experiencia="$emit('add-experiencia')"
                 @update-experiences="$emit('update-experiences')"
                 :user="userData"
-                :userExperiences="userExperiences"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"

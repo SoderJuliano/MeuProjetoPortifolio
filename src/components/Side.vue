@@ -22,7 +22,7 @@
       </p>
       <br />
       <div
-        v-for="(item, index) in this.usuario.contact.email"
+        v-for="(item, index) in user.contact.email"
         :key="index"
         class="data-container"
       >
@@ -30,7 +30,7 @@
         <span class="email-text">{{ item }}</span>
       </div>
       <div
-        v-for="(item, index) in this.usuario.contact.phone"
+        v-for="(item, index) in user.contact.phone"
         :key="index"
         class="data-container"
       >
@@ -44,12 +44,12 @@
       </div>
       <div class="data-container">
         <img
-          v-if="this.usuario.contact.adress"
+          v-if="user.contact.adress"
           src="../icons/adress.png"
           alt="adress"
           class="adress-icon"
         />
-        <span class="endereco-text">{{ this.usuario.contact.adress }}</span>
+        <span class="endereco-text">{{ user.contact.adress }}</span>
       </div>
     </div>
     
@@ -59,7 +59,7 @@
       class="template-data"
       :titulo="titles.formacao"
       :backgroundColor="cor"
-      :user="usuario"
+      :user="user"
       template=1
       :language="language"
     />
@@ -119,8 +119,7 @@ export default {
       exibirLinks: true,
       exibirFormacao: true,
       exibirHabilidade: true,
-      exibirSocial: true,
-      usuario: this.user
+      exibirSocial: true
     };
   },
   methods: {

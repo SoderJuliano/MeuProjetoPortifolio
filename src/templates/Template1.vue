@@ -21,7 +21,6 @@
         :fontColor=fontColor
         :cor="mainColor"
         :user="user"
-        :userExperiences="uExperiences"
         :language="language"
       />
       
@@ -60,7 +59,6 @@ export default {
     sideColor : String,
     fontColor: String,
     user: Object,
-    userExperiences: Array,
     language: String,
   },
   methods: {
