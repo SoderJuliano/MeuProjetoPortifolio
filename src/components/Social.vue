@@ -5,7 +5,7 @@
             <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
     </div>
     <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
-        <div :class="templateClassItem" v-for="(item, index) in this.user.social " :key="index" >
+        <div :class="templateClassItem" v-for="(item, index) in this.userData.social" :key="index" >
             <img v-if="item.includes('github')" src="../icons/git.png" class="social-icon"/>
             <img v-if="item.includes('youtube')" src="../icons/youtube.png" class="social-icon"/>
             <img v-if="item.includes('linkedin')" src="../icons/in.png" class="social-icon"/>
@@ -14,9 +14,9 @@
             <img v-if="item.includes('twitter')" src="../icons/twit.png" class="social-icon"/>
             
             <span>{{item}}</span> 
-            <img @click="remove(item)" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+            <img @click="remove" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
             <!-- fazer um componente para este botao -->
-            <img @click="remove(item)" :id="`${item}`" class="remove-bnt-delete" src="../icons/animados/lixeira.gif" alt="remove-bnt"/>
+            <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../icons/animados/lixeira.gif" alt="remove-bnt"/>
         </div>
     </div>
 </template>
@@ -42,14 +42,9 @@ export default {
         }
     },
     methods:{
-        remove(id){
-            document.getElementById(id).style.display = "none"
-            let rs = localStorage.getItem('redesociais')
-            let newarray = rs.split(",")
-            newarray.splice(rs.split(",").indexOf(id), 1)
-            this.social = newarray
-            localStorage.setItem('redesociais', newarray)
-            this.userData.social = this.social
+        remove(event){
+            this.userData.social.splice(this.userData.social.indexOf(event.target.id), 1)
+            localStorage.setItem("user", this.userData)
             this.$emit('update-user', this.userData)
         },
         getStyle(){

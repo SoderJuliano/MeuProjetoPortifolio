@@ -65,9 +65,10 @@
 <script>
 
 import strings from '../components/configs/strings.json'
+import Job from '../model/jobModel.js'
 import $ from 'jquery'
 
-class Job {
+/* class Job {
     company = null;
     function = null;
     description = null;
@@ -83,7 +84,9 @@ class Job {
 }
 function getNewJob(){
     return new Job();
-}
+} */
+
+let currentJobId;
 
 export default {
     name: 'modal-input',
@@ -94,7 +97,7 @@ export default {
             ptitle: '',
             ptitle2: '',
             ptitle3: '',
-            jobs: this.experiences,
+            job: Object,
             userData: this.user
         }
     },
@@ -145,13 +148,21 @@ export default {
                 this.ptitle = 'Endereco'
             }
             else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
-                localStorage.setItem('jobCompany', document.getElementById('modal-input').value)
-                localStorage.setItem('jobFunction', document.getElementById('modal-input2').value)
+                const job = new Job(this.userData.userExperiences.length);
+                this.currentJobId = job.getId();
+                job.setCompany($("#modal-input").val())
+                job.setPosition($("#modal-input2").val())
+                console.log(job)
+                this.userData.userExperiences.push(job);
+                this.updateUser()
+
                 this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
                 this.ptitle2 = this.language == 'pt-br' ? 'Data de demicao' : 'Date of your last day working here'
             }else{
-                localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
-                localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
+                this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
+                this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
+                //localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
+                //localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
 
                 this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
@@ -185,14 +196,14 @@ export default {
                     break;
                 case 'Nova competência':
                     if(document.getElementById('modal-input').value){
-                        this.userData.competencias.push(document.getElementById('modal-input').value)
+                        this.userData.competence.push(document.getElementById('modal-input').value)
                     }
                     this.updateUser();
                     this.cancelar();
                     break; 
                 case 'New skill':
                     if(document.getElementById('modal-input').value){
-                        this.userData.competencias.push(document.getElementById('modal-input').value)
+                        this.userData.competence.push(document.getElementById('modal-input').value)
                     }
                     this.updateUser();
                     this.cancelar();
@@ -211,13 +222,10 @@ export default {
                     break;   
                 case 'Descricao':
                     // sobre experiencia de trabalho
-                    localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
-                    
                     this.adicionarJobs()
                     this.cancelar();
                     break;
                 case 'Description':
-                    localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
                     this.adicionarJobs()
                     this.cancelar();
                     break;
@@ -264,6 +272,9 @@ export default {
         addSocialLink(){
             this.userData.social.push($("#modal-input").val())
             this.updateUser()
+        },
+        adicionarJobs(){
+            this.userData.userExperiences[this.currentJobId].setDescription()
         },
         updateUser(){
             this.$emit('update-user', this.userData)

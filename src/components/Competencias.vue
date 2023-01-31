@@ -4,7 +4,7 @@
         <img id="edit-com" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
         <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
-      <div v-for="(item, index) in competencias " :key="index" class="competencias-container">
+      <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
         <span class="data-container-page">{{item}}
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
@@ -28,7 +28,7 @@ export default {
   },
   data(){
     return{
-      competencias : this.user.competence,
+      userData : this.user,
       conteinerstyle : "template"+this.template+"-competencias"
     }
   },
@@ -55,9 +55,8 @@ export default {
           }
       },
       removeCompetence(event){
-        this.competencias.splice(this.competencias.indexOf(event.target.id),1)
-        this.$emit('update: user.competence', this.competencias)
-        localStorage.setItem('cpta', JSON.stringify(this.competencias))
+        this.userData.competence.splice(this.userData.competence.indexOf(event.target.id), 1)
+        localStorage.setItem('user', JSON.stringify(this.userData))
       },
   }
 }

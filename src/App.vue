@@ -170,7 +170,6 @@ export default {
     },
     adicionarExperiencias(experiencias) {
       this.user.userExperiences = experiencias;
-      console.log(experiencias);
     },
     adicionarNovaHabilidade(habilidade) {
       this.user.hability = habilidade;
