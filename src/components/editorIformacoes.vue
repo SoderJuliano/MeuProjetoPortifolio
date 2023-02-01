@@ -185,7 +185,7 @@ export default {
                     : setTimeout(() => {this.$emit('add-profissao')}, 800)
                     break;
                 case 'Sua profissão':
-                    this.userData.userExperiences.push( document.getElementById('modal-input').value)
+                    this.userData.profession = document.getElementById('modal-input').value
                     this.updateUser()
                     this.cancelar()
                     break;
