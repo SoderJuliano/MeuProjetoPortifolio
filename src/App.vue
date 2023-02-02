@@ -27,6 +27,8 @@
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
         :template="template"
+        :user="user"
+        @update-user="updateUser"
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
         class="multi-menu-class"
@@ -660,14 +662,6 @@ export default {
     this.language = localStorage.getItem("lng")
       ? localStorage.getItem("lng")
       : "pt-br";
-
-    let img = localStorage.getItem("profileimg");
-    let Img = localStorage.getItem("profileImg");
-    if (img || Img) {
-      this.getUserProfileIMG();
-    } else {
-      this.user.img = "../icons/avatares/avatar1.png";
-    }
     
   },
   /* mounted() {

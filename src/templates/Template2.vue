@@ -4,7 +4,7 @@
             <Header 
                 :mainColor="mainColor"
                 :fontColor="fontColor"
-                :user="user"
+                :user="userData"
                 :language="language"
                 @add-nome="$emit('add-nome')"
             />
