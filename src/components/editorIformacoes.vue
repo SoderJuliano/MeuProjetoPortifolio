@@ -177,7 +177,7 @@ export default {
                 case 'Digite nome':
                     this.userData.name = document.getElementById('modal-input').value
                     this.template == 1 ? (this.updateUser(), this.cancelar())
-                    : setTimeout(() => {this.$emit('add-profissao')}, 800)
+                    : (this.updateUser(), setTimeout(() => {this.$emit('add-profissao')}, 800))
                     break;
                 case 'Type your name':
                     this.userData.name = document.getElementById('modal-input').value
@@ -190,7 +190,7 @@ export default {
                     this.cancelar()
                     break;
                 case 'Your profession':
-                    this.userData.userExperiences.push( document.getElementById('modal-input').value)
+                    this.userData.profession = document.getElementById('modal-input').value
                     this.updateUser()
                     this.cancelar()
                     break;

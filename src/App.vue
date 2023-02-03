@@ -44,7 +44,7 @@
       @add-resumo="editarResumo"
       @add-competencia="editarCompetencias"
       @add-experiencia="editarExperiencias"
-      @add-nome="this.showModal('nome')"
+      @add-nome="editarNome"
       @add-profissao="this.showModal('profissao')"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
@@ -66,7 +66,7 @@
       class="template"
       @add-experiencia="editarExperiencias"
       @add-competencia="editarCompetencias"
-      @add-nome="this.showModal('nome')"
+      @add-nome="editarNome"
       @add-profissao="this.showModal('profissao')"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
@@ -179,18 +179,6 @@ export default {
     adicionarNovaFormacao(formacao) {
       this.user.grade.push(formacao);
     },
-    contatoIsEmpty() {
-      return localStorage.getItem("contato") == null;
-    },
-    nameIsEmpty() {
-      return localStorage.getItem("user-name") == null;
-    },
-    professionIsEmpty() {
-      return localStorage.getItem("profession") == null;
-    },
-    resumeIsEmpty() {
-      return localStorage.getItem("about") == null;
-    },
     languageIsEN() {
       return this.language == "us-en";
     },
@@ -231,6 +219,12 @@ export default {
     },
     editarResumo() {
       this.showModal("resumo");
+    },
+    editarNome(){
+      this.showModal('nome')
+      setTimeout(() => {
+        $("#modal-input").val(this.user.name);
+      }, 400);
     },
     showDivModal() {
       document.getElementsByClassName("main-modal-container")[0].style.width =
