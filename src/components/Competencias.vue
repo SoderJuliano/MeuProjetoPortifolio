@@ -95,6 +95,7 @@ export default {
 .data-container-page{
     width: 100%;
     height: 100%;
+    padding: 10px;
 }
 .editar{
   float: right;
