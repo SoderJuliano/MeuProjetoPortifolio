@@ -154,7 +154,6 @@ export default {
                 job.setPosition($("#modal-input2").val())
                 console.log(job)
                 this.userData.userExperiences.push(job);
-                this.updateUser()
 
                 this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
                 this.ptitle2 = this.language == 'pt-br' ? 'Data de demicao' : 'Date of your last day working here'
@@ -163,7 +162,7 @@ export default {
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
                 //localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
                 //localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
-
+                console.log(this.userData.userExperiences[this.currentJobId])
                 this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
@@ -274,7 +273,8 @@ export default {
             this.updateUser()
         },
         adicionarJobs(){
-            this.userData.userExperiences[this.currentJobId].setDescription()
+            //! Here I put the last modal text area content, the job desciption
+            this.userData.userExperiences[this.currentJobId].setDescription($("#modal-input3").val())
         },
         updateUser(){
             this.$emit('update-user', this.userData)
@@ -309,7 +309,7 @@ export default {
             this.ptitle = '';
             this.ptitle2 = '';
             this.ptitle3 = '';
-            document.getElementById('modal-input').value = ""
+            document.getElementById('modal-input') != null ? document.getElementById('modal-input').value = "" : ""
         },
         changePage(){
             document.getElementsByClassName("body-modal-container")[0].style.opacity = "0";

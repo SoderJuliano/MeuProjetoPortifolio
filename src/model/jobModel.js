@@ -8,14 +8,10 @@ export default class Job {
 
     constructor(id)
     {
-        alert(id)
-        this.id = genereteId(id);
+        this.id = id;
+        console.log("new job id: "+this.id);
     }
 
-    genereteId(id)
-    {
-        return id > 0 ? Math.floor(Math.random() * (100000 - 100)) + 100 : id;
-    }
 
     /** getters */
     
