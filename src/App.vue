@@ -6,7 +6,6 @@
     :title2="modal.title2"
     :placeholder2="modal.placeholder2"
     :user="user"
-    @update-experiences="adicionarExperiencias"
     :language="language"
     :template="template"
     @adicionar-formacao="adicionarNovaFormacao"
@@ -40,6 +39,7 @@
     <template1
       v-if="template == 1"
       :language="language"
+      @update-user="updateUser"
       @add-info="addInfo"
       @add-resumo="editarResumo"
       @add-competencia="editarCompetencias"

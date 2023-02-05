@@ -14,6 +14,7 @@ export default class MyNameClass {
         adress : "",
     };
     userExperiences = [];
+    imgForReal = 0
 
     updator(user) 
     {

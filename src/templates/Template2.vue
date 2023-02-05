@@ -62,9 +62,6 @@ export default {
             userData: this.user
         }
     },
-    mounted(){
-        console.log(this.userData)
-    }
 }
 </script>
 <style scoped>

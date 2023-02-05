@@ -275,6 +275,7 @@ export default {
         adicionarJobs(){
             //! Here I put the last modal text area content, the job desciption
             this.userData.userExperiences[this.currentJobId].setDescription($("#modal-input3").val())
+            this.updateUser();
         },
         updateUser(){
             this.$emit('update-user', this.userData)

@@ -53,7 +53,6 @@
     </div>
 </template>
 <script>
-import { objectExpression } from '@babel/types'
 import $ from 'jquery'
 
 export default {
@@ -75,34 +74,36 @@ export default {
     emits:['update-user'],  
     methods:{
         changeAvatar(id){
+            $(".l1").css("display", "block")
+            $(".l2").css("display", "block")
+            $(".pic").css("display", "block")
             console.log("o ide é ->"+id.target.id)
             if(id.target.id=="a1"){
                 this.userData.avatarImg = this.av1
-                this.$emit("update-user", this.userData)
             }else if(id.target.id=="a2"){
                 this.userData.avatarImg = this.av2
-                this.$emit("update-user", this.userData)
             }
             else if(id.target.id=="a3"){
                 this.userData.avatarImg = this.av3
-                this.$emit("update-user", this.userData)
             }
             else if(id.target.id=="a4"){
                 this.userData.avatarImg = this.av4
-                this.$emit("update-user", this.userData)
             }
             else if(id.target.id=="a5"){
+                $(".l1").css("display", "none")
+                $(".l2").css("display", "none")
+                $(".pic").css("display", "none")
                 this.userData.avatarImg = "none"
-                this.$emit("update-user", this.userData)
             }
             else if(id.target.id=="a5.1"){
                 this.userData.avatarImg = this.av5
-                this.$emit("update-user", this.userData)
             }
             else if(id.target.id=="a6"){
                 this.userData.avatarImg = this.av6
-                this.$emit("update-user", this.userData)
             }
+            //img-pic
+            $(".img-pic").attr("src", this.userData.avatarImg)
+            localStorage.setItem('user', JSON.stringify(this.userData))
         },
         openContainer(){
             $(".avatares-subcontainer").css({"display": "grid", "position": "absolute"});
