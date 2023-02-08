@@ -600,45 +600,7 @@ export default {
         this.user.realImg = pimg;
       }
 
-    },
-    /*setToEn() {
-      if (this.contatoIsEmpty()) {
-        (this.user.contact.email = [strings[1].emailSpan]),
-          (this.user.contact.phone = [strings[1].phone]),
-          (this.user.contact.adress = strings[1].address),
-          (this.user.contact.adress = this.languageIsEN()
-            ? strings[1].adress
-            : strings[0].adress);
-      }
-      if (this.nameIsEmpty()) {
-        this.user.name = strings[1].yname;
-      }
-      if (this.professionIsEmpty()) {
-        this.user.profession = strings[1].yjob;
-      }
-      if (this.resumeIsEmpty()) {
-        this.user.resume = strings[1].aboutSpan;
-      }
-    },
-    setToPT() {
-      if (this.contatoIsEmpty()) {
-        (this.user.contact.email = [strings[0].emailSpan]),
-          (this.user.contact.phone = [strings[0].phone]),
-          (this.user.contact.adress = strings[0].address),
-          (this.user.contact.adress = this.languageIsEN()
-            ? strings[1].adress
-            : strings[0].adress);
-      }
-      if (this.nameIsEmpty()) {
-        this.user.name = strings[0].yname;
-      }
-      if (this.professionIsEmpty()) {
-        this.user.profession = strings[0].yjob;
-      }
-      if (this.resumeIsEmpty()) {
-        this.user.resume = strings[1].aboutSpan;
-      }
-    },*/
+    }
   },
   beforeMount() {
     this.getColors();
