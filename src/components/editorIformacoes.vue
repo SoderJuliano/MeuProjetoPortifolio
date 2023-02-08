@@ -295,7 +295,7 @@ export default {
             endereco += bairro ? bairro+", " : ""
             endereco += cidade ? cidade+", " : ""
             endereco += estado ? estado+", " : ""
-            endereco += pais ? pais+"." : "."
+            endereco += pais ? pais+"." : endereco ? "." : ""
 
             this.userData.contact.adress = endereco
 
