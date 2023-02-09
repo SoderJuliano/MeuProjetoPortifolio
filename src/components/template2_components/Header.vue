@@ -113,7 +113,7 @@ export default {
 
 .profile-style:hover .editar-animado-nome{
     display: block;
-    width: 30px;
+    width: 20px;
 }
 .editar-animado-nome{
     display: none;

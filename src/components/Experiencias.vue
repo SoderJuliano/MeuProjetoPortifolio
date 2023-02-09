@@ -82,7 +82,7 @@ export default {
   
 }
 .editar-animado-resumo{
-  width:30px;
+  width:20px;
   display: none;
   float:right;
 }
@@ -106,6 +106,15 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
 }
+
+.template1-experiencias-container:hover .remove-bnt{
+  display: block;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  float: right;
+}
+
 .title{
     width: 98.35%;
 }

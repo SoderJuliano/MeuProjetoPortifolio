@@ -59,8 +59,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .editar-animado-habilidade{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   float: right;
   display: none;
 }
@@ -77,6 +77,17 @@ export default {
   margin: 0 10%;
   display: flex;
 }
+
+.template1-formacao-container:hover {
+  background-color: #d7d7d7;
+  border-radius: 10px;
+}
+
+.template2-formacao-container:hover {
+  background-color: #d7d7d7;
+  border-radius: 10px;
+}
+
 .template2-formacao-container{
   width: 80%;
   margin-left: 20px; 
@@ -96,16 +107,38 @@ export default {
 }
 .template1-remove-bnt{
   width: 20px;
-  position: absolute;
-  margin-top: 20px;
-  margin-left: 190px;
-}
-.template2-remove-bnt{
+  height: 20px;
+  position: relative;
+  margin-top: 10px;
   float: right;
+  display: none;
+}
+
+.template1-formacao-container:hover .template1-remove-bnt{
+  display: block;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.template2-formacao-container span {
+  width: 100%;
+}
+
+.template2-formacao-container:hover .template2-remove-bnt {
+  display: block;
+  float: right;
+}
+
+.template2-remove-bnt{
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
   width: 20px;
   height: 20px;
   margin-top: 20px;
   margin-right: 35px;
+  display: none;
 }
 .template2-formacao-title{
   text-align: start;

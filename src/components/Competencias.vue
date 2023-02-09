@@ -66,8 +66,8 @@ export default {
 <style scoped>
 .editar-competencias-animado{
   float: right;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   display: none;
 }
 .title:hover .editar-competencias-animado{
@@ -89,6 +89,15 @@ export default {
   padding-top: 20px;
   display: flex;
 }
+
+.competencias-container:hover .remove-bnt{
+  display: block;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  float: right;
+}
+
 .title{
     width: 98.35%;
 }
@@ -96,7 +105,14 @@ export default {
     width: 100%;
     height: 100%;
     padding: 10px;
+    min-height: 30px;
 }
+
+.data-container-page:hover {
+  background-color: #d7d7d7;
+  border-radius: 10px;
+}
+
 .editar{
   float: right;
 }
