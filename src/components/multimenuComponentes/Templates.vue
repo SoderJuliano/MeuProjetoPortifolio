@@ -3,7 +3,8 @@
     <div>
         <p class="tside" @click="openTemplates">TEMPLATES</p>
     </div>
-    <div class="dropdown">
+    <div class="dropdown-templates">
+        <div class="closeDiv" @click="closeDiv()">X</div>
         <TemplateChooser 
             :template="template"
             @now-template1="this.$emit('now-template1')"
@@ -15,6 +16,7 @@
 
 <script>
 
+import $ from 'jquery'
 import TemplateChooser from './TemplateChooser.vue'
 
 export default {
@@ -25,6 +27,14 @@ export default {
     },
     components: {
         TemplateChooser
+    },
+    methods: {
+        openTemplates(){
+            $(".dropdown-templates").css("display", "block")
+        },
+        closeDiv(){
+            $(".dropdown-templates").css({"display": "none"});
+        }
     }
 }
 </script>
