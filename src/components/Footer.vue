@@ -2,6 +2,7 @@
     <multi-menu
         v-if="hover==true"
         class="multiMenu"
+        :template="template"
         @click="changefontM"
         @now-template1="this.$emit('now-template1')"
         @now-template2="this.$emit('now-template2')"
@@ -13,6 +14,7 @@
         <imprimir
             class="imprimirbotao"
         />
+        <img class="menuupimg-down" @click="menuDown" src="../assets/arrow-down.png" alt="menu down"/>
     </div>
 </template>
 
@@ -40,6 +42,11 @@ export default {
     },
     emits:["font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color"],
     methods:{
+        menuDown(){
+            $(".footer-menu-bar").css("display", "none");
+            $(".menuupimg").css("display", "block");
+            $(".menuupimg-down").css("display", "none");
+        },
         changefontM(p){
             // formas
             if(p.target.id=="square"){
@@ -206,6 +213,15 @@ img{
     .multiMenu::-webkit-scrollbar-thumb {
         background-color: #d4aa70;
         border-radius: 100px;
+    }
+
+    .menuupimg-down {
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 4px;
+        height: 30px;
+        border-radius: 5px;
+        border: solid 1px black;
     }
 
 /*     .multiMenu:hover .template {

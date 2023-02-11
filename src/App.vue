@@ -160,6 +160,7 @@ export default {
     footerUp() {
       $(".footer-menu-bar").css("display", "block");
       $(".menuupimg").css("display", "none");
+      $(".menuupimg-down").css("display", "block");
     },
     changefont(newFont) {
       this.font = newFont;
@@ -692,6 +693,10 @@ export default {
     display: none;
   }
   #navbar {
+    display: none;
+  }
+
+  .menuupimg-down {
     display: none;
   }
 }
