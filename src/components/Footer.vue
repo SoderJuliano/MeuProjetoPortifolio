@@ -3,18 +3,13 @@
         v-if="hover==true"
         class="multiMenu"
         @click="changefontM"
+        @now-template1="this.$emit('now-template1')"
+        @now-template2="this.$emit('now-template2')"
     />
     <div class="footer">
         <img v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
-
-        <template-chooser 
-            v-if="hover==false"
-            :template="template"
-            @now-template1="this.$emit('now-template1')"
-            @now-template2="this.$emit('now-template2')"
-        />
         <imprimir
             class="imprimirbotao"
         />

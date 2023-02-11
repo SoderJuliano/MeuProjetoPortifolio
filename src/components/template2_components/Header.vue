@@ -140,6 +140,12 @@ export default {
     margin: 0 0;
 }
 
+@media screen and (max-width: 1000px ) {
+    .pic {
+        max-height: 150px;
+    }
+}
+
 @media screen and (max-width: 700px) and (min-width: 401px) {
     .l2{
         display: none;
