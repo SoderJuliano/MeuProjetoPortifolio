@@ -2,22 +2,19 @@
     <multi-menu
         v-if="hover==true"
         class="multiMenu"
+        :template="template"
         @click="changefontM"
+        @now-template1="this.$emit('now-template1')"
+        @now-template2="this.$emit('now-template2')"
     />
     <div class="footer">
         <img v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
-
-        <template-chooser 
-            v-if="hover==false"
-            :template="template"
-            @now-template1="this.$emit('now-template1')"
-            @now-template2="this.$emit('now-template2')"
-        />
         <imprimir
             class="imprimirbotao"
         />
+        <img class="menuupimg-down" @click="menuDown" src="../assets/arrow-down.png" alt="menu down"/>
     </div>
 </template>
 
@@ -45,6 +42,11 @@ export default {
     },
     emits:["font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color"],
     methods:{
+        menuDown(){
+            $(".footer-menu-bar").css("display", "none");
+            $(".menuupimg").css("display", "block");
+            $(".menuupimg-down").css("display", "none");
+        },
         changefontM(p){
             // formas
             if(p.target.id=="square"){
@@ -187,8 +189,47 @@ img{
 }
 
 @media screen and (max-width: 700px){
- .imprimirbotao{
-      margin-left: 10px !important;
- }
+    .imprimirbotao{
+        margin-left: 10px !important;
+    }
+    .multiMenu-options.multiMenu{
+        padding: 10px;
+        width: 90vw;
+        height: calc(100% - 40px);
+        position: fixed;
+        bottom: 20px;
+        top: 0%;
+        z-index: 10;
+        overflow-y: scroll;
+    }
+    .multiMenu::-webkit-scrollbar {
+        width: 16px;
+    }
+    .multiMenu::-webkit-scrollbar-track {
+        background-color: #e4e4e4;
+        border-radius: 100px;
+    }
+
+    .multiMenu::-webkit-scrollbar-thumb {
+        background-color: #d4aa70;
+        border-radius: 100px;
+    }
+
+    .menuupimg-down {
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 4px;
+        height: 30px;
+        border-radius: 5px;
+        border: solid 1px black;
+    }
+
+/*     .multiMenu:hover .template {
+        display: none !important;
+    }
+    .multiMenu:hover .custom-container {
+        display: none !important;
+    } */
+
 }
 </style>

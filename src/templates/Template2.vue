@@ -4,7 +4,7 @@
             <Header 
                 :mainColor="mainColor"
                 :fontColor="fontColor"
-                :user="user"
+                :user="userData"
                 :language="language"
                 @add-nome="$emit('add-nome')"
             />
@@ -27,7 +27,6 @@
                 @add-experiencia="$emit('add-experiencia')"
                 @update-experiences="$emit('update-experiences')"
                 :user="userData"
-                :userExperiences="userExperiences"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"
@@ -63,9 +62,6 @@ export default {
             userData: this.user
         }
     },
-    mounted(){
-        console.log(this.userData)
-    }
 }
 </script>
 <style scoped>

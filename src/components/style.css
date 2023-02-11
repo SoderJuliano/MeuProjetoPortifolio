@@ -2,6 +2,44 @@ input{
     padding: 5px;
 }
 
+body{
+    transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 1000px) {
+    .dropdown-templates, .dropdown-content{
+        position: absolute;
+        top: 10%;
+        width: 80vw;
+    }
+}
+
+.dropdown-templates {
+    display: none;
+    padding: 15px;
+    height: 120px;
+    width: 300px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgba(245, 245, 245, 0.514);
+    margin-left: 15px;
+    margin-top: -15px;
+    justify-content: space-around; 
+}
+
+.side-colors{
+    display: none;
+    padding: 15px;
+    height: 120px;
+    width: 300px;
+    border-style: solid;
+    border-color: black;
+    background-color: rgba(245, 245, 245, 0.514);
+    margin-left: 15px;
+    margin-top: -15px;
+    justify-content: space-around;    
+}
+
 .contact-template2 .title{
     width: 98%;
     align-items: start;
@@ -47,6 +85,7 @@ input{
 .remove-bnt{
     float: right;
     margin-top: -10px;
+    display: none;
 }
 
 .remove-bnt-delete{
@@ -81,14 +120,14 @@ input{
 }
 h3:hover .editar-animado{
     display: block;
-    width: 30px;
+    width: 20px;
 }
 .editar-contact{
     width: 20px;
     float: right;
 }
 .editar-contact-animado{
-    width:30px;
+    width:20px;
     float: right;
     display: none;
     right: -20px;
@@ -143,6 +182,25 @@ h3:hover .editar-animado{
     display: flex;
     padding: 5px;
 }
+
+.social-item-template1:hover {
+    background-color: #d7d7d7;
+    border-radius: 10px;
+}
+
+.social-item-template1 span {
+    width: 100%;
+}
+
+.social-item-template1:hover .remove-bnt{
+    display: block;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+    position: relative;
+    float: right; 
+}
+
 .social-row span{
     margin-bottom: 5px;
     position: relative;
@@ -156,9 +214,19 @@ h3:hover .editar-animado{
     word-wrap: break-word;
 }
 
-.data-container:hover {
+/* .data-container:hover {
     background-color: #d7d7d7;
     border-radius: 10px;
+} */
+
+.template1-experiencias-container{
+    padding: 10px;
+}
+
+.template1-experiencias-container:hover {
+    background-color: #d7d7d7;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .editar:active{

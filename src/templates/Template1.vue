@@ -6,6 +6,7 @@
         @add-habilidade="$emit('add-habilidade')"
         @add-SocialLink="$emit('add-SocialLink')"
         @adicionar-habilidade="$emit('adicionar-habilidade')"
+        @update-user="$emit('update-user')"
         :cor="sideColor"
         :user="user"
         :titles="titles"
@@ -21,7 +22,6 @@
         :fontColor=fontColor
         :cor="mainColor"
         :user="user"
-        :userExperiences="uExperiences"
         :language="language"
       />
       
@@ -35,7 +35,7 @@ import Page from '../components/Page.vue'
 export default {
   name: 'template1',
   emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
-  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade'],
+  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user'],
   data(){
     return{
       uExperiences: this.userExperiences,
@@ -60,10 +60,7 @@ export default {
     sideColor : String,
     fontColor: String,
     user: Object,
-    userExperiences: Array,
     language: String,
-  },
-  methods: {
   }
 }
 </script>

@@ -53,7 +53,7 @@
       class="data-container"
       :cor="cor"
       :fontColor="fontColor"
-      :experiences="userExperiences"
+      :experiences="user.userExperiences"
       template="1"
       :titulo="titles.experiencias"
       :language="language"
@@ -97,7 +97,6 @@ export default {
     cor: String,
     fontSize: String,
     user: Object,
-    userExperiences: Array,
     language: String,
     fontColor: String,
   },

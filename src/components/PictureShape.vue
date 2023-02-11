@@ -65,4 +65,12 @@ export default {
     border: 2px solid black;
     border-radius: 11px;
 }
+
+@media screen and (max-width:1000px) {
+    .shapes {
+        position: absolute;
+        top: 10%;
+        width: 80vw;
+    }
+}
 </style>

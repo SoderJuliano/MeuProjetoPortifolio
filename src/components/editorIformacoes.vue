@@ -65,9 +65,10 @@
 <script>
 
 import strings from '../components/configs/strings.json'
+import Job from '../model/jobModel.js'
 import $ from 'jquery'
 
-class Job {
+/* class Job {
     company = null;
     function = null;
     description = null;
@@ -83,7 +84,9 @@ class Job {
 }
 function getNewJob(){
     return new Job();
-}
+} */
+
+let currentJobId;
 
 export default {
     name: 'modal-input',
@@ -94,7 +97,7 @@ export default {
             ptitle: '',
             ptitle2: '',
             ptitle3: '',
-            jobs: this.experiences,
+            job: Object,
             userData: this.user
         }
     },
@@ -135,7 +138,7 @@ export default {
         },
         proximo(title){
             this.changePage();
-            if(title == "Email"){
+            if(title == "Email"){ 
                 
                 const email = document.getElementById('modal-input').value
                 const telefone = document.getElementById('modal-input2').value
@@ -145,14 +148,21 @@ export default {
                 this.ptitle = 'Endereco'
             }
             else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
-                localStorage.setItem('jobCompany', document.getElementById('modal-input').value)
-                localStorage.setItem('jobFunction', document.getElementById('modal-input2').value)
+                const job = new Job(this.userData.userExperiences.length);
+                this.currentJobId = job.getId();
+                job.setCompany($("#modal-input").val())
+                job.setPosition($("#modal-input2").val())
+                console.log(job)
+                this.userData.userExperiences.push(job);
+
                 this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
                 this.ptitle2 = this.language == 'pt-br' ? 'Data de demicao' : 'Date of your last day working here'
             }else{
-                localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
-                localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
-
+                this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
+                this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
+                //localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
+                //localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
+                console.log(this.userData.userExperiences[this.currentJobId])
                 this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
@@ -164,70 +174,57 @@ export default {
             //title as string
             switch(title) {
                 case 'Digite nome':
-                    this.registerValues('user-name', document.getElementById('modal-input').value);
-                    this.$emit("update-name", document.getElementById('modal-input').value)
-                    this.template == 1 ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
-                    : setTimeout(() => {
-                        this.$emit('add-profissao')    
-                    }, 800);
+                    this.userData.name = document.getElementById('modal-input').value
+                    this.template == 1 ? (this.updateUser(), this.cancelar())
+                    : (this.updateUser(), setTimeout(() => {this.$emit('add-profissao')}, 800))
                     break;
                 case 'Type your name':
-                    this.registerValues('user-name', document.getElementById('modal-input').value);
-                    this.$emit("update-name", document.getElementById('modal-input').value)
-                    this.template == 1 ? (document.getElementsByClassName("name-title")[0].textContent = document.getElementById('modal-input').value, this.cancelar())
-                    : setTimeout(() => {
-                        this.$emit('add-profissao')    
-                    }, 800);
-                    
+                    this.userData.name = document.getElementById('modal-input').value
+                    this.template == 1 ? (this.updateUser(), this.cancelar())
+                    : setTimeout(() => {this.$emit('add-profissao')}, 800)
                     break;
                 case 'Sua profissão':
-                    this.registerValues('profession', document.getElementById('modal-input').value);
-                    this.template == 1 ? $("#profession-span").text(document.getElementById('modal-input').value) 
-                    : this.$emit("add-profissao", document.getElementById('modal-input').value)
-                    this.cancelar();
+                    this.userData.profession = document.getElementById('modal-input').value
+                    this.updateUser()
+                    this.cancelar()
                     break;
                 case 'Your profession':
                     this.userData.profession = document.getElementById('modal-input').value
-                    this.$emit("update-user", this.userData)
-                    this.registerValues('profession', document.getElementById('modal-input').value);
-                    this.template == 1 ? $("#profession-span").text(document.getElementById('modal-input').value) 
-                    : ''
-                    this.cancelar();
+                    this.updateUser()
+                    this.cancelar()
                     break;
                 case 'Nova competência':
                     if(document.getElementById('modal-input').value){
-                        this.competencias.push(document.getElementById('modal-input').value)
+                        this.userData.competence.push(document.getElementById('modal-input').value)
                     }
-                    this.$emit('update: user.competence', this.competencias)
-                    localStorage.setItem('cpta', JSON.stringify(this.competencias))
+                    this.updateUser();
                     this.cancelar();
                     break; 
                 case 'New skill':
                     if(document.getElementById('modal-input').value){
-                        this.competencias.push(document.getElementById('modal-input').value)
+                        this.userData.competence.push(document.getElementById('modal-input').value)
                     }
-                    this.$emit('update: user.competence', this.competencias)
-                    localStorage.setItem('cpta', JSON.stringify(this.competencias))
+                    this.updateUser();
                     this.cancelar();
                     break; 
                 case 'Sobre voce':
-                    localStorage.setItem('about', document.getElementById('modal-input').value)
-                    document.getElementById('resume').textContent = document.getElementById('modal-input').value
+                    //document.getElementById('resume').textContent = document.getElementById('modal-input').value
+                    this.userData.resume = document.getElementById('modal-input').value;
+                    this.updateUser();
                     this.cancelar();
                     break;  
                 case 'Write about you':
-                    localStorage.setItem('about', document.getElementById('modal-input').value)
-                    document.getElementById('resume').textContent = document.getElementById('modal-input').value
+                    //document.getElementById('resume').textContent = document.getElementById('modal-input').value
+                    this.userData.resume = document.getElementById('modal-input').value;
+                    this.updateUser();
                     this.cancelar();
                     break;   
                 case 'Descricao':
                     // sobre experiencia de trabalho
-                    localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
                     this.adicionarJobs()
                     this.cancelar();
                     break;
                 case 'Description':
-                    localStorage.setItem('jobDescription', document.getElementById('modal-input3').value)
                     this.adicionarJobs()
                     this.cancelar();
                     break;
@@ -263,22 +260,26 @@ export default {
             this.cancelar()
             document.getElementById('modal-input') ? document.getElementById('modal-input').value = '' : ""
         },
-        addSocialLink(){
-            let ls = localStorage.getItem('redesociais')
-            const rs = document.getElementById('modal-input').value
-            ls ? ls.includes(rs) ? alert('Esta rede ja foi insirida') : localStorage.setItem('redesociais' , ls+","+rs) : localStorage.setItem('redesociais', rs)
-            ls.includes(rs) ? "" : this.userData.social.push(rs)
-            this.$emit("update-user", this.userData)
+        adicionarFormacao(){
+            this.userData.grade.push($("#modal-input").val())
+            this.updateUser()
         },
         adicionarHabilidade(){
-            localStorage.setItem("hability", document.getElementById('modal-input').value)
-            this.$emit('adicionar-habilidade', document.getElementById('modal-input').value)
+            this.userData.hability = $("#modal-input").val()
+            this.updateUser()
         },
-        adicionarFormacao(){
-            let g = localStorage.getItem('grade')
-            g ? localStorage.setItem('grade', g+","+document.getElementById('modal-input').value)
-                : localStorage.setItem('grade', document.getElementById('modal-input').value)
-            this.$emit('adicionar-formacao', document.getElementById('modal-input').value)
+        addSocialLink(){
+            this.userData.social.push($("#modal-input").val())
+            this.updateUser()
+        },
+        adicionarJobs(){
+            //! Here I put the last modal text area content, the job desciption
+            this.userData.userExperiences[this.currentJobId].setDescription($("#modal-input3").val())
+            this.updateUser();
+        },
+        updateUser(){
+            this.$emit('update-user', this.userData)
+            localStorage.setItem("user", JSON.stringify(this.userData))
         },
         adicionarEndereco(){
             const rua = document.getElementById("modal-input1").value
@@ -294,34 +295,12 @@ export default {
             endereco += bairro ? bairro+", " : ""
             endereco += cidade ? cidade+", " : ""
             endereco += estado ? estado+", " : ""
-            endereco += pais ? pais+"." : "."
+            endereco += pais ? pais+"." : endereco ? "." : ""
 
             this.userData.contact.adress = endereco
 
-            localStorage.setItem('contato', JSON.stringify(this.userData.contact))
-            // cabe uma refatoração para simplificar o código centralizando tudo em userData
-            this.$emit("update-user", this.userData)
-        },
-        adicionarJobs(){
-            const job = getNewJob();
-            this.jobs.push(job)
-            localStorage.setItem('jobs', JSON.stringify(this.jobs))
-            this.$emit('update-experiences', this.jobs)
-            
-        },
-        adicionarCompetencia(){
-            const cpta = document.getElementById('competencia-input').value
-            console.log('cpta '+cpta)
-            if(cpta){
-                this.competencias.push(JSON.parse(cpta))
-                console.log('array '+  this.competencias)
-                this.$emit('update: user.competence', this.competencias)
-                localStorage.setItem('cpta', JSON.stringify(this.competencias))
-            }
-            document.getElementById('competencia-input').value = ''
-        },
-        registerValues(name, value){
-            localStorage.setItem(name, value)
+            //this.$emit("update-user", this.userData)
+            this.updateUser()
         },
         cancelar(){
             document.getElementsByClassName("main-modal-container")[0].style.width = "2%";
@@ -331,7 +310,7 @@ export default {
             this.ptitle = '';
             this.ptitle2 = '';
             this.ptitle3 = '';
-            document.getElementById('modal-input').value = ""
+            document.getElementById('modal-input') != null ? document.getElementById('modal-input').value = "" : ""
         },
         changePage(){
             document.getElementsByClassName("body-modal-container")[0].style.opacity = "0";

@@ -6,7 +6,10 @@
         <fonts @changefont="$emit('changefont')" />
         <Colors />
         <pageColor />
-        <Avatares />
+        <Avatares 
+            :user="user"
+            @update-user="$emit('update-user')"
+        />
         <PicureShape />
         <Templates
             :template="template"
@@ -16,7 +19,7 @@
     </div>
 </template>
 
-<script>
+<script lang="js">
 import Fonts from "./Fonts.vue";
 import Colors from "./Colors.vue";
 import pageColor from "./pageColor.vue";
@@ -37,8 +40,9 @@ export default {
     },
     props:{
         template: Number,
+        user: Object
     },
-    emits:['now-template1', 'now-template2'],
+    emits:['now-template1', 'now-template2', 'update-user'],
 };
 </script>
 <style scoped>

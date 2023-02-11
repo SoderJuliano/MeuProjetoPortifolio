@@ -53,8 +53,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .editar-animado-habilidade{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   float: right;
   display: none;
 }
@@ -66,12 +66,51 @@ export default {
   margin: 0 auto;
   display: flex;
 }
+
+.template1-habilidade-container span {
+  width: 100%;
+}
+
+.template1-habilidade-container:hover{
+  background-color: #d7d7d7;
+  border-radius: 10px;
+}
+
+.template1-habilidade-container:hover .remove-bnt{
+  background-color: white; 
+  border-radius: 10px;
+  padding: 10px;   
+  display: block;
+  margin-top: 10px;
+  position: relative;
+  float: right;
+}
+
+.template2-habilidade-container:hover {
+  background-color: #d7d7d7;
+  border-radius: 10px;
+}
+
 .template2-habilidade-container{
   display: flex !important;
   width: 100%;
   min-height: 100px;
   max-height: 100%;
 }
+
+.template2-habilidade-container span {
+  width: 100%;
+}
+
+.template2-habilidade-container:hover .remove-bnt {
+  display: block;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  float: right;
+  margin-top: 10px;
+}
+
 @media print{
   .habilidade-container{
     padding-top: 0px !important;
@@ -94,11 +133,6 @@ export default {
   padding-right: 20px;
 }
 
-.remove-bnt{
-  position: absolute;
-  margin-left: 190px;
-  margin-top: 10px;
-}
 .template2-title{
   text-align: start;
   border-bottom: 1px solid black;

@@ -64,8 +64,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .editar-animado-resumo{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   float: right;
   display: none;
 }
