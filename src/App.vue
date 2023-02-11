@@ -78,16 +78,18 @@
       :user="user"
     />
     <div class="footer">
-      <Footer
-        :template="template"
-        @font-changed="setFont"
-        @now-template1="change_template(1)"
-        @now-template2="change_template(2)"
-        @change-main-color="changeMainColor"
-        @change-font-color="changeFontColor"
-      />
+      <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
+      <div class="footer-menu-bar" style="display: none;" > 
+        <Footer
+          :template="template"
+          @font-changed="setFont"
+          @now-template1="change_template(1)"
+          @now-template2="change_template(2)"
+          @change-main-color="changeMainColor"
+          @change-font-color="changeFontColor"
+        />
+      </div>
     </div>
-
     <div class="right"></div>
   </div>
 </template>
@@ -155,6 +157,10 @@ export default {
     Template2,
   },
   methods: {
+    footerUp() {
+      $(".footer-menu-bar").css("display", "block");
+      $(".menuupimg").css("display", "none");
+    },
     changefont(newFont) {
       this.font = newFont;
       localStorage.setItem("font", newFont);

@@ -152,4 +152,12 @@ export default {
     display: none;
     overflow-y: scroll;
 }
+
+@media screen and (max-width: 1000px) {
+    .avatares-subcontainer {
+        position: absolute;
+        top: 10%;
+        width: 80vw;
+    }
+}
 </style>
