@@ -187,8 +187,38 @@ img{
 }
 
 @media screen and (max-width: 700px){
- .imprimirbotao{
-      margin-left: 10px !important;
- }
+    .imprimirbotao{
+        margin-left: 10px !important;
+    }
+    .multiMenu-options.multiMenu{
+        padding: 10px;
+        width: 90vw;
+        height: calc(100% - 40px);
+        position: fixed;
+        bottom: 20px;
+        top: 0%;
+        z-index: 10;
+        overflow-y: scroll;
+    }
+    .multiMenu::-webkit-scrollbar {
+        width: 16px;
+    }
+    .multiMenu::-webkit-scrollbar-track {
+        background-color: #e4e4e4;
+        border-radius: 100px;
+    }
+
+    .multiMenu::-webkit-scrollbar-thumb {
+        background-color: #d4aa70;
+        border-radius: 100px;
+    }
+
+/*     .multiMenu:hover .template {
+        display: none !important;
+    }
+    .multiMenu:hover .custom-container {
+        display: none !important;
+    } */
+
 }
 </style>
