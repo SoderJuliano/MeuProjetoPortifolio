@@ -85,6 +85,7 @@
           @language-update="lupdate"
           :template="template"
           @font-changed="setFont"
+          :user="user"
           @now-template1="change_template(1)"
           @now-template2="change_template(2)"
           @change-main-color="changeMainColor"

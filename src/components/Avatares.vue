@@ -74,10 +74,13 @@ export default {
     emits:['update-user'],  
     methods:{
         changeAvatar(id){
+
             $(".l1").css("display", "block")
             $(".l2").css("display", "block")
             $(".pic").css("display", "block")
+            
             console.log("o ide é ->"+id.target.id)
+            
             if(id.target.id=="a1"){
                 this.userData.avatarImg = this.av1
             }else if(id.target.id=="a2"){
@@ -101,6 +104,11 @@ export default {
             else if(id.target.id=="a6"){
                 this.userData.avatarImg = this.av6
             }
+
+            if(this.userData.avatarImg != null && this.userData.avatarImg.length > 0){
+                this.userData.realImg = "";
+            }
+            
             //img-pic
             $(".img-pic").attr("src", this.userData.avatarImg)
             localStorage.setItem('user', JSON.stringify(this.userData))

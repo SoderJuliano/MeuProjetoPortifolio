@@ -2,6 +2,7 @@
     <multi-menu
         v-if="hover==true"
         class="multiMenu"
+        :user="user"
         :template="template"
         @click="changefontM"
         @now-template1="this.$emit('now-template1')"
@@ -41,7 +42,8 @@ export default {
     props:{
        // mainColor:String
         template: Number,
-        language: String
+        language: String,
+        user: Object
     },
     emits:["language-update", "font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color"],
     methods:{
