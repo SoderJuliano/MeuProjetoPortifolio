@@ -81,6 +81,8 @@
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
       <div class="footer-menu-bar" style="display: none;" > 
         <Footer
+          :language="language"
+          @language-update="lupdate"
           :template="template"
           @font-changed="setFont"
           @now-template1="change_template(1)"

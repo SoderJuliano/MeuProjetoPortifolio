@@ -11,6 +11,8 @@
         <img v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
         <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
+        <span v-if="this.language != 'pt-br'" @click="this.$emit('language-update', 'pt-br')" >pt-br</span>
+        <span v-if="this.language != 'us-en'" @click="this.$emit('language-update', 'us-en')" >en-us</span>
         <imprimir
             class="imprimirbotao"
         />
@@ -39,8 +41,9 @@ export default {
     props:{
        // mainColor:String
         template: Number,
+        language: String
     },
-    emits:["font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color"],
+    emits:["language-update", "font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color"],
     methods:{
         menuDown(){
             $(".footer-menu-bar").css("display", "none");
@@ -157,6 +160,16 @@ export default {
 }
 </script>
 <style scoped>
+
+.footer span {
+    padding: 5px;
+    width: 45px;
+    margin: auto 10px;
+    border: solid 1px black;
+    border-radius: 15px;
+    text-align: center;
+}
+
 .imprimirbotao{
     margin-top: 2%;
     margin-left: 20%;
@@ -190,7 +203,7 @@ img{
 
 @media screen and (max-width: 700px){
     .imprimirbotao{
-        margin-left: 10px !important;
+        margin: 10px 10px;
     }
     .multiMenu-options.multiMenu{
         padding: 10px;
@@ -216,12 +229,10 @@ img{
     }
 
     .menuupimg-down {
-        margin-left: 20%;
-        margin-right: 20%;
         margin-top: 4px;
+        position: relative;
+        float: right;
         height: 30px;
-        border-radius: 5px;
-        border: solid 1px black;
     }
 
 /*     .multiMenu:hover .template {
