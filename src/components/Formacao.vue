@@ -143,7 +143,7 @@ export default {
 .template2-formacao-title{
   text-align: start;
   margin-left: 10px !important;
-  width: 80%;
+  width: 84.5%;
   font-weight: bolder;
 }
 .template1-formacao-title{

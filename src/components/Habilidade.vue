@@ -146,7 +146,7 @@ export default {
   display: none;
 }
 .template2-container{
-  width: 80%;
+  width: 84.5%;
   padding-left: 10px;
 }
 .template1-title{
