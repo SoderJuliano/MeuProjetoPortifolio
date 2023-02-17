@@ -79,7 +79,7 @@ export default {
             $(".l2").css("display", "block")
             $(".pic").css("display", "block")
             
-            console.log("o ide é ->"+id.target.id)
+            console.log("o id é ->"+id.target.id)
             
             if(id.target.id=="a1"){
                 this.userData.avatarImg = this.av1
