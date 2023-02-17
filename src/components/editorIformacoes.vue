@@ -337,7 +337,7 @@ export default {
     background-color: rgb(74, 74, 74);
     justify-content: center;
     text-align: center;
-    transition-duration: 1500ms;
+    transition-duration: 900ms;
     transition-delay: 200ms;
 }
 .body-modal-container{

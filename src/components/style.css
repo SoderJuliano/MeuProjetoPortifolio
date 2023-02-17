@@ -234,7 +234,7 @@ h3:hover .editar-animado{
 }
 
 button:active {
-    transform: scale(0.9);
+    transform: scale(0.7);
 }
 
 button {
