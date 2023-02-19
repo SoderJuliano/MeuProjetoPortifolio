@@ -26,7 +26,7 @@
         :key="index"
         class="data-container"
       >
-        <img v-if="item" src="../icons/envelope.svg" class="email-icon" />
+        <img v-if="item" @click="this.$emit('choose-emailIcon')" src="../icons/envelope.svg" class="email-icon" />
         <span class="email-text">{{ item }}</span>
       </div>
       <div
@@ -112,6 +112,7 @@ export default {
     "add-habilidade",
     "add-SocialLink",
     "adicionar-habilidade",
+    "choose-emailIcon",
   ],
   data() {
     return {

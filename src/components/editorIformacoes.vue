@@ -1,7 +1,7 @@
 <template>
     <div class="main-modal-container">
         <h3>{{mainTitle}}</h3>
-        <div v-if="title!='Email'" class="body-modal-container">
+        <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
                     <span :style="title=='Sobre voce' || title=='Write about you'  ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
                     <br v-if="title=='Write about you'" />
@@ -58,7 +58,13 @@
                 <br><br>
                 <button v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
-        </div>
+        </div> 
+    </div>
+    <!-- New component for chose icons -->
+    <div v-if="mainTitle != 'iconChooser'" class="iconsChooser">
+            <IconChooser
+                title="title"
+            />
     </div>
 </template>
 
@@ -66,27 +72,9 @@
 
 import strings from '../components/configs/strings.json'
 import Job from '../model/jobModel.js'
+import IconChooser from './iconComponent/IconChooser.vue';
 import $ from 'jquery'
 
-/* class Job {
-    company = null;
-    function = null;
-    description = null;
-    dateHired = null;
-    dateFired = null;
-    constructor() { 
-        this.company = localStorage.getItem('jobCompany');
-        this.function = localStorage.getItem('jobFunction');
-        this.description = localStorage.getItem('jobDescription');
-        this.dateHired = localStorage.getItem('jobHired');
-        this.dateFired = localStorage.getItem('jobFired');
-    }
-}
-function getNewJob(){
-    return new Job();
-} */
-
-let currentJobId;
 
 export default {
     name: 'modal-input',
@@ -100,6 +88,9 @@ export default {
             job: Object,
             userData: this.user
         }
+    },
+    components: {
+        IconChooser
     },
     props:{
         mainTitle: String,

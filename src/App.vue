@@ -50,6 +50,7 @@
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @adicionar-habilidade="adicionarNovaHabilidade"
+      @choose-emailIcon="this.showModal('iconChooserEmailIcons')"
       class="template"
       :style="getStyle()"
       :mainColor="mainColor"
@@ -308,7 +309,6 @@ export default {
           this.showDivModal();
           break;
         case "resumo":
-
           this.modal.mainTitle = this.languageIsEN()
             ? "About you"
             : "Resumo profissional";
@@ -323,7 +323,6 @@ export default {
           this.showDivModal();
           
           $("#modal-input").val($("#resume").text())
-          
           break;
         case "experiencias":
           this.modal.mainTitle = this.languageIsEN()
@@ -377,6 +376,11 @@ export default {
           this.modal.mainTitle = "Redes sociais";
           this.modal.title1 = "Add link";
           this.modal.placeholder1 = "link da rede (https://www...)";
+          this.showDivModal();
+          break;
+        case "iconChooserEmailIcons":
+        this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserEmailIcons";
           this.showDivModal();
           break;
         default:

@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <emailicons />
+    <div v-if="title.includes('emailIcons')">
+        <Emailicons  />
     </div>
 </template>
 
 <script>
 
-import emailIcons from "./emailIcons.vue"
+import EmailIcons from './EmailIcons.vue'
 
 export default {
     name: 'iconChooser',
@@ -14,10 +14,10 @@ export default {
 
     },
     props: {
-        showEmail: Boolean,
+        title: String
     },
     component:{
-        emailIcons
+        EmailIcons
     }
 }
 </script>

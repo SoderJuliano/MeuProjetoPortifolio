@@ -1,6 +1,7 @@
 <template>
   <div class="custom-container">
       <Side
+        @choose-emailIcon="$emit('choose-emailIcon')"
         @add-info="$emit('add-info')"
         @add-formacao="$emit('add-formacao')"
         @add-habilidade="$emit('add-habilidade')"
@@ -35,7 +36,7 @@ import Page from '../components/Page.vue'
 export default {
   name: 'template1',
   emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
-  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user'],
+  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon'],
   data(){
     return{
       uExperiences: this.userExperiences,
