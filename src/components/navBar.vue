@@ -182,9 +182,11 @@ li img {
 .bnt-languages{
   min-width: 80px;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
+  box-shadow: black -1px 2px;
 }
 .bnt-languages:first-child{
+  margin-right: 10px;
   background-color: blue;
   color: white;
 }
@@ -193,14 +195,17 @@ li img {
   height: 50px;
   margin-bottom: 20px;
   justify-content: center;
-  padding-top: 1px;
+  padding-top: 10px;
 }
 .navbar {
   justify-content: center;
-  padding-top: 20px;
-  margin: 0 auto;
-  width: 54%;
+  padding: 10px;
+  margin: auto auto;
+  border-radius: 10px;
+  box-shadow: black -1px 2px 5px;
+  width: 50%;
   display: flex;
+  background-color: whitesmoke;
 }
 .nav-item{
   width: 100px;
@@ -258,7 +263,7 @@ li{
  .container-fluid{display: none;}
 }
 .nav-item.is-right{
-  position: relative;
+  width: 100px;
   display: flex;
 }
 .right-options{

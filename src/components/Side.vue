@@ -338,7 +338,7 @@ export default {
     font-size: 12px;
   }
   .pic {
-    width: 140px;
+    width: 150px;
     height: 150px;
     border-radius: 50%;
     border: 2px solid black;

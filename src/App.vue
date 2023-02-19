@@ -647,6 +647,7 @@ export default {
 .main.template {
   width: 66%;
   height: 100%;
+  margin-top: 10px;
 }
 
 .multi-menu-class:hover {
@@ -717,7 +718,7 @@ export default {
     display: none;
   }
   .main-left {
-    width: 25%;
+    width: 23%;
     height: 100vh;
     padding: 10px;
     margin-right: 10px;
