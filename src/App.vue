@@ -50,7 +50,7 @@
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @adicionar-habilidade="adicionarNovaHabilidade"
-      @choose-emailIcon="this.showModal('iconChooserEmailIcons')"
+      @choose-emailIcon="editarIcons('email')"
       class="template"
       :style="getStyle()"
       :mainColor="mainColor"
@@ -106,7 +106,6 @@ import navBar from "./components/navBar.vue";
 import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import strings from "../src/components/configs/strings.json";
-import userModel from "../src/model/userModel.js"
 import $ from "jquery";
 
 export default {
@@ -161,6 +160,14 @@ export default {
     Template2,
   },
   methods: {
+    editarIcons(value)
+    {
+      if(value.includes("email")){
+        this.showModal('iconChooserEmailIcons')
+        $(".main-modal-container").css({opacity: 0.1})
+        $('.iconsChooser').css({'display': 'flex'})
+      }
+    },
     footerUp() {
       $(".footer-menu-bar").css("display", "block");
       $(".menuupimg").css("display", "none");

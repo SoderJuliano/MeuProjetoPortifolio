@@ -1,6 +1,6 @@
 <template>
     <div class="main-modal-container">
-        <h3>{{mainTitle}}</h3>
+        <h3 v-if="mainTitle != 'iconChooser'">{{mainTitle}}</h3>
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
                     <span :style="title=='Sobre voce' || title=='Write about you'  ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
@@ -61,9 +61,10 @@
         </div> 
     </div>
     <!-- New component for chose icons -->
-    <div v-if="mainTitle != 'iconChooser'" class="iconsChooser">
-            <IconChooser
-                title="title"
+    <div @click="cancelarIsso()" v-if="mainTitle.includes('iconChooser')" class="iconsChooser">
+            <iconChooser
+                v-if="mainTitle.includes('iconChooser')"
+                :title="this.title"
             />
     </div>
 </template>
@@ -106,6 +107,13 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        cancelarIsso()
+        {
+           // alert("Cancelar isso")
+            $('.iconsChooser').css({'display': 'none'})
+            //$('.main-modal-container').css({'display': 'none'})
+            this.cancelar()
+        },
         getJobDescriptionPlaceholderText(){
             return this.language == 'pt-br' ? "Faça uma descrição resumida" : "Make a short description"
         },
@@ -364,5 +372,15 @@ h3{
 }
 button{
     margin-left: 15px;
+}
+
+.iconsChooser{
+    position: absolute;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
 }
 </style>
