@@ -7,7 +7,11 @@
         </div>
     </div>
     <div class="iconChooser-container" v-if="title.includes('EducationIcons')">
-        <EducationIcons />
+        <div class="icon-container">
+            <img @click="setNewIcon($event)" src="../../icons/education/livros.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/education/graduate.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/education/mortarboard.png"/>
+        </div>
     </div>
 
 </template>
@@ -21,7 +25,12 @@ export default {
     },
     methods: {
         setNewIcon(val){
-            $('.email-icon').attr('src', val.target.getAttribute('src'));
+            if(this.title.includes('EmailIcons')){
+                $('.email-icon').attr('src', val.target.getAttribute('src'));
+            }
+            else if(this.title.includes('EducationIcons')){
+                $('.formacao-icon').attr('src', val.target.getAttribute('src'));
+            }
         }
     }
 }

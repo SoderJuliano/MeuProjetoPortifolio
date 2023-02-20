@@ -55,6 +55,7 @@
     
     <Formacao
       @add-formacao="$emit('add-formacao')"
+      @choose-educationIcon="$emit('choose-educationIcon')"
       v-if="exibirFormacao"
       class="template-data"
       :titulo="titles.formacao"
@@ -113,6 +114,7 @@ export default {
     "add-SocialLink",
     "adicionar-habilidade",
     "choose-emailIcon",
+    "choose-educationIcon",
   ],
   data() {
     return {

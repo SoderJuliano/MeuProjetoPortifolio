@@ -51,6 +51,7 @@
       @add-SocialLink="this.showModal('socialLink')"
       @adicionar-habilidade="adicionarNovaHabilidade"
       @choose-emailIcon="editarIcons('email')"
+      @choose-educationIcon="editarIcons('education')"
       class="template"
       :style="getStyle()"
       :mainColor="mainColor"
@@ -164,9 +165,16 @@ export default {
     {
       if(value.includes("email")){
         this.showModal('iconChooserEmailIcons')
-        $(".main-modal-container").css({opacity: 0.1})
-        $('.iconsChooser').css({'display': 'flex'})
+        this.setIconContainerVisible()
       }
+      else if(value.includes("education")){
+        this.showModal('iconChooserEducationIcons')
+        this.setIconContainerVisible()
+      }
+    },
+    setIconContainerVisible(){
+      $(".main-modal-container").css({opacity: 0.1})
+      $('.iconsChooser').css({'display': 'flex'})
     },
     footerUp() {
       $(".footer-menu-bar").css("display", "block");
@@ -388,6 +396,11 @@ export default {
         case "iconChooserEmailIcons":
         this.modal.mainTitle = "iconChooser";
           this.modal.title1 = "iconChooserEmailIcons";
+          this.showDivModal();
+          break;
+        case "iconChooserEducationIcons":
+        this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserEducationIcons";
           this.showDivModal();
           break;
         default:

@@ -5,7 +5,7 @@
           <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
-          <img src="../icons/livros.png" class="formacao-icon"/>
+          <img @click="this.$emit('choose-educationIcon')" src="../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
           <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
@@ -15,7 +15,7 @@
 <script>
 export default {
   name: 'Formacao',
-  emits: ['add-formacao'],
+  emits: ['add-formacao', 'choose-educationIcon'],
   data(){
     return{
       mygrade: this.user.grade,
