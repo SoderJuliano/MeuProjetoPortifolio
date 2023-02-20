@@ -13,7 +13,13 @@
             <img @click="setNewIcon($event)" src="../../icons/education/mortarboard.png"/>
         </div>
     </div>
-
+    <div class="iconChooser-container" v-if="title.includes('PhoneIcons')">
+        <div class="icon-container">
+            <img @click="setNewIcon($event)" src="../../icons/phone/phone.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/phone/phone-call.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/phone/telephone.png"/>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -30,6 +36,9 @@ export default {
             }
             else if(this.title.includes('EducationIcons')){
                 $('.formacao-icon').attr('src', val.target.getAttribute('src'));
+            }
+            else if(this.title.includes('PhoneIcons')){
+                $('.phone-icon').attr('src', val.target.getAttribute('src'));
             }
         }
     }

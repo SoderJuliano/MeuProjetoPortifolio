@@ -52,6 +52,7 @@
       @adicionar-habilidade="adicionarNovaHabilidade"
       @choose-emailIcon="editarIcons('email')"
       @choose-educationIcon="editarIcons('education')"
+      @choose-phoneIcon="editarIcons('phone')"
       class="template"
       :style="getStyle()"
       :mainColor="mainColor"
@@ -169,6 +170,10 @@ export default {
       }
       else if(value.includes("education")){
         this.showModal('iconChooserEducationIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("phone")){
+        this.showModal('iconChooserPhoneIcons')
         this.setIconContainerVisible()
       }
     },
@@ -416,7 +421,13 @@ export default {
           this.modal.title1 = "iconChooserEducationIcons";
           this.showDivModal();
           break;
-
+        
+        case "iconChooserPhoneIcons":
+        this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserPhoneIcons";
+          this.showDivModal();
+          break;
+          
         default:
           break;
       }

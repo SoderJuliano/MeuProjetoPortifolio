@@ -1,6 +1,7 @@
 <template>
   <div class="custom-container">
       <Side
+        @choose-phoneIcon="$emit('choose-phoneIcon')"
         @choose-emailIcon="$emit('choose-emailIcon')"
         @choose-educationIcon="$emit('choose-educationIcon')"
         @add-info="$emit('add-info')"
@@ -38,7 +39,7 @@ export default {
   name: 'template1',
   emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
   'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
-  'choose-educationIcon'],
+  'choose-educationIcon', 'choose-phoneIcon'],
   data(){
     return{
       uExperiences: this.userExperiences,

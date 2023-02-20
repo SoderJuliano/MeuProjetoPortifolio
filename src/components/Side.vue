@@ -39,6 +39,7 @@
           src="../icons/phone.png"
           alt="phone"
           class="phone-icon"
+          @click="this.$emit('choose-phoneIcon')"
         />
         <span class="phone-text">{{ item }}</span>
       </div>
@@ -115,6 +116,7 @@ export default {
     "adicionar-habilidade",
     "choose-emailIcon",
     "choose-educationIcon",
+    "choose-phoneIcon",
   ],
   data() {
     return {
