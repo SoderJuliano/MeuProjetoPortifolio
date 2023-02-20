@@ -109,9 +109,7 @@ export default {
     methods:{
         cancelarIsso()
         {
-           // alert("Cancelar isso")
             $('.iconsChooser').css({'display': 'none'})
-            //$('.main-modal-container').css({'display': 'none'})
             this.cancelar()
         },
         getJobDescriptionPlaceholderText(){

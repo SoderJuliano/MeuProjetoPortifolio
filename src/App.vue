@@ -284,6 +284,7 @@ export default {
           this.modal.list = [];
           this.showDivModal();
           break;
+
         case "nome":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].yinfo
@@ -297,6 +298,7 @@ export default {
           this.modal.list = [];
           this.showDivModal();
           break;
+
         case "profissao":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].yinfo
@@ -310,6 +312,7 @@ export default {
           this.modal.list = [];
           this.showDivModal();
           break;
+
         case "competencias":
           this.modal.mainTitle = this.languageIsEN()
             ? "Competence"
@@ -323,6 +326,7 @@ export default {
           this.modal.list = this.user.competence;
           this.showDivModal();
           break;
+
         case "resumo":
           this.modal.mainTitle = this.languageIsEN()
             ? "About you"
@@ -339,6 +343,7 @@ export default {
           
           $("#modal-input").val($("#resume").text())
           break;
+
         case "experiencias":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].yhprofession
@@ -357,6 +362,7 @@ export default {
             : strings[0].tHere;
           this.showDivModal();
           break;
+
         case "formacao":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].education
@@ -369,10 +375,14 @@ export default {
             : strings[0].tHere;
           this.showDivModal();
           break;
+
         case "habilidade":
+          alert('habilidade')
+          console.log('habilidade')
+          console.log(strings[1].skill)
           this.modal.mainTitle = this.languageIsEN()
-            ? strings[1].skills
-            : strings[0].skills;
+            ? strings[1].skill
+            : strings[0].skill;
           this.modal.title1 = this.languageIsEN()
             ? strings[1].skill
             : strings[0].skill;
@@ -387,22 +397,26 @@ export default {
             }, 800);
           }
           break;
+
         case "socialLink":
           this.modal.mainTitle = "Redes sociais";
           this.modal.title1 = "Add link";
           this.modal.placeholder1 = "link da rede (https://www...)";
           this.showDivModal();
           break;
+
         case "iconChooserEmailIcons":
         this.modal.mainTitle = "iconChooser";
           this.modal.title1 = "iconChooserEmailIcons";
           this.showDivModal();
           break;
+
         case "iconChooserEducationIcons":
         this.modal.mainTitle = "iconChooser";
           this.modal.title1 = "iconChooserEducationIcons";
           this.showDivModal();
           break;
+
         default:
           break;
       }
