@@ -394,7 +394,7 @@ export default {
 }
 .data-container {
   display: flex;
-  width: 85%;
+  width: 80%;
   padding-bottom: 10px;
   align-self: center;
   margin: 0 auto;
