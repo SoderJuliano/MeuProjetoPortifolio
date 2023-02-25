@@ -46,6 +46,7 @@
         </div>
         <div class="data-container">
           <img
+            @click="$emit('choose-addressIcon')"
             v-if="user.contact.adress"
             src="../icons/adress.png"
             alt="adress"
@@ -69,6 +70,7 @@
     />
 
     <Habilidade
+      @choose-skillIcon="$emit('choose-skillIcon')"
       @add-habilidade="$emit('add-habilidade')"
       @adicionar-habilidade="$emit('adicionar-habilidade')"
       v-if="exibirHabilidade"
@@ -119,6 +121,8 @@ export default {
     "choose-emailIcon",
     "choose-educationIcon",
     "choose-phoneIcon",
+    "update-user", 
+    "choose-skillIcon"
   ],
   data() {
     return {
@@ -130,7 +134,6 @@ export default {
       exibirSocial: true
     };
   },
-  emits:["update-user"],
   methods: {
     getStyle() {
       return {

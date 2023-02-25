@@ -20,6 +20,21 @@
             <img @click="setNewIcon($event)" src="../../icons/phone/telephone.png"/>
         </div>
     </div>
+    <div class="iconChooser-container" v-if="title.includes('SkillIcons')">
+        <div class="icon-container">
+            <img @click="setNewIcon($event)" src="../../icons/skills/cognitive.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/skills/creativity.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/skills/html.png"/>
+        </div>
+    </div>
+    <div class="iconChooser-container" v-if="title.includes('AdressIcons')">
+        <div class="icon-container">
+            <img @click="setNewIcon($event)" src="../../icons/adress/address.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/adress/adress.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/adress/location.png"/>
+            <img @click="setNewIcon($event)" src="../../icons/adress/world.png"/>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -39,6 +54,12 @@ export default {
             }
             else if(this.title.includes('PhoneIcons')){
                 $('.phone-icon').attr('src', val.target.getAttribute('src'));
+            }
+            else if(this.title.includes('SkillIcons')){
+                $('.habilidade-icon').attr('src', val.target.getAttribute('src'));
+            }
+            else if(this.title.includes('AdressIcons')){
+                $('.adress-icon').attr('src', val.target.getAttribute('src'));
             }
         }
     }

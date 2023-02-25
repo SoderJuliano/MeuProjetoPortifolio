@@ -94,8 +94,8 @@ export default {
   display: flex;
 }
 .formacao-icon{
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   padding-top: 20px;
 }
 .template1-formacao span{

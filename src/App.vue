@@ -45,6 +45,8 @@
       @add-competencia="editarCompetencias"
       @add-experiencia="editarExperiencias"
       @add-nome="editarNome"
+      @choose-addressIcon="editarIcons('adress')"
+      @choose-skillIcon="editarIcons('skill')"
       @add-profissao="this.showModal('profissao')"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
@@ -174,6 +176,14 @@ export default {
       }
       else if(value.includes("phone")){
         this.showModal('iconChooserPhoneIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("skill")){
+        this.showModal('iconChooserSkillIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("adress")){
+        this.showModal('iconChooserAdressIcons')
         this.setIconContainerVisible()
       }
     },
@@ -426,7 +436,19 @@ export default {
           this.modal.title1 = "iconChooserPhoneIcons";
           this.showDivModal();
           break;
-          
+
+        case "iconChooserSkillIcons":
+          this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserSkillIcons";
+          this.showDivModal();
+          break;
+
+        case "iconChooserAdressIcons":
+          this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserAdressIcons";
+          this.showDivModal();
+        
+        break;
         default:
           break;
       }
