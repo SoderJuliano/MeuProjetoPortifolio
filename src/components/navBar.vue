@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 
 export default {
     name: 'nav-bar',
@@ -142,8 +143,10 @@ export default {
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
+        $(".side").height($(".main").height());
+        //console.log($(".side").height())      
         window.print()
-      },
+        },
       changeLanguage(lng){
         this.$emit('language-update', lng)
         lng == "pt-br" ? 

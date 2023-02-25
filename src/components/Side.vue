@@ -1,56 +1,58 @@
 <template>
   <div :style="getStyle()" class="side">
-    <div @click="$refs.fileInput.click()" class="pic">
-      <img :src="imageURL" alt="perfil" class="img-pic" />
-    </div>
-    <div v-if="exibirLinks" class="contato">
-      <input
-        type="file"
-        id="input"
-        ref="fileInput"
-        style="display: none"
-        @change="onIMGChange"
-      />
-      <p class="title">
-        {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
-        <img
-          src="../icons/editar.png"
-          alt="editar"
-          class="editar"
-          @click="$emit('add-info')"
-        />
-      </p>
-      <br />
-      <div
-        v-for="(item, index) in user.contact.email"
-        :key="index"
-        class="data-container"
-      >
-        <img v-if="item" @click="this.$emit('choose-emailIcon')" src="../icons/envelope.svg" class="email-icon" />
-        <span class="email-text">{{ item }}</span>
+    <div id="contatoAndPic">
+        <div @click="$refs.fileInput.click()" class="pic">
+        <img :src="imageURL" alt="perfil" class="img-pic" />
       </div>
-      <div
-        v-for="(item, index) in user.contact.phone"
-        :key="index"
-        class="data-container"
-      >
-        <img
-          v-if="item"
-          src="../icons/phone.png"
-          alt="phone"
-          class="phone-icon"
-          @click="this.$emit('choose-phoneIcon')"
+      <div v-if="exibirLinks" class="contato">
+        <input
+          type="file"
+          id="input"
+          ref="fileInput"
+          style="display: none"
+          @change="onIMGChange"
         />
-        <span class="phone-text">{{ item }}</span>
-      </div>
-      <div class="data-container">
-        <img
-          v-if="user.contact.adress"
-          src="../icons/adress.png"
-          alt="adress"
-          class="adress-icon"
-        />
-        <span class="endereco-text">{{ user.contact.adress }}</span>
+        <p class="title">
+          {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
+          <img
+            src="../icons/editar.png"
+            alt="editar"
+            class="editar"
+            @click="$emit('add-info')"
+          />
+        </p>
+        <br />
+        <div
+          v-for="(item, index) in user.contact.email"
+          :key="index"
+          class="data-container"
+        >
+          <img v-if="item" @click="this.$emit('choose-emailIcon')" src="../icons/envelope.svg" class="email-icon" />
+          <span class="email-text">{{ item }}</span>
+        </div>
+        <div
+          v-for="(item, index) in user.contact.phone"
+          :key="index"
+          class="data-container"
+        >
+          <img
+            v-if="item"
+            src="../icons/phone.png"
+            alt="phone"
+            class="phone-icon"
+            @click="this.$emit('choose-phoneIcon')"
+          />
+          <span class="phone-text">{{ item }}</span>
+        </div>
+        <div class="data-container">
+          <img
+            v-if="user.contact.adress"
+            src="../icons/adress.png"
+            alt="adress"
+            class="adress-icon"
+          />
+          <span class="endereco-text">{{ user.contact.adress }}</span>
+        </div>
       </div>
     </div>
     
@@ -271,7 +273,7 @@ export default {
     padding-top: 50px;
     font-size: 14px;
     overflow-x: hidden;
-    word-wrap: break-word;
+    word-break: break-all !important;
   }
   .pic {
     width: 150px;
@@ -334,13 +336,17 @@ export default {
     -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
     color-adjust: exact !important; /*Firefox*/
   }
+  
+  #contatoAndPic {
+    margin-top: 35px;
+  }
+/** ver isso */
   .side {
     min-height: 100vh !important;
-    height: calc(100% + 200px) !important;
     width: 40%;
     justify-content: center;
-    padding-top: 35px;
     font-size: 12px;
+    word-break: break-all !important;
   }
   .pic {
     width: 150px;

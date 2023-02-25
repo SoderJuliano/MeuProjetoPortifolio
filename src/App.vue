@@ -382,7 +382,6 @@ export default {
           break;
 
         case "habilidade":
-          alert('habilidade')
           console.log('habilidade')
           console.log(strings[1].skill)
           this.modal.mainTitle = this.languageIsEN()
@@ -787,7 +786,6 @@ export default {
   .main {
     display: flex;
     width: 100% !important;
-    height: 100vh;
     position: absolute;
     top: 0 !important;
     -webkit-print-color-adjust: exact;

@@ -84,13 +84,6 @@ export default {
   .custom-container{
     display: flex;
     width: 100%;
-    height: calc(100vh - 35px);
-    overflow: visible;
-  }
-  
-  .side{
-    word-wrap: break-word;
-    height: calc(100% + 30px);
   }
 }
 </style>
