@@ -98,7 +98,12 @@
         />
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <Tips
+        :lang="language"
+        :strings="this.strings"
+      />
+    </div>
   </div>
 </template>
 
@@ -110,6 +115,7 @@ import navBar from "./components/navBar.vue";
 import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import strings from "../src/components/configs/strings.json";
+import Tips from "./components/tips/Tips.vue";
 import $ from "jquery";
 
 export default {
@@ -117,6 +123,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      strings: strings,
       language: "",
       imageURL: "",
       template: 1,
@@ -162,6 +169,7 @@ export default {
     editorInformacoes,
     Template1,
     Template2,
+    Tips,
   },
   methods: {
     editarIcons(value)
