@@ -486,6 +486,11 @@ export default {
       );
     },
     changefontOld(p) {
+      // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
+      // e um palhativo
+      if(p.target.textContent.split('').length > 30){
+        return;
+      }
       if (p.target.id == "square") {
         console.log("teste");
         document.getElementsByClassName("pic")[0].style["border-radius"] =
@@ -533,7 +538,7 @@ export default {
               all[i].style.backgroundColor = "#1F271B";
               
               if(page_header[0]){
-              page_header[0].style.color = "white"
+                page_header[0].style.color = "white"
               }else{
                 document.getElementById("text_header").style.color = "white";
               }
