@@ -19,13 +19,26 @@
                     <button v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
-                    <span v-if="ptitle" style="margin-right: 10px">{{ptitle}}</span>
-                    <input v-if="ptitle" id="input-value-date1" type="date">
+                    <!-- togle date -->
+                    <p v-if="ptitle">
+                        <div style="display: flex; justify-content: start;">
+                            <span style="margin-right: 10px;">{{language == 'pt-br' ? "Data Simplificada" : "Simplified Data"}}</span>
+                            <label class="switch">
+                                <input @change="simplifiedDate = !simplifiedDate" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </p>
                     
+
+                    <span v-if="ptitle" style="margin-right: 10px">{{ptitle}}</span>
+                    <input v-if="ptitle && !simplifiedDate" id="input-value-date1" type="date">
+                    <input v-if="ptitle && simplifiedDate" id="input-value-date1" type="month">
                     <br v-if="ptitle"><br v-if="ptitle">
                     
                     <span v-if="ptitle2" style="margin-right: 10px">{{ptitle2}}</span>
-                    <input v-if="ptitle2" id="input-value-date2" type="date">
+                    <input v-if="ptitle2 && !simplifiedDate" id="input-value-date2" type="date">
+                    <input v-if="ptitle && simplifiedDate" id="input-value-date2" type="month">
                     <br v-if="title2"><br v-if="title2">
                     <span v-if="ptitle3" style="margin-left: -100px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
                     <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
@@ -87,7 +100,8 @@ export default {
             ptitle2: '',
             ptitle3: '',
             job: Object,
-            userData: this.user
+            userData: this.user,
+            simplifiedDate: true
         }
     },
     components: {
@@ -107,6 +121,10 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        dateTogleChange()
+        {
+            console.log(this.simplifiedDate)
+        },
         cancelarIsso()
         {
             $('.iconsChooser').css({'display': 'none'})
@@ -157,8 +175,6 @@ export default {
             }else{
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
-                //localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
-                //localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
                 console.log(this.userData.userExperiences[this.currentJobId])
                 this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
@@ -381,4 +397,64 @@ button{
     align-items: center;
     z-index: 10;
 }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
 </style>
