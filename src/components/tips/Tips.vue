@@ -1,6 +1,6 @@
 <template>
     <div class="tip-container">
-        <img style="width: 40px;" v-if="showTip == true" @click="show('icon')" src="../../assets/tips/idea.png" alt="tipIcon" />
+        <img style="width: 30px;" v-if="closedTip == true || (showTip == true && closedTip == true)" @click="showPng('icon')" src="../../assets/tips/idea.png" alt="tipIcon" />
         <img v-if="showTip == false" @click="show('icon')" src="../../assets/tips/idea.gif" alt="tipIcon" />
         <div class="tip-conteiner-content" id="icon">
             <div id="title">
@@ -19,11 +19,13 @@ export default {
     name: 'Tip',
     data(){
         return {
-            showTip: true
+            showTip: true,
+            closedTip: false
         }
     },
     mounted() {
         this.showTip = localStorage.getItem('tip') == 'icon'
+        this.showTip ? this.closedTip = true : this.closedTip = false
     },
     props: {
         lang: String,
@@ -36,7 +38,12 @@ export default {
             this.showTip = true;
         },
         close(tip){
+            this.closedTip = true;
             $('#'+tip).css('display', 'none');
+        },
+        showPng(tip){
+            this.closedTip = false;
+            $('#'+tip).css('display', 'block');
         }
     }
 }
