@@ -121,7 +121,8 @@ export default {
     "choose-emailIcon",
     "choose-educationIcon",
     "choose-phoneIcon",
-    "update-user", 
+    "update-user",
+    "choose-addressIcon",
     "choose-skillIcon"
   ],
   data() {

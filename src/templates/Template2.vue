@@ -22,6 +22,7 @@
                 :language="language"
             />
             <Right
+                @choose-addressIcon="$emit('choose-addressIcon')"
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
                 @add-experiencia="$emit('add-experiencia')"
@@ -47,7 +48,8 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences"],
+    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences",
+    "choose-addressIcon"],
     props:{
         mainColor: String,
         sideColor: String,

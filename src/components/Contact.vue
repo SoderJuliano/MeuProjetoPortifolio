@@ -13,7 +13,7 @@
             <span class="phone-text">{{item}}</span>
         </div>
         <div class="data-container">
-            <img v-if="this.user.contact.adress" src="../icons/adress.png" alt="adress" class="adress-icon">
+            <img @click="$emit('choose-addressIcon')" v-if="this.user.contact.adress" src="../icons/adress.png" alt="adress" class="adress-icon">
             <span class="endereco-text">{{this.user.contact.adress}}</span>
         </div>
     </div>
@@ -29,7 +29,7 @@ export default {
         user: Object,
         sideColor: String,
     },
-    emits:["add-info"],
+    emits:["add-info", "choose-addressIcon"],
     data(){
         return {/* 
             email: [],

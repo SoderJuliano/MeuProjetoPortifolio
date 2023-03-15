@@ -63,6 +63,7 @@
       :user="user"
     />
     <template2
+      @choose-addressIcon="editarIcons('adressT2')"
       v-if="template == 2"
       :language="language"
       @add-info="addInfo"
@@ -192,6 +193,10 @@ export default {
       }
       else if(value.includes("adress")){
         this.showModal('iconChooserAdressIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("adressT2")){
+        this.showModal('iconChooserAdressIconsT2')
         this.setIconContainerVisible()
       }
     },
