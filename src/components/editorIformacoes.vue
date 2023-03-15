@@ -3,15 +3,20 @@
         <h3 v-if="mainTitle != 'iconChooser'">{{mainTitle}}</h3>
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
-                    <span :style="title=='Sobre voce' || title=='Write about you'  ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
-                    <br v-if="title=='Write about you'" />
-                    <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                    <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    
+                    <div class="modal-internal-content">
+                        <span style="margin-right: 10px">{{title}}</span>
+                        <br v-if="title=='Write about you'" />
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    </div>
+                    
                     
                     <br><br>
-                    
-                    <span style="margin-right: 10px" v-if="title == 'Nome da empresa' || title == 'Company name'">{{title2}}</span>
-                    <input id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
+                    <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
+                        <span style="margin-right: 10px" >{{title2}}</span>
+                        <input id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
+                    </div>
                     
                     <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
                     
@@ -29,19 +34,28 @@
                             </label>
                         </div>
                     </p>
-                    
 
-                    <span v-if="ptitle" style="margin-right: 10px">{{ptitle}}</span>
-                    <input v-if="ptitle && !simplifiedDate" id="input-value-date1" type="date">
-                    <input v-if="ptitle && simplifiedDate" id="input-value-date1" type="month">
-                    <br v-if="ptitle"><br v-if="ptitle">
+                    <div class="modal-internal-content" v-if="ptitle">
+                        <span  style="margin-right: 10px">{{ptitle}}</span>
+                        <input v-if="!simplifiedDate" id="input-value-date1" type="date">
+                        <input v-if="simplifiedDate" id="input-value-date1" type="month" />
+                    </div>
                     
-                    <span v-if="ptitle2" style="margin-right: 10px">{{ptitle2}}</span>
-                    <input v-if="ptitle2 && !simplifiedDate" id="input-value-date2" type="date">
-                    <input v-if="ptitle && simplifiedDate" id="input-value-date2" type="month">
-                    <br v-if="title2"><br v-if="title2">
-                    <span v-if="ptitle3" style="margin-left: -100px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
-                    <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                    <br v-if="title2">
+
+                    <div v-if="ptitle" class="modal-internal-content">
+                        <span style="margin-right: 10px">{{ptitle2}}</span>
+                        <input v-if="!simplifiedDate" id="input-value-date2" type="date">
+                        <input v-if="simplifiedDate" id="input-value-date2" type="month">
+                    </div>
+                    
+                    
+                    <br v-if="title2">
+
+                    <div v-if="ptitle3" class="modal-internal-content">
+                        <span style="margin-right: 10px;">{{ptitle3}}</span>
+                        <textarea id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                    </div>
                     
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
@@ -121,10 +135,6 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
-        dateTogleChange()
-        {
-            console.log(this.simplifiedDate)
-        },
         cancelarIsso()
         {
             $('.iconsChooser').css({'display': 'none'})
@@ -456,5 +466,17 @@ button{
 
     .slider.round:before {
         border-radius: 50%;
+    }
+
+    .modal-internal-content{
+        display: flex; 
+        justify-content: start;
+    }
+
+    @media screen and (max-width: 720px) {
+        .modal-internal-content{
+            display: flex; 
+            justify-content: center;
+        }
     }
 </style>
