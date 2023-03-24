@@ -8,7 +8,7 @@
                 </button>
             </div>
               <div class="midle-options">
-                <button @click="changeLanguage('pt-br')" class="bnt-languages">Protugues</button>
+                <button @click="changeLanguage('pt-br')" class="bnt-languages">Portugues</button>
                 <button @click="changeLanguage('us-en')" class="bnt-languages">English</button>
               </div>
               <div class="right-options">
