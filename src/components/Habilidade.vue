@@ -5,7 +5,7 @@
         <img v-if="template == 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div v-if="user.hability" :class="hcstyle">
-          <img src="../icons/html.png" class="habilidade-icon"/>
+          <img  @click="this.$emit('choose-skillIcon')" src="../icons/html.png" class="habilidade-icon"/>
               <span  class="data-text-habilidades">
                 <div v-for="(item, index) in user.hability.split(',')" :key="index" >
                   <li>{{item}}</li>
@@ -19,7 +19,7 @@
 <script>
 export default {
   name: 'Habilidade',
-  emits: ['add-habilidade', 'adicionar-habilidade'],
+  emits: ['add-habilidade', 'adicionar-habilidade', 'choose-skillIcon'],
   data(){
     return {
       tstyle : "template"+this.template+"-title title",
@@ -146,7 +146,7 @@ export default {
   display: none;
 }
 .template2-container{
-  width: 80%;
+  width: 84.5%;
   padding-left: 10px;
 }
 .template1-title{

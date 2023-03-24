@@ -276,3 +276,7 @@ button {
 {
     display: block;
 }
+
+.template1-formacao-container span {
+    margin-top: 15px;
+}

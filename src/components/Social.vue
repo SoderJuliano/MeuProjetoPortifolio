@@ -1,6 +1,7 @@
 <template>
     <div class="social">
-        <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}} 
+        <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
+            {{language == 'pt-br' ? titulo[0] : titulo[1]}} 
             <img id='edit' src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
             <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
     </div>
@@ -49,7 +50,8 @@ export default {
         },
         getStyle(){
             return{
-                "border-bottom": "1px solid "+this.sideColor
+                "border-bottom": "1px solid "+this.sideColor,
+                "padding-left": "4px"
             }
         },
         hovert(){

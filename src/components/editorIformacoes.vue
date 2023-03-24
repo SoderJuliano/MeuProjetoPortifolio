@@ -1,17 +1,22 @@
 <template>
     <div class="main-modal-container">
-        <h3>{{mainTitle}}</h3>
-        <div v-if="title!='Email'" class="body-modal-container">
+        <h3 v-if="mainTitle != 'iconChooser'">{{mainTitle}}</h3>
+        <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
-                    <span :style="title=='Sobre voce' || title=='Write about you'  ? 'position: absolute; margin-bottom:50px; margin-left: -100px' : 'margin-right: 10px'">{{title}}</span>
-                    <br v-if="title=='Write about you'" />
-                    <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                    <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    
+                    <div class="modal-internal-content">
+                        <span style="margin-right: 10px">{{title}}</span>
+                        <br v-if="title=='Write about you'" />
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    </div>
+                    
                     
                     <br><br>
-                    
-                    <span style="margin-right: 10px" v-if="title == 'Nome da empresa' || title == 'Company name'">{{title2}}</span>
-                    <input id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
+                    <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
+                        <span style="margin-right: 10px" >{{title2}}</span>
+                        <input id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
+                    </div>
                     
                     <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
                     
@@ -19,16 +24,38 @@
                     <button v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
-                    <span v-if="ptitle" style="margin-right: 10px">{{ptitle}}</span>
-                    <input v-if="ptitle" id="input-value-date1" type="date">
+                    <!-- togle date -->
+                    <p v-if="ptitle">
+                        <div style="display: flex; justify-content: start;">
+                            <span style="margin-right: 10px;">{{language == 'pt-br' ? "Data Simplificada" : "Simplified Data"}}</span>
+                            <label class="switch">
+                                <input @change="simplifiedDate = !simplifiedDate" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </p>
+
+                    <div class="modal-internal-content" v-if="ptitle">
+                        <span  style="margin-right: 10px">{{ptitle}}</span>
+                        <input v-if="!simplifiedDate" id="input-value-date1" type="date">
+                        <input v-if="simplifiedDate" id="input-value-date1" type="month" />
+                    </div>
                     
-                    <br v-if="ptitle"><br v-if="ptitle">
+                    <br v-if="title2">
+
+                    <div v-if="ptitle" class="modal-internal-content">
+                        <span style="margin-right: 10px">{{ptitle2}}</span>
+                        <input v-if="!simplifiedDate" id="input-value-date2" type="date">
+                        <input v-if="simplifiedDate" id="input-value-date2" type="month">
+                    </div>
                     
-                    <span v-if="ptitle2" style="margin-right: 10px">{{ptitle2}}</span>
-                    <input v-if="ptitle2" id="input-value-date2" type="date">
-                    <br v-if="title2"><br v-if="title2">
-                    <span v-if="ptitle3" style="margin-left: -100px; margin-bottom:50px; position: absolute;">{{ptitle3}}</span>
-                    <textarea v-if="ptitle3" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                    
+                    <br v-if="title2">
+
+                    <div v-if="ptitle3" class="modal-internal-content">
+                        <span style="margin-right: 10px;">{{ptitle3}}</span>
+                        <textarea id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                    </div>
                     
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
@@ -58,7 +85,14 @@
                 <br><br>
                 <button v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
-        </div>
+        </div> 
+    </div>
+    <!-- New component for chose icons -->
+    <div @click="cancelarIsso()" v-if="mainTitle.includes('iconChooser')" class="iconsChooser">
+            <iconChooser
+                v-if="mainTitle.includes('iconChooser')"
+                :title="this.title"
+            />
     </div>
 </template>
 
@@ -66,27 +100,9 @@
 
 import strings from '../components/configs/strings.json'
 import Job from '../model/jobModel.js'
+import IconChooser from './iconComponent/IconChooser.vue';
 import $ from 'jquery'
 
-/* class Job {
-    company = null;
-    function = null;
-    description = null;
-    dateHired = null;
-    dateFired = null;
-    constructor() { 
-        this.company = localStorage.getItem('jobCompany');
-        this.function = localStorage.getItem('jobFunction');
-        this.description = localStorage.getItem('jobDescription');
-        this.dateHired = localStorage.getItem('jobHired');
-        this.dateFired = localStorage.getItem('jobFired');
-    }
-}
-function getNewJob(){
-    return new Job();
-} */
-
-let currentJobId;
 
 export default {
     name: 'modal-input',
@@ -98,8 +114,12 @@ export default {
             ptitle2: '',
             ptitle3: '',
             job: Object,
-            userData: this.user
+            userData: this.user,
+            simplifiedDate: true
         }
+    },
+    components: {
+        IconChooser
     },
     props:{
         mainTitle: String,
@@ -115,6 +135,11 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        cancelarIsso()
+        {
+            $('.iconsChooser').css({'display': 'none'})
+            this.cancelar()
+        },
         getJobDescriptionPlaceholderText(){
             return this.language == 'pt-br' ? "Faça uma descrição resumida" : "Make a short description"
         },
@@ -160,8 +185,6 @@ export default {
             }else{
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
-                //localStorage.setItem('jobHired', document.getElementById('input-value-date1').value)
-                //localStorage.setItem('jobFired', document.getElementById('input-value-date2').value)
                 console.log(this.userData.userExperiences[this.currentJobId])
                 this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
                 this.ptitle = ''
@@ -374,4 +397,86 @@ h3{
 button{
     margin-left: 15px;
 }
+
+.iconsChooser{
+    position: absolute;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    .switch input { 
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .modal-internal-content{
+        display: flex; 
+        justify-content: start;
+    }
+
+    @media screen and (max-width: 720px) {
+        .modal-internal-content{
+            display: flex; 
+            justify-content: center;
+        }
+    }
 </style>

@@ -1,60 +1,65 @@
 <template>
   <div :style="getStyle()" class="side">
-    <div @click="$refs.fileInput.click()" class="pic">
-      <img :src="imageURL" alt="perfil" class="img-pic" />
-    </div>
-    <div v-if="exibirLinks" class="contato">
-      <input
-        type="file"
-        id="input"
-        ref="fileInput"
-        style="display: none"
-        @change="onIMGChange"
-      />
-      <p class="title">
-        {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
-        <img
-          src="../icons/editar.png"
-          alt="editar"
-          class="editar"
-          @click="$emit('add-info')"
-        />
-      </p>
-      <br />
-      <div
-        v-for="(item, index) in user.contact.email"
-        :key="index"
-        class="data-container"
-      >
-        <img v-if="item" src="../icons/envelope.svg" class="email-icon" />
-        <span class="email-text">{{ item }}</span>
+    <div id="contatoAndPic">
+        <div @click="$refs.fileInput.click()" class="pic">
+        <img :src="imageURL" alt="perfil" class="img-pic" />
       </div>
-      <div
-        v-for="(item, index) in user.contact.phone"
-        :key="index"
-        class="data-container"
-      >
-        <img
-          v-if="item"
-          src="../icons/phone.png"
-          alt="phone"
-          class="phone-icon"
+      <div v-if="exibirLinks" class="contato">
+        <input
+          type="file"
+          id="input"
+          ref="fileInput"
+          style="display: none"
+          @change="onIMGChange"
         />
-        <span class="phone-text">{{ item }}</span>
-      </div>
-      <div class="data-container">
-        <img
-          v-if="user.contact.adress"
-          src="../icons/adress.png"
-          alt="adress"
-          class="adress-icon"
-        />
-        <span class="endereco-text">{{ user.contact.adress }}</span>
+        <p class="title">
+          {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
+          <img
+            src="../icons/editar.png"
+            alt="editar"
+            class="editar"
+            @click="$emit('add-info')"
+          />
+        </p>
+        <br />
+        <div
+          v-for="(item, index) in user.contact.email"
+          :key="index"
+          class="data-container"
+        >
+          <img v-if="item" @click="this.$emit('choose-emailIcon')" src="../icons/envelope.svg" class="email-icon" />
+          <span class="email-text">{{ item }}</span>
+        </div>
+        <div
+          v-for="(item, index) in user.contact.phone"
+          :key="index"
+          class="data-container"
+        >
+          <img
+            v-if="item"
+            src="../icons/phone.png"
+            alt="phone"
+            class="phone-icon"
+            @click="this.$emit('choose-phoneIcon')"
+          />
+          <span class="phone-text">{{ item }}</span>
+        </div>
+        <div class="data-container">
+          <img
+            @click="$emit('choose-addressIcon')"
+            v-if="user.contact.adress"
+            src="../icons/adress.png"
+            alt="adress"
+            class="adress-icon"
+          />
+          <span class="endereco-text">{{ user.contact.adress }}</span>
+        </div>
       </div>
     </div>
     
     <Formacao
       @add-formacao="$emit('add-formacao')"
+      @choose-educationIcon="$emit('choose-educationIcon')"
       v-if="exibirFormacao"
       class="template-data"
       :titulo="titles.formacao"
@@ -65,6 +70,7 @@
     />
 
     <Habilidade
+      @choose-skillIcon="$emit('choose-skillIcon')"
       @add-habilidade="$emit('add-habilidade')"
       @adicionar-habilidade="$emit('adicionar-habilidade')"
       v-if="exibirHabilidade"
@@ -112,6 +118,12 @@ export default {
     "add-habilidade",
     "add-SocialLink",
     "adicionar-habilidade",
+    "choose-emailIcon",
+    "choose-educationIcon",
+    "choose-phoneIcon",
+    "update-user",
+    "choose-addressIcon",
+    "choose-skillIcon"
   ],
   data() {
     return {
@@ -123,7 +135,6 @@ export default {
       exibirSocial: true
     };
   },
-  emits:["update-user"],
   methods: {
     getStyle() {
       return {
@@ -159,7 +170,7 @@ export default {
       xhr.send();
     },
     setRealImg(){
-      this.imageURL = this.userData.realImg.length > 5 ? this.userData.realImg : this.userData.avatarImg.length > 5 ? userData.avatarImg 
+      this.imageURL = this.userData.realImg.length > 5 ? this.userData.realImg : this.userData.avatarImg.length > 5 ? this.userData.avatarImg 
             : "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAES0lEQVR4nO2dy4scVRTGf92jxJBEoogaH1mI2QiuogaJEUWjIeBCJaKICxEkKzdu3Iivv0CRLELIKggGF1mpEMRIxEfQuNFRENHB1yg6EzJGMokz7eL2QNlO6UzVvfc7t/r84Oyq6nznfF2vW1W3wXEcx3Ecx3EcJy89tYAI9ICNwCXDmAdmhnFWqKsRJRpyNXAfcCtwI3ADsKZm2a+BY8BR4AhwPofAcaAP7AE+BBaBQYOYAnbnFt5FtgOTNDNhNBaAx/LK7w494EXgL+KYsRRngFeBR4HLs1VTOD1gH3GNWC7OAgeAa/KUVS7PkN6MavyGn19q2Ua4GsppyIBwuXx3hvqK4zj5zViKGfy88g/uQmfGUuxPXmVBHEJvyDxwWepCS2AN8Ad6QwbA3sS11tJXJV6GrcA6tYghd6gSWzLkFrWACttUiS0Zcr1aQIVrgQsViS0ZYulueQK4QpHYkiEb1QJGWKtIasmQC9QCRpDosWSItYdlkqeNlgyZUwsY4ZQiqSVDTqsFVJgDZhWJLRkyrRZQ4TtVYkuGTKkFVJBpsWTIN2oBFb5UJbZkyEm1gAofqwVY4Sf0I70DhKMGlvYQgE/UAoAfhiHBmiEn1AKAt5TJ3ZB/44ZUuF8tANipFmCFXehP5ktxb+Jaa7G0hzyoFlBBpsWSIZbe9JBpsWTIGbWACn+qElsy5Au1gAqfqxJbMuRdtYAKlrTI6BHvw5w2MYm9p5cy7gHOoTPj3FCDU2EnYbQ1txkf4TeFtWwivyFXZqmsYKbJZ8YvmWr6XyxdZY3yTkdz/SeWDXk9Y643MuYqlgngW9IfrqYRvVi9HJb3kAXCJ8upOYhPubFiLibtc/bThCs6ZxU8TjpDns5YR2foAW8T34wTGDp3lMYG4APimfEVRr9Ht3xSrzIHfBpxe5PArxG3F41SDIHwy47FYsRtRWVcDYm5rai4IcYoyZCYH2FeFHFbUSnJkPVGtxUVN8QYbojTiEsJH2HGujGcB67LWkHHeIX4QyeHs1bQIfaSbnDxuYx1FM8E8ALhuUgqQwbAy9RPVe4M2Qq8T1ojqvEZsCNLZYVxE/Aa6feKujgC3Ja8SuP0Cf92cBSNCcvFSeBJRFM0qbgKeBb4Hr0BdfEz8BKwOVEP5PQJs0cfRvsO72pjgbAH78HevF6NWA88RZg+Q93ctjFFeBa/IWqHMrGOcFj6HX0jY8cs8DyFDMP0gCcIx2B141LHNOECwOw3JZuxdcWUK45ja6pbIMwIPYO+OaqYBe5s3cVIPEyYOFLdFHXMA4+07GVrbh8KUTfDSpxH+OcwWxjvw1RdzCA6p6R4zbMr8WaLvjZidyThXY5djbvbgPcSFdGlOLaahra5mdlEmAqvpBclFCwS7s1+XMnCbZr5UMv1x4U+8MBqFm7KzS3WHTdW3Ks2hmxpse64seJetTHE3LiNYfzH6ziO4ziO4ziO4zhF8jeb7W7hC+joGwAAAABJRU5ErkJggg=="
     },
     showEditarContato() {
@@ -266,7 +277,7 @@ export default {
     padding-top: 50px;
     font-size: 14px;
     overflow-x: hidden;
-    word-wrap: break-word;
+    word-break: break-all !important;
   }
   .pic {
     width: 150px;
@@ -329,16 +340,20 @@ export default {
     -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
     color-adjust: exact !important; /*Firefox*/
   }
+  
+  #contatoAndPic {
+    margin-top: 35px;
+  }
+/** ver isso */
   .side {
     min-height: 100vh !important;
-    height: calc(100% + 200px) !important;
     width: 40%;
     justify-content: center;
-    padding-top: 35px;
     font-size: 12px;
+    word-break: break-all !important;
   }
   .pic {
-    width: 140px;
+    width: 150px;
     height: 150px;
     border-radius: 50%;
     border: 2px solid black;
@@ -391,7 +406,7 @@ export default {
 }
 .data-container {
   display: flex;
-  width: 85%;
+  width: 80%;
   padding-bottom: 10px;
   align-self: center;
   margin: 0 auto;

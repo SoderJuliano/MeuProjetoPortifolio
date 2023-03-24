@@ -45,11 +45,16 @@
       @add-competencia="editarCompetencias"
       @add-experiencia="editarExperiencias"
       @add-nome="editarNome"
+      @choose-addressIcon="editarIcons('adress')"
+      @choose-skillIcon="editarIcons('skill')"
       @add-profissao="this.showModal('profissao')"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @adicionar-habilidade="adicionarNovaHabilidade"
+      @choose-emailIcon="editarIcons('email')"
+      @choose-educationIcon="editarIcons('education')"
+      @choose-phoneIcon="editarIcons('phone')"
       class="template"
       :style="getStyle()"
       :mainColor="mainColor"
@@ -58,6 +63,7 @@
       :user="user"
     />
     <template2
+      @choose-addressIcon="editarIcons('adressT2')"
       v-if="template == 2"
       :language="language"
       @add-info="addInfo"
@@ -93,7 +99,12 @@
         />
       </div>
     </div>
-    <div class="right"></div>
+    <div class="right">
+      <Tips
+        :lang="language"
+        :strings="this.strings"
+      />
+    </div>
   </div>
 </template>
 
@@ -105,7 +116,7 @@ import navBar from "./components/navBar.vue";
 import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import strings from "../src/components/configs/strings.json";
-import userModel from "../src/model/userModel.js"
+import Tips from "./components/tips/Tips.vue";
 import $ from "jquery";
 
 export default {
@@ -113,6 +124,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      strings: strings,
       language: "",
       imageURL: "",
       template: 1,
@@ -158,8 +170,40 @@ export default {
     editorInformacoes,
     Template1,
     Template2,
+    Tips,
   },
   methods: {
+    editarIcons(value)
+    {
+      if(value.includes("email")){
+        this.showModal('iconChooserEmailIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("education")){
+        this.showModal('iconChooserEducationIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("phone")){
+        this.showModal('iconChooserPhoneIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("skill")){
+        this.showModal('iconChooserSkillIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("adress")){
+        this.showModal('iconChooserAdressIcons')
+        this.setIconContainerVisible()
+      }
+      else if(value.includes("adressT2")){
+        this.showModal('iconChooserAdressIconsT2')
+        this.setIconContainerVisible()
+      }
+    },
+    setIconContainerVisible(){
+      $(".main-modal-container").css({opacity: 0.1})
+      $('.iconsChooser').css({'display': 'flex'})
+    },
     footerUp() {
       $(".footer-menu-bar").css("display", "block");
       $(".menuupimg").css("display", "none");
@@ -268,6 +312,7 @@ export default {
           this.modal.list = [];
           this.showDivModal();
           break;
+
         case "nome":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].yinfo
@@ -281,6 +326,7 @@ export default {
           this.modal.list = [];
           this.showDivModal();
           break;
+
         case "profissao":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].yinfo
@@ -294,6 +340,7 @@ export default {
           this.modal.list = [];
           this.showDivModal();
           break;
+
         case "competencias":
           this.modal.mainTitle = this.languageIsEN()
             ? "Competence"
@@ -307,8 +354,8 @@ export default {
           this.modal.list = this.user.competence;
           this.showDivModal();
           break;
-        case "resumo":
 
+        case "resumo":
           this.modal.mainTitle = this.languageIsEN()
             ? "About you"
             : "Resumo profissional";
@@ -323,8 +370,8 @@ export default {
           this.showDivModal();
           
           $("#modal-input").val($("#resume").text())
-          
           break;
+
         case "experiencias":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].yhprofession
@@ -343,6 +390,7 @@ export default {
             : strings[0].tHere;
           this.showDivModal();
           break;
+
         case "formacao":
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].education
@@ -355,10 +403,13 @@ export default {
             : strings[0].tHere;
           this.showDivModal();
           break;
+
         case "habilidade":
+          console.log('habilidade')
+          console.log(strings[1].skill)
           this.modal.mainTitle = this.languageIsEN()
-            ? strings[1].skills
-            : strings[0].skills;
+            ? strings[1].skill
+            : strings[0].skill;
           this.modal.title1 = this.languageIsEN()
             ? strings[1].skill
             : strings[0].skill;
@@ -373,12 +424,44 @@ export default {
             }, 800);
           }
           break;
+
         case "socialLink":
           this.modal.mainTitle = "Redes sociais";
           this.modal.title1 = "Add link";
           this.modal.placeholder1 = "link da rede (https://www...)";
           this.showDivModal();
           break;
+
+        case "iconChooserEmailIcons":
+        this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserEmailIcons";
+          this.showDivModal();
+          break;
+
+        case "iconChooserEducationIcons":
+        this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserEducationIcons";
+          this.showDivModal();
+          break;
+        
+        case "iconChooserPhoneIcons":
+        this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserPhoneIcons";
+          this.showDivModal();
+          break;
+
+        case "iconChooserSkillIcons":
+          this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserSkillIcons";
+          this.showDivModal();
+          break;
+
+        case "iconChooserAdressIcons":
+          this.modal.mainTitle = "iconChooser";
+          this.modal.title1 = "iconChooserAdressIcons";
+          this.showDivModal();
+        
+        break;
         default:
           break;
       }
@@ -416,6 +499,11 @@ export default {
       );
     },
     changefontOld(p) {
+      // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
+      // e um palhativo
+      if(p.target.textContent.split('').length > 30){
+        return;
+      }
       if (p.target.id == "square") {
         console.log("teste");
         document.getElementsByClassName("pic")[0].style["border-radius"] =
@@ -463,7 +551,7 @@ export default {
               all[i].style.backgroundColor = "#1F271B";
               
               if(page_header[0]){
-              page_header[0].style.color = "white"
+                page_header[0].style.color = "white"
               }else{
                 document.getElementById("text_header").style.color = "white";
               }
@@ -647,6 +735,7 @@ export default {
 .main.template {
   width: 66%;
   height: 100%;
+  margin-top: 10px;
 }
 
 .multi-menu-class:hover {
@@ -717,7 +806,7 @@ export default {
     display: none;
   }
   .main-left {
-    width: 25%;
+    width: 23%;
     height: 100vh;
     padding: 10px;
     margin-right: 10px;
@@ -737,7 +826,6 @@ export default {
   .main {
     display: flex;
     width: 100% !important;
-    height: 100vh;
     position: absolute;
     top: 0 !important;
     -webkit-print-color-adjust: exact;

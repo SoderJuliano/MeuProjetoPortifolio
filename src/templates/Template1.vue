@@ -1,6 +1,11 @@
 <template>
   <div class="custom-container">
       <Side
+        @choose-addressIcon="$emit('choose-addressIcon')"
+        @choose-skillIcon="$emit('choose-skillIcon')"
+        @choose-phoneIcon="$emit('choose-phoneIcon')"
+        @choose-emailIcon="$emit('choose-emailIcon')"
+        @choose-educationIcon="$emit('choose-educationIcon')"
         @add-info="$emit('add-info')"
         @add-formacao="$emit('add-formacao')"
         @add-habilidade="$emit('add-habilidade')"
@@ -35,7 +40,8 @@ import Page from '../components/Page.vue'
 export default {
   name: 'template1',
   emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
-  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user'],
+  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
+  'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon'],
   data(){
     return{
       uExperiences: this.userExperiences,
@@ -80,13 +86,6 @@ export default {
   .custom-container{
     display: flex;
     width: 100%;
-    height: calc(100vh - 35px);
-    overflow: visible;
-  }
-  
-  .side{
-    word-wrap: break-word;
-    height: calc(100% + 30px);
   }
 }
 </style>

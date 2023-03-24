@@ -74,7 +74,7 @@ export default {
   display: block;
 }
 .template2-competencias{
-  width: 82% !important;
+  width: 87% !important;
 }
 .template2-competencias .title{
   text-align: start !important;

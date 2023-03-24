@@ -27,7 +27,9 @@
         "nskill": "Nova competência",
         "yhprofession": "Resumo profissional",
         "companyName": "Nome da empresa",
-        "yourJob": "Cargo que ocupava"
+        "yourJob": "Cargo que ocupava",
+        "tip": "Dica",
+        "iconTip": "Você pode clicar sobre alguns icons para ver outras opções."
     },
     {
         "language": "en-us",
@@ -57,6 +59,8 @@
         "nskill": "New skill",
         "yhprofession": "professional history",
         "companyName": "Company name",
-        "yourJob": "You used to work as"
+        "yourJob": "You used to work as",
+        "tip": "Tip",
+        "iconTip": "You can click over some icons to see other options."
     }
 ]

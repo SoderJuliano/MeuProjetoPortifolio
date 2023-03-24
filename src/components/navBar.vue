@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 
 export default {
     name: 'nav-bar',
@@ -142,8 +143,10 @@ export default {
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
+        $(".side").height($(".main").height());
+        //console.log($(".side").height())      
         window.print()
-      },
+        },
       changeLanguage(lng){
         this.$emit('language-update', lng)
         lng == "pt-br" ? 
@@ -182,9 +185,11 @@ li img {
 .bnt-languages{
   min-width: 80px;
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
+  box-shadow: black -1px 2px;
 }
 .bnt-languages:first-child{
+  margin-right: 10px;
   background-color: blue;
   color: white;
 }
@@ -193,14 +198,17 @@ li img {
   height: 50px;
   margin-bottom: 20px;
   justify-content: center;
-  padding-top: 1px;
+  padding-top: 10px;
 }
 .navbar {
   justify-content: center;
-  padding-top: 20px;
-  margin: 0 auto;
-  width: 54%;
+  padding: 10px;
+  margin: auto auto;
+  border-radius: 10px;
+  box-shadow: black -1px 2px 5px;
+  width: 50%;
   display: flex;
+  background-color: whitesmoke;
 }
 .nav-item{
   width: 100px;
@@ -258,7 +266,7 @@ li{
  .container-fluid{display: none;}
 }
 .nav-item.is-right{
-  position: relative;
+  width: 100px;
   display: flex;
 }
 .right-options{

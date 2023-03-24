@@ -5,10 +5,15 @@
     </div>
 </template>
 <script>
+
+import $ from 'jquery'
+
 export default {
     name: 'imprimir-bnt',
     methods:{
         print(){
+            $(".side").height($(".main").height());
+            //console.log($(".side").height())
             window.print()
         },
     }
