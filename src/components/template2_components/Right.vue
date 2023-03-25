@@ -1,6 +1,8 @@
 <template>
     <div class="container" :style="getStyle()">
         <Contact
+            @choose-emailIcon="this.$emit('choose-emailIcon')"
+            @choose-phoneIcon="this.$emit('choose-phoneIcon')"
             @choose-addressIcon="$emit('choose-addressIcon')"
             @add-info="$emit('add-info')"
             template=2
@@ -40,7 +42,8 @@ export default {
         Contact,
         Experiencias
     },
-    emits:["add-info", "add-SocialLink", "add-Experiencia", "update-experiences", "choose-addressIcon"],
+    emits:["add-info", "add-SocialLink", "add-Experiencia", "update-experiences", "choose-addressIcon",
+            "choose-phoneIcon", "choose-emailIcon"],
     props:{
         user: Object,
         sideColor: String,

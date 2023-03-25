@@ -20,6 +20,7 @@
             :user="user"
             template=2
             @add-formacao="$emit('add-formacao')"
+            @choose-educationIcon="$emit('choose-educationIcon')"
             :sideColor="sideColor"
             :titulo="titles.formacao"
             :language="language"
@@ -27,6 +28,7 @@
         <Habilidade
             @add-habilidade="$emit('add-habilidade')"
             @adicionar-habilidade="$emit('adicionar-habilidade')"
+            @choose-skillIcon="$emit('choose-skillIcon')"
             class="template-data"
             :titulo="titles.habilidades"
             :language="language"
@@ -67,7 +69,7 @@ export default {
         sideColor: String,
         language: String,
     },
-    emits:["add-resumo", "add-habilidade", "adicionar-habilidade"]
+    emits:["add-resumo", "add-habilidade", "adicionar-habilidade", "choose-educationIcon"]
 }
 </script>
 <style scoped>

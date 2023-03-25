@@ -17,16 +17,20 @@
                 @add-formacao="$emit('add-formacao')"
                 @add-habilidade="$emit('add-habilidade')"
                 @adicionar-habilidade="$emit('adicionar-habilidade')"
+                @choose-educationIcon="$emit('choose-educationIcon')"
+                @choose-skillIcon="$emit('choose-skillIcon')"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"
             />
             <Right
+                @choose-emailIcon="this.$emit('choose-emailIcon')"
                 @choose-addressIcon="$emit('choose-addressIcon')"
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
                 @add-experiencia="$emit('add-experiencia')"
                 @update-experiences="$emit('update-experiences')"
+                @choose-phoneIcon="this.$emit('choose-phoneIcon')"
                 :user="userData"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
@@ -49,7 +53,7 @@ export default {
         Right
     },
     emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences",
-    "choose-addressIcon"],
+            "choose-addressIcon", "choose-phoneIcon", "choose-emailIcon", "choose-educationIcon"],
     props:{
         mainColor: String,
         sideColor: String,
