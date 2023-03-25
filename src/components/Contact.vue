@@ -5,11 +5,11 @@
         <img src="../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
         </p><br>
         <div v-for="(item, index) in this.user.contact.email" :key="index" class="data-container">
-            <img v-if="item" src="../icons/envelope.svg" class="email-icon"/>
+            <img @click="this.$emit('choose-emailIcon')" v-if="item" src="../icons/envelope.svg" class="email-icon"/>
             <span class="email-text">{{item}}</span>
         </div>
         <div v-for="(item, index) in this.user.contact.phone" :key="index" class="data-container">
-            <img v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon">
+            <img @click="this.$emit('choose-phoneIcon')" v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon">
             <span class="phone-text">{{item}}</span>
         </div>
         <div class="data-container">
@@ -29,7 +29,7 @@ export default {
         user: Object,
         sideColor: String,
     },
-    emits:["add-info", "choose-addressIcon"],
+    emits:["add-info", "choose-addressIcon", "choose-phoneIcon", "choose-emailIcon"],
     data(){
         return {/* 
             email: [],

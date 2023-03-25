@@ -63,6 +63,9 @@
       :user="user"
     />
     <template2
+      @choose-skillIcon="editarIcons('skill')"
+      @choose-emailIcon="editarIcons('email')"
+      @choose-phoneIcon="editarIcons('phone')"
       @choose-addressIcon="editarIcons('adressT2')"
       v-if="template == 2"
       :language="language"
@@ -77,6 +80,7 @@
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
+      @choose-educationIcon="editarIcons('education')"
       :style="getStyle()"
       :mainColor="mainColor"
       :sideColor="sideColor"
@@ -806,10 +810,10 @@ export default {
     display: none;
   }
   .main-left {
-    width: 23%;
+    width: 20%;
     height: 100vh;
-    padding: 10px;
-    margin-right: 10px;
+    padding: 1px;
+    margin-right: 5px;
   }
   .right {
     width: 25%;

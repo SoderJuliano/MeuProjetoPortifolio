@@ -413,6 +413,12 @@ export default {
   margin-top: 1px;
   margin-bottom: 10px;
 }
+
+.contact-template2 .data-container{
+  margin: 0%;  
+  margin-left: 10px;
+}
+
 .email-icon {
   width: 25px;
   height: 25px;

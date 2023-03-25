@@ -93,8 +93,8 @@ export default {
     display: block;
 }
 .social-icon{
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     padding-top: 10px;
     margin-right: 10px;
 }
