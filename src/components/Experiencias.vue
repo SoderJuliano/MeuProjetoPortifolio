@@ -137,6 +137,13 @@ export default {
   .experiencias{
     min-height: 60px;
   }
+  .experiences-template1-title-white{
+      margin-bottom: 100px;
+    }
+
+    .experiences-template1-title-black{
+      margin-bottom: 100px;
+    }
 }
 .experiences-template1-title-white{
   color: white;
