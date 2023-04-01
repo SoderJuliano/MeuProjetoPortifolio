@@ -113,6 +113,9 @@ export default {
         padding: 0px !important;
         width: 100%;
     }
+    .social-row span{
+        word-break: break-all;
+    }
     .social-container{
         margin: 0 auto;
         padding-top: 0px;
