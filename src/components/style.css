@@ -164,7 +164,7 @@ h3:hover .editar-animado{
 
     .social-item-template1 span {
         word-break: break-all;
-        width: 60%;
+        max-width: 190px;
     }
 }
 
@@ -186,10 +186,6 @@ h3:hover .editar-animado{
 .social-item-template1:hover {
     background-color: #d7d7d7;
     border-radius: 10px;
-}
-
-.social-item-template1 span {
-    width: 100%;
 }
 
 .social-item-template1:hover .remove-bnt{
