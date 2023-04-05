@@ -67,6 +67,14 @@ export default {
     fontColor: String,
     user: Object,
     language: String,
+  },
+  mounted(){
+    console.log("mounted template 1")
+    console.log(mainColor)
+    console.log(sideColor)
+    console.log(fontColor)
+    console.log(language)
+    console.log(user)
   }
 }
 </script>
