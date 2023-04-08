@@ -1,4 +1,5 @@
-export default class MyNameClass {
+export default class User {
+    id = 0;
     name = "";
     profession = "";
     resume = "";
@@ -15,6 +16,10 @@ export default class MyNameClass {
     };
     userExperiences = [];
     imgForReal = 0
+
+    constructor() {
+        this.id = Math.random();
+    }
 
     updator(user) 
     {

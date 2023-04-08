@@ -31,8 +31,18 @@ export default class PageConfig {
         return this;
     }
 
+    save(){
+        localStorage.setItem("configs", JSON.stringify(this));
+    }
+
+    updateMyself(){
+        this.recoverConfigs()
+        return this;
+    }
+
     // setters
     setLanguage(language) {
+        console.log('new language choiced: '+language)
         this.language = language;
     }
     setImageURL(imageURL) {

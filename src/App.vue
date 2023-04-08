@@ -15,6 +15,7 @@
     @update-user="updateUser"
   />
   <nav-bar
+    :language="this.configs.getLanguage()"
     @close="close"
     @language-update="lupdate"
     :style="getStyle()"
@@ -27,12 +28,13 @@
       <multi-menu
         :template="this.configs.getTemplate()"
         :user="user"
+        @update-configs="updateConfigs"
         @update-user="updateUser"
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
         class="multi-menu-class"
         @changefont="changefont"
-        @click="changefontOld"
+        @click="changeOptions"
         @close="close"
       />
     </div>
@@ -142,6 +144,7 @@ export default {
       // user: new userModel() futuro trabalhar com classes
       user: 
       {
+        id: Math.floor(Math.random() * 1000) ,
         name: "",
         profession: "",
         resume: "",
@@ -170,6 +173,9 @@ export default {
     Tips,
   },
   methods: {
+    updateConfigs(){
+      this.configs.updateMyself();
+    },
     editarIcons(value)
     {
       if(value.includes("email")){
@@ -241,8 +247,8 @@ export default {
     },
     lupdate(lng) {
       if(lng){
-        localStorage.setItem("configs", JSON.stringify(this.configs))
         this.configs.setLanguage(lng);
+        localStorage.setItem("configs", JSON.stringify(this.configs))
       }
     },
     updateName(name) {
@@ -497,7 +503,7 @@ export default {
         }
       );
     },
-    changefontOld(p) {
+    changeOptions(p) {
       // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
       // e um palhativo
       if(p.target.textContent.split('').length > 30){
@@ -584,13 +590,8 @@ export default {
           this.configs.setSideColor(p.target.textContent);
           localStorage.setItem("configs", JSON.stringify(this.configs));
         }
-      } else if (
-        p.target.textContent.length < 20 &&
-        p.target.textContent != "X"
-      ) {
-        this.configs.setFont(p.target.textContent);
-        localStorage.setItem("configs", JSON.stringify(this.configs));
-      }
+      } 
+
       console.log(p.target.textContent);
     },
     getStyle() {
@@ -666,9 +667,15 @@ export default {
       }
     },
     getUserData() {
-      // esse vai ser o único objeto que precisa
-      const localUser = localStorage.getItem("user");
-      this.user = localUser ? JSON.parse(localUser) : this.user; 
+      try { 
+        this.user = JSON.parse(localStorage.getItem("user"));
+      } 
+      catch (err) { 
+        console.log(err.message);
+        console.log("created new user with id: " + this.user.id);
+        this.user = this.user 
+      };
+      localStorage.setItem("user", JSON.stringify(this.user))
     }
   },
   beforeMount() {

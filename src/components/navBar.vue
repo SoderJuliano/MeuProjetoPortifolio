@@ -58,6 +58,9 @@ export default {
         info: false
       }
     },
+    props: {
+      language: String
+    },
     emits:['close', 'language-update', 'now-template1', 'now-template2'],
     methods:{
       exemplesText(){
@@ -162,7 +165,7 @@ export default {
       }
     },
     mounted(){
-      localStorage.getItem("lng") == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
+      this.language == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
         document.getElementsByClassName("bnt-languages")[1].style.color = "white", document.getElementsByClassName("bnt-languages")[0].style.color = "black",
         document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white"
       ) : '';

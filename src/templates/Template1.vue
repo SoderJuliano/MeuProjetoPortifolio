@@ -70,11 +70,11 @@ export default {
   },
   mounted(){
     console.log("mounted template 1")
-    console.log(mainColor)
-    console.log(sideColor)
-    console.log(fontColor)
-    console.log(language)
-    console.log(user)
+    console.log("mainColor: "+this.mainColor)
+    console.log("sideColor: "+this.sideColor)
+    console.log(this.fontColor)
+    console.log(this.language)
+    console.log(this.user)
   }
 }
 </script>
