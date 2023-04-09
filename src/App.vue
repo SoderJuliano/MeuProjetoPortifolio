@@ -674,12 +674,12 @@ export default {
     },
     getUserData() {
       try { 
-        this.user = JSON.parse(localStorage.getItem("user"));
+        const lsUser = JSON.parse(localStorage.getItem("user"));
+        this.user = lsUser != null ? lsUser : this.user;
       } 
       catch (err) { 
         console.log(err.message);
         console.log("created new user with id: " + this.user.id);
-        this.user = this.user 
       };
       localStorage.setItem("user", JSON.stringify(this.user))
     }
