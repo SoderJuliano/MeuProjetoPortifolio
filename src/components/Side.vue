@@ -208,6 +208,7 @@ export default {
   border-radius: 50%;
 }
 .side {
+  height: 100%;
   display: block;
   box-shadow: 0 0 50px #ccc;
 }
@@ -277,6 +278,7 @@ export default {
     padding-top: 50px;
     font-size: 14px;
     overflow-x: hidden;
+    overflow-y: show;
     word-break: break-all !important;
   }
   .pic {
@@ -346,7 +348,6 @@ export default {
   }
 /** ver isso */
   .side {
-    min-height: 100vh !important;
     width: 40%;
     justify-content: center;
     font-size: 12px;

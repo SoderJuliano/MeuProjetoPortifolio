@@ -12,8 +12,11 @@ export default {
     name: 'imprimir-bnt',
     methods:{
         print(){
-            $(".side").height($(".main").height());
-            //console.log($(".side").height())
+            console.log("side: " + $(".side").height())
+            console.log("main-container: "+ $(".main-container").height())
+            $(".side").height() > 514 ? $(".side").height($(".side").height()) : $(".side").css("height", "100vh")
+            $(".main-container").height() > $(".side").height() ? $(".side").height($(".main-container").height()) : ""
+                
             window.print()
         },
     }

@@ -63,8 +63,6 @@ export default {
       removeJob(item){
 
         this.jobs.splice(this.jobs.indexOf(item), 1)
-          
-        localStorage.setItem('jobs', JSON.stringify(this.jobs))
         this.$emit('update-experiences', this.jobs)
       },
   },

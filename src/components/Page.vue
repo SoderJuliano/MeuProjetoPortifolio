@@ -50,6 +50,7 @@
     />
     <Experiencias
       @add-experiencia="$emit('add-experiencia')"
+      @update-experiences="$emit('update-experiences')"
       class="data-container"
       :cor="cor"
       :fontColor="fontColor"
@@ -73,6 +74,7 @@ export default {
     "add-experiencia",
     "add-nome",
     "add-profissao",
+    "update-experiences"
   ],
   data() {
     return {

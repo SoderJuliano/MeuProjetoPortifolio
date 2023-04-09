@@ -146,8 +146,11 @@ export default {
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
-        $(".side").height($(".main").height());
-        //console.log($(".side").height())      
+        console.log("side: " + $(".side").height())
+        console.log("main-container: "+ $(".main-container").height())
+        $(".side").height() > 514 ? $(".side").height($(".side").height()) : $(".side").css("height", "100vh")
+        $(".main-container").height() > $(".side").height() ? $(".side").height($(".main-container").height()) : ""
+            
         window.print()
         },
       changeLanguage(lng){
