@@ -29,7 +29,8 @@
         "companyName": "Nome da empresa",
         "yourJob": "Cargo que ocupava",
         "tip": "Dica",
-        "iconTip": "Você pode clicar sobre alguns icons para ver outras opções."
+        "iconTip": "Você pode clicar sobre alguns icons para ver outras opções.",
+        "skillTips": "Você pode por varias habilidadedes separadas por virgula (,)."
     },
     {
         "language": "en-us",
@@ -61,6 +62,7 @@
         "companyName": "Company name",
         "yourJob": "You used to work as",
         "tip": "Tip",
-        "iconTip": "You can click over some icons to see other options."
+        "iconTip": "You can click over some icons to see other options.",
+        "skillTips": "You can write many skills puting comma (,) between them."
     }
 ]
