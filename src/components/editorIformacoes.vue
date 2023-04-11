@@ -21,7 +21,7 @@
                     <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
                     
                     <button v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
-                    <button v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                    <button class="save-bnt" v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
                     <!-- togle date -->
@@ -60,7 +60,7 @@
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
                     <button v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
-                    <button v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                    <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
@@ -83,7 +83,7 @@
                 <input id="modal-input5" type="text" :placeholder=this.getEstado()>
                 <input id="modal-input6" type="text" :placeholder=this.getPais()>
                 <br><br>
-                <button v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                <button class="save-bnt" v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
         </div> 
     </div>
@@ -193,6 +193,8 @@ export default {
             this.changePage2();
         },
         add(title){
+            $('.save-bnt').prop('disabled', true);
+
             console.log(title);
             //title as string
             switch(title) {
@@ -282,6 +284,10 @@ export default {
             this.ptitle2 = '';
             this.cancelar()
             document.getElementById('modal-input') ? document.getElementById('modal-input').value = '' : ""
+            //$('.save-bnt').prop('disabled', false);
+            setTimeout(() => {
+                $('.save-bnt').prop('disabled', false);
+            }, 2000);
         },
         adicionarFormacao(){
             this.userData.grade.push($("#modal-input").val())

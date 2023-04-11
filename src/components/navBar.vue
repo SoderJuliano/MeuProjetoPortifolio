@@ -58,6 +58,9 @@ export default {
         info: false
       }
     },
+    props: {
+      language: String
+    },
     emits:['close', 'language-update', 'now-template1', 'now-template2'],
     methods:{
       exemplesText(){
@@ -143,10 +146,25 @@ export default {
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
-        $(".side").height($(".main").height());
-        //console.log($(".side").height())      
+        const sideHeight = $(".side").height()
+        const mainHeight = $(".main-container").width()
+
+        console.log("side: " + sideHeight)
+        console.log("main-container: " + mainHeight )
+        
+        sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
+        if(mainHeight > sideHeight && mainHeight > 950){
+          $(".side").height(mainHeight)
+        }else{
+          $(".main-container").height(sideHeight+50)
+        }
+        
         window.print()
-        },
+
+        $(".side").height(sideHeight)
+        $(".main-container").height(mainHeight)
+        
+      },
       changeLanguage(lng){
         this.$emit('language-update', lng)
         lng == "pt-br" ? 
@@ -162,7 +180,7 @@ export default {
       }
     },
     mounted(){
-      localStorage.getItem("lng") == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
+      this.language == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
         document.getElementsByClassName("bnt-languages")[1].style.color = "white", document.getElementsByClassName("bnt-languages")[0].style.color = "black",
         document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white"
       ) : '';

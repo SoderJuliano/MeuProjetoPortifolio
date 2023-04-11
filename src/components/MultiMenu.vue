@@ -3,7 +3,7 @@
         <div class="header">
             <h3>OPÇÕES</h3>
         </div>
-        <fonts @changefont="$emit('changefont')" />
+        <fonts @update-configs="$emit('update-configs')" />
         <Colors />
         <pageColor />
         <Avatares 
@@ -29,7 +29,7 @@ import Templates from "./multimenuComponentes/Templates.vue";
 
 export default {
     name: "multi-menu",
-    emits: ["changefont"],
+    emits: ["changefont", "update-configs"],
     components: {
         Fonts,
         Colors,

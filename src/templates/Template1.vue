@@ -23,6 +23,7 @@
         @add-experiencia="$emit('add-experiencia')"
         @add-nome="$emit('add-nome')"
         @add-profissao="$emit('add-profissao')"
+        @update-experiences="$emit('update-experiences')"
         @click="closeEditarContato"
         :fontColor=fontColor
         :cor="mainColor"
@@ -41,7 +42,7 @@ export default {
   name: 'template1',
   emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
   'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
-  'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon'],
+  'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon', 'update-experiences'],
   data(){
     return{
       uExperiences: this.userExperiences,
@@ -67,6 +68,14 @@ export default {
     fontColor: String,
     user: Object,
     language: String,
+  },
+  mounted(){
+    console.log("mounted template 1")
+    console.log("mainColor: "+this.mainColor)
+    console.log("sideColor: "+this.sideColor)
+    console.log(this.fontColor)
+    console.log(this.language)
+    console.log(this.user)
   }
 }
 </script>

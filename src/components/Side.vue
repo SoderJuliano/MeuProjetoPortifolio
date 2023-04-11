@@ -202,12 +202,13 @@ export default {
   margin-top: 1px;
 }
 .img-pic {
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 150px;
   overflow: hidden;
   border-radius: 50%;
 }
 .side {
+  height: 100%;
   display: block;
   box-shadow: 0 0 50px #ccc;
 }
@@ -223,8 +224,8 @@ export default {
     padding-bottom: 10px;
   }
   .pic {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
@@ -277,6 +278,7 @@ export default {
     padding-top: 50px;
     font-size: 14px;
     overflow-x: hidden;
+    overflow-y: show;
     word-break: break-all !important;
   }
   .pic {
@@ -346,7 +348,6 @@ export default {
   }
 /** ver isso */
   .side {
-    min-height: 100vh !important;
     width: 40%;
     justify-content: center;
     font-size: 12px;

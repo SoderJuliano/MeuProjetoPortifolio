@@ -36,7 +36,8 @@ export default {
   methods:{
     removeGrade(event){
       this.mygrade.splice(this.mygrade.indexOf(event.target.id), 1)
-      localStorage.setItem('grade', this.mygrade)
+      this.user.grade = this.mygrade
+      localStorage.setItem('user', JSON.stringify(this.user))
     },
     getStyle(){
       return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}

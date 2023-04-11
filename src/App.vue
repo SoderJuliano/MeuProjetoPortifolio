@@ -6,8 +6,8 @@
     :title2="modal.title2"
     :placeholder2="modal.placeholder2"
     :user="user"
-    :language="language"
-    :template="template"
+    :language="this.configs.getLanguage()"
+    :template="this.configs.getTemplate()"
     @adicionar-formacao="adicionarNovaFormacao"
     @adicionar-habilidade="adicionarNovaHabilidade"
     @update-name="updateName"
@@ -15,6 +15,7 @@
     @update-user="updateUser"
   />
   <nav-bar
+    :language="this.configs.getLanguage()"
     @close="close"
     @language-update="lupdate"
     :style="getStyle()"
@@ -25,20 +26,21 @@
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
-        :template="template"
+        :template="this.configs.getTemplate()"
         :user="user"
+        @update-configs="updateConfigs"
         @update-user="updateUser"
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
         class="multi-menu-class"
         @changefont="changefont"
-        @click="changefontOld"
+        @click="changeOptions"
         @close="close"
       />
     </div>
     <template1
-      v-if="template == 1"
-      :language="language"
+      v-if="this.configs.getTemplate() == 1"
+      :language="this.configs.getLanguage()"
       @update-user="updateUser"
       @add-info="addInfo"
       @add-resumo="editarResumo"
@@ -55,16 +57,17 @@
       @choose-emailIcon="editarIcons('email')"
       @choose-educationIcon="editarIcons('education')"
       @choose-phoneIcon="editarIcons('phone')"
+      @update-experiences="adicionarExperiencias"
       class="template"
       :style="getStyle()"
-      :mainColor="mainColor"
-      :sideColor="sideColor"
-      :fontColor="fontColor"
+      :mainColor="this.configs?.getMainColor()"
+      :sideColor="this.configs?.getSideColor()"
+      :fontColor="this.configs?.getFontColor()"
       :user="user"
     />
     <template2
-      v-if="template == 2"
-      :language="language"
+      v-if="this.configs.getTemplate() == 2"
+      :language="this.configs.getLanguage()"
       @add-info="addInfo"
       @add-resumo="editarResumo"
       @adicionar-habilidade="adicionarNovaHabilidade"
@@ -81,19 +84,20 @@
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
+      @update-experiences="adicionarExperiencias"
       :style="getStyle()"
-      :mainColor="mainColor"
-      :sideColor="sideColor"
-      :fontColor="fontColor"
+      :mainColor="this.configs?.getMainColor()"
+      :sideColor="this.configs?.getSideColor()"
+      :fontColor="this.configs?.getFontColor()"
       :user="user"
     />
     <div class="footer">
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
       <div class="footer-menu-bar" style="display: none;" > 
         <Footer
-          :language="language"
+          :language="this.configs.getLanguage()"
           @language-update="lupdate"
-          :template="template"
+          :template="this.configs.getTemplate()"
           @font-changed="setFont"
           :user="user"
           @now-template1="change_template(1)"
@@ -121,6 +125,7 @@ import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import strings from "../src/components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
+import PageConfig from "./model/configModel.js";
 import $ from "jquery";
 
 export default {
@@ -129,15 +134,7 @@ export default {
   data() {
     return {
       strings: strings,
-      language: "",
-      imageURL: "",
-      template: 1,
-      font: "Oswald",
-      fontSize: "15px",
-      fontSizeTitles: "17px",
-      fontColor: "black",
-      sideColor: "#B0C4DE",
-      mainColor: "#87CEEB",
+      configs: PageConfig.class,
       modal: {
         mainTitle: "",
         title1: "",
@@ -149,6 +146,7 @@ export default {
       // user: new userModel() futuro trabalhar com classes
       user: 
       {
+        id: Math.floor(Math.random() * 1000) ,
         name: "",
         profession: "",
         resume: "",
@@ -177,6 +175,9 @@ export default {
     Tips,
   },
   methods: {
+    updateConfigs(){
+      this.configs.updateMyself();
+    },
     editarIcons(value)
     {
       if(value.includes("email")){
@@ -214,14 +215,16 @@ export default {
       $(".menuupimg-down").css("display", "block");
     },
     changefont(newFont) {
-      this.font = newFont;
-      localStorage.setItem("font", newFont);
+      this.configs.setFont(newFont);
+      localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     changeFontColor(color) {
-      this.fontColor = color;
+      this.configs.setFontColor(color);
+      localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     changeMainColor(color) {
-      this.mainColor = color;
+      this.configs.setMainColor(color);
+      localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
       // futuramente pode ser usado classes this.user.updator(userData);
@@ -229,26 +232,30 @@ export default {
       localStorage.setItem("user", JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
+      console.log(experiencias) 
       this.user.userExperiences = experiencias;
+      localStorage.setItem("user", JSON.stringify(this.user));
     },
     adicionarNovaHabilidade(habilidade) {
       this.user.hability = habilidade;
+      localStorage.setItem("user", JSON.stringify(this.user));
     },
     adicionarNovaFormacao(formacao) {
       this.user.grade.push(formacao);
+      localStorage.setItem("user", JSON.stringify(this.user));
     },
     languageIsEN() {
-      return this.language == "us-en";
+      return this.configs.getLanguage() == "us-en";
     },
     change_template(template) {
-      template > 0
-        ? localStorage.setItem("template", template)
-        : localStorage.setItem("template", 1);
-      this.template = template;
+      this.configs.setTemplate(template);
+      localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     lupdate(lng) {
-      lng ? localStorage.setItem("lng", lng) : "";
-      this.language = lng;
+      if(lng){
+        this.configs.setLanguage(lng);
+        localStorage.setItem("configs", JSON.stringify(this.configs))
+      }
     },
     updateName(name) {
       this.user.name = name;
@@ -502,7 +509,7 @@ export default {
         }
       );
     },
-    changefontOld(p) {
+    changeOptions(p) {
       // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
       // e um palhativo
       if(p.target.textContent.split('').length > 30){
@@ -577,31 +584,24 @@ export default {
           }
 
         }
-        p.target.id.split("").length < 8 && p.target.id.split("").length > 1
-          ? ((this.mainColor = p.target.id),
-            localStorage.setItem("mainColor", p.target.id))
-          : localStorage.getItem("mainColor")
-          ? (this.mainColor = localStorage.getItem("mainColor"))
-          : (this.mainColor = "#87CEEB");
+        if(p.target.id.split("").length < 8 && p.target.id.split("").length > 1){
+          this.configs.setMainColor(p.target.id)
+          localStorage.setItem("configs", JSON.stringify(this.configs))
+        }
       } else if (p.target.textContent.includes("#") == true) {
         if (
           p.target.textContent.split("").length > 0 &&
           p.target.textContent.split("").length < 8
         ) {
-          this.sideColor = p.target.textContent;
-          localStorage.setItem("sideColor", p.target.textContent);
+          this.configs.setSideColor(p.target.textContent);
+          localStorage.setItem("configs", JSON.stringify(this.configs));
         }
-      } else if (
-        p.target.textContent.length < 20 &&
-        p.target.textContent != "X"
-      ) {
-        this.font = p.target.textContent;
-        localStorage.setItem("font", p.target.textContent);
-      }
+      } 
+
       console.log(p.target.textContent);
     },
     getStyle() {
-      switch (this.font) {
+      switch (this.configs?.getFont()) {
         case "Oswald":
           return {
             "font-family": "'Oswald', sans-serif !important",
@@ -668,63 +668,33 @@ export default {
           };
         default:
           return {
-            "font-family": this.font,
+            "font-family": this.configs.getFont(),
           };
       }
     },
-    getColors() {
-      const mc = localStorage.getItem("mainColor");
-      const sc = localStorage.getItem("sideColor");
-      const fntc = localStorage.getItem("fontColor");
-      if (mc) {
-        this.mainColor = mc;
-      }
-      if (sc) {
-        this.sideColor = sc;
-      }
-      if (fntc) {
-        this.fontColor = fntc;
-      }
-    },
     getUserData() {
-      // esse vai ser o único objeto que precisa
-      const localUser = localStorage.getItem("user");
-      this.user = localUser ? JSON.parse(localUser) : this.user; 
-    },
-    getUserProfileIMG() {
-
-      const pimg = localStorage.getItem("avatarImg");
-      const realImg = localStorage.getItem("profileImg");
-
-      if (realImg && realImg != "none") {
-        this.user.realImg = this.imageURL = "data:image/" + realImg;
-      } else {
-        this.user.realImg = pimg;
-      }
-
+      try { 
+        const lsUser = JSON.parse(localStorage.getItem("user"));
+        this.user = lsUser != null ? lsUser : this.user;
+      } 
+      catch (err) { 
+        console.log(err.message);
+        console.log("created new user with id: " + this.user.id);
+      };
+      localStorage.setItem("user", JSON.stringify(this.user))
     }
   },
   beforeMount() {
-    this.getColors();
+
+    if(!localStorage.getItem("configs")){
+      this.configs = new PageConfig();
+    }else{
+      this.configs = new PageConfig().recoverConfigs()
+    }
 
     this.getUserData();
-
-    localStorage.getItem("font")
-      ? (this.font = localStorage.getItem("font"))
-      : (this.font = "Oswald");
-
-    this.template = localStorage.getItem("template")
-      ? parseInt(localStorage.getItem("template"))
-      : 1;
-
-    this.language = localStorage.getItem("lng")
-      ? localStorage.getItem("lng")
-      : "pt-br";
     
-  },
-  /* mounted() {
-    this.languageIsEN() ? this.setToEn() : this.setToPT();
-  }, */
+  }
 };
 </script>
 

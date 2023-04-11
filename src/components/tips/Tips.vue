@@ -1,49 +1,75 @@
 <template>
     <div class="tip-container">
-        <img style="width: 30px;" v-if="closedTip == true || (showTip == true && closedTip == true)" @click="showPng('icon')" src="../../assets/tips/idea.png" alt="tipIcon" />
-        <img v-if="showTip == false" @click="show('icon')" src="../../assets/tips/idea.gif" alt="tipIcon" />
-        <div class="tip-conteiner-content" id="icon">
+        <img v-if="!showTip && asTipToShow()" style="width: 30px;" @click="show()" src="../../assets/tips/idea.png" alt="tipIcon" />
+        <img v-if="asTipToShow() == false && !showTip" @click="show()" src="../../assets/tips/idea.gif" alt="tipIcon" />
+        <div v-if="showTip" class="tip-conteiner-content" id="icon">
             <div id="title">
                 <h3>{{ this.lang == "pt-br" ? strings[0].tip : strings[1].tip }}</h3>
-                <span @click="close('icon')" id="closer">X</span>
+                <span @click="close(7)" id="closer">X</span>
             </div>
-            <span>{{ this.lang == "pt-br" ? strings[0].iconTip : strings[1].iconTip }}</span>
+            <div v-for="tip in tips" >
+                <div class="theTip" v-if="!tip.read">
+                    <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
+                    <p>{{ tip.message }}</p>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import $ from 'jquery';
+import Tip from '../../model/tip.js';
 
 export default {
     name: 'Tip',
     data(){
         return {
-            showTip: true,
-            closedTip: false
+            showTip: false,
+            tips: []
         }
-    },
-    mounted() {
-        this.showTip = localStorage.getItem('tip') == 'icon'
-        this.showTip ? this.closedTip = true : this.closedTip = false
     },
     props: {
         lang: String,
         strings: { type: Array }
     },
     methods: {
-        show(tip){
-            localStorage.setItem('tip', tip);
-            $('#'+tip).css('display', 'block');
+        asTipToShow(){
+            console.log('asTipToShow: ' + this.tips.every(tip => tip.read == true))
+            return this.tips.every(tip => tip.read == true)
+        },
+        show(){
             this.showTip = true;
         },
-        close(tip){
-            this.closedTip = true;
-            $('#'+tip).css('display', 'none');
+        close(){
+            this.showTip = false;
         },
-        showPng(tip){
-            this.closedTip = false;
-            $('#'+tip).css('display', 'block');
+        checked(event){
+            this.tips.map(tip => {
+                if(tip.id == event.id){
+                    tip.read = true;
+                }
+            })
+            localStorage.setItem('tips', JSON.stringify(this.tips))
+        }
+    },
+    mounted() {
+
+        this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+
+        if(this.tips.length == 0) {
+            const tip1 = new Tip();
+            const tip2 = new Tip();
+            
+            tip1.setTitle(this.lang == "pt-br" ? "Icones" : "Icons")
+            tip1.setMessage(this.lang == "pt-br" ? this.strings[0].iconTip : this.strings[1].iconTip)
+
+            tip2.setTitle(this.lang == "pt-br" ? "Habilidades" : "Skills")
+            tip2.setMessage(this.lang == "pt-br" ? this.strings[0].skillTips : this.strings[1].skillTips)
+            
+            this.tips.push(tip1)
+            this.tips.push(tip2)
+
+            localStorage.setItem('tips', JSON.stringify(this.tips));
         }
     }
 }
@@ -78,7 +104,6 @@ img:active
 
     .tip-conteiner-content
     {
-        display: none;
         padding: 10px;
         background-color: whitesmoke;
         border-radius: 10px;
@@ -113,4 +138,17 @@ img:active
         justify-content: center;
     }
 }
+
+.theTip .tip-read{
+   float: right;
+}
+
+.theTip {
+    margin-top: 5px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    transition: ease-in-out 1s;
+}
+
 </style>

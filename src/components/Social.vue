@@ -45,8 +45,8 @@ export default {
     methods:{
         remove(event){
             this.userData.social.splice(this.userData.social.indexOf(event.target.id), 1)
-            localStorage.setItem("user", this.userData)
-            this.$emit('update-user', this.userData)
+            localStorage.setItem("user", JSON.stringify(this.userData))
+            //this.$emit('update-user', this.userData)
         },
         getStyle(){
             return{
@@ -112,6 +112,9 @@ export default {
         display: block;
         padding: 0px !important;
         width: 100%;
+    }
+    .social-row span{
+        word-break: break-all;
     }
     .social-container{
         margin: 0 auto;

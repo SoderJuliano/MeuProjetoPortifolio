@@ -172,6 +172,10 @@ h3:hover .editar-animado{
     margin-bottom: 10px;
 }
 
+.social-item-template2 span{
+    word-break: break-all;
+}
+
 .social-itens-template2{
     margin-left: 1% !important;
 }

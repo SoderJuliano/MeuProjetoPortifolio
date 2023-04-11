@@ -37,7 +37,6 @@ export default {
   },
   methods:{
     removeHabilidades(){
-      localStorage.removeItem("hability")
       this.$emit('adicionar-habilidade', null)
     },
     getStyle(){
