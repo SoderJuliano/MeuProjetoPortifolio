@@ -146,13 +146,25 @@ export default {
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
-        console.log("side: " + $(".side").height())
-        console.log("main-container: "+ $(".main-container").height())
-        $(".side").height() > 514 ? $(".side").height($(".side").height()) : $(".side").css("height", "100vh")
-        $(".main-container").height() > $(".side").height() ? $(".side").height($(".main-container").height()) : ""
-            
+        const sideHeight = $(".side").height()
+        const mainHeight = $(".main-container").width()
+
+        console.log("side: " + sideHeight)
+        console.log("main-container: " + mainHeight )
+        
+        sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
+        if(mainHeight > sideHeight && mainHeight > 950){
+          $(".side").height(mainHeight)
+        }else{
+          $(".main-container").height(sideHeight+50)
+        }
+        
         window.print()
-        },
+
+        $(".side").height(sideHeight)
+        $(".main-container").height(mainHeight)
+        
+      },
       changeLanguage(lng){
         this.$emit('language-update', lng)
         lng == "pt-br" ? 
