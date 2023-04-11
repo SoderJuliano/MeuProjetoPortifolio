@@ -202,8 +202,8 @@ export default {
   margin-top: 1px;
 }
 .img-pic {
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 150px;
   overflow: hidden;
   border-radius: 50%;
 }
@@ -224,8 +224,8 @@ export default {
     padding-bottom: 10px;
   }
   .pic {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
