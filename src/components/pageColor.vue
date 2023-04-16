@@ -61,7 +61,7 @@ export default {
 .colors{
     display: none;
     padding: 15px;
-    height: 120px;
+    min-height: 120px;
     width: 300px;
     border-style: solid;
     border-color: black;
