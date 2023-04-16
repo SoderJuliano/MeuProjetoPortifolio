@@ -10,21 +10,45 @@ body{
     .dropdown-templates, .dropdown-content{
         position: absolute;
         top: 10%;
-        width: 80vw;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .dropdown-templates, .dropdown-content{
+        display: block;
+        height: 400px;
+        width: 250px;
+        overflow-y: scroll;
+        justify-content: center;
+    }
+    .select-template{
+        display: block !important;
+        justify-content: center;
+        width: 90%;
+    }
+    .select-template button{
+        margin-top: 5px;
+    }
+}
+
+@media screen and (min-width: 1001px) {
+
+    .dropdown-templates{
+        height: 200px;
+        justify-content: space-around;
+        width: 300px;
     }
 }
 
 .dropdown-templates {
     display: none;
     padding: 15px;
-    height: 120px;
-    width: 300px;
     border-style: solid;
     border-color: black;
     background-color: rgba(245, 245, 245, 0.514);
     margin-left: 15px;
-    margin-top: -15px;
-    justify-content: space-around; 
+    margin-top: -15px; 
 }
 
 .side-colors{
