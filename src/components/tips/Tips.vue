@@ -34,8 +34,18 @@ export default {
     },
     methods: {
         asTipToShow(){
-            console.log('asTipToShow: ' + this.tips.every(tip => tip.read == true))
-            return this.tips.every(tip => tip.read == true)
+            //console.log('asTipToShow: ' + this.tips.every(tip => tip.read == true))
+            let ptbrTips = []
+            let usenTips = []
+            this.tips.forEach(element => {
+                if(element.language == "pt-br"){
+                    ptbrTips.push(element)
+                }else{
+                    usenTips.push(element)
+                } 
+            });
+            
+            return this.lang == "pt-br" ? ptbrTips?.every(tip => tip.read == true) : usenTips?.every(tip => tip.read == true)
         },
         show(){
             this.showTip = true;
