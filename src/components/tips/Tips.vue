@@ -8,7 +8,7 @@
                 <span @click="close(7)" id="closer">X</span>
             </div>
             <div v-for="tip in tips" >
-                <div class="theTip" v-if="!tip.read">
+                <div class="theTip" v-if="!tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
                     <p>{{ tip.message }}</p>
                 </div>
@@ -34,8 +34,18 @@ export default {
     },
     methods: {
         asTipToShow(){
-            console.log('asTipToShow: ' + this.tips.every(tip => tip.read == true))
-            return this.tips.every(tip => tip.read == true)
+            //console.log('asTipToShow: ' + this.tips.every(tip => tip.read == true))
+            let ptbrTips = []
+            let usenTips = []
+            this.tips.forEach(element => {
+                if(element.language == "pt-br"){
+                    ptbrTips.push(element)
+                }else{
+                    usenTips.push(element)
+                } 
+            });
+            
+            return this.lang == "pt-br" ? ptbrTips?.every(tip => tip.read == true) : usenTips?.every(tip => tip.read == true)
         },
         show(){
             this.showTip = true;
@@ -57,18 +67,31 @@ export default {
         this.tips = JSON.parse(localStorage.getItem('tips')) || [];
 
         if(this.tips.length == 0) {
-            const tip1 = new Tip();
-            const tip2 = new Tip();
-            
-            tip1.setTitle(this.lang == "pt-br" ? "Icones" : "Icons")
-            tip1.setMessage(this.lang == "pt-br" ? this.strings[0].iconTip : this.strings[1].iconTip)
 
-            tip2.setTitle(this.lang == "pt-br" ? "Habilidades" : "Skills")
-            tip2.setMessage(this.lang == "pt-br" ? this.strings[0].skillTips : this.strings[1].skillTips)
-            
+            const tip1 = new Tip();
+            tip1.setTitle("Icones")
+            tip1.setMessage(this.strings[0].iconTip)
+            tip1.setLanguage("pt-br")
             this.tips.push(tip1)
+
+            const tip2 = new Tip();
+            tip2.setTitle("Habilidades")
+            tip2.setMessage(this.strings[0].skillTips)
+            tip2.setLanguage("pt-br")
             this.tips.push(tip2)
 
+            const tip3 = new Tip();
+            tip3.setTitle("Icons")
+            tip3.setMessage(this.strings[1].iconTip)
+            tip3.setLanguage("us-en")
+            this.tips.push(tip3)
+
+            const tip4 = new Tip();
+            tip4.setTitle("Skills")
+            tip4.setMessage(this.strings[1].skillTips)
+            tip4.setLanguage("us-en")
+            this.tips.push(tip4)
+            
             localStorage.setItem('tips', JSON.stringify(this.tips));
         }
     }

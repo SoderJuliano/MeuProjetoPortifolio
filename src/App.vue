@@ -109,7 +109,7 @@
     </div>
     <div class="right">
       <Tips
-        :lang="language"
+        :lang="this.configs.getLanguage()"  
         :strings="this.strings"
       />
     </div>
