@@ -8,7 +8,7 @@
                 <span @click="close(7)" id="closer">X</span>
             </div>
             <div v-for="tip in tips" >
-                <div class="theTip" v-if="!tip.read && tip.language == this.lang">
+                <div class="theTip" v-if="!tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
                     <p>{{ tip.message }}</p>
                 </div>
