@@ -34,7 +34,6 @@ export default {
     },
     methods: {
         asTipToShow(){
-            //console.log('asTipToShow: ' + this.tips.every(tip => tip.read == true))
             let ptbrTips = []
             let usenTips = []
             this.tips.forEach(element => {
