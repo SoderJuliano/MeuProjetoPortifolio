@@ -58,6 +58,7 @@
       template="1"
       :titulo="titles.experiencias"
       :language="language"
+      :user="user"
     />
   </div>
 </template>
