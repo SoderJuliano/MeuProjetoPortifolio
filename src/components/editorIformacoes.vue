@@ -1,6 +1,6 @@
 <template>
     <div class="main-modal-container">
-        <h3 v-if="mainTitle != 'iconChooser'">{{mainTitle}}</h3>
+        <h3 id="mainTitle" v-if="mainTitle != 'iconChooser'">{{this.mainTitleCaps}}</h3>
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
                     
@@ -115,7 +115,8 @@ export default {
             ptitle3: '',
             job: Object,
             userData: this.user,
-            simplifiedDate: true
+            simplifiedDate: true,
+            mainTitleCaps: this.mainTitle.toUpperCase()
         }
     },
     components: {
@@ -135,6 +136,16 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        bindEventTo(id)
+        {
+            $('#'+id).bind('keypress', function(e) {
+                var code = e.keyCode || e.which;
+                if(code == 13) { //Enter keycode
+                    console.log('enter');
+                }
+
+            });
+        },
         cancelarIsso()
         {
             $('.iconsChooser').css({'display': 'none'})
@@ -349,6 +360,16 @@ export default {
             document.getElementsByClassName("body-modal-container")[0].style.opacity = "100";
             document.getElementsByClassName("body-modal-container")[0].style.zIndex = "10";
         }
+    },
+    mounted(){
+        $(".main-modal-container").change(function(e){
+            e.preventDefault();
+            console.log('On Page '+$("#mainTitle").text())
+            console.log('OnChange executing '+e.target.id)
+            console.log(e.target.value)
+        });
+
+        
     }
 }
 </script>
