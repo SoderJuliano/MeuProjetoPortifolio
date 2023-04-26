@@ -1,6 +1,6 @@
 <template>
     <div class="main-modal-container">
-        <h3 id="mainTitle" v-if="mainTitle != 'iconChooser'">{{this.mainTitleCaps}}</h3>
+        <h3 id="mainTitle" v-if="mainTitle != 'iconChooser'">{{this.mainTitle.toUpperCase()}}</h3>
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
                     
@@ -20,7 +20,7 @@
                     
                     <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
                     
-                    <button v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
+                    <button class="bnt-proximo" v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
                     <button class="save-bnt" v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
@@ -59,19 +59,19 @@
                     
                     <br v-if="ptitle3"><br v-if="ptitle3">
                     
-                    <button v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
+                    <button class="bnt-proximo" v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
                     <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
-            <div v-if="title=='Email' && ptitle!='Endereco'">
+            <div v-if="title=='Email' && ptitle!=this.string[0].adress && ptitle!=this.string[1].adress" >
                 <span style="margin-right: 10px;">{{title}}</span>
                 <input id="modal-input" type="email" :placeholder="`${this.placeholder}`">
                 <br><br>
                 <span style="margin-right: 10px;">{{title2}}</span>
                 <input id="modal-input2" type="text" :placeholder="`${this.placeholder2}`">
                 <br><br>
-                <button @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
+                <button class="bnt-proximo" @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
                 <button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
             <div v-else>
@@ -181,7 +181,7 @@ export default {
 
                 this.userData.contact.phone = telefone ? [telefone] : ''
                 this.userData.contact.email = email ? [email] : ''
-                this.ptitle = 'Endereco'
+                this.ptitle = this.language == 'pt-br' ? this.string[0].adress : this.string[1].adress
             }
             else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
                 const job = new Job(this.userData.userExperiences.length);
@@ -264,7 +264,11 @@ export default {
                     this.adicionarJobs()
                     this.cancelar();
                     break;
-                case 'Endereco':
+                case 'Seu Endereço':
+                    this.adicionarEndereco();
+                    this.cancelar();
+                    break;
+                case 'Your adress"':
                     this.adicionarEndereco();
                     this.cancelar();
                     break;
@@ -364,12 +368,32 @@ export default {
     mounted(){
         $(".main-modal-container").change(function(e){
             e.preventDefault();
-            console.log('On Page '+$("#mainTitle").text())
-            console.log('OnChange executing '+e.target.id)
-            console.log(e.target.value)
-        });
 
-        
+            const maintitle  = $("#mainTitle").text()
+            const title1 = $(".body-modal-container span").first().text()
+            const inputId = e.target.id
+            const data = e.target.value
+
+            console.log('On Page '+maintitle)
+            console.log('On span title '+title1)
+            console.log('OnChange executing '+inputId)
+            console.log(data)
+
+            switch (maintitle, title1) {
+                case "YOUR INFORMATIONS", "Email":
+                    if(inputId == "modal-input2"){
+                        $('.bnt-proximo').click()
+                    }
+                    break;
+                case "YOUR INFORMATIONS", "Your adress":
+                    if(inputId != null){
+                        $('.save-bnt').click()
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }
 </script>
