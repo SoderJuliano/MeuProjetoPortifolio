@@ -136,16 +136,6 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
-        bindEventTo(id)
-        {
-            $('#'+id).bind('keypress', function(e) {
-                var code = e.keyCode || e.which;
-                if(code == 13) { //Enter keycode
-                    console.log('enter');
-                }
-
-            });
-        },
         cancelarIsso()
         {
             $('.iconsChooser').css({'display': 'none'})
@@ -387,6 +377,36 @@ export default {
                     break;
                 case "YOUR INFORMATIONS", "Your adress":
                     if(inputId != null){
+                        $('.save-bnt').click()
+                    }
+                    break;
+                case "EDUCATION", "Academic education":
+                    if(inputId == "modal-input"){
+                        $('.save-bnt').click()
+                    }
+                    break;
+                case "FORMAÇÃO ACADÊMICA", "Escolaridade":
+                    if(inputId == "modal-input"){
+                        $('.save-bnt').click()
+                    }
+                    break;
+                case "SKILL", "Skill":
+                    if(inputId == "modal-input"){
+                        $('.save-bnt').click()
+                    }
+                    break;
+                case "HABILIDADE", "Habilidade":
+                    if(inputId == "modal-input"){
+                        $('.save-bnt').click()
+                    }
+                    break;
+                case "REDES SOCIAIS", "Add link":
+                    if(inputId == "modal-input"){
+                        $('.save-bnt').click()
+                    }   
+                    break;
+                case "SOCIAL NETWORKS", "Add link":
+                    if(inputId == "modal-input"){
                         $('.save-bnt').click()
                     }
                     break;

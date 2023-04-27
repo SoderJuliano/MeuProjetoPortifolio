@@ -437,7 +437,9 @@ export default {
           break;
 
         case "socialLink":
-          this.modal.mainTitle = "Redes sociais";
+        this.modal.mainTitle = this.languageIsEN()
+            ? strings[1].social
+            : strings[0].social;
           this.modal.title1 = "Add link";
           this.modal.placeholder1 = "link da rede (https://www...)";
           this.showDivModal();

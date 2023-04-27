@@ -30,7 +30,8 @@
         "yourJob": "Cargo que ocupava",
         "tip": "Dica",
         "iconTip": "Você pode clicar sobre alguns icons para ver outras opções.",
-        "skillTips": "Você pode por varias habilidadedes separadas por virgula (,)."
+        "skillTips": "Você pode por varias habilidadedes separadas por virgula (,).",
+        "social": "Redes sociais"
     },
     {
         "language": "en-us",
@@ -63,6 +64,7 @@
         "yourJob": "You used to work as",
         "tip": "Tip",
         "iconTip": "You can click over some icons to see other options.",
-        "skillTips": "You can write many skills puting comma (,) between them."
+        "skillTips": "You can write many skills puting comma (,) between them.",
+        "social": "Social networks"
     }
 ]
