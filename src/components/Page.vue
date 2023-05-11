@@ -148,6 +148,7 @@ export default {
 @media screen and (min-width: 1001px) {
   .main-container {
     display: block;
+    min-height: 850px;
     height: 100%;
     width: 60%;
     min-width: 600px;

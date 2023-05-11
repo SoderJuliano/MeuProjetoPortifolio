@@ -1,5 +1,5 @@
 <template>
-    <div class="social">
+    <div class="social template-data">
         <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
             {{language == 'pt-br' ? titulo[0] : titulo[1]}} 
             <img id='edit' src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>

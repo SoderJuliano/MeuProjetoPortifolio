@@ -4,7 +4,7 @@
         <div @click="$refs.fileInput.click()" class="pic">
         <img :src="imageURL" alt="perfil" class="img-pic" />
       </div>
-      <div v-if="exibirLinks" class="contato">
+      <div v-if="exibirLinks" class="contato template-data">
         <input
           type="file"
           id="input"
@@ -271,6 +271,8 @@ export default {
 }
 @media screen and (min-width: 1001px) {
   .side {
+    padding: 5px;
+    min-height: 800px;
     width: 40%;
     min-width: 250px;
     background-color: gray;
