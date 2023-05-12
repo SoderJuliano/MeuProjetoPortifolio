@@ -10,7 +10,7 @@
                 <div v-for="(item, index) in user.hability.split(',')" :key="index" >
                   <li>{{item}}</li>
                 </div>
-              </span> 
+              </span>
         <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
@@ -76,9 +76,9 @@ export default {
 }
 
 .template1-habilidade-container:hover .remove-bnt{
-  background-color: white; 
+  background-color: white;
   border-radius: 10px;
-  padding: 10px;   
+  padding: 10px;
   display: block;
   margin-top: 10px;
   position: relative;
@@ -136,7 +136,8 @@ export default {
   text-align: start;
   border-bottom: 1px solid black;
   font-weight: bold;
-  width: 100%;
+  margin-left: 0px;
+  width: 87%;
 }
 .template2-title:hover .editar-animado-habilidade{
   display: block;
@@ -145,7 +146,7 @@ export default {
   display: none;
 }
 .template2-container{
-  width: 84.5%;
+  width: 97.5%;
   padding-left: 10px;
 }
 .template1-title{

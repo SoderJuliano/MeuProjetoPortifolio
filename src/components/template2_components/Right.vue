@@ -1,6 +1,7 @@
 <template>
     <div class="container" :style="getStyle()">
         <Contact
+            class="template-data"
             @choose-emailIcon="this.$emit('choose-emailIcon')"
             @choose-phoneIcon="this.$emit('choose-phoneIcon')"
             @choose-addressIcon="$emit('choose-addressIcon')"
@@ -11,7 +12,8 @@
             :language="language"
             :titulo="titulo.contato"
         />
-        <Social 
+        <Social
+            class="template-data"
             @add-SocialLink="$emit('add-SocialLink')"
             template=2
             :language="language"
@@ -20,6 +22,7 @@
             :sideColor="sideColor"
         />
         <Experiencias
+            class="template-data"
             @add-Experiencia="$emit('add-Experiencia')"
             @update-experiences="$emit('update-experiences')"
             template=2
