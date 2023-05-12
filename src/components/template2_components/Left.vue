@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <Resumo 
+        <Resumo
+            class="template-data"
             :user="user"
             :titulo="titles.resumo"
             :language="language"
@@ -8,7 +9,8 @@
             template=2
             :sideColor="sideColor"
         />
-        <Competencias 
+        <Competencias
+            class="template-data"
             :user="user"
             :titulo="titles.competencias"
             :language="language"
@@ -16,7 +18,8 @@
             @add-competencia="$emit('add-competencia')"
             :sideColor="sideColor"
         />
-        <Formacao 
+        <Formacao
+            class="template-data"
             :user="user"
             template=2
             @add-formacao="$emit('add-formacao')"

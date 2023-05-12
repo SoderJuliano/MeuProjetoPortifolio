@@ -30,7 +30,7 @@
     </div>
     <Resumo
       @add-resumo="$emit('add-resumo')"
-      class="data-container"
+      class="data-container template-data"
       :cor="cor"
       :user="u"
       template="1"
@@ -40,7 +40,7 @@
     />
     <Competencias
       @add-competencia="$emit('add-competencia')"
-      class="data-container"
+      class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
       :user="u"
@@ -51,7 +51,7 @@
     <Experiencias
       @add-experiencia="$emit('add-experiencia')"
       @update-experiences="$emit('update-experiences')"
-      class="data-container"
+      class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
       :experiences="user.userExperiences"

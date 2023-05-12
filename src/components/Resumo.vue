@@ -40,15 +40,15 @@ export default {
         document.getElementById("edit-re").style.display = "block" : ''
       },
      getStyle(){ //console.log(this.cor +' corrr')
-        return this.template == 2 
+        return this.template == 2
         ? {
             'text-align': 'start',
             'font-weight': 'bolder !important',
             'margin-left': '10px !important',
             'border-bottom': '1px solid '+this.sideColor,
             'width': '85%'
-          } 
-        : { 
+          }
+        : {
             'background-color': `${this.cor}`,
             'color': `${this.fontColor}`
           }
@@ -71,7 +71,7 @@ export default {
 }
 .resumo:hover .editar-animado-resumo{
   display: block;
-} 
+}
 .template1-resumo-titulo{
   align-self: center;
   background-color: white;
@@ -104,5 +104,5 @@ export default {
   .editar{
     display: none;
   }
-} 
+}
 </style>
