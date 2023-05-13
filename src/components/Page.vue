@@ -13,13 +13,15 @@
         />
       </div>
       <div style="width: 100%; text-align: center; padding-top: 20px">
-        <span @input="newProfession" class="profession" id="profession-span">{{
-          u.profession
-            ? u.profession
-            : language == "pt-br"
-            ? "Sua profissão"
-            : "Your profession"
-        }}</span>
+        <span @input="newProfession" class="profession" id="profession-span">
+          {{
+            u.profession
+              ? u.profession
+              : language == "pt-br"
+              ? "Sua profissão"
+              : "Your profession"
+          }}
+        </span>
         <img
           src="../icons/editar.png"
           alt="editar"
@@ -63,9 +65,9 @@
   </div>
 </template>
 <script>
-import Resumo from "./Resumo.vue";
-import Competencias from "./Competencias.vue";
-import Experiencias from "./Experiencias.vue";
+import Resumo from "./componentesCompartilhados/Resumo.vue";
+import Competencias from "./componentesCompartilhados/Competencias.vue";
+import Experiencias from "./componentesCompartilhados/Experiencias.vue";
 
 export default {
   name: "Page",

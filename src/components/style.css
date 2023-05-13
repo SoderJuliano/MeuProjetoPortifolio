@@ -175,6 +175,9 @@ h3:hover .editar-animado{
     margin-top: 20px;
 }
 @media print {
+    .not-visible {
+        display: none;
+    }
     .editar-contact-animado{
         display: none;
     }

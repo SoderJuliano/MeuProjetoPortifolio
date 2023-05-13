@@ -26,9 +26,9 @@
                         <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
                         <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                       </div>
-                    </li>                    
+                    </li>
                     <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
-                      <img src="../icons/header/paper.png" alt="paper" class="li-img" />
+                      <img alt="paper" class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB5klEQVR4nO2YvUvDQBiHH00qCIJQHUQEF8HFycHFr9HRXaT9W3RycRL/geLg4uKiU4dWRTcFRWkXR1FUEPxA1EjghHBc06S5JneSB96lfZPck9/l8gH6mQA2gFPgHvgCnoFzYBuYwXD6gE3gG/Da1B4whIH0ArsRBILlJzSIYZQVA30SZ34LOAA+FT3+f0ZxJQ2wCgxLPZPArdT3CgxgCOPS4D6AkRa9y4pUFjGEeTGN/uowpHdUIeLLWce0QsT/zTp2JIlHoB+L6BMrlJzGOhYxBVwoJKpC0ApWgXeFRMWkZbcds4qb4AOwgmXsSxINYAwLeZFE5rAQB/gJSLwBPVhIQUrjLusB5fwnCuICXwKKWEoRuAxcI/47+wIWsqa4m59gIRWFiBErlwscx/y4oKPOxLG7+nEhrSrpvEvfBHacFp6opq5U5DTSwtOZipxGViLNpKmUAo/gWYk0kqYSTKOUoUg5aSrBNJyIIvUYq1E9ooiTJBVXsbFukVpEEfmkxkpFFWdWU0s1zSPRaqMsRejkWmm1QdYiTpxUwpqzFomVSlijCSJO1FTCmkwQCa5g14RwJB7XXYNFXPGSVtO9427hdet4uUiHeHkibcinVod4+dRqQz61TJ1aXsqFbuK8/emqyI8hvxcxpS1Nh3aEAAAAAElFTkSuQmCC">
                       <a class="nav-link" href="#" >
                         {{this.sobreSiteMim().toUpperCase()}}
                       </a>
@@ -38,9 +38,9 @@
                       </div>
                     </li>
                 </div>
-        </nav> 
+        </nav>
     </div>
-  <options-menu 
+  <options-menu
     @close="closeMenu"
     :show = show
   />
@@ -93,19 +93,19 @@ export default {
         switch (qual) {
           case 1:
             if(this.info){
-              this.info = false  
+              this.info = false
               break;
             }
             this.info = true
-            this.myInfo = false 
+            this.myInfo = false
             break;
           case 2:
             if(this.myInfo){
-              this.myInfo = false 
+              this.myInfo = false
               break;
             }
             this.myInfo = true
-            this.info = false 
+            this.info = false
             break;
         }
       },
@@ -127,15 +127,15 @@ export default {
         this.show = false
       },
       about(){
-        localStorage.getItem('lng') == 'us-en' 
+        localStorage.getItem('lng') == 'us-en'
           ? alert("We are not using cookies and I do not store any information in server-side")
           : alert("Não usamos cookies e não guardamos nenhuma informação sua")
       },
       aboutMe(){
-        window.open("https://www.linkedin.com/in/julianosoder/");  
+        window.open("https://www.linkedin.com/in/julianosoder/");
       },
       support(){
-        localStorage.getItem('lng') != 'us-en' 
+        localStorage.getItem('lng') != 'us-en'
           ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba")
           : alert("Support this project sending money or sharing it with friends")
       },
@@ -151,30 +151,30 @@ export default {
 
         console.log("side: " + sideHeight)
         console.log("main-container: " + mainHeight )
-        
+
         sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
         if(mainHeight > sideHeight && mainHeight > 950){
           $(".side").height(mainHeight)
         }else{
           $(".main-container").height(sideHeight+50)
         }
-        
+
         window.print()
 
         $(".side").height(sideHeight)
         $(".main-container").height(mainHeight)
-        
+
       },
       changeLanguage(lng){
         this.$emit('language-update', lng)
-        lng == "pt-br" ? 
-        (document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "blue", 
-        document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "white", 
+        lng == "pt-br" ?
+        (document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "blue",
+        document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "white",
         document.getElementsByClassName("bnt-languages")[1].style.color = "black",
         document.getElementsByClassName("bnt-languages")[0].style.color = "white"
         )
-        : (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue", 
-        document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white", 
+        : (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
+        document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white",
         document.getElementsByClassName("bnt-languages")[0].style.color = "black",
         document.getElementsByClassName("bnt-languages")[1].style.color = "white")
       }
@@ -280,7 +280,7 @@ li img {
 li{
   display: flex;
 }
-@media only screen and (max-width: 720px) { 
+@media only screen and (max-width: 720px) {
  .container-fluid{display: none;}
 }
 .nav-item.is-right{

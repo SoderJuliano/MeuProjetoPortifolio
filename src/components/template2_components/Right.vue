@@ -35,9 +35,9 @@
     </div>
 </template>
 <script>
-import Contact from '../Contact.vue'
-import Social from '../Social.vue'
-import Experiencias from '../Experiencias.vue'
+import Contact from '../componentesCompartilhados/Contact.vue'
+import Social from '../componentesCompartilhados/Social.vue'
+import Experiencias from '../componentesCompartilhados/Experiencias.vue'
 
 export default {
     components: {
@@ -74,6 +74,7 @@ export default {
 
 <style scoped>
 .container {
+    min-height: 550px;
     width: 50%;
     padding: 10px;
 }

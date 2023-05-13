@@ -44,10 +44,10 @@
     </div>
 </template>
 <script>
-import Competencias from '../Competencias.vue'
-import Resumo from '../Resumo.vue'
-import Formacao from '../Formacao.vue'
-import Habilidade from '../Habilidade.vue'
+import Competencias from '../componentesCompartilhados/Competencias.vue'
+import Resumo from '../componentesCompartilhados/Resumo.vue'
+import Formacao from '../componentesCompartilhados/Formacao.vue'
+import Habilidade from '../componentesCompartilhados/Habilidade.vue'
 
 export default {
     name: 'left',
