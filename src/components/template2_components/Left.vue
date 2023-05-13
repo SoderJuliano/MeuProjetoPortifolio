@@ -78,6 +78,7 @@ export default {
 <style scoped>
 .container {
     width: 50%;
+    padding: 10px;
 }
 @media screen and (max-width: 1000px){
     .container{

@@ -7,7 +7,7 @@
       </p>
       <div class="resumo-container">
           <ion-icon name="book" size="large"></ion-icon>
-          <span @input="saveContent" id='resume'>{{user.resume}}</span>
+          <span id='resume'>{{user.resume}}</span>
           </div>
   </div>
 </template>
@@ -60,10 +60,6 @@ export default {
             'color': `${this.fontColor}`
           }
       },
-      saveContent(){
-        const content = document.getElementById('resume').textContent
-        localStorage.setItem('about', content)
-      }
   }
 }
 </script>

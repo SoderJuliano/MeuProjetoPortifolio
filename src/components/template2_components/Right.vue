@@ -1,4 +1,4 @@
-<template>
+    <template>
     <div class="container" :style="getStyle()">
         <Contact
             class="template-data"

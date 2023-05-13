@@ -178,6 +178,9 @@ h3:hover .editar-animado{
     .not-visible {
         display: none;
     }
+    .template-data{
+        min-height: 100px;
+    }
     .editar-contact-animado{
         display: none;
     }
