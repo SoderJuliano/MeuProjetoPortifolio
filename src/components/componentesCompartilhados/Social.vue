@@ -1,24 +1,26 @@
 <template>
-    <div class="social template-data">
-        <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
-            {{language == 'pt-br' ? titulo[0] : titulo[1]}}
-            <showSwitcher className="social.template-data" :startShowing="user.social.length > 0" />
-            <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
-            <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
-    </div>
-    <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
-        <div :class="templateClassItem" v-for="(item, index) in this.userData.social" :key="index" >
-            <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
-            <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
-            <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
-            <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
-            <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
-            <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
+    <div class="template-data-social">
+        <div class="social">
+            <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
+                {{language == 'pt-br' ? titulo[0] : titulo[1]}}
+                <showSwitcher className="template-data-social" :startShowing="user.social.length > 0" />
+                <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
+                <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+        </div>
+        <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
+            <div :class="templateClassItem" v-for="(item, index) in this.userData.social" :key="index" >
+                <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
+                <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
+                <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
+                <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
+                <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
+                <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
 
-            <span>{{item}}</span>
-            <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
-            <!-- fazer um componente para este botao -->
-            <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
+                <span>{{item}}</span>
+                <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
+                <!-- fazer um componente para este botao -->
+                <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
+            </div>
         </div>
     </div>
 </template>
@@ -128,6 +130,14 @@ export default {
     }
     .remove-bnt{
         display: none;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .template-data-social{
+        min-height: 100px;
+        background-color: rgb(255 240 240);
+        border-radius: 5px;
     }
 }
 </style>
