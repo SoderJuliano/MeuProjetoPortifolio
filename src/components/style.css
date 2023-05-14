@@ -176,11 +176,12 @@ h3:hover .editar-animado{
 }
 @media print {
     .not-visible {
-        display: none;
+        display: none !important;
     }
     .template-data{
         min-height: 100px;
     }
+
     .editar-contact-animado{
         display: none;
     }

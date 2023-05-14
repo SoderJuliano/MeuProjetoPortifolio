@@ -1,7 +1,10 @@
 <template>
   <div :class="tstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <showSwitcher :className="tstyle" :startShowing="user.userExperiences.length > 0" />
+        <showSwitcher
+            :className="tstyle"
+            :startShowing="user.userExperiences.length > 0"
+        />
         <img id="edit-exp" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
@@ -83,7 +86,6 @@ export default {
   .remove-bnt{
     display: none;
   }
-
 }
 .editar-animado-resumo{
   width:20px;
