@@ -34,6 +34,11 @@ body{
 }
 
 @media screen and (min-width: 1001px) {
+    .template-data {
+        min-height: 100px;
+        background-color: rgb(255 240 240);
+        border-radius: 5px;
+    }
 
     .dropdown-templates{
         height: 200px;
@@ -49,7 +54,7 @@ body{
     border-style: solid;
     border-color: black;
     background-color: rgba(245, 245, 245, 0.514);
-    margin-top: -15px; 
+    margin-top: -15px;
 }
 
 .side-colors{
@@ -62,7 +67,7 @@ body{
     background-color: rgba(245, 245, 245, 0.514);
     margin-left: 15px;
     margin-top: -15px;
-    justify-content: space-around;    
+    justify-content: space-around;
 }
 
 .contact-template2 .title{
@@ -168,8 +173,15 @@ h3:hover .editar-animado{
     border-bottom: 1px solid gray;
     font-weight: bolder;
     margin-top: 20px;
-} 
+}
 @media print {
+    .not-visible {
+        display: none !important;
+    }
+    .template-data{
+        min-height: 100px;
+    }
+
     .editar-contact-animado{
         display: none;
     }
@@ -182,7 +194,7 @@ h3:hover .editar-animado{
     .editar-animado{
         display: none !important;
     }
-    
+
     #headericon{
         display: none;
     }
@@ -223,7 +235,7 @@ h3:hover .editar-animado{
     padding: 10px;
     background-color: white;
     position: relative;
-    float: right; 
+    float: right;
 }
 
 .social-row span{
@@ -275,7 +287,7 @@ button {
 @media screen and (min-width: 1001px){
     button {
         min-width: 150px;
-    }   
+    }
 }
 
 .template2-experiencias-container:hover {
@@ -285,7 +297,7 @@ button {
     padding-right: 2px;
 }
 
-.template2-experiencias-container .remove-bnt 
+.template2-experiencias-container .remove-bnt
 {
     position: absolute;
     margin-left: 24%;
@@ -297,7 +309,7 @@ button {
 }
 
 
-.template2-experiencias-container:hover .remove-bnt 
+.template2-experiencias-container:hover .remove-bnt
 {
     display: block;
 }

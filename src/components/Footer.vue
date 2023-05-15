@@ -55,7 +55,7 @@ export default {
         changefontM(p){
             // formas
             if(p.target.id=="square"){
-                
+
                 $(".pic")[0].style['border-radius'] = '0px';
                 $(".img-pic")[0].style['border-radius'] = '0px';
                 $(".pic")[0].style['border'] = '2px solid black';
@@ -63,17 +63,17 @@ export default {
             }else if(p.target.id=="triangleUp"){
 
                 $(".pic")[0].style['border-radius'] = '11px';
-                $(".img-pic")[0].style['border-radius'] = '11px';   
+                $(".img-pic")[0].style['border-radius'] = '11px';
                 $(".pic")[0].style['border'] = '2px solid black';
 
             }else if(p.target.id=="circle"){
-                
+
                 $(".pic")[0].style['border-radius'] = '50%';
                 $(".img-pic")[0].style['border-radius'] = '50%';
                 $(".pic")[0].style['border'] = '2px solid black';
 
             }else if(p.target.id=="colorfull-circle"){
-                
+
                 $(".pic")[0].style['border-radius'] = '50%';
                 $(".img-pic")[0].style['border-radius'] = '50%';
                 $(".pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
@@ -83,8 +83,8 @@ export default {
             }
             // cores
             if(p.target.textContent.includes('pag-')==true && p.target.id != '' && p.target.id != null){
-                
-                p.target.id == "#1F271B" ? this.$emit("change-font-color", "white") : this.$emit("change-font-color", "black"); 
+
+                p.target.id == "#1F271B" ? this.$emit("change-font-color", "white") : this.$emit("change-font-color", "black");
                 this.$emit("change-main-color", p.target.id)
                 localStorage.setItem("mainColor", p.target.id)
                 localStorage.setItem("fontColor", p.target.id == "#1F271B" ? "white" : "black")
@@ -96,13 +96,13 @@ export default {
                     localStorage.setItem("sideColor",  p.target.textContent)
                 }
             }else{
-                switch(p.target.textContent){ 
+                switch(p.target.textContent){
                     case 'Oswald':
-                        $(".main")[0].style.fontFamily = "'Oswald', sans-serif" 
+                        $(".main")[0].style.fontFamily = "'Oswald', sans-serif"
                         this.$emit('font-changed', 'Oswald')
                         break
                     case 'Zen Loop':
-                        $(".main")[0].style.fontFamily = "'Zen Loop', cursive" 
+                        $(".main")[0].style.fontFamily = "'Zen Loop', cursive"
                         $(".main")[0].style.fontWeight = "bold";
                         this.$emit('font-changed', 'Zen Loop')
                         break

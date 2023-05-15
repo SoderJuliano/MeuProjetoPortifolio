@@ -17,19 +17,19 @@ export default {
 
             console.log("side: " + sideHeight)
             console.log("main-container: " + mainHeight )
-            
+
             sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
             if(mainHeight > sideHeight && mainHeight > 950){
             $(".side").height(mainHeight)
             }else{
             $(".main-container").height(sideHeight+50)
             }
-            
+
             window.print()
 
             $(".side").height(sideHeight)
             $(".main-container").height(mainHeight)
-            
+
         },
     }
 }

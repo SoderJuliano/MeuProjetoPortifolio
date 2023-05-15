@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-        <Resumo 
+        <Resumo
+            class="template-data"
             :user="user"
             :titulo="titles.resumo"
             :language="language"
@@ -8,7 +9,8 @@
             template=2
             :sideColor="sideColor"
         />
-        <Competencias 
+        <Competencias
+            class="template-data"
             :user="user"
             :titulo="titles.competencias"
             :language="language"
@@ -16,7 +18,8 @@
             @add-competencia="$emit('add-competencia')"
             :sideColor="sideColor"
         />
-        <Formacao 
+        <Formacao
+            class="template-data"
             :user="user"
             template=2
             @add-formacao="$emit('add-formacao')"
@@ -41,10 +44,10 @@
     </div>
 </template>
 <script>
-import Competencias from '../Competencias.vue'
-import Resumo from '../Resumo.vue'
-import Formacao from '../Formacao.vue'
-import Habilidade from '../Habilidade.vue'
+import Competencias from '../componentesCompartilhados/Competencias.vue'
+import Resumo from '../componentesCompartilhados/Resumo.vue'
+import Formacao from '../componentesCompartilhados/Formacao.vue'
+import Habilidade from '../componentesCompartilhados/Habilidade.vue'
 
 export default {
     name: 'left',
@@ -75,6 +78,7 @@ export default {
 <style scoped>
 .container {
     width: 50%;
+    padding: 10px;
 }
 @media screen and (max-width: 1000px){
     .container{

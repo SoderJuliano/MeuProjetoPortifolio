@@ -93,7 +93,7 @@
     />
     <div class="footer">
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
-      <div class="footer-menu-bar" style="display: none;" > 
+      <div class="footer-menu-bar" style="display: none;" >
         <Footer
           :language="this.configs.getLanguage()"
           @language-update="lupdate"
@@ -109,7 +109,7 @@
     </div>
     <div class="right">
       <Tips
-        :lang="this.configs.getLanguage()"  
+        :lang="this.configs.getLanguage()"
         :strings="this.strings"
       />
     </div>
@@ -144,7 +144,7 @@ export default {
         list: [],
       },
       // user: new userModel() futuro trabalhar com classes
-      user: 
+      user:
       {
         id: Math.floor(Math.random() * 1000) ,
         name: "",
@@ -232,7 +232,7 @@ export default {
       localStorage.setItem("user", JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
-      console.log(experiencias) 
+      console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem("user", JSON.stringify(this.user));
     },
@@ -379,7 +379,7 @@ export default {
           this.modal.list = this.user.competence;
 
           this.showDivModal();
-          
+
           $("#modal-input").val($("#resume").text())
           break;
 
@@ -437,7 +437,9 @@ export default {
           break;
 
         case "socialLink":
-          this.modal.mainTitle = "Redes sociais";
+        this.modal.mainTitle = this.languageIsEN()
+            ? strings[1].social
+            : strings[0].social;
           this.modal.title1 = "Add link";
           this.modal.placeholder1 = "link da rede (https://www...)";
           this.showDivModal();
@@ -454,7 +456,7 @@ export default {
           this.modal.title1 = "iconChooserEducationIcons";
           this.showDivModal();
           break;
-        
+
         case "iconChooserPhoneIcons":
         this.modal.mainTitle = "iconChooser";
           this.modal.title1 = "iconChooserPhoneIcons";
@@ -471,7 +473,7 @@ export default {
           this.modal.mainTitle = "iconChooser";
           this.modal.title1 = "iconChooserAdressIcons";
           this.showDivModal();
-        
+
         break;
         default:
           break;
@@ -560,15 +562,15 @@ export default {
             for (i; i < all.length; i++) {
               all[i].style.color = "white";
               all[i].style.backgroundColor = "#1F271B";
-              
+
               if(page_header[0]){
                 page_header[0].style.color = "white"
               }else{
                 document.getElementById("text_header").style.color = "white";
               }
-            }  
+            }
           }, 500);
-          
+
         } else {
 
           if(page_header[0]){
@@ -596,7 +598,7 @@ export default {
           this.configs.setSideColor(p.target.textContent);
           localStorage.setItem("configs", JSON.stringify(this.configs));
         }
-      } 
+      }
 
       console.log(p.target.textContent);
     },
@@ -673,11 +675,11 @@ export default {
       }
     },
     getUserData() {
-      try { 
+      try {
         const lsUser = JSON.parse(localStorage.getItem("user"));
         this.user = lsUser != null ? lsUser : this.user;
-      } 
-      catch (err) { 
+      }
+      catch (err) {
         console.log(err.message);
         console.log("created new user with id: " + this.user.id);
       };
@@ -688,12 +690,13 @@ export default {
 
     if(!localStorage.getItem("configs")){
       this.configs = new PageConfig();
+      localStorage.setItem("configs", JSON.stringify(this.configs));
     }else{
       this.configs = new PageConfig().recoverConfigs()
     }
 
     this.getUserData();
-    
+
   }
 };
 </script>
@@ -749,7 +752,7 @@ export default {
     bottom: 0;
     background-color: #FFF;
     width: 100%;
-    height: 40px;    
+    height: 40px;
     text-align: start;
     display: flex;
     z-index: 11;
@@ -823,7 +826,7 @@ export default {
   #navbar {
     display: none !important;
   }
-  
+
   .navbar {
     display: none !important;
   }

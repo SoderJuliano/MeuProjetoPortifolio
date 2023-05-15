@@ -1,22 +1,29 @@
 <template>
   <div :class="conteinerstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <img id="edit-com" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
-        <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
+        <showSwitcher :className="conteinerstyle" :startShowing="user.competence.length > 0" />
+        <img id="edit-com" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
+        <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
         <span class="data-container-page">{{item}}
-          <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
+          <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
         </span>
       </div>
   </div>
 </template>
 
 <script>
+
+import showSwitcher from '../iconComponent/showSwitcher.vue';
+
 export default {
   name: 'Competencias',
-  props:{
+  components: {
+      showSwitcher
+  },
+  props: {
     titulo: Array,
     language: String,
     backgroundColor: String,
@@ -43,7 +50,7 @@ export default {
         document.getElementById("edit-com").style.display = "block" : ''
       },
       getStyle(){
-        return this.template == 1 
+        return this.template == 1
         ? {
             'background-color': `${this.cor}`,
             'color': `${this.fontColor}`
@@ -51,7 +58,8 @@ export default {
         : {
             'border-bottom': '1px solid '+this.sideColor+ '!important',
             'margin-left': '10px !important',
-            'padding-left': '0px !important'
+            'padding-left': '5px !important',
+            'width': '90%'
           }
       },
       removeCompetence(event){
@@ -72,9 +80,6 @@ export default {
 }
 .title:hover .editar-competencias-animado{
   display: block;
-}
-.template2-competencias{
-  width: 87% !important;
 }
 .template2-competencias .title{
   text-align: start !important;

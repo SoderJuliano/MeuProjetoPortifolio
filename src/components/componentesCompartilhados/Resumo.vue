@@ -1,19 +1,26 @@
 <template>
   <div @mouseover="hovert" @mouseleave="leavehovert" class="resumo">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <img id="edit-re" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
-        <img v-if="this.template==2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
+        <showSwitcher className="resumo" :startShowing="user.resume != ''" />
+        <img id="edit-re" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
+        <img v-if="this.template==2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-resumo')"/>
       </p>
       <div class="resumo-container">
           <ion-icon name="book" size="large"></ion-icon>
-          <span @input="saveContent" id='resume'>{{user.resume}}</span>
+          <span id='resume'>{{user.resume}}</span>
           </div>
   </div>
 </template>
 
 <script>
+
+import showSwitcher from '../iconComponent/showSwitcher.vue';
+
 export default {
   name: 'Resumo',
+  components: {
+    showSwitcher
+  },
   data(){
     return {
       tstyle: "template"+this.template+"-resumo-titulo title",
@@ -40,23 +47,19 @@ export default {
         document.getElementById("edit-re").style.display = "block" : ''
       },
      getStyle(){ //console.log(this.cor +' corrr')
-        return this.template == 2 
+        return this.template == 2
         ? {
             'text-align': 'start',
             'font-weight': 'bolder !important',
             'margin-left': '10px !important',
             'border-bottom': '1px solid '+this.sideColor,
-            'width': '85%'
-          } 
-        : { 
+            'width': '90%'
+          }
+        : {
             'background-color': `${this.cor}`,
             'color': `${this.fontColor}`
           }
       },
-      saveContent(){
-        const content = document.getElementById('resume').textContent
-        localStorage.setItem('about', content)
-      }
   }
 }
 </script>
@@ -71,7 +74,7 @@ export default {
 }
 .resumo:hover .editar-animado-resumo{
   display: block;
-} 
+}
 .template1-resumo-titulo{
   align-self: center;
   background-color: white;
@@ -104,5 +107,5 @@ export default {
   .editar{
     display: none;
   }
-} 
+}
 </style>

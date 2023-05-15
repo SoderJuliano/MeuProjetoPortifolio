@@ -1,16 +1,20 @@
 <template>
   <div :class="tstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <img id="edit-exp" src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
-        <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        <showSwitcher
+            :className="tstyle"
+            :startShowing="user.userExperiences.length > 0"
+        />
+        <img id="edit-exp" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
+        <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs?.slice().reverse()" :key="index" :class="cstyle">
-        <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt">
+        <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
           <h3>{{item.function}}</h3>
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
-            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span> 
-              {{ item.dateHired ? this.language=='pt-br'? 'ate' : 'until' : '' }} 
+            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span>
+              {{ item.dateHired ? this.language=='pt-br'? 'ate' : 'until' : '' }}
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
             <span style="margin-top: 0; margin-left:10px;" v-else>{{ item.dateHired ? this.language=='pt-br'? 'hoje' : 'today' : ''}}</span>
           </div>
@@ -20,9 +24,13 @@
 </template>
 
 <script>
+
+import showSwitcher from '../iconComponent/showSwitcher.vue';
+
 export default {
   name: 'Experiencias',
   emits: ['add-experiencia', "update-experiences"],
+  components: {showSwitcher},
   props:{
     template: Number,
     titulo: Array,
@@ -78,7 +86,6 @@ export default {
   .remove-bnt{
     display: none;
   }
-  
 }
 .editar-animado-resumo{
   width:20px;

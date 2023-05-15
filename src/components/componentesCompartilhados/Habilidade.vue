@@ -1,24 +1,29 @@
 <template>
   <div :class="cstyle">
       <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
-        <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
-        <img v-if="template == 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
+        <showSwitcher :className="cstyle" :startShowing="user.hability != ''" />
+        <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
+        <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div v-if="user.hability" :class="hcstyle">
-          <img @click="this.$emit('choose-skillIcon')" src="../icons/html.png" class="habilidade-icon"/>
+          <img @click="this.$emit('choose-skillIcon')" src="../../icons/html.png" class="habilidade-icon"/>
               <span  class="data-text-habilidades">
                 <div v-for="(item, index) in user.hability.split(',')" :key="index" >
                   <li>{{item}}</li>
                 </div>
-              </span> 
-        <img @click="removeHabilidades()" class="remove-bnt" src="../icons/remove.png" alt="remove-bnt"/>
+              </span>
+        <img @click="removeHabilidades()" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
 
 <script>
+
+import showSwitcher from '../iconComponent/showSwitcher.vue';
+
 export default {
   name: 'Habilidade',
+  components: {showSwitcher},
   emits: ['add-habilidade', 'adicionar-habilidade', 'choose-skillIcon'],
   data(){
     return {
@@ -40,7 +45,6 @@ export default {
       this.$emit('adicionar-habilidade', null)
     },
     getStyle(){
-
       return this.template == 2 ? {
         'border-bottom': '1px solid '+this.sideColor,
       } : ""
@@ -76,9 +80,9 @@ export default {
 }
 
 .template1-habilidade-container:hover .remove-bnt{
-  background-color: white; 
+  background-color: white;
   border-radius: 10px;
-  padding: 10px;   
+  padding: 10px;
   display: block;
   margin-top: 10px;
   position: relative;
@@ -136,7 +140,8 @@ export default {
   text-align: start;
   border-bottom: 1px solid black;
   font-weight: bold;
-  width: 100%;
+  margin-left: 0px;
+  width: 92%;
 }
 .template2-title:hover .editar-animado-habilidade{
   display: block;
@@ -145,7 +150,7 @@ export default {
   display: none;
 }
 .template2-container{
-  width: 84.5%;
+  width: 98.5%;
   padding-left: 10px;
 }
 .template1-title{

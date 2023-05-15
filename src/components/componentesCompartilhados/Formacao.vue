@@ -1,20 +1,28 @@
 <template>
-  <div :class="conteinerstyle">
+  <div :class="containerstyle">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
-          <img v-if="template== 2" src="../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
+          <showSwitcher
+            :className="containerstyle"
+            :startShowing="user.grade.length > 0"
+            />
+          <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
+          <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
-          <img @click="this.$emit('choose-educationIcon')" src="../icons/livros.png" class="formacao-icon"/>
+          <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon"/>
           <span class="data-container">{{item}}</span>
-          <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../icons/remove.png" alt="remove-bnt"/>
+          <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
 
 <script>
+
+import showSwitcher from '../iconComponent/showSwitcher.vue';
+
 export default {
   name: 'Formacao',
+  components: {showSwitcher},
   emits: ['add-formacao', 'choose-educationIcon'],
   data(){
     return{
@@ -43,7 +51,7 @@ export default {
       return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
     }
   },
-  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes  
+  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes
    watch: {
     user: {
       handler(newVal) {
@@ -91,7 +99,7 @@ export default {
 
 .template2-formacao-container{
   width: 80%;
-  margin-left: 20px; 
+  margin-left: 20px;
   display: flex;
 }
 .formacao-icon{
@@ -103,8 +111,7 @@ export default {
   padding-top: 20px;
 }
 .template2-formacao{
-  width: 80%;
-  padding-left: 20px;
+  width: 100%;
 }
 .template1-remove-bnt{
   width: 20px;
@@ -144,7 +151,7 @@ export default {
 .template2-formacao-title{
   text-align: start;
   margin-left: 10px !important;
-  width: 84.5%;
+  width: 90%;
   font-weight: bolder;
 }
 .template1-formacao-title{

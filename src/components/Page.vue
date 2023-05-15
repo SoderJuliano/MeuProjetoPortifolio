@@ -13,13 +13,15 @@
         />
       </div>
       <div style="width: 100%; text-align: center; padding-top: 20px">
-        <span @input="newProfession" class="profession" id="profession-span">{{
-          u.profession
-            ? u.profession
-            : language == "pt-br"
-            ? "Sua profissão"
-            : "Your profession"
-        }}</span>
+        <span @input="newProfession" class="profession" id="profession-span">
+          {{
+            u.profession
+              ? u.profession
+              : language == "pt-br"
+              ? "Sua profissão"
+              : "Your profession"
+          }}
+        </span>
         <img
           src="../icons/editar.png"
           alt="editar"
@@ -30,7 +32,7 @@
     </div>
     <Resumo
       @add-resumo="$emit('add-resumo')"
-      class="data-container"
+      class="data-container template-data"
       :cor="cor"
       :user="u"
       template="1"
@@ -40,7 +42,7 @@
     />
     <Competencias
       @add-competencia="$emit('add-competencia')"
-      class="data-container"
+      class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
       :user="u"
@@ -51,7 +53,7 @@
     <Experiencias
       @add-experiencia="$emit('add-experiencia')"
       @update-experiences="$emit('update-experiences')"
-      class="data-container"
+      class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
       :experiences="user.userExperiences"
@@ -63,9 +65,9 @@
   </div>
 </template>
 <script>
-import Resumo from "./Resumo.vue";
-import Competencias from "./Competencias.vue";
-import Experiencias from "./Experiencias.vue";
+import Resumo from "./componentesCompartilhados/Resumo.vue";
+import Competencias from "./componentesCompartilhados/Competencias.vue";
+import Experiencias from "./componentesCompartilhados/Experiencias.vue";
 
 export default {
   name: "Page",
@@ -148,6 +150,7 @@ export default {
 @media screen and (min-width: 1001px) {
   .main-container {
     display: block;
+    min-height: 850px;
     height: 100%;
     width: 60%;
     min-width: 600px;

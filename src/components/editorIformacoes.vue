@@ -1,26 +1,26 @@
 <template>
     <div class="main-modal-container">
-        <h3 v-if="mainTitle != 'iconChooser'">{{mainTitle}}</h3>
+        <h3 id="mainTitle" v-if="mainTitle != 'iconChooser'">{{this.mainTitle.toUpperCase()}}</h3>
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
-                    
+
                     <div class="modal-internal-content">
                         <span style="margin-right: 10px">{{title}}</span>
                         <br v-if="title=='Write about you'" />
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <input v-else id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                        <input v-else @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`">
                     </div>
-                    
-                    
+
+
                     <br><br>
                     <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
                         <span style="margin-right: 10px" >{{title2}}</span>
-                        <input id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
+                        <input @keydown.enter="pressedEnter()" id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
                     </div>
-                    
+
                     <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
-                    
-                    <button v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
+
+                    <button class="bnt-proximo" v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
                     <button class="save-bnt" v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
@@ -40,7 +40,7 @@
                         <input v-if="!simplifiedDate" id="input-value-date1" type="date">
                         <input v-if="simplifiedDate" id="input-value-date1" type="month" />
                     </div>
-                    
+
                     <br v-if="title2">
 
                     <div v-if="ptitle" class="modal-internal-content">
@@ -48,30 +48,30 @@
                         <input v-if="!simplifiedDate" id="input-value-date2" type="date">
                         <input v-if="simplifiedDate" id="input-value-date2" type="month">
                     </div>
-                    
-                    
+
+
                     <br v-if="title2">
 
                     <div v-if="ptitle3" class="modal-internal-content">
                         <span style="margin-right: 10px;">{{ptitle3}}</span>
                         <textarea id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
                     </div>
-                    
+
                     <br v-if="ptitle3"><br v-if="ptitle3">
-                    
-                    <button v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
+
+                    <button class="bnt-proximo" v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
                     <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
-            <div v-if="title=='Email' && ptitle!='Endereco'">
+            <div v-if="title=='Email' && ptitle!=this.string[0].adress && ptitle!=this.string[1].adress" >
                 <span style="margin-right: 10px;">{{title}}</span>
                 <input id="modal-input" type="email" :placeholder="`${this.placeholder}`">
                 <br><br>
                 <span style="margin-right: 10px;">{{title2}}</span>
-                <input id="modal-input2" type="text" :placeholder="`${this.placeholder2}`">
+                <input @keydown.enter="pressedEnter()" id="modal-input2" type="text" :placeholder="`${this.placeholder2}`">
                 <br><br>
-                <button @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
+                <button class="bnt-proximo" @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
                 <button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
             <div v-else>
@@ -81,11 +81,11 @@
                 <input id="modal-input3" type="text" :placeholder=this.getBairro()>
                 <input id="modal-input4" type="text" :placeholder=this.getCidade()>
                 <input id="modal-input5" type="text" :placeholder=this.getEstado()>
-                <input id="modal-input6" type="text" :placeholder=this.getPais()>
+                <input @keydown.enter="pressedEnter()" id="modal-input6" type="text" :placeholder=this.getPais()>
                 <br><br>
                 <button class="save-bnt" v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
-        </div> 
+        </div>
     </div>
     <!-- New component for chose icons -->
     <div @click="cancelarIsso()" v-if="mainTitle.includes('iconChooser')" class="iconsChooser">
@@ -115,7 +115,9 @@ export default {
             ptitle3: '',
             job: Object,
             userData: this.user,
-            simplifiedDate: true
+            simplifiedDate: true,
+            mainTitleCaps: this.mainTitle.toUpperCase(),
+            pressed: false
         }
     },
     components: {
@@ -163,14 +165,14 @@ export default {
         },
         proximo(title){
             this.changePage();
-            if(title == "Email"){ 
-                
+            if(title == "Email"){
+
                 const email = document.getElementById('modal-input').value
                 const telefone = document.getElementById('modal-input2').value
 
                 this.userData.contact.phone = telefone ? [telefone] : ''
                 this.userData.contact.email = email ? [email] : ''
-                this.ptitle = 'Endereco'
+                this.ptitle = this.language == 'pt-br' ? this.string[0].adress : this.string[1].adress
             }
             else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
                 const job = new Job(this.userData.userExperiences.length);
@@ -224,26 +226,26 @@ export default {
                     }
                     this.updateUser();
                     this.cancelar();
-                    break; 
+                    break;
                 case 'New skill':
                     if(document.getElementById('modal-input').value){
                         this.userData.competence.push(document.getElementById('modal-input').value)
                     }
                     this.updateUser();
                     this.cancelar();
-                    break; 
+                    break;
                 case 'Sobre voce':
                     //document.getElementById('resume').textContent = document.getElementById('modal-input').value
                     this.userData.resume = document.getElementById('modal-input').value;
                     this.updateUser();
                     this.cancelar();
-                    break;  
+                    break;
                 case 'Write about you':
                     //document.getElementById('resume').textContent = document.getElementById('modal-input').value
                     this.userData.resume = document.getElementById('modal-input').value;
                     this.updateUser();
                     this.cancelar();
-                    break;   
+                    break;
                 case 'Descricao':
                     // sobre experiencia de trabalho
                     this.adicionarJobs()
@@ -253,7 +255,11 @@ export default {
                     this.adicionarJobs()
                     this.cancelar();
                     break;
-                case 'Endereco':
+                case 'Seu Endereço':
+                    this.adicionarEndereco();
+                    this.cancelar();
+                    break;
+                case 'Your adress':
                     this.adicionarEndereco();
                     this.cancelar();
                     break;
@@ -319,11 +325,16 @@ export default {
             const pais = document.getElementById("modal-input6").value
 
             let endereco = "";
-            endereco += rua ? rua+", " : ""
-            endereco += numero ? numero+", " : ""
-            endereco += bairro ? bairro+", " : ""
-            endereco += cidade ? cidade+", " : ""
-            endereco += estado ? estado+", " : ""
+            endereco += rua ? rua : ""
+            endereco!="" ? ", " : ""
+            endereco += numero ? numero : ""
+            endereco!="" ? ", " : ""
+            endereco += bairro ? bairro : ""
+            endereco!="" ? ", " : ""
+            endereco += cidade ? cidade : ""
+            endereco!="" ? ", " : ""
+            endereco += estado ? estado : ""
+            endereco!="" ? ", " : ""
             endereco += pais ? pais+"." : endereco ? "." : ""
 
             this.userData.contact.adress = endereco
@@ -348,7 +359,79 @@ export default {
         changePage2(){
             document.getElementsByClassName("body-modal-container")[0].style.opacity = "100";
             document.getElementsByClassName("body-modal-container")[0].style.zIndex = "10";
+        },
+        pressedEnter(){
+            sessionStorage.setItem('enter', true);
         }
+    },
+    mounted(){
+        $(".main-modal-container").change(function(e){
+            e.preventDefault();
+            setTimeout(() => {
+                const maintitle  = $("#mainTitle").text()
+                const title1 = $(".body-modal-container span").first().text()
+                const inputId = e.target.id
+                const data = e.target.value
+                const pressed = sessionStorage.getItem('enter')
+
+                console.log('On Page '+maintitle)
+                console.log('On span title '+title1)
+                console.log('OnChange executing '+inputId)
+                console.log('pressed = '+pressed)
+                console.log(data)
+
+                switch (maintitle, title1) {
+                    case "INFORMACOES PESSOAIS", "Seu Endereço":
+                        if(inputId != null && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "YOUR INFORMATIONS", "Email":
+                        if(inputId == "modal-input2" && pressed == 'true'){
+                            $('.bnt-proximo').click()
+                        }
+                        break;
+                    case "YOUR INFORMATIONS", "Your adress":
+                        if(inputId != null && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "EDUCATION", "Academic education":
+                        if(inputId == "modal-input" && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "FORMAÇÃO ACADÊMICA", "Escolaridade":
+                        if(inputId == "modal-input" && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "SKILL", "Skill":
+                        if(inputId == "modal-input" && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "HABILIDADE", "Habilidade":
+                        if(inputId == "modal-input" && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "REDES SOCIAIS", "Add link":
+                        if(inputId == "modal-input" && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    case "SOCIAL NETWORKS", "Add link":
+                        if(inputId == "modal-input" && pressed == 'true'){
+                            $('.save-bnt').click()
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                sessionStorage.setItem('enter', false);
+            }, 900)
+        });
     }
 }
 </script>
@@ -421,7 +504,7 @@ button{
         height: 34px;
     }
 
-    .switch input { 
+    .switch input {
         opacity: 0;
         width: 0;
         height: 0;
@@ -475,13 +558,13 @@ button{
     }
 
     .modal-internal-content{
-        display: flex; 
+        display: flex;
         justify-content: start;
     }
 
     @media screen and (max-width: 720px) {
         .modal-internal-content{
-            display: flex; 
+            display: flex;
             justify-content: center;
         }
     }
