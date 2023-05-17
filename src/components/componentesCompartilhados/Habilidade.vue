@@ -55,6 +55,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.template1-container{
+    min-height: 100px;
+    height: 100%;
+}
 .editar-animado-habilidade{
   width: 20px;
   height: 20px;

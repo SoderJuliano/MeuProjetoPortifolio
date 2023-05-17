@@ -356,6 +356,8 @@ export default {
   }
 /** ver isso */
   .side {
+    min-height: 900px;
+    height: 100%;
     width: 40%;
     justify-content: center;
     font-size: 12px;
