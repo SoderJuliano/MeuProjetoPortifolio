@@ -57,7 +57,7 @@ export default {
 <style scoped>
 .template1-container{
     min-height: 100px;
-    height: 100%;
+    max-height: 100%;
 }
 .editar-animado-habilidade{
   width: 20px;
