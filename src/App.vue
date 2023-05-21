@@ -127,6 +127,7 @@ import strings from "../src/components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
 import $ from "jquery";
+import axios from 'axios'
 
 export default {
   name: "App",
@@ -687,6 +688,65 @@ export default {
     }
   },
   beforeMount() {
+
+    $.getJSON("https://api.ipify.org/?format=json", function(e) {
+        console.log(e.ip);
+        const data = {
+        "user": e.ip,
+        "url": "https://custom-cv-online.netlify.app",
+        "key": "https://custom-cv-online.netlify.app"
+      }
+      const header = {
+        "accept": "application/json",
+        "Content-Type": "application/json"
+      }
+      axios.get('http://144.22.141.109:3000/notifications', { data: JSON.stringify(data) }, { headers: header })
+        .then( response => {
+          console.log(response)
+        })     
+        .catch(function (error) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+          if(error.response.status == 404){
+            axios.post('http://144.22.141.109:3000/notifications', {
+              title: "Icons",
+              app: "custom-cv-online",
+              appUrl: "https://custom-cv-online.netlify.app",
+              user: e.ip,
+              key: "https://custom-cv-online.netlify.app",
+              content: "You can click over some icons to see other options.",
+              read: false
+            })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        });      
+      });
+
+    //axios.get('http://144.22.141.109:3000/notifications')
+
+    
+    /*axios.post('http://144.22.141.109:3000/notifications', {
+        title: "I`m a notification",
+        app: "My App",
+        appUrl: "myapp.com",
+        user: "myuser@example.com",
+        key: "!@ExempleKey",
+        content: "This is a test notification",
+        read: false
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+*/
 
     if(!localStorage.getItem("configs")){
       this.configs = new PageConfig();
