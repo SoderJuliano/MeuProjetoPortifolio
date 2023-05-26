@@ -686,85 +686,86 @@ export default {
       };
       localStorage.setItem("user", JSON.stringify(this.user))
     },
-    setBrandNewNotifications(){
-      axios.post('http://144.22.141.109:3000/notifications', {
-        title: "Icones",
-        language: "pt-br",
-        app: "custom-cv-online",
-        appUrl: "https://custom-cv-online.netlify.app",
-        user: e.ip,
-        key: "https://custom-cv-online.netlify.app",
-        content: "Você pode clicar sobre alguns icons para ver outras opções.",
-        read: false
-      }).then(function (response) {
-          console.log(response);
-          axios.post('http://144.22.141.109:3000/notifications', {
-            title: "Habilidades",
-            language: "pt-br",
-            app: "custom-cv-online",
-            appUrl: "https://custom-cv-online.netlify.app",
-            user: e.ip,
-            key: "https://custom-cv-online.netlify.app",
-            content: "Você pode por varias habilidadedes separadas por virgula (,).",
-            read: false
-          })
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      axios.post('http://144.22.141.109:3000/notifications', {
-        title: "Icons",
-        language: "us-en",
-        app: "custom-cv-online",
-        appUrl: "https://custom-cv-online.netlify.app",
-        user: e.ip,
-        key: "https://custom-cv-online.netlify.app",
-        content: "You can click over some icons to see other options.",
-        read: false
-      })
-        .then(function (response) {
-          console.log(response);
-          axios.post('http://144.22.141.109:3000/notifications', {
-            title: "Skills",
-            language: "us-en",
-            app: "custom-cv-online",
-            appUrl: "https://custom-cv-online.netlify.app",
-            user: e.ip,
-            key: "https://custom-cv-online.netlify.app",
-            content: "You can write many skills puting comma (,) between them.",
-            read: false
-          })
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
   },
   beforeMount() {
 
     $.getJSON("https://api.ipify.org/?format=json", function(e) {
         console.log(e.ip);
         const data = {
-        "user": e.ip,
-        "url": "https://custom-cv-online.netlify.app",
-        "key": "https://custom-cv-online.netlify.app"
+        user: e.ip,
+        url: "https://custom-cv-online.netlify.app",
+        key: "https://custom-cv-online.netlify.app"
       }
       const header = {
         "accept": "application/json",
         "Content-Type": "application/json"
       }
-      axios.get('http://144.22.141.109:3000/notifications', { data: JSON.stringify(data) }, { headers: header })
+
+      axios.get(`http://144.22.141.109:3000/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+       { headers: header })
         .then( response => {
-          console.log(response)
+          console.log(response.data)
+          localStorage.setItem('tips', JSON.stringify(response.data));
         })     
         .catch(function (error) {
           console.log(error.response.data);
           console.log(error.response.status);
           console.log(error.response.headers);
           if(error.response.status == 404){
-              setBrandNewNotifications();            
+            axios.post('http://144.22.141.109:3000/notifications', {
+              title: "Icones",
+              language: "pt-br",
+              app: "custom-cv-online",
+              appUrl: "https://custom-cv-online.netlify.app",
+              user: e.ip,
+              key: "https://custom-cv-online.netlify.app",
+              content: "Você pode clicar sobre alguns icons para ver outras opções.",
+              read: false
+            }).then(function (response) {
+              console.log(response);
+              axios.post('http://144.22.141.109:3000/notifications', {
+                title: "Habilidades",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "Você pode por varias habilidadedes separadas por virgula (,).",
+                read: false
+              })
+            })
+              .catch(function (error) {
+                console.log(error);
+              });
+            axios.post('http://144.22.141.109:3000/notifications', {
+              title: "Icons",
+              language: "us-en",
+              app: "custom-cv-online",
+              appUrl: "https://custom-cv-online.netlify.app",
+              user: e.ip,
+              key: "https://custom-cv-online.netlify.app",
+              content: "You can click over some icons to see other options.",
+              read: false
+            })
+              .then(function (response) {
+                console.log(response);
+                axios.post('http://144.22.141.109:3000/notifications', {
+                  title: "Skills",
+                  language: "us-en",
+                  app: "custom-cv-online",
+                  appUrl: "https://custom-cv-online.netlify.app",
+                  user: e.ip,
+                  key: "https://custom-cv-online.netlify.app",
+                  content: "You can write many skills puting comma (,) between them.",
+                  read: false
+                })
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
           }
-        });      
+        });    
       });
     if(!localStorage.getItem("configs")){
       this.configs = new PageConfig();
