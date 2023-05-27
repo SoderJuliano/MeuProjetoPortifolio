@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import Tip from '../../model/tip.js';
-import $ from "jquery";
 import axios from 'axios'
 
 export default {
