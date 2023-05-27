@@ -127,7 +127,7 @@ import strings from "../src/components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
 import $ from "jquery";
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   name: "App",

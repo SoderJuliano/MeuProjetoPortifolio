@@ -19,6 +19,8 @@
 
 <script>
 import Tip from '../../model/tip.js';
+import $ from "jquery";
+import axios from 'axios'
 
 export default {
     name: 'Tip',
@@ -56,6 +58,7 @@ export default {
             this.tips.map(tip => {
                 if(tip.id == event.id){
                     tip.read = true;
+                    axios.patch(`http://144.22.141.109:3000/notifications/${tip.id}`)
                 }
             })
             localStorage.setItem('tips', JSON.stringify(this.tips))
