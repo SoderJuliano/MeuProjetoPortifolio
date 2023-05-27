@@ -63,8 +63,20 @@ export default {
     },
     mounted() {
 
-        this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+        setTimeout(() => {
+            this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+        }, 2000); 
         
+    },
+    watch: {
+        tips(newValue, oldValue){
+            console.log("someData changed!");
+            console.log(oldValue.length);
+            console.log(newValue.length);
+            if(newValue.length != oldValue.length && newValue.length != 0){
+                this.showTip = true;
+            }
+        }
     }
 }
 </script>
