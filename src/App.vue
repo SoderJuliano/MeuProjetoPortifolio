@@ -688,6 +688,17 @@ export default {
     },
   },
   beforeMount() {
+    axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
+
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
+
+    // Configuração de CORS
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
+    axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
+
+    // Agora você pode fazer as requisições usando o axios
 
     $.getJSON("https://api.ipify.org/?format=json", function(e) {
         console.log(e.ip);
@@ -696,12 +707,13 @@ export default {
         url: "https://custom-cv-online.netlify.app",
         key: "https://custom-cv-online.netlify.app"
       }
+
       const header = {
         "accept": "application/json",
-        "Content-Type": "application/json"
-      }
+        "content-type": "application/json"
+      };
 
-      axios.get(`http://144.22.141.109:3000/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+      axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
        { headers: header })
         .then( response => {
           console.log(response.data)
