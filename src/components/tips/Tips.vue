@@ -56,24 +56,53 @@ export default {
             this.tips.map(tip => {
                 if(tip.id == event.id){
                     tip.read = true;
-                    axios.patch(`http://144.22.141.109:3000/notifications/${tip.id}`)
+                    axios.patch(`/notifications/${tip.id}`)
                 }
             })
             localStorage.setItem('tips', JSON.stringify(this.tips))
+        },
+        verificarTips() {
+            const intervaloInicial = 2000; // 2 segundos
+            const intervaloRecorrente = 4000; // 4 segundos
+
+            const intervalId = setInterval(() => {
+                this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+
+                if (this.tips.length > 0) {
+                clearInterval(intervalId); // Parar a verificação quando tips.length for maior que zero
+                // console.log('tips.length é maior que zero!');
+                }
+            }, intervaloInicial);
+
+            setInterval(() => {
+                if (this.tips.length === 0) {
+                // console.log('tips.length ainda é zero. Verificando novamente...');
+                clearInterval(intervalId);
+
+                const novoIntervalId = setInterval(() => {
+                    this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+
+                    if (this.tips.length > 0) {
+                        clearInterval(novoIntervalId);
+                        // console.log('tips.length é maior que zero!');
+                    }
+                }, intervaloRecorrente);
+                }
+            }, intervaloRecorrente);
         }
     },
     mounted() {
-
-        setTimeout(() => {
-            this.tips = JSON.parse(localStorage.getItem('tips')) || [];
-        }, 2000); 
+        this.verificarTips();
+        // setTimeout(() => {
+        //     this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+        // }, 2000);
         
     },
     watch: {
         tips(newValue, oldValue){
-            console.log("someData changed!");
-            console.log(oldValue.length);
-            console.log(newValue.length);
+            // console.log("someData changed!");
+            // console.log(oldValue.length);
+            // console.log(newValue.length);
             if(newValue.length != oldValue.length && newValue.length != 0){
                 this.showTip = true;
             }
