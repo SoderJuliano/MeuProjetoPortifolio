@@ -127,6 +127,7 @@ import strings from "../src/components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
 import $ from "jquery";
+import axios from 'axios';
 
 export default {
   name: "App",
@@ -684,10 +685,110 @@ export default {
         console.log("created new user with id: " + this.user.id);
       };
       localStorage.setItem("user", JSON.stringify(this.user))
-    }
+    },
   },
   beforeMount() {
+    axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
 
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+    axios.defaults.headers.common['Accept'] = 'application/json';
+
+    // Configuração de CORS
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
+    axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
+
+    // Agora você pode fazer as requisições usando o axios
+
+    $.getJSON("https://api.ipify.org/?format=json", function(e) {
+      const data = {
+        user: e.ip,
+        url: "https://custom-cv-online.netlify.app",
+        key: "https://custom-cv-online.netlify.app"
+      }
+
+      const header = {
+        "accept": "application/json",
+        "content-type": "application/json"
+      };
+
+      axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+       { headers: header })
+        .then( response => {
+          // console.log(response.data)
+          localStorage.setItem('tips', JSON.stringify(response.data));
+        })     
+        .catch(function (error) {
+          // console.log(error.response.data);
+          // console.log(error.response.status);
+          // console.log(error.response.headers);
+          if(error.response.status == 404){
+            axios.post('/notifications', {
+              title: "Icones",
+              language: "pt-br",
+              app: "custom-cv-online",
+              appUrl: "https://custom-cv-online.netlify.app",
+              user: e.ip,
+              key: "https://custom-cv-online.netlify.app",
+              content: "Você pode clicar sobre alguns icons para ver outras opções.",
+              read: false
+            }).then(function (response) {
+              // console.log(response);
+              axios.post('/notifications', {
+                title: "Habilidades",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "Você pode por varias habilidadedes separadas por virgula (,).",
+                read: false
+              })
+            })
+              .catch(function (error) {
+                console.log(error);
+              });
+            axios.post('/notifications', {
+              title: "Icons",
+              language: "us-en",
+              app: "custom-cv-online",
+              appUrl: "https://custom-cv-online.netlify.app",
+              user: e.ip,
+              key: "https://custom-cv-online.netlify.app",
+              content: "You can click over some icons to see other options.",
+              read: false
+            })
+              .then(function (response) {
+                // console.log(response);
+                axios.post('/notifications', {
+                  title: "Skills",
+                  language: "us-en",
+                  app: "custom-cv-online",
+                  appUrl: "https://custom-cv-online.netlify.app",
+                  user: e.ip,
+                  key: "https://custom-cv-online.netlify.app",
+                  content: "You can write many skills puting comma (,) between them.",
+                  read: false
+                })
+              })
+              .then(function (response) {
+                if(response.status == 201){
+                  axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+                  { headers: header })
+                    .then( response => {
+                      // console.log(response.data)
+                      localStorage.setItem('tips', JSON.stringify(response.data));
+                    }) 
+                }   
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+          }
+        });    
+      });
+
+    // General configs
     if(!localStorage.getItem("configs")){
       this.configs = new PageConfig();
       localStorage.setItem("configs", JSON.stringify(this.configs));

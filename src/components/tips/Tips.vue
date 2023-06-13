@@ -8,9 +8,16 @@
                 <span @click="close(7)" id="closer">X</span>
             </div>
             <div v-for="tip in tips" >
-                <div class="theTip" v-if="!tip.read && tip?.language == this.lang">
+                <div style="color: gray;" class="theTip" v-if="tip.read && tip?.language == this.lang">
+                    <span>{{tip.title}}</span>
+                    <span class="tip-read">Ok</span>
+                    <p>{{ tip.content }}</p>
+                </div>
+            </div>
+            <div v-for="tip in tips" >
+                <div style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
-                    <p>{{ tip.message }}</p>
+                    <p>{{ tip.content }}</p>
                 </div>
             </div>
         </div>
@@ -18,7 +25,7 @@
 </template>
 
 <script>
-import Tip from '../../model/tip.js';
+import axios from 'axios'
 
 export default {
     name: 'Tip',
@@ -56,42 +63,56 @@ export default {
             this.tips.map(tip => {
                 if(tip.id == event.id){
                     tip.read = true;
+                    axios.patch(`/notifications/${tip.id}`)
                 }
             })
             localStorage.setItem('tips', JSON.stringify(this.tips))
+        },
+        verificarTips() {
+            const intervaloInicial = 2000; // 2 segundos
+            const intervaloRecorrente = 4000; // 4 segundos
+
+            const intervalId = setInterval(() => {
+                this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+
+                if (this.tips.length > 0) {
+                clearInterval(intervalId); // Parar a verificação quando tips.length for maior que zero
+                // console.log('tips.length é maior que zero!');
+                }
+            }, intervaloInicial);
+
+            setInterval(() => {
+                if (this.tips.length === 0) {
+                // console.log('tips.length ainda é zero. Verificando novamente...');
+                clearInterval(intervalId);
+
+                const novoIntervalId = setInterval(() => {
+                    this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+
+                    if (this.tips.length > 0) {
+                        clearInterval(novoIntervalId);
+                        // console.log('tips.length é maior que zero!');
+                    }
+                }, intervaloRecorrente);
+                }
+            }, intervaloRecorrente);
         }
     },
     mounted() {
-
-        this.tips = JSON.parse(localStorage.getItem('tips')) || [];
-
-        if(this.tips.length == 0) {
-
-            const tip1 = new Tip();
-            tip1.setTitle("Icones")
-            tip1.setMessage(this.strings[0].iconTip)
-            tip1.setLanguage("pt-br")
-            this.tips.push(tip1)
-
-            const tip2 = new Tip();
-            tip2.setTitle("Habilidades")
-            tip2.setMessage(this.strings[0].skillTips)
-            tip2.setLanguage("pt-br")
-            this.tips.push(tip2)
-
-            const tip3 = new Tip();
-            tip3.setTitle("Icons")
-            tip3.setMessage(this.strings[1].iconTip)
-            tip3.setLanguage("us-en")
-            this.tips.push(tip3)
-
-            const tip4 = new Tip();
-            tip4.setTitle("Skills")
-            tip4.setMessage(this.strings[1].skillTips)
-            tip4.setLanguage("us-en")
-            this.tips.push(tip4)
-            
-            localStorage.setItem('tips', JSON.stringify(this.tips));
+        this.verificarTips();
+        // setTimeout(() => {
+        //     this.tips = JSON.parse(localStorage.getItem('tips')) || [];
+        // }, 2000);
+        
+    },
+    watch: {
+        tips(newValue, oldValue){
+            // console.log("someData changed!");
+            // console.log(oldValue.length);
+            // console.log(newValue.length);
+            if(newValue.length != oldValue.length && newValue.length != 0){
+                this.showTip = true;
+            }
         }
     }
 }
