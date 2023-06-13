@@ -8,7 +8,14 @@
                 <span @click="close(7)" id="closer">X</span>
             </div>
             <div v-for="tip in tips" >
-                <div class="theTip" v-if="!tip.read && tip?.language == this.lang">
+                <div style="color: gray;" class="theTip" v-if="tip.read && tip?.language == this.lang">
+                    <span>{{tip.title}}</span>
+                    <span class="tip-read">Ok</span>
+                    <p>{{ tip.content }}</p>
+                </div>
+            </div>
+            <div v-for="tip in tips" >
+                <div style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
                     <p>{{ tip.content }}</p>
                 </div>
