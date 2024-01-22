@@ -317,6 +317,7 @@ export default {
             localStorage.setItem("user", JSON.stringify(this.userData))
         },
         adicionarEndereco(){
+            console.log("called")
             const rua = document.getElementById("modal-input1").value
             const numero = document.getElementById("modal-input2").value
             const bairro = document.getElementById("modal-input3").value
@@ -324,22 +325,15 @@ export default {
             const estado = document.getElementById("modal-input5").value
             const pais = document.getElementById("modal-input6").value
 
-            let endereco = "";
-            endereco += rua ? rua : ""
-            endereco!="" ? ", " : ""
-            endereco += numero ? numero : ""
-            endereco!="" ? ", " : ""
-            endereco += bairro ? bairro : ""
-            endereco!="" ? ", " : ""
-            endereco += cidade ? cidade : ""
-            endereco!="" ? ", " : ""
-            endereco += estado ? estado : ""
-            endereco!="" ? ", " : ""
-            endereco += pais ? pais+"." : endereco ? "." : ""
+            const comma = ", ";
+            let endereco = rua+" "+numero+" "+bairro+" "+cidade+" "+estado+" "+pais
+
+            endereco = endereco.trim();
+            endereco = endereco.replaceAll(" ", comma);
+            endereco += endereco.split(" ").length > 0 ? "." : "";
 
             this.userData.contact.adress = endereco
 
-            //this.$emit("update-user", this.userData)
             this.updateUser()
         },
         cancelar(){
@@ -378,7 +372,7 @@ export default {
                 console.log('On span title '+title1)
                 console.log('OnChange executing '+inputId)
                 console.log('pressed = '+pressed)
-                console.log(data)
+                console.log('data -> '+data)
 
                 switch (maintitle, title1) {
                     case "INFORMACOES PESSOAIS", "Seu Endereço":

@@ -36,6 +36,8 @@
           <img v-if="item" @click="this.$emit('choose-emailIcon')" src="../icons/envelope.svg" class="email-icon" />
           <span class="email-text">{{ item }}</span>
         </div>
+
+        <!-- todo phone style -->
         <div
           v-for="(item, index) in user.contact.phone"
           :key="index"

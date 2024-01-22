@@ -1,5 +1,5 @@
 export default class PageConfig {
-    
+
     language = 'pt-br';
     imageURL = "";
     template = 1;
@@ -8,7 +8,7 @@ export default class PageConfig {
     fontSizeTitles = "17px";
     fontColor = "black";
     sideColor = "#B0C4DE";
-    mainColor = "#87CEEB";      
+    mainColor = "#87CEEB";
 
 
     constructor() {
