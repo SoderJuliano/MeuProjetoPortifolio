@@ -330,7 +330,7 @@ export default {
 
             endereco = endereco.trim();
             endereco = endereco.replaceAll(" ", comma);
-            endereco += endereco.split(" ").length > 0 ? "." : "";
+            endereco += endereco.split("").length > 0 ? "." : "";
 
             this.userData.contact.adress = endereco
 
@@ -358,7 +358,15 @@ export default {
             sessionStorage.setItem('enter', true);
         }
     },
-    mounted(){
+    updated() {
+        if(this.user.contact.adress != null && this.ptitle == "Seu Endereço") {
+            this.user.contact.adress.split(", ").forEach((word, index) => {
+                word = word.replace(".", "");
+                document.getElementById("modal-input"+(index+1)).value = word;
+            });
+        }
+    },
+    mounted() {
         $(".main-modal-container").change(function(e){
             e.preventDefault();
             setTimeout(() => {
@@ -368,11 +376,11 @@ export default {
                 const data = e.target.value
                 const pressed = sessionStorage.getItem('enter')
 
-                console.log('On Page '+maintitle)
-                console.log('On span title '+title1)
-                console.log('OnChange executing '+inputId)
-                console.log('pressed = '+pressed)
-                console.log('data -> '+data)
+                // console.log('On Page '+maintitle)
+                // console.log('On span title '+title1)
+                // console.log('OnChange executing '+inputId)
+                // console.log('pressed = '+pressed)
+                // console.log('data -> '+data)
 
                 switch (maintitle, title1) {
                     case "INFORMACOES PESSOAIS", "Seu Endereço":
