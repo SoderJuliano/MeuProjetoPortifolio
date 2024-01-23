@@ -109,7 +109,8 @@ body{
 }
 
 .email-text{
-    word-break: break-all !important;
+    /* word-break: break-all !important; */
+    word-break: break-all;
 }
 
 /* global itens  */
@@ -249,7 +250,10 @@ h3:hover .editar-animado{
 }
 
 .data-container{
-    word-wrap: break-word;
+    position: relative;
+    /* word-wrap: break-word; */
+    word-wrap: normal;
+    word-break: auto-phrase !important;
 }
 
 /* .data-container:hover {
@@ -317,4 +321,15 @@ button {
 
 .template1-formacao-container span {
     margin-top: 15px;
+}
+
+.phone-enabled {
+    position: absolute;
+    right: 5px;
+}
+
+.phone-disabled {
+    display: none;
+    position: absolute;
+    right: 5px;
 }

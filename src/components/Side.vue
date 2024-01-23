@@ -19,7 +19,7 @@
             :startShowing="user.contact.email.length > 0
             || user.contact.phone.length > 0
             || user.contact.address != '' ? true : false"
-           />
+          />
           <img
             src="../icons/editar.png"
             alt="editar"
@@ -51,6 +51,8 @@
             @click="this.$emit('choose-phoneIcon')"
           />
           <span class="phone-text">{{ normalizePhone(item) }}</span>
+          <img @click="toglePhoneMask()" src="../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
+          <img @click="toglePhoneMask()" src="../icons/phone/disabled.svg" id="disabled" class="phone-disabled">
         </div>
         <div class="data-container">
           <img
@@ -142,10 +144,28 @@ export default {
       exibirLinks: true,
       exibirFormacao: true,
       exibirHabilidade: true,
-      exibirSocial: true
+      exibirSocial: true,
+      phoneMask: true
     };
   },
   methods: {
+    toglePhoneMask() {
+      if(this.phoneMask == true) {
+        document.getElementById("enabled").style.display = "none";
+        document.getElementById("disabled").style.display = "block";
+        this.phoneMask = false;
+        let phone = document.getElementsByClassName("phone-text")[0].textContent;
+        phone = phone.replaceAll(" ", "");
+        phone = phone.replaceAll("-", "");
+        document.getElementsByClassName("phone-text")[0].textContent =  phone;
+      } else {
+        document.getElementById("enabled").style.display = "block";
+        document.getElementById("disabled").style.display = "none";
+        this.phoneMask = true;
+        let phone = document.getElementsByClassName("phone-text")[0].textContent;
+        document.getElementsByClassName("phone-text")[0].textContent =  this.normalizePhone(phone);
+      }
+    },
     getStyle() {
       return {
         "background-color": `${this.cor}`,

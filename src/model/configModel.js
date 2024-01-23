@@ -13,7 +13,7 @@ export default class PageConfig {
 
     constructor() {
         //defaul configs aready set
-        console.log(this);
+        //console.log(this);
     }
 
     recoverConfigs() {
