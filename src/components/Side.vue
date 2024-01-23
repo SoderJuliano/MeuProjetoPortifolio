@@ -50,7 +50,7 @@
             class="phone-icon"
             @click="this.$emit('choose-phoneIcon')"
           />
-          <span class="phone-text">{{ item }}</span>
+          <span class="phone-text">{{ normalizePhone(item) }}</span>
         </div>
         <div class="data-container">
           <img
@@ -191,6 +191,25 @@ export default {
         "editar-contato-container"
       )[0].style.opacity = "90%";
     },
+    normalizePhone(phone) {
+      if(phone.length == 11 && this.language == "pt-br") {
+        return "("+phone.slice(0, 2) +") "+phone.slice(2, 3) +" "+phone.slice(3, 7)+"-"+phone.slice(7, 11);
+      } else if (phone.length == 14 && this.language == "pt-br") {
+        return phone.slice(0, 3) +" "+phone.slice(3, 5) +" "+phone.slice(5, 10)+"-"+phone.slice(10, 14);
+      } else if (phone.length == 13 && this.language == "pt-br") {
+        return "+"+phone.slice(0, 2) +" "+phone.slice(2, 4) +" "+phone.slice(4, 9)+"-"+phone.slice(9, 13);
+      } else if (phone.length == 9 && this.language == "pt-br") {
+        return phone.slice(0, 5) +"-"+phone.slice(5, 9);
+      }
+
+      if(phone.length == 12 && this.language != "pt-br") {
+        return phone.slice(0, 2)+" ("+phone.slice(2, 5)+")-"+phone.slice(5, 9)+"-"+phone.slice(9, 12);
+      }else if(phone.length == 11 && this.language != "pt-br") {
+        return "+"+phone.slice(0, 1)+" ("+phone.slice(1, 4)+")-"+phone.slice(4, 8)+"-"+phone.slice(8, 11);
+      }
+
+      return phone;
+    }
   },
   mounted() {
     this.setRealImg()

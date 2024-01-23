@@ -326,15 +326,24 @@ export default {
             const pais = document.getElementById("modal-input6").value
 
             const comma = ", ";
-            let endereco = rua+" "+numero+" "+bairro+" "+cidade+" "+estado+" "+pais
+
+            let endereco = this.returnIfNotEmpty(rua)+"->"+this.returnIfNotEmpty(numero)+"->"+this.returnIfNotEmpty(bairro)+"->"+this.returnIfNotEmpty(cidade)+"->"+this.returnIfNotEmpty(estado)+"->"+this.returnIfNotEmpty(pais)
 
             endereco = endereco.trim();
-            endereco = endereco.replaceAll(" ", comma);
+            endereco = endereco.replaceAll("undefined->", "");
+            endereco = endereco.replaceAll("undefined", "");
+            endereco = endereco.replaceAll("->", comma);
             endereco += endereco.split("").length > 0 ? "." : "";
+            endereco = endereco.replaceAll(", .", ".");
 
-            this.userData.contact.adress = endereco
+            this.userData.contact.adress = endereco;
 
             this.updateUser()
+        },
+        returnIfNotEmpty(item) {
+            if(item.length > 0) {
+                return item;
+            }
         },
         cancelar(){
             document.getElementsByClassName("main-modal-container")[0].style.width = "2%";
