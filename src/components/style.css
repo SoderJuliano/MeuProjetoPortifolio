@@ -333,3 +333,13 @@ button {
     position: absolute;
     right: 5px;
 }
+
+@media print {
+    .phone-enabled {
+        display: none;
+    }
+
+    .phone-disabled {
+        display: none;
+    }
+}
