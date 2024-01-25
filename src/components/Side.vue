@@ -157,6 +157,8 @@ export default {
         let phone = document.getElementsByClassName("phone-text")[0].textContent;
         phone = phone.replaceAll(" ", "");
         phone = phone.replaceAll("-", "");
+        phone = phone.replaceAll("(", "");
+        phone = phone.replaceAll(")", "");
         document.getElementsByClassName("phone-text")[0].textContent =  phone;
       } else {
         document.getElementById("enabled").style.display = "block";
