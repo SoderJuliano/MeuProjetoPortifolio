@@ -5,12 +5,15 @@
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
 
                     <div class="modal-internal-content">
-                        <span style="margin-right: 10px">{{title}}</span>
+                        <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
                         <br v-if="title=='Write about you'" />
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-else @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`">
                     </div>
 
+                    <span class="balao" v-if="mainTitle == 'Habilidade' && title == 'Habilidade' && language == 'pt-br'">
+                        Separe as habilidades por vírgula.
+                    </span>
 
                     <br><br>
                     <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
@@ -364,7 +367,12 @@ export default {
             document.getElementsByClassName("body-modal-container")[0].style.zIndex = "10";
         },
         pressedEnter(){
+            //modal-input6 modal-input2 modal-input
+            $(".save-bnt").css('opacity',0.5);
             sessionStorage.setItem('enter', true);
+            setTimeout(() => {
+                $(".save-bnt").css('opacity', 1);
+            }, 1000);
         }
     },
     updated() {
@@ -441,7 +449,7 @@ export default {
                         break;
                 }
                 sessionStorage.setItem('enter', false);
-            }, 900)
+            }, 800)
         });
     }
 }
@@ -571,6 +579,24 @@ button{
     .modal-internal-content{
         display: flex;
         justify-content: start;
+    }
+
+    span {
+        margin-right: 10px;
+        background-color: #1a1a1a;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+
+    input:focus .balao {
+        opacity: 0% !important;
+    }
+
+
+    input:active .balao {
+        opacity: 0%;
     }
 
     @media screen and (max-width: 720px) {

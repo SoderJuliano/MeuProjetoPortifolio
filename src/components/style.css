@@ -272,11 +272,11 @@ h3:hover .editar-animado{
 }
 
 .editar:active{
-    transform: scale(1.5);
+    transform: scale(.9);
 }
 
 button:active {
-    transform: scale(0.7);
+    transform: scale(0.9);
 }
 
 button {
@@ -350,4 +350,25 @@ button {
     #disabled {
         display: none;
     }
+}
+
+.balao {
+    margin-top: -100px;
+    background: whitesmoke;
+    border-radius: 15px;
+    margin-left: -15%;
+    position: absolute;
+    padding: 10px;
+}
+
+.balao:after{
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #1a1a1a;
+    bottom: -20px;
+    left: 20%;
 }
