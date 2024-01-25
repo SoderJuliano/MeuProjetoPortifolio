@@ -336,10 +336,18 @@ button {
 
 @media print {
     .phone-enabled {
-        display: none;
+        display: none !important;
     }
 
     .phone-disabled {
+        display: none !important;
+    }
+
+    #enable {
+        display: none;
+    }
+
+    #disabled {
         display: none;
     }
 }
