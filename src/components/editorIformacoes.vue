@@ -8,7 +8,8 @@
                         <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
                         <br v-if="title=='Write about you'" />
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <input v-else @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                        <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <input v-else @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
 
                     <span class="balao" v-if="mainTitle == 'Habilidade' && title == 'Habilidade' && language == 'pt-br'">
@@ -590,17 +591,22 @@ button{
     }
 
 
-    input:focus .balao {
+    textarea:focus .balao {
         opacity: 0% !important;
     }
 
 
-    input:active .balao {
+    textarea:active .balao {
         opacity: 0%;
     }
 
+    .modal-internal-content span {
+            align-self: center;
+            height: 30px;
+        }
+
     @media screen and (max-width: 720px) {
-        .modal-internal-content{
+        .modal-internal-content {
             display: flex;
             justify-content: center;
         }

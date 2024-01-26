@@ -353,10 +353,10 @@ button {
 }
 
 .balao {
-    margin-top: -100px;
+    margin-top: -160px;
     background: whitesmoke;
     border-radius: 15px;
-    margin-left: -15%;
+    margin-left: -13%;
     position: absolute;
     padding: 10px;
 }
@@ -371,4 +371,18 @@ button {
     border-top: 20px solid #1a1a1a;
     bottom: -20px;
     left: 20%;
+}
+
+@media (max-width: 1000px) and (min-width: 660px) {
+    .balao {
+        margin-top: -150px !important;
+        left: 30% !important;
+    }
+}
+
+@media (max-width: 660px) {
+    .balao {
+        margin-top: -170px !important;
+        left: 20% !important;
+    }
 }
