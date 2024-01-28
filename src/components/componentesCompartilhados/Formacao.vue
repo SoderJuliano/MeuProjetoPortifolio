@@ -110,8 +110,11 @@ export default {
 .template1-formacao span{
   padding-top: 20px;
 }
-.template2-formacao{
+.template2-formacao {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  margin-top: 15px;
 }
 .template1-remove-bnt{
   width: 20px;
@@ -148,11 +151,23 @@ export default {
   margin-right: 35px;
   display: none;
 }
-.template2-formacao-title{
-  text-align: start;
-  margin-left: 10px !important;
+.template2-formacao-title {
+  text-align: center;
   width: 90%;
   font-weight: bolder;
+}
+
+@media (max-width: 1000px) {
+  .template2-formacao-title {
+    margin-left: 0px !important;
+  }
+}
+
+@media (min-width: 1000px) {
+  .template2-formacao-title {
+    margin-top: 0px;
+    margin-left: 10px !important;
+  }
 }
 .template1-formacao-title{
   align-self: center;

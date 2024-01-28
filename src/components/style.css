@@ -13,6 +13,27 @@ body{
         width: 80%;
         margin-left: 5px;
     }
+    .template-data .title {
+        margin-left: 0px;
+    }
+
+    /* Ajusta o title do experiencias no template 2 */
+    .container .template-data .title {
+        width: 93% !important;
+    }
+
+    /* Ajusta o title do Resumo t2  */
+    .container .template2-resumo-titulo .title {
+        width: 93% !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media (min-width: 1000px) {
+
+    .container .template2-resumo-titulo .title {
+        margin-left: 10px !important;
+    }
 }
 
 @media screen and (max-width: 400px) {
@@ -72,23 +93,26 @@ body{
 }
 
 .contact-template2 .title{
-    width: 98%;
+    width: 90%;
+    align-self: center;
     align-items: start;
     text-align: start !important;
     margin: 0px;
     border-bottom: 1px solid gray;
 }
 .contact-template2{
+    display: flex;
+    flex-direction: column;
     padding: 0px;
     margin: 0px;
 }
 
 .social-template2 {
-    width: 100%;
+    width: 90%;
     align-items: start;
     text-align: start !important;
     padding: 0px;
-    margin: 0px;
+    margin-top: 15px;
     border-bottom: 1px solid gray;
 }
 .social-itens-template2{
@@ -384,5 +408,18 @@ button {
     .balao {
         margin-top: -170px !important;
         left: 20% !important;
+    }
+}
+
+/*
+    Overrides the default css to fix issue tha was making
+    the title out of phone screen bounds
+*/
+@media (max-width: 1000px) {
+    .contact-template2 .title {
+        width: 93% !important;
+    }
+    .social-template2 {
+        width: 95% !important;
     }
 }

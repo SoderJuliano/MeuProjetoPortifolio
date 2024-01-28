@@ -51,7 +51,6 @@ export default {
         ? {
             'text-align': 'start',
             'font-weight': 'bolder !important',
-            'margin-left': '10px !important',
             'border-bottom': '1px solid '+this.sideColor,
             'width': '90%'
           }

@@ -57,8 +57,7 @@ export default {
           }
         : {
             'border-bottom': '1px solid '+this.sideColor+ '!important',
-            'margin-left': '10px !important',
-            'padding-left': '5px !important',
+            'padding-left': '5px',
             'width': '90%'
           }
       },
@@ -81,9 +80,9 @@ export default {
 .title:hover .editar-competencias-animado{
   display: block;
 }
-.template2-competencias .title{
+.template2-competencias .title {
   text-align: start !important;
-  padding-left: 10px !important;
+  padding-left: 10px;
   margin: 0 !important;
 }
 .competencias-container{
@@ -147,6 +146,26 @@ export default {
   }
   .remove-bnt{
     display: none;
+  }
+}
+
+@media (max-width: 1000px) {
+  .template2-competencias .title {
+    margin-left: 0px;
+  }
+}
+
+
+@media (min-width: 1000px) {
+  .template2-competencias .title {
+    align-self: center;
+  }
+
+  .template2-competencias {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px !important;
   }
 }
 </style>

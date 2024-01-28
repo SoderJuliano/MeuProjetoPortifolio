@@ -47,7 +47,7 @@ export default {
       jobEnd: '',
       lasJobHired: '',
       lastJobEnd: '',
-      tstyle: 'experiences-template'+this.template+'-title-'+this.fontColor,
+      tstyle: 'experiences-template'+this.template+'-title-'+ this.fontColor ? this.fontColor : "black",
       cstyle: 'template'+this.template+'-experiencias-container',
       jobs: this.experiences
     }
@@ -106,7 +106,7 @@ export default {
   height: 100%;
   align-self: center;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 35px;
   display: block;
   background-color: whitesmoke;
   padding: 10px;
@@ -121,8 +121,8 @@ export default {
   float: right;
 }
 
-.title{
-    width: 98.35%;
+.title {
+    width: 90%;
 }
 .data-container-page-title{
     width: 50%;

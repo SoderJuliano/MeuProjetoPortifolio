@@ -182,9 +182,9 @@ export default {
 img{
     width: 25px;
 }
-.close-bnt{
+.close-bnt {
     position: absolute;
-    right: 20px;
+    right: 50px;
     width: 35px;
     height: 100%;
 }
