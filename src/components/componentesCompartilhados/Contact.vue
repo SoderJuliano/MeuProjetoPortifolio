@@ -1,6 +1,6 @@
 <template>
     <div :class="tstyle">
-        <p class="title" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
+        <p :style="getStyle()" class="title">{{language == "pt-br" ? titulo[0] : titulo[1]}}
             <showSwitcher :className="tstyle" :startShowing="user.contact.email.length > 0 || user.contact.phone.length > 0 || user.contact.address != ''" />
             <img style="margin-right: 5px; margin-top: 5px" src="../../icons/editar.png" alt="editar" class="editar-contact"/>
             <img src="../../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
@@ -53,7 +53,8 @@ export default {
     methods:{
         getStyle(){
             return {
-                "border-bottom": "1px solid "+this.sideColor
+                "border-bottom": "1px solid "+this.sideColor,
+                "width": this.template == 2 ? "80%" : "100% !important"
             }
         }
     }

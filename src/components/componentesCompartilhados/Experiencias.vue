@@ -1,5 +1,5 @@
 <template>
-  <div :class="tstyle">
+  <div :class="tstyle" class="experiencias">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
             :className="tstyle"
@@ -66,7 +66,8 @@ export default {
               'background-color': `${this.cor}`,
               'color': `${this.fontColor}`,
               "border-bottom": "1px solid "+this.sideColor,
-              "text-align": this.template == 2 ? "start" : "center"
+              "text-align": this.template == 2 ? "start" : "center",
+              "width": this.template == 2 ? "" : "99% !important"
           }
       },
       removeJob(item){
@@ -140,8 +141,9 @@ export default {
   word-wrap: break-word;
 }
 @media screen and (max-width: 1000px) {
-  .experiencias{
+  .experiencias {
     min-height: 60px;
+    height: calc(100% + 100px);
   }
   .experiences-template1-title-white{
       margin-bottom: 100px;

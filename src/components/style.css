@@ -17,6 +17,10 @@ body{
         margin-left: 0px;
     }
 
+    .title-template1 {
+        width: 97% !important;
+    }
+
     /* Ajusta o title do experiencias no template 2 */
     .container .template-data .title {
         width: 93% !important;
@@ -307,9 +311,19 @@ button {
     font-family: 'Roboto Mono', monospace;
 }
 
-@media  screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
     button {
         width: 100%;
+    }
+
+    .contact-template2 {
+        width: 97% !important;
+    }
+
+    .data-container {
+        text-align: start !important;
+        align-items: start !important;
+        width: 97%;
     }
 }
 
