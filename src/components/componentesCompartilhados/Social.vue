@@ -140,4 +140,15 @@ export default {
         border-radius: 5px;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .social-template1 {
+        width: 97% !important;
+    }
+}
+@media (min-width: 600px) and (max-width: 1000px) {
+    .social-template1 {
+        width: 99% !important;
+    }
+}
 </style>

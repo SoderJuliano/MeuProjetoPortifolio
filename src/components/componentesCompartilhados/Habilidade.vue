@@ -176,4 +176,16 @@ export default {
     display: none;
   }
 }
+
+@media (max-width: 600px) {
+  .template1-title {
+    width: 97% !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+  .template1-title {
+    width: 99% !important;
+  }
+}
 </style>

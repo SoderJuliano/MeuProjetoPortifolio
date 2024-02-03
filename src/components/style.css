@@ -6,6 +6,18 @@ body{
     transition: all 0.3s ease-in-out;
 }
 
+@media (max-width: 600px) {
+    .title-template1 {
+        width: 97% !important;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+    .title-template1 {
+        width: 99% !important;
+    }
+}
+
 @media screen and (max-width: 1000px) {
     .dropdown-templates, .dropdown-content{
         position: absolute;
@@ -15,10 +27,6 @@ body{
     }
     .template-data .title {
         margin-left: 0px;
-    }
-
-    .title-template1 {
-        width: 97% !important;
     }
 
     /* Ajusta o title do experiencias no template 2 */

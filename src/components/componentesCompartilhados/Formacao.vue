@@ -157,12 +157,21 @@ export default {
   font-weight: bolder;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1000px) and (min-width: 600px) {
   .template2-formacao-title {
     margin-left: 0px !important;
   }
+
+  .template1-formacao-title {
+    width: 99% !important;
+  }
 }
 
+@media (max-width: 600px) {
+  .template1-formacao-title {
+    width: 97% !important;
+  }
+}
 @media (min-width: 1000px) {
   .template2-formacao-title {
     margin-top: 0px;

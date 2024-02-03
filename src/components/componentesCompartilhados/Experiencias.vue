@@ -67,7 +67,7 @@ export default {
               'color': `${this.fontColor}`,
               "border-bottom": "1px solid "+this.sideColor,
               "text-align": this.template == 2 ? "start" : "center",
-              "width": this.template == 2 ? "" : "99% !important"
+              "width": this.template == 2 ? "" : "98.35% !important"
           }
       },
       removeJob(item){
