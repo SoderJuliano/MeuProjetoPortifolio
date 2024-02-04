@@ -4,6 +4,11 @@
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
 
+                    <!-- Se for o modal de social pra adicionar link e o link for uma página da web roda esse bloco aqui -->
+                    <div style="text-align: start; align-self: start;" v-if="(this.mainTitle.toUpperCase().includes('REDES SOCIAIS')) || (this.mainTitle.toUpperCase().includes('SOCIAL NETWORKS'))">
+                        <input @change="check($event)" type="checkbox"><label>{{ this.language.includes("en") ? "Add as a web link" : "Adicionar como link de página" }}</label>
+                    </div>
+
                     <div class="modal-internal-content">
                         <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
                         <br v-if="title=='Write about you'" />
@@ -121,7 +126,8 @@ export default {
             userData: this.user,
             simplifiedDate: true,
             mainTitleCaps: this.mainTitle.toUpperCase(),
-            pressed: false
+            pressed: false,
+            isPageLink: false
         }
     },
     components: {
@@ -141,6 +147,9 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        check(event) {
+            this.isPageLink = event.target.checked;
+        },
         cancelarIsso()
         {
             $('.iconsChooser').css({'display': 'none'})
@@ -308,7 +317,7 @@ export default {
             this.updateUser()
         },
         addSocialLink(){
-            this.userData.social.push($("#modal-input").val())
+            this.userData.social.push(this.isPageLink ? "link:"+$("#modal-input").val() : $("#modal-input").val());
             this.updateUser()
         },
         adicionarJobs(){

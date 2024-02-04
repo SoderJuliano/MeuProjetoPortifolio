@@ -16,7 +16,9 @@
                 <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
                 <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
 
-                <span>{{item}}</span>
+                <img v-if="item.includes('link:')" src="../../icons/page.svg" alt="svg" class="social-icon">
+                <a v-if="item.includes('link:')" :href="item.split('link:')[1]">{{ item.split("link:")[1] }}</a>
+                <span v-else>{{item}}</span>
                 <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
                 <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
@@ -74,13 +76,27 @@ export default {
 </script>
 <style>
 @media screen and (max-width: 1000px) {
-    .remove-bnt{
+    .remove-bnt {
         position: absolute;
         right: 40px;
     }
 }
 </style>
 <style scoped>
+
+.remove-bnt {
+    position: absolute;
+    margin-left: 70px;
+}
+
+a {
+    min-height: 30px;
+    padding-top: 10px;
+}
+
+span {
+    min-height: 30px;
+}
 .social-template1{
     align-self: center;
     background-color: white;
