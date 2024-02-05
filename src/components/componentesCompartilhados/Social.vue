@@ -9,14 +9,15 @@
         </div>
         <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" v-for="(item, index) in this.userData.social" :key="index" >
-                <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
-                <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
-                <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
-                <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
-                <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
-                <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
-
-                <img v-if="item.includes('link:')" src="../../icons/page.svg" alt="svg" class="social-icon">
+                <div v-if="item.includes('github') || item.includes('youtube') || item.includes('linkedin') || item.includes('stackoverflow') || item.includes('facebook') || item.includes('twitter')">
+                    <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
+                    <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
+                    <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
+                    <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
+                    <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
+                    <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
+                </div>
+                <img v-else src="../../icons/page.svg" alt="svg" class="social-icon">
                 <a v-if="item.includes('link:')" :href="item.split('link:')[1]">{{ item.split("link:")[1] }}</a>
                 <span v-else>{{item}}</span>
                 <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
