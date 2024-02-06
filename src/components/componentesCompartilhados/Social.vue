@@ -9,14 +9,17 @@
         </div>
         <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" v-for="(item, index) in this.userData.social" :key="index" >
-                <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
-                <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
-                <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
-                <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
-                <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
-                <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
-
-                <span>{{item}}</span>
+                <div v-if="item.includes('github') || item.includes('youtube') || item.includes('linkedin') || item.includes('stackoverflow') || item.includes('facebook') || item.includes('twitter')">
+                    <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
+                    <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
+                    <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
+                    <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
+                    <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
+                    <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
+                </div>
+                <img v-else src="../../icons/page.svg" alt="svg" class="social-icon">
+                <a v-if="item.includes('link:')" :href="item.split('link:')[1]">{{ item.split("link:")[1] }}</a>
+                <span v-else>{{item}}</span>
                 <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
                 <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
@@ -74,13 +77,27 @@ export default {
 </script>
 <style>
 @media screen and (max-width: 1000px) {
-    .remove-bnt{
+    .remove-bnt {
         position: absolute;
         right: 40px;
     }
 }
 </style>
 <style scoped>
+
+.remove-bnt {
+    position: absolute;
+    margin-left: 70px;
+}
+
+a {
+    min-height: 30px;
+    padding-top: 10px;
+}
+
+span {
+    min-height: 30px;
+}
 .social-template1{
     align-self: center;
     background-color: white;
@@ -138,6 +155,17 @@ export default {
         min-height: 100px;
         background-color: rgb(255 240 240);
         border-radius: 5px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .social-template1 {
+        width: 97% !important;
+    }
+}
+@media (min-width: 600px) and (max-width: 1000px) {
+    .social-template1 {
+        width: 99% !important;
     }
 }
 </style>

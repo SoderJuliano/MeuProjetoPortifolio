@@ -95,7 +95,7 @@ export default {
 }
 
 #headericon:active {
-    transform: scale(1.5);
+    transform: scale(.9);
 }
 
 .container {

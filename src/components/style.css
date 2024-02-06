@@ -6,12 +6,45 @@ body{
     transition: all 0.3s ease-in-out;
 }
 
+@media (max-width: 600px) {
+    .title-template1 {
+        width: 97% !important;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+    .title-template1 {
+        width: 99% !important;
+    }
+}
+
 @media screen and (max-width: 1000px) {
     .dropdown-templates, .dropdown-content{
         position: absolute;
         top: 10%;
         width: 80%;
         margin-left: 5px;
+    }
+    .template-data .title {
+        margin-left: 0px;
+    }
+
+    /* Ajusta o title do experiencias no template 2 */
+    .container .template-data .title {
+        width: 93% !important;
+    }
+
+    /* Ajusta o title do Resumo t2  */
+    .container .template2-resumo-titulo .title {
+        width: 93% !important;
+        margin-left: 0px !important;
+    }
+}
+
+@media (min-width: 1000px) {
+
+    .container .template2-resumo-titulo .title {
+        margin-left: 10px !important;
     }
 }
 
@@ -72,23 +105,26 @@ body{
 }
 
 .contact-template2 .title{
-    width: 98%;
+    width: 90%;
+    align-self: center;
     align-items: start;
     text-align: start !important;
     margin: 0px;
     border-bottom: 1px solid gray;
 }
 .contact-template2{
+    display: flex;
+    flex-direction: column;
     padding: 0px;
     margin: 0px;
 }
 
 .social-template2 {
-    width: 100%;
+    width: 90%;
     align-items: start;
     text-align: start !important;
     padding: 0px;
-    margin: 0px;
+    margin-top: 15px;
     border-bottom: 1px solid gray;
 }
 .social-itens-template2{
@@ -272,20 +308,30 @@ h3:hover .editar-animado{
 }
 
 .editar:active{
-    transform: scale(1.5);
+    transform: scale(.9);
 }
 
 button:active {
-    transform: scale(0.7);
+    transform: scale(0.9);
 }
 
 button {
     font-family: 'Roboto Mono', monospace;
 }
 
-@media  screen and (max-width: 1000px) {
+@media screen and (max-width: 1000px) {
     button {
         width: 100%;
+    }
+
+    .contact-template2 {
+        width: 97% !important;
+    }
+
+    .data-container {
+        text-align: start !important;
+        align-items: start !important;
+        width: 97%;
     }
 }
 
@@ -349,5 +395,53 @@ button {
 
     #disabled {
         display: none;
+    }
+}
+
+.balao {
+    margin-top: -160px;
+    background: whitesmoke;
+    border-radius: 15px;
+    margin-left: -13%;
+    position: absolute;
+    padding: 10px;
+}
+
+.balao:after{
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #1a1a1a;
+    bottom: -20px;
+    left: 20%;
+}
+
+@media (max-width: 1000px) and (min-width: 660px) {
+    .balao {
+        margin-top: -150px !important;
+        left: 30% !important;
+    }
+}
+
+@media (max-width: 660px) {
+    .balao {
+        margin-top: -170px !important;
+        left: 20% !important;
+    }
+}
+
+/*
+    Overrides the default css to fix issue tha was making
+    the title out of phone screen bounds
+*/
+@media (max-width: 1000px) {
+    .contact-template2 .title {
+        width: 93% !important;
+    }
+    .social-template2 {
+        width: 95% !important;
     }
 }

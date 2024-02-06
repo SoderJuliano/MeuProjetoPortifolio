@@ -140,12 +140,12 @@ export default {
   padding-right: 20px;
 }
 
-.template2-title{
+.template2-title {
   text-align: start;
   border-bottom: 1px solid black;
   font-weight: bold;
-  margin-left: 0px;
-  width: 92%;
+  width: 90%;
+  margin-top: 0px;
 }
 .template2-title:hover .editar-animado-habilidade{
   display: block;
@@ -154,8 +154,10 @@ export default {
   display: none;
 }
 .template2-container{
-  width: 98.5%;
-  padding-left: 10px;
+  margin-top: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .template1-title{
   align-self: center;
@@ -172,6 +174,18 @@ export default {
 @media print{
   .remove-bnt{
     display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .template1-title {
+    width: 97% !important;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 1000px) {
+  .template1-title {
+    width: 99% !important;
   }
 }
 </style>

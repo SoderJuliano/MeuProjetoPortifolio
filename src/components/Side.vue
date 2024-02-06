@@ -12,7 +12,7 @@
           style="display: none"
           @change="onIMGChange"
         />
-        <p class="title">
+        <p class="title title-template1">
           {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
           <showSwitcher
             className="contato.template-data"

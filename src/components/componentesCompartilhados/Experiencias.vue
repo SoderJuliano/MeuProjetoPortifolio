@@ -1,5 +1,5 @@
 <template>
-  <div :class="tstyle">
+  <div :class="tstyle" class="experiencias">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
             :className="tstyle"
@@ -47,7 +47,7 @@ export default {
       jobEnd: '',
       lasJobHired: '',
       lastJobEnd: '',
-      tstyle: 'experiences-template'+this.template+'-title-'+this.fontColor,
+      tstyle: 'experiences-template'+this.template+'-title-'+ this.fontColor ? this.fontColor : "black",
       cstyle: 'template'+this.template+'-experiencias-container',
       jobs: this.experiences
     }
@@ -66,7 +66,8 @@ export default {
               'background-color': `${this.cor}`,
               'color': `${this.fontColor}`,
               "border-bottom": "1px solid "+this.sideColor,
-              "text-align": this.template == 2 ? "start" : "center"
+              "text-align": this.template == 2 ? "start" : "center",
+              "width": this.template == 2 ? "" : "98.35% !important"
           }
       },
       removeJob(item){
@@ -106,7 +107,7 @@ export default {
   height: 100%;
   align-self: center;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 35px;
   display: block;
   background-color: whitesmoke;
   padding: 10px;
@@ -121,8 +122,8 @@ export default {
   float: right;
 }
 
-.title{
-    width: 98.35%;
+.title {
+    width: 90%;
 }
 .data-container-page-title{
     width: 50%;
@@ -140,8 +141,9 @@ export default {
   word-wrap: break-word;
 }
 @media screen and (max-width: 1000px) {
-  .experiencias{
+  .experiencias {
     min-height: 60px;
+    height: calc(100% + 100px);
   }
   .experiences-template1-title-white{
       margin-bottom: 100px;

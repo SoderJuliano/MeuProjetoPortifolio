@@ -4,13 +4,22 @@
         <div v-if="title!='Email' && mainTitle != 'iconChooser'" class="body-modal-container">
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
 
-                    <div class="modal-internal-content">
-                        <span style="margin-right: 10px">{{title}}</span>
-                        <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <input v-else @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`">
+                    <!-- Se for o modal de social pra adicionar link e o link for uma página da web roda esse bloco aqui -->
+                    <div style="text-align: start; align-self: start;" v-if="(this.mainTitle.toUpperCase().includes('REDES SOCIAIS')) || (this.mainTitle.toUpperCase().includes('SOCIAL NETWORKS'))">
+                        <input @change="check($event)" type="checkbox"><label>{{ this.language.includes("en") ? "Add as a web link" : "Adicionar como link de página" }}</label>
                     </div>
 
+                    <div class="modal-internal-content">
+                        <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
+                        <br v-if="title=='Write about you'" />
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <input v-else @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
+                    </div>
+
+                    <span class="balao" v-if="mainTitle == 'Habilidade' && title == 'Habilidade' && language == 'pt-br'">
+                        Separe as habilidades por vírgula.
+                    </span>
 
                     <br><br>
                     <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
@@ -117,7 +126,8 @@ export default {
             userData: this.user,
             simplifiedDate: true,
             mainTitleCaps: this.mainTitle.toUpperCase(),
-            pressed: false
+            pressed: false,
+            isPageLink: false
         }
     },
     components: {
@@ -137,6 +147,9 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        check(event) {
+            this.isPageLink = event.target.checked;
+        },
         cancelarIsso()
         {
             $('.iconsChooser').css({'display': 'none'})
@@ -304,7 +317,7 @@ export default {
             this.updateUser()
         },
         addSocialLink(){
-            this.userData.social.push($("#modal-input").val())
+            this.userData.social.push(this.isPageLink ? "link:"+$("#modal-input").val() : $("#modal-input").val());
             this.updateUser()
         },
         adicionarJobs(){
@@ -364,7 +377,12 @@ export default {
             document.getElementsByClassName("body-modal-container")[0].style.zIndex = "10";
         },
         pressedEnter(){
+            //modal-input6 modal-input2 modal-input
+            $(".save-bnt").css('opacity',0.5);
             sessionStorage.setItem('enter', true);
+            setTimeout(() => {
+                $(".save-bnt").css('opacity', 1);
+            }, 1000);
         }
     },
     updated() {
@@ -441,7 +459,7 @@ export default {
                         break;
                 }
                 sessionStorage.setItem('enter', false);
-            }, 900)
+            }, 800)
         });
     }
 }
@@ -573,8 +591,31 @@ button{
         justify-content: start;
     }
 
+    span {
+        margin-right: 10px;
+        background-color: #1a1a1a;
+        color: white;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+
+    textarea:focus .balao {
+        opacity: 0% !important;
+    }
+
+
+    textarea:active .balao {
+        opacity: 0%;
+    }
+
+    .modal-internal-content span {
+            align-self: center;
+            height: 30px;
+        }
+
     @media screen and (max-width: 720px) {
-        .modal-internal-content{
+        .modal-internal-content {
             display: flex;
             justify-content: center;
         }
