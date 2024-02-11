@@ -11,7 +11,7 @@
 
                     <div class="modal-internal-content">
                         <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
-                        <br v-if="title=='Write about you'" />
+                        <br v-if="title =='Write about you'" />
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                         <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
@@ -110,7 +110,8 @@
 import strings from '../components/configs/strings.json'
 import Job from '../model/jobModel.js'
 import IconChooser from './iconComponent/IconChooser.vue';
-import $ from 'jquery'
+import * as funcs from './componentesCompartilhados/util/functions';
+import $ from 'jquery';
 
 
 export default {
@@ -209,8 +210,8 @@ export default {
         },
         add(title){
             $('.save-bnt').prop('disabled', true);
-
-            console.log(title);
+            // console.log('clicked')
+            // console.log(title);
             //title as string
             switch(title) {
                 case 'Digite nome':
@@ -403,63 +404,17 @@ export default {
                 const data = e.target.value
                 const pressed = sessionStorage.getItem('enter')
 
-                // console.log('On Page '+maintitle)
-                // console.log('On span title '+title1)
-                // console.log('OnChange executing '+inputId)
-                // console.log('pressed = '+pressed)
-                // console.log('data -> '+data)
-
-                switch (maintitle, title1) {
-                    case "INFORMACOES PESSOAIS", "Seu Endereço":
-                        if(inputId != null && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "YOUR INFORMATIONS", "Email":
-                        if(inputId == "modal-input2" && pressed == 'true'){
-                            $('.bnt-proximo').click()
-                        }
-                        break;
-                    case "YOUR INFORMATIONS", "Your adress":
-                        if(inputId != null && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "EDUCATION", "Academic education":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "FORMAÇÃO ACADÊMICA", "Escolaridade":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "SKILL", "Skill":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "HABILIDADE", "Habilidade":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "REDES SOCIAIS", "Add link":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "SOCIAL NETWORKS", "Add link":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    default:
-                        break;
+                const modal = {
+                    modal_title: maintitle,
+                    input_title: title1,
+                    inputId: inputId,
+                    pressed: pressed,
+                    data: data
                 }
+
+                $(funcs.witchModalIAm(modal)).click();
                 sessionStorage.setItem('enter', false);
-            }, 800)
+            }, 500)
         });
     }
 }

@@ -136,7 +136,9 @@ span {
     .social-row{
         display: block;
         padding: 0px !important;
-        width: 100%;
+        /* if set 100% here the links texts overflows the side div size */
+        /* So its better keep it 80s % */
+        width: 80%;
     }
     .social-row span{
         word-break: break-all;
