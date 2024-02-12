@@ -66,11 +66,23 @@ export function witchModalIAm(modal) {
             if(modal.inputId == "modal-input" && modal.pressed == 'true') {
                 return '.save-bnt';
             }
+        case "COMPETENCIA", "Nova competência":
+            if(modal.inputId == 'modal-input' && modal.pressed == 'true') {
+                return '.save-bnt';
+            }
+        case "COMPETENCE", "New skill":
+            if(modal.inputId == 'modal-input' && modal.pressed == 'true') {
+                return '.save-bnt';
+            }
         case "RESUMO PROFISSIONAL", "Nome da empresa":
             if(modal.inputId == 'modal-input2' && modal.pressed == 'true') {
                 return '.bnt-proximo';
             }
-
+        case "RESUMO PROFISSIONAL", "Descrição":
+            if(modal.inputId == 'modal-input3'  && modal.pressed == 'true') {
+                return '.save-bnt';
+            }
+        // fazer resumo profissional em  ingles
         default:
             break;
     }

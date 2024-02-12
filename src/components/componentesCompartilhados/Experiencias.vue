@@ -14,7 +14,7 @@
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
             <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span>
-              {{ item.dateHired ? this.language=='pt-br'? 'ate' : 'until' : '' }}
+              {{ item.dateHired ? this.language=='pt-br'? 'até' : 'until' : '' }}
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
             <span style="margin-top: 0; margin-left:10px;" v-else>{{ item.dateHired ? this.language=='pt-br'? 'hoje' : 'today' : ''}}</span>
           </div>
