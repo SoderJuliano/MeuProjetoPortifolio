@@ -13,7 +13,7 @@
                         <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
                         <br v-if="title =='Write about you'" />
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
 
@@ -46,16 +46,16 @@
 
                     <div class="modal-internal-content" v-if="ptitle">
                         <span  style="margin-right: 10px">{{ptitle}}</span>
-                        <input v-if="!simplifiedDate" id="input-value-date1" type="date">
-                        <input v-if="simplifiedDate" id="input-value-date1" type="month" />
+                        <input @keydown.enter="pressedEnterInDate()" v-if="!simplifiedDate" id="input-value-date1" type="date">
+                        <input @keydown.enter="pressedEnterInDate()" v-if="simplifiedDate" id="input-value-date1" type="month" />
                     </div>
 
                     <br v-if="title2">
 
                     <div v-if="ptitle" class="modal-internal-content">
                         <span style="margin-right: 10px">{{ptitle2}}</span>
-                        <input v-if="!simplifiedDate" id="input-value-date2" type="date">
-                        <input v-if="simplifiedDate" id="input-value-date2" type="month">
+                        <input @keydown.enter="pressedEnterInDate()" v-if="!simplifiedDate" id="input-value-date2" type="date">
+                        <input @keydown.enter="pressedEnterInDate()" v-if="simplifiedDate" id="input-value-date2" type="month">
                     </div>
 
 
@@ -63,7 +63,7 @@
 
                     <div v-if="ptitle3" class="modal-internal-content">
                         <span style="margin-right: 10px;">{{ptitle3}}</span>
-                        <textarea id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
                     </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
@@ -202,7 +202,7 @@ export default {
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
                 console.log(this.userData.userExperiences[this.currentJobId])
-                this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
+                this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
             }
@@ -260,7 +260,7 @@ export default {
                     this.updateUser();
                     this.cancelar();
                     break;
-                case 'Descricao':
+                case 'Descrição':
                     // sobre experiencia de trabalho
                     this.adicionarJobs()
                     this.cancelar();
@@ -378,12 +378,19 @@ export default {
             document.getElementsByClassName("body-modal-container")[0].style.zIndex = "10";
         },
         pressedEnter(){
-            //modal-input6 modal-input2 modal-input
             $(".save-bnt").css('opacity',0.5);
+            $(".bnt-proximo").css('opacity',0.5);
             sessionStorage.setItem('enter', true);
             setTimeout(() => {
                 $(".save-bnt").css('opacity', 1);
+                $(".bnt-proximo").css('opacity', 1);
             }, 1000);
+        },
+        pressedEnterInDate() {
+            $(".bnt-proximo").click();
+        },
+        pressedEnterOk() {
+            $(".save-bnt").click();
         }
     },
     updated() {
@@ -484,7 +491,7 @@ button{
     .switch {
         position: relative;
         display: inline-block;
-        width: 60px;
+        width: 70px;
         height: 34px;
     }
 
