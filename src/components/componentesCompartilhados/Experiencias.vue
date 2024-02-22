@@ -73,7 +73,7 @@ export default {
       removeJob(item){
         this.jobs.splice(this.jobs.indexOf(item), 1)
         this.user.userExperiences = this.jobs
-        localStorage.setItem('user', JSON.stringify(this.user))
+        localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.user))
       },
   },
   beforeMount(){

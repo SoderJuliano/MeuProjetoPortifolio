@@ -4,6 +4,7 @@
         class="multiMenu"
         :user="user"
         :template="template"
+        :language="this.configs.getLanguage()"
         @click="changefontM"
         @now-template1="this.$emit('now-template1')"
         @now-template2="this.$emit('now-template2')"

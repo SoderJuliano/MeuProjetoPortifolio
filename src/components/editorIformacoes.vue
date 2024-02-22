@@ -328,7 +328,7 @@ export default {
         },
         updateUser(){
             this.$emit('update-user', this.userData)
-            localStorage.setItem("user", JSON.stringify(this.userData))
+            localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
         },
         adicionarEndereco(){
             console.log("called")

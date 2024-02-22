@@ -8,6 +8,7 @@
         <pageColor />
         <Avatares 
             :user="user"
+            :language="language"
             @update-user="$emit('update-user')"
         />
         <PicureShape />
@@ -40,7 +41,8 @@ export default {
     },
     props:{
         template: Number,
-        user: Object
+        user: Object,
+        language: String
     },
     emits:['now-template1', 'now-template2', 'update-user'],
 };

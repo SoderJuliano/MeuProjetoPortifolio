@@ -59,6 +59,7 @@ export default {
     name: "avatares",
     props:{
         user: Object,
+        language: String
     },
     data(){
         return {
@@ -108,10 +109,9 @@ export default {
             if(this.userData.avatarImg != null && this.userData.avatarImg.length > 0){
                 this.userData.realImg = "";
             }
-            
             //img-pic
             $(".img-pic").attr("src", this.userData.avatarImg)
-            localStorage.setItem('user', JSON.stringify(this.userData))
+            localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.userData))
         },
         openContainer(){
             $(".avatares-subcontainer").css({"display": "grid", "position": "absolute"});

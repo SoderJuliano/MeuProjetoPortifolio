@@ -63,7 +63,7 @@ export default {
       },
       removeCompetence(event){
         this.userData.competence.splice(this.userData.competence.indexOf(event.target.id), 1)
-        localStorage.setItem('user', JSON.stringify(this.userData))
+        localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.userData))
       },
   }
 }
