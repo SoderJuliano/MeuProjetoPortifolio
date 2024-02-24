@@ -85,12 +85,28 @@
             </div>
             <div v-else>
                 <span>{{ptitle}}</span><br><br>
-                <input id="modal-input1" type="text" :placeholder=this.getRua() >
-                <input id="modal-input2" type="text" :placeholder=this.getNumero()>
-                <input id="modal-input3" type="text" :placeholder=this.getBairro()>
-                <input id="modal-input4" type="text" :placeholder=this.getCidade()>
-                <input id="modal-input5" type="text" :placeholder=this.getEstado()>
-                <input @keydown.enter="pressedEnter()" id="modal-input6" type="text" :placeholder=this.getPais()>
+                <input
+                    :value="this.userData.getAdressPart('street')"
+                    @change="this.userData.setAdressPart('street', $event.target.value)" id="modal-input1" type="text" :placeholder=this.getRua()>
+                <input
+                    :value="this.userData.getAdressPart('number')"
+                    @change="this.userData.setAdressPart('number', $event.target.value)" id="modal-input2" type="text" :placeholder=this.getNumero()>
+                <input
+                    :value="this.userData.getAdressPart('district')"
+                    @change="this.userData.setAdressPart('district', $event.target.value)"
+                    id="modal-input3" type="text" :placeholder=this.getBairro()>
+                <input
+                    :value="this.userData.getAdressPart('city')"
+                    @change="this.userData.setAdressPart('city', $event.target.value)"
+                    id="modal-input4" type="text" :placeholder=this.getCidade()>
+                <input
+                    :value="this.userData.getAdressPart('state')"
+                    @change="this.userData.setAdressPart('state', $event.target.value)"
+                    id="modal-input5" type="text" :placeholder=this.getEstado()>
+                <input
+                    :value="this.userData.getAdressPart('country')"
+                    @change="this.userData.setAdressPart('country', $event.target.value)"
+                    @keydown.enter="pressedEnter()" id="modal-input6" type="text" :placeholder=this.getPais()>
                 <br><br>
                 <button class="save-bnt" v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
@@ -107,8 +123,9 @@
 
 <script>
 
-import strings from '../components/configs/strings.json'
-import Job from '../model/jobModel.js'
+import strings from '../components/configs/strings.json';
+import Job from '../model/jobModel.js';
+import UserModel from '../model/userModel';
 import IconChooser from './iconComponent/IconChooser.vue';
 import * as funcs from './componentesCompartilhados/util/functions';
 import $ from 'jquery';
@@ -124,7 +141,7 @@ export default {
             ptitle2: '',
             ptitle3: '',
             job: Object,
-            userData: this.user,
+            userData: Object,
             simplifiedDate: true,
             mainTitleCaps: this.mainTitle.toUpperCase(),
             pressed: false,
@@ -402,6 +419,9 @@ export default {
         }
     },
     mounted() {
+        this.userData = new UserModel();
+        this.userData = this.userData.constructorObject(this.user);
+
         $(".main-modal-container").change(function(e){
             e.preventDefault();
             setTimeout(() => {
@@ -423,7 +443,15 @@ export default {
                 sessionStorage.setItem('enter', false);
             }, 500)
         });
-    }
+    },
+    watch: {
+        user: {
+            deep: true,
+            handler() {
+                this.userData = this.userData.constructorObject(this.user);
+            }
+        }
+  }
 }
 </script>
 
