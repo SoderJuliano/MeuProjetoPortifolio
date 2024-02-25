@@ -57,7 +57,7 @@ export default {
     methods:{
         remove(event){
             this.userData.social.splice(this.userData.social.indexOf(event.target.id), 1)
-            localStorage.setItem("user", JSON.stringify(this.userData))
+            localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
             //this.$emit('update-user', this.userData)
         },
         getStyle(){
@@ -136,7 +136,9 @@ span {
     .social-row{
         display: block;
         padding: 0px !important;
-        width: 100%;
+        /* if set 100% here the links texts overflows the side div size */
+        /* So its better keep it 80s % */
+        width: 80%;
     }
     .social-row span{
         word-break: break-all;

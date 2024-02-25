@@ -46,16 +46,16 @@
 
                     <div class="modal-internal-content" v-if="ptitle">
                         <span  style="margin-right: 10px">{{ptitle}}</span>
-                        <input v-if="!simplifiedDate" id="input-value-date1" type="date">
-                        <input v-if="simplifiedDate" id="input-value-date1" type="month" />
+                        <input @keydown.enter="pressedEnterInDate()" v-if="!simplifiedDate" id="input-value-date1" type="date">
+                        <input @keydown.enter="pressedEnterInDate()" v-if="simplifiedDate" id="input-value-date1" type="month" />
                     </div>
 
                     <br v-if="title2">
 
                     <div v-if="ptitle" class="modal-internal-content">
                         <span style="margin-right: 10px">{{ptitle2}}</span>
-                        <input v-if="!simplifiedDate" id="input-value-date2" type="date">
-                        <input v-if="simplifiedDate" id="input-value-date2" type="month">
+                        <input @keydown.enter="pressedEnterInDate()" v-if="!simplifiedDate" id="input-value-date2" type="date">
+                        <input @keydown.enter="pressedEnterInDate()" v-if="simplifiedDate" id="input-value-date2" type="month">
                     </div>
 
 
@@ -63,7 +63,7 @@
 
                     <div v-if="ptitle3" class="modal-internal-content">
                         <span style="margin-right: 10px;">{{ptitle3}}</span>
-                        <textarea id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
                     </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
@@ -83,14 +83,32 @@
                 <button class="bnt-proximo" @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
                 <button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
+
+            <!-- Somente quando coloca o endereço -->
             <div v-else>
                 <span>{{ptitle}}</span><br><br>
-                <input id="modal-input1" type="text" :placeholder=this.getRua() >
-                <input id="modal-input2" type="text" :placeholder=this.getNumero()>
-                <input id="modal-input3" type="text" :placeholder=this.getBairro()>
-                <input id="modal-input4" type="text" :placeholder=this.getCidade()>
-                <input id="modal-input5" type="text" :placeholder=this.getEstado()>
-                <input @keydown.enter="pressedEnter()" id="modal-input6" type="text" :placeholder=this.getPais()>
+                <input
+                    :value="this.userData.getAdressPart('street')"
+                    @change="this.userData.setAdressPart('street', $event.target.value)" id="modal-input1" type="text" :placeholder=this.getRua()>
+                <input
+                    :value="this.userData.getAdressPart('number')"
+                    @change="this.userData.setAdressPart('number', $event.target.value)" id="modal-input2" type="text" :placeholder=this.getNumero()>
+                <input
+                    :value="this.userData.getAdressPart('district')"
+                    @change="this.userData.setAdressPart('district', $event.target.value)"
+                    id="modal-input3" type="text" :placeholder=this.getBairro()>
+                <input
+                    :value="this.userData.getAdressPart('city')"
+                    @change="this.userData.setAdressPart('city', $event.target.value)"
+                    id="modal-input4" type="text" :placeholder=this.getCidade()>
+                <input
+                    :value="this.userData.getAdressPart('state')"
+                    @change="this.userData.setAdressPart('state', $event.target.value)"
+                    id="modal-input5" type="text" :placeholder=this.getEstado()>
+                <input
+                    :value="this.userData.getAdressPart('country')"
+                    @change="this.userData.setAdressPart('country', $event.target.value)"
+                    @keydown.enter="pressedEnter()" id="modal-input6" type="text" :placeholder=this.getPais()>
                 <br><br>
                 <button class="save-bnt" v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
             </div>
@@ -107,10 +125,12 @@
 
 <script>
 
-import strings from '../components/configs/strings.json'
-import Job from '../model/jobModel.js'
+import strings from '../components/configs/strings.json';
+import Job from '../model/jobModel.js';
+import UserModel from '../model/userModel';
 import IconChooser from './iconComponent/IconChooser.vue';
-import $ from 'jquery'
+import * as funcs from './componentesCompartilhados/util/functions';
+import $ from 'jquery';
 
 
 export default {
@@ -123,7 +143,7 @@ export default {
             ptitle2: '',
             ptitle3: '',
             job: Object,
-            userData: this.user,
+            userData: Object,
             simplifiedDate: true,
             mainTitleCaps: this.mainTitle.toUpperCase(),
             pressed: false,
@@ -201,7 +221,7 @@ export default {
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
                 console.log(this.userData.userExperiences[this.currentJobId])
-                this.ptitle3 = this.language == 'pt-br' ? 'Descricao' : 'Description'
+                this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
             }
@@ -209,8 +229,8 @@ export default {
         },
         add(title){
             $('.save-bnt').prop('disabled', true);
-
-            console.log(title);
+            // console.log('clicked')
+            // console.log(title);
             //title as string
             switch(title) {
                 case 'Digite nome':
@@ -259,7 +279,7 @@ export default {
                     this.updateUser();
                     this.cancelar();
                     break;
-                case 'Descricao':
+                case 'Descrição':
                     // sobre experiencia de trabalho
                     this.adicionarJobs()
                     this.cancelar();
@@ -327,7 +347,7 @@ export default {
         },
         updateUser(){
             this.$emit('update-user', this.userData)
-            localStorage.setItem("user", JSON.stringify(this.userData))
+            localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
         },
         adicionarEndereco(){
             console.log("called")
@@ -377,12 +397,19 @@ export default {
             document.getElementsByClassName("body-modal-container")[0].style.zIndex = "10";
         },
         pressedEnter(){
-            //modal-input6 modal-input2 modal-input
             $(".save-bnt").css('opacity',0.5);
+            $(".bnt-proximo").css('opacity',0.5);
             sessionStorage.setItem('enter', true);
             setTimeout(() => {
                 $(".save-bnt").css('opacity', 1);
+                $(".bnt-proximo").css('opacity', 1);
             }, 1000);
+        },
+        pressedEnterInDate() {
+            $(".bnt-proximo").click();
+        },
+        pressedEnterOk() {
+            $(".save-bnt").click();
         }
     },
     updated() {
@@ -394,6 +421,9 @@ export default {
         }
     },
     mounted() {
+        this.userData = new UserModel();
+        this.userData = this.userData.constructorObject(this.user);
+
         $(".main-modal-container").change(function(e){
             e.preventDefault();
             setTimeout(() => {
@@ -403,65 +433,27 @@ export default {
                 const data = e.target.value
                 const pressed = sessionStorage.getItem('enter')
 
-                // console.log('On Page '+maintitle)
-                // console.log('On span title '+title1)
-                // console.log('OnChange executing '+inputId)
-                // console.log('pressed = '+pressed)
-                // console.log('data -> '+data)
-
-                switch (maintitle, title1) {
-                    case "INFORMACOES PESSOAIS", "Seu Endereço":
-                        if(inputId != null && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "YOUR INFORMATIONS", "Email":
-                        if(inputId == "modal-input2" && pressed == 'true'){
-                            $('.bnt-proximo').click()
-                        }
-                        break;
-                    case "YOUR INFORMATIONS", "Your adress":
-                        if(inputId != null && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "EDUCATION", "Academic education":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "FORMAÇÃO ACADÊMICA", "Escolaridade":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "SKILL", "Skill":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "HABILIDADE", "Habilidade":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "REDES SOCIAIS", "Add link":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    case "SOCIAL NETWORKS", "Add link":
-                        if(inputId == "modal-input" && pressed == 'true'){
-                            $('.save-bnt').click()
-                        }
-                        break;
-                    default:
-                        break;
+                const modal = {
+                    modal_title: maintitle,
+                    input_title: title1,
+                    inputId: inputId,
+                    pressed: pressed,
+                    data: data
                 }
+
+                $(funcs.witchModalIAm(modal)).click();
                 sessionStorage.setItem('enter', false);
-            }, 800)
+            }, 500)
         });
-    }
+    },
+    watch: {
+        user: {
+            deep: true,
+            handler() {
+                this.userData = this.userData.constructorObject(this.user);
+            }
+        }
+  }
 }
 </script>
 
@@ -529,7 +521,7 @@ button{
     .switch {
         position: relative;
         display: inline-block;
-        width: 60px;
+        width: 70px;
         height: 34px;
     }
 

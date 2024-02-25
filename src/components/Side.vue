@@ -184,7 +184,7 @@ export default {
           setTimeout(() => {
             this.userData.realImg = localStorage.getItem("newImage");
             console.log(this.userData);
-            localStorage.setItem("user", JSON.stringify(this.userData));
+            localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
           }, 400);
       }
     },

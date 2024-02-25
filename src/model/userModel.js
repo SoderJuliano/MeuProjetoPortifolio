@@ -13,16 +13,30 @@ export default class User {
         email : [],
         phone : [],
         adress : "",
+        adressObject : {
+            country : "",
+            state : "",
+            city : "",
+            street : "",
+            number : "",
+            district : ""
+        }
     };
     userExperiences = [];
     imgForReal = 0
 
     constructor() {
-        this.id = Math.random();
+        this.id = this.id == 0 ? Math.random() : this.id;
     }
 
-    updator(user) 
+    constructorObject(user) {
+        this.updator(user);
+        return this;
+    }
+
+    updator(user)
     {
+        this.id = user.id;
         this.name = user.name;
         this.profession = user.profession;
         this.resume = user.resume;
@@ -34,5 +48,58 @@ export default class User {
         this.realImg = user.realImg;
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
+    }
+
+    setAdressPart(witch, value) {
+        console.log('setting witch: '+witch+' and value: '+value);
+        switch (witch) {
+            case 'country':
+                this.contact.adressObject.country = value;
+                break;
+            case 'state':
+                this.contact.adressObject.state = value;
+                break;
+            case 'city':
+                this.contact.adressObject.city = value;
+                break;
+            case 'district':
+                this.contact.adressObject.district = value;
+                break;
+            case 'number':
+                this.contact.adressObject.number = value;
+            break;
+            case 'street':
+                this.contact.adressObject.street = value;
+                break;
+            default:
+                break;
+        }
+    }
+    getAdressPart(witch) {
+        if(this.contact == null || this.contact.adressObject == null) {
+            return null;
+        }
+        switch (witch) {
+            case 'country':
+                return this.contact.adressObject.country;
+                break;
+            case 'state':
+                return this.contact.adressObject.state;
+                break;
+            case 'city':
+                return this.contact.adressObject.city;
+                break;
+            case 'district':
+                return this.contact.adressObject.district;
+                break;
+            case 'number':
+                return this.contact.adressObject.number;
+            break;
+            case 'street':
+                return this.contact.adressObject.street;
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -123,6 +123,16 @@ export default {
       }
     },
   },
+  watch: {
+    user: {
+      deep: true,
+      //handle the change
+      handler() {
+        // console.log('user updated in page template');
+        this.u = this.user
+      }
+    }
+  }
 };
 </script>
 <style scoped>

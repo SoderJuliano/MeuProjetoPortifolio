@@ -28,6 +28,7 @@
       <multi-menu
         :template="this.configs.getTemplate()"
         :user="user"
+        :language="this.configs.getLanguage()"
         @update-configs="updateConfigs"
         @update-user="updateUser"
         @now-template1="change_template(1)"
@@ -136,6 +137,7 @@ export default {
     return {
       strings: strings,
       configs: PageConfig.class,
+      localStorageKey: 'user-pt',
       modal: {
         mainTitle: "",
         title1: "",
@@ -228,22 +230,21 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      // futuramente pode ser usado classes this.user.updator(userData);
       this.user = userData;
-      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
       console.log(experiencias)
       this.user.userExperiences = experiencias;
-      localStorage.setItem("user", JSON.stringify(this.user));
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarNovaHabilidade(habilidade) {
       this.user.hability = habilidade;
-      localStorage.setItem("user", JSON.stringify(this.user));
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarNovaFormacao(formacao) {
       this.user.grade.push(formacao);
-      localStorage.setItem("user", JSON.stringify(this.user));
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     languageIsEN() {
       return this.configs.getLanguage() == "us-en";
@@ -253,10 +254,14 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     lupdate(lng) {
+      console.log('executing lupdate')
       if(lng){
         this.configs.setLanguage(lng);
-        localStorage.setItem("configs", JSON.stringify(this.configs))
+        this.updateLocalStorageKey(lng);
+        localStorage.setItem("configs", JSON.stringify(this.configs));
+        this.getUserData();
       }
+      console.log("finished lupdate")
     },
     updateName(name) {
       this.user.name = name;
@@ -675,16 +680,30 @@ export default {
           };
       }
     },
-    getUserData() {
+    updateLocalStorageKey(newInput) {
+      console.log('newInput');
+      console.log(newInput);
+      this.localStorageKey = newInput.includes("pt") ? "user-pt" : "user-en";
+      console.log(this.localStorageKey);
+    },
+      getUserData() {
       try {
-        const lsUser = JSON.parse(localStorage.getItem("user"));
-        this.user = lsUser != null ? lsUser : this.user;
-      }
-      catch (err) {
-        console.log(err.message);
-        console.log("created new user with id: " + this.user.id);
+        const lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
+        console.log('found')
+        console.log(lsUser)
+        if(lsUser == null) {
+          lsUser = JSON.parse(localStorage.getItem("user"));
+        }
+        if(lsUser != null) {
+          this.user = lsUser;
+          console.log('set')
+          console.log(this.user)
+        }
+      }catch (err) {
+        // console.log(err.message);
+        // console.log("created new user with id: " + this.user.id);
+        localStorage.setItem(this.localStorageKey, JSON.stringify(this.user))
       };
-      localStorage.setItem("user", JSON.stringify(this.user))
     },
   },
   beforeMount() {
@@ -795,7 +814,7 @@ export default {
     }else{
       this.configs = new PageConfig().recoverConfigs()
     }
-
+    this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
 
   }
