@@ -12,7 +12,7 @@
                     <div class="modal-internal-content">
                         <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedEnterOk()" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                         <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
