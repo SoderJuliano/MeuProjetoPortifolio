@@ -1,8 +1,8 @@
 export function witchModalIAm(modal) {
-    console.log('On span title '+modal.input_title)
-    console.log('OnChange executing '+modal.inputId)
-    console.log('modal.pressed = '+modal.pressed)
-    console.log('data -> '+modal.data)
+    // console.log('On span title '+modal.input_title)
+    // console.log('OnChange executing '+modal.inputId)
+    // console.log('modal.pressed = '+modal.pressed)
+    // console.log('data -> '+modal.data)
 
     switch (modal.modal_title, modal.input_title) {
         case "INFORMACOES PESSOAIS", "Seu Endereço":
@@ -61,6 +61,10 @@ export function witchModalIAm(modal) {
         case "INFORMACOES PESSOAIS", "Sua profissão":
             if(modal.inputId == "modal-input" && modal.pressed == 'true') {
                 return '.save-bnt';
+            }
+        case "INFORMACOES PESSOAIS", "Email":
+            if(modal.inputId == "modal-input2" && modal.pressed == 'true') {
+                return 'bnt-proximo';
             }
         case "YOUR INFORMATIONS", "Your profession":
             if(modal.inputId == "modal-input" && modal.pressed == 'true') {
