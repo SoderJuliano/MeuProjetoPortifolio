@@ -5,15 +5,15 @@
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
 
                     <!-- Se for o modal de social pra adicionar link e o link for uma página da web roda esse bloco aqui -->
-                    <div style="text-align: start; align-self: start;" v-if="(this.mainTitle.toUpperCase().includes('REDES SOCIAIS')) || (this.mainTitle.toUpperCase().includes('SOCIAL NETWORKS'))">
-                        <input @change="check($event)" type="checkbox"><label>{{ this.language.includes("en") ? "Add as a web link" : "Adicionar como link de página" }}</label>
+                    <div style="text-align: start; align-self: start; display: flex;" v-if="(this.mainTitle.toUpperCase().includes('REDES SOCIAIS')) || (this.mainTitle.toUpperCase().includes('SOCIAL NETWORKS'))">
+                        <input style="width: 20px; height: 20px;" @change="check($event)" type="checkbox"><label>{{ this.language.includes("en") ? "Add as a web link" : "Adicionar como link de página" }}</label>
                     </div>
 
                     <div class="modal-internal-content">
                         <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedEnterOk()" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedEnterOk()" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedEnterOk()" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
 
@@ -63,7 +63,7 @@
 
                     <div v-if="ptitle3" class="modal-internal-content">
                         <p style="margin-right: 10px;">{{ptitle3}}</p>
-                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="40" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
                     </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
@@ -85,7 +85,7 @@
 
             <!-- Somente quando coloca o endereço -->
             <div class="adress-form" v-else>
-                <p>{{ptitle}}</p><br><br>
+                <p>{{ptitle}}</p>
                 <input
                     :value="this.userData.getAdressPart('street')"
                     @change="this.userData.setAdressPart('street', $event.target.value)" id="modal-input1" type="text" :placeholder=this.getRua()>
@@ -639,7 +639,6 @@ button{
         padding: 10px;
     }
 
-
     textarea:focus .balao {
         opacity: 0% !important;
     }
@@ -647,6 +646,12 @@ button{
 
     textarea:active .balao {
         opacity: 0%;
+    }
+
+    textarea {
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 16px;
     }
 
     .modal-internal-content span {
@@ -657,7 +662,24 @@ button{
     @media screen and (max-width: 720px) {
         .modal-internal-content {
             display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
             justify-content: center;
+            position: relative;
+        }
+
+        textarea {
+            max-width: 70%;
+            align-self: center;
+        }
+
+        p {
+            position: relative;
+            left: 10%;
+        }
+
+        button {
+            width: 80%;
         }
     }
 </style>
