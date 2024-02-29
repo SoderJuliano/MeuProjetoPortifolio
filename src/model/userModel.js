@@ -76,6 +76,9 @@ export default class User {
         }
     }
     getAdressPart(witch) {
+        if(this.contact == null || this.contact.adressObject == null) {
+            return null;
+        }
         switch (witch) {
             case 'country':
                 return this.contact.adressObject.country;

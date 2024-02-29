@@ -104,8 +104,8 @@ export default {
 }
 .formacao-icon{
   width: 25px;
-  height: 25px;
-  padding-top: 20px;
+  height: 30px;
+  padding-top: 30px;
 }
 .template1-formacao span{
   padding-top: 20px;
