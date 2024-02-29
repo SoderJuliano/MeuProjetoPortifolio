@@ -221,7 +221,9 @@ export default {
             }else{
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
-                console.log(this.userData.userExperiences[this.currentJobId])
+                //console.log(this.userData.userExperiences[this.currentJobId])
+                console.log(`$("#input-value-date1").val()`)
+                console.log($("#input-value-date1").val())
                 this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''

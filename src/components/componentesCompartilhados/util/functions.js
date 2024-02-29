@@ -82,6 +82,14 @@ export function witchModalIAm(modal) {
             if(modal.inputId == 'modal-input3'  && modal.pressed == 'true') {
                 return '.save-bnt';
             }
+        case "PROFESSIONAL HISTORY", "Company name":
+            if(modal.inputId == 'modal-input2'  && modal.pressed == 'true') {
+                return '.bnt-proximo';
+            }
+        case "PROFESSIONAL HISTORY", "Date when start to work here":
+            if(modal.inputId == 'input-value-date2'  && modal.pressed == 'true') {
+                return '.bnt-proximo';
+            }
         // fazer resumo profissional em  ingles
         default:
             break;
