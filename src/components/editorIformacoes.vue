@@ -5,16 +5,16 @@
                 <div v-if="title != null && (ptitle == '' && ptitle3 == '')">
 
                     <!-- Se for o modal de social pra adicionar link e o link for uma página da web roda esse bloco aqui -->
-                    <div style="text-align: start; align-self: start;" v-if="(this.mainTitle.toUpperCase().includes('REDES SOCIAIS')) || (this.mainTitle.toUpperCase().includes('SOCIAL NETWORKS'))">
-                        <input @change="check($event)" type="checkbox"><label>{{ this.language.includes("en") ? "Add as a web link" : "Adicionar como link de página" }}</label>
+                    <div style="text-align: start; align-self: start; display: flex;" v-if="(this.mainTitle.toUpperCase().includes('REDES SOCIAIS')) || (this.mainTitle.toUpperCase().includes('SOCIAL NETWORKS'))">
+                        <input style="width: 20px; height: 20px;" @change="check($event)" type="checkbox"><label>{{ this.language.includes("en") ? "Add as a web link" : "Adicionar como link de página" }}</label>
                     </div>
 
                     <div class="modal-internal-content">
-                        <span style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</span>
+                        <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" cols="30" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="mainTitle == 'Habilidade' && title == 'Habilidade'" @keydown.enter="pressedEnter()" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
-                        <input v-if="(title != 'Write about you') && (title != 'Sobre voce')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedEnterOk()" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedEnterOk()" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
 
                     <span class="balao" v-if="mainTitle == 'Habilidade' && title == 'Habilidade' && language == 'pt-br'">
@@ -23,14 +23,14 @@
 
                     <br><br>
                     <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
-                        <span style="margin-right: 10px" >{{title2}}</span>
+                        <p style="margin-right: 10px" >{{title2}}</p>
                         <input @keydown.enter="pressedEnter()" id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
                     </div>
 
                     <br v-if="title == 'Nome da empresa' || title == 'Company name'"><br v-if="title == 'Nome da empresa' || title == 'Company name'">
 
                     <button class="bnt-proximo" v-if="title == 'Nome da empresa' || title == 'Company name'" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
-                    <button class="save-bnt" v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                    <button class="save-bnt" v-else v-on:click=add(title)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Cancelar" : "Cancel"}}</button>
                 </div>
                 <div v-else>
                     <!-- togle date -->
@@ -45,7 +45,7 @@
                     </p>
 
                     <div class="modal-internal-content" v-if="ptitle">
-                        <span  style="margin-right: 10px">{{ptitle}}</span>
+                        <p  style="margin-right: 10px">{{ptitle}}</p>
                         <input @keydown.enter="pressedEnterInDate()" v-if="!simplifiedDate" id="input-value-date1" type="date">
                         <input @keydown.enter="pressedEnterInDate()" v-if="simplifiedDate" id="input-value-date1" type="month" />
                     </div>
@@ -53,7 +53,7 @@
                     <br v-if="title2">
 
                     <div v-if="ptitle" class="modal-internal-content">
-                        <span style="margin-right: 10px">{{ptitle2}}</span>
+                        <p style="margin-right: 10px">{{ptitle2}}</p>
                         <input @keydown.enter="pressedEnterInDate()" v-if="!simplifiedDate" id="input-value-date2" type="date">
                         <input @keydown.enter="pressedEnterInDate()" v-if="simplifiedDate" id="input-value-date2" type="month">
                     </div>
@@ -62,31 +62,30 @@
                     <br v-if="title2">
 
                     <div v-if="ptitle3" class="modal-internal-content">
-                        <span style="margin-right: 10px;">{{ptitle3}}</span>
-                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="30" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                        <p style="margin-right: 10px;">{{ptitle3}}</p>
+                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="40" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
                     </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
 
                     <button class="bnt-proximo" v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
-                    <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                    <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Cancelar" : "Cancel"}}</button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
             <div v-if="title=='Email' && ptitle!=this.string[0].adress && ptitle!=this.string[1].adress" >
-                <span style="margin-right: 10px;">{{title}}</span>
+                <p style="margin-right: 10px;">{{title}}</p>
                 <input id="modal-input" type="email" :placeholder="`${this.placeholder}`">
-                <br><br>
-                <span style="margin-right: 10px;">{{title2}}</span>
+                <p style="margin-right: 10px;">{{title2}}</p>
                 <input @keydown.enter="pressedEnter()" id="modal-input2" type="text" :placeholder="`${this.placeholder2}`">
                 <br><br>
                 <button class="bnt-proximo" @click="proximo(title)">{{language == 'pt-br' ? "Próximo" : "Next"}}</button>
-                <button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                <button v-on:click="cancelar">{{language == 'pt-br' ? "Cancelar" : "Cancel"}}</button>
             </div>
 
             <!-- Somente quando coloca o endereço -->
-            <div v-else>
-                <span>{{ptitle}}</span><br><br>
+            <div class="adress-form" v-else>
+                <p>{{ptitle}}</p>
                 <input
                     :value="this.userData.getAdressPart('street')"
                     @change="this.userData.setAdressPart('street', $event.target.value)" id="modal-input1" type="text" :placeholder=this.getRua()>
@@ -109,8 +108,10 @@
                     :value="this.userData.getAdressPart('country')"
                     @change="this.userData.setAdressPart('country', $event.target.value)"
                     @keydown.enter="pressedEnter()" id="modal-input6" type="text" :placeholder=this.getPais()>
-                <br><br>
-                <button class="save-bnt" v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Concelar" : "Cancel"}}</button>
+                <br>
+                <div>
+                    <button class="save-bnt" v-on:click=add(ptitle)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Cancelar" : "Cancel"}}</button>
+                </div>
             </div>
         </div>
     </div>
@@ -220,7 +221,9 @@ export default {
             }else{
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
-                console.log(this.userData.userExperiences[this.currentJobId])
+                //console.log(this.userData.userExperiences[this.currentJobId])
+                console.log(`$("#input-value-date1").val()`)
+                console.log($("#input-value-date1").val())
                 this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
@@ -428,7 +431,7 @@ export default {
             e.preventDefault();
             setTimeout(() => {
                 const maintitle  = $("#mainTitle").text()
-                const title1 = $(".body-modal-container span").first().text()
+                const title1 = $(".body-modal-container p").first().text()
                 const inputId = e.target.id
                 const data = e.target.value
                 const pressed = sessionStorage.getItem('enter')
@@ -457,8 +460,37 @@ export default {
 }
 </script>
 
+<style>
+button {
+    background-color: white;
+    border-radius: 20px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+</style>
+
 <style scoped>
-.main-modal-container{
+
+.adress-form {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.adress-form input {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.save-bnt {
+    background-color: white;
+    border-radius: 20px;
+    font-size: 16px;
+}
+.main-modal-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -473,7 +505,7 @@ export default {
     transition-duration: 900ms;
     transition-delay: 200ms;
 }
-.body-modal-container{
+.body-modal-container {
     width: 80vw;
     max-width: 1000px;
     align-self: center;
@@ -489,15 +521,20 @@ export default {
 }
 
 .body-modal-container input {
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 5px;
     font-family: 'Roboto Mono', monospace;
+    padding-left: 10px;
+    font-size: 16px;
 }
 
-#modal-input {
-    border-radius: 10px;
+input {
+    border-radius: 20px;
     padding: 5px;
     font-family: 'Roboto Mono', monospace;
+    padding-left: 10px;
+    font-size: 16px;
+    width: 100%;
 }
 
 h3{
@@ -579,8 +616,21 @@ button{
     }
 
     .modal-internal-content{
-        display: flex;
+        display: block;
         justify-content: start;
+        text-align: start;
+    }
+
+    .modal-internal-content p {
+        width: 100%;
+        text-align: start;
+        padding-left: 10px;
+    }
+
+    .body-modal-container p {
+        width: 100%;
+        text-align: start;
+        padding-left: 10px;
     }
 
     span {
@@ -591,7 +641,6 @@ button{
         padding: 10px;
     }
 
-
     textarea:focus .balao {
         opacity: 0% !important;
     }
@@ -599,6 +648,12 @@ button{
 
     textarea:active .balao {
         opacity: 0%;
+    }
+
+    textarea {
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 16px;
     }
 
     .modal-internal-content span {
@@ -609,7 +664,24 @@ button{
     @media screen and (max-width: 720px) {
         .modal-internal-content {
             display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
             justify-content: center;
+            position: relative;
+        }
+
+        textarea {
+            max-width: 70%;
+            align-self: center;
+        }
+
+        p {
+            position: relative;
+            left: 10%;
+        }
+
+        button {
+            width: 80%;
         }
     }
 </style>
