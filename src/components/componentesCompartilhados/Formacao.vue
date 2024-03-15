@@ -98,7 +98,6 @@ export default {
 }
 
 .template2-formacao-container{
-  width: 80%;
   margin-left: 20px;
   display: flex;
 }
@@ -171,8 +170,13 @@ export default {
   .template1-formacao-title {
     width: 97% !important;
   }
+
+  .template2-formacao-container {
+    width: 80% !important;
+  }
 }
 @media (min-width: 1000px) {
+
   .template2-formacao-title {
     margin-top: 0px;
     margin-left: 10px !important;
