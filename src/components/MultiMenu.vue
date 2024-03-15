@@ -6,7 +6,7 @@
         <fonts @update-configs="$emit('update-configs')" />
         <Colors />
         <pageColor />
-        <Avatares 
+        <Avatares
             :user="user"
             :language="language"
             @update-user="$emit('update-user')"

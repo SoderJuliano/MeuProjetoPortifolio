@@ -47,7 +47,7 @@
                     id="a5"
                     src="../icons/avatares/no-img.png"
                     alt="avatar"
-                />            
+                />
             </div>
         </div>
     </div>
@@ -74,6 +74,14 @@ export default {
     },
     emits:['update-user'],  
     methods:{
+        closeAll() {
+            $(".side-colors").css({"display": "none"});
+            $(".colors").css({"display": "none"});
+            $(".dropdown-content").css({"display": "none"});
+            $(".avatares-subcontainer").css({"display": "none"});
+            $(".shapes").css({"display": "none"});
+            $(".dropdown-templates").css({"display": "none"});
+        },
         changeAvatar(id){
 
             $(".l1").css("display", "block")
@@ -114,6 +122,7 @@ export default {
             localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.userData))
         },
         openContainer(){
+            this.closeAll();
             $(".avatares-subcontainer").css({"display": "grid", "position": "absolute"});
         },
         closeDiv(){

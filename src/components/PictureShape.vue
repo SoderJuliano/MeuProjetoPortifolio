@@ -16,7 +16,16 @@ import $ from 'jquery'
 export default {
     name: 'shapes',
     methods: {
+        closeAll() {
+            $(".side-colors").css({"display": "none"});
+            $(".colors").css({"display": "none"});
+            $(".dropdown-content").css({"display": "none"});
+            $(".avatares-subcontainer").css({"display": "none"});
+            $(".shapes").css({"display": "none"});
+            $(".dropdown-templates").css({"display": "none"});
+        },
         openContainer(){
+            this.closeAll();
             $(".shapes").css({"display": "flex", "position": "absolute"});
         },
         closeDiv(){

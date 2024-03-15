@@ -59,7 +59,16 @@ export default {
     }
   },
   methods: {
+    closeAll() {
+      $(".side-colors").css({"display": "none"});
+      $(".colors").css({"display": "none"});
+      $(".dropdown-content").css({"display": "none"});
+      $(".avatares-subcontainer").css({"display": "none"});
+      $(".shapes").css({"display": "none"});
+      $(".dropdown-templates").css({"display": "none"});
+    },
     openFontsContainer(){
+      this.closeAll();
       $(".dropdown-content").css({"display": "grid", "position": "absolute"});
     },
     closeFontDiv(){
