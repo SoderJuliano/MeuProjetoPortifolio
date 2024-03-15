@@ -103,8 +103,14 @@ export default {
 
 .row{
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
 }
+
+.row p {
+  width: 100px;
+  text-align: start;
+}
+
 @media screen and(min-width: 1001px) {
   .fonts-container{
     width: 100%;
