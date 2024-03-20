@@ -2,8 +2,8 @@
   <div :style="getStyle()" class="side">
     <div id="contatoAndPic">
         <div @click="$refs.fileInput.click()" class="pic">
-        <img :src="imageURL" alt="perfil" class="img-pic" />
-      </div>
+          <img :src="imageURL" alt="perfil" class="img-pic" />
+        </div>
       <div v-if="exibirLinks" class="contato template-data">
         <input
           type="file"
@@ -238,6 +238,19 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .pic {
+    display: flex;
+    z-index: 10;
+  }
+
+  .img-pic {
+    display: flex;
+    z-index: 1;
+  }
+</style>
+
 <style>
 .editar {
   width: 24px;
