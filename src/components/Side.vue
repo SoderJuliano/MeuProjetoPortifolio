@@ -1,6 +1,10 @@
 <template>
   <div :style="getStyle()" class="side">
     <div id="contatoAndPic">
+      <div class="ajsut-img">
+        <CenterImg :language="language" />
+        <CenterImgOpenclose class="ajust-img-open-close" />
+      </div>
         <div @click="$refs.fileInput.click()" class="pic">
           <img :src="imageURL" alt="perfil" class="img-pic" />
         </div>
@@ -108,14 +112,19 @@
 import Formacao from "./componentesCompartilhados/Formacao.vue";
 import Habilidade from "./componentesCompartilhados/Habilidade.vue";
 import Social from "./componentesCompartilhados/Social.vue";
+import CenterImg from "./utils/centerImg.vue";
+import CenterImgOpenclose from "./utils/centerImgOpenClose.vue";
 import showSwitcher from "./iconComponent/showSwitcher.vue";
+import $ from "jquery";
 
 export default {
   components: {
     Formacao,
     Habilidade,
     Social,
-    showSwitcher
+    showSwitcher,
+    CenterImg,
+    CenterImgOpenclose
   },
   props: {
     cor: String,
@@ -187,6 +196,8 @@ export default {
             localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
           }, 400);
       }
+
+      $(".ajsut-img").css("display", "block");
     },
     toDataURL(url, callback) {
       var xhr = new XMLHttpRequest();
@@ -243,11 +254,17 @@ export default {
   .pic {
     display: flex;
     z-index: 10;
+    overflow: hidden;
+    position: relative;
   }
 
   .img-pic {
+    max-width: 300px;
+    position: relative;
     display: flex;
     z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
   }
 </style>
 
@@ -263,12 +280,7 @@ export default {
   height: 24px;
   float: right;
 }
-.img-pic {
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  border-radius: 50%;
-}
+
 .side {
   height: 100%;
   display: block;
@@ -399,6 +411,11 @@ export default {
   }
 }
 @media print {
+
+  .ajsut-img {
+    display: none;
+  }
+
   .editar-social {
     display: none;
   }
@@ -500,5 +517,20 @@ export default {
   width: 25px;
   height: 25px;
   margin-right: 10px;
+}
+
+.ajsut-img {
+  display: block;
+  margin: 155px 6%;
+  position: absolute;
+  z-index: 15;
+}
+
+.ajust-img-open-close {
+  display: block;
+  position: relative;
+  z-index: 16;
+  margin-left: 200px;
+  margin-top: -60px;
 }
 </style>
