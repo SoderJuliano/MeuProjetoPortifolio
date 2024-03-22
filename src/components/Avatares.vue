@@ -126,7 +126,7 @@ export default {
 
             setTimeout(() => {
                 $(".pic .img-avatar").css({"display": "block","width": "150px", "height": "150px", "border-radius": "50%", "padding": "0px"});
-            }, 500);
+            }, 400);
         },
         openContainer(){
             this.closeAll();
