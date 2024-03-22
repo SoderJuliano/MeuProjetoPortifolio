@@ -4,6 +4,7 @@
             <div class="line">
                 <div class="l1"></div>
                 <div @click="$refs.imgInput.click()" class="pic">
+                    <img :src="imageURL" alt="perfil-avatar" class="img-avatar">
                     <img :src="imageURL" alt="perfil" class="img-pic" />
                 </div>
                 <div class="l2"></div>
