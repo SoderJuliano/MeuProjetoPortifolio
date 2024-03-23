@@ -3,14 +3,24 @@
     <div id="contatoAndPic">
       <div class="ajsut-img">
         <CenterImg :language="language" />
-        <CenterImgOpenclose class="ajust-img-open-close" />
+        <CenterImgOpenclose 
+          :language="language"
+          :user="userData" 
+          @user-update="this.$emit('update-user')"
+          class="ajust-img-open-close" 
+        />
       </div>
-        <div @click="$refs.fileInput.click()" class="pic">
-          <img v-if="imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic" />
-          <img v-if="imageURL?.length < 10 && avatarImg?.length > 10" :src="avatarImg" alt="perfil-avatar" class="img-avatar" />
-          <img v-else :src="defaultImageURL" class="img-avatar" alt="perfil" />
+        <div class="pic">
+          <img v-if="this.user.realImg?.length > 10" :src="imageURL" alt="perfil"
+          class="img-pic" :style="{ left: posX + 'px', top: posY + 'px' }" @mousedown="startDrag"
+          />
+          <img
+            @click="$refs.fileInput.click()"
+            v-if="this.user.realImg.length < 10 && this.user.avatarImg.length > 10" :src="avatarImg" alt="perfil-avatar" class="img-avatar" />
+          <img 
+            @click="$refs.fileInput.click()"
+            v-else-if="this.user.realImg.length < 10 && this.user.avatarImg.length < 10" :src="defaultImageURL" class="img-avatar" alt="perfil" />
         </div>
-      <div v-if="exibirLinks" class="contato template-data">
         <input
           type="file"
           id="input"
@@ -18,6 +28,7 @@
           style="display: none"
           @change="onIMGChange"
         />
+      <div v-if="exibirLinks" class="contato template-data">
         <p class="title title-template1">
           {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
           <showSwitcher
@@ -150,6 +161,11 @@ export default {
   ],
   data() {
     return {
+      isDragging: false,
+      startX: 0,
+      startY: 0,
+      posX: 0,
+      posY: 0,
       userData: this.user,
       defaultImageURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAES0lEQVR4nO2dy4scVRTGf92jxJBEoogaH1mI2QiuogaJEUWjIeBCJaKICxEkKzdu3Iivv0CRLELIKggGF1mpEMRIxEfQuNFRENHB1yg6EzJGMokz7eL2QNlO6UzVvfc7t/r84Oyq6nznfF2vW1W3wXEcx3Ecx3EcJy89tYAI9ICNwCXDmAdmhnFWqKsRJRpyNXAfcCtwI3ADsKZm2a+BY8BR4AhwPofAcaAP7AE+BBaBQYOYAnbnFt5FtgOTNDNhNBaAx/LK7w494EXgL+KYsRRngFeBR4HLs1VTOD1gH3GNWC7OAgeAa/KUVS7PkN6MavyGn19q2Ua4GsppyIBwuXx3hvqK4zj5zViKGfy88g/uQmfGUuxPXmVBHEJvyDxwWepCS2AN8Ad6QwbA3sS11tJXJV6GrcA6tYghd6gSWzLkFrWACttUiS0Zcr1aQIVrgQsViS0ZYulueQK4QpHYkiEb1QJGWKtIasmQC9QCRpDosWSItYdlkqeNlgyZUwsY4ZQiqSVDTqsFVJgDZhWJLRkyrRZQ4TtVYkuGTKkFVJBpsWTIN2oBFb5UJbZkyEm1gAofqwVY4Sf0I70DhKMGlvYQgE/UAoAfhiHBmiEn1AKAt5TJ3ZB/44ZUuF8tANipFmCFXehP5ktxb+Jaa7G0hzyoFlBBpsWSIZbe9JBpsWTIGbWACn+qElsy5Au1gAqfqxJbMuRdtYAKlrTI6BHvw5w2MYm9p5cy7gHOoTPj3FCDU2EnYbQ1txkf4TeFtWwivyFXZqmsYKbJZ8YvmWr6XyxdZY3yTkdz/SeWDXk9Y643MuYqlgngW9IfrqYRvVi9HJb3kAXCJ8upOYhPubFiLibtc/bThCs6ZxU8TjpDns5YR2foAW8T34wTGDp3lMYG4APimfEVRr9Ht3xSrzIHfBpxe5PArxG3F41SDIHwy47FYsRtRWVcDYm5rai4IcYoyZCYH2FeFHFbUSnJkPVGtxUVN8QYbojTiEsJH2HGujGcB67LWkHHeIX4QyeHs1bQIfaSbnDxuYx1FM8E8ALhuUgqQwbAy9RPVe4M2Qq8T1ojqvEZsCNLZYVxE/Aa6feKujgC3Ja8SuP0Cf92cBSNCcvFSeBJRFM0qbgKeBb4Hr0BdfEz8BKwOVEP5PQJs0cfRvsO72pjgbAH78HevF6NWA88RZg+Q93ctjFFeBa/IWqHMrGOcFj6HX0jY8cs8DyFDMP0gCcIx2B141LHNOECwOw3JZuxdcWUK45ja6pbIMwIPYO+OaqYBe5s3cVIPEyYOFLdFHXMA4+07GVrbh8KUTfDSpxH+OcwWxjvw1RdzCA6p6R4zbMr8WaLvjZidyThXY5djbvbgPcSFdGlOLaahra5mdlEmAqvpBclFCwS7s1+XMnCbZr5UMv1x4U+8MBqFm7KzS3WHTdW3Ks2hmxpse64seJetTHE3LiNYfzH6ziO4ziO4ziO4zhF8jeb7W7hC+joGwAAAABJRU5ErkJggg==",
       imageURL: this.user.realImg,
@@ -162,6 +178,24 @@ export default {
     };
   },
   methods: {
+    startDrag(event) {
+      this.isDragging = true;
+      this.startX = event.clientX - this.posX;
+      this.startY = event.clientY - this.posY;
+      document.addEventListener("mousemove", this.onDrag);
+      document.addEventListener("mouseup", this.stopDrag);
+    },
+    onDrag(event) {
+      if (this.isDragging) {
+        this.posX = event.clientX - this.startX;
+        this.posY = event.clientY - this.startY;
+      }
+    },
+    stopDrag() {
+      this.isDragging = false;
+      document.removeEventListener("mousemove", this.onDrag);
+      document.removeEventListener("mouseup", this.stopDrag);
+    },
     toglePhoneMask() {
       if(this.phoneMask == true) {
         document.getElementById("enabled").style.display = "none";
@@ -186,51 +220,19 @@ export default {
         "background-color": `${this.cor}`,
       };
     },
-    onIMGChange(img) {
-      if (img.target.files[0].size > 2762231) {
-        alert("Arquivo muito grande, tente uma img menor que 3Mb");
-      } else {
-        $(".img-pic").css("display", "block");
-        $(".img-avatar").css("display", "none");
-        this.imageURL = URL.createObjectURL(img.target.files[0]);
-        this.toDataURL(this.imageURL, function (data) {
-          localStorage.setItem("newImage", data);
-        });
-          setTimeout(() => {
-            this.userData.realImg = localStorage.getItem("newImage");
-            console.log(this.userData);
-            localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
-          }, 400);
-      }
-
-      $(".ajsut-img").css("display", "block");
-    },
-    toDataURL(url, callback) {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        var reader = new FileReader();
-        reader.onloadend = function () {
-          callback(reader.result);
-        };
-        reader.readAsDataURL(xhr.response);
-      };
-      xhr.open("GET", url);
-      xhr.responseType = "blob";
-      xhr.send();
-    },
     setRealImg(){
       const imgExiste = this.userData.realImg.length > 5;
+
+      console.log("imgExiste", imgExiste)
+      console.log("imageURL.length < 10 && avatarImg?.length > 10", this.userData.realImg.length < 10 && this.userData.avatarImg.length > 10)
+
       if (imgExiste) {
-        $(".ajsut-img").css("display", "block");
+        $(".ajsut-img").css("display", "flex");
         this.imageURL = this.userData.realImg;
       }
       else if (this.userData.avatarImg.length > 5) {
         $(".img-avatar").css("display", "block");
-        this.imageURL = this.userData.avatarImg;
-      }
-      else {
-        $(".img-avatar").css("display", "block");
-        this.imageURL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAES0lEQVR4nO2dy4scVRTGf92jxJBEoogaH1mI2QiuogaJEUWjIeBCJaKICxEkKzdu3Iivv0CRLELIKggGF1mpEMRIxEfQuNFRENHB1yg6EzJGMokz7eL2QNlO6UzVvfc7t/r84Oyq6nznfF2vW1W3wXEcx3Ecx3EcJy89tYAI9ICNwCXDmAdmhnFWqKsRJRpyNXAfcCtwI3ADsKZm2a+BY8BR4AhwPofAcaAP7AE+BBaBQYOYAnbnFt5FtgOTNDNhNBaAx/LK7w494EXgL+KYsRRngFeBR4HLs1VTOD1gH3GNWC7OAgeAa/KUVS7PkN6MavyGn19q2Ua4GsppyIBwuXx3hvqK4zj5zViKGfy88g/uQmfGUuxPXmVBHEJvyDxwWepCS2AN8Ad6QwbA3sS11tJXJV6GrcA6tYghd6gSWzLkFrWACttUiS0Zcr1aQIVrgQsViS0ZYulueQK4QpHYkiEb1QJGWKtIasmQC9QCRpDosWSItYdlkqeNlgyZUwsY4ZQiqSVDTqsFVJgDZhWJLRkyrRZQ4TtVYkuGTKkFVJBpsWTIN2oBFb5UJbZkyEm1gAofqwVY4Sf0I70DhKMGlvYQgE/UAoAfhiHBmiEn1AKAt5TJ3ZB/44ZUuF8tANipFmCFXehP5ktxb+Jaa7G0hzyoFlBBpsWSIZbe9JBpsWTIGbWACn+qElsy5Au1gAqfqxJbMuRdtYAKlrTI6BHvw5w2MYm9p5cy7gHOoTPj3FCDU2EnYbQ1txkf4TeFtWwivyFXZqmsYKbJZ8YvmWr6XyxdZY3yTkdz/SeWDXk9Y643MuYqlgngW9IfrqYRvVi9HJb3kAXCJ8upOYhPubFiLibtc/bThCs6ZxU8TjpDns5YR2foAW8T34wTGDp3lMYG4APimfEVRr9Ht3xSrzIHfBpxe5PArxG3F41SDIHwy47FYsRtRWVcDYm5rai4IcYoyZCYH2FeFHFbUSnJkPVGtxUVN8QYbojTiEsJH2HGujGcB67LWkHHeIX4QyeHs1bQIfaSbnDxuYx1FM8E8ALhuUgqQwbAy9RPVe4M2Qq8T1ojqvEZsCNLZYVxE/Aa6feKujgC3Ja8SuP0Cf92cBSNCcvFSeBJRFM0qbgKeBb4Hr0BdfEz8BKwOVEP5PQJs0cfRvsO72pjgbAH78HevF6NWA88RZg+Q93ctjFFeBa/IWqHMrGOcFj6HX0jY8cs8DyFDMP0gCcIx2B141LHNOECwOw3JZuxdcWUK45ja6pbIMwIPYO+OaqYBe5s3cVIPEyYOFLdFHXMA4+07GVrbh8KUTfDSpxH+OcwWxjvw1RdzCA6p6R4zbMr8WaLvjZidyThXY5djbvbgPcSFdGlOLaahra5mdlEmAqvpBclFCwS7s1+XMnCbZr5UMv1x4U+8MBqFm7KzS3WHTdW3Ks2hmxpse64seJetTHE3LiNYfzH6ziO4ziO4ziO4zhF8jeb7W7hC+joGwAAAABJRU5ErkJggg==";
+        this.avatarImg = this.userData.avatarImg;
       }
     },
     showEditarContato() {
@@ -259,10 +261,53 @@ export default {
       }
 
       return phone;
-    }
+    },
+    onIMGChange(img) {
+      if (img.target.files[0].size > 2762231) {
+          alert("Arquivo muito grande, tente uma img menor que 3Mb");
+      } else {
+          $(".img-pic").css("display", "block");
+          $(".img-avatar").css("display", "none");
+          this.imageURL = URL.createObjectURL(img.target.files[0]);
+          this.toDataURL(this.imageURL, function (data) {
+              localStorage.setItem("newImage", data);
+          });
+          setTimeout(() => {
+              this.userData.realImg = localStorage.getItem("newImage");
+              this.$emit("user-update", this.userData);
+              // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
+          }, 400);
+      }
+
+      $(".ajsut-img").css("display", "flex");
+    },
+    toDataURL(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            var reader = new FileReader();
+            reader.onloadend = function () {
+            callback(reader.result);
+            };
+            reader.readAsDataURL(xhr.response);
+        };
+        xhr.open("GET", url);
+        xhr.responseType = "blob";
+        xhr.send();
+    },
   },
   mounted() {
     this.setRealImg()
+  },
+  watch: { // Declaração do Watch
+    user: (newVal) => { // Observamos o modelo anyAmount
+      
+      console.log("watch")
+
+      console.log(newVal)
+      
+      this.userData = newVal
+      this.imageURL = this.userData.realImg  
+    }
   }
 };
 </script>
@@ -441,6 +486,7 @@ export default {
   .editar-social {
     display: none;
   }
+
   body {
     -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
     color-adjust: exact !important; /*Firefox*/
@@ -542,10 +588,23 @@ export default {
 }
 
 .ajsut-img {
+  flex-direction: column;
+  width: 25%;
+  height: 480px;
+  justify-content: center;
+  align-items: center;
   display: none;
-  margin: 155px 6%;
   position: absolute;
-  z-index: 15;
+}
+
+.ajust-img-open-close #close {
+  position: absolute;
+  margin-top: -100px;
+}
+
+.main-open-close #open {
+  position: absolute;
+  margin-top: -100px;
 }
 
 .ajust-img-open-close {

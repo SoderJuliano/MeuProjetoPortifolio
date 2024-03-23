@@ -115,9 +115,8 @@ export default {
                 this.userData.avatarImg = this.av6
             }
 
-            if(this.userData.avatarImg != null && this.userData.avatarImg.length > 0){
-                this.userData.realImg = "";
-            }
+            this.userData.realImg = "";
+            
             //img-pic
             $(".img-avatar").attr("src", this.userData.avatarImg)
             localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.userData))
