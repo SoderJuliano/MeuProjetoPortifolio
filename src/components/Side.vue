@@ -273,7 +273,6 @@ export default {
           $(".img-pic").css("display", "block");
           $(".img-avatar").css("display", "none");
           const url = URL.createObjectURL(img.target.files[0]);
-          $(".img-pic").attr('src', url);
           this.toDataURL(url, function (data) {
               localStorage.setItem("newImage", data);
           });
@@ -285,6 +284,11 @@ export default {
               this.$emit("local-update-user", this.userData);
               // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
           }, 400);
+
+          setTimeout(() => {
+            this.imageURL = this.userData.realImg;
+           // $(".img-pic").attr('src', url);
+          }, 500)
       }
 
       $(".ajsut-img").css("display", "flex");
