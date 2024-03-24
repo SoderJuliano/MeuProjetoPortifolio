@@ -307,14 +307,16 @@ export default {
     this.setRealImg()
   },
   watch: {
-    user: (newVal) => {
-      
-      console.log("watch")
+    user: {
+      handler(newval) {
+        console.log("watch", newval)
 
-      console.log(newVal)
-      
-      this.userData = newVal
-      this.imageURL = this.userData.realImg  
+        console.log("userDataBefore", this.userData)
+        
+        this.userData = newval
+        this.imageURL = this.userData.realImg
+      },
+      immediate: true
     }
   }
 };

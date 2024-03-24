@@ -90,7 +90,6 @@ export default {
     user: (updated) => {
       console.log("Template1 user updated");
       console.log(updated);
-      this.user = updated;
     }
   }
 }

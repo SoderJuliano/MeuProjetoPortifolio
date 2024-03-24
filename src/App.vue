@@ -232,6 +232,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
+      console.log('user update', userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
