@@ -94,8 +94,7 @@ export default {
 <style scoped>
 
 .photo {
-    position: absolute;
-    margin-top: -140px;
+    position: relative;
 }
 
 .main-open-close {

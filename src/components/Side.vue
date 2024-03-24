@@ -614,20 +614,22 @@ export default {
 }
 
 .ajust-img-open-close #close {
-  position: absolute;
-  margin-top: -100px;
+  position: relative;
 }
 
 .main-open-close #open {
-  position: absolute;
-  margin-top: -100px;
+  position: relative;
 }
 
 .ajust-img-open-close {
   display: block;
   position: relative;
   z-index: 16;
-  margin-left: 200px;
-  margin-top: -60px;
+  margin-left: 225px;
+  margin-top: -350px;
+  background-color: rgba(245, 245, 245, 0.521);
+  border-radius: 25px;
+  padding: 10px;
+  height: 90px;
 }
 </style>
