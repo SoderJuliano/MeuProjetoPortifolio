@@ -6,7 +6,7 @@
         <CenterImgOpenclose 
           :language="language"
           :user="userData" 
-          @user-update="this.$emit('update-user')"
+          @user-update="reEmit"
           class="ajust-img-open-close" 
         />
       </div>
@@ -157,7 +157,8 @@ export default {
     "choose-phoneIcon",
     "update-user",
     "choose-addressIcon",
-    "choose-skillIcon"
+    "choose-skillIcon",
+    "local-update-user",
   ],
   data() {
     return {
@@ -178,6 +179,9 @@ export default {
     };
   },
   methods: {
+    reEmit(data) {
+      this.$emit("local-update-user", data);
+    },
     startDrag(event) {
       this.isDragging = true;
       this.startX = event.clientX - this.posX;
@@ -268,13 +272,17 @@ export default {
       } else {
           $(".img-pic").css("display", "block");
           $(".img-avatar").css("display", "none");
-          this.imageURL = URL.createObjectURL(img.target.files[0]);
-          this.toDataURL(this.imageURL, function (data) {
+          const url = URL.createObjectURL(img.target.files[0]);
+          $(".img-pic").attr('src', url);
+          this.toDataURL(url, function (data) {
               localStorage.setItem("newImage", data);
           });
           setTimeout(() => {
               this.userData.realImg = localStorage.getItem("newImage");
-              this.$emit("user-update", this.userData);
+
+              console.log("atualizacao ", this.userData)
+              
+              this.$emit("local-update-user", this.userData);
               // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
           }, 400);
       }
@@ -298,8 +306,8 @@ export default {
   mounted() {
     this.setRealImg()
   },
-  watch: { // Declaração do Watch
-    user: (newVal) => { // Observamos o modelo anyAmount
+  watch: {
+    user: (newVal) => {
       
       console.log("watch")
 
@@ -321,7 +329,7 @@ export default {
   }
 
   .img-pic {
-    width: 200px;
+    width: 150px;
     position: absolute;
     display: flex;
     z-index: 1;
@@ -590,7 +598,7 @@ export default {
 .ajsut-img {
   flex-direction: column;
   width: 25%;
-  height: 480px;
+  height: 510px;
   justify-content: center;
   align-items: center;
   display: none;

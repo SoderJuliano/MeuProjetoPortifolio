@@ -52,8 +52,9 @@ export default {
             } else {
                 $(".img-pic").css("display", "block");
                 $(".img-avatar").css("display", "none");
-                this.imageURL = URL.createObjectURL(img.target.files[0]);
-                this.toDataURL(this.imageURL, function (data) {
+                const url = URL.createObjectURL(img.target.files[0]);
+                $(".img-pic").attr('src', url);
+                this.toDataURL(url, function (data) {
                     localStorage.setItem("newImage", data);
                 });
                 setTimeout(() => {

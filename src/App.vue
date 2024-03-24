@@ -43,6 +43,7 @@
       v-if="this.configs.getTemplate() == 1"
       :language="this.configs.getLanguage()"
       @update-user="updateUser"
+      @local-update-user="updateUser"
       @add-info="addInfo"
       @add-resumo="editarResumo"
       @add-competencia="editarCompetencias"
@@ -231,8 +232,6 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      console.log("updating")
-      console.log(userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
@@ -308,7 +307,7 @@ export default {
       document.getElementsByClassName("main-modal-container")[0].style.opacity =
         "100";
       document.getElementsByClassName("main-modal-container")[0].style.zIndex =
-        "10";
+        "17";
     },
     showModal(qual) {
       window.scrollTo({
