@@ -632,4 +632,30 @@ export default {
   padding: 10px;
   height: 90px;
 }
+
+
+@media screen and (max-width: 786px) {
+
+  .ajsut-img {
+    align-self: center;
+  }
+
+  #contatoAndPic {
+    display: flex;
+    flex-direction: column;
+  }
+    
+}
+
+@media screen and (min-width: 186px) and (max-width: 1000px) {
+
+  .ajsut-img {
+    align-self: center;
+  }
+
+  #contatoAndPic {
+    display: flex;
+    flex-direction: column;
+  }
+}
 </style>
