@@ -981,6 +981,11 @@ export default {
     5px 5px 15px 5px gray;
 }
 
+.multiMenu-options:hover {
+  position: relative;
+  z-index: 17;
+}
+
 @media screen and (max-width: 1000px) {
   .main {
     display: block;
