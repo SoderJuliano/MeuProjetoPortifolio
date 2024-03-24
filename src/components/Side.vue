@@ -602,6 +602,7 @@ export default {
 }
 
 .ajsut-img {
+  margin-top: 20px;
   flex-direction: column;
   width: 25%;
   height: 510px;

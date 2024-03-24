@@ -1,8 +1,8 @@
 <template>
     <div class="main-open-close">
         <img @click="$refs.fileInput.click()" class="photo" src="../../icons/camera-svgrepo-com.svg" alt="camera">
-        <img id="close" @click="close()" src="../../assets/correct.svg" alt="V">
-        <img id="open" @click="open()" src="../../assets/resize.svg" alt="< >">
+        <img id="close" @click="close()" src="../../icons/close-circle.svg" alt="V">
+        <img id="open" @click="open()" src="../../icons/resize-circle.svg" alt="< >">
         <input
           type="file"
           id="input"
