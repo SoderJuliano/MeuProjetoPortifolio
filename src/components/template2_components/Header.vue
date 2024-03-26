@@ -120,6 +120,7 @@ export default {
 
                 setTimeout(() => {
                     this.imageURL = this.userData.realImg;
+                    $(".img-pic").css({"width": "150px", "height": "150px"});
                 // $(".img-pic").attr('src', url);
                 }, 500)
             }
@@ -208,6 +209,19 @@ export default {
 
 .pic {
     margin: 0 0;
+    z-index: 10;
+    overflow: hidden;
+    position: relative;
+}
+
+.img-pic {
+    position: relative;
+    z-index: 0;
+}
+
+.container {
+    position: relative;
+    z-index: 10;
 }
 
 @media screen and (max-width: 1000px ) {
