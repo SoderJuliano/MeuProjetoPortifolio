@@ -151,6 +151,10 @@ export default {
             this.userData = updated;
             this.imageURL = this.userData.realImg;
         }
+    },
+    mounted() {
+        // console.log("mounted header")
+        $(".img-pic").css({"width": "150px", "height": "150px"});
     }
 }
 </script>

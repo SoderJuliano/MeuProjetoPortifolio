@@ -11,15 +11,15 @@
         />
       </div>
         <div class="pic">
-          <img v-if="this.user.realImg?.length > 10" :src="imageURL" alt="perfil"
+          <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil"
           class="img-pic" :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag" @mousedown="startDrag"
           />
           <img
             @click="$refs.fileInput.click()"
-            v-if="this.user.realImg.length < 10 && this.user.avatarImg.length > 10" :src="avatarImg" alt="perfil-avatar" class="img-avatar" />
+            v-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length > 10" :src="avatarImg" alt="perfil-avatar" class="img-avatar" />
           <img 
             @click="$refs.fileInput.click()"
-            v-else-if="this.user.realImg.length < 10 && this.user.avatarImg.length < 10" :src="defaultImageURL" class="img-avatar" alt="perfil" />
+            v-else-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length < 10" :src="defaultImageURL" class="img-avatar" alt="perfil" />
         </div>
         <input
           type="file"
@@ -250,10 +250,7 @@ export default {
       };
     },
     setRealImg(){
-      const imgExiste = this.userData.realImg.length > 5;
-
-      console.log("imgExiste", imgExiste)
-      console.log("imageURL.length < 10 && avatarImg?.length > 10", this.userData.realImg.length < 10 && this.userData.avatarImg.length > 10)
+      const imgExiste = this.userData?.realImg?.length > 5;
 
       if (imgExiste) {
         $(".ajsut-img").css("display", "flex");
