@@ -12,7 +12,7 @@
       </div>
         <div class="pic">
           <img v-if="this.user.realImg?.length > 10" :src="imageURL" alt="perfil"
-          class="img-pic" :style="{ left: posX + 'px', top: posY + 'px' }" @mousedown="startDrag"
+          class="img-pic" :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag" @mousedown="startDrag"
           />
           <img
             @click="$refs.fileInput.click()"
@@ -128,6 +128,7 @@ import Social from "./componentesCompartilhados/Social.vue";
 import CenterImg from "./utils/centerImg.vue";
 import CenterImgOpenclose from "./utils/centerImgOpenClose.vue";
 import showSwitcher from "./iconComponent/showSwitcher.vue";
+import * as funcs from './componentesCompartilhados/util/functions';
 import $ from "jquery";
 
 export default {
@@ -183,17 +184,41 @@ export default {
       this.$emit("local-update-user", data);
     },
     startDrag(event) {
+      event.preventDefault();
       this.isDragging = true;
-      this.startX = event.clientX - this.posX;
-      this.startY = event.clientY - this.posY;
-      document.addEventListener("mousemove", this.onDrag);
-      document.addEventListener("mouseup", this.stopDrag);
+      if (window.innerWidth < 1000) {
+        // For mobile devices
+        this.startX = event.touches[0].screenX - this.posX;
+        this.startY = event.touches[0].screenY - this.posY;
+        console.log("mobile")
+        document.addEventListener("touchmove", this.onDragMobile);
+        document.addEventListener("touchend", this.onStopMobile);
+      } else {
+        // For desktop devices
+        this.startX = event.clientX - this.posX;
+        this.startY = event.clientY - this.posY;
+        document.addEventListener("mousemove", this.onDrag);
+        document.addEventListener("mouseup", this.stopDrag);
+      }
     },
     onDrag(event) {
       if (this.isDragging) {
         this.posX = event.clientX - this.startX;
         this.posY = event.clientY - this.startY;
       }
+    },
+    onDragMobile(event) {
+      if (this.isDragging) {
+        const clientX = event.touches[0].screenX;
+        const clientY = event.touches[0].screenY;
+        this.posX = clientX - this.startX;
+        this.posY = clientY - this.startY;
+      }
+    },
+    onStopMobile(event) {
+      this.isDragging = false;
+      document.removeEventListener("touchmove", this.onDragMobile);
+      document.removeEventListener("touchend", this.onStopMobile);
     },
     stopDrag() {
       this.isDragging = false;
@@ -268,7 +293,14 @@ export default {
     },
     onIMGChange(img) {
       if (img.target.files[0].size > 2762231) {
+        if(this.language.includes("en") ) {
+          funcs.isMobile() ? alert("File too large, try a smaller img reducing the image quality in the camera options") :
+          alert("File too large, try a smaller img");
+          return;
+        }else {
+          funcs.isMobile() ? alert("Arquivo muito grande, tente uma img menor que 3Mb reduzindo a qualidade da imagem nas opções de câmera") :
           alert("Arquivo muito grande, tente uma img menor que 3Mb");
+        }
       } else {
           $(".img-pic").css("display", "block");
           $(".img-avatar").css("display", "none");
