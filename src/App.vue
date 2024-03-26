@@ -87,6 +87,7 @@
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
       @update-experiences="adicionarExperiencias"
+      @local-update-user="updateUser"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
       :sideColor="this.configs?.getSideColor()"
@@ -961,7 +962,7 @@ export default {
 .main.template {
   width: 66%;
   height: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .multi-menu-class:hover {
