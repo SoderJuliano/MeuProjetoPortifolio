@@ -40,11 +40,13 @@ export default {
             $("#open").css("display", "block");
             $("#close").css("display", "none");
             $(".main.centerImg").css("display", "none");
+            $(".ajsut-img").css({"display": "flex", "z-index": "0"});
         },
         open() {
             $("#open").css("display", "none");
             $("#close").css("display", "block");
             $(".main.centerImg").css("display", "block");
+            $(".ajsut-img").css({"display": "flex", "z-index": "2"});
         },
         onIMGChange(img) {
             if (img.target.files[0].size > 2762231) {
@@ -64,7 +66,7 @@ export default {
                 }, 400);
             }
 
-            $(".ajsut-img").css("display", "flex");
+            $(".ajsut-img").css({"display": "flex", "z-index": "2"});
         },
         toDataURL(url, callback) {
             var xhr = new XMLHttpRequest();

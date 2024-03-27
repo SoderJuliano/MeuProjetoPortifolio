@@ -253,7 +253,7 @@ export default {
       const imgExiste = this.userData?.realImg?.length > 5;
 
       if (imgExiste) {
-        $(".ajsut-img").css("display", "flex");
+        $(".ajsut-img").css({"display": "flex", "z-index": "2"});
         this.imageURL = this.userData.realImg;
       }
       else if (this.userData.avatarImg.length > 5) {
@@ -320,7 +320,7 @@ export default {
           }, 500)
       }
 
-      $(".ajsut-img").css("display", "flex");
+      $(".ajsut-img").css({"display": "flex", "z-index": "2"});
     },
     toDataURL(url, callback) {
         var xhr = new XMLHttpRequest();
@@ -590,6 +590,8 @@ export default {
 }
 
 .title {
+  position: relative;
+  z-index: 1;
   align-self: center;
   background-color: white;
   color: black;
@@ -632,6 +634,7 @@ export default {
 }
 
 .ajsut-img {
+  z-index: 0;
   margin-top: 20px;
   flex-direction: column;
   width: 25%;

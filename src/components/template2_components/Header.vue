@@ -124,7 +124,7 @@ export default {
                 // $(".img-pic").attr('src', url);
                 }, 500)
             }
-            $(".ajsut-img").css("display", "flex");
+            $(".ajsut-img").css({"display": "flex", "z-index": "2"});
         },
         toDataURL(url, callback) {
             var xhr = new XMLHttpRequest();
