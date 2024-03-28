@@ -12,6 +12,8 @@
         @add-SocialLink="$emit('add-SocialLink')"
         @adicionar-habilidade="$emit('adicionar-habilidade')"
         @update-user="$emit('update-user')"
+        @user-update="reEmit"
+        @local-update-user="reEmit"
         :cor="sideColor"
         :user="user"
         :titles="titles"
@@ -40,7 +42,7 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
+  emits: ['local-update-user', 'add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
   'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
   'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon', 'update-experiences'],
   data(){
@@ -69,6 +71,13 @@ export default {
     user: Object,
     language: String,
   },
+  methods: {
+
+    reEmit(data) {
+      console.log("data", data)
+      this.$emit("local-update-user", data)
+    }
+  },
   mounted(){
     console.log("mounted template 1")
     console.log("mainColor: "+this.mainColor)
@@ -76,6 +85,12 @@ export default {
     console.log(this.fontColor)
     console.log(this.language)
     console.log(this.user)
+  },
+  watch: {
+    user: (updated) => {
+      console.log("Template1 user updated");
+      console.log(updated);
+    }
   }
 }
 </script>

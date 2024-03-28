@@ -95,3 +95,11 @@ export function witchModalIAm(modal) {
             break;
     }
 }
+
+export function isMobile() {
+    return window.innerWidth <= 1000;
+}
+
+export function isMobilePortrait() {
+    return window.innerWidth <= 600;
+}

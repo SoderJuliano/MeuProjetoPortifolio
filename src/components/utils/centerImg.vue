@@ -1,10 +1,14 @@
 <template>
     <div class="main centerImg">
         <p>{{language.includes("pt") ? "Ajuste a foto para esquerda ou para direita" : "Move your pic to rigth and left to center it"}}</p>
-        <div class="d-flex">
+        <div class="d-flex column">
             <div class="row d-flex">
                 <img @click="move(-10)" src="../../assets/arrow-left.svg" alt="-">
                 <img @click="move(+10)" src="../../assets/arrow-rigth.svg" alt="+">
+            </div>
+            <div class="row d-flex">
+                <img @click="resize(-50)" src="../../icons/minus.svg" alt="smaller" />
+                <img @click="resize(+50)" src="../../icons/plus.svg" alt="bigger" />
             </div>
         </div>
     </div>
@@ -19,6 +23,10 @@ export default {
         language: String
     },
     methods: {
+        resize(value) {
+            $('.img-pic').width($('.img-pic').width() + value);
+            $('.img-pic').height($('.img-pic').height() + value);
+        },
         move(more) {
             let newPosition = this.getIntValueFromPixel($(".img-pic").css("margin-left"));
             console.log(newPosition);
@@ -38,8 +46,8 @@ export default {
     display: block;
     position: absolute;
     width: 235px;
-    height: 120px;
-    background-color: white;
+    height: 200px;
+    background-color: #ffffffde;
     border-radius: 45px;
     padding: 20px;
     box-shadow: -5px 10px 10px 0px gray;
@@ -58,6 +66,10 @@ p {
     justify-content: center;
 }
 
+.column {
+    flex-direction: column;
+}
+
 .row 
 {
     width: 170px;
@@ -69,6 +81,7 @@ p {
     justify-content: space-between;
     border-radius: 45px;
     box-shadow: -5px 10px 10px 0px gray;
+    margin-bottom: 10px;
 }
 
 .row img 

@@ -43,6 +43,7 @@
       v-if="this.configs.getTemplate() == 1"
       :language="this.configs.getLanguage()"
       @update-user="updateUser"
+      @local-update-user="updateUser"
       @add-info="addInfo"
       @add-resumo="editarResumo"
       @add-competencia="editarCompetencias"
@@ -86,6 +87,7 @@
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
       @update-experiences="adicionarExperiencias"
+      @local-update-user="updateUser"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
       :sideColor="this.configs?.getSideColor()"
@@ -231,6 +233,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
+      console.log('user update', userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
@@ -306,7 +309,7 @@ export default {
       document.getElementsByClassName("main-modal-container")[0].style.opacity =
         "100";
       document.getElementsByClassName("main-modal-container")[0].style.zIndex =
-        "10";
+        "17";
     },
     showModal(qual) {
       window.scrollTo({
@@ -959,7 +962,7 @@ export default {
 .main.template {
   width: 66%;
   height: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .multi-menu-class:hover {
@@ -977,6 +980,11 @@ export default {
     5px 5px 15px 5px gray;
   box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray,
     5px 5px 15px 5px gray;
+}
+
+.multiMenu-options:hover {
+  position: relative;
+  z-index: 17;
 }
 
 @media screen and (max-width: 1000px) {

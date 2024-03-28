@@ -6,7 +6,7 @@ export default class User {
     competence = [];
     social = [];
     grade = [];
-    hability = "";
+    ability = "";
     avatarImg = "";
     realImg = "";
     contact = {

@@ -271,14 +271,18 @@ li img {
     width: 100%;
     text-align: center;
     justify-content: center;
+    align-items: center;
 }
 .nav-item:hover .nav-link{
   opacity: 1;
   transition: 0.3s ease-in-out;
 }
 .nav-item:hover .li-img{
-  transform: translateY(-30px);
+  transform: translateY(-40px);
   transition: 0.3s ease-in-out;
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
 }
 .nav-item .nav-link{
   opacity: 0;

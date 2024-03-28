@@ -12,8 +12,8 @@
                     <div class="modal-internal-content">
                         <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedEnterOk()" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedEnterOk()" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
 
@@ -406,13 +406,18 @@ export default {
             setTimeout(() => {
                 $(".save-bnt").css('opacity', 1);
                 $(".bnt-proximo").css('opacity', 1);
-            }, 1000);
+            }, 300);
         },
         pressedEnterInDate() {
             $(".bnt-proximo").click();
         },
         pressedEnterOk() {
             $(".save-bnt").click();
+        },
+        pressedShifAndEnter(event) {
+            if (event.shiftKey && event.key === 'Enter') {
+                $(".save-bnt").click();
+            }
         }
     },
     updated() {
