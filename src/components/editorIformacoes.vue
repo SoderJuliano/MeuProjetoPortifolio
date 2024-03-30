@@ -550,14 +550,14 @@ button{
     margin-left: 15px;
 }
 
-.iconsChooser{
+.iconsChooser {
     position: absolute;
     display: flex;
     width: 100vw;
     height: 100vh;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 18;
 }
 
     .switch {

@@ -79,12 +79,17 @@ export default {
 .template2-formacao-title:hover .editar{
   display: none;
 }
-.template1-formacao-container{
+.template1-formacao-container {
   width: 80%;
   height: 100%;
   align-self: center;
   margin: 0 10%;
   display: flex;
+}
+
+.template1-formacao-container img {
+  position: relative;
+  z-index: 10;
 }
 
 .template1-formacao-container:hover {
