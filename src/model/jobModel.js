@@ -9,7 +9,7 @@ export default class Job {
     constructor(id)
     {
         this.id = id;
-        console.log("new job id: "+this.id);
+        // console.log("new job id: "+this.id);
     }
 
 

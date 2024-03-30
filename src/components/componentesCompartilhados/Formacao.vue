@@ -51,17 +51,17 @@ export default {
       return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
     }
   },
-  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes
+  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes */
    watch: {
     user: {
       handler(newVal) {
-        console.log("user changed")
-        console.log(newVal)
+        // console.log("user changed")
+        // console.log(newVal)
         this.mygrade = newVal.grade
       },
       deep: true,
     },
-  }, */
+  },
 }
 </script>
 
@@ -79,12 +79,17 @@ export default {
 .template2-formacao-title:hover .editar{
   display: none;
 }
-.template1-formacao-container{
+.template1-formacao-container {
   width: 80%;
   height: 100%;
   align-self: center;
   margin: 0 10%;
   display: flex;
+}
+
+.template1-formacao-container img {
+  position: relative;
+  z-index: 10;
 }
 
 .template1-formacao-container:hover {

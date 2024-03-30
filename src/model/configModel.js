@@ -13,7 +13,7 @@ export default class PageConfig {
 
     constructor() {
         //defaul configs aready set
-        //console.log(this);
+        //// console.log(this);
     }
 
     recoverConfigs() {
@@ -27,7 +27,7 @@ export default class PageConfig {
         this.fontColor = hosted.fontColor
         this.sideColor = hosted.sideColor
         this.mainColor = hosted.mainColor
-        console.log(this)
+        // console.log(this)
         return this;
     }
 
@@ -42,7 +42,7 @@ export default class PageConfig {
 
     // setters
     setLanguage(language) {
-        console.log('new language choiced: '+language)
+        // console.log('new language choiced: '+language)
         this.language = language;
     }
     setImageURL(imageURL) {

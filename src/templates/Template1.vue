@@ -74,22 +74,22 @@ export default {
   methods: {
 
     reEmit(data) {
-      console.log("data", data)
+      // console.log("data", data)
       this.$emit("local-update-user", data)
     }
   },
   mounted(){
-    console.log("mounted template 1")
-    console.log("mainColor: "+this.mainColor)
-    console.log("sideColor: "+this.sideColor)
-    console.log(this.fontColor)
-    console.log(this.language)
-    console.log(this.user)
+    // console.log("mounted template 1")
+    // console.log("mainColor: "+this.mainColor)
+    // console.log("sideColor: "+this.sideColor)
+    // console.log(this.fontColor)
+    // console.log(this.language)
+    // console.log(this.user)
   },
   watch: {
     user: (updated) => {
-      console.log("Template1 user updated");
-      console.log(updated);
+      // console.log("Template1 user updated");
+      // console.log(updated);
     }
   }
 }

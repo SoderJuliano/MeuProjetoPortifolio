@@ -14,7 +14,7 @@ axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, A
 export function setNewNotification(data) {
     return axios.post('/notifications', data).then((response) => 
     {
-        console.log('chamada POST executada');
-        console.log(response.data);
+        // console.log('chamada POST executada');
+        // console.log(response.data);
     })
 }

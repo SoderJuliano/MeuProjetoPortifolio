@@ -83,10 +83,10 @@ export default {
         },
     },
     mounted() {
-        console.log("recived userData")
-        console.log(this.userData)
-        console.log("user")
-        console.log(this.user)
+        // console.log("recived userData")
+        // console.log(this.userData)
+        // console.log("user")
+        // console.log(this.user)
     }
 }
 

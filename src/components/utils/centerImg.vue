@@ -29,9 +29,9 @@ export default {
         },
         move(more) {
             let newPosition = this.getIntValueFromPixel($(".img-pic").css("margin-left"));
-            console.log(newPosition);
+            // console.log(newPosition);
             $(".img-pic").css("margin-left", newPosition+more);
-            console.log('movendo '+newPosition)
+            // console.log('movendo '+newPosition)
         },
         getIntValueFromPixel(val) {
             return Number(val.split('px')[0]);
