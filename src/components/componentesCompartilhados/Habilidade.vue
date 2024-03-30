@@ -131,6 +131,8 @@ export default {
   width: 25px;
   height: 25px;
   padding-top: 20px;
+  position: relative;
+  z-index: 10;
 }
 .data-text-habilidades{
   min-height: 20px;
