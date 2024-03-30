@@ -58,7 +58,7 @@ export default {
         remove(event){
             this.userData.social.splice(this.userData.social.indexOf(event.target.id), 1)
             localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
-            this.$emit('update-user', this.userData)
+            //this.$emit('update-user', this.userData)
         },
         getStyle(){
             return{
