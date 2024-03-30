@@ -307,9 +307,7 @@ export default {
           });
           setTimeout(() => {
               this.userData.realImg = localStorage.getItem("newImage");
-
-              // console.log("atualizacao ", this.userData)
-              
+              // console.log("atualizacao ", this.userData) 
               this.$emit("local-update-user", this.userData);
               // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
           }, 400);
