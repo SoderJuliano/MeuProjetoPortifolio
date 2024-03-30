@@ -233,12 +233,12 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      console.log('user update', userData)
+      // console.log('user update', userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
-      console.log(experiencias)
+      // console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
@@ -258,14 +258,14 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     lupdate(lng) {
-      console.log('executing lupdate')
+      // console.log('executing lupdate')
       if(lng){
         this.configs.setLanguage(lng);
         this.updateLocalStorageKey(lng);
         localStorage.setItem("configs", JSON.stringify(this.configs));
         this.getUserData();
       }
-      console.log("finished lupdate")
+      // console.log("finished lupdate")
     },
     updateName(name) {
       this.user.name = name;
@@ -426,8 +426,8 @@ export default {
           break;
 
         case "habilidade":
-          console.log('habilidade')
-          console.log(strings[1].skill)
+          // console.log('habilidade')
+          // console.log(strings[1].skill)
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].skill
             : strings[0].skill;
@@ -528,7 +528,7 @@ export default {
         return;
       }
       if (p.target.id == "square") {
-        console.log("teste");
+        // console.log("teste");
         document.getElementsByClassName("pic")[0].style["border-radius"] =
           "0px";
         document.getElementsByClassName("img-pic")[0].style["border-radius"] =
@@ -566,7 +566,7 @@ export default {
         let i = 0;
         let all = document.getElementsByClassName("title");
         let page_header = document.getElementsByClassName("page-header");
-        //console.log(p.target.id)
+        //// console.log(p.target.id)
         if (p.target.textContent == "pag-#1F271B") {
           setTimeout(() => {
             for (i; i < all.length; i++) {
@@ -610,7 +610,7 @@ export default {
         }
       }
 
-      console.log(p.target.textContent);
+      // console.log(p.target.textContent);
     },
     getStyle() {
       switch (this.configs?.getFont()) {
@@ -685,23 +685,23 @@ export default {
       }
     },
     updateLocalStorageKey(newInput) {
-      console.log('newInput');
-      console.log(newInput);
+      // console.log('newInput');
+      // console.log(newInput);
       this.localStorageKey = newInput.includes("pt") ? "user-pt" : "user-en";
-      console.log(this.localStorageKey);
+      // console.log(this.localStorageKey);
     },
       getUserData() {
       try {
         const lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
-        console.log('found')
-        console.log(lsUser)
+        // console.log('found')
+        // console.log(lsUser)
         if(lsUser == null) {
           lsUser = JSON.parse(localStorage.getItem("user"));
         }
         if(lsUser != null) {
           this.user = lsUser;
-          console.log('set')
-          console.log(this.user)
+          // console.log('set')
+          // console.log(this.user)
         }
       }catch (err) {
         // console.log(err.message);
@@ -736,7 +736,7 @@ export default {
       axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
        { headers: header })
         .then( response => {
-          console.log(response.data)
+          // console.log(response.data)
           let easyEnter = false;
           let facilSalvar = false;
           let icones = false;
@@ -931,7 +931,7 @@ export default {
                 }   
               })
               .catch(function (error) {
-                console.log(error);
+                // console.log(error);
               });
           }
         });    
@@ -1043,6 +1043,11 @@ export default {
     padding: 1px;
     margin-right: 5px;
   }
+
+  .main-left:hover {
+    z-index: 10;
+  }
+
   .right {
     width: 25%;
     margin: 0 auto;

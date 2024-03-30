@@ -65,6 +65,16 @@ export default {
         this.userData.competence.splice(this.userData.competence.indexOf(event.target.id), 1)
         localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.userData))
       },
+  },
+  watch: {
+    user: {
+      deep: true,
+      //handle the change
+      handler() {
+        // console.log('user updated in page template1 PAGE');
+        this.userData = this.user
+      }
+    }
   }
 }
 </script>

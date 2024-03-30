@@ -56,11 +56,11 @@
       class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
-      :experiences="user.userExperiences"
+      :experiences="u.userExperiences"
       template="1"
       :titulo="titles.experiencias"
       :language="language"
-      :user="user"
+      :user="u"
     />
   </div>
 </template>
@@ -116,7 +116,7 @@ export default {
     },
     newProfession() {
       const prof = document.getElementsByClassName("profession")[0].textContent;
-      console.log(prof);
+      // console.log(prof);
       if (prof) {
         this.u.profession = prof;
         localStorage.setItem("profession", prof);

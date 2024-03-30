@@ -51,17 +51,17 @@ export default {
       return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
     }
   },
-  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes
+  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes */
    watch: {
     user: {
       handler(newVal) {
-        console.log("user changed")
-        console.log(newVal)
+        // console.log("user changed")
+        // console.log(newVal)
         this.mygrade = newVal.grade
       },
       deep: true,
     },
-  }, */
+  },
 }
 </script>
 

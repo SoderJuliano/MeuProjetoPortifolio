@@ -78,7 +78,7 @@ export default {
       const fontConfig = new PageConfig().recoverConfigs();
       fontConfig.setFont(font);
       fontConfig.save();
-      console.log("font config updated")
+      // console.log("font config updated")
       this.$emit("update-configs");
     }
   }

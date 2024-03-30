@@ -213,7 +213,7 @@ export default {
                 this.currentJobId = job.getId();
                 job.setCompany($("#modal-input").val())
                 job.setPosition($("#modal-input2").val())
-                console.log(job)
+                // console.log(job)
                 this.userData.userExperiences.push(job);
 
                 this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
@@ -221,9 +221,9 @@ export default {
             }else{
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
-                //console.log(this.userData.userExperiences[this.currentJobId])
-                console.log(`$("#input-value-date1").val()`)
-                console.log($("#input-value-date1").val())
+                //// console.log(this.userData.userExperiences[this.currentJobId])
+                // console.log(`$("#input-value-date1").val()`)
+                // console.log($("#input-value-date1").val())
                 this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
@@ -353,7 +353,7 @@ export default {
             localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
         },
         adicionarEndereco(){
-            console.log("called")
+            // console.log("called")
             const rua = document.getElementById("modal-input1").value
             const numero = document.getElementById("modal-input2").value
             const bairro = document.getElementById("modal-input3").value

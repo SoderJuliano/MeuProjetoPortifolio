@@ -15,8 +15,8 @@ export default {
             const sideHeight = $(".side").height()
             const mainHeight = $(".main-container").width()
 
-            console.log("side: " + sideHeight)
-            console.log("main-container: " + mainHeight )
+            // console.log("side: " + sideHeight)
+            // console.log("main-container: " + mainHeight )
 
             sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
             if(mainHeight > sideHeight && mainHeight > 950){

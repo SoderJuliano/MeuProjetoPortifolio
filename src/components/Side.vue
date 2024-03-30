@@ -190,7 +190,7 @@ export default {
         // For mobile devices
         this.startX = event.touches[0].screenX - this.posX;
         this.startY = event.touches[0].screenY - this.posY;
-        console.log("mobile")
+        // console.log("mobile")
         document.addEventListener("touchmove", this.onDragMobile);
         document.addEventListener("touchend", this.onStopMobile);
       } else {
@@ -308,7 +308,7 @@ export default {
           setTimeout(() => {
               this.userData.realImg = localStorage.getItem("newImage");
 
-              console.log("atualizacao ", this.userData)
+              // console.log("atualizacao ", this.userData)
               
               this.$emit("local-update-user", this.userData);
               // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
@@ -342,9 +342,9 @@ export default {
   watch: {
     user: {
       handler(newval) {
-        console.log("watch", newval)
+        // console.log("watch", newval)
 
-        console.log("userDataBefore", this.userData)
+        // console.log("userDataBefore", this.userData)
         
         this.userData = newval
         this.imageURL = this.userData.realImg
@@ -447,7 +447,7 @@ export default {
     margin-right: 1%;
     padding: 1px;
     background-color: whitesmoke;
-    z-index: 1000;
+    z-index: 10;
     position: absolute;
     top: 10%;
     border: 2px solid white;
@@ -515,7 +515,7 @@ export default {
     opacity: 90%;
     padding: 10px;
     position: absolute;
-    z-index: 1000;
+    z-index: 10;
     border: 2px solid white;
     color: white;
     font-size: 16px;
