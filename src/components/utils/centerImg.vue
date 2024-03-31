@@ -1,6 +1,6 @@
 <template>
     <div class="main centerImg">
-        <p>{{language.includes("pt") ? "Ajuste a foto para esquerda ou para direita" : "Move your pic to rigth and left to center it"}}</p>
+        <p>{{this.isPortuguese() ? "Ajuste a foto para esquerda ou para direita" : "Move your pic to rigth and left to center it"}}</p>
         <div class="d-flex column">
             <div class="row d-flex">
                 <img @click="move(-10)" src="../../assets/arrow-left.svg" alt="-">
@@ -9,6 +9,10 @@
             <div class="row d-flex">
                 <img @click="resize(-50)" src="../../icons/minus.svg" alt="smaller" />
                 <img @click="resize(+50)" src="../../icons/plus.svg" alt="bigger" />
+            </div>
+            <div class="row d-flex">
+                <span>{{this.isPortuguese() ? "Centralize a foto" : "Auto center pic"}}</span>
+                <img @click="autoAjustar()" src="../../icons/center.svg" alt="center">
             </div>
         </div>
     </div>
@@ -22,10 +26,25 @@ export default {
     props: {
         language: String
     },
+    data() {
+        return {
+            local_language: this.language
+        }
+    },
     methods: {
+        autoAjustar() {
+            $('.img-pic').width(150);
+            $('.img-pic').height(150);
+            $('.img-pic').css({ left: '0' + 'px', top: '0' + 'px' });
+            $('.img-pic').css({ 'margin-left': '0' + 'px', 'margin-rigth': '0' + 'px' });
+        },
         resize(value) {
-            $('.img-pic').width($('.img-pic').width() + value);
-            $('.img-pic').height($('.img-pic').height() + value);
+            const novo_valor = $('.img-pic').width() + value;
+            // console.log('antes width', $('.img-pic').width());
+            // console.log('antes heigth', $('.img-pic').height());
+            $('.img-pic').css({"width": novo_valor+"px", "height": novo_valor+"px"});
+            // console.log('depois width', $('.img-pic').width());
+            // console.log('depois heigth', $('.img-pic').height());
         },
         move(more) {
             let newPosition = this.getIntValueFromPixel($(".img-pic").css("margin-left"));
@@ -35,7 +54,16 @@ export default {
         },
         getIntValueFromPixel(val) {
             return Number(val.split('px')[0]);
-        }       
+        },
+        isPortuguese() {
+            return this.local_language.includes("pt");
+        }
+    },
+    watch: {
+        language(newValue){
+            console.log("someData changed!", newValue);
+            this.local_language = newValue;
+        }
     }
 }
 </script>
@@ -46,7 +74,8 @@ export default {
     display: block;
     position: absolute;
     width: 235px;
-    height: 200px;
+    height: auto;
+    max-height: 350px;
     background-color: #ffffffde;
     border-radius: 45px;
     padding: 20px;

@@ -3,6 +3,15 @@
         <div :class="tstyle">
             <div class="line">
                 <div class="l1"></div>
+                <div class="ajsut-img">
+                    <CenterImg :language="language" />
+                    <CenterImgOpenclose 
+                    :language="language"
+                    :user="userData" 
+                    @user-update="reEmit"
+                    class="ajust-img-open-close" 
+                    />
+                </div>
                 <div @click="$refs.imgInput.click()" class="pic">
                     <img 
                         v-if="this.userData?.realImg?.length < 10 && this.userData?.avatarImg?.length > 10" 
@@ -42,11 +51,16 @@
 <script>
 
 import funcs from "../componentesCompartilhados/util/functions";
+import CenterImg from "../../components/utils/centerImg.vue";
+import CenterImgOpenclose from "../../components/utils/centerImgOpenClose.vue";
 import $ from "jquery";
 
 export default {
     name: "header",
     emits: ["add-nome", "local-update-user"],
+    components: {
+        CenterImg, CenterImgOpenclose
+    },
     props: {
         mainColor: String,
         fontColor: String,
@@ -159,6 +173,12 @@ export default {
 }
 </script>
 <style scoped>
+
+.line .ajust-img-open-close {
+    transform: rotate(-90deg);
+    margin-top: -405px;
+    margin-left: 260px;
+}
 
 #headericon
 {

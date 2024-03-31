@@ -960,7 +960,7 @@ export default {
 }
 
 .main.template {
-  width: 66%;
+  width: 70%;
   height: 100%;
   margin-top: 20px;
 }

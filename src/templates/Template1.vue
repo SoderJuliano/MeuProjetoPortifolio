@@ -97,7 +97,7 @@ export default {
 <style scoped>
 @media screen and (min-width: 1001px){
   .custom-container{
-    width: 100%;
+    width: 70%;
     justify-content: start;
     height: 100% !important;
     padding-bottom: 50px;

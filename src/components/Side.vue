@@ -635,7 +635,7 @@ export default {
 
 .ajsut-img {
   z-index: 0;
-  margin-top: 20px;
+  margin-top: 65px;
   flex-direction: column;
   width: 25%;
   height: 510px;
@@ -658,7 +658,7 @@ export default {
   position: relative;
   z-index: 16;
   margin-left: 225px;
-  margin-top: -350px;
+  margin-top: -445px;
   background-color: rgba(245, 245, 245, 0.521);
   border-radius: 25px;
   padding: 10px;
