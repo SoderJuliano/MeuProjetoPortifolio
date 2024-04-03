@@ -90,14 +90,16 @@ export default {
 .fonts-container{
   height: 40px;
 }
-.closeFontsDiv{
+.closeFontsDiv {
+  text-align: center;
+  position: relative;
+  width: 40px;
+  padding: 10px;
+  left: 70%;
   border-radius: 5px;
   border: solid 1px black;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  font-size: 16px !important;
-  background-color: black;
+  font-size: 20px !important;
+  background-color: red;
   color: white;
 }
 
