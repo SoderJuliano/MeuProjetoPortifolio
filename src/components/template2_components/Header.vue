@@ -254,7 +254,7 @@ export default {
     }
 }
 
-@media screen and (max-width: 700px) and (min-width: 401px) {
+@media screen and (max-width: 700px) {
     .l2{
         display: none;
     }
