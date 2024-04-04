@@ -118,6 +118,7 @@ export default {
   margin-top: 10px;
 }
 
+
 @media print{
   .habilidade-container{
     padding-top: 0px !important;
