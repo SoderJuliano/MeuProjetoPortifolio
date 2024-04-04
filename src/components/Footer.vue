@@ -240,7 +240,7 @@ img{
     display: none;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) and (min-width: 400px) {
     .imprimirbotao{
         margin: 10px 10px;
     }
@@ -281,5 +281,14 @@ img{
         display: none !important;
     } */
 
+}
+
+@media screen and (max-width: 400px) {
+    .footer img {
+        margin-left: 10px;
+    }
+    .footer span {
+        margin: auto 10px;
+    }
 }
 </style>
