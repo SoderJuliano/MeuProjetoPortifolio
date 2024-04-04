@@ -100,7 +100,7 @@ export default {
 
 .template1-formacao-container img {
   position: relative;
-  z-index: 10;
+  z-index: 1;
 }
 
 .template1-formacao-container:hover {
