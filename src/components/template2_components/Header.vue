@@ -35,8 +35,8 @@
                 @click="$emit('add-nome')" 
             />
             <div id="text_header" >
-                <h2>{{this.user?.name}}</h2>
-                <h3>{{this.user?.profession}}</h3>   
+                <h2>{{this.userData?.name}}</h2>
+                <h3>{{this.userData?.profession}}</h3>   
             </div>
             
             <input type="file"
@@ -162,6 +162,7 @@ export default {
     },
     watch: {
         user: function(updated) {
+            // console.log("updated", updated);
             this.userData = updated;
             this.imageURL = this.userData.realImg;
         }
@@ -254,7 +255,7 @@ export default {
     }
 }
 
-@media screen and (max-width: 700px) and (min-width: 401px) {
+@media screen and (max-width: 700px) {
     .l2{
         display: none;
     }

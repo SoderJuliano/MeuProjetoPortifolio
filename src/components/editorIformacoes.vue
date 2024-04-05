@@ -243,8 +243,12 @@ export default {
                     break;
                 case 'Type your name':
                     this.userData.name = document.getElementById('modal-input').value
-                    this.template == 1 ? (this.updateUser(), this.cancelar())
-                    : setTimeout(() => {this.$emit('add-profissao')}, 800)
+                    if(this.template == 1) {
+                        this.cancelar();
+                    }else if(this.template == 2) {
+                        setTimeout(() => {this.$emit('add-profissao')}, 800);
+                    }
+                    this.updateUser();
                     break;
                 case 'Sua profissão':
                     this.userData.profession = document.getElementById('modal-input').value

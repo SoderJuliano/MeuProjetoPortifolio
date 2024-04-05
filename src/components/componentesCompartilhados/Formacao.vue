@@ -10,8 +10,8 @@
       </p>
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
           <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon"/>
-          <span class="data-container">{{item}}</span>
-          <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
+          <span @touchstart="showRemoveItem(index)" class="data-container">{{item}}</span>
+          <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
@@ -19,6 +19,8 @@
 <script>
 
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import $ from 'jquery';
+
 
 export default {
   name: 'Formacao',
@@ -30,7 +32,8 @@ export default {
       tstyle: "template"+this.template+"-formacao-title title",
       containerstyle: "template"+this.template+"-formacao",
       conteinerdata: "template"+this.template+"-formacao-container",
-      remove: "template"+this.template+"-remove-bnt"
+      remove: "template"+this.template+"-remove-bnt",
+      isShowingRemoveBnt: false
     }
   },
   props:{
@@ -42,6 +45,13 @@ export default {
     sideColor: String,
   },
   methods:{
+    showRemoveItem(item) {
+      this.isShowingRemoveBnt ?
+      $('#'+item).css({'display': 'none'})
+      :
+      $('#'+item).css({'display': 'block', 'position': 'absolute'});
+      this.isShowingRemoveBnt = !this.isShowingRemoveBnt;
+    },
     removeGrade(event){
       this.mygrade.splice(this.mygrade.indexOf(event.target.id), 1)
       this.user.grade = this.mygrade
@@ -85,6 +95,12 @@ export default {
   align-self: center;
   margin: 0 10%;
   display: flex;
+  touch-action: manipulation;
+}
+
+.template1-formacao-container img {
+  position: relative;
+  z-index: 1;
 }
 
 .template1-formacao-container img {
@@ -121,11 +137,10 @@ export default {
   margin-top: 15px;
 }
 .template1-remove-bnt{
-  width: 20px;
-  height: 20px;
-  position: relative;
-  margin-top: 10px;
-  float: right;
+  position: absolute;
+  align-self: center;
+  right: 40px;
+  width: 40px;
   display: none;
 }
 

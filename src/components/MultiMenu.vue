@@ -73,6 +73,7 @@ export default {
         width: 80%;
         background-color: white;
         overflow: scroll;
+        cursor: pointer;
     }
 }
 </style>

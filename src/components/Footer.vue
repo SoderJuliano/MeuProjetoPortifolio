@@ -235,12 +235,12 @@ img{
     top: 50px;
     z-index: 10;
 }
-
+/* 
 .multiMenu:hover .l2 {
     display: none;
-}
+} */
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) and (min-width: 400px) {
     .imprimirbotao{
         margin: 10px 10px;
     }
@@ -253,6 +253,7 @@ img{
         top: 0%;
         z-index: 10;
         overflow-y: scroll;
+        cursor: pointer;
     }
     .multiMenu::-webkit-scrollbar {
         width: 16px;
@@ -281,5 +282,14 @@ img{
         display: none !important;
     } */
 
+}
+
+@media screen and (max-width: 400px) {
+    .footer img {
+        margin-left: 10px;
+    }
+    .footer span {
+        margin: auto 10px;
+    }
 }
 </style>
