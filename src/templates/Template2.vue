@@ -73,7 +73,14 @@ export default {
         reEmit(data){
             this.$emit('local-update-user', data);
         }
-    }
+    },
+    watch: {
+        user: function(updated) {
+            // console.log("updated", updated);
+            this.userData = updated;
+            this.imageURL = this.userData.realImg;
+        }
+    },
 }
 </script>
 <style scoped>
