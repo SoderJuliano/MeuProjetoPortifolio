@@ -73,6 +73,12 @@ export default {
         leavehovert(){
             document.getElementById("edit").style.display = "block";
         }
+    },
+    watch: {
+        user: function(newVal) {
+            this.userData = newVal
+            this.social = newVal.social
+        }
     }
 }
 </script>

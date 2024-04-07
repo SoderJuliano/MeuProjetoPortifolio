@@ -233,7 +233,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      // console.log('user update', userData)
+      //console.log('user update', userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
@@ -263,6 +263,7 @@ export default {
         this.configs.setLanguage(lng);
         this.updateLocalStorageKey(lng);
         localStorage.setItem("configs", JSON.stringify(this.configs));
+
         this.getUserData();
       }
       // console.log("finished lupdate")
@@ -690,7 +691,7 @@ export default {
       this.localStorageKey = newInput.includes("pt") ? "user-pt" : "user-en";
       // console.log(this.localStorageKey);
     },
-      getUserData() {
+    getUserData() {
       try {
         const lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
         // console.log('found')

@@ -15,7 +15,7 @@
         @user-update="reEmit"
         @local-update-user="reEmit"
         :cor="sideColor"
-        :user="user"
+        :user="this.userData"
         :titles="titles"
         :language="language"
       />
@@ -29,7 +29,7 @@
         @click="closeEditarContato"
         :fontColor=fontColor
         :cor="mainColor"
-        :user="user"
+        :user="this.userData"
         :language="language"
       />
       
@@ -47,6 +47,7 @@ export default {
   'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon', 'update-experiences'],
   data(){
     return{
+      userData: this.user,
       uExperiences: this.userExperiences,
       titles: 
         {
@@ -87,11 +88,16 @@ export default {
     // console.log(this.user)
   },
   watch: {
-    user: (updated) => {
-      // console.log("Template1 user updated");
-      // console.log(updated);
-    }
-  }
+      user: function(updated) {
+          // console.log("updated", updated);
+          this.userData = updated;
+          this.imageURL = this.userData.realImg;
+      },
+      language: function(newVal) {
+        console.log("language changed to => "+newVal)
+        this.userData = this.user;
+      }
+    },
 }
 </script>
 <style scoped>
