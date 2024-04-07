@@ -93,7 +93,7 @@ export default {
   width: 80%;
   height: 100%;
   align-self: center;
-  margin: 0 10%;
+  margin: 0 2%;
   display: flex;
   touch-action: manipulation;
 }
