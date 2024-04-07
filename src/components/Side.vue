@@ -91,7 +91,7 @@
       class="template-data"
       :titulo="titles.formacao"
       :backgroundColor="cor"
-      :user="user"
+      :user="this.userData"
       template=1
       :language="language"
     />
@@ -104,7 +104,7 @@
       class="template-data"
       :titulo="titles.habilidades"
       backgroundColor="#808080"
-      :user="user"
+      :user="this.userData"
       template=1
       :language="language"
     />
@@ -114,7 +114,7 @@
       v-if="exibirSocial"
       class="template-data"
       backgroundColor="#808080"
-      :user="user"
+      :user="this.userData"
       template=1
       :titulo="titles.social"
       :language="language"
