@@ -88,6 +88,7 @@ export default {
             $(".l1").css("display", "block")
             $(".l2").css("display", "block")
             $(".pic").css("display", "block")
+            $(".ajsut-img").css("display", "none")
             
             // console.log("o id é ->"+id.target.id)
             
