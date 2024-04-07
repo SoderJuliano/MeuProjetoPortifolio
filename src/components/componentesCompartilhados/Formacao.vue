@@ -103,6 +103,11 @@ export default {
   z-index: 1;
 }
 
+.template1-formacao-container img {
+  position: relative;
+  z-index: 10;
+}
+
 .template1-formacao-container:hover {
   background-color: #d7d7d7;
   border-radius: 10px;
