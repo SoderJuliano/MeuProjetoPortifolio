@@ -116,7 +116,9 @@ export default {
       showMenu(){
         this.show = true
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "1"
-        document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "1"
+        document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "17"
+        //! Este valor de z-index precisa ser maior que o do .side que tem a img do usuario,
+        //! caso contrário a img aparecerá por cima do menu
         document.getElementsByClassName("multi-menu-class")[0].animate([
             // keyframes
             { transform: 'translateY(-300px) scale(0.1)', marginLeft:'150px', opacity: '0.5'},

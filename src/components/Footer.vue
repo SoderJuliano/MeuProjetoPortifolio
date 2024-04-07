@@ -245,6 +245,7 @@ img{
         margin: 10px 10px;
     }
     .multiMenu-options.multiMenu{
+        position: relative;
         padding: 10px;
         width: 90vw;
         height: calc(100% - 40px);
