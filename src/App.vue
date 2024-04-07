@@ -970,6 +970,7 @@ export default {
 }
 
 .multi-menu-class {
+  position: relative;
   padding: 30px;
   opacity: 0;
   z-index: -1;
@@ -1040,7 +1041,7 @@ export default {
   }
 
   .main-left:hover {
-    z-index: 10;
+    z-index: 11;
   }
 
   .right {
