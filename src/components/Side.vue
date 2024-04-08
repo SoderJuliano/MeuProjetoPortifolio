@@ -376,6 +376,10 @@ export default {
   .img-avatar {
     max-width: 150px;
   }
+
+  .data-container {
+    width: 80%;
+  }
 </style>
 
 <style>
@@ -604,7 +608,6 @@ export default {
 }
 .data-container {
   display: flex;
-  width: 80%;
   padding-bottom: 10px;
   align-self: center;
   margin: 0 auto;

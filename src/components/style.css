@@ -289,6 +289,10 @@ h3:hover .editar-animado{
     word-break: auto-phrase !important;
 }
 
+.contact-template2 .data-container {
+    width: 96%;
+}
+
 /* .data-container:hover {
     background-color: #d7d7d7;
     border-radius: 10px;
