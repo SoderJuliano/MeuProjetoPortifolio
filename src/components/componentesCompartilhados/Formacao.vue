@@ -93,7 +93,7 @@ export default {
   width: 80%;
   height: 100%;
   align-self: center;
-  margin: 0 2%;
+  margin: 0 10%;
   display: flex;
   touch-action: manipulation;
 }
@@ -101,11 +101,6 @@ export default {
 .template1-formacao-container img {
   position: relative;
   z-index: 1;
-}
-
-.template1-formacao-container img {
-  position: relative;
-  z-index: 10;
 }
 
 .template1-formacao-container:hover {
@@ -119,7 +114,6 @@ export default {
 }
 
 .template2-formacao-container{
-  margin-left: 20px;
   display: flex;
 }
 .formacao-icon{
