@@ -383,6 +383,7 @@ export default {
 
   .data-container {
     width: 80%;
+    break-inside: avoid;
   }
 </style>
 
@@ -401,7 +402,6 @@ export default {
 }
 
 .side {
-  height: 100%;
   display: block;
   box-shadow: 0 0 50px #ccc;
 }
@@ -465,7 +465,6 @@ export default {
 @media screen and (min-width: 1001px) {
   .side {
     padding: 5px;
-    min-height: 800px;
     width: 40%;
     min-width: 250px;
     background-color: gray;
@@ -473,7 +472,7 @@ export default {
     padding-top: 50px;
     font-size: 14px;
     overflow-x: hidden;
-    overflow-y: show;
+    overflow-y: visible;
     word-break: break-all !important;
   }
   .pic {

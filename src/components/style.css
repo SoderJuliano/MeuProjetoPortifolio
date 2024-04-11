@@ -300,6 +300,7 @@ h3:hover .editar-animado{
 
 .template1-experiencias-container{
     padding: 10px;
+    break-inside: avoid;
 }
 
 .template1-experiencias-container:hover {
