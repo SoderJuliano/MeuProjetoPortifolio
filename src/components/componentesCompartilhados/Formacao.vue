@@ -96,6 +96,8 @@ export default {
   margin: 0 10%;
   display: flex;
   touch-action: manipulation;
+  position: relative;
+  z-index: 3;
 }
 
 .template1-formacao-container img {

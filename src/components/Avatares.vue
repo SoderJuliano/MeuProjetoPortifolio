@@ -89,6 +89,7 @@ export default {
             $(".l2").css("display", "block")
             $(".pic").css("display", "block")
             $(".ajsut-img").css("display", "none")
+            $(".template1-formacao-container").css({"z-index": "3"});
             
             // console.log("o id é ->"+id.target.id)
             

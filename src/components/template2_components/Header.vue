@@ -139,6 +139,7 @@ export default {
                 }, 500)
             }
             $(".ajsut-img").css({"display": "flex", "z-index": "2"});
+            $(".template1-formacao-container").css({"z-index": "1"});
         },
         toDataURL(url, callback) {
             var xhr = new XMLHttpRequest();
