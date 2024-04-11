@@ -255,6 +255,7 @@ export default {
       if (imgExiste) {
         $(".ajsut-img").css({"display": "flex", "z-index": "2"});
         $(".template1-formacao-container").css({"z-index": "1"});
+        $("#headericon").css({"z-index": "1"});
         this.imageURL = this.userData.realImg;
       }
       else if (this.userData.avatarImg.length > 5) {
@@ -323,6 +324,7 @@ export default {
 
       $(".ajsut-img").css({"display": "flex", "z-index": "2"});
       $(".template1-formacao-container").css({"z-index": "1"});
+      $("#headericon").css({"z-index": "1"});
     },
     toDataURL(url, callback) {
         var xhr = new XMLHttpRequest();

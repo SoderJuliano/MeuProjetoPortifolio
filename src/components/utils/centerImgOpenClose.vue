@@ -42,6 +42,7 @@ export default {
             $(".main.centerImg").css("display", "none");
             $(".ajsut-img").css({"display": "flex", "z-index": "0"});
             $(".template1-formacao-container").css({"z-index": "3"});
+            $("#headericon").css({"z-index": "2"});
         },
         open() {
             $("#open").css("display", "none");
@@ -49,6 +50,7 @@ export default {
             $(".main.centerImg").css("display", "block");
             $(".ajsut-img").css({"display": "flex", "z-index": "2"});
             $(".template1-formacao-container").css({"z-index": "1"});
+            $("#headericon").css({"z-index": "1"});
         },
         onIMGChange(img) {
             if (img.target.files[0].size > 2762231) {
@@ -70,6 +72,7 @@ export default {
 
             $(".ajsut-img").css({"display": "flex", "z-index": "2"});
             $(".template1-formacao-container").css({"z-index": "1"});
+            $("#headericon").css({"z-index": "1"});
         },
         toDataURL(url, callback) {
             var xhr = new XMLHttpRequest();

@@ -140,6 +140,7 @@ export default {
             }
             $(".ajsut-img").css({"display": "flex", "z-index": "2"});
             $(".template1-formacao-container").css({"z-index": "1"});
+            $("#headericon").css({"z-index": "1"});
         },
         toDataURL(url, callback) {
             var xhr = new XMLHttpRequest();
@@ -188,6 +189,7 @@ export default {
     width: 20px;
     height: 20px;
     margin-left: 5%;
+    z-index: 2;
 }
 
 #headericon:active {
