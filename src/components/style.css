@@ -368,6 +368,8 @@ button {
 
 .template1-formacao-container span {
     margin-top: 15px;
+    text-align: start;
+    margin-left: 10px;
 }
 
 .phone-enabled {
