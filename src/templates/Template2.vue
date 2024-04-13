@@ -7,6 +7,7 @@
                 :user="userData"
                 :language="language"
                 @add-nome="$emit('add-nome')"
+                @local-update-user="reEmit"
             />
         </div>
         <div class="main-body">
@@ -53,7 +54,7 @@ export default {
         Right
     },
     emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences",
-            "choose-addressIcon", "choose-phoneIcon", "choose-emailIcon", "choose-educationIcon"],
+            "choose-addressIcon", "choose-phoneIcon", "choose-emailIcon", "choose-educationIcon", "choose-skillIcon", "local-update-user"],
     props:{
         mainColor: String,
         sideColor: String,
@@ -68,6 +69,18 @@ export default {
             userData: this.user
         }
     },
+    methods:{
+        reEmit(data){
+            this.$emit('local-update-user', data);
+        }
+    },
+    watch: {
+        user: function(updated) {
+            // console.log("updated", updated);
+            this.userData = updated;
+            this.imageURL = this.userData.realImg;
+        }
+    },
 }
 </script>
 <style scoped>
@@ -76,7 +89,7 @@ export default {
         box-shadow: none !important;
     }
 }
-.main{
+.main {
     display: block;
     box-shadow: 0px 0px 30px 1px;
 }

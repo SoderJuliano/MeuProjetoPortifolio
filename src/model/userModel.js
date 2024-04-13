@@ -6,7 +6,7 @@ export default class User {
     competence = [];
     social = [];
     grade = [];
-    hability = "";
+    ability = "";
     avatarImg = "";
     realImg = "";
     contact = {
@@ -51,7 +51,7 @@ export default class User {
     }
 
     setAdressPart(witch, value) {
-        console.log('setting witch: '+witch+' and value: '+value);
+        // console.log('setting witch: '+witch+' and value: '+value);
         switch (witch) {
             case 'country':
                 this.contact.adressObject.country = value;

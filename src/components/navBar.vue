@@ -116,7 +116,9 @@ export default {
       showMenu(){
         this.show = true
         document.getElementsByClassName("multi-menu-class")[0].style.opacity = "1"
-        document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "1"
+        document.getElementsByClassName("multi-menu-class")[0].style.zIndex = "17"
+        //! Este valor de z-index precisa ser maior que o do .side que tem a img do usuario,
+        //! caso contrário a img aparecerá por cima do menu
         document.getElementsByClassName("multi-menu-class")[0].animate([
             // keyframes
             { transform: 'translateY(-300px) scale(0.1)', marginLeft:'150px', opacity: '0.5'},
@@ -153,8 +155,8 @@ export default {
         const sideHeight = $(".side").height()
         const mainHeight = $(".main-container").width()
 
-        console.log("side: " + sideHeight)
-        console.log("main-container: " + mainHeight )
+        // console.log("side: " + sideHeight)
+        // console.log("main-container: " + mainHeight )
 
         sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
         if(mainHeight > sideHeight && mainHeight > 950){
@@ -271,14 +273,18 @@ li img {
     width: 100%;
     text-align: center;
     justify-content: center;
+    align-items: center;
 }
 .nav-item:hover .nav-link{
   opacity: 1;
   transition: 0.3s ease-in-out;
 }
 .nav-item:hover .li-img{
-  transform: translateY(-30px);
+  transform: translateY(-40px);
   transition: 0.3s ease-in-out;
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
 }
 .nav-item .nav-link{
   opacity: 0;

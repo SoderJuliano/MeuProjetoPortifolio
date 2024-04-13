@@ -46,7 +46,7 @@ export default {
         this.template == 2 ?
         document.getElementById("edit-re").style.display = "block" : ''
       },
-     getStyle(){ //console.log(this.cor +' corrr')
+     getStyle(){ //// console.log(this.cor +' corrr')
         return this.template == 2
         ? {
             'text-align': 'start',

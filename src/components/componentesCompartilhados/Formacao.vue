@@ -10,8 +10,8 @@
       </p>
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
           <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon"/>
-          <span class="data-container">{{item}}</span>
-          <img  @click="removeGrade($event)" :id="`${item}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
+          <span @touchstart="showRemoveItem(index)" class="data-container">{{item}}</span>
+          <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>
@@ -19,6 +19,8 @@
 <script>
 
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import $ from 'jquery';
+
 
 export default {
   name: 'Formacao',
@@ -30,7 +32,8 @@ export default {
       tstyle: "template"+this.template+"-formacao-title title",
       containerstyle: "template"+this.template+"-formacao",
       conteinerdata: "template"+this.template+"-formacao-container",
-      remove: "template"+this.template+"-remove-bnt"
+      remove: "template"+this.template+"-remove-bnt",
+      isShowingRemoveBnt: false
     }
   },
   props:{
@@ -42,6 +45,13 @@ export default {
     sideColor: String,
   },
   methods:{
+    showRemoveItem(item) {
+      this.isShowingRemoveBnt ?
+      $('#'+item).css({'display': 'none'})
+      :
+      $('#'+item).css({'display': 'block', 'position': 'absolute'});
+      this.isShowingRemoveBnt = !this.isShowingRemoveBnt;
+    },
     removeGrade(event){
       this.mygrade.splice(this.mygrade.indexOf(event.target.id), 1)
       this.user.grade = this.mygrade
@@ -51,17 +61,17 @@ export default {
       return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
     }
   },
-  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes
+  /* Este e outro jeito de observar mudancas em um objeto e executar funcoes */
    watch: {
     user: {
       handler(newVal) {
-        console.log("user changed")
-        console.log(newVal)
+        // console.log("user changed")
+        // console.log(newVal)
         this.mygrade = newVal.grade
       },
       deep: true,
     },
-  }, */
+  },
 }
 </script>
 
@@ -79,12 +89,20 @@ export default {
 .template2-formacao-title:hover .editar{
   display: none;
 }
-.template1-formacao-container{
+.template1-formacao-container {
   width: 80%;
   height: 100%;
   align-self: center;
   margin: 0 10%;
   display: flex;
+  touch-action: manipulation;
+  position: relative;
+  z-index: 3;
+}
+
+.template1-formacao-container img {
+  position: relative;
+  z-index: 1;
 }
 
 .template1-formacao-container:hover {
@@ -98,8 +116,6 @@ export default {
 }
 
 .template2-formacao-container{
-  width: 80%;
-  margin-left: 20px;
   display: flex;
 }
 .formacao-icon{
@@ -117,11 +133,10 @@ export default {
   margin-top: 15px;
 }
 .template1-remove-bnt{
-  width: 20px;
-  height: 20px;
-  position: relative;
-  margin-top: 10px;
-  float: right;
+  position: absolute;
+  align-self: center;
+  right: 40px;
+  width: 40px;
   display: none;
 }
 
@@ -171,8 +186,13 @@ export default {
   .template1-formacao-title {
     width: 97% !important;
   }
+
+  .template2-formacao-container {
+    width: 80% !important;
+  }
 }
 @media (min-width: 1000px) {
+
   .template2-formacao-title {
     margin-top: 0px;
     margin-left: 10px !important;

@@ -43,6 +43,7 @@
       v-if="this.configs.getTemplate() == 1"
       :language="this.configs.getLanguage()"
       @update-user="updateUser"
+      @local-update-user="updateUser"
       @add-info="addInfo"
       @add-resumo="editarResumo"
       @add-competencia="editarCompetencias"
@@ -86,6 +87,7 @@
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
       @update-experiences="adicionarExperiencias"
+      @local-update-user="updateUser"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
       :sideColor="this.configs?.getSideColor()"
@@ -231,11 +233,12 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
+      //console.log('user update', userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
-      console.log(experiencias)
+      // console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
@@ -255,14 +258,15 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     lupdate(lng) {
-      console.log('executing lupdate')
+      // console.log('executing lupdate')
       if(lng){
         this.configs.setLanguage(lng);
         this.updateLocalStorageKey(lng);
         localStorage.setItem("configs", JSON.stringify(this.configs));
+
         this.getUserData();
       }
-      console.log("finished lupdate")
+      // console.log("finished lupdate")
     },
     updateName(name) {
       this.user.name = name;
@@ -306,7 +310,7 @@ export default {
       document.getElementsByClassName("main-modal-container")[0].style.opacity =
         "100";
       document.getElementsByClassName("main-modal-container")[0].style.zIndex =
-        "10";
+        "17";
     },
     showModal(qual) {
       window.scrollTo({
@@ -423,8 +427,8 @@ export default {
           break;
 
         case "habilidade":
-          console.log('habilidade')
-          console.log(strings[1].skill)
+          // console.log('habilidade')
+          // console.log(strings[1].skill)
           this.modal.mainTitle = this.languageIsEN()
             ? strings[1].skill
             : strings[0].skill;
@@ -525,7 +529,7 @@ export default {
         return;
       }
       if (p.target.id == "square") {
-        console.log("teste");
+        // console.log("teste");
         document.getElementsByClassName("pic")[0].style["border-radius"] =
           "0px";
         document.getElementsByClassName("img-pic")[0].style["border-radius"] =
@@ -563,7 +567,7 @@ export default {
         let i = 0;
         let all = document.getElementsByClassName("title");
         let page_header = document.getElementsByClassName("page-header");
-        //console.log(p.target.id)
+        //// console.log(p.target.id)
         if (p.target.textContent == "pag-#1F271B") {
           setTimeout(() => {
             for (i; i < all.length; i++) {
@@ -607,7 +611,7 @@ export default {
         }
       }
 
-      console.log(p.target.textContent);
+      // console.log(p.target.textContent);
     },
     getStyle() {
       switch (this.configs?.getFont()) {
@@ -682,23 +686,23 @@ export default {
       }
     },
     updateLocalStorageKey(newInput) {
-      console.log('newInput');
-      console.log(newInput);
+      // console.log('newInput');
+      // console.log(newInput);
       this.localStorageKey = newInput.includes("pt") ? "user-pt" : "user-en";
-      console.log(this.localStorageKey);
+      // console.log(this.localStorageKey);
     },
-      getUserData() {
+    getUserData() {
       try {
         const lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
-        console.log('found')
-        console.log(lsUser)
+        // console.log('found')
+        // console.log(lsUser)
         if(lsUser == null) {
           lsUser = JSON.parse(localStorage.getItem("user"));
         }
         if(lsUser != null) {
           this.user = lsUser;
-          console.log('set')
-          console.log(this.user)
+          // console.log('set')
+          // console.log(this.user)
         }
       }catch (err) {
         // console.log(err.message);
@@ -733,7 +737,7 @@ export default {
       axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
        { headers: header })
         .then( response => {
-          console.log(response.data)
+          // console.log(response.data)
           let easyEnter = false;
           let facilSalvar = false;
           let icones = false;
@@ -928,7 +932,7 @@ export default {
                 }   
               })
               .catch(function (error) {
-                console.log(error);
+                // console.log(error);
               });
           }
         });    
@@ -957,9 +961,9 @@ export default {
 }
 
 .main.template {
-  width: 66%;
+  width: 70%;
   height: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .multi-menu-class:hover {
@@ -967,6 +971,7 @@ export default {
 }
 
 .multi-menu-class {
+  position: relative;
   padding: 30px;
   opacity: 0;
   z-index: -1;
@@ -1035,6 +1040,11 @@ export default {
     padding: 1px;
     margin-right: 5px;
   }
+
+  .main-left:hover {
+    z-index: 11;
+  }
+
   .right {
     width: 25%;
     margin: 0 auto;

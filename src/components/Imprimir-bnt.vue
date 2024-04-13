@@ -15,8 +15,8 @@ export default {
             const sideHeight = $(".side").height()
             const mainHeight = $(".main-container").width()
 
-            console.log("side: " + sideHeight)
-            console.log("main-container: " + mainHeight )
+            // console.log("side: " + sideHeight)
+            // console.log("main-container: " + mainHeight )
 
             sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
             if(mainHeight > sideHeight && mainHeight > 950){
@@ -38,16 +38,16 @@ export default {
 .print-icon{
     width: 25%;
     height: 15px;
-    padding-top: 7%;
-    padding-left: 10%;
+    position: relative;
+    align-self: center;
+    justify-self: start;
 }
-.print-div{
+.print-div {
     display: flex;
     width: 120px;
     border: solid black 1px;
     border-radius: 20px;
     position: relative;
-    bottom: 4px;
 }
 .impreimir-text{
         padding: 3%;

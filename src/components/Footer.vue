@@ -4,15 +4,15 @@
         class="multiMenu"
         :user="user"
         :template="template"
-        :language="this.configs.getLanguage()"
+        :language="this.language"
         @click="changefontM"
         @now-template1="this.$emit('now-template1')"
         @now-template2="this.$emit('now-template2')"
     />
     <div class="footer">
-        <img v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
+        <img @click="hover = true" v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
-        <img class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
+        <img @click="hover = false" class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
         <span v-if="this.language != 'pt-br'" @click="this.$emit('language-update', 'pt-br')" >pt-br</span>
         <span v-if="this.language != 'us-en'" @click="this.$emit('language-update', 'us-en')" >en-us</span>
         <imprimir
@@ -90,10 +90,26 @@ export default {
                 localStorage.setItem("mainColor", p.target.id)
                 localStorage.setItem("fontColor", p.target.id == "#1F271B" ? "white" : "black")
 
+                if(confirm(this.language.includes("pt") ? "Cor alterada. Ver cor?" : "Color set. See it?")) {
+                    this.hover = false;
+                } else {
+                    this.hover = true;
+                }
+                // alert(this.language.includes("pt") ? "Cor alterada" : "Color set");
             }
             else if(p.target.textContent.includes('#')==true){
                 if(p.target.textContent.split('').length>0 && p.target.textContent.split('').length<8){
-                    $(".side")[0].style.backgroundColor = p.target.textContent
+                    const side = $(".side")[0];
+                    if(side) {
+                        side.style.backgroundColor = p.target.textContent;
+                        if(confirm(this.language.includes("pt") ? "Cor alterada. Ver cor?" : "Color set. See it?")) {
+                            this.hover = false;
+                        } else {
+                            this.hover = true;
+                        }
+                    } else {
+                        alert(this.language.includes("pt") ? "Este template não tem cor lateral" : "This selected template do not has side color")
+                    }
                     localStorage.setItem("sideColor",  p.target.textContent)
                 }
             }else{
@@ -164,30 +180,50 @@ export default {
 </script>
 <style scoped>
 
+.footer {
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+.footer img {
+    margin-left: 20px;
+}
+
+.footer img:active {
+    transform: scale(.9);
+}
+
 .footer span {
     padding: 5px;
     width: 45px;
-    margin: auto 10px;
+    margin: auto 40px;
     border: solid 1px black;
     border-radius: 15px;
     text-align: center;
 }
 
-.imprimirbotao{
-    margin-top: 2%;
-    margin-left: 20%;
+.imprimirbotao {
+    position: relative;
+    align-self: center;
+    padding: 5px;
     height: 25px !important;
     width: 100px !important;
+}
+
+.imprimirbotao:active {
+    transform: scale(.9);
 }
 
 img{
     width: 25px;
 }
 .close-bnt {
+    right: 70px;
+    width: 40px;
     position: absolute;
-    right: 50px;
-    width: 35px;
-    height: 100%;
+    justify-content: center;
 }
 .multiMenu{
     width: 80%;
@@ -199,16 +235,17 @@ img{
     top: 50px;
     z-index: 10;
 }
-
+/* 
 .multiMenu:hover .l2 {
     display: none;
-}
+} */
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 700px) and (min-width: 400px) {
     .imprimirbotao{
         margin: 10px 10px;
     }
     .multiMenu-options.multiMenu{
+        position: relative;
         padding: 10px;
         width: 90vw;
         height: calc(100% - 40px);
@@ -217,6 +254,7 @@ img{
         top: 0%;
         z-index: 10;
         overflow-y: scroll;
+        cursor: pointer;
     }
     .multiMenu::-webkit-scrollbar {
         width: 16px;
@@ -245,5 +283,14 @@ img{
         display: none !important;
     } */
 
+}
+
+@media screen and (max-width: 400px) {
+    .footer img {
+        margin-left: 10px;
+    }
+    .footer span {
+        margin: auto 10px;
+    }
 }
 </style>

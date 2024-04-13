@@ -29,10 +29,19 @@ export default {
         TemplateChooser
     },
     methods: {
-        openTemplates(){
+        closeAll() {
+            $(".side-colors").css({"display": "none"});
+            $(".colors").css({"display": "none"});
+            $(".dropdown-content").css({"display": "none"});
+            $(".avatares-subcontainer").css({"display": "none"});
+            $(".shapes").css({"display": "none"});
+            $(".dropdown-templates").css({"display": "none"});
+        },
+        openTemplates() {
+            this.closeAll();
             $(".dropdown-templates").css("display", "block")
         },
-        closeDiv(){
+        closeDiv() {
             $(".dropdown-templates").css({"display": "none"});
         }
     }

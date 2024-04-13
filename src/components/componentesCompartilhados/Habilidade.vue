@@ -57,7 +57,6 @@ export default {
 <style scoped>
 .template1-container{
     min-height: 100px;
-    max-height: 100%;
 }
 .editar-animado-habilidade{
   width: 20px;
@@ -72,6 +71,7 @@ export default {
   align-self: center;
   margin: 0 auto;
   display: flex;
+  padding-bottom: 20px;
 }
 
 .template1-habilidade-container span {
@@ -118,6 +118,7 @@ export default {
   margin-top: 10px;
 }
 
+
 @media print{
   .habilidade-container{
     padding-top: 0px !important;
@@ -131,6 +132,8 @@ export default {
   width: 25px;
   height: 25px;
   padding-top: 20px;
+  position: relative;
+  z-index: 10;
 }
 .data-text-habilidades{
   min-height: 20px;

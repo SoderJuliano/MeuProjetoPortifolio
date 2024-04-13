@@ -30,10 +30,19 @@ import $ from 'jquery'
 export default {
     name: 'cores',
     methods: {
-        openContainer(){
+        closeAll() {
+            $(".side-colors").css({"display": "none"});
+            $(".colors").css({"display": "none"});
+            $(".dropdown-content").css({"display": "none"});
+            $(".avatares-subcontainer").css({"display": "none"});
+            $(".shapes").css({"display": "none"});
+            $(".dropdown-templates").css({"display": "none"});
+        },
+        openContainer() {
+            this.closeAll();
             $(".side-colors").css({"display": "grid", "position": "absolute"});
         },
-        closeDiv(){
+        closeDiv() {
             $(".side-colors").css({"display": "none"});
         }
     }
@@ -41,14 +50,20 @@ export default {
 </script>
 
 <style>
-.closeDiv{
-    border-radius: 5px;
-    border: solid 1px black;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    font-size: 16px !important;
-    background-color: black;
-    color: white;
+.closeDiv {
+  text-align: center;
+  position: relative;
+  width: 40px;
+  padding: 10px;
+  left: 70%;
+  border-radius: 5px;
+  border: solid 1px black;
+  font-size: 20px !important;
+  background-color: red;
+  color: white;
+}
+
+.colors-container {
+    max-height: 100%;
 }
 </style>

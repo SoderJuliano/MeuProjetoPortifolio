@@ -6,7 +6,7 @@
         <fonts @update-configs="$emit('update-configs')" />
         <Colors />
         <pageColor />
-        <Avatares 
+        <Avatares
             :user="user"
             :language="language"
             @update-user="$emit('update-user')"
@@ -73,6 +73,7 @@ export default {
         width: 80%;
         background-color: white;
         overflow: scroll;
+        cursor: pointer;
     }
 }
 </style>

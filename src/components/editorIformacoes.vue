@@ -12,8 +12,8 @@
                     <div class="modal-internal-content">
                         <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedEnterOk()" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedEnterOk()" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
+                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
                     </div>
 
@@ -213,7 +213,7 @@ export default {
                 this.currentJobId = job.getId();
                 job.setCompany($("#modal-input").val())
                 job.setPosition($("#modal-input2").val())
-                console.log(job)
+                // console.log(job)
                 this.userData.userExperiences.push(job);
 
                 this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
@@ -221,9 +221,9 @@ export default {
             }else{
                 this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
                 this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
-                //console.log(this.userData.userExperiences[this.currentJobId])
-                console.log(`$("#input-value-date1").val()`)
-                console.log($("#input-value-date1").val())
+                //// console.log(this.userData.userExperiences[this.currentJobId])
+                // console.log(`$("#input-value-date1").val()`)
+                // console.log($("#input-value-date1").val())
                 this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
                 this.ptitle = ''
                 this.ptitle2 = ''
@@ -243,8 +243,12 @@ export default {
                     break;
                 case 'Type your name':
                     this.userData.name = document.getElementById('modal-input').value
-                    this.template == 1 ? (this.updateUser(), this.cancelar())
-                    : setTimeout(() => {this.$emit('add-profissao')}, 800)
+                    if(this.template == 1) {
+                        this.cancelar();
+                    }else if(this.template == 2) {
+                        setTimeout(() => {this.$emit('add-profissao')}, 800);
+                    }
+                    this.updateUser();
                     break;
                 case 'Sua profissão':
                     this.userData.profession = document.getElementById('modal-input').value
@@ -350,10 +354,9 @@ export default {
         },
         updateUser(){
             this.$emit('update-user', this.userData)
-            localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
         },
         adicionarEndereco(){
-            console.log("called")
+            // console.log("called")
             const rua = document.getElementById("modal-input1").value
             const numero = document.getElementById("modal-input2").value
             const bairro = document.getElementById("modal-input3").value
@@ -406,13 +409,18 @@ export default {
             setTimeout(() => {
                 $(".save-bnt").css('opacity', 1);
                 $(".bnt-proximo").css('opacity', 1);
-            }, 1000);
+            }, 300);
         },
         pressedEnterInDate() {
             $(".bnt-proximo").click();
         },
         pressedEnterOk() {
             $(".save-bnt").click();
+        },
+        pressedShifAndEnter(event) {
+            if (event.shiftKey && event.key === 'Enter') {
+                $(".save-bnt").click();
+            }
         }
     },
     updated() {
@@ -545,14 +553,14 @@ button{
     margin-left: 15px;
 }
 
-.iconsChooser{
+.iconsChooser {
     position: absolute;
     display: flex;
     width: 100vw;
     height: 100vh;
     justify-content: center;
     align-items: center;
-    z-index: 10;
+    z-index: 18;
 }
 
     .switch {

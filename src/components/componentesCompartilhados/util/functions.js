@@ -1,8 +1,8 @@
 export function witchModalIAm(modal) {
-    console.log('On span title '+modal.input_title)
-    console.log('OnChange executing '+modal.inputId)
-    console.log('modal.pressed = '+modal.pressed)
-    console.log('data -> '+modal.data)
+    // console.log('On span title '+modal.input_title)
+    // console.log('OnChange executing '+modal.inputId)
+    // console.log('modal.pressed = '+modal.pressed)
+    // console.log('data -> '+modal.data)
 
     switch (modal.modal_title, modal.input_title) {
         case "INFORMACOES PESSOAIS", "Seu Endereço":
@@ -94,4 +94,12 @@ export function witchModalIAm(modal) {
         default:
             break;
     }
+}
+
+export function isMobile() {
+    return window.innerWidth <= 1000;
+}
+
+export function isMobilePortrait() {
+    return window.innerWidth <= 600;
 }

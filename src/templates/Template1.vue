@@ -12,8 +12,10 @@
         @add-SocialLink="$emit('add-SocialLink')"
         @adicionar-habilidade="$emit('adicionar-habilidade')"
         @update-user="$emit('update-user')"
+        @user-update="reEmit"
+        @local-update-user="reEmit"
         :cor="sideColor"
-        :user="user"
+        :user="this.userData"
         :titles="titles"
         :language="language"
       />
@@ -27,7 +29,7 @@
         @click="closeEditarContato"
         :fontColor=fontColor
         :cor="mainColor"
-        :user="user"
+        :user="this.userData"
         :language="language"
       />
       
@@ -40,11 +42,12 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
+  emits: ['local-update-user', 'add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
   'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
   'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon', 'update-experiences'],
   data(){
     return{
+      userData: this.user,
       uExperiences: this.userExperiences,
       titles: 
         {
@@ -69,20 +72,38 @@ export default {
     user: Object,
     language: String,
   },
+  methods: {
+
+    reEmit(data) {
+      // console.log("data", data)
+      this.$emit("local-update-user", data)
+    }
+  },
   mounted(){
-    console.log("mounted template 1")
-    console.log("mainColor: "+this.mainColor)
-    console.log("sideColor: "+this.sideColor)
-    console.log(this.fontColor)
-    console.log(this.language)
-    console.log(this.user)
-  }
+    // console.log("mounted template 1")
+    // console.log("mainColor: "+this.mainColor)
+    // console.log("sideColor: "+this.sideColor)
+    // console.log(this.fontColor)
+    // console.log(this.language)
+    // console.log(this.user)
+  },
+  watch: {
+      user: function(updated) {
+          // console.log("updated", updated);
+          this.userData = updated;
+          this.imageURL = this.userData.realImg;
+      },
+      language: function(newVal) {
+        console.log("language changed to => "+newVal)
+        this.userData = this.user;
+      }
+    },
 }
 </script>
 <style scoped>
 @media screen and (min-width: 1001px){
   .custom-container{
-    width: 100%;
+    width: 70%;
     justify-content: start;
     height: 100% !important;
     padding-bottom: 50px;

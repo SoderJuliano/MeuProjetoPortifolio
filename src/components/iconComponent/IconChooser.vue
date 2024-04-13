@@ -75,6 +75,8 @@ export default {
     border: solid 1px black;
     opacity: 1;
     padding: 10px;
+    position: relative;
+    z-index: 17;
 }
 
 .icon-container img {

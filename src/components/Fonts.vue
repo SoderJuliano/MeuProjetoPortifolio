@@ -59,7 +59,16 @@ export default {
     }
   },
   methods: {
+    closeAll() {
+      $(".side-colors").css({"display": "none"});
+      $(".colors").css({"display": "none"});
+      $(".dropdown-content").css({"display": "none"});
+      $(".avatares-subcontainer").css({"display": "none"});
+      $(".shapes").css({"display": "none"});
+      $(".dropdown-templates").css({"display": "none"});
+    },
     openFontsContainer(){
+      this.closeAll();
       $(".dropdown-content").css({"display": "grid", "position": "absolute"});
     },
     closeFontDiv(){
@@ -69,7 +78,7 @@ export default {
       const fontConfig = new PageConfig().recoverConfigs();
       fontConfig.setFont(font);
       fontConfig.save();
-      console.log("font config updated")
+      // console.log("font config updated")
       this.$emit("update-configs");
     }
   }
@@ -81,21 +90,29 @@ export default {
 .fonts-container{
   height: 40px;
 }
-.closeFontsDiv{
+.closeFontsDiv {
+  text-align: center;
+  position: relative;
+  width: 40px;
+  padding: 10px;
+  left: 70%;
   border-radius: 5px;
   border: solid 1px black;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  font-size: 16px !important;
-  background-color: black;
+  font-size: 20px !important;
+  background-color: red;
   color: white;
 }
 
 .row{
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
 }
+
+.row p {
+  width: 100px;
+  text-align: start;
+}
+
 @media screen and(min-width: 1001px) {
   .fonts-container{
     width: 100%;

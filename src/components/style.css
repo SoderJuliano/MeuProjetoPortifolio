@@ -94,14 +94,12 @@ body{
 .side-colors{
     display: none;
     padding: 15px;
-    height: 120px;
     width: 300px;
     border-style: solid;
     border-color: black;
     background-color: rgba(245, 245, 245, 0.514);
     margin-left: 15px;
     margin-top: -15px;
-    justify-content: space-around;
 }
 
 .contact-template2 .title{
@@ -272,7 +270,6 @@ h3:hover .editar-animado{
     border-radius: 10px;
     padding: 10px;
     background-color: white;
-    position: relative;
     float: right;
 }
 
@@ -292,6 +289,10 @@ h3:hover .editar-animado{
     word-break: auto-phrase !important;
 }
 
+.contact-template2 .data-container {
+    width: 96%;
+}
+
 /* .data-container:hover {
     background-color: #d7d7d7;
     border-radius: 10px;
@@ -299,6 +300,7 @@ h3:hover .editar-animado{
 
 .template1-experiencias-container{
     padding: 10px;
+    break-inside: avoid;
 }
 
 .template1-experiencias-container:hover {
@@ -367,6 +369,8 @@ button {
 
 .template1-formacao-container span {
     margin-top: 15px;
+    text-align: start;
+    margin-left: 10px;
 }
 
 .phone-enabled {

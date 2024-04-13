@@ -30,7 +30,16 @@ import $ from 'jquery'
 export default {
     name: 'page-cores',
     methods: {
+        closeAll() {
+            $(".side-colors").css({"display": "none"});
+            $(".colors").css({"display": "none"});
+            $(".dropdown-content").css({"display": "none"});
+            $(".avatares-subcontainer").css({"display": "none"});
+            $(".shapes").css({"display": "none"});
+            $(".dropdown-templates").css({"display": "none"});
+        },
         openContainer(){
+            this.closeAll();
             $(".colors").css({"display": "grid", "position": "absolute"});
         },
         closeDiv(){

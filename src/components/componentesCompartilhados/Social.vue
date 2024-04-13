@@ -57,6 +57,7 @@ export default {
     methods:{
         remove(event){
             this.userData.social.splice(this.userData.social.indexOf(event.target.id), 1)
+            // console.log("this.userData.social", this.userData.social)
             localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData))
             //this.$emit('update-user', this.userData)
         },
@@ -71,6 +72,12 @@ export default {
         },
         leavehovert(){
             document.getElementById("edit").style.display = "block";
+        }
+    },
+    watch: {
+        user: function(newVal) {
+            this.userData = newVal
+            this.social = newVal.social
         }
     }
 }
@@ -88,6 +95,10 @@ export default {
 .remove-bnt {
     position: absolute;
     margin-left: 70px;
+}
+
+span:hover .remove-bnt {
+    position: absolute !important;
 }
 
 a {
