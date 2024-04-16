@@ -245,6 +245,9 @@ export default {
 .img-pic {
     position: relative;
     z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .container {
@@ -255,6 +258,10 @@ export default {
 @media screen and (max-width: 1000px ) {
     .pic {
         max-height: 150px;
+    }
+    .ajsut-img {
+        position: absolute;
+        top: 100px;
     }
 }
 
