@@ -158,12 +158,12 @@ export default {
     width: 60%;
     border-radius: 10px;
     padding: 10px;
-    background-color: whitesmoke;
 }
-.tside:hover{
-    background-color: black;
-    color: white;
+
+.tside.touch .multimenu-line {
+    width: 100px;
 }
+
 .avatares-subcontainer{
     display: none;
     padding: 15px;

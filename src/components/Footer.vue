@@ -226,8 +226,7 @@ img{
     justify-content: center;
 }
 .multiMenu{
-    width: 80%;
-    background-color: whitesmoke;
+    width: 100%;
     height: 100%;
     position: fixed;
     bottom: 20px;
@@ -291,6 +290,7 @@ img{
     }
     .footer span {
         margin: auto 10px;
+        min-width: 60px;
     }
 }
 </style>

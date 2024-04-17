@@ -3,20 +3,43 @@
         <div class="header">
             <h3>OPÇÕES</h3>
         </div>
-        <fonts @update-configs="$emit('update-configs')" />
-        <Colors />
-        <pageColor />
-        <Avatares
+        <div class="option">
+            <fonts @update-configs="$emit('update-configs')" />
+            <p class="multimenu-line first"></p>
+        </div>
+        
+        <div class="option">
+            <Colors />
+            <p class="multimenu-line"></p>
+        </div>
+        
+        <div class="option">
+            <pageColor />
+            <p class="multimenu-line"></p>
+        </div>
+        
+        <div class="option">
+            <Avatares
             :user="user"
             :language="language"
             @update-user="$emit('update-user')"
-        />
-        <PicureShape />
-        <Templates
-            :template="template"
-            @now-template1="this.$emit('now-template1')"
-            @now-template2="this.$emit('now-template2')"
-        />
+            />
+            <p class="multimenu-line"></p>
+        </div>
+        
+        <div class="option">
+            <PicureShape />
+            <p class="multimenu-line"></p>
+        </div>
+        
+        <div class="option">
+            <Templates
+                :template="template"
+                @now-template1="this.$emit('now-template1')"
+                @now-template2="this.$emit('now-template2')"
+            />
+            <p class="multimenu-line"></p>
+        </div>
     </div>
 </template>
 
@@ -58,7 +81,30 @@ export default {
     width: 50%;
     height: 30px;
     text-align: center;
+    margin-bottom: 20px;
+    margin-left: 10px;
 }
+
+.multimenu-line {
+    transition: ease-in-out 500ms;
+    border-radius: 0px;
+    margin-left: 10px;
+    width: 0px;
+    border-bottom: 4px solid black;
+    border-radius: 10px;
+    position: absolute;
+    margin-top: -15px;
+}
+
+/* The first child has a different padding for some reason */
+.multimenu-line.first {
+    margin-top: 0px !important;
+}
+
+.option:hover .multimenu-line {
+    width: 100px;
+}
+
 @media only screen and(min-width:1001px) {
     .multiMenu-options {
         max-height: 100%;

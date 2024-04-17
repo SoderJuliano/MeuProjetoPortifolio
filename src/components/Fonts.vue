@@ -6,28 +6,44 @@
               <div class="closeFontsDiv" @click="closeFontDiv()">X</div>
               <div class="row">
                   <p style="font-family: 'Oswald', sans-serif !important; font-weight: bold;" @click=changeFont(Oswald) >Oswald</p>
-                  <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click=changeFont(ZenLoop) >Zen Loop</p>
-                  <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click=changeFont(Fuggles) >Fuggles</p>
               </div>
               <div class="row">
                 <p style="font-family': 'STIX Two Math', serif; font-weight: bold" @click=changeFont(STIXTwoMath) >STIX Two Math</p>
-                <p style="font-family: 'Hina Mincho', serif;" @click=changeFont(HinaMincho) >Hina Mincho</p>
-                <p style="font-family: 'Inconsolata', monospace;" @click=changeFont(Inconsolata) >Inconsolata</p>
               </div>
               <div class="row">
                 <p style="font-family: 'Kaisei Decol', serif;" @click=changeFont(KaiseiDecol) >Kaisei Decol</p>
-                <p style="font-family: 'Teko', sans-serif;" @click=changeFont(Teko) >Teko</p>
-                <p style="font-family: 'Crimson Text', serif;" @click=changeFont(Crimson) >Crimson</p>
               </div>
               <div class="row">
                 <p style="font-family: 'Dongle', sans-serif;" @click=changeFont(Dongle) >Dongle</p>
-                <p style="font-family: 'Mochiy Pop One', sans-serif;" @click=changeFont(Mochiy) >Mochiy</p>
-                <p style="font-family: 'Roboto Mono', monospace;" @click=changeFont(Roboto) >Roboto</p>
               </div>
               <div class="row">
                 <p style="font-family: verdana" @click=changeFont(verdana)>verdana</p>
-                <p style="font-family:'Courier New'" @click=changeFont(CourierNew)>Courier New</p>
               </div>
+              <div class="row">
+                <p style="font-family:'Zen Loop', cursive !important; font-weight: bold" @click=changeFont(ZenLoop) >Zen Loop</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Fuggles', cursive; font-weight: bold" @click=changeFont(Fuggles) >Fuggles</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Hina Mincho', serif;" @click=changeFont(HinaMincho) >Hina Mincho</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Inconsolata', monospace;" @click=changeFont(Inconsolata) >Inconsolata</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Teko', sans-serif;" @click=changeFont(Teko) >Teko</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Crimson Text', serif;" @click=changeFont(Crimson) >Crimson</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Mochiy Pop One', sans-serif;" @click=changeFont(Mochiy) >Mochiy</p>
+              </div>
+              <div class="row">
+                <p style="font-family: 'Roboto Mono', monospace;" @click=changeFont(Roboto) >Roboto</p>
+              </div>
+              <div class="row"><p style="font-family:'Courier New'" @click=changeFont(CourierNew)>Courier New</p></div>
             </div>
         </div>
     </div>
@@ -103,14 +119,17 @@ export default {
   color: white;
 }
 
-.row{
+.row {
+  min-width: 300px;
+  width: 100%;
   display: flex;
   justify-content: start;
 }
 
 .row p {
-  width: 100px;
-  text-align: start;
+  width: 100%;
+  text-align: center;
+  font-weight: bolder;
 }
 
 @media screen and(min-width: 1001px) {
@@ -143,12 +162,9 @@ export default {
     background-color: black;
     color:white;
 }
-.dropdown p{
-    font-weight: bolder;
-    margin-left: 20px;
-}
 
 .dropdown {
+  width: 80vw;
   position: relative;
   display: inline-block;
 }
@@ -156,7 +172,9 @@ export default {
 .dropdown-content {
   display: none;
   position: absolute;
-  min-width: 300px;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
   z-index: 1;
   overflow-y: scroll;
   padding: 15px;
@@ -188,7 +206,7 @@ export default {
   }
 }
 
-.dropdown-content p:hover{
+.dropdown-content .row:hover{
   background-color: gray;
 }
 </style>
