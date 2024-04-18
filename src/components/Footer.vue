@@ -10,9 +10,9 @@
         @now-template2="this.$emit('now-template2')"
     />
     <div class="footer">
-        <img @click="hover = true" v-if="hover==false" @mouseover="hover = true" src="../icons/menustatic.png" alt="">
+        <img @click="hover = true" v-if="hover==false" @mousedown="hover = true" src="../icons/menustatic.png" alt="">
         <img v-else src="../icons/openedmenu.png" alt="menu-gif">
-        <img @click="hover = false" class="close-bnt" @mouseover="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
+        <img @click="hover = false" class="close-bnt" @mousedown="hover = false" v-if="hover==true" src="../icons/close.png" alt="close" />
         <span v-if="this.language != 'pt-br'" @click="this.$emit('language-update', 'pt-br')" >pt-br</span>
         <span v-if="this.language != 'us-en'" @click="this.$emit('language-update', 'us-en')" >en-us</span>
         <imprimir
@@ -197,7 +197,7 @@ export default {
 
 .footer span {
     padding: 5px;
-    width: 45px;
+    width: 60px;
     margin: auto 40px;
     border: solid 1px black;
     border-radius: 15px;
@@ -220,7 +220,7 @@ img{
     width: 25px;
 }
 .close-bnt {
-    right: 70px;
+    right: 30px;
     width: 40px;
     position: absolute;
     justify-content: center;
