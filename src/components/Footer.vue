@@ -231,7 +231,7 @@ img{
     position: fixed;
     bottom: 20px;
     background-color: white;
-    top: 50px;
+    top: 0px;
     z-index: 10;
 }
 /* 

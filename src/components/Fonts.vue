@@ -164,7 +164,7 @@ export default {
 }
 
 .dropdown {
-  width: 80vw;
+  width: 100%;
   position: relative;
   display: inline-block;
 }
