@@ -11,6 +11,13 @@
         </div>
         
         <div class="option">
+            <FontsSize
+                :language="language" 
+                @update-configs="$emit('update-configs')" />
+            <p class="multimenu-line second"></p>
+        </div>
+
+        <div class="option">
             <Colors
                 :language="language" 
             />
@@ -54,6 +61,7 @@
 
 <script lang="js">
 import Fonts from "./Fonts.vue";
+import FontsSize from "./FontsSize.vue";
 import Colors from "./Colors.vue";
 import pageColor from "./pageColor.vue";
 import Avatares from "./Avatares.vue";
@@ -70,6 +78,7 @@ export default {
         Avatares,
         PicureShape,
         Templates,
+        FontsSize
     },
     props:{
         template: Number,
@@ -108,6 +117,16 @@ export default {
 /* The first child has a different padding for some reason */
 .multimenu-line.first {
     margin-top: 0px !important;
+}
+
+/* The second element */
+.multimenu-line.second {
+  margin-top: -5px;
+}
+
+/* The second one was to close of the others */
+.option:nth-child(3) {
+    margin-bottom: 20px;
 }
 
 .option:hover .multimenu-line {
