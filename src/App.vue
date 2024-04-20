@@ -256,6 +256,13 @@ export default {
     change_template(template) {
       this.configs.setTemplate(template);
       localStorage.setItem("configs", JSON.stringify(this.configs));
+      if(this.configs.getTemplate() == 2) {
+        $(".footer .close-bnt").css({"right": "60px"})
+        console.log('set t2')
+      }else {
+        $(".footer .close-bnt").css({"right": "30px"})
+        console.log('set t1')
+      }
     },
     lupdate(lng) {
       // console.log('executing lupdate')
