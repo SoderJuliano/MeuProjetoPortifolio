@@ -130,7 +130,7 @@ export default {
                         break
                     case 'STIX Two Math':
                         $(".main")[0].style.fontFamily = "'STIX Two Math', serif"
-                        this.$emit('font-changed', 'Oswald')
+                        this.$emit('font-changed', "'STIX Two Math', serif")
                         break
                     case 'Hina Mincho':
                         $(".main")[0].style.fontFamily = "'Hina Mincho', serif"

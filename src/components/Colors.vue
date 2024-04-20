@@ -1,6 +1,6 @@
 <template>
     <div class="colors-container">
-        <p class="tside" @click="openContainer()">COR LATERAL</p>
+        <p class="tside" @click="openContainer()">{{ this.language.includes("en") ? "SECONDARY COLOR" : "COR LATERAL"}}</p>
         <div class="side-colors">
             <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="dots-container">
@@ -39,6 +39,7 @@ import $ from 'jquery'
 
 export default {
     name: 'cores',
+    props: {language: String},
     methods: {
         closeAll() {
             $(".side-colors").css({"display": "none"});

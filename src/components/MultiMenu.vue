@@ -1,20 +1,26 @@
 <template>
     <div class="multiMenu-options">
         <div class="header">
-            <h3>OPÇÕES</h3>
+            <h3>{{language.includes("en") ? "OPTIONS" : "OPÇÕES"}}</h3>
         </div>
         <div class="option">
-            <fonts @update-configs="$emit('update-configs')" />
+            <fonts
+                :language="language" 
+                @update-configs="$emit('update-configs')" />
             <p class="multimenu-line first"></p>
         </div>
         
         <div class="option">
-            <Colors />
+            <Colors
+                :language="language" 
+            />
             <p class="multimenu-line"></p>
         </div>
         
         <div class="option">
-            <pageColor />
+            <pageColor 
+                :language="language" 
+            />
             <p class="multimenu-line"></p>
         </div>
         
@@ -28,12 +34,15 @@
         </div>
         
         <div class="option">
-            <PicureShape />
+            <PicureShape
+                :language="language" 
+            />
             <p class="multimenu-line"></p>
         </div>
         
         <div class="option">
             <Templates
+                :language="language"     
                 :template="template"
                 @now-template1="this.$emit('now-template1')"
                 @now-template2="this.$emit('now-template2')"

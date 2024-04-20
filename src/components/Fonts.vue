@@ -1,6 +1,6 @@
 <template>
     <div class="fonts-container" @click="closeFontsContainer">
-      <p class="tside" @click="openFontsContainer">FONTES</p>
+      <p class="tside" @click="openFontsContainer">{{this.language.includes("en") ? "FONTS" : "FONTES"}}</p>
         <div class="dropdown">
             <div class="dropdown-content">
               <div class="closeFontsDiv" @click="closeFontDiv()">X</div>
@@ -56,6 +56,9 @@ import PageConfig  from '../model/configModel';
 export default {
   name: 'fonts',
   emits: ["update-configs"],
+  props: {
+    language: String
+  },
   data(){
     return{
       Oswald: "'Oswald', sans-serif",
@@ -164,7 +167,7 @@ export default {
 }
 
 .dropdown {
-  width: 100%;
+  width: 85%;
   position: relative;
   display: inline-block;
 }

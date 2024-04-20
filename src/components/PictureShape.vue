@@ -1,6 +1,8 @@
 <template>
     <div class="shape-container">
-        <p class="tside" @click="openContainer()">TIPO DE IMAGEM CONTAINER</p>
+        <p class="tside" @click="openContainer()">
+        {{ this.language.includes("en") ? "PHOTO SHAPE TYPE" : "TIPO DE IMAGEM CONTAINER"}}
+        </p>
         <div class="shapes">
             <div>
                 <div class="closeDiv" @click="closeDiv()">X</div>
@@ -19,6 +21,7 @@ import $ from 'jquery'
 
 export default {
     name: 'shapes',
+    props: {language: String},
     methods: {
         closeAll() {
             $(".side-colors").css({"display": "none"});
