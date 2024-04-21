@@ -236,10 +236,26 @@ export default {
     z-index: 1;
 }
 
-.pic {
+.img-avatar {
+    width: 150px;
+    height: 150px;
+    position: relative;
+}
+/* 
+.pic:has(.img-pic) {
     margin: 0 0;
     z-index: 10;
-    overflow: clip;
+    overflow: hidden;
+    position: relative;
+    width: 150px;
+    height: 150px;
+} */
+
+
+.pic {
+    overflow: hidden;
+    margin: 0 0;
+    z-index: 10;
     position: relative;
     width: 150px;
     height: 150px;
