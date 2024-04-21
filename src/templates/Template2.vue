@@ -76,7 +76,7 @@ export default {
     },
     watch: {
         user: function(updated) {
-            // console.log("updated", updated);
+            console.log("updated", updated);
             this.userData = updated;
             this.imageURL = this.userData.realImg;
         }

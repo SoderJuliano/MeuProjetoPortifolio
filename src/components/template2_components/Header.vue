@@ -135,7 +135,7 @@ export default {
 
                 setTimeout(() => {
                     this.imageURL = this.userData.realImg;
-                    $(".img-pic").css({"width": "150px", "height": "150px"});
+                    $(".img-pic").css({"width": "150px", "height": "150px", "display": "flex"});
                 // $(".img-pic").attr('src', url);
                 }, 500)
             }
@@ -165,7 +165,7 @@ export default {
     },
     watch: {
         user: function(updated) {
-            // console.log("updated", updated);
+            console.log("updated", updated);
             this.userData = updated;
             this.imageURL = this.userData.realImg.length > 10 ? this.userData.realImg : this.userData.avatarImg;
         }
@@ -239,8 +239,10 @@ export default {
 .pic {
     margin: 0 0;
     z-index: 10;
-    overflow: hidden;
+    overflow: clip;
     position: relative;
+    width: 150px;
+    height: 150px;
 }
 
 .img-pic {
@@ -258,7 +260,8 @@ export default {
 
 @media screen and (max-width: 1000px ) {
     .pic {
-        max-height: 150px;
+        height: 150px;
+        width: 150px;
     }
     .ajsut-img {
         position: absolute;

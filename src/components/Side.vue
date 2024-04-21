@@ -380,7 +380,8 @@ export default {
   }
 
   .img-avatar {
-    max-width: 150px;
+    width: 150px;
+    height: 150px;
   }
 
   .data-container {

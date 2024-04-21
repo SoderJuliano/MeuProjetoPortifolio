@@ -35,7 +35,7 @@
             <Avatares
             :user="user"
             :language="language"
-            @update-user="$emit('update-user')"
+            @update-user="update"
             />
             <p class="multimenu-line"></p>
         </div>
@@ -70,7 +70,7 @@ import Templates from "./multimenuComponentes/Templates.vue";
 
 export default {
     name: "multi-menu",
-    emits: ["changefont", "update-configs"],
+    emits: ["changefont", "update-configs", "update-user"],
     components: {
         Fonts,
         Colors,
@@ -86,6 +86,11 @@ export default {
         language: String
     },
     emits:['now-template1', 'now-template2', 'update-user'],
+    methods: {
+        update(val) {
+            this.$emit("update-user", val);
+        }
+    }
 };
 </script>
 <style scoped>

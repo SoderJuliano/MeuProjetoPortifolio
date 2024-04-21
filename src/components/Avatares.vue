@@ -121,13 +121,14 @@ export default {
             this.userData.realImg = "";
             
             //img-pic
-            $(".img-avatar").attr("src", this.userData.avatarImg)
-            localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.userData))
+            $(".pic .img-avatar").attr("src", this.userData.avatarImg);
+           
+            this.$emit('update-user', this.userData);
 
-            $(".side .pic .img-pic").css({"display": "none"});
+            $(".pic .img-pic").css({"display": "none"});
 
             setTimeout(() => {
-                $(".side .pic .img-avatar").css({"display": "block","width": "150px", "height": "150px", "border-radius": "50%", "padding": "0px"});
+                $(".pic .img-avatar").css({"display": "block","width": "150px", "height": "150px", "border-radius": "50%", "padding": "0px"});
             }, 400);
         },
         openContainer(){
