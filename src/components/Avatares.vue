@@ -85,8 +85,13 @@ export default {
         },
         changeAvatar(id){
 
-            $(".l1").css("display", "block")
-            $(".l2").css("display", "block")
+            let windowWidth = window.innerWidth;
+
+            if(windowWidth > 700){
+                $(".l1").css("display", "block")
+                $(".l2").css("display", "block")
+            }
+ 
             $(".pic").css("display", "block")
             $(".ajsut-img").css("display", "none")
             $(".template1-formacao-container").css({"z-index": "3"});

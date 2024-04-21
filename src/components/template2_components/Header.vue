@@ -56,6 +56,7 @@ import funcs from "../componentesCompartilhados/util/functions";
 import CenterImg from "../../components/utils/centerImg.vue";
 import CenterImgOpenclose from "../../components/utils/centerImgOpenClose.vue";
 import $ from "jquery";
+import * as svgs from "../utils/svgsText.js";
 
 export default {
     name: "header",
@@ -170,9 +171,25 @@ export default {
             this.imageURL = this.userData.realImg.length > 10 ? this.userData.realImg : this.userData.avatarImg;
         }
     },
+    beforeMount() {
+        if(this.userData.avatarImg.length < 10) {
+            this.userData.avatarImg = svgs.av1;
+        }
+    },
     mounted() {
         // console.log("mounted header")
         $(".img-pic").css({"width": "150px", "height": "150px"});
+        $(document).ready(function() {
+            function checkWindowSize() {
+                if ($(window).width() < 700) {
+                    $('.l1, .l2').hide();
+                } else {
+                    $('.l1, .l2').show();
+                }
+            }
+            checkWindowSize();
+            $(window).resize(checkWindowSize);
+        });
     }
 }
 </script>
@@ -275,10 +292,6 @@ export default {
 }
 
 @media screen and (max-width: 1000px ) {
-    .pic {
-        height: 150px;
-        width: 150px;
-    }
     .ajsut-img {
         position: absolute;
         top: 100px;
