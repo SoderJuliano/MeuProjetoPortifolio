@@ -307,4 +307,10 @@ export default {
     }
 }
 
+@media print {
+    .l1, .l2 {
+        display: block !important;
+    }
+}
+
 </style>
