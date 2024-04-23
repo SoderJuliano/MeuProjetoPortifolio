@@ -29,10 +29,17 @@ export default class User {
         this.id = this.id == 0 ? Math.random() : this.id;
     }
 
+
+    updateToParente(name, val) {
+        this.$emit(name, val);
+    }
+
+
     constructorObject(user) {
         this.updator(user);
         return this;
     }
+    
 
     updator(user)
     {

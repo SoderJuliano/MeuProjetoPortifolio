@@ -47,3 +47,17 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+@media screen and (max-width: 768px) {
+    /* define no modelo mobile o tamanhom da janela de seleção de templetes */
+    .dropdown-templates {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 90vw;
+        height: 100%;
+    }
+}
+</style>

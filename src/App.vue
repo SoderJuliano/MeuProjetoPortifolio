@@ -88,6 +88,7 @@
       @choose-educationIcon="editarIcons('education')"
       @update-experiences="adicionarExperiencias"
       @local-update-user="updateUser"
+      @update-user="updateUser"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
       :sideColor="this.configs?.getSideColor()"
@@ -107,6 +108,7 @@
           @now-template2="change_template(2)"
           @change-main-color="changeMainColor"
           @change-font-color="changeFontColor"
+          @update-user="updateUser"
         />
       </div>
     </div>
@@ -233,7 +235,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      //console.log('user update', userData)
+      console.log('user update', userData)
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
@@ -256,6 +258,13 @@ export default {
     change_template(template) {
       this.configs.setTemplate(template);
       localStorage.setItem("configs", JSON.stringify(this.configs));
+      if(this.configs.getTemplate() == 2) {
+        $(".footer .close-bnt").css({"right": "60px"})
+        console.log('set t2')
+      }else {
+        $(".footer .close-bnt").css({"right": "30px"})
+        console.log('set t1')
+      }
     },
     lupdate(lng) {
       // console.log('executing lupdate')

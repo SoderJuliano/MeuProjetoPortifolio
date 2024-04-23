@@ -141,8 +141,9 @@ export default {
         window.open("https://www.linkedin.com/in/julianosoder/");
       },
       support(){
+        // caixa baae423e-b98a-4f7b-b32b-fb8174b175b3
         localStorage.getItem('lng') != 'us-en'
-          ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> f22a0b49-3c64-41af-9101-266672b139ba")
+          ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> baae423e-b98a-4f7b-b32b-fb8174b175b3")
           : alert("Support this project sending money or sharing it with friends")
       },
       more(){
