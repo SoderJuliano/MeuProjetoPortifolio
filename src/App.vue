@@ -998,6 +998,7 @@ export default {
     display: block;
     width: 100%;
     height: 100%;
+    margin-top: 50px;
   }
 
   .main.template {
@@ -1029,6 +1030,7 @@ export default {
   .menuupimg-down {
     display: none;
   }
+
 }
 @media screen and (min-width: 1001px) {
   .template {

@@ -167,7 +167,7 @@ export default {
   display: none;
 }
 .template2-formacao-title {
-  text-align: center;
+  text-align: start;
   width: 90%;
   font-weight: bolder;
 }
