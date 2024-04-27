@@ -1030,6 +1030,7 @@ export default {
   .menuupimg-down {
     display: none;
   }
+
 }
 @media screen and (min-width: 1001px) {
   .template {
