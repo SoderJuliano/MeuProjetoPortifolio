@@ -140,7 +140,7 @@ export default {
   display: none;
 }
 
-.template1-formacao-container:hover .template1-remove-bnt{
+.template1-formacao-container:hover .template1-remove-bnt {
   display: block;
   background-color: white;
   padding: 10px;
@@ -211,9 +211,14 @@ export default {
   padding: 5px;
 }
 @media print {
-  .template1-remove-bnt{
+  .template1-formacao-container:hover .template1-remove-bnt {
     display: none;
   }
+
+  .template1-remove-bnt{
+    display: none !important;
+  }
+  
   .template2-remove-bnt{
     display: none !important;
   }
