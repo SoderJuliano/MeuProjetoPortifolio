@@ -215,6 +215,10 @@ export default {
     display: none;
   }
   .template2-remove-bnt{
+    display: none !important;
+  }
+
+  .template2-formacao-container:hover .template2-remove-bnt {
     display: none;
   }
 }
