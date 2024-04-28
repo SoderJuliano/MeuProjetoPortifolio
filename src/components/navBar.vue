@@ -324,4 +324,12 @@ li{
   width: 100%;
   display: flex;
 }
+
+@media screen and (max-width: 1000px) {
+  
+  /* Menu sandwish desapear when screen is less than 1000px */
+  #showMenu {
+    display: none !important;
+  }
+}
 </style>
