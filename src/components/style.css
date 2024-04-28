@@ -39,6 +39,7 @@ body{
         width: 93% !important;
         margin-left: 0px !important;
     }
+
 }
 
 @media (min-width: 1000px) {
@@ -63,6 +64,11 @@ body{
     }
     .select-template button{
         margin-top: 5px;
+    }
+
+    /* .container tem um padding que fica estranho no mobile, isso corrige */
+    .contact-template2 {
+        margin-left: -10px !important;
     }
 }
 
@@ -132,9 +138,15 @@ body{
 }
 
 .social-item-template2{
+    display: flex;
     padding: 10px;
+    min-height: 40px;
+    align-items: center;
+    justify-content: start;
     height: 100%;
     width: 100%;
+    margin-bottom: 10px;
+    position: relative;
 }
 
 .social-item-template2 img {
@@ -169,7 +181,7 @@ body{
 }
 
 .social-item-template2:hover {
-    display: block;
+    display: flex;
     background-color: #d7d7d7;
     border-radius: 10px;
 }
@@ -241,12 +253,9 @@ h3:hover .editar-animado{
     }
 }
 
-.social-item-template2{
-    margin-bottom: 10px;
-}
-
 .social-item-template2 span{
     word-break: break-all;
+    padding-top: 20px;
 }
 
 .social-itens-template2{

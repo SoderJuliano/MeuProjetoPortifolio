@@ -1,5 +1,5 @@
 <template>
-  <div :class="tstyle" class="experiencias">
+  <div :class="mainclass">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
             :className="tstyle"
@@ -43,6 +43,7 @@ export default {
   },
   data(){
     return{
+      mainclass: 'experiencias templete'+this.template,
       jobHired: '',
       jobEnd: '',
       lasJobHired: '',
@@ -166,5 +167,12 @@ export default {
 
 .experiences-template1-title-black{
   color: black;
+}
+
+@media screen and (max-width: 400px) {
+/* templete 2 tem um padding que deixa estranho isso, esse margin negativo corrige */
+  .experiencias.templete2.template-data {
+    margin-left: -5px !important;
+  }
 }
 </style>
