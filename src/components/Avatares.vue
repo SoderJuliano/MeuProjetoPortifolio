@@ -4,7 +4,7 @@
         <div class="avatares-subcontainer">
             <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="avatar-line">
-                <img class="avatar" 
+                <img class="avatar"
                     id="a1"
                     @click="changeAvatar"
                     :src=av1
@@ -73,7 +73,7 @@ export default {
             av6: svgs.av6
         }
     },
-    emits:['update-user'],  
+    emits:['update-user'],
     methods:{
         closeAll() {
             $(".side-colors").css({"display": "none"});
@@ -91,14 +91,14 @@ export default {
                 $(".l1").css("display", "block")
                 $(".l2").css("display", "block")
             }
- 
+
             $(".pic").css("display", "block")
             $(".ajsut-img").css("display", "none")
             $(".template1-formacao-container").css({"z-index": "3"});
             $("#headericon").css({"z-index": "2"});
-            
+
             // console.log("o id é ->"+id.target.id)
-            
+
             if(id.target.id=="a1"){
                 this.userData.avatarImg = this.av1
             }else if(id.target.id=="a2"){
@@ -124,10 +124,10 @@ export default {
             }
 
             this.userData.realImg = "";
-            
+
             //img-pic
             $(".pic .img-avatar").attr("src", this.userData.avatarImg);
-           
+
             this.$emit('update-user', this.userData);
 
             $(".pic .img-pic").css({"display": "none"});
@@ -142,6 +142,15 @@ export default {
         },
         closeDiv(){
             $(".avatares-subcontainer").css({"display": "none"});
+        }
+    },
+    watch: {
+        user: {
+        deep: true,
+        //handle the change
+        handler() {
+            this.userData = this.user
+        }
         }
     }
 }

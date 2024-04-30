@@ -292,6 +292,10 @@ export default {
 }
 
 @media screen and (max-width: 1000px ) {
+    .pic {
+        height: 150px;
+        width: 150px;
+    }
     .ajsut-img {
         position: absolute;
         top: 100px;
