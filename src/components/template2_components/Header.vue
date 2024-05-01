@@ -2,7 +2,7 @@
     <div class="container" :style="getStyle()">  
         <div :class="tstyle">
             <div class="line">
-                <div class="l1"></div>
+                <div v-if="this.userData?.avatarImg?.length > 10" class="l1"></div>
                 <div class="ajsut-img">
                     <CenterImg 
                         :language="language" 
@@ -28,7 +28,7 @@
                         class="img-pic"
                     />
                 </div>
-                <div class="l2"></div>
+                <div v-if="this.userData?.avatarImg?.length > 10" class="l2"></div>
             </div>
             <img 
                 src="../../icons/header/pencil.png" 
