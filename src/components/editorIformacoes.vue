@@ -461,10 +461,11 @@ export default {
         user: {
             deep: true,
             handler() {
-                this.userData = this.userData.constructorObject(this.user);
+                let model = new UserModel();
+                this.userData = model.constructorObject(this.user);
             }
         }
-  }
+    }
 }
 </script>
 
