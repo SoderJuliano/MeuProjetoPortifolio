@@ -532,46 +532,36 @@ export default {
       );
     },
     changeOptions(p) {
+      const pic = $(".pic").first();
+      // imgpic is firing NullPointer and is no needed anymore
+      //const imgpic = $(".img-pic").first();
+
       // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
       // e um palhativo
       if(p.target.textContent.split('').length > 30){
         return;
       }
       if (p.target.id == "square") {
-        // console.log("teste");
-        document.getElementsByClassName("pic")[0].style["border-radius"] =
-          "0px";
-        document.getElementsByClassName("img-pic")[0].style["border-radius"] =
-          "0px";
-        document.getElementsByClassName("pic")[0].style["border"] =
-          "2px solid black";
+        pic.css({"border-radius": "0px",
+          "border": "2px solid black"
+        });
       } else if (p.target.id == "triangleUp") {
-        document.getElementsByClassName("pic")[0].style["border-radius"] =
-          "11px";
-        document.getElementsByClassName("img-pic")[0].style["border-radius"] =
-          "11px";
-        document.getElementsByClassName("pic")[0].style["border"] =
-          "2px solid black";
+        pic.css({"border-radius": "11px",
+          "border": "2px solid black"
+        });
       } else if (p.target.id == "circle") {
-        document.getElementsByClassName("pic")[0].style["border-radius"] =
-          "50%";
-        document.getElementsByClassName("img-pic")[0].style["border-radius"] =
-          "50%";
-        document.getElementsByClassName("pic")[0].style["border"] =
-          "2px solid black";
+        pic.css({"border-radius": "50%",
+          "border": "2px solid black"
+        });
       } else if (p.target.id == "colorfull-circle") {
-        document.getElementsByClassName("pic")[0].style["border-radius"] =
-          "50%";
-        document.getElementsByClassName("img-pic")[0].style["border-radius"] =
-          "50%";
-        document.getElementsByClassName("pic")[0].style["border-top"] =
-          "5px solid rgb(255, 2, 2)";
-        document.getElementsByClassName("pic")[0].style["border-left"] =
-          "5px solid rgb(68, 0, 255)";
-        document.getElementsByClassName("pic")[0].style["border-right"] =
-          "5px solid rgb(0, 158, 61)";
-        document.getElementsByClassName("pic")[0].style["border-bottom"] =
-          "5px solid rgb(255, 0, 221)";
+
+        pic.css({"border-radius": "50%",
+          "border-top": "5px solid rgb(255, 2, 2)",
+          "border-left": "5px solid rgb(68, 0, 255)",
+          "border-right": "5px solid rgb(0, 158, 61)",
+          "border-bottom": "5px solid rgb(255, 0, 221)"
+        });
+
       } else if (p.target.textContent.includes("pag-") == true) {
         let i = 0;
         let all = document.getElementsByClassName("title");
