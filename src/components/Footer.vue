@@ -65,25 +65,21 @@ export default {
             if(p.target.id=="square"){
 
                 $(".pic")[0].style['border-radius'] = '0px';
-                $(".img-pic")[0].style['border-radius'] = '0px';
                 $(".pic")[0].style['border'] = '2px solid black';
 
             }else if(p.target.id=="triangleUp"){
 
                 $(".pic")[0].style['border-radius'] = '11px';
-                $(".img-pic")[0].style['border-radius'] = '11px';
                 $(".pic")[0].style['border'] = '2px solid black';
 
             }else if(p.target.id=="circle"){
 
                 $(".pic")[0].style['border-radius'] = '50%';
-                $(".img-pic")[0].style['border-radius'] = '50%';
                 $(".pic")[0].style['border'] = '2px solid black';
 
             }else if(p.target.id=="colorfull-circle"){
 
                 $(".pic")[0].style['border-radius'] = '50%';
-                $(".img-pic")[0].style['border-radius'] = '50%';
                 $(".pic")[0].style['border-top'] = '5px solid rgb(255, 2, 2)';
                 $(".pic")[0].style['border-left'] = '5px solid rgb(68, 0, 255)';
                 $(".pic")[0].style['border-right'] = '5px solid rgb(0, 158, 61)';
