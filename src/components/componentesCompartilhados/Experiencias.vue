@@ -5,32 +5,41 @@
             :className="tstyle"
             :startShowing="user.userExperiences.length > 0"
         />
-        <img id="edit-exp" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
+        <img src="../../icons/editar.png" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
-        <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
+        <div>
+          <img v-if="item" @clic="editJob(item)" :src="editIcon" @click="editar(true)" alt="editar" class="remove-bnt">
+          <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
+        </div>
           <h3>{{item.position}}</h3>
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
-            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span>
+            <span style="margin-btop: 0; margin-right:10px;">{{item.dateHired}}</span>
             <span v-if="item.dateHired && item.dateFired">{{ item.dateHired ? this.language=='pt-br'? 'até' : 'until' : ''}}</span>
             <span v-else-if="item.dateHired && !item.dateFired">{{item.dateHired ? this.language=='pt-br'? 'trabalho atual.' : 'current job.' : ''}}</span>
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
           </div>
           <p style="background-color:  whitesmoke; padding: 10px; border-radius: 10px;">{{item.description}}</p>
-      </div>
+          <div v-if="showEditing" class="job-edit">
+            <wrappEditModel :job="getJobModel(item)" :language="language" @editar-end="editar" @update-experiencias="updateExperiencias"/>
+          </div>
+        </div>
   </div>
 </template>
 
 <script>
 
+import * as svgs from "../utils/svgsText.js";
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import jobModel from '../../model/jobModel.js';
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Experiencias',
-  emits: ['add-experiencia', "update-experiences"],
-  components: {showSwitcher},
+  emits: ['add-experiencia', 'update-experiencias'],
+  components: {showSwitcher, wrappEditModel},
   props:{
     template: Number,
     titulo: Array,
@@ -50,10 +59,27 @@ export default {
       lastJobEnd: '',
       tstyle: 'experiences-template'+this.template+'-title-'+ this.fontColor ? this.fontColor : "black",
       cstyle: 'template'+this.template+'-experiencias-container',
-      jobs: this.experiences
+      jobs: this.experiences,
+      editIcon: svgs.editIcon,
+      showEditing: false
     }
   },
   methods:{
+      updateExperiencias(job) {
+        this.jobs.map(each => {
+          if(each.id == job.id) {
+            each = job
+          }
+        })
+        thiss.$emit("update-experiencias", this.jobs);
+      },
+      getJobModel(item) {
+        const model = new jobModel();
+        return model.retrieveJob(item);
+      },
+      editar(val) {
+        this.showEditing = val
+      },
       hovert(){
         this.template == 2 ?
         document.getElementById("edit-exp").style.display = "none" : ''
@@ -96,6 +122,16 @@ export default {
     display: none;
   }
 }
+
+.job-edit {
+  position: relative;
+  top: 0;
+}
+
+.editar:active {
+  transform: scale(0.9);
+}
+
 .editar-animado-resumo{
   width:20px;
   display: none;

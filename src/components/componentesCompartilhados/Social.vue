@@ -24,6 +24,9 @@
                 <!-- fazer um componente para este botao -->
                 <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
             </div>
+            <!-- <div v-if="showEditing" class="obj-edit">
+                <wrappEditModel :objeto="item" :language="language" @editar-end="editar" @update-experiencias="updateExperiencias"/>
+            </div> -->
         </div>
     </div>
 </template>

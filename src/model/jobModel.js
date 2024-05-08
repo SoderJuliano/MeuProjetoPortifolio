@@ -12,9 +12,19 @@ export default class Job {
         // console.log("new job id: "+this.id);
     }
 
+    /** recieve a item refers a job, but switch into a job model to have access all the methods */
+    retrieveJob(item) {
+        this.id = item.id;
+        this.company = item.company;
+        this.description = item.description;
+        this.dateHired = item.dateHired;
+        this.dateFired = item.dateFired;
+        this.position = item.position;
+        return this;
+    }
+
 
     /** getters */
-    
     getId(){return this.id}
     getCompany(){return this.company}
     getDescription(){return this.description}

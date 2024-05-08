@@ -39,7 +39,6 @@ export default class User {
         this.updator(user);
         return this;
     }
-    
 
     updator(user)
     {
