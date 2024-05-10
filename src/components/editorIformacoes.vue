@@ -209,7 +209,7 @@ export default {
                 this.ptitle = this.language == 'pt-br' ? this.string[0].adress : this.string[1].adress
             }
             else if((title==strings[0].companyName || title==strings[1].companyName)  && this.ptitle == ''){
-                const job = new Job(this.userData.userExperiences.length);
+                const job = new Job(this.userData?.userExperiences?.length);
                 this.currentJobId = job.getId();
                 job.setCompany($("#modal-input").val())
                 job.setPosition($("#modal-input2").val())

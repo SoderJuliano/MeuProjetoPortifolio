@@ -3,14 +3,14 @@
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
             :className="tstyle"
-            :startShowing="user.userExperiences.length > 0"
+            :startShowing="jobs?.length > 0"
         />
         <img src="../../icons/editar.png" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
         <div>
-          <img v-if="item" @clic="editJob(item)" :src="editIcon" @click="editar(true)" alt="editar" class="remove-bnt">
+          <img v-if="item" :src="editIcon" @click="editar(true)" alt="editar" class="remove-bnt">
           <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
         </div>
           <h3>{{item.position}}</h3>
@@ -23,7 +23,12 @@
           </div>
           <p style="background-color:  whitesmoke; padding: 10px; border-radius: 10px;">{{item.description}}</p>
           <div v-if="showEditing" class="job-edit">
-            <wrappEditModel :job="getJobModel(item)" :language="language" @editar-end="editar" @update-experiencias="updateExperiencias"/>
+            <wrappEditModel
+              :job="getJobModel(item)"
+              :language="language"
+              @editar-end="editar"
+              @update-experiencias="updateExperiencias"
+            />
           </div>
         </div>
   </div>
@@ -66,12 +71,13 @@ export default {
   },
   methods:{
       updateExperiencias(job) {
-        this.jobs.map(each => {
-          if(each.id == job.id) {
-            each = job
+        console.log(job)
+        this.jobs.forEach((each, index) => {
+          if (each.id === job.id) {
+            this.jobs[index] = job;
           }
-        })
-        thiss.$emit("update-experiencias", this.jobs);
+        });
+        this.$emit("update-experiencias", this.jobs);
       },
       getJobModel(item) {
         const model = new jobModel();

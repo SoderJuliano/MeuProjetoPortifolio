@@ -169,7 +169,6 @@ span {
 @media screen and (min-width: 1000px) {
     .template-data-social{
         min-height: 100px;
-        background-color: rgb(255 240 240);
         border-radius: 5px;
     }
 }

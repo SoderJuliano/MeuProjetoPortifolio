@@ -30,7 +30,7 @@
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
                 @add-experiencia="$emit('add-experiencia')"
-                @update-experiences="$emit('update-experiences')"
+                @update-experiencias="$emit('update-experiencias')"
                 @choose-phoneIcon="this.$emit('choose-phoneIcon')"
                 :user="userData"
                 :mainColor="mainColor"

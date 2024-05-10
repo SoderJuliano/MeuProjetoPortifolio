@@ -59,7 +59,7 @@
       @choose-emailIcon="editarIcons('email')"
       @choose-educationIcon="editarIcons('education')"
       @choose-phoneIcon="editarIcons('phone')"
-      @update-experiences="adicionarExperiencias"
+      @update-experiencias="adicionarExperiencias"
       class="template"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
@@ -240,7 +240,7 @@ export default {
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
-      // console.log(experiencias)
+      console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },

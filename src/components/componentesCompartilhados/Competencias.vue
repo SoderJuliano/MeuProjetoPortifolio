@@ -8,20 +8,31 @@
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
         <span class="data-container-page">{{item}}
+          <img v-if="item" :src="editIcon" @click="editar(true)" alt="editar" class="remove-bnt">
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
         </span>
+        <div v-if="showEditing" class="competence-edit">
+          <wrappEditModel
+            :textItem="item"
+            :language="language"
+            @editar-end="editar"
+            @update-experiencias="updateExperiencias"
+          />
+        </div>
       </div>
   </div>
 </template>
 
 <script>
-
+import * as svgs from "../utils/svgsText.js";
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Competencias',
   components: {
-      showSwitcher
+      showSwitcher,
+      wrappEditModel
   },
   props: {
     titulo: Array,
@@ -36,11 +47,16 @@ export default {
   data(){
     return{
       userData : this.user,
-      conteinerstyle : "template"+this.template+"-competencias"
+      conteinerstyle : "template"+this.template+"-competencias",
+      showEditing: false,
+      editIcon: svgs.editIcon,
     }
   },
   emits: ['add-competencia'],
   methods:{
+      editar(val) {
+        this.showEditing = val
+      },
       hovert(){
         this.template == 2 ?
         document.getElementById("edit-com").style.display = "none" : ''
@@ -81,6 +97,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.competence-edit {
+  position: relative;
+  top: 0;
+}
 .editar-competencias-animado{
   float: right;
   width: 20px;
