@@ -10,7 +10,7 @@
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
         <div>
-          <img v-if="item" :src="editIcon" @click="editar(true)" alt="editar" class="remove-bnt">
+          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
           <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
         </div>
           <h3>{{item.position}}</h3>
@@ -22,7 +22,7 @@
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
           </div>
           <p style="background-color:  whitesmoke; padding: 10px; border-radius: 10px;">{{item.description}}</p>
-          <div v-if="showEditing" class="job-edit">
+          <div v-if="showEditing == index" class="job-edit">
             <wrappEditModel
               :job="getJobModel(item)"
               :language="language"
@@ -66,7 +66,7 @@ export default {
       cstyle: 'template'+this.template+'-experiencias-container',
       jobs: this.experiences,
       editIcon: svgs.editIcon,
-      showEditing: false
+      showEditing: null
     }
   },
   methods:{
@@ -125,6 +125,9 @@ export default {
 <style scoped>
 @media print{
   .remove-bnt{
+    display: none;
+  }
+  .job-edit {
     display: none;
   }
 }

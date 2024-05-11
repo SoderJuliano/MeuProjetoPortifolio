@@ -7,10 +7,10 @@
             <span>Position: </span><input id="position" type="text" :value="job?.position"  />
         </div>
         <div class="item" >
-            <span>Date start: </span><input id="dateStart" type="month" :value="job?.item"  />
+            <span>Date start: </span><input id="dateStart" type="month" :value="job?.dateHired"  />
         </div>
         <div class="item" >
-            <span>Date end: </span><input id="dateEnd" type="month" :value="job?.item"  />
+            <span>Date end: </span><input id="dateEnd" type="month" :value="job?.dateFired"  />
         </div>
         <div class="item" >
             <span>Description: </span><textarea id="description" cols="40" rows="5" :value="job?.description"  />
@@ -20,21 +20,25 @@
             <button @click="editarEnd">{{this.language.includes("pt") ? "Fechar" : "Close"}}</button>
         </div>
     </div>
-    <div v-if="job == null && text == null && data">
-        <div v-for="(value, key) in data" :key="key">
+    <div v-if="job == null && text == null && data" class="wrapMain">
+        <div class="item" v-for="(value, key) in data" :key="key">
             <span>{{ key }}</span>
             <input @change="changeData(data[key])" v-model="data[key]" />
         </div>
-        <button @click="editarEnd">{{this.language.includes("pt") ? "Cancelar" : "Cancel"}}</button>
-        <button @click="salvar('data')">{{this.language.includes("pt") ? "Salvar" : "Save"}}</button>
-    </div>
-    <div v-if="job == null && data == null && text">
-        <div>
+        <div class="div-bnts">
+            <button @click="salvar('data')">{{this.language.includes("pt") ? "Salvar" : "Save"}}</button>
+            <button @click="editarEnd">{{this.language.includes("pt") ? "Cancelar" : "Cancel"}}</button>
+        </div>
+        </div>
+    <div v-if="job == null && data == null && text" class="wrapMain">
+        <div class="item">
             <span>{{this.language.includes("pt") ? "Texto" : "Text"}}</span>
             <input type="text" id="text" :value="text" />
         </div>
-        <button @click="editarEnd">{{this.language.includes("pt") ? "Cancelar" : "Cancel"}}</button>
-        <button @click="salvar('text')">{{this.language.includes("pt") ? "Salvar" : "Save"}}</button>
+        <div class="div-bnts">
+            <button @click="salvar('text', 'update-competence')">{{this.language.includes("pt") ? "Atualizar" : "Update"}}</button>
+            <button @click="editarEnd">{{this.language.includes("pt") ? "Cancelar" : "Cancel"}}</button>
+        </div>
     </div>
 </template>
 <script>
@@ -49,16 +53,18 @@ export default {
         font: String,
         language: String,
         objeto: Object,
-        textItem: String
+        textItem: String,
+        textIndex: Number
     },
-    emits: ["update-experiences", "editar-end"],
+    emits: ["update-experiences", "editar-end", "update-competence"],
     data() {
         return {
             job: this.job,
             font: this.font,
             language: this.language,
             data: this.objeto,
-            text: this.textItem
+            text: this.textItem,
+            index: this.textIndex
         }
     },
     methods: {
@@ -73,11 +79,15 @@ export default {
         editarEnd() {
             this.$emit("editar-end")
         },
-        salvar(value) {
+        salvar(value, whereTo) {
             if (value === 'text') {
-                this.$emit("update-experiencias", $("#text").val())
+                let textObj = {
+                    text: $("#text").val(),
+                    index: this.index
+                }
+                this.$emit(whereTo, textObj)
             } else if (value === 'data') {
-                this.$emit("update-experiencias", this.data)
+                this.$emit(whereTo, this.data)
             }
         },
         updateData(value) {

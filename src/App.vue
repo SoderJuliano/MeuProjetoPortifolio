@@ -60,6 +60,7 @@
       @choose-educationIcon="editarIcons('education')"
       @choose-phoneIcon="editarIcons('phone')"
       @update-experiencias="adicionarExperiencias"
+      @update-competences="updateCompetences"
       class="template"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
@@ -183,6 +184,9 @@ export default {
     Tips,
   },
   methods: {
+    updateCompetences(value) {
+      this.user.competence = value;
+    },
     updateConfigs(){
       this.configs.updateMyself();
     },

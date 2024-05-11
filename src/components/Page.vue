@@ -42,6 +42,7 @@
     />
     <Competencias
       @add-competencia="$emit('add-competencia')"
+      @update-competences="updateCompetences"
       class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
@@ -77,7 +78,8 @@ export default {
     "add-experiencia",
     "add-nome",
     "add-profissao",
-    "update-experiencias"
+    "update-experiencias",
+    "update-competences"
   ],
   data() {
     return {
@@ -106,6 +108,9 @@ export default {
     fontColor: String,
   },
   methods: {
+    updateCompetences(value) {
+      this.$emit("update-competences", value);
+    },
     reEmitUpdate(value){
       this.$emit("update-experiencias", value);
     },

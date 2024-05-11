@@ -8,15 +8,16 @@
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
         <span class="data-container-page">{{item}}
-          <img v-if="item" :src="editIcon" @click="editar(true)" alt="editar" class="remove-bnt">
+          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
         </span>
-        <div v-if="showEditing" class="competence-edit">
+        <div v-if="showEditing == index" class="competence-edit">
           <wrappEditModel
             :textItem="item"
+            :textIndex="index"
             :language="language"
             @editar-end="editar"
-            @update-experiencias="updateExperiencias"
+            @update-competence="updateCompetences"
           />
         </div>
       </div>
@@ -48,12 +49,17 @@ export default {
     return{
       userData : this.user,
       conteinerstyle : "template"+this.template+"-competencias",
-      showEditing: false,
+      showEditing: null,
       editIcon: svgs.editIcon,
     }
   },
-  emits: ['add-competencia'],
+  emits: ['add-competencia', 'update-competences'],
   methods:{
+      updateCompetences(val) {
+        this.userData.competence[val.index] = val.text;
+        console.log(this.userData.competence[val.index]);
+        this.$emit('update-competences', this.userData.competence);
+      },
       editar(val) {
         this.showEditing = val
       },
@@ -122,6 +128,7 @@ export default {
   margin: 0 auto;
   padding-top: 20px;
   display: flex;
+  flex-direction: column;
 }
 
 .competencias-container:hover .remove-bnt{
@@ -175,6 +182,9 @@ export default {
     display: none;
   }
   .remove-bnt{
+    display: none;
+  }
+  .competence-edit {
     display: none;
   }
 }
