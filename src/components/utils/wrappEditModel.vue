@@ -54,7 +54,8 @@ export default {
         language: String,
         objeto: Object,
         textItem: String,
-        textIndex: Number
+        textIndex: Number,
+        fontSize: String
     },
     emits: ["update-experiences", "editar-end", "update-competence"],
     data() {
@@ -64,7 +65,7 @@ export default {
             language: this.language,
             data: this.objeto,
             text: this.textItem,
-            index: this.textIndex
+            index: this.textIndex,
         }
     },
     methods: {
@@ -97,8 +98,8 @@ export default {
                 }
             });
             console.log('on change update data:', this.data);
-        }
-    }
+        },
+    },
 }
 </script>
 <style scoped >
@@ -126,6 +127,7 @@ export default {
         border: none;
         width: 70%;
         padding: 5px;
+        font-size: 16px;
     }
 
     .item textarea {

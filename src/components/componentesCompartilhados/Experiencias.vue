@@ -16,7 +16,7 @@
           <h3>{{item.position}}</h3>
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
-            <span style="margin-btop: 0; margin-right:10px;">{{item.dateHired}}</span>
+            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span>
             <span v-if="item.dateHired && item.dateFired">{{ item.dateHired ? this.language=='pt-br'? 'até' : 'until' : ''}}</span>
             <span v-else-if="item.dateHired && !item.dateFired">{{item.dateHired ? this.language=='pt-br'? 'trabalho atual.' : 'current job.' : ''}}</span>
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
