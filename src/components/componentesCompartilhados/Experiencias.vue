@@ -5,7 +5,7 @@
             :className="tstyle"
             :startShowing="jobs?.length > 0"
         />
-        <img src="../../icons/editar.png" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
+        <img src="../../icons/editar.png" id="edit-exp" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
@@ -87,12 +87,16 @@ export default {
         this.showEditing = val
       },
       hovert(){
-        this.template == 2 ?
-        document.getElementById("edit-exp").style.display = "none" : ''
+        let element = document.getElementById("edit-exp");
+        if (element && this.template == 2) {
+          element.style.display = "none";
+        }
       },
       leavehovert(){
-        this.template == 2 ?
-        document.getElementById("edit-exp").style.display = "block" : ''
+        let element = document.getElementById("edit-exp");
+        if (element && this.template == 2) {
+          element.style.display = "block";
+        }
       },
       getStyle(){
           return{
