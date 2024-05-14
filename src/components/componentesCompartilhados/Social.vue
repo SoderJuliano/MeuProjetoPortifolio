@@ -3,7 +3,7 @@
         <div class="social">
             <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
                 {{language == 'pt-br' ? titulo[0] : titulo[1]}}
-                <showSwitcher className="template-data-social" :startShowing="user.social.length > 0" />
+                <showSwitcher className="template-data-social" :startShowing="user.social?.length > 0" />
                 <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
                 <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
@@ -20,24 +20,34 @@
                 <img v-else src="../../icons/page.svg" alt="svg" class="social-icon">
                 <a v-if="item.includes('link:')" :href="item.split('link:')[1]">{{ item.split("link:")[1] }}</a>
                 <span v-else>{{item}}</span>
+                <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt editar">
                 <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
                 <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
+                <div v-if="showEditing == index" class="obj-edit">
+                    <wrappEditModel
+                        :textItem="item"
+                        :textIndex="index"
+                        :language="language"
+                        :event="'update-social'"
+                        @editar-end="editar"
+                        @update-social="updateSocial"
+                    />
+                </div>
             </div>
-            <!-- <div v-if="showEditing" class="obj-edit">
-                <wrappEditModel :objeto="item" :language="language" @editar-end="editar" @update-experiencias="updateExperiencias"/>
-            </div> -->
         </div>
     </div>
 </template>
 <script>
-
+import * as svgs from "../utils/svgsText.js";
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
     name: "Social",
     components: {
-        showSwitcher
+        showSwitcher,
+        wrappEditModel
     },
     props:{
         template: Number,
@@ -54,10 +64,21 @@ export default {
             templateClassItemContainer: "social-itens-template"+this.template,
             templateClassItem: "social-item-template"+this.template,
             social: this.user.social,
-            userData: this.user
+            userData: this.user,
+            showEditing: null,
+            editIcon: svgs.editIcon,
         }
     },
     methods:{
+        updateSocial(value) {
+            this.userData.social[value.index] = value.text;
+            console.log("updateSocial", this.userData.social);
+            sessionStorage.setItem('updateSocial', this.userData.social);
+        },
+        editar(value) {
+            console.log(value)
+            this.showEditing = value;
+        },
         remove(event){
             this.userData.social.splice(this.userData.social.indexOf(event.target.id), 1)
             // console.log("this.userData.social", this.userData.social)
@@ -94,10 +115,21 @@ export default {
 }
 </style>
 <style scoped>
+/* Na lateral fica porbaixo do page no t1 se for position relative  */
+.obj-edit {
+    position: absolute;
+    margin-top: 30px;
+    z-index: 1;
+}
 
 .remove-bnt {
     position: absolute;
     margin-left: 70px;
+}
+
+.remove-bnt.editar {
+    position: absolute;
+    margin-left: 130px;
 }
 
 span:hover .remove-bnt {
@@ -107,10 +139,12 @@ span:hover .remove-bnt {
 a {
     min-height: 30px;
     padding-top: 10px;
+    width: 100%;
 }
 
 span {
     min-height: 30px;
+    width: 100%;
 }
 .social-template1{
     align-self: center;
@@ -162,6 +196,9 @@ span {
         padding-top: 0px;
     }
     .remove-bnt{
+        display: none;
+    }
+    .obj-edit {
         display: none;
     }
 }

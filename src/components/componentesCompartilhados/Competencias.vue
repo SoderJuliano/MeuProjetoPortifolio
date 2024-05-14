@@ -16,6 +16,7 @@
             :textItem="item"
             :textIndex="index"
             :language="language"
+            :event="'update-competence'"
             @editar-end="editar"
             @update-competence="updateCompetences"
           />

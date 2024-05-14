@@ -61,6 +61,7 @@
       @choose-phoneIcon="editarIcons('phone')"
       @update-experiencias="adicionarExperiencias"
       @update-competences="updateCompetences"
+      @update-social="handleUpdateSocial"
       class="template"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
@@ -183,7 +184,35 @@ export default {
     Template2,
     Tips,
   },
+  mounted() {
+    let lastSocial = this.user.social;
+    let lastFormacao = this.user.grade;
+    setInterval(() => {
+      const newUpdate = sessionStorage.getItem('updateSocial');
+      const newFormacao = sessionStorage.getItem('updateFormacao');
+      if(newUpdate != null && newUpdate != lastSocial) {
+        lastSocial = newUpdate;
+        this.handleUpdateSocial(newUpdate.split(','));
+        sessionStorage.removeItem('updateSocial');
+      }
+      if(newFormacao != null && lastFormacao != newFormacao) {
+        lastFormacao = newFormacao;
+        this.handleUpdateFormacao(newFormacao);
+        sessionStorage.removeItem('updateFormacao');
+      }
+    }, 1500);
+  },
   methods: {
+    handleUpdateFormacao(value) {
+      this.user.grade = value;
+      this.updateUser(this.user);
+    },
+    handleUpdateSocial(value) {
+      console.log("handleUpdateSocial", value)
+      this.user.social = value;
+      this.updateUser(this.user);
+      console.log("user", this.user)
+    },
     updateCompetences(value) {
       this.user.competence = value;
     },
@@ -714,6 +743,8 @@ export default {
       };
     },
   },
+  // fim methods
+
   beforeMount() {
     axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
 
@@ -938,7 +969,7 @@ export default {
                 // console.log(error);
               });
           }
-        });    
+        });
       });
 
     // General configs
@@ -950,8 +981,7 @@ export default {
     }
     this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
-
-  }
+  },
 };
 </script>
 

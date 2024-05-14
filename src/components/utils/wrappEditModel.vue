@@ -36,7 +36,7 @@
             <input type="text" id="text" :value="text" />
         </div>
         <div class="div-bnts">
-            <button @click="salvar('text', 'update-competence')">{{this.language.includes("pt") ? "Atualizar" : "Update"}}</button>
+            <button @click="salvar('text', this.eventEmit)">{{this.language.includes("pt") ? "Atualizar" : "Update"}}</button>
             <button @click="editarEnd">{{this.language.includes("pt") ? "Cancelar" : "Cancel"}}</button>
         </div>
     </div>
@@ -54,9 +54,14 @@ export default {
         language: String,
         objeto: Object,
         textItem: String,
-        textIndex: Number
+        textIndex: Number,
+        event: String
     },
-    emits: ["update-experiences", "editar-end", "update-competence"],
+    emits: [
+        "update-experiences", "editar-end",
+        "update-competence", "update-social",
+        "update-formacao"
+    ],
     data() {
         return {
             job: this.job,
@@ -64,7 +69,8 @@ export default {
             language: this.language,
             data: this.objeto,
             text: this.textItem,
-            index: this.textIndex
+            index: this.textIndex,
+            eventEmit: this.event
         }
     },
     methods: {
@@ -85,7 +91,11 @@ export default {
                     text: $("#text").val(),
                     index: this.index
                 }
-                this.$emit(whereTo, textObj)
+                if (typeof whereTo === 'string') {
+                    this.$emit(whereTo, textObj)
+                }else {
+                    console.error("whereTo  não é do tipo string", whereTo);
+                }
             } else if (value === 'data') {
                 this.$emit(whereTo, this.data)
             }

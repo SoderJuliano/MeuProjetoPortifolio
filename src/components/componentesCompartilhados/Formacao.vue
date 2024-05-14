@@ -11,7 +11,20 @@
       <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
           <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon"/>
           <span @touchstart="showRemoveItem(index)" class="data-container">{{item}}</span>
-          <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
+          <div class="bnt-divs">
+            <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
+            <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="editar">
+          </div>
+          <div v-if="showEditing == index" class="competence-edit">
+            <wrappEditModel
+              :textItem="item"
+              :textIndex="index"
+              :language="language"
+              :event="'update-formacao'"
+              @editar-end="editar"
+              @update-competence="updateCompetences"
+            />
+          </div>
       </div>
   </div>
 </template>
@@ -20,11 +33,12 @@
 
 import showSwitcher from '../iconComponent/showSwitcher.vue';
 import $ from 'jquery';
-
+import * as svgs from "../utils/svgsText.js";
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Formacao',
-  components: {showSwitcher},
+  components: {showSwitcher, wrappEditModel},
   emits: ['add-formacao', 'choose-educationIcon'],
   data(){
     return{
@@ -33,7 +47,9 @@ export default {
       containerstyle: "template"+this.template+"-formacao",
       conteinerdata: "template"+this.template+"-formacao-container",
       remove: "template"+this.template+"-remove-bnt",
-      isShowingRemoveBnt: false
+      isShowingRemoveBnt: false,
+      showEditing: null,
+      editIcon: svgs.editIcon,
     }
   },
   props:{
@@ -45,6 +61,9 @@ export default {
     sideColor: String,
   },
   methods:{
+    editar(index){
+      this.showEditing = index;
+    },
     showRemoveItem(item) {
       this.isShowingRemoveBnt ?
       $('#'+item).css({'display': 'none'})
@@ -77,6 +96,34 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.competence-edit {
+    position: absolute;
+    margin-top: 30px;
+    z-index: 1;
+}
+
+.bnt-divs {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.editar {
+  display: none;
+}
+
+.template1-formacao-container:hover  .editar {
+    position: relative;
+    right: 10px;
+    display: flex;
+    width: 20px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-left: 20px;
+}
+
 .editar-animado-habilidade{
   width: 20px;
   height: 20px;
@@ -133,9 +180,7 @@ export default {
   margin-top: 15px;
 }
 .template1-remove-bnt{
-  position: absolute;
   align-self: center;
-  right: 40px;
   width: 40px;
   display: none;
 }
@@ -145,6 +190,7 @@ export default {
   background-color: white;
   padding: 10px;
   border-radius: 10px;
+  width: 20px;
 }
 
 .template2-formacao-container span {
