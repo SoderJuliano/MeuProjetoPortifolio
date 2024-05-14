@@ -5,7 +5,7 @@
             :className="tstyle"
             :startShowing="jobs?.length > 0"
         />
-        <img src="../../icons/editar.png" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
+        <img src="../../icons/editar.png" id="edit-exp" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
@@ -16,7 +16,7 @@
           <h3>{{item.position}}</h3>
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
-            <span style="margin-btop: 0; margin-right:10px;">{{item.dateHired}}</span>
+            <span style="margin-top: 0; margin-right:10px;">{{item.dateHired}}</span>
             <span v-if="item.dateHired && item.dateFired">{{ item.dateHired ? this.language=='pt-br'? 'até' : 'until' : ''}}</span>
             <span v-else-if="item.dateHired && !item.dateFired">{{item.dateHired ? this.language=='pt-br'? 'trabalho atual.' : 'current job.' : ''}}</span>
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
@@ -87,12 +87,16 @@ export default {
         this.showEditing = val
       },
       hovert(){
-        this.template == 2 ?
-        document.getElementById("edit-exp").style.display = "none" : ''
+        let element = document.getElementById("edit-exp");
+        if (element && this.template == 2) {
+          element.style.display = "none";
+        }
       },
       leavehovert(){
-        this.template == 2 ?
-        document.getElementById("edit-exp").style.display = "block" : ''
+        let element = document.getElementById("edit-exp");
+        if (element && this.template == 2) {
+          element.style.display = "block";
+        }
       },
       getStyle(){
           return{

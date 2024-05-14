@@ -107,8 +107,8 @@ export default {
                 }
             });
             console.log('on change update data:', this.data);
-        }
-    }
+        },
+    },
 }
 </script>
 <style scoped >
@@ -136,6 +136,7 @@ export default {
         border: none;
         width: 70%;
         padding: 5px;
+        font-size: 16px;
     }
 
     .item textarea {
