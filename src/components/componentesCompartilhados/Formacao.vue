@@ -13,7 +13,7 @@
           <span @touchstart="showRemoveItem(index)" class="data-container">{{item}}</span>
           <div class="bnt-divs">
             <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
-            <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="editar">
+            <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="editar-item">
           </div>
           <div v-if="showEditing == index" class="competence-edit">
             <wrappEditModel
@@ -22,7 +22,7 @@
               :language="language"
               :event="'update-formacao'"
               @editar-end="editar"
-              @update-competence="updateCompetences"
+              @update-formacao="updateFormacao"
             />
           </div>
       </div>
@@ -61,6 +61,12 @@ export default {
     sideColor: String,
   },
   methods:{
+    updateFormacao(value) {
+      console.log('formacao', value)
+      this.mygrade[value.index] = value.text;
+      console.log('typeof mygrade', JSON.stringify(this.mygrade))
+      sessionStorage.setItem("updateFormacao", this.mygrade);
+    },
     editar(index){
       this.showEditing = index;
     },
@@ -97,7 +103,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .competence-edit {
-    position: absolute;
+    position: fixed;
     margin-top: 30px;
     z-index: 1;
 }
@@ -109,11 +115,11 @@ export default {
   justify-content: center;
 }
 
-.editar {
+.editar-item {
   display: none;
 }
 
-.template1-formacao-container:hover  .editar {
+.template1-formacao-container:hover  .editar-item {
     position: relative;
     right: 10px;
     display: flex;

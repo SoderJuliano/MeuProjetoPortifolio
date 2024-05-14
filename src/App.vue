@@ -197,7 +197,7 @@ export default {
       }
       if(newFormacao != null && lastFormacao != newFormacao) {
         lastFormacao = newFormacao;
-        this.handleUpdateFormacao(newFormacao);
+        this.handleUpdateFormacao(newFormacao.split(','));
         sessionStorage.removeItem('updateFormacao');
       }
     }, 1500);
