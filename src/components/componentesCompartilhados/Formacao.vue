@@ -8,14 +8,16 @@
           <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
           <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
-      <div v-for="(item, index) in mygrade" :key="index" :class="conteinerdata">
+      <div class="formacao-item-list" v-for="(item, index) in mygrade" :key="index">
+        <div :class="conteinerdata">
           <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon"/>
           <span @touchstart="showRemoveItem(index)" class="data-container">{{item}}</span>
-          <div class="bnt-divs">
+        </div>
+        <div class="bnt-divs">
             <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
             <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="editar-item">
-          </div>
-          <div v-if="showEditing == index" class="competence-edit">
+        </div>
+        <div v-if="showEditing == index" class="competence-edit">
             <wrappEditModel
               :textItem="item"
               :textIndex="index"
@@ -102,46 +104,55 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.formacao-item-list:hover .editar-item {
+  display: flex;
+}
+
+.formacao-item-list:hover .template1-remove-bnt {
+  display: flex;
+}
+
+.formacao-item-list {
+  position: relative;
+}
+
 .competence-edit {
-    position: fixed;
-    margin-top: 30px;
-    z-index: 1;
+  position: relative;
+  margin-top: 30px;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  justify-content: space-between;
 }
 
 .bnt-divs {
   display: flex;
   width: 100%;
+  margin-top: -55px;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
+  position: absolute;
+  z-index: 4;
 }
 
 .editar-item {
+  width: 20px;
   display: none;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-.template1-formacao-container:hover  .editar-item {
-    position: relative;
-    right: 10px;
-    display: flex;
-    width: 20px;
-    background-color: white;
-    border-radius: 10px;
-    padding: 10px;
-    margin-left: 20px;
-}
-
-.editar-animado-habilidade{
+.editar-animado-habilidade {
   width: 20px;
   height: 20px;
   float: right;
   display: none;
 }
-.template2-formacao-title:hover .editar-animado-habilidade{
-  display: block;
-}
-.template2-formacao-title:hover .editar{
-  display: none;
-}
+
 .template1-formacao-container {
   width: 80%;
   height: 100%;
@@ -158,7 +169,7 @@ export default {
   z-index: 1;
 }
 
-.template1-formacao-container:hover {
+/* .template1-formacao-container:hover {
   background-color: #d7d7d7;
   border-radius: 10px;
 }
@@ -166,7 +177,7 @@ export default {
 .template2-formacao-container:hover {
   background-color: #d7d7d7;
   border-radius: 10px;
-}
+} */
 
 .template2-formacao-container{
   display: flex;
@@ -187,16 +198,11 @@ export default {
 }
 .template1-remove-bnt{
   align-self: center;
-  width: 40px;
+  width: 20px;
   display: none;
-}
-
-.template1-formacao-container:hover .template1-remove-bnt {
-  display: block;
   background-color: white;
   padding: 10px;
   border-radius: 10px;
-  width: 20px;
 }
 
 .template2-formacao-container span {
@@ -276,6 +282,10 @@ export default {
   }
 
   .template2-formacao-container:hover .template2-remove-bnt {
+    display: none;
+  }
+  
+  .editar-item {
     display: none;
   }
 }
