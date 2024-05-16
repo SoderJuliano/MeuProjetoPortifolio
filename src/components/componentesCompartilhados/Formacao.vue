@@ -6,7 +6,7 @@
             :startShowing="user.grade.length > 0"
             />
           <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
-          <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
+          <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-formacao')"/>
       </p>
       <div class="formacao-item-list" v-for="(item, index) in mygrade" :key="index">
         <div :class="conteinerdata">
@@ -110,6 +110,10 @@ export default {
 }
 
 .formacao-item-list:hover .template1-remove-bnt {
+  display: flex;
+}
+
+.formacao-item-list:hover .template2-remove-bnt {
   display: flex;
 }
 
@@ -219,9 +223,6 @@ export default {
   padding: 10px;
   border-radius: 10px;
   width: 20px;
-  height: 20px;
-  margin-top: 20px;
-  margin-right: 35px;
   display: none;
 }
 .template2-formacao-title {
