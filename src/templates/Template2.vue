@@ -20,6 +20,7 @@
                 @adicionar-habilidade="$emit('adicionar-habilidade')"
                 @choose-educationIcon="$emit('choose-educationIcon')"
                 @choose-skillIcon="$emit('choose-skillIcon')"
+                @update-competences="reEmitCompetences"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"
@@ -53,8 +54,21 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences",
-            "choose-addressIcon", "choose-phoneIcon", "choose-emailIcon", "choose-educationIcon", "choose-skillIcon", "local-update-user"],
+    emits:["add-info",
+        "add-SocialLink",
+        "update-competences",
+        "add-experiencia",
+        "add-resumo",
+        "add-habilidade",
+        "add-nome",
+        "adicionar-habilidade",
+        "update-experiences",
+        "choose-addressIcon",
+        "choose-phoneIcon",
+        "choose-emailIcon",
+        "choose-educationIcon",
+        "choose-skillIcon",
+        "local-update-user"],
     props:{
         mainColor: String,
         sideColor: String,
@@ -72,6 +86,9 @@ export default {
     methods:{
         reEmit(data){
             this.$emit('local-update-user', data);
+        },
+        reEmitCompetences(data){
+            this.$emit('update-competences', data);
         }
     },
     watch: {

@@ -174,16 +174,20 @@ body{
     margin-right: 20px;
 }
 .social-item-template2:hover .remove-bnt-delete{
-    display: block;
     width: 20px;
-    position: relative;
-    margin-top: -5px;
-}
-
-.social-item-template2:hover {
+    position: absolute;
+    right: 40px;
+    top: 10px;
     display: flex;
     background-color: #d7d7d7;
-    border-radius: 10px;
+}
+
+.social-item-template2:hover .remove-bnt.editar{
+    width: 20px;
+    position: absolute;
+    display: flex;
+    right: 10px;
+    top: 17px;
 }
 
 .social-item-template2:hover .remove-bnt{

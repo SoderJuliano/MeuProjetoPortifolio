@@ -16,6 +16,7 @@
             :language="language"
             template=2
             @add-competencia="$emit('add-competencia')"
+            @update-competences="onUpdateCompetences"
             :sideColor="sideColor"
         />
         <Formacao
@@ -61,6 +62,11 @@ export default {
             }
         }
     },
+    methods: {
+        onUpdateCompetences(competences){
+            this.$emit('update-competences', competences)
+        }
+    },
     components: {
         Resumo,
         Competencias,
@@ -72,7 +78,7 @@ export default {
         sideColor: String,
         language: String,
     },
-    emits:["add-resumo", "add-habilidade", "adicionar-habilidade", "choose-educationIcon"]
+    emits:["add-resumo", "add-habilidade", "adicionar-habilidade", "choose-educationIcon", "update-competences"]
 }
 </script>
 <style scoped>

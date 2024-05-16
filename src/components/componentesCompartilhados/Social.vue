@@ -7,8 +7,8 @@
                 <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
                 <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
-        <div :class="template == 2 ? templateClassItemContainer : 'social-row'">
-            <div :class="templateClassItem" v-for="(item, index) in this.userData.social" :key="index" >
+        <div v-for="(item, index) in this.userData.social" :key="index" :class="template == 2 ? templateClassItemContainer : 'social-row'">
+            <div :class="templateClassItem" >
                 <div v-if="item.includes('github') || item.includes('youtube') || item.includes('linkedin') || item.includes('stackoverflow') || item.includes('facebook') || item.includes('twitter')">
                     <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
                     <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
@@ -24,7 +24,8 @@
                 <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
                 <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
-                <div v-if="showEditing == index" class="obj-edit">
+            </div>
+            <div v-if="showEditing == index" class="obj-edit">
                     <wrappEditModel
                         :textItem="item"
                         :textIndex="index"
@@ -33,7 +34,6 @@
                         @editar-end="editar"
                         @update-social="updateSocial"
                     />
-                </div>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@ export default {
 <style scoped>
 /* Na lateral fica porbaixo do page no t1 se for position relative  */
 .obj-edit {
-    position: absolute;
+    position: relative;
     margin-top: 30px;
     z-index: 1;
 }
@@ -204,9 +204,10 @@ span {
 }
 
 @media screen and (min-width: 1000px) {
-    .template-data-social{
+    .template-data-social {
         min-height: 100px;
         border-radius: 5px;
+        height: auto;
     }
 }
 

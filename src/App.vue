@@ -88,6 +88,7 @@
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
+      @update-competences="updateCompetences"
       @update-experiences="adicionarExperiencias"
       @local-update-user="updateUser"
       @update-user="updateUser"
@@ -211,10 +212,10 @@ export default {
       console.log("handleUpdateSocial", value)
       this.user.social = value;
       this.updateUser(this.user);
-      console.log("user", this.user)
     },
     updateCompetences(value) {
       this.user.competence = value;
+      this.updateUser(this.user);
     },
     updateConfigs(){
       this.configs.updateMyself();

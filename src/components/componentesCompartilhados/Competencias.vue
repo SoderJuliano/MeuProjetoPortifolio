@@ -58,7 +58,6 @@ export default {
   methods:{
       updateCompetences(val) {
         this.userData.competence[val.index] = val.text;
-        console.log(this.userData.competence[val.index]);
         this.$emit('update-competences', this.userData.competence);
       },
       editar(val) {
