@@ -171,12 +171,23 @@ export default {
   margin-bottom: 10px;
 }
 
-.template1-experiencias-container:hover .remove-bnt{
+.template1-experiencias-container:hover .remove-bnt {
   display: block;
   background-color: white;
   padding: 10px;
   border-radius: 10px;
   float: right;
+}
+
+.template2-experiencias-container:hover .remove-bnt {
+  display: block;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.template2-experiencias-container:hover .remove-bnt:last-child {
+  margin-left: 20%;
 }
 
 .title {

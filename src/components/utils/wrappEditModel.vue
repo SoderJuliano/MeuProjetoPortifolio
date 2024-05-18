@@ -81,6 +81,10 @@ export default {
             this.job.setDateFired($('#dateEnd').val())
             this.job.setDescription($('#description').val())
             this.$emit("update-experiencias", this.job)
+
+            setTimeout(() => {
+                this.editarEnd();
+            }, 800);
         },
         editarEnd() {
             this.$emit("editar-end")
@@ -99,6 +103,9 @@ export default {
             } else if (value === 'data') {
                 this.$emit(whereTo, this.data)
             }
+            setTimeout(() => {
+                this.editarEnd();
+            }, 900);
         },
         updateData(value) {
             this.data.forEach(el => {

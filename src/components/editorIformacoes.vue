@@ -88,7 +88,10 @@
                 <p>{{ptitle}}</p>
                 <input
                     :value="this.userData.getAdressPart('street')"
-                    @change="this.userData.setAdressPart('street', $event.target.value)" id="modal-input1" type="text" :placeholder=this.getRua()>
+                    @change="this.userData.setAdressPart('street', $event.target.value)"
+                    id="modal-input1"
+                    type="text"
+                    :placeholder=this.getRua()>
                 <input
                     :value="this.userData.getAdressPart('number')"
                     @change="this.userData.setAdressPart('number', $event.target.value)" id="modal-input2" type="text" :placeholder=this.getNumero()>
