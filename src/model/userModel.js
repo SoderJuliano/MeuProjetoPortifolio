@@ -39,7 +39,6 @@ export default class User {
         this.updator(user);
         return this;
     }
-    
 
     updator(user)
     {
@@ -59,6 +58,9 @@ export default class User {
 
     setAdressPart(witch, value) {
         // console.log('setting witch: '+witch+' and value: '+value);
+        if (!this.contact.adressObject) {
+            this.contact.adressObject = {}; // Inicializando como um objeto vazio
+        }
         switch (witch) {
             case 'country':
                 this.contact.adressObject.country = value;
@@ -101,7 +103,7 @@ export default class User {
                 break;
             case 'number':
                 return this.contact.adressObject.number;
-            break;
+                break;
             case 'street':
                 return this.contact.adressObject.street;
                 break;

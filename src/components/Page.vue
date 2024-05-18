@@ -42,6 +42,7 @@
     />
     <Competencias
       @add-competencia="$emit('add-competencia')"
+      @update-competences="updateCompetences"
       class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
@@ -52,11 +53,11 @@
     />
     <Experiencias
       @add-experiencia="$emit('add-experiencia')"
-      @update-experiences="$emit('update-experiences')"
+      @update-experiencias="reEmitUpdate"
       class="data-container template-data"
       :cor="cor"
       :fontColor="fontColor"
-      :experiences="u.userExperiences"
+      :experiences="u?.userExperiences"
       template="1"
       :titulo="titles.experiencias"
       :language="language"
@@ -77,7 +78,8 @@ export default {
     "add-experiencia",
     "add-nome",
     "add-profissao",
-    "update-experiences"
+    "update-experiencias",
+    "update-competences"
   ],
   data() {
     return {
@@ -106,6 +108,12 @@ export default {
     fontColor: String,
   },
   methods: {
+    updateCompetences(value) {
+      this.$emit("update-competences", value);
+    },
+    reEmitUpdate(value){
+      this.$emit("update-experiencias", value);
+    },
     getStyle() {
       return {
         "background-color": `${this.cor}`,

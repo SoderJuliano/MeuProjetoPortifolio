@@ -24,7 +24,7 @@
         <Experiencias
             class="template-data"
             @add-Experiencia="$emit('add-Experiencia')"
-            @update-experiences="$emit('update-experiences')"
+            @update-experiencias="reEmitUpdate"
             template=2
             :language="language"
             :titulo="titulo.experiencias"
@@ -53,6 +53,10 @@ export default {
         language: String,
     },
     methods:{
+        reEmitUpdate(value){
+            console.log("reemetindo o valor "+value);
+            this.$emit("update-experiences", value);
+        },
         getStyle(){
             return{
                 "border-left": "2px solid "+this.sideColor,

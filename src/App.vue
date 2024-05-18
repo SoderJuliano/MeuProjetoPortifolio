@@ -59,7 +59,9 @@
       @choose-emailIcon="editarIcons('email')"
       @choose-educationIcon="editarIcons('education')"
       @choose-phoneIcon="editarIcons('phone')"
-      @update-experiences="adicionarExperiencias"
+      @update-experiencias="adicionarExperiencias"
+      @update-competences="updateCompetences"
+      @update-social="handleUpdateSocial"
       class="template"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
@@ -86,6 +88,7 @@
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
+      @update-competences="updateCompetences"
       @update-experiences="adicionarExperiencias"
       @local-update-user="updateUser"
       @update-user="updateUser"
@@ -182,7 +185,38 @@ export default {
     Template2,
     Tips,
   },
+  mounted() {
+    let lastSocial = this.user.social;
+    let lastFormacao = this.user.grade;
+    setInterval(() => {
+      const newUpdate = sessionStorage.getItem('updateSocial');
+      const newFormacao = sessionStorage.getItem('updateFormacao');
+      if(newUpdate != null && newUpdate != lastSocial) {
+        lastSocial = newUpdate;
+        this.handleUpdateSocial(newUpdate.split(','));
+        sessionStorage.removeItem('updateSocial');
+      }
+      if(newFormacao != null && lastFormacao != newFormacao) {
+        lastFormacao = newFormacao;
+        this.handleUpdateFormacao(newFormacao.split(','));
+        sessionStorage.removeItem('updateFormacao');
+      }
+    }, 1500);
+  },
   methods: {
+    handleUpdateFormacao(value) {
+      this.user.grade = value;
+      this.updateUser(this.user);
+    },
+    handleUpdateSocial(value) {
+      console.log("handleUpdateSocial", value)
+      this.user.social = value;
+      this.updateUser(this.user);
+    },
+    updateCompetences(value) {
+      this.user.competence = value;
+      this.updateUser(this.user);
+    },
     updateConfigs(){
       this.configs.updateMyself();
     },
@@ -240,7 +274,7 @@ export default {
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
-      // console.log(experiencias)
+      console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
@@ -710,6 +744,8 @@ export default {
       };
     },
   },
+  // fim methods
+
   beforeMount() {
     axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
 
@@ -934,7 +970,7 @@ export default {
                 // console.log(error);
               });
           }
-        });    
+        });
       });
 
     // General configs
@@ -946,8 +982,7 @@ export default {
     }
     this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
-
-  }
+  },
 };
 </script>
 

@@ -8,20 +8,33 @@
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
         <span class="data-container-page">{{item}}
+          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
         </span>
+        <div v-if="showEditing == index" class="competence-edit">
+          <wrappEditModel
+            :textItem="item"
+            :textIndex="index"
+            :language="language"
+            :event="'update-competence'"
+            @editar-end="editar"
+            @update-competence="updateCompetences"
+          />
+        </div>
       </div>
   </div>
 </template>
 
 <script>
-
+import * as svgs from "../utils/svgsText.js";
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Competencias',
   components: {
-      showSwitcher
+      showSwitcher,
+      wrappEditModel
   },
   props: {
     titulo: Array,
@@ -36,11 +49,20 @@ export default {
   data(){
     return{
       userData : this.user,
-      conteinerstyle : "template"+this.template+"-competencias"
+      conteinerstyle : "template"+this.template+"-competencias",
+      showEditing: null,
+      editIcon: svgs.editIcon,
     }
   },
-  emits: ['add-competencia'],
+  emits: ['add-competencia', 'update-competences'],
   methods:{
+      updateCompetences(val) {
+        this.userData.competence[val.index] = val.text;
+        this.$emit('update-competences', this.userData.competence);
+      },
+      editar(val) {
+        this.showEditing = val
+      },
       hovert(){
         this.template == 2 ?
         document.getElementById("edit-com").style.display = "none" : ''
@@ -81,6 +103,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.competence-edit {
+  position: relative;
+  top: 0;
+}
 .editar-competencias-animado{
   float: right;
   width: 20px;
@@ -102,6 +128,7 @@ export default {
   margin: 0 auto;
   padding-top: 20px;
   display: flex;
+  flex-direction: column;
 }
 
 .competencias-container:hover .remove-bnt{
@@ -155,6 +182,9 @@ export default {
     display: none;
   }
   .remove-bnt{
+    display: none;
+  }
+  .competence-edit {
     display: none;
   }
 }
