@@ -4,11 +4,11 @@
         <img id="close" @click="close()" src="../../icons/close-circle.svg" alt="V">
         <img id="open" @click="open()" src="../../icons/resize-circle.svg" alt="< >">
         <input
-          type="file"
-          id="input"
-          ref="fileInput"
-          style="display: none"
-          @change="onIMGChange"
+            type="file"
+            id="input"
+            ref="fileInput"
+            style="display: none"
+            @change="onIMGChange"
         />
     </div>
 </template>

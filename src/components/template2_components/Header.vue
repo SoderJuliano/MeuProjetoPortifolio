@@ -3,15 +3,18 @@
         <div :class="tstyle">
             <div class="line">
                 <div v-if="this.userData?.avatarImg?.length > 10" class="l1"></div>
-                <div class="ajsut-img">
+                <div class="ajsut-img" v-if="userData?.realImg?.length > 10">
                     <CenterImg :language="language" />
                     <CenterImgOpenclose :language="language" :user="userData" @user-update="reEmit"
                         class="ajust-img-open-close" />
                 </div>
-                <div @click="$refs.imgInput.click()" class="pic">
-                    <img v-if="this.userData?.realImg?.length < 10 && this.userData?.avatarImg?.length > 10"
+                <div class="pic">
+                    <img @click="$refs.imgInput.click()"
+                        v-if="this.userData?.realImg?.length < 10 && this.userData?.avatarImg?.length > 10"
                         :src="this.userData?.avatarImg" alt="perfil-avatar" class="img-avatar" />
-                    <img v-if="imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic" />
+                    <img v-if="imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic"
+                        :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag"
+                        @mousedown="startDrag" />
                 </div>
                 <div v-if="this.userData?.avatarImg?.length > 10" class="l2"></div>
             </div>
@@ -47,12 +50,59 @@ export default {
     },
     data() {
         return {
+            isDragging: false,
+            startX: 0,
+            startY: 0,
+            posX: 0,
+            posY: 0,
             imageURL: this.user.realImg,
             tstyle: "profile-style-" + this.fontColor,
             userData: this.user
         }
     },
     methods: {
+        startDrag(event) {
+            event.preventDefault();
+            this.isDragging = true;
+            if (window.innerWidth < 1000) {
+                // For mobile devices
+                this.startX = event.touches[0].screenX - this.posX;
+                this.startY = event.touches[0].screenY - this.posY;
+                // console.log("mobile")
+                document.addEventListener("touchmove", this.onDragMobile);
+                document.addEventListener("touchend", this.onStopMobile);
+            } else {
+                // For desktop devices
+                this.startX = event.clientX - this.posX;
+                this.startY = event.clientY - this.posY;
+                document.addEventListener("mousemove", this.onDrag);
+                document.addEventListener("mouseup", this.stopDrag);
+            }
+        },
+        onDrag(event) {
+            if (this.isDragging) {
+                this.posX = event.clientX - this.startX;
+                this.posY = event.clientY - this.startY;
+            }
+        },
+        onDragMobile(event) {
+            if (this.isDragging) {
+                const clientX = event.touches[0].screenX;
+                const clientY = event.touches[0].screenY;
+                this.posX = clientX - this.startX;
+                this.posY = clientY - this.startY;
+            }
+        },
+        onStopMobile(event) {
+            this.isDragging = false;
+            document.removeEventListener("touchmove", this.onDragMobile);
+            document.removeEventListener("touchend", this.onStopMobile);
+        },
+        stopDrag() {
+            this.isDragging = false;
+            document.removeEventListener("mousemove", this.onDrag);
+            document.removeEventListener("mouseup", this.stopDrag);
+        },
         avaliateFile() {
             const divisor = 4;
             let base64 = sessionStorage.getItem("newImage");
@@ -165,6 +215,9 @@ export default {
             checkWindowSize();
             $(window).resize(checkWindowSize);
         });
+        if (this.userData?.realImg?.length > 10) {
+            $(".ajsut-img").css({ "display": "flex", "z-index": "2" });
+        }
     }
 }
 </script>
