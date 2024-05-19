@@ -11,7 +11,7 @@
     @adicionar-formacao="adicionarNovaFormacao"
     @adicionar-habilidade="adicionarNovaHabilidade"
     @update-name="updateName"
-    @add-profissao="this.showModal('profissao')"
+    @add-profissao="editarProfissao"
     @update-user="updateUser"
   />
   <nav-bar
@@ -51,7 +51,7 @@
       @add-nome="editarNome"
       @choose-addressIcon="editarIcons('adress')"
       @choose-skillIcon="editarIcons('skill')"
-      @add-profissao="this.showModal('profissao')"
+      @add-profissao="editarProfissao"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
@@ -83,7 +83,7 @@
       @choose-phoneIcon="editarIcons('phone')"
       @choose-addressIcon="editarIcons('adress')"
       @choose-emailIcon="editarIcons('email')"
-      @add-profissao="this.showModal('profissao')"
+      @add-profissao="editarProfissao"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
@@ -338,6 +338,12 @@ export default {
     },
     editarResumo() {
       this.showModal("resumo");
+    },
+    editarProfissao() {
+      this.showModal('profissao');
+      setTimeout(() => {
+        $("#modal-input").val(this.user.profession);
+      }, 600);
     },
     editarNome(){
       this.showModal('nome')

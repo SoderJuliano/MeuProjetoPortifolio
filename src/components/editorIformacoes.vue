@@ -34,15 +34,15 @@
                 </div>
                 <div v-else>
                     <!-- togle date -->
-                    <p v-if="ptitle">
+                    <div v-if="ptitle">
                         <div style="display: flex; justify-content: start;">
                             <span style="margin-right: 10px;">{{language == 'pt-br' ? "Data Simplificada" : "Simplified Data"}}</span>
                             <label class="switch">
-                                <input @change="simplifiedDate = !simplifiedDate" type="checkbox" checked>
+                                <input @change="simplifiedDate = !simplifiedDate" type="checkbox" checked  />
                                 <span class="slider round"></span>
                             </label>
                         </div>
-                    </p>
+                    </div>
 
                     <div class="modal-internal-content" v-if="ptitle">
                         <p  style="margin-right: 10px">{{ptitle}}</p>
