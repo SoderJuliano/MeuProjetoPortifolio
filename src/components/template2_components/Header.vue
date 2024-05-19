@@ -1,5 +1,5 @@
 <template>
-    <div class="container" :style="getStyle()">
+    <div class="container-header" :style="getStyle()">
         <div :class="tstyle">
             <div class="line">
                 <div v-if="this.userData?.avatarImg?.length > 10" class="l1"></div>
@@ -217,6 +217,7 @@ export default {
         });
         if (this.userData?.realImg?.length > 10) {
             $(".ajsut-img").css({ "display": "flex", "z-index": "2" });
+            $(".container-header").css({"z-index": "10"})
         }
     }
 }
@@ -240,11 +241,13 @@ export default {
     transform: scale(.9);
 }
 
-.container {
+.container-header {
     width: 100%;
     min-height: 200px;
     background-color: gray;
+    z-index: 0;
 }
+
 
 .profile-style-white {
     color: white;
@@ -315,11 +318,6 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.container {
-    position: relative;
-    z-index: 10;
 }
 
 @media screen and (max-width: 1000px) {

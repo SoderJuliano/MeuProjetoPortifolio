@@ -43,6 +43,8 @@ export default {
             $(".ajsut-img").css({"display": "flex", "z-index": "0"});
             $(".template1-formacao-container").css({"z-index": "3"});
             $("#headericon").css({"z-index": "2"});
+            // define para 0 para nãoatrapalhar as ações de botões de edição no corpo do t2
+            $(".container-header").css({"z-index": "0"});
         },
         open() {
             $("#open").css("display", "none");
@@ -51,6 +53,8 @@ export default {
             $(".ajsut-img").css({"display": "flex", "z-index": "2"});
             $(".template1-formacao-container").css({"z-index": "1"});
             $("#headericon").css({"z-index": "1"});
+            // define para 10 para que não fique por de baixo docorpo do template 2
+            $(".container-header").css({"z-index": "10"});
         },
         onIMGChange(img) {
             if (img.target.files[0].size > 2762231) {

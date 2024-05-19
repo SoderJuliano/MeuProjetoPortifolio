@@ -1,5 +1,5 @@
 <template>
-  <div @mouseover="hovert" @mouseleave="leavehovert" class="resumo">
+  <div class="resumo">
       <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher className="resumo" :startShowing="user.resume != ''" />
         <img id="edit-re" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-resumo')"/>
@@ -38,14 +38,6 @@ export default {
   },
   emits:['add-resumo'],
   methods:{
-      hovert(){
-        this.template == 2 ?
-        document.getElementById("edit-re").style.display = "none" : ''
-      },
-      leavehovert(){
-        this.template == 2 ?
-        document.getElementById("edit-re").style.display = "block" : ''
-      },
      getStyle(){ //// console.log(this.cor +' corrr')
         return this.template == 2
         ? {
@@ -71,9 +63,19 @@ export default {
   float: right;
   display: none;
 }
-.resumo:hover .editar-animado-resumo{
+.resumo:hover .editar-animado-resumo {
   display: block;
 }
+
+.template2-resumo-titulo:hover #edit-re  {
+  display: none;
+}
+
+.template2-resumo-titulo:hover .editar-animado-resumo {
+  display: block;
+  z-index: 1;
+}
+
 .template1-resumo-titulo{
   align-self: center;
   background-color: white;
