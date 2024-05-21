@@ -6,10 +6,17 @@
         <div class="item" >
             <span>Position: </span><input id="position" type="text" :value="job?.position"  />
         </div>
-        <div class="item" >
+        <div v-if="job?.dateHired.length == 10" class="item">
+            <span>Date Start: </span><input type="date" :value="job?.dateHired" />
+        </div>
+        <div v-else class="item" >
             <span>Date start: </span><input id="dateStart" type="month" :value="job?.dateHired"  />
         </div>
-        <div class="item" >
+
+        <div v-if="job?.dateHired.length == 10" class="item" >
+            <span>Date end: </span><input id="dateEnd" type="date" :value="job?.dateFired"  />
+        </div>
+        <div v-else class="item" >
             <span>Date end: </span><input id="dateEnd" type="month" :value="job?.dateFired"  />
         </div>
         <div class="item" >
