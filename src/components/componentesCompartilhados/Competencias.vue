@@ -142,11 +142,14 @@ export default {
 .title{
     width: 98.35%;
 }
-.data-container-page{
+
+/* z-index mínimmo 1 senão o header fica por cima. */
+.data-container-page {
     width: 100%;
     height: 100%;
     padding: 10px;
     min-height: 30px;
+    z-index: 1;
 }
 
 .data-container-page:hover {

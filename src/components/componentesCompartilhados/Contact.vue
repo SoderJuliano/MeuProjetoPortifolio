@@ -65,4 +65,13 @@ export default {
 .editar-contact:active {
     transform: scale(.9);
 }
+.contact-template2:hover .editar-contact {
+    display: none;
+}
+
+
+.contact-template2 .editar-contact-animado {
+    left: 30px;
+    position: sticky;
+}
 </style>
