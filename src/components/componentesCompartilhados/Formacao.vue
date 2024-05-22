@@ -132,7 +132,7 @@ export default {
 
 .bnt-divs {
   display: flex;
-  width: 100%;
+  width: 80%;
   margin-top: -55px;
   align-items: center;
   justify-content: end;
@@ -146,8 +146,8 @@ export default {
   background-color: white;
   padding: 10px;
   border-radius: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 30px;
 }
 
 .editar-animado-formacao {
@@ -207,6 +207,7 @@ export default {
   background-color: white;
   padding: 10px;
   border-radius: 10px;
+  margin-right: 30px;
 }
 
 .template2-formacao-container span {
