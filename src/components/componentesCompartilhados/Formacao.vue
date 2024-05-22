@@ -10,8 +10,8 @@
       </p>
       <div class="formacao-item-list" v-for="(item, index) in mygrade" :key="index">
         <div :class="conteinerdata">
-          <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon"/>
-          <span @touchstart="showRemoveItem(index)" class="data-container">{{item}}</span>
+          <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon" alt="icon"/>
+          <span class="data-container">{{item}}</span>
         </div>
         <div class="bnt-divs">
             <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
@@ -72,17 +72,17 @@ export default {
     editar(index){
       this.showEditing = index;
     },
-    showRemoveItem(item) {
-      this.isShowingRemoveBnt ?
-      $('#'+item).css({'display': 'none'})
-      :
-      $('#'+item).css({'display': 'block', 'position': 'absolute'});
-      this.isShowingRemoveBnt = !this.isShowingRemoveBnt;
-    },
+    // showRemoveItem(item) {
+    //   this.isShowingRemoveBnt ?
+    //   $('#'+item).css({'display': 'none'})
+    //   :
+    //   this.isShowingRemoveBnt = !this.isShowingRemoveBnt;
+    // },
     removeGrade(event){
       this.mygrade.splice(this.mygrade.indexOf(event.target.id), 1)
       this.user.grade = this.mygrade
       localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.user))
+      sessionStorage.removeItem('updateFormacao');
     },
     getStyle(){
       return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
@@ -109,14 +109,6 @@ export default {
   display: flex;
 }
 
-.formacao-item-list:hover .template1-remove-bnt {
-  display: flex;
-}
-
-.formacao-item-list:hover .template2-remove-bnt {
-  display: flex;
-}
-
 .formacao-item-list {
   position: relative;
 }
@@ -131,23 +123,31 @@ export default {
 }
 
 .bnt-divs {
-  display: flex;
-  width: 80%;
+  display: none;
+  width: 100px;
   margin-top: -55px;
   align-items: center;
   justify-content: end;
   position: absolute;
   z-index: 4;
+  right: 30px;
 }
 
 .editar-item {
-  width: 20px;
-  display: none;
+  width: 30px;
   background-color: white;
   padding: 10px;
   border-radius: 10px;
   margin-left: 10px;
   margin-right: 30px;
+  margin-top: 5px;
+}
+
+.template2-remove-bnt {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 30px;
 }
 
 .editar-animado-formacao {
@@ -200,23 +200,36 @@ export default {
   width: 100%;
   margin-top: 15px;
 }
-.template1-remove-bnt{
-  align-self: center;
-  width: 20px;
-  display: none;
+.template1-remove-bnt {
+  width: 30px;
   background-color: white;
   padding: 10px;
   border-radius: 10px;
-  margin-right: 30px;
+  margin-top: 5px;
+  margin-right: 1px;
 }
 
 .template2-formacao-container span {
   width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 40px;
 }
 
-.template2-formacao-container:hover .template2-remove-bnt {
+.template2-formacao-container:hover .bnt-divs {
   display: block;
-  float: right;
+}
+
+.template1-formacao-container:hover .bnt-divs {
+  display: block;
+}
+
+.formacao-item-list:hover .bnt-divs {
+  display: flex;
+}
+
+.formacao-item-list:hover .bnt-divs {
+  display: flex;
 }
 
 .template2-formacao:hover .editar {
@@ -227,13 +240,6 @@ export default {
   display: block;
 }
 
-.template2-remove-bnt{
-  background-color: white;
-  padding: 10px;
-  border-radius: 10px;
-  width: 20px;
-  display: none;
-}
 .template2-formacao-title {
   text-align: start;
   width: 90%;
@@ -257,6 +263,7 @@ export default {
 
   .template2-formacao-container {
     width: 80% !important;
+    padding: 5px;
   }
 }
 @media (min-width: 1000px) {

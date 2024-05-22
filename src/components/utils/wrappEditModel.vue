@@ -169,4 +169,11 @@ export default {
         width: 100%;
         margin-top: 20px;
     }
+
+    @media (max-width: 768px) {
+        .wrapMain {
+            width: 80vw;
+        }
+        
+    }
 </style>

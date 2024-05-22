@@ -138,7 +138,7 @@ span:hover .remove-bnt {
 
 a {
     min-height: 30px;
-    padding-top: 10px;
+    padding-top: 30px;
     width: 100%;
 }
 
