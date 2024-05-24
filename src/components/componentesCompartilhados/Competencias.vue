@@ -7,10 +7,11 @@
       </p>
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
-        <span class="data-container-page">{{item}}
-          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
+        <span class="data-container-page">{{item}}</span>
+        <div class="bnts">
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
-        </span>
+          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
+        </div>
         <div v-if="showEditing == index" class="competence-edit">
           <wrappEditModel
             :textItem="item"
@@ -131,12 +132,20 @@ export default {
   flex-direction: column;
 }
 
-.competencias-container:hover .remove-bnt{
-  display: block;
-  background-color: white;
-  padding: 10px;
-  border-radius: 10px;
-  float: right;
+.bnts {
+  display: none;
+  width: 130px;
+  padding: 5px;
+  justify-content: space-between;
+  position: absolute;
+  margin-top: 10px;
+  justify-content: space-between;
+  z-index: 2;
+  right: 10px;
+}
+
+.competencias-container:hover .bnts {
+  display: flex;
 }
 
 .title{
@@ -157,30 +166,25 @@ export default {
   border-radius: 10px;
 }
 
-.editar{
+.editar {
   float: right;
-}
-@media print{
-  .editar{
-    display: none;
-  }
-  .remove-bnt{
-    display: none;
-  }
-}
-.remove-bnt{
-  float: right;
-  margin-right: 30px;
-}
-</style>
-<style>
-.remove-bnt{
-  max-width: 20px;
-  max-height: 20px;
-  padding-top: 8px;
 }
 
-@media print{
+.remove-bnt {
+  display: block;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  float: none;
+  right: 0;
+}
+
+</style>
+<style>
+@media print {
   .editar{
     display: none;
   }
