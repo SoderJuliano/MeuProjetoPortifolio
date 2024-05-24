@@ -619,10 +619,17 @@ export default {
                 document.getElementById("text_header").style.color = "white";
               }
             }
+            let eyeIcons = $(".icon-show-title");
+            let editarIcons = $(".editar");
+            eyeIcons.addClass("icone-branco");
+            editarIcons.addClass("icone-branco");
           }, 500);
 
         } else {
-
+          let eyeIcons = $(".icon-show-title");
+          let editarIcons = $(".editar");
+          eyeIcons.removeClass("icone-branco");
+          editarIcons.removeClass("icone-branco");
           if(page_header[0]){
             page_header[0].style.color = "black"
           }else{
@@ -993,6 +1000,10 @@ export default {
 </script>
 
 <style>
+.icone-branco {
+  filter: invert(100%);
+}
+
 @media print {
   .template {
     width: 100vw !important;
