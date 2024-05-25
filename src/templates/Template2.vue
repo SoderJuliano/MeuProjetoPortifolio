@@ -11,8 +11,9 @@
             />
         </div>
         <div class="main-body">
-            <Left 
+            <Left
                 :user="userData"
+                @update-formacao="onUpdateFormacao"
                 @add-resumo="$emit('add-resumo')"
                 @add-competencia="$emit('add-competencia')"
                 @add-formacao="$emit('add-formacao')"
@@ -26,6 +27,7 @@
                 :language="language"
             />
             <Right
+                @user-update="reEmit"
                 @choose-emailIcon="this.$emit('choose-emailIcon')"
                 @choose-addressIcon="$emit('choose-addressIcon')"
                 @add-info="$emit('add-info')"
@@ -43,6 +45,7 @@
 </template>
 
 <script>
+import { onUpdated } from 'vue';
 import Header from '../components/template2_components/Header.vue'
 import Left from '../components/template2_components/Left.vue'
 import Right from '../components/template2_components/Right.vue'
@@ -89,6 +92,10 @@ export default {
         },
         reEmitCompetences(data){
             this.$emit('update-competences', data);
+        },
+        onUpdateFormacao(newval) {
+            this.userData.grade = newval;
+            this.$emit('local-update-user', this.userData);
         }
     },
     watch: {

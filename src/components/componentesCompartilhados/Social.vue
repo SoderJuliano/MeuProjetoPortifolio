@@ -5,7 +5,7 @@
                 {{language == 'pt-br' ? titulo[0] : titulo[1]}}
                 <showSwitcher className="template-data-social" :startShowing="user.social?.length > 0" />
                 <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
-                <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+                <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
         <div v-for="(item, index) in this.userData.social" :key="index" :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" >

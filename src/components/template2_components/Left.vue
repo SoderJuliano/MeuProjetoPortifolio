@@ -23,6 +23,7 @@
             class="template-data"
             :user="user"
             template=2
+            @update-formacao="onUpdateFormacao"
             @add-formacao="$emit('add-formacao')"
             @choose-educationIcon="$emit('choose-educationIcon')"
             :sideColor="sideColor"
@@ -63,6 +64,9 @@ export default {
         }
     },
     methods: {
+        onUpdateFormacao(data) {
+            this.$emit("update-formacao", data);
+        },
         onUpdateCompetences(competences){
             this.$emit('update-competences', competences)
         }
@@ -78,7 +82,14 @@ export default {
         sideColor: String,
         language: String,
     },
-    emits:["add-resumo", "add-habilidade", "adicionar-habilidade", "choose-educationIcon", "update-competences"]
+    emits:[
+        "add-resumo",
+        "add-habilidade",
+        "adicionar-habilidade",
+        "choose-educationIcon",
+        "update-competences",
+        "update-formacao"
+    ]
 }
 </script>
 <style scoped>
