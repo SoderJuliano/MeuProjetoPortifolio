@@ -2,7 +2,7 @@
   <div :class="mainclass">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
-            :className="tstyle"
+            :className="classToShare"
             :startShowing="jobs?.length > 0"
         />
         <img src="../../icons/editar.png" id="edit-exp" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
@@ -62,7 +62,7 @@ export default {
       jobEnd: '',
       lasJobHired: '',
       lastJobEnd: '',
-      tstyle: 'experiences-template'+this.template+'-title-'+ this.fontColor ? this.fontColor : "black",
+      classToShare: 'experiencias',
       cstyle: 'template'+this.template+'-experiencias-container',
       jobs: this.experiences,
       editIcon: svgs.editIcon,
@@ -128,6 +128,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @media print{
+
+  .not-visible {
+    display: none;
+  }
+
   .remove-bnt{
     display: none;
   }

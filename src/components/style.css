@@ -23,6 +23,11 @@ body{
     background-color: white;
 }
 
+/* deixar igual os dois lados dos containers t2 */
+.main-body .container:last-child {
+    padding-top: 15px;
+}
+
 @media screen and (max-width: 1000px) {
     .dropdown-templates, .dropdown-content{
         position: absolute;
