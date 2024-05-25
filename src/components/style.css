@@ -255,6 +255,11 @@ h3:hover .editar-animado{
         word-break: break-all;
         max-width: 190px;
     }
+
+    .social-item-template1 a {
+        word-break: break-all;
+        max-width: 190px;
+    }
 }
 
 .social-item-template2 span{
@@ -290,6 +295,11 @@ h3:hover .editar-animado{
     margin-bottom: 5px;
     position: relative;
 }
+
+.social-item-template1 a {
+    padding-top: 10px;
+}
+
 .social-item-template1 img{
     width: 24px !important;
     height: 24px !important;
