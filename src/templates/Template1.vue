@@ -11,7 +11,7 @@
         @add-habilidade="$emit('add-habilidade')"
         @add-SocialLink="$emit('add-SocialLink')"
         @adicionar-habilidade="$emit('adicionar-habilidade')"
-        @update-user="$emit('update-user')"
+        @update-user="updateUser"
         @user-update="reEmit"
         @local-update-user="reEmit"
         :cor="sideColor"
@@ -77,6 +77,9 @@ export default {
     language: String,
   },
   methods: {
+    updateUser(data) {
+      this.$emit('update-user', data)
+    },
     onUpdateCompetences(value) {
       this.$emit('update-competences', value)
     },

@@ -57,7 +57,7 @@ export default {
         user: Object,
         sideColor: String,
     },
-    emits:['add-SocialLink'],
+    emits:['add-SocialLink', 'update-user'],
     data(){
         return{
             templateClass: "social-template"+this.template+" title",
@@ -72,8 +72,7 @@ export default {
     methods:{
         updateSocial(value) {
             this.userData.social[value.index] = value.text;
-            console.log("updateSocial", this.userData.social);
-            sessionStorage.setItem('updateSocial', this.userData.social);
+            this.$emit('update-user', this.userData);
         },
         editar(value) {
             console.log(value)

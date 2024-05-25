@@ -46,7 +46,10 @@
       </div>
     </div>
 
-    <Formacao @add-formacao="$emit('add-formacao')" @choose-educationIcon="$emit('choose-educationIcon')"
+    <Formacao
+      @update-formacao="onUpdateFormacao"
+      @add-formacao="$emit('add-formacao')"
+      @choose-educationIcon="$emit('choose-educationIcon')"
       v-if="exibirFormacao" class="template-data" :titulo="titles.formacao" :backgroundColor="cor" :user="this.userData"
       template=1 :language="language" />
 
@@ -54,7 +57,11 @@
       @adicionar-habilidade="$emit('adicionar-habilidade')" v-if="exibirHabilidade" class="template-data"
       :titulo="titles.habilidades" backgroundColor="#808080" :user="this.userData" template=1 :language="language" />
 
-    <Social @add-SocialLink="$emit('add-SocialLink')" v-if="exibirSocial" class="template-data"
+    <Social
+      @update-user="onUpdateUser"
+      @add-SocialLink="$emit('add-SocialLink')"
+      v-if="exibirSocial"
+      class="template-data"
       backgroundColor="#808080" :user="this.userData" template=1 :titulo="titles.social" :language="language" />
   </div>
 </template>
@@ -117,6 +124,13 @@ export default {
     };
   },
   methods: {
+    onUpdateUser(data) {
+      this.$emit("update-user", data);
+    },
+    onUpdateFormacao(newval) {
+      this.userData.grade = newval;
+      this.$emit("update-user", this.userData);
+    },
     reEmit(data) {
       this.$emit("local-update-user", data);
     },

@@ -1,6 +1,6 @@
 <template>
   <div :class="containerstyle">
-      <p :class="tstyle" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+      <p :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
           <showSwitcher
             :className="containerstyle"
             :startShowing="user.grade.length > 0"
@@ -34,14 +34,13 @@
 <script>
 
 import showSwitcher from '../iconComponent/showSwitcher.vue';
-import $ from 'jquery';
 import * as svgs from "../utils/svgsText.js";
 import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Formacao',
   components: {showSwitcher, wrappEditModel},
-  emits: ['add-formacao', 'choose-educationIcon'],
+  emits: ['add-formacao', 'choose-educationIcon', 'update-formacao'],
   data(){
     return{
       mygrade: this.user.grade,
@@ -64,10 +63,8 @@ export default {
   },
   methods:{
     updateFormacao(value) {
-      console.log('formacao', value)
       this.mygrade[value.index] = value.text;
-      console.log('typeof mygrade', JSON.stringify(this.mygrade))
-      sessionStorage.setItem("updateFormacao", this.mygrade);
+      this.$emit("update-formacao", this.mygrade);
     },
     editar(index){
       this.showEditing = index;
@@ -84,9 +81,6 @@ export default {
       localStorage.setItem(this.language.includes('en') ? 'user-en' : 'user-pt', JSON.stringify(this.user))
       sessionStorage.removeItem('updateFormacao');
     },
-    getStyle(){
-      return this.template == 1 ? {"background-color": "white"} : {"border-bottom": "1px solid "+this.sideColor}
-    }
   },
   /* Este e outro jeito de observar mudancas em um objeto e executar funcoes */
    watch: {

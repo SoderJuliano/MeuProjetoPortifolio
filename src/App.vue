@@ -137,6 +137,7 @@ import PageConfig from "./model/configModel.js";
 import $ from "jquery";
 import axios from 'axios';
 import * as funcs from "./components/configs/requests";
+import * as functions from "./components/componentesCompartilhados/util/functions";
 
 export default {
   name: "App",
@@ -185,26 +186,9 @@ export default {
     Template2,
     Tips,
   },
-  mounted() {
-    let lastSocial = this.user.social;
-    let lastFormacao = this.user.grade;
-    setInterval(() => {
-      const newUpdate = sessionStorage.getItem('updateSocial');
-      const newFormacao = sessionStorage.getItem('updateFormacao');
-      if(newUpdate != null && newUpdate != lastSocial) {
-        lastSocial = newUpdate;
-        this.handleUpdateSocial(newUpdate.split(','));
-        sessionStorage.removeItem('updateSocial');
-      }
-      if(newFormacao != null && lastFormacao != newFormacao) {
-        lastFormacao = newFormacao;
-        this.handleUpdateFormacao(newFormacao.split(','));
-        sessionStorage.removeItem('updateFormacao');
-      }
-    }, 1500);
-  },
   methods: {
     handleUpdateFormacao(value) {
+      console.log(value)
       this.user.grade = value;
       this.updateUser(this.user);
     },
@@ -572,92 +556,8 @@ export default {
       );
     },
     changeOptions(p) {
-      const pic = $(".pic").first();
-      // imgpic is firing NullPointer and is no needed anymore
-      //const imgpic = $(".img-pic").first();
-
-      // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
-      // e um palhativo
-      if(p.target.textContent.split('').length > 30){
-        return;
-      }
-      if (p.target.id == "square") {
-        pic.css({"border-radius": "0px",
-          "border": "2px solid black"
-        });
-      } else if (p.target.id == "triangleUp") {
-        pic.css({"border-radius": "11px",
-          "border": "2px solid black"
-        });
-      } else if (p.target.id == "circle") {
-        pic.css({"border-radius": "50%",
-          "border": "2px solid black"
-        });
-      } else if (p.target.id == "colorfull-circle") {
-
-        pic.css({"border-radius": "50%",
-          "border-top": "5px solid rgb(255, 2, 2)",
-          "border-left": "5px solid rgb(68, 0, 255)",
-          "border-right": "5px solid rgb(0, 158, 61)",
-          "border-bottom": "5px solid rgb(255, 0, 221)"
-        });
-
-      } else if (p.target.textContent.includes("pag-") == true) {
-        let i = 0;
-        let all = document.getElementsByClassName("title");
-        let page_header = document.getElementsByClassName("page-header");
-        //// console.log(p.target.id)
-        if (p.target.textContent == "pag-#1F271B") {
-          setTimeout(() => {
-            for (i; i < all.length; i++) {
-              all[i].style.color = "white";
-              all[i].style.backgroundColor = "#1F271B";
-
-              if(page_header[0]){
-                page_header[0].style.color = "white"
-              }else{
-                document.getElementById("text_header").style.color = "white";
-              }
-            }
-            let eyeIcons = $(".icon-show-title");
-            let editarIcons = $(".editar");
-            eyeIcons.addClass("icone-branco");
-            editarIcons.addClass("icone-branco");
-          }, 500);
-
-        } else {
-          let eyeIcons = $(".icon-show-title");
-          let editarIcons = $(".editar");
-          eyeIcons.removeClass("icone-branco");
-          editarIcons.removeClass("icone-branco");
-          if(page_header[0]){
-            page_header[0].style.color = "black"
-          }else{
-            document.getElementById("text_header").style.color = "black";
-          }
-
-          all = document.getElementsByClassName("title");
-          for (i; i < all.length; i++) {
-            all[i].style.color = "black";
-            all[i].style.backgroundColor = "white";
-          }
-
-        }
-        if(p.target.id.split("").length < 8 && p.target.id.split("").length > 1){
-          this.configs.setMainColor(p.target.id)
-          localStorage.setItem("configs", JSON.stringify(this.configs))
-        }
-      } else if (p.target.textContent.includes("#") == true) {
-        if (
-          p.target.textContent.split("").length > 0 &&
-          p.target.textContent.split("").length < 8
-        ) {
-          this.configs.setSideColor(p.target.textContent);
-          localStorage.setItem("configs", JSON.stringify(this.configs));
-        }
-      }
-
-      // console.log(p.target.textContent);
+      // evento - jquery- configs
+      this.configs = functions.heavyEventHandling(p, $, this.configs);
     },
     getStyle() {
       switch (this.configs?.getFont()) {
@@ -958,7 +858,7 @@ export default {
               content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
               read: false
             })
-            
+
             funcs.setNewNotification({
               title: "Easy enter",
               language: "us-en",
@@ -976,8 +876,8 @@ export default {
                     .then( response => {
                       // console.log(response.data)
                       localStorage.setItem('tips', JSON.stringify(response.data));
-                    }) 
-                }   
+                    });
+                }
               })
               .catch(function (error) {
                 // console.log(error);
@@ -991,11 +891,14 @@ export default {
       this.configs = new PageConfig();
       localStorage.setItem("configs", JSON.stringify(this.configs));
     }else{
-      this.configs = new PageConfig().recoverConfigs()
+      this.configs = new PageConfig().recoverConfigs();
     }
     this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
   },
+  mounted() {
+    this.configs.setIconsCollor();
+  }
 };
 </script>
 
