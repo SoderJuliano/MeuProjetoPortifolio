@@ -173,7 +173,7 @@ export default {
     width: 60%;
     min-width: 600px;
     padding-left: 30px;
-    box-shadow: 0 0 50px #ccc;
+    /* box-shadow: 0 0 50px #ccc; */
   }
   .editar-competencais {
     width: 40%;
