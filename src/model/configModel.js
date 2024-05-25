@@ -39,8 +39,11 @@ export default class PageConfig {
             } else {
                 $(".icon-show-title, .editar").removeClass("icone-branco");
                 $(".title").css({"background-color": "white", "color": "black"});
+                // recolocando a cor
+                $(".template1-resumo-titulo.title").css({"background-color": this.mainColor});
+                $(".template1-competencias p.title").css("background-color", this.mainColor);
+                $(".experiencias.templete1 p.title").css("background-color", this.mainColor);
             }
-            console.log('set', this.fontColor);
         }.bind(this));
     }
 

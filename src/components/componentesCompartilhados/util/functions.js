@@ -108,7 +108,8 @@ export function heavyEventHandling(p, $, configs) {
     // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
     // e um palhativo
     if (p.target.textContent.split("").length > 30) {
-        return;
+        // retono as configs sem alterar elas
+        return configs;
     }
     const pic = $(".pic").first();
 

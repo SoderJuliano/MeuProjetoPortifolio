@@ -1,59 +1,41 @@
 <template>
     <div class="multiMenu-options">
         <div class="header">
-            <h3>{{language.includes("en") ? "OPTIONS" : "OPÇÕES"}}</h3>
+            <h3>{{ language.includes("en") ? "OPTIONS" : "OPÇÕES" }}</h3>
         </div>
         <div class="option">
-            <fonts
-                :language="language" 
-                @update-configs="$emit('update-configs')" />
+            <fonts :language="language" @update-configs="$emit('update-configs')" />
             <p class="multimenu-line first"></p>
         </div>
-        
+
         <div class="option">
-            <FontsSize
-                :language="language" 
-                @update-configs="$emit('update-configs')" />
+            <FontsSize :language="language" @update-configs="$emit('update-configs')" />
             <p class="multimenu-line second"></p>
         </div>
 
         <div class="option">
-            <Colors
-                :language="language" 
-            />
+            <Colors :language="language" />
             <p class="multimenu-line"></p>
         </div>
-        
+
         <div class="option">
-            <pageColor 
-                :language="language" 
-            />
+            <pageColor :language="language" />
             <p class="multimenu-line"></p>
         </div>
-        
+
         <div class="option">
-            <Avatares
-            :user="user"
-            :language="language"
-            @update-user="update"
-            />
+            <Avatares :user="user" :language="language" @update-user="update" />
             <p class="multimenu-line"></p>
         </div>
-        
+
         <div class="option">
-            <PicureShape
-                :language="language" 
-            />
+            <PicureShape :language="language" />
             <p class="multimenu-line"></p>
         </div>
-        
+
         <div class="option">
-            <Templates
-                :language="language"     
-                :template="template"
-                @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')"
-            />
+            <Templates :language="language" :template="template" @now-template1="this.$emit('now-template1')"
+                @now-template2="this.$emit('now-template2')" />
             <p class="multimenu-line"></p>
         </div>
     </div>
@@ -80,12 +62,12 @@ export default {
         Templates,
         FontsSize
     },
-    props:{
+    props: {
         template: Number,
         user: Object,
         language: String
     },
-    emits:['now-template1', 'now-template2', 'update-user'],
+    emits: ['now-template1', 'now-template2', 'update-user'],
     methods: {
         update(val) {
             this.$emit("update-user", val);
@@ -99,6 +81,7 @@ export default {
     right: 10px;
     top: 10px;
 }
+
 .header {
     display: flex;
     width: 50%;
@@ -126,7 +109,7 @@ export default {
 
 /* The second element */
 .multimenu-line.second {
-  margin-top: -5px;
+    margin-top: -5px;
 }
 
 /* The second one was to close of the others */
@@ -145,6 +128,7 @@ export default {
         background-color: white;
     }
 }
+
 @media only screen and(max-width:1000px) {
     .multiMenu-options {
         height: 150px;
