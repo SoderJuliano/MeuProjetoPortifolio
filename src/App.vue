@@ -913,6 +913,11 @@ export default {
 </script>
 
 <style>
+.ripple-background {
+  position: relative;
+  z-index: -1;
+}
+
 .icone-branco {
   filter: invert(100%);
 }

@@ -398,6 +398,7 @@ button {
 .template2-experiencias-container:hover .remove-bnt
 {
     display: block;
+    width: 30px;
 }
 
 .template1-formacao-container span {
