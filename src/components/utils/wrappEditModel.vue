@@ -168,6 +168,8 @@ export default {
         justify-content: space-around;
         width: 100%;
         margin-top: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 
     @media (max-width: 768px) {
