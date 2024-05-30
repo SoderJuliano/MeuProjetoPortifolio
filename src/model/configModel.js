@@ -1,3 +1,4 @@
+import $ from 'jquery';
 export default class PageConfig {
 
     language = 'pt-br';
@@ -27,8 +28,23 @@ export default class PageConfig {
         this.fontColor = hosted.fontColor
         this.sideColor = hosted.sideColor
         this.mainColor = hosted.mainColor
-        // console.log(this)
         return this;
+    }
+
+    setIconsCollor() {
+        $(document).ready(function() {
+            if (this.fontColor === "white") {
+                $(".icon-show-title, .editar").addClass("icone-branco");
+                $(".title").css({"background-color": "#1F271B", "color": "white"});
+            } else {
+                $(".icon-show-title, .editar").removeClass("icone-branco");
+                $(".title").css({"background-color": "white", "color": "black"});
+                // recolocando a cor
+                $(".template1-resumo-titulo.title").css({"background-color": this.mainColor});
+                $(".template1-competencias p.title").css("background-color", this.mainColor);
+                $(".experiencias.templete1 p.title").css("background-color", this.mainColor);
+            }
+        }.bind(this));
     }
 
     save(){

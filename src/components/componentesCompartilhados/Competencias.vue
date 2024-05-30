@@ -7,21 +7,35 @@
       </p>
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
-        <span class="data-container-page">{{item}}
+        <span class="data-container-page">{{item}}</span>
+        <div class="bnts">
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
-        </span>
+          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
+        </div>
+        <div v-if="showEditing == index" class="competence-edit">
+          <wrappEditModel
+            :textItem="item"
+            :textIndex="index"
+            :language="language"
+            :event="'update-competence'"
+            @editar-end="editar"
+            @update-competence="updateCompetences"
+          />
+        </div>
       </div>
   </div>
 </template>
 
 <script>
-
+import * as svgs from "../utils/svgsText.js";
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Competencias',
   components: {
-      showSwitcher
+      showSwitcher,
+      wrappEditModel
   },
   props: {
     titulo: Array,
@@ -36,11 +50,20 @@ export default {
   data(){
     return{
       userData : this.user,
-      conteinerstyle : "template"+this.template+"-competencias"
+      conteinerstyle : "template"+this.template+"-competencias",
+      showEditing: null,
+      editIcon: svgs.editIcon,
     }
   },
-  emits: ['add-competencia'],
+  emits: ['add-competencia', 'update-competences'],
   methods:{
+      updateCompetences(val) {
+        this.userData.competence[val.index] = val.text;
+        this.$emit('update-competences', this.userData.competence);
+      },
+      editar(val) {
+        this.showEditing = val
+      },
       hovert(){
         this.template == 2 ?
         document.getElementById("edit-com").style.display = "none" : ''
@@ -81,6 +104,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.competence-edit {
+  position: relative;
+  top: 0;
+}
 .editar-competencias-animado{
   float: right;
   width: 20px;
@@ -102,24 +129,36 @@ export default {
   margin: 0 auto;
   padding-top: 20px;
   display: flex;
+  flex-direction: column;
 }
 
-.competencias-container:hover .remove-bnt{
-  display: block;
-  background-color: white;
-  padding: 10px;
-  border-radius: 10px;
-  float: right;
+.bnts {
+  display: none;
+  width: 130px;
+  padding: 5px;
+  justify-content: space-between;
+  position: absolute;
+  margin-top: 10px;
+  justify-content: space-between;
+  z-index: 2;
+  right: 10px;
+}
+
+.competencias-container:hover .bnts {
+  display: flex;
 }
 
 .title{
     width: 98.35%;
 }
-.data-container-page{
+
+/* z-index mínimmo 1 senão o header fica por cima. */
+.data-container-page {
     width: 100%;
     height: 100%;
     padding: 10px;
     min-height: 30px;
+    z-index: 1;
 }
 
 .data-container-page:hover {
@@ -127,34 +166,32 @@ export default {
   border-radius: 10px;
 }
 
-.editar{
+.editar {
   float: right;
-}
-@media print{
-  .editar{
-    display: none;
-  }
-  .remove-bnt{
-    display: none;
-  }
-}
-.remove-bnt{
-  float: right;
-  margin-right: 30px;
-}
-</style>
-<style>
-.remove-bnt{
-  max-width: 20px;
-  max-height: 20px;
-  padding-top: 8px;
 }
 
-@media print{
+.remove-bnt {
+  display: block;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  float: none;
+  right: 0;
+}
+
+</style>
+<style>
+@media print {
   .editar{
     display: none;
   }
   .remove-bnt{
+    display: none;
+  }
+  .competence-edit {
     display: none;
   }
 }

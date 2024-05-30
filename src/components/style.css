@@ -1,3 +1,4 @@
+
 input{
     padding: 5px;
 }
@@ -16,6 +17,15 @@ body{
     .title-template1 {
         width: 99% !important;
     }
+}
+
+.custom-container.template {
+    background-color: white;
+}
+
+/* deixar igual os dois lados dos containers t2 */
+.main-body .container:last-child {
+    padding-top: 15px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -75,7 +85,7 @@ body{
 @media screen and (min-width: 1001px) {
     .template-data {
         min-height: 100px;
-        background-color: rgb(255 240 240);
+        background-color: rgb(255 240 240 / 41%);
         border-radius: 5px;
     }
 
@@ -174,16 +184,20 @@ body{
     margin-right: 20px;
 }
 .social-item-template2:hover .remove-bnt-delete{
-    display: block;
     width: 20px;
-    position: relative;
-    margin-top: -5px;
-}
-
-.social-item-template2:hover {
+    position: absolute;
+    right: 40px;
+    top: 10px;
     display: flex;
     background-color: #d7d7d7;
-    border-radius: 10px;
+}
+
+.social-item-template2:hover .remove-bnt.editar{
+    width: 20px;
+    position: absolute;
+    display: flex;
+    right: 10px;
+    top: 17px;
 }
 
 .social-item-template2:hover .remove-bnt{
@@ -251,6 +265,11 @@ h3:hover .editar-animado{
         word-break: break-all;
         max-width: 190px;
     }
+
+    .social-item-template1 a {
+        word-break: break-all;
+        max-width: 190px;
+    }
 }
 
 .social-item-template2 span{
@@ -286,6 +305,11 @@ h3:hover .editar-animado{
     margin-bottom: 5px;
     position: relative;
 }
+
+.social-item-template1 a {
+    padding-top: 10px;
+}
+
 .social-item-template1 img{
     width: 24px !important;
     height: 24px !important;
@@ -374,6 +398,7 @@ button {
 .template2-experiencias-container:hover .remove-bnt
 {
     display: block;
+    width: 30px;
 }
 
 .template1-formacao-container span {

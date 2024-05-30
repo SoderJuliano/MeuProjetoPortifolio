@@ -11,8 +11,9 @@
             />
         </div>
         <div class="main-body">
-            <Left 
+            <Left
                 :user="userData"
+                @update-formacao="onUpdateFormacao"
                 @add-resumo="$emit('add-resumo')"
                 @add-competencia="$emit('add-competencia')"
                 @add-formacao="$emit('add-formacao')"
@@ -20,17 +21,19 @@
                 @adicionar-habilidade="$emit('adicionar-habilidade')"
                 @choose-educationIcon="$emit('choose-educationIcon')"
                 @choose-skillIcon="$emit('choose-skillIcon')"
+                @update-competences="reEmitCompetences"
                 :mainColor="mainColor"
                 :sideColor="sideColor"
                 :language="language"
             />
             <Right
+                @user-update="reEmit"
                 @choose-emailIcon="this.$emit('choose-emailIcon')"
                 @choose-addressIcon="$emit('choose-addressIcon')"
                 @add-info="$emit('add-info')"
                 @add-SocialLink="$emit('add-SocialLink')"
                 @add-experiencia="$emit('add-experiencia')"
-                @update-experiences="$emit('update-experiences')"
+                @update-experiencias="$emit('update-experiencias')"
                 @choose-phoneIcon="this.$emit('choose-phoneIcon')"
                 :user="userData"
                 :mainColor="mainColor"
@@ -42,6 +45,7 @@
 </template>
 
 <script>
+import { onUpdated } from 'vue';
 import Header from '../components/template2_components/Header.vue'
 import Left from '../components/template2_components/Left.vue'
 import Right from '../components/template2_components/Right.vue'
@@ -53,8 +57,21 @@ export default {
         Left,
         Right
     },
-    emits:["add-info", "add-SocialLink", "add-experiencia", "add-resumo", "add-habilidade", "add-nome", "adicionar-habilidade", "update-experiences",
-            "choose-addressIcon", "choose-phoneIcon", "choose-emailIcon", "choose-educationIcon", "choose-skillIcon", "local-update-user"],
+    emits:["add-info",
+        "add-SocialLink",
+        "update-competences",
+        "add-experiencia",
+        "add-resumo",
+        "add-habilidade",
+        "add-nome",
+        "adicionar-habilidade",
+        "update-experiences",
+        "choose-addressIcon",
+        "choose-phoneIcon",
+        "choose-emailIcon",
+        "choose-educationIcon",
+        "choose-skillIcon",
+        "local-update-user"],
     props:{
         mainColor: String,
         sideColor: String,
@@ -72,6 +89,13 @@ export default {
     methods:{
         reEmit(data){
             this.$emit('local-update-user', data);
+        },
+        reEmitCompetences(data){
+            this.$emit('update-competences', data);
+        },
+        onUpdateFormacao(newval) {
+            this.userData.grade = newval;
+            this.$emit('local-update-user', this.userData);
         }
     },
     watch: {
@@ -103,6 +127,7 @@ export default {
     width: 100%;
     min-height: 400px;
     height: 100%;
+    background-color: white;
 }
 
 @media screen and (max-width: 1000px) {

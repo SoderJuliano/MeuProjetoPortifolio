@@ -3,122 +3,66 @@
     <div id="contatoAndPic">
       <div class="ajsut-img">
         <CenterImg :language="language" />
-        <CenterImgOpenclose 
-          :language="language"
-          :user="userData" 
-          @user-update="reEmit"
-          class="ajust-img-open-close" 
-        />
+        <CenterImgOpenclose :language="language" :user="userData" @user-update="reEmit" class="ajust-img-open-close" />
       </div>
-        <div class="pic">
-          <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil"
-          class="img-pic" :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag" @mousedown="startDrag"
-          />
-          <img
-            @click="$refs.fileInput.click()"
-            v-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length > 10" :src="avatarImg" alt="perfil-avatar" class="img-avatar" />
-          <img 
-            @click="$refs.fileInput.click()"
-            v-else-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length < 10" :src="defaultImageURL" class="img-avatar" alt="perfil" />
-        </div>
-        <input
-          type="file"
-          id="input"
-          ref="fileInput"
-          style="display: none"
-          @change="onIMGChange"
-        />
+      <div class="pic">
+        <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic"
+          :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag" @mousedown="startDrag" />
+        <img @click="$refs.fileInput.click()"
+          v-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length > 10" :src="avatarImg"
+          alt="perfil-avatar" class="img-avatar" />
+        <img @click="$refs.fileInput.click()"
+          v-else-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length < 10" :src="defaultImageURL"
+          class="img-avatar" alt="perfil" />
+      </div>
+      <input type="file" id="input" ref="fileInput" style="display: none" @change="onIMGChange" />
       <div v-if="exibirLinks" class="contato template-data">
         <p class="title title-template1">
           {{ language == "pt-br" ? "CONTATO" : "CONTACT" }}
-          <showSwitcher
-            className="contato.template-data"
-            :startShowing="user.contact.email.length > 0
+          <showSwitcher className="contato.template-data" :startShowing="user.contact.email.length > 0
             || user.contact.phone.length > 0
-            || user.contact.address != '' ? true : false"
-          />
-          <img
-            src="../icons/editar.png"
-            alt="editar"
-            class="editar"
-            @click="$emit('add-info')"
-          />
+            || user.contact.address != '' ? true : false" />
+          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-info')" />
         </p>
         <br />
-        <div
-          v-for="(item, index) in user.contact.email"
-          :key="index"
-          class="data-container"
-        >
+        <div v-for="(item, index) in user.contact.email" :key="index" class="data-container">
           <img v-if="item" @click="this.$emit('choose-emailIcon')" src="../icons/envelope.svg" class="email-icon" />
           <span class="email-text">{{ item }}</span>
         </div>
 
         <!-- todo phone style -->
-        <div
-          v-for="(item, index) in user.contact.phone"
-          :key="index"
-          class="data-container"
-        >
-          <img
-            v-if="item"
-            src="../icons/phone.png"
-            alt="phone"
-            class="phone-icon"
-            @click="this.$emit('choose-phoneIcon')"
-          />
+        <div v-for="(item, index) in user.contact.phone" :key="index" class="data-container">
+          <img v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon"
+            @click="this.$emit('choose-phoneIcon')" />
           <span class="phone-text">{{ normalizePhone(item) }}</span>
           <img @click="toglePhoneMask()" src="../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
           <img @click="toglePhoneMask()" src="../icons/phone/disabled.svg" id="disabled" class="phone-disabled">
         </div>
         <div class="data-container">
-          <img
-            @click="$emit('choose-addressIcon')"
-            v-if="user.contact.adress"
-            src="../icons/adress.png"
-            alt="adress"
-            class="adress-icon"
-          />
+          <img @click="$emit('choose-addressIcon')" v-if="user.contact.adress" src="../icons/adress.png" alt="adress"
+            class="adress-icon" />
           <span class="endereco-text">{{ user.contact.adress }}</span>
         </div>
       </div>
     </div>
 
     <Formacao
+      @update-formacao="onUpdateFormacao"
       @add-formacao="$emit('add-formacao')"
       @choose-educationIcon="$emit('choose-educationIcon')"
-      v-if="exibirFormacao"
-      class="template-data"
-      :titulo="titles.formacao"
-      :backgroundColor="cor"
-      :user="this.userData"
-      template=1
-      :language="language"
-    />
+      v-if="exibirFormacao" class="template-data" :titulo="titles.formacao" :backgroundColor="cor" :user="this.userData"
+      template=1 :language="language" />
 
-    <Habilidade
-      @choose-skillIcon="$emit('choose-skillIcon')"
-      @add-habilidade="$emit('add-habilidade')"
-      @adicionar-habilidade="$emit('adicionar-habilidade')"
-      v-if="exibirHabilidade"
-      class="template-data"
-      :titulo="titles.habilidades"
-      backgroundColor="#808080"
-      :user="this.userData"
-      template=1
-      :language="language"
-    />
+    <Habilidade @choose-skillIcon="$emit('choose-skillIcon')" @add-habilidade="$emit('add-habilidade')"
+      @adicionar-habilidade="$emit('adicionar-habilidade')" v-if="exibirHabilidade" class="template-data"
+      :titulo="titles.habilidades" backgroundColor="#808080" :user="this.userData" template=1 :language="language" />
 
     <Social
+      @update-user="onUpdateUser"
       @add-SocialLink="$emit('add-SocialLink')"
       v-if="exibirSocial"
       class="template-data"
-      backgroundColor="#808080"
-      :user="this.userData"
-      template=1
-      :titulo="titles.social"
-      :language="language"
-    />
+      backgroundColor="#808080" :user="this.userData" template=1 :titulo="titles.social" :language="language" />
   </div>
 </template>
 <script>
@@ -180,6 +124,13 @@ export default {
     };
   },
   methods: {
+    onUpdateUser(data) {
+      this.$emit("update-user", data);
+    },
+    onUpdateFormacao(newval) {
+      this.userData.grade = newval;
+      this.$emit("update-user", this.userData);
+    },
     reEmit(data) {
       this.$emit("local-update-user", data);
     },
@@ -226,7 +177,7 @@ export default {
       document.removeEventListener("mouseup", this.stopDrag);
     },
     toglePhoneMask() {
-      if(this.phoneMask == true) {
+      if (this.phoneMask == true) {
         document.getElementById("enabled").style.display = "none";
         document.getElementById("disabled").style.display = "block";
         this.phoneMask = false;
@@ -235,13 +186,13 @@ export default {
         phone = phone.replaceAll("-", "");
         phone = phone.replaceAll("(", "");
         phone = phone.replaceAll(")", "");
-        document.getElementsByClassName("phone-text")[0].textContent =  phone;
+        document.getElementsByClassName("phone-text")[0].textContent = phone;
       } else {
         document.getElementById("enabled").style.display = "block";
         document.getElementById("disabled").style.display = "none";
         this.phoneMask = true;
         let phone = document.getElementsByClassName("phone-text")[0].textContent;
-        document.getElementsByClassName("phone-text")[0].textContent =  this.normalizePhone(phone);
+        document.getElementsByClassName("phone-text")[0].textContent = this.normalizePhone(phone);
       }
     },
     getStyle() {
@@ -249,13 +200,13 @@ export default {
         "background-color": `${this.cor}`,
       };
     },
-    setRealImg(){
+    setRealImg() {
       const imgExiste = this.userData?.realImg?.length > 5;
 
       if (imgExiste) {
-        $(".ajsut-img").css({"display": "flex", "z-index": "2"});
-        $(".template1-formacao-container").css({"z-index": "1"});
-        $("#headericon").css({"z-index": "1"});
+        $(".ajsut-img").css({ "display": "flex", "z-index": "2" });
+        $(".template1-formacao-container").css({ "z-index": "1" });
+        $("#headericon").css({ "z-index": "1" });
         this.imageURL = this.userData.realImg;
       }
       else if (this.userData.avatarImg.length > 5) {
@@ -272,72 +223,72 @@ export default {
       )[0].style.opacity = "90%";
     },
     normalizePhone(phone) {
-      if(phone.length == 11 && this.language == "pt-br") {
-        return "("+phone.slice(0, 2) +") "+phone.slice(2, 3) +" "+phone.slice(3, 7)+"-"+phone.slice(7, 11);
+      if (phone.length == 11 && this.language == "pt-br") {
+        return "(" + phone.slice(0, 2) + ") " + phone.slice(2, 3) + " " + phone.slice(3, 7) + "-" + phone.slice(7, 11);
       } else if (phone.length == 14 && this.language == "pt-br") {
-        return phone.slice(0, 3) +" "+phone.slice(3, 5) +" "+phone.slice(5, 10)+"-"+phone.slice(10, 14);
+        return phone.slice(0, 3) + " " + phone.slice(3, 5) + " " + phone.slice(5, 10) + "-" + phone.slice(10, 14);
       } else if (phone.length == 13 && this.language == "pt-br") {
-        return "+"+phone.slice(0, 2) +" "+phone.slice(2, 4) +" "+phone.slice(4, 9)+"-"+phone.slice(9, 13);
+        return "+" + phone.slice(0, 2) + " " + phone.slice(2, 4) + " " + phone.slice(4, 9) + "-" + phone.slice(9, 13);
       } else if (phone.length == 9 && this.language == "pt-br") {
-        return phone.slice(0, 5) +"-"+phone.slice(5, 9);
+        return phone.slice(0, 5) + "-" + phone.slice(5, 9);
       }
 
-      if(phone.length == 12 && this.language != "pt-br") {
-        return phone.slice(0, 2)+" ("+phone.slice(2, 5)+")-"+phone.slice(5, 9)+"-"+phone.slice(9, 12);
-      }else if(phone.length == 11 && this.language != "pt-br") {
-        return "+"+phone.slice(0, 1)+" ("+phone.slice(1, 4)+")-"+phone.slice(4, 8)+"-"+phone.slice(8, 11);
+      if (phone.length == 12 && this.language != "pt-br") {
+        return phone.slice(0, 2) + " (" + phone.slice(2, 5) + ")-" + phone.slice(5, 9) + "-" + phone.slice(9, 12);
+      } else if (phone.length == 11 && this.language != "pt-br") {
+        return "+" + phone.slice(0, 1) + " (" + phone.slice(1, 4) + ")-" + phone.slice(4, 8) + "-" + phone.slice(8, 11);
       }
 
       return phone;
     },
     onIMGChange(img) {
       if (img.target.files[0].size > 2762231) {
-        if(this.language.includes("en") ) {
+        if (this.language.includes("en")) {
           funcs.isMobile() ? alert("File too large, try a smaller img reducing the image quality in the camera options") :
-          alert("File too large, try a smaller img");
+            alert("File too large, try a smaller img");
           return;
-        }else {
+        } else {
           funcs.isMobile() ? alert("Arquivo muito grande, tente uma img menor que 3Mb reduzindo a qualidade da imagem nas opções de câmera") :
-          alert("Arquivo muito grande, tente uma img menor que 3Mb");
+            alert("Arquivo muito grande, tente uma img menor que 3Mb");
         }
       } else {
-          $(".img-pic").css("display", "block");
-          $(".img-avatar").css("display", "none");
-          const url = URL.createObjectURL(img.target.files[0]);
-          this.toDataURL(url, function (data) {
-              localStorage.setItem("newImage", data);
-          });
-          setTimeout(() => {
-              this.userData.realImg = localStorage.getItem("newImage");
+        $(".img-pic").css("display", "block");
+        $(".img-avatar").css("display", "none");
+        const url = URL.createObjectURL(img.target.files[0]);
+        this.toDataURL(url, function (data) {
+          localStorage.setItem("newImage", data);
+        });
+        setTimeout(() => {
+          this.userData.realImg = localStorage.getItem("newImage");
 
-              // console.log("atualizacao ", this.userData)
-              
-              this.$emit("local-update-user", this.userData);
-              // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
-          }, 400);
+          // console.log("atualizacao ", this.userData)
 
-          setTimeout(() => {
-            this.imageURL = this.userData.realImg;
-           // $(".img-pic").attr('src', url);
-          }, 500)
+          this.$emit("local-update-user", this.userData);
+          // localStorage.setItem(this.language.includes("en") ? "user-en" : "user-pt", JSON.stringify(this.userData));
+        }, 400);
+
+        setTimeout(() => {
+          this.imageURL = this.userData.realImg;
+          // $(".img-pic").attr('src', url);
+        }, 500)
       }
 
-      $(".ajsut-img").css({"display": "flex", "z-index": "2"});
-      $(".template1-formacao-container").css({"z-index": "1"});
-      $("#headericon").css({"z-index": "1"});
+      $(".ajsut-img").css({ "display": "flex", "z-index": "2" });
+      $(".template1-formacao-container").css({ "z-index": "1" });
+      $("#headericon").css({ "z-index": "1" });
     },
     toDataURL(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            var reader = new FileReader();
-            reader.onloadend = function () {
-            callback(reader.result);
-            };
-            reader.readAsDataURL(xhr.response);
+      var xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+          callback(reader.result);
         };
-        xhr.open("GET", url);
-        xhr.responseType = "blob";
-        xhr.send();
+        reader.readAsDataURL(xhr.response);
+      };
+      xhr.open("GET", url);
+      xhr.responseType = "blob";
+      xhr.send();
     },
   },
   mounted() {
@@ -349,7 +300,7 @@ export default {
         // console.log("watch", newval)
 
         // console.log("userDataBefore", this.userData)
-        
+
         this.userData = newval
         this.imageURL = this.userData.realImg
       },
@@ -360,44 +311,44 @@ export default {
 </script>
 
 <style scoped>
-  .pic {
-    display: flex;
-    z-index: 10;
-    overflow: hidden;
-    position: relative;
-  }
+.pic {
+  display: flex;
+  z-index: 10;
+  overflow: hidden;
+  position: relative;
+}
 
-  .img-pic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    display: flex;
-    z-index: 1;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 20%;
-  }
+.img-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  display: flex;
+  z-index: 1;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20%;
+}
 
-  .img-avatar {
-    width: 150px;
-    height: 150px;
-  }
+.img-avatar {
+  width: 150px;
+  height: 150px;
+}
 
-  .data-container {
-    width: 80%;
-    break-inside: avoid;
-  }
+.data-container {
+  width: 80%;
+  break-inside: avoid;
+}
 </style>
 
 <style>
-
 .editar {
   width: 24px;
   height: 24px;
   float: right;
   margin-right: 5px;
 }
+
 .side .editar {
   width: 24px;
   height: 24px;
@@ -408,9 +359,11 @@ export default {
   display: block;
   box-shadow: 0 0 50px #ccc;
 }
+
 .template-data {
   width: 100%;
 }
+
 @media only screen and (max-width: 1000px) {
   .side {
     width: 100%;
@@ -419,6 +372,7 @@ export default {
     padding-top: 50px;
     padding-bottom: 10px;
   }
+
   .pic {
     width: 150px;
     height: 150px;
@@ -427,12 +381,14 @@ export default {
     align-self: center;
     margin: 0 auto;
   }
+
   .editar-dados-contato {
     width: 95%;
     position: absolute;
     top: 10%;
     border: 2px solid white;
   }
+
   .editar-dados-escolares {
     width: 95%;
     position: absolute;
@@ -441,6 +397,7 @@ export default {
     display: none;
     padding: 1px;
   }
+
   .editar-habilidade {
     width: 95%;
     display: none;
@@ -452,6 +409,7 @@ export default {
     font-weight: bold;
     z-index: 10;
   }
+
   .editar-social {
     width: 95%;
     display: none;
@@ -465,6 +423,7 @@ export default {
     font-weight: bold;
   }
 }
+
 @media screen and (min-width: 1001px) {
   .side {
     padding: 5px;
@@ -478,6 +437,7 @@ export default {
     overflow-y: visible;
     word-break: break-all !important;
   }
+
   .pic {
     width: 150px;
     height: 150px;
@@ -486,6 +446,7 @@ export default {
     align-self: center;
     margin: 0 auto;
   }
+
   .editar-dados-escolares {
     width: 300px;
     max-height: 100%;
@@ -499,6 +460,7 @@ export default {
     padding: 10px;
     position: absolute;
   }
+
   .editar-habilidade {
     width: 300px;
     max-height: 100%;
@@ -513,6 +475,7 @@ export default {
     position: absolute;
     z-index: 10;
   }
+
   .editar-social {
     width: 400px;
     max-height: 100%;
@@ -531,6 +494,7 @@ export default {
     font-size: 16px;
   }
 }
+
 @media print {
 
   .ajsut-img {
@@ -542,14 +506,17 @@ export default {
   }
 
   body {
-    -webkit-print-color-adjust: exact !important; /* Chrome, Safari, Edge */
-    color-adjust: exact !important; /*Firefox*/
+    -webkit-print-color-adjust: exact !important;
+    /* Chrome, Safari, Edge */
+    color-adjust: exact !important;
+    /*Firefox*/
   }
 
   #contatoAndPic {
     margin-top: 35px;
   }
-/** ver isso */
+
+  /** ver isso */
   .side {
     min-height: 900px;
     height: 100%;
@@ -558,6 +525,7 @@ export default {
     font-size: 12px;
     word-break: break-all !important;
   }
+
   .pic {
     width: 150px;
     height: 150px;
@@ -582,18 +550,23 @@ export default {
   .editar-dados-contato {
     display: none !important;
   }
+
   .editar-social {
     display: none !important;
   }
+
   .title {
     margin-top: 10px !important;
   }
+
   .formacao-container {
     padding-top: 0px !important;
   }
+
   .habilidade-container {
     padding-top: 0px !important;
   }
+
   .social-container {
     padding-top: 0px !important;
   }
@@ -612,6 +585,7 @@ export default {
   text-align: center;
   padding: 5px;
 }
+
 .data-container {
   display: flex;
   padding-bottom: 10px;
@@ -621,7 +595,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.contact-template2 .data-container{
+.contact-template2 .data-container {
   margin: 0%;
   margin-left: 10px;
 }
@@ -631,11 +605,13 @@ export default {
   height: 25px;
   margin-right: 10px;
 }
+
 .phone-icon {
   width: 25px;
   height: 25px;
   margin-right: 10px;
 }
+
 .adress-icon {
   width: 25px;
   height: 25px;
@@ -685,7 +661,7 @@ export default {
     display: flex;
     flex-direction: column;
   }
-    
+
 }
 
 @media screen and (min-width: 186px) and (max-width: 1000px) {

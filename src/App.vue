@@ -11,7 +11,7 @@
     @adicionar-formacao="adicionarNovaFormacao"
     @adicionar-habilidade="adicionarNovaHabilidade"
     @update-name="updateName"
-    @add-profissao="this.showModal('profissao')"
+    @add-profissao="editarProfissao"
     @update-user="updateUser"
   />
   <nav-bar
@@ -51,7 +51,7 @@
       @add-nome="editarNome"
       @choose-addressIcon="editarIcons('adress')"
       @choose-skillIcon="editarIcons('skill')"
-      @add-profissao="this.showModal('profissao')"
+      @add-profissao="editarProfissao"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
@@ -59,7 +59,9 @@
       @choose-emailIcon="editarIcons('email')"
       @choose-educationIcon="editarIcons('education')"
       @choose-phoneIcon="editarIcons('phone')"
-      @update-experiences="adicionarExperiencias"
+      @update-experiencias="adicionarExperiencias"
+      @update-competences="updateCompetences"
+      @update-social="handleUpdateSocial"
       class="template"
       :style="getStyle()"
       :mainColor="this.configs?.getMainColor()"
@@ -81,11 +83,12 @@
       @choose-phoneIcon="editarIcons('phone')"
       @choose-addressIcon="editarIcons('adress')"
       @choose-emailIcon="editarIcons('email')"
-      @add-profissao="this.showModal('profissao')"
+      @add-profissao="editarProfissao"
       @add-formacao="this.showModal('formacao')"
       @add-habilidade="this.showModal('habilidade')"
       @add-SocialLink="this.showModal('socialLink')"
       @choose-educationIcon="editarIcons('education')"
+      @update-competences="updateCompetences"
       @update-experiences="adicionarExperiencias"
       @local-update-user="updateUser"
       @update-user="updateUser"
@@ -119,6 +122,16 @@
       />
     </div>
   </div>
+
+    <!-- animated bg -->
+    <div class='ripple-background'>
+      <div class='circle xxlarge shade1'></div>
+      <div class='circle xlarge shade2'></div>
+      <div class='circle large shade3'></div>
+      <div class='circle mediun shade4'></div>
+      <div class='circle small shade5'></div>
+    </div>
+
 </template>
 
 <script>
@@ -134,6 +147,7 @@ import PageConfig from "./model/configModel.js";
 import $ from "jquery";
 import axios from 'axios';
 import * as funcs from "./components/configs/requests";
+import * as functions from "./components/componentesCompartilhados/util/functions";
 
 export default {
   name: "App",
@@ -183,6 +197,20 @@ export default {
     Tips,
   },
   methods: {
+    handleUpdateFormacao(value) {
+      console.log(value)
+      this.user.grade = value;
+      this.updateUser(this.user);
+    },
+    handleUpdateSocial(value) {
+      console.log("handleUpdateSocial", value)
+      this.user.social = value;
+      this.updateUser(this.user);
+    },
+    updateCompetences(value) {
+      this.user.competence = value;
+      this.updateUser(this.user);
+    },
     updateConfigs(){
       this.configs.updateMyself();
     },
@@ -240,7 +268,7 @@ export default {
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     adicionarExperiencias(experiencias) {
-      // console.log(experiencias)
+      console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
@@ -304,6 +332,12 @@ export default {
     },
     editarResumo() {
       this.showModal("resumo");
+    },
+    editarProfissao() {
+      this.showModal('profissao');
+      setTimeout(() => {
+        $("#modal-input").val(this.user.profession);
+      }, 600);
     },
     editarNome(){
       this.showModal('nome')
@@ -532,85 +566,8 @@ export default {
       );
     },
     changeOptions(p) {
-      const pic = $(".pic").first();
-      // imgpic is firing NullPointer and is no needed anymore
-      //const imgpic = $(".img-pic").first();
-
-      // as vezes clicando no lugar errado dispara um emit com um length gigante esse if impede isso
-      // e um palhativo
-      if(p.target.textContent.split('').length > 30){
-        return;
-      }
-      if (p.target.id == "square") {
-        pic.css({"border-radius": "0px",
-          "border": "2px solid black"
-        });
-      } else if (p.target.id == "triangleUp") {
-        pic.css({"border-radius": "11px",
-          "border": "2px solid black"
-        });
-      } else if (p.target.id == "circle") {
-        pic.css({"border-radius": "50%",
-          "border": "2px solid black"
-        });
-      } else if (p.target.id == "colorfull-circle") {
-
-        pic.css({"border-radius": "50%",
-          "border-top": "5px solid rgb(255, 2, 2)",
-          "border-left": "5px solid rgb(68, 0, 255)",
-          "border-right": "5px solid rgb(0, 158, 61)",
-          "border-bottom": "5px solid rgb(255, 0, 221)"
-        });
-
-      } else if (p.target.textContent.includes("pag-") == true) {
-        let i = 0;
-        let all = document.getElementsByClassName("title");
-        let page_header = document.getElementsByClassName("page-header");
-        //// console.log(p.target.id)
-        if (p.target.textContent == "pag-#1F271B") {
-          setTimeout(() => {
-            for (i; i < all.length; i++) {
-              all[i].style.color = "white";
-              all[i].style.backgroundColor = "#1F271B";
-
-              if(page_header[0]){
-                page_header[0].style.color = "white"
-              }else{
-                document.getElementById("text_header").style.color = "white";
-              }
-            }
-          }, 500);
-
-        } else {
-
-          if(page_header[0]){
-            page_header[0].style.color = "black"
-          }else{
-            document.getElementById("text_header").style.color = "black";
-          }
-
-          all = document.getElementsByClassName("title");
-          for (i; i < all.length; i++) {
-            all[i].style.color = "black";
-            all[i].style.backgroundColor = "white";
-          }
-
-        }
-        if(p.target.id.split("").length < 8 && p.target.id.split("").length > 1){
-          this.configs.setMainColor(p.target.id)
-          localStorage.setItem("configs", JSON.stringify(this.configs))
-        }
-      } else if (p.target.textContent.includes("#") == true) {
-        if (
-          p.target.textContent.split("").length > 0 &&
-          p.target.textContent.split("").length < 8
-        ) {
-          this.configs.setSideColor(p.target.textContent);
-          localStorage.setItem("configs", JSON.stringify(this.configs));
-        }
-      }
-
-      // console.log(p.target.textContent);
+      // evento - jquery- configs
+      this.configs = functions.heavyEventHandling(p, $, this.configs);
     },
     getStyle() {
       switch (this.configs?.getFont()) {
@@ -710,6 +667,8 @@ export default {
       };
     },
   },
+  // fim methods
+
   beforeMount() {
     axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
 
@@ -909,7 +868,7 @@ export default {
               content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
               read: false
             })
-            
+
             funcs.setNewNotification({
               title: "Easy enter",
               language: "us-en",
@@ -927,14 +886,14 @@ export default {
                     .then( response => {
                       // console.log(response.data)
                       localStorage.setItem('tips', JSON.stringify(response.data));
-                    }) 
-                }   
+                    });
+                }
               })
               .catch(function (error) {
                 // console.log(error);
               });
           }
-        });    
+        });
       });
 
     // General configs
@@ -942,16 +901,27 @@ export default {
       this.configs = new PageConfig();
       localStorage.setItem("configs", JSON.stringify(this.configs));
     }else{
-      this.configs = new PageConfig().recoverConfigs()
+      this.configs = new PageConfig().recoverConfigs();
     }
     this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
-
+  },
+  mounted() {
+    this.configs.setIconsCollor();
   }
 };
 </script>
 
 <style>
+.ripple-background {
+  position: relative;
+  z-index: -1;
+}
+
+.icone-branco {
+  filter: invert(100%);
+}
+
 @media print {
   .template {
     width: 100vw !important;
@@ -1052,6 +1022,11 @@ export default {
   }
 }
 @media print {
+
+  .ripple-background {
+    display: none;
+  }
+
   #navbar {
     display: none !important;
   }
@@ -1089,4 +1064,87 @@ export default {
     display: none !important;
   }
 }
+
+/* animated bg css */
+body{
+  background: #3399ff;
+}
+
+
+.circle{
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: ripple 15s infinite;
+  box-shadow: 0px 0px 1px 0px #508fb9;
+}
+
+.small{
+  width: 200px;
+  height: 200px;
+  left: -100px;
+  bottom: -100px;
+}
+
+.medium{
+  width: 400px;
+  height: 400px;
+  left: -200px;
+  bottom: -200px;
+}
+
+.large{
+  width: 600px;
+  height: 600px;
+  left: -300px;
+  bottom: -300px;
+}
+
+.xlarge{
+  width: 800px;
+  height: 800px;
+  left: -400px;
+  bottom: -400px;
+}
+
+.xxlarge{
+  width: 1000px;
+  height: 1000px;
+  left: -500px;
+  bottom: -500px;
+}
+
+.shade1{
+  opacity: 0.2;
+}
+.shade2{
+  opacity: 0.5;
+}
+
+.shade3{
+  opacity: 0.7;
+}
+
+.shade4{
+  opacity: 0.8;
+}
+
+.shade5{
+  opacity: 0.9;
+}
+
+@keyframes ripple{
+  0%{
+    transform: scale(0.8);
+  }
+  
+  50%{
+    transform: scale(1.2);
+  }
+  
+  100%{
+    transform: scale(0.8);
+  }
+}
+
 </style>

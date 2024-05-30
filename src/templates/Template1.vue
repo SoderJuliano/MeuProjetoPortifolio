@@ -11,7 +11,7 @@
         @add-habilidade="$emit('add-habilidade')"
         @add-SocialLink="$emit('add-SocialLink')"
         @adicionar-habilidade="$emit('adicionar-habilidade')"
-        @update-user="$emit('update-user')"
+        @update-user="updateUser"
         @user-update="reEmit"
         @local-update-user="reEmit"
         :cor="sideColor"
@@ -25,14 +25,14 @@
         @add-experiencia="$emit('add-experiencia')"
         @add-nome="$emit('add-nome')"
         @add-profissao="$emit('add-profissao')"
-        @update-experiences="$emit('update-experiences')"
+        @update-experiencias="reEmitUpdate"
+        @update-competences="onUpdateCompetences"
         @click="closeEditarContato"
         :fontColor=fontColor
         :cor="mainColor"
         :user="this.userData"
         :language="language"
       />
-      
   </div>
 </template>
 
@@ -42,14 +42,18 @@ import Page from '../components/Page.vue'
 
 export default {
   name: 'template1',
-  emits: ['local-update-user', 'add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 'add-profissao', 
-  'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
-  'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon', 'update-experiences'],
+  emits: [
+    'local-update-user', 'add-info', 'add-resumo', 'add-competencia', 'add-experiencia', 'add-nome', 
+    'add-profissao',
+    'add-formacao', 'add-habilidade', 'add-SocialLink', 'adicionar-habilidade', 'update-user', 'choose-emailIcon',
+    'choose-educationIcon', 'choose-phoneIcon', 'choose-skillIcon', 'choose-addressIcon', 'update-experiencias', 
+    'update-competences'
+  ],
   data(){
     return{
       userData: this.user,
       uExperiences: this.userExperiences,
-      titles: 
+      titles:
         {
           competencias: ["COMPETÊNCIAS", "COMPETENCE"],
           resumo: ["RESUMO", "SUMMARY"],
@@ -73,7 +77,15 @@ export default {
     language: String,
   },
   methods: {
-
+    updateUser(data) {
+      this.$emit('update-user', data)
+    },
+    onUpdateCompetences(value) {
+      this.$emit('update-competences', value)
+    },
+    reEmitUpdate(jobs) {
+      this.$emit('update-experiencias', jobs)
+    },
     reEmit(data) {
       // console.log("data", data)
       this.$emit("local-update-user", data)

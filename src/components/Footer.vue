@@ -92,7 +92,17 @@ export default {
                 this.$emit("change-main-color", p.target.id)
                 localStorage.setItem("mainColor", p.target.id)
                 localStorage.setItem("fontColor", p.target.id == "#1F271B" ? "white" : "black")
-
+                setTimeout(() => {
+                    let eyeIcons = $(".icon-show-title");
+                    let editarIcons = $(".editar");
+                    if(p.target.id == "#1F271B") {
+                        eyeIcons.addClass("icone-branco");
+                        editarIcons.addClass("icone-branco");
+                    }else {
+                        eyeIcons.removeClass("icone-branco");
+                        editarIcons.removeClass("icone-branco");
+                    }
+                }, 300);
                 if(confirm(this.language.includes("pt") ? "Cor alterada. Ver cor?" : "Color set. See it?")) {
                     this.hover = false;
                 } else {

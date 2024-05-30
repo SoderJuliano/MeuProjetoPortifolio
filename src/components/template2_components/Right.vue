@@ -14,6 +14,7 @@
         />
         <Social
             class="template-data"
+            @update-user="onUpdateUser"
             @add-SocialLink="$emit('add-SocialLink')"
             template=2
             :language="language"
@@ -24,7 +25,7 @@
         <Experiencias
             class="template-data"
             @add-Experiencia="$emit('add-Experiencia')"
-            @update-experiences="$emit('update-experiences')"
+            @update-experiencias="reEmitUpdate"
             template=2
             :language="language"
             :titulo="titulo.experiencias"
@@ -46,13 +47,19 @@ export default {
         Experiencias
     },
     emits:["add-info", "add-SocialLink", "add-Experiencia", "update-experiences", "choose-addressIcon",
-            "choose-phoneIcon", "choose-emailIcon"],
+            "choose-phoneIcon", "choose-emailIcon", "user-update"],
     props:{
         user: Object,
         sideColor: String,
         language: String,
     },
     methods:{
+        onUpdateUser(data) {
+            this.$emit("user-update", data);
+        },
+        reEmitUpdate(value){
+            this.$emit("update-experiences", value);
+        },
         getStyle(){
             return{
                 "border-left": "2px solid "+this.sideColor,

@@ -80,14 +80,13 @@ export default {
     justify-content: space-around;
     display: none;
 }
-.colors-container{
+.colors-container {
     display: block;
-    background-color: white;
     margin-top: 10px;
 }
 </style>
 <style>
-.colors-container .title{
+.colors-container .title {
     text-align: initial;
 }
 </style>

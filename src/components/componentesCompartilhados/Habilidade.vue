@@ -72,6 +72,8 @@ export default {
   margin: 0 auto;
   display: flex;
   padding-bottom: 20px;
+  z-index: 2;
+  position: relative;
 }
 
 .template1-habilidade-container span {
@@ -83,11 +85,18 @@ export default {
   border-radius: 10px;
 }
 
-.template1-habilidade-container:hover .remove-bnt{
+.template1-habilidade-container:hover .remove-bnt,
+.template1-container:hover .remove-bnt,
+.template1-habilidade-container span:hover .remove-bnt {
+  display: block;
+}
+
+.remove-bnt {
+  width: 30px;
+  height: 30px;
   background-color: white;
   border-radius: 10px;
   padding: 10px;
-  display: block;
   margin-top: 10px;
   position: relative;
   float: right;

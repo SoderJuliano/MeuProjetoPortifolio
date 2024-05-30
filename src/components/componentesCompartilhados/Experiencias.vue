@@ -2,14 +2,17 @@
   <div :class="mainclass">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
-            :className="tstyle"
-            :startShowing="user.userExperiences.length > 0"
+            :className="classToShare"
+            :startShowing="jobs?.length > 0"
         />
-        <img id="edit-exp" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-experiencia')"/>
+        <img src="../../icons/editar.png" id="edit-exp" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
-        <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
+        <div>
+          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
+          <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
+        </div>
           <h3>{{item.position}}</h3>
           <div style="display: flex">
             <h4 style="margin-top: 0; margin-right:10px;">{{item.company}}</h4>
@@ -19,18 +22,29 @@
             <span style="margin-top: 0; margin-left:10px;" v-if="item.dateFired">{{item.dateFired}}</span>
           </div>
           <p style="background-color:  whitesmoke; padding: 10px; border-radius: 10px;">{{item.description}}</p>
-      </div>
+          <div v-if="showEditing == index" class="job-edit">
+            <wrappEditModel
+              :job="getJobModel(item)"
+              :language="language"
+              @editar-end="editar"
+              @update-experiencias="updateExperiencias"
+            />
+          </div>
+        </div>
   </div>
 </template>
 
 <script>
 
+import * as svgs from "../utils/svgsText.js";
 import showSwitcher from '../iconComponent/showSwitcher.vue';
+import jobModel from '../../model/jobModel.js';
+import wrappEditModel from "../utils/wrappEditModel.vue";
 
 export default {
   name: 'Experiencias',
-  emits: ['add-experiencia', "update-experiences"],
-  components: {showSwitcher},
+  emits: ['add-experiencia', 'update-experiencias'],
+  components: {showSwitcher, wrappEditModel},
   props:{
     template: Number,
     titulo: Array,
@@ -48,19 +62,41 @@ export default {
       jobEnd: '',
       lasJobHired: '',
       lastJobEnd: '',
-      tstyle: 'experiences-template'+this.template+'-title-'+ this.fontColor ? this.fontColor : "black",
+      classToShare: 'experiencias',
       cstyle: 'template'+this.template+'-experiencias-container',
-      jobs: this.experiences
+      jobs: this.experiences,
+      editIcon: svgs.editIcon,
+      showEditing: null
     }
   },
   methods:{
+      updateExperiencias(job) {
+        console.log(job)
+        this.jobs.forEach((each, index) => {
+          if (each.id === job.id) {
+            this.jobs[index] = job;
+          }
+        });
+        this.$emit("update-experiencias", this.jobs);
+      },
+      getJobModel(item) {
+        const model = new jobModel();
+        return model.retrieveJob(item);
+      },
+      editar(val) {
+        this.showEditing = val
+      },
       hovert(){
-        this.template == 2 ?
-        document.getElementById("edit-exp").style.display = "none" : ''
+        let element = document.getElementById("edit-exp");
+        if (element && this.template == 2) {
+          element.style.display = "none";
+        }
       },
       leavehovert(){
-        this.template == 2 ?
-        document.getElementById("edit-exp").style.display = "block" : ''
+        let element = document.getElementById("edit-exp");
+        if (element && this.template == 2) {
+          element.style.display = "block";
+        }
       },
       getStyle(){
           return{
@@ -92,10 +128,28 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 @media print{
+
+  .not-visible {
+    display: none;
+  }
+
   .remove-bnt{
     display: none;
   }
+  .job-edit {
+    display: none;
+  }
 }
+
+.job-edit {
+  position: relative;
+  top: 0;
+}
+
+.editar:active {
+  transform: scale(0.9);
+}
+
 .editar-animado-resumo{
   width:20px;
   display: none;
@@ -122,12 +176,24 @@ export default {
   margin-bottom: 10px;
 }
 
-.template1-experiencias-container:hover .remove-bnt{
+.template1-experiencias-container:hover .remove-bnt {
   display: block;
   background-color: white;
   padding: 10px;
   border-radius: 10px;
+  width: 20px;
   float: right;
+}
+
+.template2-experiencias-container:hover .remove-bnt {
+  display: block;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.template2-experiencias-container:hover .remove-bnt:last-child {
+  margin-left: 20%;
 }
 
 .title {
