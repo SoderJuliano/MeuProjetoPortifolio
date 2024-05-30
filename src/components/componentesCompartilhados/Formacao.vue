@@ -280,6 +280,11 @@ export default {
   padding: 5px;
 }
 @media print {
+
+  .template2-formacao-container span {
+    width: 80%;
+  }
+
   .template1-formacao-container:hover .template1-remove-bnt {
     display: none;
   }
