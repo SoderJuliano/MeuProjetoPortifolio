@@ -194,6 +194,11 @@ export default {
   .competence-edit {
     display: none;
   }
+
+  /* Estava 100/% mas aí cortava um pedacinho à direita no t1 */
+  .competencias-container .data-container-page {
+    width: 95%;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -214,5 +219,10 @@ export default {
     align-items: center;
     margin-top: 10px !important;
   }
+
+  .competencias-container {
+    position: relative;
+  }
+
 }
 </style>
