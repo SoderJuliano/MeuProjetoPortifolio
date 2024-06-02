@@ -11,7 +11,9 @@
         </div>
         <div v-for="(item, index) in this.user.contact.phone" :key="index" class="data-container">
             <img @click="this.$emit('choose-phoneIcon')" v-if="item" src="../../icons/phone.png" alt="phone" class="phone-icon">
-            <span class="phone-text">{{item}}</span>
+            <span class="phone-text">{{ normalizePhone(item) }}</span>
+            <img @click="toglePhoneMask()" alt="phone" src="../../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
+            <img @click="toglePhoneMask()" alt="phone" src="../../icons/phone/disabled.svg" id="disabled" class="phone-disabled">
         </div>
         <div class="data-container">
             <img @click="$emit('choose-addressIcon')" v-if="this.user.contact.adress" src="../../icons/adress.png" alt="adress" class="adress-icon">
@@ -51,6 +53,44 @@ export default {
         this.adress = this.user.contact.adress;
     }, */
     methods:{
+        toglePhoneMask() {
+            if (this.phoneMask == true) {
+                document.getElementById("enabled").style.display = "none";
+                document.getElementById("disabled").style.display = "block";
+                this.phoneMask = false;
+                let phone = document.getElementsByClassName("phone-text")[0].textContent;
+                phone = phone.replaceAll(" ", "");
+                phone = phone.replaceAll("-", "");
+                phone = phone.replaceAll("(", "");
+                phone = phone.replaceAll(")", "");
+                document.getElementsByClassName("phone-text")[0].textContent = phone;
+            } else {
+                document.getElementById("enabled").style.display = "block";
+                document.getElementById("disabled").style.display = "none";
+                this.phoneMask = true;
+                let phone = document.getElementsByClassName("phone-text")[0].textContent;
+                document.getElementsByClassName("phone-text")[0].textContent = this.normalizePhone(phone);
+            }
+        },
+        normalizePhone(phone) {
+            if (phone.length == 11 && this.language == "pt-br") {
+                return "(" + phone.slice(0, 2) + ") " + phone.slice(2, 3) + " " + phone.slice(3, 7) + "-" + phone.slice(7, 11);
+            } else if (phone.length == 14 && this.language == "pt-br") {
+                return phone.slice(0, 3) + " " + phone.slice(3, 5) + " " + phone.slice(5, 10) + "-" + phone.slice(10, 14);
+            } else if (phone.length == 13 && this.language == "pt-br") {
+                return "+" + phone.slice(0, 2) + " " + phone.slice(2, 4) + " " + phone.slice(4, 9) + "-" + phone.slice(9, 13);
+            } else if (phone.length == 9 && this.language == "pt-br") {
+                return phone.slice(0, 5) + "-" + phone.slice(5, 9);
+            }
+
+            if (phone.length == 12 && this.language != "pt-br") {
+                return phone.slice(0, 2) + " (" + phone.slice(2, 5) + ")-" + phone.slice(5, 9) + "-" + phone.slice(9, 12);
+            } else if (phone.length == 11 && this.language != "pt-br") {
+                return "+" + phone.slice(0, 1) + " (" + phone.slice(1, 4) + ")-" + phone.slice(4, 8) + "-" + phone.slice(8, 11);
+            }
+
+            return phone;
+        },
         getStyle(){
             return {
                 "border-bottom": "1px solid "+this.sideColor,
@@ -62,6 +102,12 @@ export default {
 </script>
 
 <style scoped>
+.phone-enabled {
+    right: 30px;
+}
+.phone-disabled {
+    right: 30px;
+ }
 .editar-contact:active {
     transform: scale(.9);
 }
