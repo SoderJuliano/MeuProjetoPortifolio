@@ -72,7 +72,7 @@ import Social from "./componentesCompartilhados/Social.vue";
 import CenterImg from "./utils/centerImg.vue";
 import CenterImgOpenclose from "./utils/centerImgOpenClose.vue";
 import showSwitcher from "./iconComponent/showSwitcher.vue";
-import * as funcs from './componentesCompartilhados/util/functions';
+import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from "jquery";
 
 export default {

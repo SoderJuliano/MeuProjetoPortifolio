@@ -133,7 +133,7 @@ import strings from '../components/configs/strings.json';
 import Job from '../model/jobModel.js';
 import UserModel from '../model/userModel';
 import IconChooser from './iconComponent/IconChooser.vue';
-import * as funcs from './componentesCompartilhados/util/functions';
+import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from 'jquery';
 
 

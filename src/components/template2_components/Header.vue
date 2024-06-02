@@ -30,7 +30,7 @@
 </template>
 <script>
 
-import funcs from "../componentesCompartilhados/util/functions";
+import funcs from "../componentesCompartilhados/utilJS/functions";
 import CenterImg from "../../components/utils/centerImg.vue";
 import CenterImgOpenclose from "../../components/utils/centerImgOpenClose.vue";
 import $ from "jquery";
