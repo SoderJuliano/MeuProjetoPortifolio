@@ -61,7 +61,7 @@ export default {
     },
     watch: {
         language(newValue){
-            console.log("someData changed!", newValue);
+            // console.log("someData changed!", newValue);
             this.local_language = newValue;
         }
     }

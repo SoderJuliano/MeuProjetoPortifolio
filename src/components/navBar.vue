@@ -17,6 +17,10 @@
               </div>
               <div class="right-options">
                 <li class="nav-item">
+                  <img class="li-img" src="../icons/database.png" alt="database">
+                  <a v-on:click="dbSave()" class="nav-link">{{ this.printDatadaseText() }}</a>
+                </li>
+                <li class="nav-item">
                   <downloadDoc text="DOWNLOAD" />
                 </li>
                 <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
@@ -54,7 +58,9 @@
 </template>
 
 <script>
+import UserModel from '../model/userModel.js';
 import $ from 'jquery';
+import axios from 'axios';
 import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
 
 export default {
@@ -64,16 +70,46 @@ export default {
         show: false,
         myInfo: false,
         info: false,
+        language: this.language,
+        isANewUser: true
       }
     },
     components: {
       downloadDoc
     },
     props: {
-      language: String
+      language: String,
+      user: Object
     },
     emits:['close', 'language-update', 'now-template1', 'now-template2'],
     methods:{
+      async dbSave() {
+        const confirmed = confirm(this.getAlertConfirmText());
+
+        if (confirmed) {
+          let userFromModer = new UserModel();
+          userFromModer = userFromModer.constructorObject(this.user);
+          console.log(typeof userFromModer)
+          if(userFromModer instanceof UserModel) {
+            let response;
+            response = await userFromModer.saveIntoDatabase(this.isANewUser);
+            if(response) {
+              console.log('response from backend', response)
+              alert(response.message)
+              this.isANewUser = false;
+            }
+          }else {
+            alert("Não foi possível salvar");
+          }
+          //todo
+        } else {
+          // Código a ser executado se o usuário clicar em "Cancelar"
+          alert("Você escolheu Não!");
+        }
+      },
+      getAlertConfirmText() {
+        return this.getLanguage() == 'us-en' ? "Is Ok save all yor information in our database?" : "Podemos salvar todas suas informações em nosso banco de dados?"
+      },
       exemplesText(){
         return this.getLanguage() == 'us-en' ? "See more" : "Mais Exemplos"
       },
@@ -95,7 +131,10 @@ export default {
       printText(){
         return this.getLanguage() == 'us-en' ? "PRINTER" : "IMPRIMIR"
       },
-      getLanguage(){ return localStorage.getItem('lng')},
+      printDatadaseText() {
+        return this.getLanguage() == 'us-en' ? "SAVE REMOTLY" : "SALVAR NA NUVEM"
+      },
+      getLanguage(){ return this.language },
       close(){
         this.$emit('close')
         this.show = false
@@ -198,6 +237,11 @@ export default {
         document.getElementsByClassName("bnt-languages")[1].style.color = "white", document.getElementsByClassName("bnt-languages")[0].style.color = "black",
         document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white"
       ) : '';
+    },
+    watch: {
+        language(newValue){
+            this.local_language = newValue;
+        }
     }
 }
 </script>

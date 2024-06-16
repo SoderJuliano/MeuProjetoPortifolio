@@ -21,6 +21,7 @@ body{
 
 .custom-container.template {
     background-color: white;
+    border-radius: 10px;
 }
 
 /* deixar igual os dois lados dos containers t2 */

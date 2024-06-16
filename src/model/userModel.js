@@ -1,3 +1,4 @@
+import { saveUserInfosInDataBase, teste2 } from '../components/configs/requests';
 export default class User {
     id = 0;
     name = "";
@@ -29,6 +30,10 @@ export default class User {
         this.id = this.id == 0 ? Math.random() : this.id;
     }
 
+    // newUser = true and false here means, true new user, false update existing user
+    async saveIntoDatabase(newUser) {
+        return await saveUserInfosInDataBase(this, newUser);
+    }
 
     updateToParente(name, val) {
         this.$emit(name, val);

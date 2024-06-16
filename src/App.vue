@@ -20,6 +20,7 @@
     @language-update="lupdate"
     :style="getStyle()"
     id="navbar"
+    :user="user"
     class="navbar navbar-expand-lg navbar-light bg-light"
   >
   </nav-bar>
@@ -928,6 +929,7 @@ export default {
   .template {
     width: 100vw !important;
     height: 100vh !important;
+    border-radius: 0px !important;
   }
 }
 
@@ -1043,8 +1045,9 @@ export default {
     -webkit-print-color-adjust: exact;
   }
 
-  .template{
+  .template {
     width: 100% !important;
+    border-radius: 10px;
   }
 
   .right {
