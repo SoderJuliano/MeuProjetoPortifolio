@@ -24,6 +24,7 @@
     class="navbar navbar-expand-lg navbar-light bg-light"
   >
   </nav-bar>
+  <login v-if="inlogin"></login>
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
@@ -147,6 +148,7 @@ import Template2 from "./templates/Template2.vue";
 import strings from "../src/components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
+import login from "./components/login/login.vue";
 import $ from "jquery";
 import axios from 'axios';
 import * as funcs from "./components/configs/requests";
@@ -157,6 +159,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      inlogin: true,
       strings: strings,
       configs: PageConfig.class,
       localStorageKey: 'user-pt',
@@ -198,6 +201,7 @@ export default {
     Template1,
     Template2,
     Tips,
+    login,
   },
   methods: {
     handleUpdateFormacao(value) {
