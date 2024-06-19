@@ -24,7 +24,13 @@
     class="navbar navbar-expand-lg navbar-light bg-light"
   >
   </nav-bar>
-  <login v-if="inlogin"></login>
+  <login
+    v-if="inlogin"
+    :email="user?.contact?.email"
+    :customTitle="loginTitle"
+    @login="login"
+    @cancel="cancelLogin"
+  ></login>
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
@@ -159,6 +165,8 @@ export default {
   emits: ["close"],
   data() {
     return {
+      // loginTitle, null == default title
+      loginTitle: null,
       inlogin: true,
       strings: strings,
       configs: PageConfig.class,
@@ -204,6 +212,12 @@ export default {
     login,
   },
   methods: {
+    cancelLogin() {
+      this.inlogin = false;
+    },
+    login(email, password) {
+      console.log("email and password " + email +" "+ password)
+    },
     handleUpdateFormacao(value) {
       console.log(value)
       this.user.grade = value;

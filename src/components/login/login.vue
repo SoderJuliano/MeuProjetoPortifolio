@@ -3,7 +3,8 @@
         <div class="inner-login-tempalte">
             <div class="modal-header">
                 <div class="modal-title">
-                    <span>Login</span>
+                    <span v-if="customTitle">{{ customTitle }}</span>
+                    <span v-else>Login</span>
                 </div>
             </div>
             <div class="modal-body">
@@ -12,39 +13,49 @@
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="******" v-model="password" @input="validatePassword">
-                    <small v-if="password.length > 0 && password.length <= 6" class="text-danger">A senha deve conter mais de 6 caracteres.</small>
+                    <small v-if="customMessage && password.length > 0 && password.length <= 6">{{ customMessage }}</small>
+                    <small v-else-if="password.length > 0 && password.length <= 6" class="text-danger">A senha deve conter mais de 6 caracteres.</small>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary">Login</button>
-                    <button type="button" class="btn btn-danger">Cancel</button>
+                    <button :disabled="!passwordMeetTheRequirements" @click="login()" type="button" class="btn btn-primary">Login</button>
+                    <button @click="cancel" type="button" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+
 export default {
     name: 'modal-login-template',
     props: {
-        email: String
+        email: String,
+        customMessage: String,
+        customTitle: String
     },
     data() {
         return {
             email: this.email,
-            password: ""
+            password: "",
+            passwordMeetTheRequirements: false
         }
     },
-    emits: ['login'],
+    emits: ['login', 'cancel'],
     methods: {
         login() {
             this.$emit('login', this.email, this.password);
         },
+        cancel() {
+            this.$emit('cancel');
+        },
         validatePassword() {
             // Lógica para validar a senha
             if (this.password.length > 6) {
-                
+                this.passwordMeetTheRequirements = true;
+            }else {
+                this.passwordMeetTheRequirements = false;
             }
         }
     }
@@ -61,8 +72,12 @@ export default {
         justify-content: center;
         width: 100vw;
         height: 100vh !important;
-        background: transparent;
-        z-index: 2;
+        background: #f5f5f569;
+        /*
+            z-index 2 is the submenus to control photos and shapes
+            if keep 2 stays under those menus, 3 is ok
+        */
+        z-index: 3;
     }
     .inner-login-tempalte {
         flex-direction: column;
@@ -122,6 +137,10 @@ export default {
         position: relative;
         width: 200px;
         padding: 10px;
+    }
+
+    button:first-child {
+        margin-right: 10px;
     }
 
     small {

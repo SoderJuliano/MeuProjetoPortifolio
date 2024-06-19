@@ -94,9 +94,11 @@ export default {
             let response;
             response = await userFromModer.saveIntoDatabase(this.isANewUser);
             if(response) {
-              console.log('response from backend', response)
-              alert(response.message)
+              console.log('response from backend', response);
               this.isANewUser = false;
+            }else {
+              // In case that is a fresh new user with no data to save
+              alert(this.getErroSalvarNoBancoSemInfos());
             }
           }else {
             alert("Não foi possível salvar");
@@ -106,6 +108,9 @@ export default {
           // Código a ser executado se o usuário clicar em "Cancelar"
           alert("Você escolheu Não!");
         }
+      },
+      getErroSalvarNoBancoSemInfos() {
+        return this.getLanguage() == 'us-en' ? "You do not have data to save or is missing at last one email in your cv contact infos" : "Não tem dados para salvar, ou está faltando um email nos dados de contato do seu cv"
       },
       getAlertConfirmText() {
         return this.getLanguage() == 'us-en' ? "Is Ok save all yor information in our database?" : "Podemos salvar todas suas informações em nosso banco de dados?"

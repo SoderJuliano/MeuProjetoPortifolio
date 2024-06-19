@@ -11,17 +11,21 @@ export function setNewNotification(data) {
     });
 }
 
-export function saveUserInfosInDataBase(user, newUser) {
-  let phoneNumbers = [];
-
-  if (user.contact && user.contact.phone !== null) {
-    if (typeof user.contact.phone === 'string') {
-      phoneNumbers.push(user.contact.phone);
-    } else if (Array.isArray(user.contact.phone)) {
-      phoneNumbers = phoneNumbers.concat(user.contact.phone.filter(phone => typeof phone === 'string'));
-    }
+export function saveLogin(email, password, userId) {
+  const login = {
+    "email": email,
+    "password":  password,
+    "userId": userId
   }
 
+  return axios.post("http://localhost:5200/user/register", data, { headers }).then((response) => {
+    console.log("register newLogin response ", response);
+    return response;
+  });
+}
+
+export function saveUserInfosInDataBase(user, newUser) {
+  let phoneNumbers = [];
   let emails = [];
 
   if (user.contact && user.contact.email !== null) {
@@ -29,6 +33,18 @@ export function saveUserInfosInDataBase(user, newUser) {
       emails.push(user.contact.email);
     } else if (Array.isArray(user.contact.email)) {
       emails = emails.concat(user.contact.email.filter(email => typeof email === 'string'));
+    }
+  }else {
+    return;
+  }
+
+
+
+  if (user.contact && user.contact.phone !== null) {
+    if (typeof user.contact.phone === 'string') {
+      phoneNumbers.push(user.contact.phone);
+    } else if (Array.isArray(user.contact.phone)) {
+      phoneNumbers = phoneNumbers.concat(user.contact.phone.filter(phone => typeof phone === 'string'));
     }
   }
 
