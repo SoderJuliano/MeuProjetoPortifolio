@@ -61,6 +61,10 @@ export default class User {
         this.userExperiences = user.userExperiences;
     }
 
+    getEmails() {
+        return this.contact?.email;
+    }
+
     setAdressPart(witch, value) {
         // console.log('setting witch: '+witch+' and value: '+value);
         if (!this.contact.adressObject) {

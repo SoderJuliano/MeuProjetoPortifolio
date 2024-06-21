@@ -71,7 +71,8 @@ export default {
         myInfo: false,
         info: false,
         language: this.language,
-        isANewUser: true
+        // null is the default value for isAnewUser, after try save infos gonna figure it out
+        isANewUser: null
       }
     },
     components: {
@@ -89,16 +90,22 @@ export default {
         if (confirmed) {
           let userFromModer = new UserModel();
           userFromModer = userFromModer.constructorObject(this.user);
-          console.log(typeof userFromModer)
+          if(userFromModer.getEmails() == null || userFromModer.getEmails().length == 0) {
+            alert(this.getErroSalvarNoBancoSemInfos());
+            return;
+          }
           if(userFromModer instanceof UserModel) {
             let response;
             response = await userFromModer.saveIntoDatabase(this.isANewUser);
-            if(response) {
+            if (response) {
               console.log('response from backend', response);
-              this.isANewUser = false;
-            }else {
-              // In case that is a fresh new user with no data to save
-              alert(this.getErroSalvarNoBancoSemInfos());
+              if (response.status == 422) {
+                console.log('Error: Request failed with status code', response.status);
+                this.isANewUser == false;
+              } else if(response.status == 200) {
+                this.isANewUser = true;
+                alert("Salvo com sucesso!");
+              }
             }
           }else {
             alert("Não foi possível salvar");
@@ -246,6 +253,10 @@ export default {
     watch: {
         language(newValue){
             this.local_language = newValue;
+        },
+        isANewUser(newValue){
+          console.log('isANewUser', newValue);
+          this.$emit('isANewUser', newValue);
         }
     }
 }

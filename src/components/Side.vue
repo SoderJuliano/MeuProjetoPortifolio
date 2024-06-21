@@ -200,9 +200,12 @@ export default {
         "background-color": `${this.cor}`,
       };
     },
+    /**
+     * Set the real image based on user data.
+     *
+     */
     setRealImg() {
       const imgExiste = this.userData?.realImg?.length > 5;
-
       if (imgExiste) {
         $(".ajsut-img").css({ "display": "flex", "z-index": "2" });
         $(".template1-formacao-container").css({ "z-index": "1" });
@@ -292,7 +295,7 @@ export default {
     },
   },
   mounted() {
-    this.setRealImg()
+    this.setRealImg();
   },
   watch: {
     user: {

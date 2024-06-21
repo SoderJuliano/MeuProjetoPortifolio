@@ -28,6 +28,8 @@
     v-if="inlogin"
     :email="user?.contact?.email"
     :customTitle="loginTitle"
+    :language="this.configs?.getLanguage()"
+    :inOnboarding="inOnboarding"
     @login="login"
     @cancel="cancelLogin"
   ></login>
@@ -167,7 +169,8 @@ export default {
     return {
       // loginTitle, null == default title
       loginTitle: null,
-      inlogin: true,
+      inlogin: false,
+      inOnboarding: true,
       strings: strings,
       configs: PageConfig.class,
       localStorageKey: 'user-pt',

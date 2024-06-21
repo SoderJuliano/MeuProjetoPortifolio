@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <div class="modal-title">
                     <span v-if="customTitle">{{ customTitle }}</span>
-                    <span v-else>Login</span>
+                    <span v-else>{{ inOnboarding ? (language === 'pt-br' ? 'Cadastro' : 'Register') : 'Login' }}</span>
                 </div>
             </div>
             <div class="modal-body">
@@ -12,14 +12,17 @@
                     <input type="text" class="form-control" placeholder="email" v-model="email">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="******" v-model="password" @input="validatePassword">
+                    <input type="password" class="form-control" :placeholder="this.language === 'pt-br' ? 'Senha' : 'Password'" v-model="password" @input="validatePassword">
                     <small v-if="customMessage && password.length > 0 && password.length <= 6">{{ customMessage }}</small>
-                    <small v-else-if="password.length > 0 && password.length <= 6" class="text-danger">A senha deve conter mais de 6 caracteres.</small>
+                    <small v-else-if="password.length > 0 && password.length <= 6" class="text-danger">{{ this.language === 'pt-br' ? 'Sua senha deve ter pelo menos 6 caracteres.' : 'Your password must have at least 6 characters.' }}</small>
+                    <br><br v-if="inOnboarding && password.length > 0">
+                    <input v-if="inOnboarding" type="password" class="form-control" :placeholder="this.language === 'pt-br' ? 'Confirme sua senha' : 'Confirm your password'" v-model="repeatPassword" @input="validatePassword">
+                    <small v-if="!passwordMeetTheRequirements && repeatPassword.length > 0">{{ this.language === 'pt-br' ? 'As senhas devem ser iguais.' : 'The passwords must be equal.' }}</small>
                 </div>
             </div>
             <div class="modal-footer">
                 <div class="form-group">
-                    <button :disabled="!passwordMeetTheRequirements" @click="login()" type="button" class="btn btn-primary">Login</button>
+                    <button :disabled="!passwordMeetTheRequirements" @click="login()" type="button" class="btn btn-primary">{{ inOnboarding ? 'Confirmar' : 'Login' }}</button>
                     <button @click="cancel" type="button" class="btn btn-danger">Cancel</button>
                 </div>
             </div>
@@ -33,12 +36,15 @@ export default {
     props: {
         email: String,
         customMessage: String,
-        customTitle: String
+        customTitle: String,
+        language: String,
+        inOnboarding: Boolean
     },
     data() {
         return {
             email: this.email,
             password: "",
+            repeatPassword: "",
             passwordMeetTheRequirements: false
         }
     },
@@ -52,12 +58,12 @@ export default {
         },
         validatePassword() {
             // Lógica para validar a senha
-            if (this.password.length > 6) {
+            if (this.password.length > 6 && this.password === this.repeatPassword) {
                 this.passwordMeetTheRequirements = true;
             }else {
                 this.passwordMeetTheRequirements = false;
             }
-        }
+        },
     }
 }
 </script>
@@ -137,6 +143,8 @@ export default {
         position: relative;
         width: 200px;
         padding: 10px;
+        border-radius: 15px;
+        margin-bottom: 50px;
     }
 
     button:first-child {

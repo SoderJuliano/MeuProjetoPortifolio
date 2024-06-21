@@ -79,21 +79,23 @@ export function saveUserInfosInDataBase(user, newUser) {
     };
 
     if(newUser) {
-      return axios.post("http://localhost:5200/user/", data, { headers }).then((response) => {
+      return axios.post("http://localhost:5200/user", data, { headers }).then((response) => {
         console.log('chamada POST executada');
         console.log(response.data);
       }).catch(error => {
           console.log('chamada POST executada');
           console.log(error);
+          return error;
       });
     } else {
       data._id = user.id;
-      return axios.put("http://localhost:5200/user/", data, { headers }).then((response) => {
+      return axios.put("http://localhost:5200/user", data, { headers }).then((response) => {
         console.log('chamada PUT executada');
         console.log(response.data);
       }).catch(error => {
           console.log('chamada PUT executada');
           console.log(error);
+          return error;
       });
     }
 }
