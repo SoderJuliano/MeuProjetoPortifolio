@@ -81,9 +81,9 @@ export default {
         background: #f5f5f569;
         /*
             z-index 2 is the submenus to control photos and shapes
-            if keep 2 stays under those menus, 3 is ok
+            if keep 2 stays under those menus, 4 is ok
         */
-        z-index: 3;
+        z-index: 4;
     }
     .inner-login-tempalte {
         flex-direction: column;
