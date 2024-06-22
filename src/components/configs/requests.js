@@ -37,9 +37,6 @@ export function saveUserInfosInDataBase(user, newUser) {
   }else {
     return;
   }
-
-
-
   if (user.contact && user.contact.phone !== null) {
     if (typeof user.contact.phone === 'string') {
       phoneNumbers.push(user.contact.phone);
@@ -80,69 +77,24 @@ export function saveUserInfosInDataBase(user, newUser) {
 
     if(newUser) {
       return axios.post("http://localhost:5200/user", data, { headers }).then((response) => {
-        console.log('chamada POST executada');
-        console.log(response.data);
+        // console.log('chamada POST executada');
+        // console.log(response.data);
+        return response;
       }).catch(error => {
-          console.log('chamada POST executada');
-          console.log(error);
-          return error;
+          // console.log('chamada POST executada');
+          // console.log(error);
+          return error.response;
       });
     } else {
       data._id = user.id;
       return axios.put("http://localhost:5200/user", data, { headers }).then((response) => {
-        console.log('chamada PUT executada');
-        console.log(response.data);
+        // console.log('chamada PUT executada');
+        // console.log(response.data);
+        return response;
       }).catch(error => {
-          console.log('chamada PUT executada');
-          console.log(error);
-          return error;
+          // console.log('chamada PUT executada');
+          // console.log(error);
+          return error.response;
       });
     }
 }
-// export function teste2() {
-//     const data = {
-//         "name": "string",
-//         "profession": "string",
-//         "resume": "string",
-//         "competence": [
-//           "string"
-//         ],
-//         "social": [
-//           "string"
-//         ],
-//         "grade": [
-//           "string"
-//         ],
-//         "ability": "string",
-//         "avatarImg": "string",
-//         "realImg": "string",
-//         "contact": {
-//           "email": [
-//             "string"
-//           ],
-//           "phone": [
-//             "string"
-//           ],
-//           "address": {
-//             "country": "string",
-//             "state": "string",
-//             "city": "string",
-//             "street": "string",
-//             "number": "string",
-//             "district": "string"
-//           },
-//           "adressAsString": "string"
-//         }
-//       };
-//       console.log('req', data)
-//       axios.post('http://localhost:5200/user/', data, {
-//         headers: {
-//           'Accept': 'application/json',
-//           'Content-Type': 'application/json'
-//         }
-//       }).then((response) => {
-//         console.log('Response:', response.data);
-//       }).catch((error) => {
-//         console.error('Error:', error);
-//       });
-// }

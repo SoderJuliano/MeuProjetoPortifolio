@@ -1,4 +1,4 @@
-import { saveUserInfosInDataBase, teste2 } from '../components/configs/requests';
+import { saveUserInfosInDataBase, saveLogin } from '../components/configs/requests';
 export default class User {
     id = 0;
     name = "";
@@ -33,6 +33,10 @@ export default class User {
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
         return await saveUserInfosInDataBase(this, newUser);
+    }
+
+    async firstLogin(email, password) {
+        return await saveLogin(email, password, this.id);
     }
 
     updateToParente(name, val) {

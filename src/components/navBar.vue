@@ -36,6 +36,7 @@
                     <a v-on:click="about" class="dropdown-item" href="#">{{this.sobreSiteText()}}</a>
                     <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
                     <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
+                    <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
                   </div>
                   </li>
                   <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
@@ -60,7 +61,6 @@
 <script>
 import UserModel from '../model/userModel.js';
 import $ from 'jquery';
-import axios from 'axios';
 import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
 
 export default {
@@ -72,7 +72,7 @@ export default {
         info: false,
         language: this.language,
         // null is the default value for isAnewUser, after try save infos gonna figure it out
-        isANewUser: null
+        isANewUsedr: null
       }
     },
     components: {
@@ -82,8 +82,11 @@ export default {
       language: String,
       user: Object
     },
-    emits:['close', 'language-update', 'now-template1', 'now-template2'],
+    emits:['close', 'language-update', 'now-template1', 'now-template2', 'show-login-diagram', 'register-user', 'update-user', 'change-main-color', 'change-font-color', 'update-social'],
     methods:{
+      hotToLogin() {
+        this.$emit('show-login-diagram', 'login');
+      },
       async dbSave() {
         const confirmed = confirm(this.getAlertConfirmText());
 
@@ -98,13 +101,24 @@ export default {
             let response;
             response = await userFromModer.saveIntoDatabase(this.isANewUser);
             if (response) {
-              console.log('response from backend', response);
+              console.log('response from backend stats -->', response);
               if (response.status == 422) {
                 console.log('Error: Request failed with status code', response.status);
                 this.isANewUser == false;
-              } else if(response.status == 200) {
+              } else if(response.status == 404) {
+                // goes in here is case is a new user
+                console.log('Error: Request failed with status code', response.status);
                 this.isANewUser = true;
-                alert("Salvo com sucesso!");
+                setTimeout(() => {
+                  this.dbSave();
+                }, 200);
+              } else if(response.status == 201) {
+                this.isANewUser = true;
+                alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
+                this.$emit('register-user', response.data._id);
+              } else if (response.status == 200) {
+                this.isANewUser = false;
+                alert("Salvo com sucesso!", response.data);
               }
             }
           }else {
@@ -116,11 +130,17 @@ export default {
           alert("Você escolheu Não!");
         }
       },
+      getHowLoginText() {
+        return this.getLanguage() == 'us-en' ? "How the Login works" : "Como o Login funciona"
+      },
       getErroSalvarNoBancoSemInfos() {
-        return this.getLanguage() == 'us-en' ? "You do not have data to save or is missing at last one email in your cv contact infos" : "Não tem dados para salvar, ou está faltando um email nos dados de contato do seu cv"
+        return this.getLanguage() == 'us-en' ?
+        "You do not have data to save or is missing at last one email in your cv contact infos" :
+        "Não tem dados para salvar, ou está faltando um email nos dados de contato do seu cv"
       },
       getAlertConfirmText() {
-        return this.getLanguage() == 'us-en' ? "Is Ok save all yor information in our database?" : "Podemos salvar todas suas informações em nosso banco de dados?"
+        return this.getLanguage() == 'us-en' ?
+        "Is Ok save all yor information in our database?" : "Podemos salvar todas suas informações em nosso banco de dados?"
       },
       exemplesText(){
         return this.getLanguage() == 'us-en' ? "See more" : "Mais Exemplos"

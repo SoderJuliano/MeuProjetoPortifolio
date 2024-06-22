@@ -150,6 +150,7 @@ img:active
         padding: 10px;
         background-color: whitesmoke;
         border-radius: 10px;
+        cursor: pointer;
     }
 
     .tip-conteiner-content:hover #closer

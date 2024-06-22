@@ -18,6 +18,8 @@
     :language="this.configs.getLanguage()"
     @close="close"
     @language-update="lupdate"
+    @show-login-diagram="this.showDiagramsModalFunction"
+    @register-user="registerUser"
     :style="getStyle()"
     id="navbar"
     :user="user"
@@ -33,6 +35,12 @@
     @login="login"
     @cancel="cancelLogin"
   ></login>
+  <diagrams-modal
+    :diagram="diagram"
+    v-if="showDiagramsModal"
+    :language="this.configs.getLanguage()"
+    @close="this.showDiagramsModalFunction(null)"
+  ></diagrams-modal>
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
@@ -159,14 +167,18 @@ import PageConfig from "./model/configModel.js";
 import login from "./components/login/login.vue";
 import $ from "jquery";
 import axios from 'axios';
+import UserModel from './model/userModel.js';
 import * as funcs from "./components/configs/requests";
 import * as functions from "./components/componentesCompartilhados/utilJS/functions";
+import diagramsModal from "./components/tips/diagramsModal.vue";
 
 export default {
   name: "App",
   emits: ["close"],
   data() {
     return {
+      diagram: null,
+      showDiagramsModal: false,
       // loginTitle, null == default title
       loginTitle: null,
       inlogin: false,
@@ -213,13 +225,33 @@ export default {
     Template2,
     Tips,
     login,
+    diagramsModal
   },
   methods: {
+    registerUser(id) {
+      this.user.id = id;
+      // in ligin open de login/register menu
+      // in onboarding set the titles and fields to the first registration
+      this.inOnboarding = true;
+      this.inlogin = true;
+    },
+    showDiagramsModalFunction(val) {
+      this.diagram = val;
+      this.showDiagramsModal = !this.showDiagramsModal;
+    },
     cancelLogin() {
       this.inlogin = false;
     },
     login(email, password) {
       console.log("email and password " + email +" "+ password)
+      let userFromModel = new UserModel();
+      userFromModel = userFromModel.constructorObject(this.user);
+      if(userFromModel instanceof UserModel) {
+        const response = userFromModel.firstLogin(email, password);
+        if (response) {
+          console.log('response from backend login -->', response);
+        }
+      }
     },
     handleUpdateFormacao(value) {
       console.log(value)

@@ -7,6 +7,14 @@ body{
     transition: all 0.3s ease-in-out;
 }
 
+a {
+    cursor: pointer;
+}
+
+img {
+    cursor: pointer;
+}
+
 @media (max-width: 600px) {
     .title-template1 {
         width: 97% !important;

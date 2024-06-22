@@ -94,7 +94,10 @@ export default {
     },
     mounted() {
         // Will close till to better ux
-        this.close();
+        // need to wait some mls to load every z-index than execute clone that put index to 0
+        setTimeout(() => {
+            this.close();
+        }, 400);
     }
 }
 
