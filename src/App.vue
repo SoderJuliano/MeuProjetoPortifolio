@@ -1,4 +1,13 @@
 <template>
+  <h1 @click="showAlertToTrue">Caraca</h1>
+
+  <SimpleAlerts
+    @close="closeSimpleAlert"
+    title="Alert Title"
+    message="This is an alert message"
+    :show="showAlert">
+  </SimpleAlerts>
+
   <editorInformacoes
     :mainTitle="modal.mainTitle"
     :title="modal.title1"
@@ -151,7 +160,6 @@
       <div class='circle mediun shade4'></div>
       <div class='circle small shade5'></div>
     </div>
-
 </template>
 
 <script>
@@ -171,12 +179,14 @@ import UserModel from './model/userModel.js';
 import * as funcs from "./components/configs/requests";
 import * as functions from "./components/componentesCompartilhados/utilJS/functions";
 import diagramsModal from "./components/tips/diagramsModal.vue";
-
+import SimpleAlerts from 'simple-alerts';
+import 'simple-alerts/dist/simpleAlertsVue.css';
 export default {
   name: "App",
   emits: ["close"],
   data() {
     return {
+      showAlert: false,
       diagram: null,
       showDiagramsModal: false,
       // loginTitle, null == default title
@@ -225,9 +235,18 @@ export default {
     Template2,
     Tips,
     login,
-    diagramsModal
+    diagramsModal,
+    SimpleAlerts
   },
   methods: {
+    showAlertToTrue(){
+      console.log('showAlertToTrue')
+      this.showAlert = true
+    },
+    closeSimpleAlert(){
+      this.showAlert = false
+      console.log('closeSimpleAlert')
+    },
     registerUser(id) {
       this.user.id = id;
       // in ligin open de login/register menu
