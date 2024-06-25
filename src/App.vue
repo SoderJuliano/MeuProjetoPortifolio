@@ -1,6 +1,4 @@
 <template>
-  <h1 @click="showAlertToTrue">Caraca</h1>
-
   <SimpleAlerts
     @close="closeSimpleAlert"
     title="Alert Title"

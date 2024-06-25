@@ -249,6 +249,7 @@ export default {
   text-align: center;
   justify-content: center;
   align-self: center;
+  border-top-right-radius: 10px;
 }
 
 .name-title {
