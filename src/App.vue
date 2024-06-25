@@ -1009,6 +1009,7 @@ export default {
   width: 70%;
   height: 100%;
   margin-top: 20px;
+  border-radius: 10px;
 }
 
 .multi-menu-class:hover {
