@@ -82,7 +82,19 @@ export default {
       language: String,
       user: Object
     },
-    emits:['close', 'language-update', 'now-template1', 'now-template2', 'show-login-diagram', 'register-user', 'update-user', 'change-main-color', 'change-font-color', 'update-social'],
+    emits:[
+      'close',
+      'language-update',
+      'now-template1',
+      'now-template2',
+      'show-login-diagram',
+      'register-user',
+      'register-error',
+      'update-user',
+      'change-main-color',
+      'change-font-color',
+      'update-social'
+    ],
     methods:{
       hotToLogin() {
         this.$emit('show-login-diagram', 'login');
@@ -103,8 +115,9 @@ export default {
             if (response) {
               console.log('response from backend stats -->', response);
               if (response.status == 422) {
-                console.log('Error: Request failed with status code', response.status);
+                console.log('Error: Request failed', response.data);
                 this.isANewUser == false;
+                this.$emit('register-error', response.data.message);
               } else if(response.status == 404) {
                 // goes in here is case is a new user
                 console.log('Error: Request failed with status code', response.status);
@@ -115,10 +128,11 @@ export default {
               } else if(response.status == 201) {
                 this.isANewUser = true;
                 alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
-                this.$emit('register-user', response.data._id);
+                this.$emit('register-user', response.data.content._id);
               } else if (response.status == 200) {
                 this.isANewUser = false;
-                alert("Salvo com sucesso!", response.data);
+                //alert("Salvo com sucesso!", response.data);
+                this.$emit('register-user', response.data.content._id);
               }
             }
           }else {

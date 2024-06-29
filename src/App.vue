@@ -1,11 +1,12 @@
 <template>
-  <h1 @click="showAlertToTrue">Caraca</h1>
-
   <SimpleAlerts
     @close="closeSimpleAlert"
     title="Alert Title"
     message="This is an alert message"
-    :show="showAlert">
+    :customProperties="alert"
+    :custom="true"
+    :show="showAlert"
+    >
   </SimpleAlerts>
 
   <editorInformacoes
@@ -181,11 +182,19 @@ import * as functions from "./components/componentesCompartilhados/utilJS/functi
 import diagramsModal from "./components/tips/diagramsModal.vue";
 import SimpleAlerts from 'simple-alerts';
 import 'simple-alerts/dist/simpleAlertsVue.css';
+
 export default {
   name: "App",
   emits: ["close"],
   data() {
     return {
+      alert: {
+        autoClose: true,
+        timer: 1000,
+        backgroundColor: 'red',
+        textColor: 'white',
+        closeButtonText: 'Close',
+      },
       showAlert: false,
       diagram: null,
       showDiagramsModal: false,
@@ -207,7 +216,8 @@ export default {
       // user: new userModel() futuro trabalhar com classes
       user:
       {
-        id: Math.floor(Math.random() * 1000) ,
+        id: Math.floor(Math.random() * 1000),
+        _id: "",
         name: "",
         profession: "",
         resume: "",
@@ -240,7 +250,6 @@ export default {
   },
   methods: {
     showAlertToTrue(){
-      console.log('showAlertToTrue')
       this.showAlert = true
     },
     closeSimpleAlert(){
@@ -248,11 +257,23 @@ export default {
       console.log('closeSimpleAlert')
     },
     registerUser(id) {
-      this.user.id = id;
-      // in ligin open de login/register menu
-      // in onboarding set the titles and fields to the first registration
-      this.inOnboarding = true;
-      this.inlogin = true;
+      console.log('id', this.user._id)
+      if(this.user?._id == id) {
+        this.inlogin = false;
+      }else if (this.user?._id?.length < 24 && this.user?._id != id) {
+        // in ligin open de login/register menu
+        // in onboarding set the titles and fields to the first registration
+        this.inOnboarding = true;
+        this.inlogin = true;
+        this.user._id = id;
+        this.updateUser(this.user);
+      }else if(this.user?._id?.length == 24) {
+        // Despite that we sava the id on the first registerying, we made the register and the all data
+        // saves using the emai and not the id, we will have the id more for some front step controller
+        this.user._id = id;
+        this.inOnboarding = false;
+        this.inlogin = true;
+      }
     },
     showDiagramsModalFunction(val) {
       this.diagram = val;
@@ -731,12 +752,14 @@ export default {
           lsUser = JSON.parse(localStorage.getItem("user"));
         }
         if(lsUser != null) {
-          this.user = lsUser;
+          let userFromModer = new UserModel();
+          userFromModer = userFromModer.constructorObject(lsUser);
+          this.user = userFromModer;
           // console.log('set')
           // console.log(this.user)
         }
       }catch (err) {
-        // console.log(err.message);
+        // console.log(err);
         // console.log("created new user with id: " + this.user.id);
         localStorage.setItem(this.localStorageKey, JSON.stringify(this.user))
       };
@@ -875,7 +898,7 @@ export default {
           }
 
           localStorage.setItem('tips', JSON.stringify(response.data));
-        })     
+        })
         .catch(function (error) {
           if(error.response == null){
             console.error('Ocorreu uma exeção');
@@ -983,6 +1006,11 @@ export default {
   },
   mounted() {
     this.configs.setIconsCollor();
+    if (this.user?._id?.length == 24) {
+      this.inlogin = true;
+    } else {
+      this.inlogin = false;
+    }
   }
 };
 </script>

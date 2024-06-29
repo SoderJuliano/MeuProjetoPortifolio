@@ -1,6 +1,7 @@
 import { saveUserInfosInDataBase, saveLogin } from '../components/configs/requests';
 export default class User {
     id = 0;
+    _id = "";
     name = "";
     profession = "";
     resume = "";
@@ -52,6 +53,7 @@ export default class User {
     updator(user)
     {
         this.id = user.id;
+        this._id = user._id ? user._id : "";
         this.name = user.name;
         this.profession = user.profession;
         this.resume = user.resume;
@@ -63,6 +65,10 @@ export default class User {
         this.realImg = user.realImg;
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
+    }
+
+    getId() {
+        return this._id ? this._id : this.id;
     }
 
     getEmails() {
