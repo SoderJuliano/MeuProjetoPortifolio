@@ -439,6 +439,7 @@ export default {
     overflow-x: hidden;
     overflow-y: visible;
     word-break: break-all !important;
+    border-top-left-radius: 10px;
   }
 
   .pic {
