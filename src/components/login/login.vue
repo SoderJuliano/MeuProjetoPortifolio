@@ -70,7 +70,10 @@ export default {
             // Lógica para validar a senha
             if (this.password.length > 6 && this.password === this.repeatPassword) {
                 this.passwordMeetTheRequirements = true;
-            }else {
+            } else if (this.password.length > 6 && this.inOnboarding == false) {
+                this.passwordMeetTheRequirements = true;
+            }
+            else {
                 this.passwordMeetTheRequirements = false;
             }
         },
@@ -130,7 +133,6 @@ export default {
         font-size: 24px;
         padding: 20px;
         font-weight: bold;
-        color: white;
         border-radius: 25px;
         width: 200px;
         align-self: center;

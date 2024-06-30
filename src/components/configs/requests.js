@@ -17,10 +17,35 @@ export function saveLogin(email, password, userId) {
     "password":  password,
     "userId": userId
   }
-
-  return axios.post("http://localhost:5200/user/register", data, { headers }).then((response) => {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+  return axios.post("http://localhost:5200/user/register", login, { headers }).then((response) => {
     console.log("register newLogin response ", response);
     return response;
+  }).catch((error) => {
+    console.log("register newLogin error ", error);
+    return error;
+  });
+}
+
+export function loginUser(email, userId, password) {
+  const login = {
+    "email": email,
+    "password":  password,
+    "userId": userId
+  }
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+  return axios.post("http://localhost:5200/user/login", login, { headers }).then((response) => {
+    console.log("register newLogin response ", response);
+    return response;
+  }).catch((error) => {
+    console.log("register newLogin error ", error);
+    return error;
   });
 }
 

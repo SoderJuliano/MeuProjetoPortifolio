@@ -1,4 +1,4 @@
-import { saveUserInfosInDataBase, saveLogin } from '../components/configs/requests';
+import { saveUserInfosInDataBase, saveLogin, loginUser } from '../components/configs/requests';
 export default class User {
     id = 0;
     _id = "";
@@ -31,13 +31,24 @@ export default class User {
         this.id = this.id == 0 ? Math.random() : this.id;
     }
 
+    async getBackEndDataAndResolveYourSelf(login) {
+        const response = await loginUser(login.email, login.userId, login.password);
+        // console.log('Inside userModel response: ', response);
+        if(response?.status == 200){
+            this.updator(response?.data.content);
+            return this;
+        }else {
+            return null;
+        }
+    }
+
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
         return await saveUserInfosInDataBase(this, newUser);
     }
 
     async firstLogin(email, password) {
-        return await saveLogin(email, password, this.id);
+        return await saveLogin(email[0], password, this._id);
     }
 
     updateToParente(name, val) {

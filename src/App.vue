@@ -4,7 +4,7 @@
     title="Alert Title"
     message="This is an alert message"
     :customProperties="alert"
-    :custom="true"
+    :custom="customAlert"
     :show="showAlert"
     >
   </SimpleAlerts>
@@ -195,13 +195,14 @@ export default {
         textColor: 'white',
         closeButtonText: 'Close',
       },
+      customAlert: false,
       showAlert: false,
       diagram: null,
       showDiagramsModal: false,
       // loginTitle, null == default title
       loginTitle: null,
       inlogin: false,
-      inOnboarding: true,
+      inOnboarding: false,
       strings: strings,
       configs: PageConfig.class,
       localStorageKey: 'user-pt',
@@ -282,14 +283,27 @@ export default {
     cancelLogin() {
       this.inlogin = false;
     },
-    login(email, password) {
+    async login(email, password) {
       console.log("email and password " + email +" "+ password)
       let userFromModel = new UserModel();
       userFromModel = userFromModel.constructorObject(this.user);
-      if(userFromModel instanceof UserModel) {
-        const response = userFromModel.firstLogin(email, password);
-        if (response) {
-          console.log('response from backend login -->', response);
+      if(userFromModel instanceof UserModel && this.inOnboarding == true) {
+        const response = await userFromModel.firstLogin(email, password);
+        // console.log('response from backend login -->', response);
+        // console.log('response status -->', response?.status);
+        if (response && response.status == 200) {
+          this.inlogin = false;
+          this.inOnboarding = false;
+          this.user.getBackEndDataAndResolveYourSelf(response?.data.content);
+        }
+      }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
+        const responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email[0], "password": password, "userId": this.user._id});
+        // console.log('response from backend login -->', responseUser);
+        if (responseUser?._id.length == 24) {
+          this.inlogin = false;
+        }else if (responseUser == null) {
+
+          this.inlogin = false;
         }
       }
     },
@@ -1008,6 +1022,7 @@ export default {
     this.configs.setIconsCollor();
     if (this.user?._id?.length == 24) {
       this.inlogin = true;
+      this.inOnboarding = false;
     } else {
       this.inlogin = false;
     }
