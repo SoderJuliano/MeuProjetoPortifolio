@@ -33,7 +33,6 @@ export default class User {
 
     async getBackEndDataAndResolveYourSelf(login) {
         const response = await loginUser(login.email, login.userId, login.password);
-        // console.log('Inside userModel response: ', response);
         if(response?.status == 200){
             this.updator(response?.data.content);
             return this;
@@ -48,6 +47,10 @@ export default class User {
     }
 
     async firstLogin(email, password) {
+        console.log("typeof email", typeof email);
+        if (typeof email === 'string') {
+            return await saveLogin(email, password, this._id);
+        }
         return await saveLogin(email[0], password, this._id);
     }
 

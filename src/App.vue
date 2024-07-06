@@ -302,9 +302,16 @@ export default {
           this.user.getBackEndDataAndResolveYourSelf(response?.data.content);
         }
       }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
-        const responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email[0], "password": password, "userId": this.user._id});
+        let responseUser;
+        if(typeof email == 'string') {
+          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email, "password": password, "userId": this.user._id});
+        }else {
+          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email[0], "password": password, "userId": this.user._id});
+        }
         // console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {
+          this.updateUser(responseUser)
+          console.log('response app', responseUser)
           this.inlogin = false;
         }else if (responseUser == null) {
 

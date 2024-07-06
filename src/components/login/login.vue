@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="email" v-model="email">
+                    <input id="email" type="text" class="form-control" placeholder="email" v-model="email">
                 </div>
                 <div class="form-group">
                     <div v-if="!showPassword" class="pass-container">
@@ -39,7 +39,7 @@
     </div>
 </template>
 <script>
-
+import $ from "jquery";
 export default {
     name: 'modal-login-template',
     props: {
@@ -61,7 +61,9 @@ export default {
     emits: ['login', 'cancel'],
     methods: {
         login() {
-            this.$emit('login', this.email, this.password);
+            // Using jquery for be sure that the email will be send its the email got fron email's input
+            // and not the one got from the props
+            this.$emit('login', $('#email').val(), this.password);
         },
         cancel() {
             this.$emit('cancel');
