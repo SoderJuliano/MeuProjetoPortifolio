@@ -52,7 +52,7 @@
                 </div>
         </nav>
         <nav class="navbar-login">
-          <button>Login</button>
+          <button @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
         </nav>
     </div>
   <options-menu
@@ -68,22 +68,24 @@ import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
 
 export default {
     name: 'nav-bar',
-    data(){
+    props: {
+      language: String,
+      user: Object,
+      inlogin: Boolean
+    },
+    data() {
       return{
         show: false,
         myInfo: false,
         info: false,
         language: this.language,
         // null is the default value for isAnewUser, after try save infos gonna figure it out
-        isANewUsedr: null
+        isANewUsedr: null,
+        login: this.inlogin != null ? this.inlogin : false
       }
     },
     components: {
       downloadDoc
-    },
-    props: {
-      language: String,
-      user: Object
     },
     emits:[
       'close',
@@ -96,9 +98,14 @@ export default {
       'update-user',
       'change-main-color',
       'change-font-color',
-      'update-social'
+      'update-social',
+      'show-login'
     ],
     methods:{
+      openLogin(){
+        this.login = true;
+        this.$emit('show-login');
+      },
       hotToLogin() {
         this.$emit('show-login-diagram', 'login');
       },
@@ -294,6 +301,10 @@ export default {
         isANewUser(newValue){
           console.log('isANewUser', newValue);
           this.$emit('isANewUser', newValue);
+        },
+        inlogin(newValue){
+          console.log('inlogin', newValue);
+          this.login = newValue;
         }
     }
 }

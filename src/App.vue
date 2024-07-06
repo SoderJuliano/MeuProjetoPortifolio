@@ -30,9 +30,11 @@
     @language-update="lupdate"
     @show-login-diagram="this.showDiagramsModalFunction"
     @register-user="registerUser"
+    @show-login="showLogin"
     :style="getStyle()"
     id="navbar"
     :user="user"
+    :inlogin="inlogin"
     class="navbar navbar-expand-lg navbar-light bg-light"
   >
   </nav-bar>
@@ -250,6 +252,9 @@ export default {
     SimpleAlerts
   },
   methods: {
+    showLogin(){
+      this.inlogin = true
+    },
     showAlertToTrue(){
       this.showAlert = true
     },
