@@ -106,7 +106,7 @@ export default {
             z-index 2 is the submenus to control photos and shapes
             if keep 2 stays under those menus, 4 is ok
         */
-        z-index: 4;
+        z-index: 11;
     }
     .inner-login-tempalte {
         flex-direction: column;

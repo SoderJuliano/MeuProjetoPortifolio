@@ -51,6 +51,9 @@
                   </li>
                 </div>
         </nav>
+        <nav class="navbar-login">
+          <button>Login</button>
+        </nav>
     </div>
   <options-menu
     @close="closeMenu"
@@ -364,16 +367,38 @@ li img {
   margin-bottom: 20px;
   justify-content: center;
   padding-top: 10px;
+  display: flex;
+  position: relative;
 }
 .navbar {
   justify-content: center;
   padding: 10px;
-  margin: auto auto;
+  height: 100%;
+  justify-self: center;
+  align-self: center;
   border-radius: 10px;
-  box-shadow: black -1px 2px 5px;
   width: 50%;
+  box-shadow: black -1px 2px 5px;
   display: flex;
   background-color: whitesmoke;
+}
+
+.navbar-login {
+  justify-content: right;
+  position: absolute;
+  right: 0;
+  align-self: right;
+  padding: 10px;
+  background-color: rgba(245, 245, 245, 0.205);
+  border-radius: 10px;
+}
+
+.navbar-login button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px;
+  font-weight: bolder;
+  border-radius: 10px;
 }
 
 .dropdown-menu{
@@ -420,9 +445,10 @@ li{
   padding: 10px;
   border-radius: 25px;
 }
-.bnt-close{
+.bnt-close {
   min-width: 40px;
   height: 40px;
+  border-radius: 10px;
 }
 .midle-options{
   justify-content: center;

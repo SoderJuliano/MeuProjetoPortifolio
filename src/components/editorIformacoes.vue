@@ -475,7 +475,7 @@ export default {
 <style>
 button {
     background-color: white;
-    border-radius: 20px;
+    border-radius: 10px;
     font-size: 16px;
     margin-bottom: 10px;
 }
@@ -533,7 +533,7 @@ button {
 }
 
 .body-modal-container input {
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 5px;
     font-family: 'Roboto Mono', monospace;
     padding-left: 10px;
@@ -541,7 +541,7 @@ button {
 }
 
 input {
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 5px;
     font-family: 'Roboto Mono', monospace;
     padding-left: 10px;
