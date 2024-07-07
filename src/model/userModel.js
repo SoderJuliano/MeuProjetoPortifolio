@@ -1,4 +1,4 @@
-import { saveUserInfosInDataBase, saveLogin, loginUser } from '../components/configs/requests';
+import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser } from '../components/configs/requests';
 export default class User {
     id = 0;
     _id = "";
@@ -41,6 +41,12 @@ export default class User {
         }
     }
 
+    // Updates the user if the user's name changes or if the user has been created
+    // on the backend.
+    async updateUserName() {
+        updateUser(this.name, this.contact.email[0]);
+    }
+
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
         return await saveUserInfosInDataBase(this, newUser);
@@ -64,11 +70,18 @@ export default class User {
         return this;
     }
 
+    setName(name) {
+        if(name != this.name) {
+            this.name = name;
+            if (this._id.length == 24) {
+                this.updateUserName();
+            }
+        }
+    }
     updator(user)
     {
         this.id = user.id;
         this._id = user._id ? user._id : "";
-        this.name = user.name;
         this.profession = user.profession;
         this.resume = user.resume;
         this.competence = user.competence;
@@ -79,6 +92,7 @@ export default class User {
         this.realImg = user.realImg;
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
+        this.setName(user.name);
     }
 
     getId() {

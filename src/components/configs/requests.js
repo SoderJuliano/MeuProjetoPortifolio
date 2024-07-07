@@ -123,3 +123,31 @@ export function saveUserInfosInDataBase(user, newUser) {
       });
     }
 }
+
+
+export function updateUser(name, email) {
+  const data = {
+    name,
+    email,
+  };
+
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  const params = {
+    name,
+    email,
+  };
+
+  return axios.patch("http://localhost:5200/user", data, { headers, params }).then((response) => {
+    // console.log('chamada PATCH executada');
+    // console.log(response.data);
+    return response;
+  }).catch(error => {
+      // console.log('chamada PATCH executada');
+      // console.log(error);
+      return error.response;
+  });
+}

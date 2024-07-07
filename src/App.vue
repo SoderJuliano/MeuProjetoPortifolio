@@ -428,7 +428,16 @@ export default {
       // console.log("finished lupdate")
     },
     updateName(name) {
-      this.user.name = name;
+      if (this.user instanceof UserModel) {
+        this.user.setName(name);
+      } else if (typeof this.user !== 'undefined' && this.user !== null) {
+        const userFromModer = new UserModel();
+        userFromModer.constructorObject(this.user);
+        userFromModer.setName(name);
+        this.user = userFromModer;
+      } else {
+        console.error('Unexpected user type or value:', typeof this.user, this.user);
+      }
     },
     setFont(fnt) {
       this.font = fnt;
