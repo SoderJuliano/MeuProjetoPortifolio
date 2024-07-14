@@ -1,4 +1,7 @@
 import axios from 'axios';
+import { DRAGONITE_ENV } from '../configs/envs.js';
+
+const apiUrl = DRAGONITE_ENV;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -21,7 +24,7 @@ export function saveLogin(email, password, userId) {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
-  return axios.post("http://localhost:5200/user/register", login, { headers }).then((response) => {
+  return axios.post(`${apiUrl}/user/register`, login, { headers }).then((response) => {
     console.log("register newLogin response ", response);
     return response;
   }).catch((error) => {
@@ -40,7 +43,8 @@ export function loginUser(email, userId, password) {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
-  return axios.post("http://localhost:5200/user/login", login, { headers }).then((response) => {
+
+  return axios.post(`${apiUrl}/user/login`, login, { headers }).then((response) => {
     console.log("register newLogin response ", response);
     return response;
   }).catch((error) => {
@@ -101,7 +105,7 @@ export function saveUserInfosInDataBase(user, newUser) {
     };
 
     if(newUser) {
-      return axios.post("http://localhost:5200/user", data, { headers }).then((response) => {
+      return axios.post(`${apiUrl}/user`, data, { headers }).then((response) => {
         // console.log('chamada POST executada');
         // console.log(response.data);
         return response;
@@ -112,7 +116,7 @@ export function saveUserInfosInDataBase(user, newUser) {
       });
     } else {
       data._id = user.id;
-      return axios.put("http://localhost:5200/user", data, { headers }).then((response) => {
+      return axios.put(`${apiUrl}/user`, data, { headers }).then((response) => {
         // console.log('chamada PUT executada');
         // console.log(response.data);
         return response;
@@ -141,7 +145,7 @@ export function updateUser(name, email) {
     email,
   };
 
-  return axios.patch("http://localhost:5200/user", data, { headers, params }).then((response) => {
+  return axios.patch(`${apiUrl}/user`, data, { headers, params }).then((response) => {
     // console.log('chamada PATCH executada');
     // console.log(response.data);
     return response;

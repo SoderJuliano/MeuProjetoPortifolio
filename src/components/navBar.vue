@@ -80,7 +80,7 @@ export default {
         info: false,
         language: this.language,
         // null is the default value for isAnewUser, after try save infos gonna figure it out
-        isANewUsedr: null,
+        isANewUser: null,
         login: this.inlogin != null ? this.inlogin : false
       }
     },
@@ -138,11 +138,11 @@ export default {
               } else if(response.status == 201) {
                 this.isANewUser = true;
                 alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
-                this.$emit('register-user', response.data.content._id);
+                this.$emit('register-user', response.data.content._id, this.isANewUser);
               } else if (response.status == 200) {
                 this.isANewUser = false;
                 //alert("Salvo com sucesso!", response.data);
-                this.$emit('register-user', response.data.content._id);
+                this.$emit('register-user', response.data.content._id, this.isANewUser);
               }
             }
           }else {

@@ -262,8 +262,9 @@ export default {
       this.showAlert = false
       console.log('closeSimpleAlert')
     },
-    registerUser(id) {
-      console.log('id', this.user._id)
+    registerUser(id, newUser) {
+      console.log('id', id)
+      console.log('newUser', newUser)
       if(this.user?._id == id) {
         this.inlogin = false;
       }else if (this.user?._id?.length < 24 && this.user?._id != id) {
@@ -273,11 +274,14 @@ export default {
         this.inlogin = true;
         this.user._id = id;
         this.updateUser(this.user);
-      }else if(this.user?._id?.length == 24) {
+      }else if(this.user?._id?.length == 24 && !newUser) {
         // Despite that we sava the id on the first registerying, we made the register and the all data
         // saves using the emai and not the id, we will have the id more for some front step controller
         this.user._id = id;
         this.inOnboarding = false;
+        this.inlogin = true;
+      }else if(this.user?._id?.length == 24 && newUser) {
+        this.inOnboarding = true;
         this.inlogin = true;
       }
     },
@@ -289,7 +293,6 @@ export default {
       this.inlogin = false;
     },
     async login(email, password) {
-      console.log("email and password " + email +" "+ password)
       let userFromModel = new UserModel();
       userFromModel = userFromModel.constructorObject(this.user);
       if(userFromModel instanceof UserModel && this.inOnboarding == true) {
