@@ -159,6 +159,7 @@
       <Tips
         :lang="this.configs.getLanguage()"
         :strings="this.strings"
+        :novaMensagem="newTipMessege"
       />
     </div>
   </div>
@@ -198,6 +199,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      newTipMessege: null,
       alertTitle: 'Alert',
       alertMessage: "",
       alert: {
@@ -343,8 +345,14 @@ export default {
         }
       }
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
-      console.log('response dragonite messeges', response);
-      
+      console.log('response dragonite messeges', response[0]);
+      if(response.length > 0) {
+        this.alertTitle = "Você tem novas mensagens";
+        this.alertMessage = "";
+        this.showAlertToTrue();
+        this.newTipMessege = response[0];
+      }
+
     },
     handleUpdateFormacao(value) {
       console.log(value)

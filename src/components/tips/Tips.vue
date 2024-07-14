@@ -7,14 +7,14 @@
                 <h3>{{ this.lang == "pt-br" ? strings[0].tip : strings[1].tip }}</h3>
                 <span @click="close(7)" id="closer">X</span>
             </div>
-            <div v-for="tip in tips" >
+            <div v-for="tip in tips" v-bind:key="tip.id">
                 <div style="color: gray;" class="theTip" v-if="tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span>
                     <span class="tip-read">Ok</span>
                     <p>{{ tip.content }}</p>
                 </div>
             </div>
-            <div v-for="tip in tips" >
+            <div v-for="tip in tips" v-bind:key="tip.id">
                 <div style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
                     <p>{{ tip.content }}</p>
@@ -37,7 +37,8 @@ export default {
     },
     props: {
         lang: String,
-        strings: { type: Array }
+        strings: { type: Array },
+        novaMensagem: Object
     },
     methods: {
         asTipToShow(){
@@ -50,7 +51,6 @@ export default {
                     usenTips.push(element)
                 } 
             });
-            
             return this.lang == "pt-br" ? ptbrTips?.every(tip => tip.read == true) : usenTips?.every(tip => tip.read == true)
         },
         show(){
@@ -112,6 +112,14 @@ export default {
             // console.log(newValue.length);
             if(newValue.length != oldValue.length && newValue.length != 0){
                 this.showTip = true;
+            }
+        },
+        novaMensagem(newValue, oldValue) {
+            //console.log("someData changed!, novaMensagem", newValue, oldValue);
+            if(newValue != null && newValue != oldValue)
+            {
+                this.tips.push(newValue);
+                // this.language.includes('pt-br') ? this.ptbrTips.push(newValue) : this.usenTips.push(newValue);
             }
         }
     }
