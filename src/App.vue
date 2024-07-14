@@ -342,6 +342,9 @@ export default {
           this.inlogin = false;
         }
       }
+      const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
+      console.log('response dragonite messeges', response);
+      
     },
     handleUpdateFormacao(value) {
       console.log(value)

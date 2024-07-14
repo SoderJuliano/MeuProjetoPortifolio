@@ -6,6 +6,17 @@ const apiUrl = DRAGONITE_ENV;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
+export function getDragoniteMesseges(key) {
+  axios.defaults.baseURL = 'https://abra-api.top';
+  return axios.get(`/notifications/retrieve?key=${key}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error('Error fetching messages:', error);
+    });
+}
+
 export function setNewNotification(data) {
     axios.defaults.baseURL = 'https://abra-api.top';
     return axios.post('/notifications', data).then((response) => {
