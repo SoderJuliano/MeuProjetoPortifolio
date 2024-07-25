@@ -39,6 +39,7 @@
     @show-login-diagram="this.showDiagramsModalFunction"
     @register-user="registerUser"
     @show-login="showLogin"
+    @register-error="alertErrorFromBkend"
     :style="getStyle()"
     id="navbar"
     :user="user"
@@ -265,6 +266,14 @@ export default {
     SimpleAlerts
   },
   methods: {
+    alertErrorFromBkend(msg){
+      if (msg.includes("Must have a name") && this.configs.getLanguage().includes("pt")) {
+        this.alertMessage = "O nome deve ser informado"
+      }else {
+        this.alertMessage = msg
+      }
+      this.showAlertErrorToTrue()
+    },
     showLogin(){
       this.inlogin = true
     },

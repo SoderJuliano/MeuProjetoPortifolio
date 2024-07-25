@@ -103,7 +103,6 @@ export default {
         // setTimeout(() => {
         //     this.tips = JSON.parse(localStorage.getItem('tips')) || [];
         // }, 2000);
-        
     },
     watch: {
         tips(newValue, oldValue){
@@ -114,11 +113,18 @@ export default {
                 this.showTip = true;
             }
         },
-        novaMensagem(newValue, oldValue) {
-            //console.log("someData changed!, novaMensagem", newValue, oldValue);
-            if(newValue != null && newValue != oldValue)
+        novaMensagem(newValue) {
+            console.log("someData changed!, novaMensagem", newValue);
+            if(newValue != null)
             {
-                this.tips.push(newValue);
+                const newTip = {
+                    id: newValue._id,
+                    title: newValue.title,
+                    content: newValue.content,
+                    language: this.lang,
+                    read: false
+                }
+                this.tips.push(newTip);
                 // this.language.includes('pt-br') ? this.ptbrTips.push(newValue) : this.usenTips.push(newValue);
             }
         }
