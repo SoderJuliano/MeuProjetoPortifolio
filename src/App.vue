@@ -1,4 +1,5 @@
 <template>
+  <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
   <SimpleAlerts
     @close="closeSimpleAlert"
     :title="alertTitle"
@@ -194,12 +195,14 @@ import * as functions from "./components/componentesCompartilhados/utilJS/functi
 import diagramsModal from "./components/tips/diagramsModal.vue";
 import SimpleAlerts from 'simple-alerts';
 import 'simple-alerts/dist/simpleAlertsVue.css';
+import Loader from "./components/componentesCompartilhados/Loader.vue";
 
 export default {
   name: "App",
   emits: ["close"],
   data() {
     return {
+      loading: false,
       newTipMessege: null,
       alertTitle: 'Alert',
       alertMessage: "",
@@ -263,7 +266,8 @@ export default {
     Tips,
     login,
     diagramsModal,
-    SimpleAlerts
+    SimpleAlerts,
+    Loader,
   },
   methods: {
     alertErrorFromBkend(msg){

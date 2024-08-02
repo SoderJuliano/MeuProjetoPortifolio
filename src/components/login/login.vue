@@ -46,13 +46,16 @@
                 </div>
             </div>
         </div>
-        <div class="loading" v-else>{{ this.language === 'pt-br' ? 'Estamos verificando suas credenciais...' : 'We are checking your credentials...' }}</div>
+        <Loader v-else :language="language" :show="true" ></Loader>
+        <!-- <div class="loading" v-else>{{ this.language === 'pt-br' ? 'Estamos verificando suas credenciais...' : 'We are checking your credentials...' }}</div> -->
     </div>
 </template>
 <script>
 import $ from "jquery";
+import Loader from "../componentesCompartilhados/Loader.vue";
 export default {
     name: 'modal-login-template',
+    components: {Loader},
     props: {
         email: String,
         customMessage: String,
