@@ -53,7 +53,7 @@ export default class User {
     }
 
     async firstLogin(email, password) {
-        console.log("firstLogin");
+        // console.log("firstLogin");
         if (typeof email === 'string') {
             return await saveLogin(email, password, this._id);
         }

@@ -1,4 +1,14 @@
 <template>
+  <GlobalModal
+      ref="globalModal"
+      :title="globalModalTitle"
+      :message="globalModalMessage"
+    >
+    <div class="globalModal">
+      <input id="input-token" type="text">
+      <button @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
+    </div>
+    </GlobalModal>
   <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
   <SimpleAlerts
     @close="closeSimpleAlert"
@@ -196,12 +206,15 @@ import diagramsModal from "./components/tips/diagramsModal.vue";
 import SimpleAlerts from 'simple-alerts';
 import 'simple-alerts/dist/simpleAlertsVue.css';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
+import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
 
 export default {
   name: "App",
   emits: ["close"],
   data() {
     return {
+      globalModalTitle: '',
+      globalModalMessage: '',
       loading: false,
       newTipMessege: null,
       alertTitle: 'Alert',
@@ -268,8 +281,22 @@ export default {
     diagramsModal,
     SimpleAlerts,
     Loader,
+    GlobalModal,
   },
   methods: {
+    submitToken() {
+      funcs.submitToken(this.user._id, $("#input-token").val()).then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          // todo: must handle the response here
+        } else {
+          console.error("Falha ao logar");
+        }
+      });
+    },
+    showGlobalModal() {
+      this.$refs.myModal.open();
+    },
     alertErrorFromBkend(msg){
       if (msg.includes("Must have a name") && this.configs.getLanguage().includes("pt")) {
         this.alertMessage = "O nome deve ser informado"
@@ -290,7 +317,6 @@ export default {
     closeSimpleAlert(){
       this.showAlert = false
       this.showAlertError = false
-      console.log('closeSimpleAlert')
     },
     registerUser(id, newUser) {
       console.log('id', id)
@@ -332,7 +358,12 @@ export default {
         if (response && response.status == 200) {
           this.inlogin = false;
           this.inOnboarding = false;
-          this.user.getBackEndDataAndResolveYourSelf(response?.data.content);
+          this.globalModalTitle = this.languageIsEN() ? "Account confirmation" : "Confirmação de conta";
+          this.globalModalMessage = this.languageIsEN() ?
+          "We sent a token to your e-mail, please copy and paste this token in the below field." :
+          "Enviamos um token para seu email, copie e cole ele no campo abaixo.";
+          this.showGlobalModal();
+          // this.user.getBackEndDataAndResolveYourSelf(response?.data.content);
         }
       }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
         let responseUser;

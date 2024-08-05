@@ -59,12 +59,21 @@
     @close="closeMenu"
     :show = show
   />
+  <SimpleAlerts
+    @close="closeSimpleAlert"
+    :title="alertTitle"
+    :message="alertMessage"
+    :show="showAlert"
+    >
+  </SimpleAlerts>
 </template>
 
 <script>
 import UserModel from '../model/userModel.js';
 import $ from 'jquery';
 import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
+import 'simple-alerts/dist/simpleAlertsVue.css';
+import SimpleAlerts from 'simple-alerts';
 
 export default {
     name: 'nav-bar',
@@ -81,7 +90,10 @@ export default {
         language: this.language,
         // null is the default value for isAnewUser, after try save infos gonna figure it out
         isANewUser: null,
-        login: this.inlogin != null ? this.inlogin : false
+        login: this.inlogin != null ? this.inlogin : false,
+        alertTitle: null,
+        alertMessage: null,
+        showAlert: false,
       }
     },
     components: {
@@ -102,6 +114,9 @@ export default {
       'show-login'
     ],
     methods:{
+      closeSimpleAlert() {
+        this.showAlert = false
+      },
       openLogin(){
         this.login = true;
         this.$emit('show-login');
@@ -116,7 +131,7 @@ export default {
           let userFromModer = new UserModel();
           userFromModer = userFromModer.constructorObject(this.user);
           if(userFromModer.getEmails() == null || userFromModer.getEmails().length == 0) {
-            alert(this.getErroSalvarNoBancoSemInfos());
+            this.showAlertComponent("Error", this.getErroSalvarNoBancoSemInfos());
             return;
           }
           if(userFromModer instanceof UserModel) {
@@ -137,7 +152,8 @@ export default {
                 }, 200);
               } else if(response.status == 201) {
                 this.isANewUser = true;
-                alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
+                // alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
+                this.showAlertComponent("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
               } else if (response.status == 200) {
                 this.isANewUser = false;
@@ -146,16 +162,23 @@ export default {
               }
             }
           }else {
-            alert("Não foi possível salvar");
+            // alert("Não foi possível salvar");
+            this.showAlertComponent(null, this.getLanguage() == 'us-en' ? "Not possible to save" : "Não foi possível salvar");
           }
           //todo
         } else {
           // Código a ser executado se o usuário clicar em "Cancelar"
-          alert("Você escolheu Não!");
+          // alert("Você escolheu Não!");
+          this.showAlertComponent(null, this.getLanguage() == 'us-en' ? "You choose do not save" : "Você escolheu não salvar");
         }
       },
       getHowLoginText() {
         return this.getLanguage() == 'us-en' ? "How the Login works" : "Como o Login funciona"
+      },
+      showAlertComponent(title, message) {
+        this.alertTitle = title;
+        this.alertMessage = message;
+        this.showAlert = true;
       },
       getErroSalvarNoBancoSemInfos() {
         return this.getLanguage() == 'us-en' ?
