@@ -166,3 +166,33 @@ export function updateUser(name, email) {
       return error.response;
   });
 }
+
+export function requestDelete(id) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.patch(`${apiUrl}/user/request/${id}/delete`, null, { headers }).then((response) => {
+    // console.log('chamada DELETE executada');
+    // console.log(response.data);
+    return response;
+  }).catch(error => {
+    console.error('Erro during request delete', error);
+  });
+}
+
+export function deleteUser(id, token) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.delete(`${apiUrl}/user/delete/${id}/${token}`, { headers }).then((response) => {
+    // console.log('chamada DELETE executada');
+    // console.log(response.data);
+    return response;
+  }).catch(error => {
+    console.error('Erro durante delete user', error);
+  });
+}

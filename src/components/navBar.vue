@@ -37,6 +37,7 @@
                     <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
                     <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                     <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
+                    <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
                   </div>
                   </li>
                   <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
@@ -66,6 +67,16 @@
     :show="showAlert"
     >
   </SimpleAlerts>
+  <GlobalModal
+      ref="globalModal"
+      :title="globalModalTitle"
+      :message="globalModalMessage"
+    >
+    <div class="globalModal">
+      <input id="input-token" type="text">
+      <button @click="submitToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
+    </div>
+    </GlobalModal>
 </template>
 
 <script>
@@ -74,6 +85,8 @@ import $ from 'jquery';
 import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
 import 'simple-alerts/dist/simpleAlertsVue.css';
 import SimpleAlerts from 'simple-alerts';
+import GlobalModal from './componentesCompartilhados/GlobalModal.vue';
+import { deleteUser } from "./configs/requests.js";
 
 export default {
     name: 'nav-bar',
@@ -94,10 +107,14 @@ export default {
         alertTitle: null,
         alertMessage: null,
         showAlert: false,
+        globalModalTitle: '',
+        globalModalMessage: '',
       }
     },
     components: {
-      downloadDoc
+      downloadDoc,
+      SimpleAlerts,
+      GlobalModal
     },
     emits:[
       'close',
@@ -114,6 +131,43 @@ export default {
       'show-login'
     ],
     methods:{
+      async submitToken() {
+        await deleteUser(this.user._id, $("#input-token").val()).then((response) => {
+          console.log(response);
+          if (response.status == 200) {
+            // todo: must handle the response here
+          } else {
+            console.error("Falha ao logar");
+          }
+        });
+      },
+      getDeleteAccText() {
+        return this.language == 'us-en' ? 'Delete my account' : 'Deletar minha conta';
+      },
+      async deleteAccount() {
+        if(this.user._id.length != 24) {
+            localStorage.removeItem("user-pt");
+            localStorage.removeItem("user-en");
+            return;
+        }
+        let userFromModer = new UserModel();
+        userFromModer = userFromModer.constructorObject(this.user);
+        const response = await userFromModer.requestDeleteThisUser();
+        if(response && response.status == 200) {
+            this.showAlertComponent(
+              this.language == 'us-en' ? response.data.content : "",
+              this.language == 'us-en' ? 'Get the token we send to your e-mail address' : 'Use o token que enviamos para seu e-mail'
+            );
+            this.globalModalTitle = 'Duplo fator de confirmação';
+            this.globalModalMessage = "Confirme a deleção da conta através do token que enviamos para seu email.";
+            this.$refs.globalModal.open();
+            return;
+        }
+        this.showAlertComponent(
+          this.language == 'us-en' ? response.data.content : "",
+          this.language == 'us-en' ? 'Failed to delete the account' : 'Falha ao excluir a conta'
+        );
+      },
       closeSimpleAlert() {
         this.showAlert = false
       },
@@ -138,14 +192,14 @@ export default {
             let response;
             response = await userFromModer.saveIntoDatabase(this.isANewUser);
             if (response) {
-              console.log('response from backend stats -->', response);
+              // console.log('response from backend stats -->', response);
               if (response.status == 422) {
-                console.log('Error: Request failed', response.data);
+                // console.log('Error: Request failed', response.data);
                 this.isANewUser == false;
                 this.$emit('register-error', response.data.message);
               } else if(response.status == 404) {
                 // goes in here is case is a new user
-                console.log('Error: Request failed with status code', response.status);
+                // console.log('Error: Request failed with status code', response.status);
                 this.isANewUser = true;
                 setTimeout(() => {
                   this.dbSave();

@@ -1,4 +1,4 @@
-import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser } from '../components/configs/requests';
+import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelete } from '../components/configs/requests';
 export default class User {
     id = 0;
     _id = "";
@@ -29,6 +29,10 @@ export default class User {
 
     constructor() {
         this.id = this.id == 0 ? Math.random() : this.id;
+    }
+
+    async requestDeleteThisUser() {
+        return await requestDelete(this._id);
     }
 
     async getBackEndDataAndResolveYourSelf(login) {

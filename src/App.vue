@@ -66,6 +66,7 @@
     :inOnboarding="inOnboarding"
     @login="login"
     @cancel="cancelLogin"
+    @alert="fireGlobalAlert"
   ></login>
   <diagrams-modal
     :diagram="diagram"
@@ -294,8 +295,13 @@ export default {
         }
       });
     },
+    fireGlobalAlert(msg) {
+      this.alertTitle = null;
+      this.alertMessage = msg;
+      this.showAlertToTrue();
+    },
     showGlobalModal() {
-      this.$refs.myModal.open();
+      this.$refs.globalModal.open();
     },
     alertErrorFromBkend(msg){
       if (msg.includes("Must have a name") && this.configs.getLanguage().includes("pt")) {
