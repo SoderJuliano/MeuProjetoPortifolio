@@ -289,7 +289,7 @@ export default {
     async submitToken() {
       try {
         const token = $("#input-token").val();
-        const response = await funcs.activateAccount(this.user._id, token);
+        const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0]);
         console.log("response:", response);
 
         if (response?.status === 200) {
@@ -408,7 +408,7 @@ export default {
         }
       }
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
-      console.log('response dragonite messeges', response[0]);
+
       if(response.length > 0) {
         this.alertTitle = "Você tem novas mensagens";
         this.alertMessage = "";

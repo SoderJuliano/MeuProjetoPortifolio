@@ -197,13 +197,13 @@ export function deleteUser(id, token) {
   });
 }
 
-export function activateAccount(id, token) {
+export function activateAccount(id, token, email) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
 // /activate/{id}/{code}
-  return axios.patch(`${apiUrl}/user/activate/${id}/${token}`, null, { headers }).then((response) => {
+  return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, null, { headers }).then((response) => {
     return response;
   }).catch(error => {
     console.error('Erro durante delete user', error);
