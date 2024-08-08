@@ -51,6 +51,7 @@
     @register-user="registerUser"
     @show-login="showLogin"
     @register-error="alertErrorFromBkend"
+    @ativationAccount="showGlobalModal"
     :style="getStyle()"
     id="navbar"
     :user="user"
@@ -285,15 +286,27 @@ export default {
     GlobalModal,
   },
   methods: {
-    submitToken() {
-      funcs.submitToken(this.user._id, $("#input-token").val()).then((response) => {
-        console.log(response);
-        if (response.status == 200) {
-          // todo: must handle the response here
+    async submitToken() {
+      try {
+        const token = $("#input-token").val();
+        const response = await funcs.activateAccount(this.user._id, token);
+        console.log("response:", response);
+
+        if (response?.status === 200) {
+          // Handle success
+          this.fireGlobalAlert("Success! Sucesso!");
         } else {
-          console.error("Falha ao logar");
+          // Handle non-200 responses
+          this.fireGlobalAlert(response?.data || "An error occurred");
         }
-      });
+      } catch (error) {
+        console.error("Error during activateAccount:", error);
+
+        // Axios errors typically have a response object with data
+        const errorMessage = error.response?.data || error.message || "An unknown error occurred";
+        this.fireGlobalAlert(errorMessage);
+      }
+      this.$refs.globalModal.close();
     },
     fireGlobalAlert(msg) {
       this.alertTitle = null;

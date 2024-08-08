@@ -38,6 +38,7 @@
                     <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                     <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
                     <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
+                    <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
                   </div>
                   </li>
                   <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
@@ -74,7 +75,7 @@
     >
     <div class="globalModal">
       <input id="input-token" type="text">
-      <button @click="submitToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
+      <button @click="submitDeleteToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
     </div>
     </GlobalModal>
 </template>
@@ -128,14 +129,21 @@ export default {
       'change-main-color',
       'change-font-color',
       'update-social',
-      'show-login'
+      'show-login',
+      'ativationAccount'
     ],
     methods:{
-      async submitToken() {
+      getActivateAccText() {
+        return this.language == 'us-en' ? 'Insert activation token' : 'Inserir token de ativação';
+      },
+      async submitDeleteToken() {
         await deleteUser(this.user._id, $("#input-token").val()).then((response) => {
           console.log(response);
           if (response.status == 200) {
-            // todo: must handle the response here
+              localStorage.removeItem("user-pt");
+              localStorage.removeItem("user-en");
+              this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+              return;
           } else {
             console.error("Falha ao logar");
           }
@@ -145,9 +153,13 @@ export default {
         return this.language == 'us-en' ? 'Delete my account' : 'Deletar minha conta';
       },
       async deleteAccount() {
-        if(this.user._id.length != 24) {
+        if(this.user?._id?.length != 24) {
             localStorage.removeItem("user-pt");
             localStorage.removeItem("user-en");
+            this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
             return;
         }
         let userFromModer = new UserModel();
@@ -207,7 +219,7 @@ export default {
               } else if(response.status == 201) {
                 this.isANewUser = true;
                 // alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
-                this.showAlertComponent("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
+                this.showAlertComponent(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
               } else if (response.status == 200) {
                 this.isANewUser = false;

@@ -196,3 +196,17 @@ export function deleteUser(id, token) {
     console.error('Erro durante delete user', error);
   });
 }
+
+export function activateAccount(id, token) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+// /activate/{id}/{code}
+  return axios.patch(`${apiUrl}/user/activate/${id}/${token}`, null, { headers }).then((response) => {
+    return response;
+  }).catch(error => {
+    console.error('Erro durante delete user', error);
+    throw error;
+  });
+}
