@@ -130,7 +130,8 @@ export default {
       'change-font-color',
       'update-social',
       'show-login',
-      'ativationAccount'
+      'ativationAccount',
+      'check-abra-messages'
     ],
     methods:{
       getActivateAccText() {
@@ -143,6 +144,7 @@ export default {
               localStorage.removeItem("user-pt");
               localStorage.removeItem("user-en");
               this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+              this.$refs.globalModal.close();
               return;
           } else {
             console.error("Falha ao logar");
@@ -166,6 +168,7 @@ export default {
         userFromModer = userFromModer.constructorObject(this.user);
         const response = await userFromModer.requestDeleteThisUser();
         if(response && response.status == 200) {
+            this.$emit("check-abra-messages");
             this.showAlertComponent(
               this.language == 'us-en' ? response.data.content : "",
               this.language == 'us-en' ? 'Get the token we send to your e-mail address' : 'Use o token que enviamos para seu e-mail'

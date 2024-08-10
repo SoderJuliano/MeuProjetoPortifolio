@@ -167,13 +167,13 @@ export function updateUser(name, email) {
   });
 }
 
-export function requestDelete(id) {
+export function requestDelete(id, email) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
 
-  return axios.patch(`${apiUrl}/user/request/${id}/delete`, null, { headers }).then((response) => {
+  return axios.patch(`${apiUrl}/user/request/${id}/${email}/delete`, null, { headers }).then((response) => {
     // console.log('chamada DELETE executada');
     // console.log(response.data);
     return response;

@@ -32,7 +32,7 @@ export default class User {
     }
 
     async requestDeleteThisUser() {
-        return await requestDelete(this._id);
+        return await requestDelete(this._id, this?.contact?.email[0]);
     }
 
     async getBackEndDataAndResolveYourSelf(login) {

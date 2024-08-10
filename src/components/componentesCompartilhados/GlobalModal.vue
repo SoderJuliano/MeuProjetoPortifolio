@@ -54,7 +54,7 @@ export default {
 .modal-content {
     background: #fff;
     border-radius: 8px;
-    padding: 20px;
+    padding: 40px;
     position: relative;
     width: 90%;
     max-width: 500px;

@@ -38,7 +38,8 @@ export default {
     props: {
         lang: String,
         strings: { type: Array },
-        novaMensagem: Object
+        novaMensagem: Object,
+        novasMensagens: { type: Array },
     },
     methods: {
         asTipToShow(){
@@ -114,7 +115,6 @@ export default {
             }
         },
         novaMensagem(newValue) {
-            console.log("someData changed!, novaMensagem", newValue);
             if(newValue != null)
             {
                 const newTip = {
@@ -126,6 +126,23 @@ export default {
                 }
                 this.tips.push(newTip);
                 // this.language.includes('pt-br') ? this.ptbrTips.push(newValue) : this.usenTips.push(newValue);
+            }
+        },
+        novasMensagens(newValue) {
+            if(newValue.length > 0)
+            {
+                console.log('novas mensagens', newValue)
+                this.novasMensagens.forEach(novaMensagem => {
+                    const newTip = {
+                        id: novaMensagem._id,
+                        title: novaMensagem.title,
+                        content: novaMensagem.content,
+                        language: this.lang,
+                        read: false
+                    }
+                    this.tips.push(newTip);
+                    // this.language.includes('pt-br') ? this.ptbrTips.push(novaMensagem) : this.usenTips.push(novaMensagem);
+                });
             }
         }
     }

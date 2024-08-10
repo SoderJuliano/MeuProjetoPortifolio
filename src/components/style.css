@@ -466,6 +466,24 @@ button {
     left: 20%;
 }
 
+#input-token {
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.globalModal button {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    margin-bottom: 10px;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
 @media (max-width: 1000px) and (min-width: 660px) {
     .balao {
         margin-top: -230px !important;

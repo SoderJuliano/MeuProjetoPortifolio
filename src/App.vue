@@ -6,7 +6,7 @@
     >
     <div class="globalModal">
       <input id="input-token" type="text">
-      <button @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
+      <button id="submit-token" @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
     </div>
     </GlobalModal>
   <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
@@ -52,6 +52,7 @@
     @show-login="showLogin"
     @register-error="alertErrorFromBkend"
     @ativationAccount="showGlobalModal"
+    @check-abra-messages="onCheckAbraMessages"
     :style="getStyle()"
     id="navbar"
     :user="user"
@@ -174,6 +175,7 @@
         :lang="this.configs.getLanguage()"
         :strings="this.strings"
         :novaMensagem="newTipMessege"
+        :novasMensagens="newListOfAbraMessages"
       />
     </div>
   </div>
@@ -219,6 +221,7 @@ export default {
       globalModalMessage: '',
       loading: false,
       newTipMessege: null,
+      newListOfAbraMessages: [],
       alertTitle: 'Alert',
       alertMessage: "",
       alert: {
@@ -286,7 +289,17 @@ export default {
     GlobalModal,
   },
   methods: {
+    async onCheckAbraMessages() {
+      console.log("Check onAbraMessages");
+      const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
+      if(response.length > 0) {
+        this.newTipMessege = response[response.length - 1];
+      }
+    },
     async submitToken() {
+      const bnt = $("#submit-token")
+      bnt.text(this.languageIsEN() ? "Sending..." : "Enviando...");
+      bnt.prop("disabled", true);
       try {
         const token = $("#input-token").val();
         const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0]);
@@ -306,6 +319,8 @@ export default {
         const errorMessage = error.response?.data || error.message || "An unknown error occurred";
         this.fireGlobalAlert(errorMessage);
       }
+      bnt.prop("disabled", false);
+      bnt.text(this.languageIsEN() ? "Submit token" : "Enviar token");
       this.$refs.globalModal.close();
     },
     fireGlobalAlert(msg) {
