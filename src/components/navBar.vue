@@ -38,6 +38,7 @@
                     <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                     <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
                     <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
+                    <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
                     <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
                   </div>
                   </li>
@@ -66,6 +67,8 @@
     :title="alertTitle"
     :message="alertMessage"
     :show="showAlert"
+    :customProperties="alert"
+    :custom="customAlert"
     >
   </SimpleAlerts>
   <GlobalModal
@@ -110,6 +113,14 @@ export default {
         showAlert: false,
         globalModalTitle: '',
         globalModalMessage: '',
+        customAlert: { type: Boolean, value: false },
+        alert: {
+          autoClose: false,
+          timer: 5000,
+          backgroundColor: 'black',
+          textColor: 'white',
+          closeButtonText: 'Close',
+        },
       }
     },
     components: {
@@ -134,11 +145,20 @@ export default {
       'check-abra-messages'
     ],
     methods:{
+      confirmDeleteAccount() {
+        this.globalModalTitle = this.language == 'us-en' ? 'Confirm Account Deletion' : 'Confirmar deleção da conta';
+        this.globalModalMessage = this.language == 'us-en' ? 'Are you sure you want to delete your account?' : "Você tem certeza de que deseja deletar sua conta?";
+        this.$refs.globalModal.open();
+      },
       getActivateAccText() {
         return this.language == 'us-en' ? 'Insert activation token' : 'Inserir token de ativação';
       },
       async submitDeleteToken() {
-        await deleteUser(this.user._id, $("#input-token").val()).then((response) => {
+        const token = $("#input-token").val();
+        if(token == null || token == "" || token == "undefined") {
+            return;
+        }
+        await deleteUser(this.user._id, token).then((response) => {
           console.log(response);
           if (response.status == 200) {
               localStorage.removeItem("user-pt");
@@ -153,6 +173,9 @@ export default {
       },
       getDeleteAccText() {
         return this.language == 'us-en' ? 'Delete my account' : 'Deletar minha conta';
+      },
+      getConfirmDeleteAccText() {
+        return this.language == 'us-en' ? 'Confirm account deletion(insert token)' : 'Confirmar deleção da conta (inserir token)';
       },
       async deleteAccount() {
         if(this.user?._id?.length != 24) {
@@ -185,6 +208,9 @@ export default {
       },
       closeSimpleAlert() {
         this.showAlert = false
+        this.alertTitle = null;
+        this.alertMessage = null;
+        this.customAlert = false;
       },
       openLogin(){
         this.login = true;
@@ -326,10 +352,14 @@ export default {
       closeMenu(){
         this.show = false
       },
-      about(){
-        localStorage.getItem('lng') == 'us-en'
-          ? alert("We are not using cookies and I do not store any information in server-side")
-          : alert("Não usamos cookies e não guardamos nenhuma informação sua")
+      about() {
+        const text = this.language == 'us-en' ?
+        "We store all your information locally in the browser's memory (on localhost). We do not use cookies, nor do we save any of your data on our servers. If you wish to share your information and save it to our database, please click 'Save Remotely' and register."
+        : "Armazenamos todas as suas informações localmente na memória do navegador (em localhost). Não usamos cookies, nem salvamos nenhum dos seus dados em nossos servidores. Se você deseja compartilhar suas informações e salvá-las em nosso banco de dados, clique em 'Salvar remotamente' e registre-se.";
+        this.customAlert = true;
+        this.alertMessage = text;
+        this.alertTitle = 'INFO'
+        this.showAlert = true;
       },
       aboutMe(){
         window.open("https://www.linkedin.com/in/julianosoder/");
@@ -340,8 +370,14 @@ export default {
           ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> baae423e-b98a-4f7b-b32b-fb8174b175b3")
           : alert("Support this project sending money or sharing it with friends")
       },
-      more(){
-        alert("Ainda em desenvolvimento.  Apoie este projeto ;)")
+      more() {
+        const text = this.language == 'us-en' ?
+        "If you'd like to see more of my projects, feel free to follow my GitHub at SoderJuliano(https://github.com/SoderJuliano). You can also visit my personal webpage at https://juliano-soder.netlify.app. This generator is still in development, so please consider supporting it."
+        : "Se você quiser ver mais de meus projetos, fique à vontade para seguir meu GitHub em SoderJuliano. Você também pode visitar minha página pessoal em juliano-soder.netlify.app. Este gerador ainda está em desenvolvimento, então considere apoiá-lo .";
+        this.customAlert = true;
+        this.alertMessage = text;
+        this.alertTitle = 'SUPORT'
+        this.showAlert = true;
       },
       contact(){
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
@@ -515,9 +551,12 @@ li img {
   width: 150px;
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
+  border-radius: 10px;
 }
 .dropdown-item:hover{
-  background-color: gray;
+  background-color: rgb(48, 47, 47);
+  border-radius: 10px;
+  color: white;
 }
 .dropdown-item{
   padding: 10px;

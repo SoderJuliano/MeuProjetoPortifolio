@@ -118,7 +118,7 @@ export default {
             if(newValue != null)
             {
                 const newTip = {
-                    id: newValue._id,
+                    id: newValue.id,
                     title: newValue.title,
                     content: newValue.content,
                     language: this.lang,
@@ -134,7 +134,7 @@ export default {
                 console.log('novas mensagens', newValue)
                 this.novasMensagens.forEach(novaMensagem => {
                     const newTip = {
-                        id: novaMensagem._id,
+                        id: novaMensagem.id,
                         title: novaMensagem.title,
                         content: novaMensagem.content,
                         language: this.lang,
