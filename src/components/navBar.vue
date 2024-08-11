@@ -365,10 +365,14 @@ export default {
         window.open("https://www.linkedin.com/in/julianosoder/");
       },
       support(){
+        const text = this.language == 'us-en' ?
+        "Support this project with a minimum donation of 0.0001 BTC by using the following link: Payment Request. User-3d1e2 has requested a payment of 0.0001 BTC. Click this link to pay: https://s.binance.com/sQe6mcmP."
+        : "Contribua para o desenvolvimento deste projeto com um PIX de qualquer valor para a chave aleatória: baae423e-b98a-4f7b-b32b-fb8174b175b3.";
+        this.customAlert = true;
+        this.alertMessage = text;
+        this.alertTitle = 'SUPPORT'
+        this.showAlert = true;
         // caixa baae423e-b98a-4f7b-b32b-fb8174b175b3
-        localStorage.getItem('lng') != 'us-en'
-          ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> baae423e-b98a-4f7b-b32b-fb8174b175b3")
-          : alert("Support this project sending money or sharing it with friends")
       },
       more() {
         const text = this.language == 'us-en' ?
@@ -376,7 +380,7 @@ export default {
         : "Se você quiser ver mais de meus projetos, fique à vontade para seguir meu GitHub em SoderJuliano. Você também pode visitar minha página pessoal em juliano-soder.netlify.app. Este gerador ainda está em desenvolvimento, então considere apoiá-lo .";
         this.customAlert = true;
         this.alertMessage = text;
-        this.alertTitle = 'SUPORT'
+        this.alertTitle = 'SUPPORT'
         this.showAlert = true;
       },
       contact(){
