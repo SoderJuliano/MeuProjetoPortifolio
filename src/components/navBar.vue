@@ -55,7 +55,8 @@
                 </div>
         </nav>
         <nav class="navbar-login">
-          <button @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <button v-if="!logedIn" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <span v-else>{{ this.user.name }}</span>
         </nav>
     </div>
   <options-menu
@@ -95,6 +96,7 @@ import { deleteUser } from "./configs/requests.js";
 export default {
     name: 'nav-bar',
     props: {
+      logedIn: Boolean,
       language: String,
       user: Object,
       inlogin: Boolean
@@ -437,7 +439,11 @@ export default {
         inlogin(newValue){
           console.log('inlogin', newValue);
           this.login = newValue;
-        }
+        },
+        logedIn(newValue){
+          console.log('logedIn', newValue);
+          this.logedIn = newValue;
+        },
     }
 }
 </script>

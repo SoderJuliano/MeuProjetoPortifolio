@@ -53,6 +53,7 @@
     @register-error="alertErrorFromBkend"
     @ativationAccount="showGlobalModal"
     @check-abra-messages="onCheckAbraMessages"
+    @logedIn="logedIn"
     :style="getStyle()"
     id="navbar"
     :user="user"
@@ -217,6 +218,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      logedIn: false,
       globalModalTitle: '',
       globalModalMessage: '',
       loading: false,
@@ -307,7 +309,8 @@ export default {
 
         if (response?.status === 200) {
           // Handle success
-          this.fireGlobalAlert("Success! Sucesso!");
+          this.fireGlobalAlert("Success! Agora você pode acessar sua conta de qualquer dispositivo.");
+          this.logedIn = true;
         } else {
           // Handle non-200 responses
           this.fireGlobalAlert(response?.data || "An error occurred");
@@ -390,6 +393,7 @@ export default {
         // console.log('response from backend login -->', response);
         // console.log('response status -->', response?.status);
         if (response && response.status == 200) {
+          this.logedIn = true;
           this.inlogin = false;
           this.inOnboarding = false;
           this.globalModalTitle = this.languageIsEN() ? "Account confirmation" : "Confirmação de conta";

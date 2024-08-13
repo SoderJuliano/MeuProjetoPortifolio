@@ -117,15 +117,17 @@ export default {
         novaMensagem(newValue) {
             if(newValue != null)
             {
-                const newTip = {
-                    id: newValue.id,
-                    title: newValue.title,
-                    content: newValue.content,
-                    language: this.lang,
-                    read: false
+                const existingTip = this.tips.find(tip => tip.id === newValue.id && tip.language === this.lang);
+                if (!existingTip) {
+                    const newTip = {
+                        id: newValue.id,
+                        title: newValue.title,
+                        content: newValue.content,
+                        language: this.lang,
+                        read: false
+                    }
+                    this.tips.push(newTip);
                 }
-                this.tips.push(newTip);
-                // this.language.includes('pt-br') ? this.ptbrTips.push(newValue) : this.usenTips.push(newValue);
             }
         },
         novasMensagens(newValue) {
