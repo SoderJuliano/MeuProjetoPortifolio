@@ -498,10 +498,12 @@ export default {
 }
 </style>
 <style scoped>
+/* Toggle start */
 
 .toggle-container {
   position: relative;
-  display: inline-block; /* Adjust for positioning within the navbar */
+  display: flex;
+  width: 100%;
 }
 
 .toggle-text {
@@ -513,9 +515,10 @@ export default {
 }
 
 .toggle-label {
+  display: flex;
   width: 60px;
   height: 30px;
-  background-color: blue; /* Default color */
+  background-color: rgb(190, 190, 190); /* Default color */
   border-radius: 30px;
   position: relative;
   cursor: pointer;
@@ -535,11 +538,12 @@ export default {
 }
 
 .toggle-input:checked + .toggle-label {
-  background-color: green; /* Change color when checked */
+  background-color: blue; /* Change color when checked */
 }
 
 .toggle-input:checked + .toggle-label:before {
   transform: translateX(30px); /* Move the switch */
+  background-color: green;
 }
 
 li img {
@@ -596,6 +600,10 @@ li img {
   padding: 10px;
   background-color: rgba(245, 245, 245, 0.205);
   border-radius: 10px;
+}
+
+.navbar-login:hover {
+  background-color: whitesmoke;
 }
 
 .navbar-login button {
