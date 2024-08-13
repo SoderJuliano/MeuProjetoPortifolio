@@ -155,10 +155,10 @@ export default {
 
 .tip-container
 {
-    display: none; 
+    display: none;
 }
 
-img 
+img
 {
     width: 60px;
 }
@@ -168,9 +168,9 @@ img:active
     width: 50px;
 }
 
-@media screen and (min-width: 1000px) 
+@media screen and (min-width: 1000px)
 {
-    .tip-container 
+    .tip-container
     {
         display: block;
         width: 100%;

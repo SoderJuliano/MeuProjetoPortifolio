@@ -55,11 +55,19 @@
                 </div>
         </nav>
         <nav class="navbar-login">
-          <button v-if="!logedIn" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
-          <button v-else-if="logedIn">
+          <button v-if="!isLoggedIn" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <button @click="isLoggedInClicked = !isLoggedInClicked" v-else-if="isLoggedIn">
             <img src="../assets/navbar/check.png" alt="ok">
             <span>{{ this.user.name.split(' ')[0] }}</span>
           </button>
+         <!-- Your Custom Toggle Switch -->
+        <div v-if="isLoggedIn && isLoggedInClicked" class="toggle-container">
+          <span class="toggle-text">
+            {{ this.language == 'us-en' ? 'syncronized' : 'sincronizado' }}
+          </span>
+          <input type="checkbox" id="languageToggle" class="toggle-input">
+          <label for="languageToggle" class="toggle-label"></label>
+        </div>
         </nav>
     </div>
   <options-menu
@@ -106,6 +114,7 @@ export default {
     },
     data() {
       return{
+        isLoggedInClicked: false,
         isLoggedIn: this.logedIn,
         show: false,
         myInfo: false,
@@ -490,6 +499,49 @@ export default {
 </style>
 <style scoped>
 
+.toggle-container {
+  position: relative;
+  display: inline-block; /* Adjust for positioning within the navbar */
+}
+
+.toggle-text {
+  margin-right: 10px; /* Add spacing between text and toggle */
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-label {
+  width: 60px;
+  height: 30px;
+  background-color: blue; /* Default color */
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-label:before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s ease;
+}
+
+.toggle-input:checked + .toggle-label {
+  background-color: green; /* Change color when checked */
+}
+
+.toggle-input:checked + .toggle-label:before {
+  transform: translateX(30px); /* Move the switch */
+}
+
 li img {
   width: 50px;
   height: 50px;
@@ -554,6 +606,10 @@ li img {
   border-radius: 10px;
   cursor: pointer;
   display: flex;
+}
+
+.navbar-login button:first-child {
+  justify-content: center;
 }
 
 .navbar-login button:last-child img {
