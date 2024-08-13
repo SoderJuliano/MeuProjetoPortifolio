@@ -53,7 +53,7 @@
     @register-error="alertErrorFromBkend"
     @ativationAccount="showGlobalModal"
     @check-abra-messages="onCheckAbraMessages"
-    @logedIn="logedIn"
+    :logedIn="logedIn"
     :style="getStyle()"
     id="navbar"
     :user="user"
@@ -413,13 +413,14 @@ export default {
         // console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {
           this.updateUser(responseUser)
-          console.log('response app', responseUser)
+          // console.log('response app', responseUser)
           this.alertTitle = "Bem vindo de volta!";
           this.alertMessage = "Você já possui uma conta no CustomCV!";
           this.showAlertToTrue();
           this.inlogin = false;
+          this.logedIn = true;
         }else if (responseUser == null) {
-          console.log('response app', responseUser)
+          // console.log('response app', responseUser)
           this.alertTitle = "Erro ao fazer login";
           this.alertMessage = "Email ou senha inválidos";
           this.showAlertErrorToTrue();

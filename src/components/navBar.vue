@@ -56,7 +56,10 @@
         </nav>
         <nav class="navbar-login">
           <button v-if="!logedIn" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
-          <span v-else>{{ this.user.name }}</span>
+          <button v-else-if="logedIn">
+            <img src="../assets/navbar/check.png" alt="ok">
+            <span>{{ this.user.name.split(' ')[0] }}</span>
+          </button>
         </nav>
     </div>
   <options-menu
@@ -103,6 +106,7 @@ export default {
     },
     data() {
       return{
+        isLoggedIn: this.logedIn,
         show: false,
         myInfo: false,
         info: false,
@@ -433,16 +437,16 @@ export default {
             this.local_language = newValue;
         },
         isANewUser(newValue){
-          console.log('isANewUser', newValue);
+          // console.log('isANewUser', newValue);
           this.$emit('isANewUser', newValue);
         },
         inlogin(newValue){
-          console.log('inlogin', newValue);
+          // console.log('inlogin', newValue);
           this.login = newValue;
         },
-        logedIn(newValue){
-          console.log('logedIn', newValue);
-          this.logedIn = newValue;
+        logedIn(newValue) {
+          // console.log('logedIn', newValue);
+          this.isLoggedIn = newValue;
         },
     }
 }
@@ -548,6 +552,16 @@ li img {
   padding: 10px;
   font-weight: bolder;
   border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+.navbar-login button:last-child img {
+  margin-right: 10px;
+}
+
+.navbar-login button:last-child span {
+  margin-top: 5px;
 }
 
 .dropdown-menu{

@@ -124,7 +124,7 @@ export default {
                         title: newValue.title,
                         content: newValue.content,
                         language: this.lang,
-                        read: false
+                        read: newValue.read
                     }
                     this.tips.push(newTip);
                 }
