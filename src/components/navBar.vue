@@ -60,7 +60,6 @@
             <img src="../assets/navbar/check.png" alt="ok">
             <span>{{ this.user.name.split(' ')[0] }}</span>
           </button>
-         <!-- Your Custom Toggle Switch -->
         <div v-if="isLoggedIn && isLoggedInClicked" class="toggle-container">
           <span class="toggle-text">
             {{ this.language == 'us-en' ? 'syncronized' : 'sincronizado' }}
@@ -160,6 +159,13 @@ export default {
       'check-abra-messages'
     ],
     methods:{
+      openCloseTips(value) {
+        if(value) {
+          $(".tip-conteiner-content").css({"display": "none"});
+        }else {
+          $(".tip-conteiner-content").css({"display": "block"});
+        }
+      },
       confirmDeleteAccount() {
         this.globalModalTitle = this.language == 'us-en' ? 'Confirm Account Deletion' : 'Confirmar deleção da conta';
         this.globalModalMessage = this.language == 'us-en' ? 'Are you sure you want to delete your account?' : "Você tem certeza de que deseja deletar sua conta?";
@@ -456,6 +462,9 @@ export default {
         logedIn(newValue) {
           // console.log('logedIn', newValue);
           this.isLoggedIn = newValue;
+        },
+        isLoggedInClicked(newValue) {
+          this.openCloseTips(newValue);
         },
     }
 }
