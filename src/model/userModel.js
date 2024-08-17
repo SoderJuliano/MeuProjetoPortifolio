@@ -91,7 +91,7 @@ export default class User {
         this.competence = user.competence;
         this.social = user.social;
         this.grade = user.grade;
-        this.hability = user.hability;
+        this.hability = user?.hability ? user.hability : user?.ability;
         this.avatarImg = user.avatarImg;
         this.realImg = user.realImg;
         this.contact = user.contact;

@@ -64,7 +64,13 @@
           <span class="toggle-text">
             {{ this.language == 'us-en' ? 'syncronized' : 'sincronizado' }}
           </span>
-          <input type="checkbox" id="languageToggle" class="toggle-input">
+          <input
+            type="checkbox"
+            id="languageToggle"
+            class="toggle-input"
+            :checked="syncUser"
+            @change="this.$emit('toggle-sync', !syncUser)"
+          >
           <label for="languageToggle" class="toggle-label"></label>
         </div>
         </nav>
@@ -109,7 +115,8 @@ export default {
       logedIn: Boolean,
       language: String,
       user: Object,
-      inlogin: Boolean
+      inlogin: Boolean,
+      syncUser: Boolean,
     },
     data() {
       return{
@@ -156,7 +163,8 @@ export default {
       'update-social',
       'show-login',
       'ativationAccount',
-      'check-abra-messages'
+      'check-abra-messages',
+      'toggle-sync'
     ],
     methods:{
       openCloseTips(value) {

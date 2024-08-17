@@ -53,8 +53,10 @@
     @register-error="alertErrorFromBkend"
     @ativationAccount="showGlobalModal"
     @check-abra-messages="onCheckAbraMessages"
+    @toggle-sync="toggleSync"
     :logedIn="logedIn"
     :style="getStyle()"
+    :syncUser="syncUser"
     id="navbar"
     :user="user"
     :inlogin="inlogin"
@@ -218,6 +220,7 @@ export default {
   emits: ["close"],
   data() {
     return {
+      syncUser: false,
       logedIn: false,
       globalModalTitle: '',
       globalModalMessage: '',
@@ -291,6 +294,10 @@ export default {
     GlobalModal,
   },
   methods: {
+    toggleSync(val) {
+      this.syncUser = val;
+      console.log("Toggling sync", val);
+    },
     async onCheckAbraMessages() {
       console.log("Check onAbraMessages");
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
@@ -503,9 +510,23 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      console.log('user update', userData)
+      console.log('user update', userData);
+      // todo saveIntoDatabase
+      if(this.syncUser) {
+        this.doUpdateUserAsync();
+      }
       this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
+    },
+    async doUpdateUserAsync() {
+      let userFromModel = new UserModel();
+        userFromModel = userFromModel.constructorObject(this.user);
+        const response = await userFromModel.saveIntoDatabase(false);
+        console.log('user on update user', response);
+        if(response.status != 200) {
+          console.log('user on update user status', response.status);
+          this.syncUser = false;
+        }
     },
     adicionarExperiencias(experiencias) {
       console.log(experiencias)
