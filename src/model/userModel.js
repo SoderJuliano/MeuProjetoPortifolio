@@ -2,7 +2,7 @@ import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelet
 export default class User {
     id = 0;
     _id = "";
-    name = "";
+    name = this.getNameFromLocalStorage();
     profession = "";
     resume = "";
     competence = [];
@@ -26,6 +26,24 @@ export default class User {
     };
     userExperiences = [];
     imgForReal = 0
+
+    getNameFromLocalStorage() {
+        let name = "";
+        let user = JSON.parse(localStorage.getItem("user-pt"));
+        if(user) {
+            console.log('user pt')
+            name = user.name;
+            console.log('user name '+name)
+        }else {
+            user = JSON.parse(localStorage.getItem("user-en"));
+            if(user) {
+                console.log('user en')
+                name = user.name;
+                console.log('user name '+name)
+            }
+        }
+        return name;
+    }
 
     constructor() {
         this.id = this.id == 0 ? Math.random() : this.id;
@@ -75,6 +93,9 @@ export default class User {
     }
 
     setName(name) {
+        console.log("name == this.name : " + name == this.name);
+        console.log("name : " + name );
+        console.log("this.name : " + this.name);
         if(name != this.name) {
             this.name = name;
             if (this._id.length == 24) {

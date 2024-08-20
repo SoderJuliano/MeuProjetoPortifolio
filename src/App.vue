@@ -436,7 +436,7 @@ export default {
       }
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
 
-      if(response.length > 0) {
+      if(response && response.length > 0) {
         this.alertTitle = "Você tem novas mensagens";
         this.alertMessage = "";
         this.showAlertToTrue();
