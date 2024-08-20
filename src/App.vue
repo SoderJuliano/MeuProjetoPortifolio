@@ -400,6 +400,7 @@ export default {
         // console.log('response from backend login -->', response);
         // console.log('response status -->', response?.status);
         if (response && response.status == 200) {
+          this.toggleSync(true);
           this.logedIn = true;
           this.inlogin = false;
           this.inOnboarding = false;
@@ -420,6 +421,9 @@ export default {
         // console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {
           this.updateUser(responseUser)
+          // when login then we can tur on sycn, not before to not make an unecessary
+          // PUT request to update user into backend
+          this.toggleSync(true);
           // console.log('response app', responseUser)
           this.alertTitle = "Bem vindo de volta!";
           this.alertMessage = "Você já possui uma conta no CustomCV!";
@@ -572,7 +576,7 @@ export default {
       } else if (typeof this.user !== 'undefined' && this.user !== null) {
         const userFromModer = new UserModel();
         userFromModer.constructorObject(this.user);
-        userFromModer.setName(name);
+        // userFromModer.setName(name);
         this.user = userFromModer;
       } else {
         console.error('Unexpected user type or value:', typeof this.user, this.user);

@@ -33,13 +33,11 @@ export default class User {
         if(user) {
             console.log('user pt')
             name = user.name;
-            console.log('user name '+name)
         }else {
             user = JSON.parse(localStorage.getItem("user-en"));
             if(user) {
                 console.log('user en')
                 name = user.name;
-                console.log('user name '+name)
             }
         }
         return name;
@@ -93,9 +91,6 @@ export default class User {
     }
 
     setName(name) {
-        console.log("name == this.name : " + name == this.name);
-        console.log("name : " + name );
-        console.log("this.name : " + this.name);
         if(name != this.name) {
             this.name = name;
             if (this._id.length == 24) {

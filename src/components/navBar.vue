@@ -66,12 +66,12 @@
           </span>
           <input
             type="checkbox"
-            id="languageToggle"
+            id="syncToggle"
             class="toggle-input"
             :checked="syncUser"
             @change="this.$emit('toggle-sync', !syncUser)"
           >
-          <label for="languageToggle" class="toggle-label"></label>
+          <label for="syncToggle" class="toggle-label"></label>
         </div>
         </nav>
     </div>
@@ -474,6 +474,14 @@ export default {
         isLoggedInClicked(newValue) {
           this.openCloseTips(newValue);
         },
+        syncUser(newValue) {
+          const checkbox = $("#syncToggle");
+          if(newValue == true) {
+            checkbox.prop("checked", true);
+          }else {
+            checkbox.prop("checked", false);
+          }
+        }
     }
 }
 </script>

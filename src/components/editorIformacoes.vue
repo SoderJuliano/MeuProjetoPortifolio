@@ -239,10 +239,13 @@ export default {
             // console.log(title);
             //title as string
             switch(title) {
+                //  The name should be update by this emit update-name
+                // 'cause with use another updateUser will not update the name in ther backend
+                //  only update-name does it
                 case 'Digite nome':
-                    this.userData.name = document.getElementById('modal-input').value
-                    this.template == 1 ? (this.updateUser(), this.cancelar())
-                    : (this.updateUser(), setTimeout(() => {this.$emit('add-profissao')}, 800))
+                    const name = document.getElementById('modal-input').value
+                    this.template == 1 ? (this.$emit("update-name", name), this.cancelar())
+                    : (this.$emit("update-name", name), setTimeout(() => {this.$emit('add-profissao')}, 800))
                     break;
                 case 'Type your name':
                     this.userData.name = document.getElementById('modal-input').value
