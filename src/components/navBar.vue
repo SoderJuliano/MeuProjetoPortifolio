@@ -55,7 +55,7 @@
                 </div>
         </nav>
         <nav class="navbar-login">
-          <button v-if="!isLoggedIn" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <button v-if="!isLoggedIn || !this.user.name" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
           <button @click="isLoggedInClicked = !isLoggedInClicked" v-else-if="isLoggedIn">
             <img src="../assets/navbar/check.png" alt="ok">
             <span>{{ this.user.name.split(' ')[0] }}</span>
@@ -188,12 +188,15 @@ export default {
             return;
         }
         await deleteUser(this.user._id, token).then((response) => {
-          console.log(response);
+          // console.log(response);
           if (response.status == 200) {
               localStorage.removeItem("user-pt");
               localStorage.removeItem("user-en");
               this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
               this.$refs.globalModal.close();
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
               return;
           } else {
             console.error("Falha ao logar");

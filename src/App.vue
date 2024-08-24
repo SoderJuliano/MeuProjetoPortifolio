@@ -179,6 +179,7 @@
         :strings="this.strings"
         :novaMensagem="newTipMessege"
         :novasMensagens="newListOfAbraMessages"
+        :keyDragonite="(user?.contact?.email[0] || '') + (user?._id || '')"
       />
     </div>
   </div>

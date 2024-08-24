@@ -7,11 +7,12 @@
                 <h3>{{ this.lang == "pt-br" ? strings[0].tip : strings[1].tip }}</h3>
                 <span @click="close(7)" id="closer">X</span>
             </div>
-            <div v-for="tip in tips" v-bind:key="tip.id">
+            <div v-for="(tip, index) in tips" v-bind:key="tip.id">
                 <div style="color: gray;" class="theTip" v-if="tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span>
                     <span class="tip-read">Ok</span>
                     <p>{{ tip.content }}</p>
+                    <button @click="deleteTip(tip.id, index)">delete</button>
                 </div>
             </div>
             <div v-for="tip in tips" v-bind:key="tip.id">
@@ -40,8 +41,28 @@ export default {
         strings: { type: Array },
         novaMensagem: Object,
         novasMensagens: { type: Array },
+        keyDragonite: String,
     },
     methods: {
+        deleteTip(id, index) {
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+            const data = {
+                "id": String(id),
+                "key": index > 6 ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
+            };
+            axios.delete(`/notifications/delete`, { headers, data })
+            .then(() => {
+                const index = this.tips.findIndex(tip => tip.id === id);
+                if (index !== -1) {
+                    this.tips.splice(index, 1);
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting tip:', error);
+            });
+        },
         asTipToShow(){
             let ptbrTips = []
             let usenTips = []
@@ -50,7 +71,7 @@ export default {
                     ptbrTips.push(element)
                 }else{
                     usenTips.push(element)
-                } 
+                }
             });
             return this.lang == "pt-br" ? ptbrTips?.every(tip => tip.read == true) : usenTips?.every(tip => tip.read == true)
         },
@@ -100,11 +121,12 @@ export default {
         }
     },
     mounted() {
+        console.log('key ', this.keyDragonite);
         this.verificarTips();
         // setTimeout(() => {
         //     this.tips = JSON.parse(localStorage.getItem('tips')) || [];
         // }, 2000);
-    },
+        },
     watch: {
         tips(newValue, oldValue){
             // console.log("someData changed!");
