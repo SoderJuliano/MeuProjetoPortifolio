@@ -12,7 +12,7 @@
                     <span>{{tip.title}}</span>
                     <span class="tip-read">Ok</span>
                     <p>{{ tip.content }}</p>
-                    <button @click="deleteTip(tip.id, index)">delete</button>
+                    <button @click="deleteTip(tip, index)">delete</button>
                 </div>
             </div>
             <div v-for="tip in tips" v-bind:key="tip.id">
@@ -44,20 +44,25 @@ export default {
         keyDragonite: String,
     },
     methods: {
-        deleteTip(id, index) {
+        deleteTip(item, index) {
             const headers = {
                 'Content-Type': 'application/json',
             };
-            const data = {
-                "id": String(id),
+            let data = {
+                "id": String(item.id),
                 "key": index > 6 ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
             };
+            if (item.appUrl) {
+                data.appUrl = String(item.appUrl);
+            }
+            if (item.user) {
+                data.user = String(item.user);
+            }
+
             axios.delete(`/notifications/delete`, { headers, data })
             .then(() => {
-                const index = this.tips.findIndex(tip => tip.id === id);
-                if (index !== -1) {
-                    this.tips.splice(index, 1);
-                }
+                this.tips.splice(index, 1);
+                localStorage.setItem('deletedDefaultNotifications', true);
             })
             .catch(error => {
                 console.error('Error deleting tip:', error);

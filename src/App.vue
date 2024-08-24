@@ -947,231 +947,264 @@ export default {
   // fim methods
 
   beforeMount() {
-    axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
+    if(!localStorage.getItem('deletedDefaultNotifications')) {
+      axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
 
-    axios.defaults.headers.common['Content-Type'] = 'application/json';
-    axios.defaults.headers.common['Accept'] = 'application/json';
+      axios.defaults.headers.common['Content-Type'] = 'application/json';
+      axios.defaults.headers.common['Accept'] = 'application/json';
 
-    // Configuração de CORS
-    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-    axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
-    axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
+      // Configuração de CORS
+      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+      axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
+      axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
 
-    $.getJSON("https://api.ipify.org/?format=json", function(e) {
-      const data = {
-        user: e.ip,
-        url: "https://custom-cv-online.netlify.app",
-        key: "https://custom-cv-online.netlify.app"
-      }
+      $.getJSON("https://api.ipify.org/?format=json", function(e) {
+        const data = {
+          user: e.ip,
+          url: "https://custom-cv-online.netlify.app",
+          key: "https://custom-cv-online.netlify.app"
+        }
+
+        const header = {
+          "accept": "application/json",
+          "content-type": "application/json"
+        };
+
+        axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+          { headers: header })
+          .then( response => {
+            // console.log(response.data)
+            let easyEnter = false;
+            let facilSalvar = false;
+            let icones = false;
+            let icons = false;
+            let habilidades = false;
+            let skills = false;
+
+            response.data.forEach(element => {
+              // console.log('element')
+              // console.log(element)
+                if(element.title.includes('Icones')) {
+                  icones = true;
+                }else if(element.title.includes('Icons')) {
+                  icons = true;
+                }else if (element.title.includes('Habilidades')) {
+                  habilidades = true;
+                }else if(element.title.includes('Skills')) {
+                  skills = true;
+                }else if(element.title.includes('Salvamento fácil')) {
+                  facilSalvar = true;
+                }else if (element.title.includes('Easy enter')) {
+                  easyEnter = true;
+                }
+            });
+
+            // console.log('easyEnter', easyEnter);
+            // console.log('facilSalvar', facilSalvar);
+            // console.log('icones', icones);
+            // console.log('icons', icons);
+
+            if(easyEnter == false) {
+              funcs.setNewNotification({
+                title: "Easy enter",
+                language: "us-en",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change.",
+                read: false
+              })
+            }
+            if(facilSalvar == false) {
+              funcs.setNewNotification({
+                title: "Salvamento fácil",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
+                read: false
+              })
+            }
+            if(habilidades == false) {
+              funcs.setNewNotification({
+                title: "Habilidades",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "Você pode por varias habilidadedes separadas por virgula (,).",
+                read: false
+              })
+            }
+            if(skills == false) {
+              funcs.setNewNotification({
+                title: "Skills",
+                language: "us-en",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "You can write many skills puting comma (,) between them.",
+                read: false
+              })
+            }
+            if(icons == false) {
+              funcs.setNewNotification({
+                title: "Icons",
+                language: "us-en",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "You can click over some icons to see other options.",
+                read: false
+              })
+            }
+            if(icones == false) {
+              funcs.setNewNotification({
+                title: "Icones",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "Você pode clicar sobre alguns icons para ver outras opções.",
+                read: false
+              })
+            }
+
+            localStorage.setItem('tips', JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            if(error.response == null){
+              console.error('Ocorreu uma exeção');
+              console.error(error);
+              return;
+            }
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
+
+            // if the notifications do no exist at all create all of them over there
+            if(error.response.status == 404){
+
+              funcs.setNewNotification({
+                title: "Icones",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "Você pode clicar sobre alguns icons para ver outras opções.",
+                read: false
+              })
+
+              funcs.setNewNotification({
+                title: "Icons",
+                language: "us-en",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "You can click over some icons to see other options.",
+                read: false
+              })
+
+              funcs.setNewNotification({
+                title: "Skills",
+                language: "us-en",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "You can write many skills puting comma (,) between them.",
+                read: false
+              })
+
+              funcs.setNewNotification({
+                title: "Habilidades",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "Você pode por varias habilidadedes separadas por virgula (,).",
+                read: false
+              })
+
+              funcs.setNewNotification({
+                title: "Salvamento fácil",
+                language: "pt-br",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
+                read: false
+              })
+
+              funcs.setNewNotification({
+                title: "Easy enter",
+                language: "us-en",
+                app: "custom-cv-online",
+                appUrl: "https://custom-cv-online.netlify.app",
+                user: e.ip,
+                key: "https://custom-cv-online.netlify.app",
+                content: "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change.",
+                read: false
+              })
+                .then(function (response) {
+                  if(response.status == 201){
+                    axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+                    { headers: header })
+                      .then( response => {
+                        // console.log(response.data)
+                        localStorage.setItem('tips', JSON.stringify(response.data));
+                      });
+                  }
+                })
+                .catch(function (error) {
+                  // console.log(error);
+                });
+            }
+          });
+        });
+    }else {
+      // Else - caso no localhost tenha a variavel deletedDefaultNotifications é porque
+      // já foi apagado as mensagens default e não deve criar nosvas, apenas buscar as que ainda existem
+      axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
+
+      axios.defaults.headers.common['Content-Type'] = 'application/json';
+      axios.defaults.headers.common['Accept'] = 'application/json';
+
+      // Configuração de CORS
+      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+      axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
+      axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
 
       const header = {
-        "accept": "application/json",
-        "content-type": "application/json"
+          "accept": "application/json",
+          "content-type": "application/json"
       };
 
-      axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
-       { headers: header })
-        .then( response => {
-          // console.log(response.data)
-          let easyEnter = false;
-          let facilSalvar = false;
-          let icones = false;
-          let icons = false;
-          let habilidades = false;
-          let skills = false;
-
-          response.data.forEach(element => {
-            // console.log('element')
-            // console.log(element)
-              if(element.title.includes('Icones')) {
-                icones = true;
-              }else if(element.title.includes('Icons')) {
-                icons = true;
-              }else if (element.title.includes('Habilidades')) {
-                habilidades = true;
-              }else if(element.title.includes('Skills')) {
-                skills = true;
-              }else if(element.title.includes('Salvamento fácil')) {
-                facilSalvar = true;
-              }else if (element.title.includes('Easy enter')) {
-                easyEnter = true;
-              }
-          });
-
-          // console.log('easyEnter', easyEnter);
-          // console.log('facilSalvar', facilSalvar);
-          // console.log('icones', icones);
-          // console.log('icons', icons);
-
-          if(easyEnter == false) {
-            funcs.setNewNotification({
-              title: "Easy enter",
-              language: "us-en",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change.",
-              read: false
-            })
-          }
-          if(facilSalvar == false) {
-            funcs.setNewNotification({
-              title: "Salvamento fácil",
-              language: "pt-br",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
-              read: false
-            })
-          }
-          if(habilidades == false) {
-            funcs.setNewNotification({
-              title: "Habilidades",
-              language: "pt-br",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "Você pode por varias habilidadedes separadas por virgula (,).",
-              read: false
-            })
-          }
-          if(skills == false) {
-            funcs.setNewNotification({
-              title: "Skills",
-              language: "us-en",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "You can write many skills puting comma (,) between them.",
-              read: false
-            })
-          }
-          if(icons == false) {
-            funcs.setNewNotification({
-              title: "Icons",
-              language: "us-en",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "You can click over some icons to see other options.",
-              read: false
-            })
-          }
-          if(icones == false) {
-            funcs.setNewNotification({
-              title: "Icones",
-              language: "pt-br",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "Você pode clicar sobre alguns icons para ver outras opções.",
-              read: false
-            })
-          }
-
-          localStorage.setItem('tips', JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          if(error.response == null){
-            console.error('Ocorreu uma exeção');
-            console.error(error);
-            return;
-          }
-          // console.log(error.response.data);
-          // console.log(error.response.status);
-          // console.log(error.response.headers);
-
-          // if the notifications do no exist at all create all of them over there
-          if(error.response.status == 404){
-
-            funcs.setNewNotification({
-              title: "Icones",
-              language: "pt-br",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "Você pode clicar sobre alguns icons para ver outras opções.",
-              read: false
-            })
-
-            funcs.setNewNotification({
-              title: "Icons",
-              language: "us-en",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "You can click over some icons to see other options.",
-              read: false
-            })
-
-            funcs.setNewNotification({
-              title: "Skills",
-              language: "us-en",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "You can write many skills puting comma (,) between them.",
-              read: false
-            })
-
-            funcs.setNewNotification({
-              title: "Habilidades",
-              language: "pt-br",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "Você pode por varias habilidadedes separadas por virgula (,).",
-              read: false
-            })
-
-            funcs.setNewNotification({
-              title: "Salvamento fácil",
-              language: "pt-br",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
-              read: false
-            })
-
-            funcs.setNewNotification({
-              title: "Easy enter",
-              language: "us-en",
-              app: "custom-cv-online",
-              appUrl: "https://custom-cv-online.netlify.app",
-              user: e.ip,
-              key: "https://custom-cv-online.netlify.app",
-              content: "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change.",
-              read: false
-            })
-              .then(function (response) {
-                if(response.status == 201){
-                  axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
-                  { headers: header })
-                    .then( response => {
-                      // console.log(response.data)
-                      localStorage.setItem('tips', JSON.stringify(response.data));
-                    });
-                }
-              })
-              .catch(function (error) {
-                // console.log(error);
-              });
-          }
-        });
+      $.getJSON("https://api.ipify.org/?format=json", function(e) {
+        const data = {
+          user: e.ip,
+          url: "https://custom-cv-online.netlify.app",
+          key: "https://custom-cv-online.netlify.app"
+        }
+        axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
+                    { headers: header })
+                      .then( response => {
+                        // console.log(response.data)
+                        localStorage.setItem('tips', JSON.stringify(response.data));
+                      });
       });
+    }
 
     // General configs
     if(!localStorage.getItem("configs")){
