@@ -54,6 +54,7 @@
     @ativationAccount="showGlobalModal"
     @check-abra-messages="onCheckAbraMessages"
     @toggle-sync="toggleSync"
+    @reset-password="resetPassword"
     :logedIn="logedIn"
     :style="getStyle()"
     :syncUser="syncUser"
@@ -295,12 +296,20 @@ export default {
     GlobalModal,
   },
   methods: {
+    async resetPassword() {
+      const response = await funcs.resetPassword(this.user._id);
+      if(response?.status === 200) {
+        this.fireGlobalAlert(this.languageIsEN()? "Password reset email sent successfully." : "Email de redefinição de senha enviado com sucesso.");
+      }else {
+        this.fireGlobalAlert(this.languageIsEN()? "Failed to send password reset email." : "Falha ao enviar email de redefinição de senha.");
+      }
+    },
     toggleSync(val) {
       this.syncUser = val;
-      console.log("Toggling sync", val);
+      // console.log("Toggling sync", val);
     },
     async onCheckAbraMessages() {
-      console.log("Check onAbraMessages");
+      // console.log("Check onAbraMessages");
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
       if(response.length > 0) {
         this.newTipMessege = response[response.length - 1];

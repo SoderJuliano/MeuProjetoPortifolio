@@ -210,3 +210,17 @@ export function activateAccount(id, token, email) {
     throw error;
   });
 }
+
+export function resetPassword(id) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.patch(`${apiUrl}/user/recover/${id}/password`, null, { headers }).then((response) => {
+    return response;
+  }).catch(error => {
+    console.error('Erro durante reset password', error);
+    throw error;
+  });
+}

@@ -40,6 +40,7 @@
                     <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
                     <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
                     <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
+                    <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">{{this.getResetPasswordText()}}</a>
                   </div>
                   </li>
                   <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
@@ -164,9 +165,13 @@ export default {
       'show-login',
       'ativationAccount',
       'check-abra-messages',
-      'toggle-sync'
+      'toggle-sync',
+      'reset-password'
     ],
     methods:{
+      getResetPasswordText() {
+        return this.language == 'us-en' ? 'Reset Password' : 'Recuperar senha';
+      },
       openCloseTips(value) {
         if(value) {
           $(".tip-conteiner-content").css({"display": "none"});
