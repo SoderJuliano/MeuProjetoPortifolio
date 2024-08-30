@@ -224,3 +224,22 @@ export function resetPassword(id) {
     throw error;
   });
 }
+
+export function setNewPassword(id, password, token) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+  const data = {
+    'id': id,
+    'password': password,
+    'token': token
+  }
+
+  return axios.patch(`${apiUrl}/user/request/setPassword`, data, { headers }).then((response) => {
+    return response;
+  }).catch(error => {
+    console.error('Erro durante reset password', error);
+    throw error;
+  });
+}

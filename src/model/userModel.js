@@ -178,4 +178,16 @@ export default class User {
                 break;
         }
     }
+
+    findAndRetrieveInfos(language) {
+        const en = localStorage.getItem('user-en');
+        const pt = localStorage.getItem('user-pt');
+        if(language == null) {
+            return en ? en : pt;
+        }else if(language == 'user-en') {
+            return en;
+        }else {
+            return pt;
+        }
+    }
 }
