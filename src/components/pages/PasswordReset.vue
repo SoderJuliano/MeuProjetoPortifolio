@@ -16,36 +16,82 @@
         </form>
         <button @click="goBackHome" class="back-button">Go Back</button>
         </div>
+        <SimpleAlerts
+            @close="handleAlertClose"
+            :title="alertTitle"
+            :message="alertMessage"
+            :show="showAlert"
+            :customProperties="alert"
+            custom="true"
+        >
+        </SimpleAlerts>
     </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { ref } from 'vue';
     import { setNewPassword } from '../configs/requests';
     import UserModel from '../../model/userModel';
+    import SimpleAlerts from 'simple-alerts';
+    import 'simple-alerts/dist/simpleAlertsVue.css';
 
     const props = defineProps({
         newPassword: String
     });
 
+    let alertTitle = ref('Success');
+    let alertMessage = ref('Password changed!');
+    let showAlert = ref(false); // Make showAlert reactive
+    let alert = {
+        autoClose: false,
+        timer: 3000,
+        backgroundColor: 'white',
+        textColor: '#000000',
+        closeButton: true,
+        closeButtonText: 'Close'
+    };
+    let lastResponseStatus = ref(0);
+
     const password = ref(props.newPassword || '');
 
-    const submitNewPassword = () => {
-        console.log('New Password:', password.value);
-        const u = new UserModel()
-        let us = JSON.parse(u.findAndRetrieveInfos(null))
-        console.log('user_id', us)
-        console.log('user_id', us._id)
-    
-        const response = setNewPassword(us._id, password.value, window.location.href.split('newPasswordToken=')[1])
-        console.log(response)
-        if(response.status == 200) {
-            alert('great')
+    const submitNewPassword = async () => {
+        try {
+            const u = new UserModel();
+            let us = JSON.parse(u.findAndRetrieveInfos(null));
+
+            const response = await setNewPassword(us._id, password.value, window.location.href.split('newPasswordToken=')[1]);
+            console.log(response);
+
+            if (response.status === 200) {
+                // Handle success
+                alertTitle.value = 'Success';
+                alertMessage.value = 'Password successfully changed!';
+                showAlert.value = true;
+                lastResponseStatus.value = 200
+            } else {
+                // Handle failure
+                alertTitle.value = 'Error';
+                alertMessage.value = 'Failed to change password. Please try again.';
+                showAlert.value = true;
+            }
+        } catch (error) {
+            console.error('Error while submitting new password:', error);
+            alertTitle.value = 'Error';
+            alertMessage.value = 'An error occurred. Please try again later.';
+            showAlert.value = true;
         }
     };
 
     const goBackHome = () => {
         window.location.href = "/";
     };
+
+    const handleAlertClose = () => {
+        showAlert.value = false;
+        if(lastResponseStatus.value === 200) {
+            window.location.href = '/';
+        }
+    };
+
     </script>
 
 <style scoped>
