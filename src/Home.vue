@@ -324,7 +324,7 @@ export default {
         const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0]);
         console.log("response:", response);
 
-        if (response?.status === 200) {
+        if (response && response?.status === 200) {
           // Handle success
           this.fireGlobalAlert("Success! Agora você pode acessar sua conta de qualquer dispositivo.");
           this.logedIn = true;

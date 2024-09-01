@@ -194,17 +194,19 @@ export default {
         }
         await deleteUser(this.user._id, token).then((response) => {
           // console.log(response);
-          if (response.status == 200) {
+          if (response?.status == 200) {
               localStorage.removeItem("user-pt");
               localStorage.removeItem("user-en");
               this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
               this.$refs.globalModal.close();
               setTimeout(() => {
-                window.location.reload();
+                window.location.href = "/";
               }, 3000);
               return;
           } else {
-            console.error("Falha ao logar");
+            this.alertTitle = this.language == 'us-en' ? 'Error' : 'Erro';
+            this.alertMessage = this.language == 'us-en' ? 'Fail. You may start over requesting a new token.' : 'Falha. Talvez tente novamente com um token novo';
+            this.showAlert = true;
           }
         });
       },
