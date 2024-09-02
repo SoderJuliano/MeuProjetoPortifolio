@@ -1,11 +1,14 @@
 <template>
-<div :class="{'block-layout': block}" :style="css">
-    <span v-if="!isEditingTitle" @click="editTitle">{{ title }}</span>
-    <input v-else type="text" v-model="editableTitle" @blur="saveTitle" @keyup.enter="saveTitle" />
-
-    <span v-if="!isEditingText" @click="editText">{{ text }}</span>
-    <input v-else type="text" v-model="editableText" @blur="saveText" @keyup.enter="saveText" />
-</div>
+    <div class="component" :class="{'block-layout': block}" :style="css">
+        <div class="span1" :style="span1">
+            <span v-if="!isEditingTitle" @click="editTitle">{{ title }}</span>
+            <input v-else type="text" v-model="editableTitle" @blur="saveTitle" @keyup.enter="saveTitle" />
+        </div>
+        <div class="span2" :style="span2">
+            <span v-if="!isEditingText" @click="editText">{{ text }}</span>
+            <input v-else type="text" v-model="editableText" @blur="saveText" @keyup.enter="saveText" />
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -18,6 +21,8 @@ title: String,
 text: String,
 css: Object,
 block: Boolean,
+span1: Object,
+span2: Object
 });
 
 // Local state for editing
@@ -44,7 +49,7 @@ isEditingText.value = false;
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .component {
 display: flex;
 align-items: center;
@@ -59,12 +64,25 @@ display: block;
 margin-bottom: 8px;
 }
 
-span {
-flex: 1 1 20%;
+input {
+flex: 80%;
+margin-left: 10px;
 }
 
-input {
-flex: 1 1 80%;
-margin-left: 10px;
+@media print {
+    span {
+        font-size: 70%;
+    }
+    .block-layout {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        margin-bottom: 0% !important;
+        margin-top: 0% !important;
+    }
+    .component {
+        margin-top: 1px !important;
+        padding-left: 10% !important;
+        padding-right: 10% !important;
+    }
 }
 </style>

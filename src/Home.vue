@@ -156,6 +156,10 @@
         :fontColor="this.configs?.getFontColor()"
         :user="user"
       />
+      <Template3
+        class="template"
+        v-if="this.configs.getTemplate() == 3"
+      />
     </div>
     <div class="footer">
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
@@ -202,6 +206,7 @@ import Footer from "./components/Footer.vue";
 import navBar from "./components/navBar.vue";
 import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
+import Template3 from "./templates/Templete3.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -288,6 +293,7 @@ export default {
     editorInformacoes,
     Template1,
     Template2,
+    Template3,
     Tips,
     login,
     diagramsModal,
@@ -1349,6 +1355,9 @@ export default {
   }
 }
 @media print {
+  .navbar-login {
+    display: none;
+  }
 
   .ripple-background {
     display: none;
