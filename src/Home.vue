@@ -1280,10 +1280,6 @@ export default {
   transform: perspective(400px) rotateY(35deg);
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
-  -webkit-box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray,
-    5px 5px 15px 5px gray;
-  box-shadow: inset -1px 3px 8px 5px gray, 2px 5px 16px 0px gray,
-    5px 5px 15px 5px gray;
 }
 
 @media screen and (max-width: 1000px) {
