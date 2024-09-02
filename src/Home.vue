@@ -1280,6 +1280,7 @@ export default {
   transform: perspective(400px) rotateY(35deg);
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1000px) {
