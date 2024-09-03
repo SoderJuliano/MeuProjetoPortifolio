@@ -8,8 +8,8 @@
             <span v-if="!isEditingText" @click="editText" v-html="text"></span>
             <input v-else type="text" v-model="editableText" @blur="saveText" @keyup.enter="saveText" />
         </div>
+        <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
     </div>
-    <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
 </template>
 
 <script setup>
@@ -109,6 +109,9 @@ margin-left: 10px;
         margin-top: 1px !important;
         padding-left: 10% !important;
         padding-right: 10% !important;
+    }
+    .remove-button {
+        display: none;
     }
 }
 </style>

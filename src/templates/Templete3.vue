@@ -153,20 +153,22 @@
 
 <script setup>
     import ComponentWrap from '../components/componentesCompartilhados/ComponentWrap.vue';
-    import { reactive } from 'vue';
+    import { ref } from 'vue';
 
-    const additionalComponents = reactive([]);
+    const additionalComponents = ref([]);
 
     // Function to add a new ComponentWrap instance
     const addComponent = () => {
-        additionalComponents.push({
+        additionalComponents.value.push({
             text: "New Text Here",
             title: "New Title Here"
         });
     };
 
     const removeComponent = (index) => {
-        additionalComponents.value.splice(index, 1);
+        if (index !== undefined && additionalComponents.value.length > index) {
+            additionalComponents.value.splice(index, 1);
+        }
     };
 
     const updateTitle = (index, newTitle) => {
