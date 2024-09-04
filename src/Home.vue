@@ -159,6 +159,8 @@
       <Template3
         class="template"
         v-if="this.configs.getTemplate() == 3"
+        :user="user"
+        :language="this.configs.getLanguage()"
       />
     </div>
     <div class="footer">

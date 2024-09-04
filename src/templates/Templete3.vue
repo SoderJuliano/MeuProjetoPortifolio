@@ -1,8 +1,9 @@
 <template>
     <div class="template">
         <ComponentWrap
-            title="RESUME"
-            text="Juliano Soder"
+            id="1000"
+            :title="getById(1000).title"
+            :text="getById(1000).text"
             :block="true"
             :css="{
                 'margin-top': '50px',
@@ -11,39 +12,55 @@
                 'padding-left': '20%',
                 'padding-right': '20%'
                 }"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
-            text="Rua Antas 301, Centro, Maondaí SC, Brasil"
+            id="1001"
+            :text="getById(1001).text"
             :block="true"
             :css="base_css"
+            @update:text="updateText"
         />
         <ComponentWrap
-            text="phone: 49 991883551"
+            id="1002"
+            :text="getById(1002).text"
             :block="true"
             :css="base_css"
+            @update:text="updateText"
         />
         <ComponentWrap
-            text="email: julianosoder1989@gmail.com"
+            id="1003"
+            :text="getById(1003).text"
             :block="true"
             :css="base_css"
+            @update:text="updateText"
         />
         <ComponentWrap
-            text="Software Developer at Google"
-            title="Objective"
+            id="1004"
+            :text="getById(1004).text"
+            :title="getById(1004).title"
             :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
             text="HTML, JAVA, CSS, GOLANG, PHP"
             title="Skills summary"
+            :text="getById(1005).text"
+            :title="getById(1005).title"
             :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <!-- <br/> -->
         <ComponentWrap
                 text="Education"
+                :text="getById(1006).text"
                 :css="{
                     'padding-left': '20%',
                     'text-align': 'start',
@@ -51,23 +68,33 @@
                     'margin-top': '20px',
                     'font-weight': 'bold'
                 }"
+                @update:text="updateText"
         />
         <ComponentWrap
             text="Post graduation in Data Scinece by UNIASSELVI University"
             title="2019-2020"
+            :text="getById(1007).text"
+            :title="getById(1007).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
             text="Graduated in Software analysis and development by FAEL College"
             title="2015-2019"
+            :text="getById(1008).text"
+            :title="getById(1008).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
                 text="Work experience"
+                :text="getById(1009).text"
                 :css="{
                     'padding-left': '20%',
                     'text-align': 'start',
@@ -75,24 +102,34 @@
                     'margin-top': '20px',
                     'font-weight': 'bold'
                 }"
+                @update:text="updateText"
         />
         <ComponentWrap
             text="<b>ViaHub</b><br/>I work as a fullstack software engineer building rest APIs with Java (8, 11, 13, 17, 21) and making front-ends with AngularJS, Vue.js and React.js. Also had experience with Flutter/Draft on this role. I use daily tecnologies as git, kafka, kubernets, jira, docker, kustumize, Maven, Mongodb and Lombok."
             title="2021 - present"
+            :text="getById(1010).text"
+            :title="getById(1010).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
             text="<b>Inova Eletronic Systems</b><br/>
             I use to work as a fullstack Softwere Developer building Rest APIs with Golang and front-ends with AngularJs. Also I used to wotk with SASS, JENKINS, Buckets AWS, AWS database S3, AWS Loadbalance, Docker and SemanticsUI as default css framework."
             title="2020 - 2021"
+            :text="getById(1011).text"
+            :title="getById(1011).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
                 text="Other experience"
+                :text="getById(1012).text"
                 :css="{
                     'padding-left': '20%',
                     'text-align': 'start',
@@ -100,48 +137,66 @@
                     'margin-top': '20px',
                     'font-weight': 'bold'
                 }"
+                @update:text="updateText"
         />
         <ComponentWrap
             text="<b>Freelancer</b><br/>
             Eventually I build websites using AngularJS and Vue.js as main front-end frameworks with bootstrap or pure CSS. Also I have some projects of mine I work on my free times as a hobby, APIs built in NestJs, Python, Java and PHP."
             title="2015 - present"
+            :text="getById(1013).text"
+            :title="getById(1013).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
             text="Portuguese: Native speaker.<br/>English: fair, listening I am able to understand anything from a native speaker, but limited to common phrases when I communicate. I studied English for 4 years and lived in Alabama USA for 9 months."
             title="Languages"
+            :text="getById(1014).text"
+            :title="getById(1014).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
             text="Team work<br/>Agile development<br/>Leadership experience<br/>I adapt quickly<br/>I work well under pressure"
             title="Other skills"
+            :text="getById(1015).text"
+            :title="getById(1015).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <ComponentWrap
             text="I trevaled to United States of America twice in 2012 and 2013 to work and provide training ia a subsidiary Brazilian company totaling 9 months working abrod, in which I was congratuleted for the great work when I was pesponsible for the night shift for three months."
             title="Personal"
+            :text="getById(1016).text"
+            :title="getById(1016).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            @update:title="updateTitle"
+            @update:text="updateText"
         />
         <!-- Loop through additional ComponentWraps -->
         <ComponentWrap
-            v-for="(component, index) in additionalComponents"
+            v-for="(component, index) in additionalComponents.filter(c => !c.norender)"
             :key="index"
             :text="component.text"
             :title="component.title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            :id="component.id"
             removeBnt="true"
-            @update:title="updateTitle(index, $event)"
-            @update:text="updateText(index, $event)"
+            @update:title="updateTitle"
+            @update:text="updateText"
             @remove="removeComponent(index)"
         />
 
@@ -154,15 +209,59 @@
 <script setup>
     import ComponentWrap from '../components/componentesCompartilhados/ComponentWrap.vue';
     import { ref } from 'vue';
+    import { defineProps } from 'vue';
 
-    const additionalComponents = ref([]);
+    const props = defineProps({
+        user: Object,
+        language: String
+    });
+
+    const isEnglish = props.language == 'us-en';
+
+    const additionalComponents = ref([
+        {
+            id: 1000,
+            title: "RESUME",
+            text: props.user.name ? props.user.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
+            norender: true
+        },
+        {
+            id: 1001,
+            title:null,
+            text: props.user.contact.adress ? props.user.contact?.adress : isEnglish ? 'Your adress: Type in here' : 'Seu endereço: Digite aqui',
+            norender: true
+        },
+        {
+            id: 1002,
+            title:null,
+            text: props.user.contact.phone.length > 0 ? props.user.contact?.phone[0] : isEnglish ? 'Phone: Type in here' : 'Telefone: Digite aqui',
+            norender: true
+        },
+        {
+            id: 1003,
+            title:null,
+            text: props.user.contact.email.length > 0 ? props.user.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
+            norender: true
+        },
+        {
+            id: 1004,
+            title: 'Objective',
+            text: props.user.profession ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
+            norender: true
+        }
+    ]);
 
     // Function to add a new ComponentWrap instance
     const addComponent = () => {
         additionalComponents.value.push({
+            id: additionalComponents.value.length + 1,
             text: "New Text Here",
             title: "New Title Here"
         });
+    };
+
+    const getById = (id) => {
+        return additionalComponents.value.find(component => component.id === id);
     };
 
     const removeComponent = (index) => {
@@ -171,12 +270,18 @@
         }
     };
 
-    const updateTitle = (index, newTitle) => {
-        additionalComponents[index].title = newTitle;
+    const updateTitle = ({ id, title }) => {
+        const component = additionalComponents.value.find(c => c.id === Number(id));
+        if (component) {
+            component.title = title;
+        }
     };
 
-    const updateText = (index, newText) => {
-        additionalComponents[index].text = newText;
+    const updateText = ({ id, text }) => {
+        const component = additionalComponents.value.find(c => c.id === Number(id));
+        if (component) {
+            component.text = text;
+        }
     };
 
 

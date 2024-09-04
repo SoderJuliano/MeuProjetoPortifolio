@@ -18,16 +18,17 @@ import { defineProps } from 'vue';
 
 // Define the props
 const props = defineProps({
-title: String,
-text: String,
-css: Object,
-block: Boolean,
-span1: Object,
-span2: Object,
-removeBnt: {
-    type: Boolean,
-    default: false,
-}
+    id: Number,
+    title: String,
+    text: String,
+    css: Object,
+    block: Boolean,
+    span1: Object,
+    span2: Object,
+    removeBnt: {
+        type: Boolean,
+        default: false,
+    }
 });
 const emit = defineEmits(['update:title', 'update:text', 'remove']);
 
@@ -44,7 +45,8 @@ const editTitle = () => {
 
 const saveTitle = () => {
     isEditingTitle.value = false;
-    emit('update:title', editableTitle.value);
+    console.log("'update:title', { id: props.id, title: editableTitle.value }", { id: props.id, title: editableTitle.value })
+    emit('update:title', { id: props.id, title: editableTitle.value });
 };
 
 const editText = () => {
@@ -53,7 +55,7 @@ const editText = () => {
 
 const saveText = () => {
     isEditingText.value = false;
-    emit('update:text', editableText.value);
+    emit('update:text', { id: props.id, text: editableText.value });
 };
 
 const removeComponent = () => {
