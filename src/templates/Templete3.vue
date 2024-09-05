@@ -59,7 +59,6 @@
         <!-- <br/> -->
         <ComponentWrap
             id="1006"
-            text="Education"
             :text="getById(1006).text"
             :css="{
                 'padding-left': '20%',
@@ -72,29 +71,28 @@
         />
         <!-- Education -->
         <div>
-        <!-- Loop through educationComponents -->
-        <ComponentWrap
-            v-for="(component, index) in educationComponents.filter(c => !c.norender)"
-            :key="index"
-            :text="component.text"
-            :title="component.title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            :id="component.id"
-            removeBnt="true"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            @remove="removeEducationComponent(index)"
-        ></ComponentWrap>
+            <!-- Loop through educationComponents -->
+            <ComponentWrap
+                v-for="(component, index) in educationComponents.filter(c => !c.norender)"
+                :key="index"
+                :text="component.text"
+                :title="component.title"
+                :css="{ ...base_css, 'display': 'flex', 'padding-right': '6%' }"
+                :span1="span1"
+                :span2="span2"
+                :id="component.id"
+                removeBnt="true"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                @remove="removeEducationComponent(index)"
+            ></ComponentWrap>
 
             <!-- Plus icon to add more education components -->
             <div @click="addEducationComponent" class="plus-icon">+</div>
         </div>
         <ComponentWrap
-                text="Work experience"
-                id="1009"
-                :text="getById(1009).text"
+                id="1007"
+                :text="getById(1007).text"
                 :css="{
                     'padding-left': '20%',
                     'text-align': 'start',
@@ -104,6 +102,32 @@
                 }"
                 @update:text="updateText"
         />
+
+<!-- Experiencies -->
+
+
+        <div>
+            <!-- Loop through educationComponents -->
+            <ComponentWrap
+                v-for="(component, index) in experiencesComponents.filter(c => !c.norender)"
+                :key="index"
+                :text="component.text"
+                :title="component.title"
+                :css="{ ...base_css, 'display': 'flex', 'padding-right': '6%' }"
+                :span1="span1"
+                :span2="span2"
+                :id="component.id"
+                removeBnt="true"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                @remove="removeExperiencesComponents(index)"
+            ></ComponentWrap>
+
+            <!-- Plus icon to add more education components -->
+            <div @click="addExperiencesComponents" class="plus-icon">+</div>
+        </div>
+
+
         <ComponentWrap
             text="<b>ViaHub</b><br/>I work as a fullstack software engineer building rest APIs with Java (8, 11, 13, 17, 21) and making front-ends with AngularJS, Vue.js and React.js. Also had experience with Flutter/Draft on this role. I use daily tecnologies as git, kafka, kubernets, jira, docker, kustumize, Maven, Mongodb and Lombok."
             title="2021 - present"
@@ -252,13 +276,13 @@
         },
         {
             id: 1004,
-            title: 'Objective',
+            title: isEnglish ? 'Objective' : 'Objetivo',
             text: props.user.profession ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
             norender: true
         },
         {
             id: 1005,
-            title: 'Skills summary',
+            title: isEnglish ? 'Skills summary' : 'Habilidades',
             text: props.user.ability ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
             norender: true
         },
@@ -266,6 +290,12 @@
             id: 1006,
             title: null,
             text: isEnglish ? 'Education' : 'Educação',
+            norender: true
+        },
+        {
+            id: 1007,
+            title: null,
+            text: isEnglish ? 'Work experience' : 'Experiencias',
             norender: true
         }
     ]);
@@ -279,7 +309,7 @@
                 id: 2000 + index, // Generate ID starting from 2000
                 title: grade.length > 0 ? grade : 'Add education',
                 text: isEnglish ? 'Education' : 'Educação',
-                norender: true
+                norender: false
             });
         });
     } else {
@@ -305,6 +335,46 @@
     const removeEducationComponent = (index) => {
         educationComponents.value.splice(index, 1);
     };
+
+
+    const experiencesComponents = ref([]);
+
+    if (props.user.userExperiences && props.user.userExperiences.length > 0) {
+        props.user.userExperiences.forEach((ex, index) => {
+            let innerText = ex.position ? "<b>"+ex.position+" - </b>" : "";
+            innerText += ex.company ? "<b>"+ex.company+"</b><br/>" : "<br/>";
+            innerText += ex.description ? ex.description : "";
+            experiencesComponents.value.push({
+                id: 3000 + index, // Generate ID starting from 3000
+                title: ex.dateHired ? ex.dateHired + ' - ' + ex.dateFired : isEnglish ? 'Add date' : 'Adicionar data',
+                text: innerText ? innerText : '',
+                norender: false
+            });
+        });
+    } else {
+        experiencesComponents.value.push({
+            id: 3000,
+            title: '2020 - present',
+            text: isEnglish ? 'Add experience' : 'Adicionar experiência profissional',
+            norender: false
+        });
+    }
+
+    const addExperiencesComponents = () => {
+        const newId = 3000 + experiencesComponents.value.length;
+        experiencesComponents.value.push({
+            id: newId,
+            title: '2020 - present',
+            text: isEnglish ? 'Add experience' : 'Adicionar experiência profissional',
+            norender: false
+        });
+    };
+
+    const removeExperiencesComponents = (index) => {
+        experiencesComponents.value.splice(index, 1);
+    };
+
+
     // Function to add a new ComponentWrap instance
     const addComponent = () => {
         additionalComponents.value.push({
@@ -327,12 +397,14 @@
     const updateTitle = ({ id, title }) => {
     // First, try to find the component in additionalComponents
         let component = additionalComponents.value.find(c => c.id === Number(id));
-        
+
         // If not found, try to find it in educationComponents
         if (!component) {
             component = educationComponents.value.find(c => c.id === Number(id));
+        }else if (!component) {
+            component = experiencesComponents.value.find(c => c.id === Number(id));
         }
-        
+
         // If component is found in either array, update the title
         if (component) {
             component.title = title;
@@ -342,12 +414,14 @@
     const updateText = ({ id, text }) => {
         // First, try to find the component in additionalComponents
         let component = additionalComponents.value.find(c => c.id === Number(id));
-        
+
         // If not found, try to find it in educationComponents
         if (!component) {
             component = educationComponents.value.find(c => c.id === Number(id));
+        }else if (!component) {
+            component = experiencesComponents.value.find(c => c.id === Number(id));
         }
-        
+
         // If component is found in either array, update the text
         if (component) {
             component.text = text;
