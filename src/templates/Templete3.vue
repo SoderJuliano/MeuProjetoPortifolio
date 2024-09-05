@@ -286,8 +286,8 @@
         // Add a default component if the grade array is empty
         educationComponents.value.push({
             id: 2000,
-            title: 'Add education',
-            text: isEnglish ? 'Education' : 'Educação',
+            title: '2020 - 2024',
+            text: isEnglish ? 'Add Education' : 'Adicionar Educação',
             norender: false
         });
     }
@@ -296,8 +296,8 @@
         const newId = 2000 + educationComponents.value.length;
         educationComponents.value.push({
             id: newId,
-            title: 'Add education',
-            text: isEnglish ? 'Education' : 'Educação',
+            title: 'Date in here',
+            text: isEnglish ? 'Add Education' : 'Adicionar Educação',
             norender: false
         });
     };
@@ -325,18 +325,35 @@
     };
 
     const updateTitle = ({ id, title }) => {
-        const component = additionalComponents.value.find(c => c.id === Number(id));
+    // First, try to find the component in additionalComponents
+        let component = additionalComponents.value.find(c => c.id === Number(id));
+        
+        // If not found, try to find it in educationComponents
+        if (!component) {
+            component = educationComponents.value.find(c => c.id === Number(id));
+        }
+        
+        // If component is found in either array, update the title
         if (component) {
             component.title = title;
         }
     };
 
     const updateText = ({ id, text }) => {
-        const component = additionalComponents.value.find(c => c.id === Number(id));
+        // First, try to find the component in additionalComponents
+        let component = additionalComponents.value.find(c => c.id === Number(id));
+        
+        // If not found, try to find it in educationComponents
+        if (!component) {
+            component = educationComponents.value.find(c => c.id === Number(id));
+        }
+        
+        // If component is found in either array, update the text
         if (component) {
             component.text = text;
         }
     };
+
 
 
     let base_css = {
