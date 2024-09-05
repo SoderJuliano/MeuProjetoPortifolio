@@ -47,8 +47,7 @@
             @update:text="updateText"
         />
         <ComponentWrap
-            text="HTML, JAVA, CSS, GOLANG, PHP"
-            title="Skills summary"
+            id="1005"
             :text="getById(1005).text"
             :title="getById(1005).title"
             :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
@@ -59,41 +58,42 @@
         />
         <!-- <br/> -->
         <ComponentWrap
-                text="Education"
-                :text="getById(1006).text"
-                :css="{
-                    'padding-left': '20%',
-                    'text-align': 'start',
-                    'margin-bottom': '0px',
-                    'margin-top': '20px',
-                    'font-weight': 'bold'
-                }"
-                @update:text="updateText"
+            id="1006"
+            text="Education"
+            :text="getById(1006).text"
+            :css="{
+                'padding-left': '20%',
+                'text-align': 'start',
+                'margin-bottom': '0px',
+                'margin-top': '20px',
+                'font-weight': 'bold'
+            }"
+            @update:text="updateText"
         />
+        <!-- Education -->
+        <div>
+        <!-- Loop through educationComponents -->
         <ComponentWrap
-            text="Post graduation in Data Scinece by UNIASSELVI University"
-            title="2019-2020"
-            :text="getById(1007).text"
-            :title="getById(1007).title"
+            v-for="(component, index) in educationComponents.filter(c => !c.norender)"
+            :key="index"
+            :text="component.text"
+            :title="component.title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
+            :id="component.id"
+            removeBnt="true"
             @update:title="updateTitle"
             @update:text="updateText"
-        />
-        <ComponentWrap
-            text="Graduated in Software analysis and development by FAEL College"
-            title="2015-2019"
-            :text="getById(1008).text"
-            :title="getById(1008).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
+            @remove="removeEducationComponent(index)"
+        ></ComponentWrap>
+
+            <!-- Plus icon to add more education components -->
+            <div @click="addEducationComponent" class="plus-icon">+</div>
+        </div>
         <ComponentWrap
                 text="Work experience"
+                id="1009"
                 :text="getById(1009).text"
                 :css="{
                     'padding-left': '20%',
@@ -107,6 +107,7 @@
         <ComponentWrap
             text="<b>ViaHub</b><br/>I work as a fullstack software engineer building rest APIs with Java (8, 11, 13, 17, 21) and making front-ends with AngularJS, Vue.js and React.js. Also had experience with Flutter/Draft on this role. I use daily tecnologies as git, kafka, kubernets, jira, docker, kustumize, Maven, Mongodb and Lombok."
             title="2021 - present"
+            id="1010"
             :text="getById(1010).text"
             :title="getById(1010).title"
             :css="{ ...base_css, 'display': 'flex' }"
@@ -119,6 +120,7 @@
             text="<b>Inova Eletronic Systems</b><br/>
             I use to work as a fullstack Softwere Developer building Rest APIs with Golang and front-ends with AngularJs. Also I used to wotk with SASS, JENKINS, Buckets AWS, AWS database S3, AWS Loadbalance, Docker and SemanticsUI as default css framework."
             title="2020 - 2021"
+            id="1011"
             :text="getById(1011).text"
             :title="getById(1011).title"
             :css="{ ...base_css, 'display': 'flex' }"
@@ -129,6 +131,7 @@
         />
         <ComponentWrap
                 text="Other experience"
+                id="1012"
                 :text="getById(1012).text"
                 :css="{
                     'padding-left': '20%',
@@ -143,6 +146,7 @@
             text="<b>Freelancer</b><br/>
             Eventually I build websites using AngularJS and Vue.js as main front-end frameworks with bootstrap or pure CSS. Also I have some projects of mine I work on my free times as a hobby, APIs built in NestJs, Python, Java and PHP."
             title="2015 - present"
+            id="1013"
             :text="getById(1013).text"
             :title="getById(1013).title"
             :css="{ ...base_css, 'display': 'flex' }"
@@ -154,6 +158,7 @@
         <ComponentWrap
             text="Portuguese: Native speaker.<br/>English: fair, listening I am able to understand anything from a native speaker, but limited to common phrases when I communicate. I studied English for 4 years and lived in Alabama USA for 9 months."
             title="Languages"
+            id="1014"
             :text="getById(1014).text"
             :title="getById(1014).title"
             :css="{ ...base_css, 'display': 'flex' }"
@@ -165,6 +170,7 @@
         <ComponentWrap
             text="Team work<br/>Agile development<br/>Leadership experience<br/>I adapt quickly<br/>I work well under pressure"
             title="Other skills"
+            id="1015"
             :text="getById(1015).text"
             :title="getById(1015).title"
             :css="{ ...base_css, 'display': 'flex' }"
@@ -176,6 +182,7 @@
         <ComponentWrap
             text="I trevaled to United States of America twice in 2012 and 2013 to work and provide training ia a subsidiary Brazilian company totaling 9 months working abrod, in which I was congratuleted for the great work when I was pesponsible for the night shift for three months."
             title="Personal"
+            id="1016"
             :text="getById(1016).text"
             :title="getById(1016).title"
             :css="{ ...base_css, 'display': 'flex' }"
@@ -248,9 +255,56 @@
             title: 'Objective',
             text: props.user.profession ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
             norender: true
+        },
+        {
+            id: 1005,
+            title: 'Skills summary',
+            text: props.user.ability ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
+            norender: true
+        },
+        {
+            id: 1006,
+            title: null,
+            text: isEnglish ? 'Education' : 'Educação',
+            norender: true
         }
     ]);
 
+    const educationComponents = ref([]);
+
+    if (props.user.grade && props.user.grade.length > 0) {
+        // Iterate over the grade array and push components into educationComponents
+        props.user.grade.forEach((grade, index) => {
+            educationComponents.value.push({
+                id: 2000 + index, // Generate ID starting from 2000
+                title: grade.length > 0 ? grade : 'Add education',
+                text: isEnglish ? 'Education' : 'Educação',
+                norender: true
+            });
+        });
+    } else {
+        // Add a default component if the grade array is empty
+        educationComponents.value.push({
+            id: 2000,
+            title: 'Add education',
+            text: isEnglish ? 'Education' : 'Educação',
+            norender: false
+        });
+    }
+
+    const addEducationComponent = () => {
+        const newId = 2000 + educationComponents.value.length;
+        educationComponents.value.push({
+            id: newId,
+            title: 'Add education',
+            text: isEnglish ? 'Education' : 'Educação',
+            norender: false
+        });
+    };
+
+    const removeEducationComponent = (index) => {
+        educationComponents.value.splice(index, 1);
+    };
     // Function to add a new ComponentWrap instance
     const addComponent = () => {
         additionalComponents.value.push({
