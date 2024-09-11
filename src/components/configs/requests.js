@@ -1,10 +1,37 @@
 import axios from 'axios';
-import { DRAGONITE_ENV } from '../configs/envs.js';
+import { DRAGONITE_ENV, DRAGONITE_ENV2, setDragoniteEnv } from '../configs/envs.js';
 
 const apiUrl = DRAGONITE_ENV;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
+
+
+export async function getLastEnvUrl() {
+  try {
+    // Make the API request to get the notifications
+    const response = await axios.get('https://abra-api.top/notifications/retrieve?key=ngrockurl');
+    const data = response.data;
+
+    // Check if data is an array and has elements
+    if (Array.isArray(data) && data.length > 0) {
+      // Get the last notification object in the array
+      const lastNotification = data[data.length - 1];
+
+      // Update DRAGONITE_ENV if content exists in the last notification
+      if (lastNotification && lastNotification.content) {
+        setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
+        console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
+      } else {
+        console.error('No valid content found in the last notification.');
+      }
+    } else {
+      console.error('No data received or empty array.');
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
 
 export function getDragoniteMesseges(key) {
   axios.defaults.baseURL = 'https://abra-api.top';

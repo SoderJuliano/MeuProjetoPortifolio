@@ -5,6 +5,8 @@
 import Home from './Home.vue';
 import PasswordReset from './components/pages/PasswordReset.vue';
 import NotFound from './components/pages/NotFound.vue';
+import * as funcs from "./components/configs/requests.js";
+
 export default {
     name: "App",
     components: {
@@ -18,7 +20,7 @@ export default {
             newPassword: null
         }
     },
-    mounted() {
+    async mounted() {
         const uri = window.location.href;
         console.log(uri);
         if(uri == 'http://localhost:8080/' || uri == 'https://custom-cv-online.netlify.app/') {
@@ -30,6 +32,7 @@ export default {
         }else {
             this.activeComp = 'NotFound';
         }
+        await await funcs.getLastEnvUrl();
     }
 }
 </script>
