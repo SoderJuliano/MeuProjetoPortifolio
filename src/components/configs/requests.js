@@ -22,6 +22,7 @@ export async function getLastEnvUrl() {
       if (lastNotification && lastNotification.content) {
         setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
         console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
+        apiUrl = lastNotification.content;
       } else {
         console.error('No valid content found in the last notification.');
       }
