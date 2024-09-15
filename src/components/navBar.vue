@@ -41,6 +41,7 @@
                     <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
                     <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
                     <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">{{this.getResetPasswordText()}}</a>
+                    <a v-on:click="deleteLocalData()" class="dropdown-item" href="#">{{ getDeleteLocalData() }}</a>
                   </div>
                   </li>
                   <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
@@ -169,6 +170,17 @@ export default {
       'reset-password'
     ],
     methods:{
+      deleteLocalData() {
+        localStorage.removeItem("configs");
+        localStorage.removeItem("user-pt");
+        localStorage.removeItem("user-en");
+        setTimeout(() => {
+          window.location.reload()
+        }, 900);
+      },
+      getDeleteLocalData() {
+        return this.language == 'us-en' ? 'Delete all my account data from my browser' : 'Apagar todos dados da conta do meu anvegador';
+      },
       getResetPasswordText() {
         return this.language == 'us-en' ? 'Reset Password' : 'Recuperar senha';
       },

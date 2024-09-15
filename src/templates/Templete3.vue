@@ -116,6 +116,8 @@
                 :css="{ ...base_css, 'display': 'flex', 'padding-right': '6%' }"
                 :span1="span1"
                 :span2="span2"
+                textArea="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
                 :id="component.id"
                 removeBnt="true"
                 @update:title="updateTitle"
@@ -128,7 +130,7 @@
         </div>
 
 
-        <ComponentWrap
+        <!-- <ComponentWrap
             text="<b>ViaHub</b><br/>I work as a fullstack software engineer building rest APIs with Java (8, 11, 13, 17, 21) and making front-ends with AngularJS, Vue.js and React.js. Also had experience with Flutter/Draft on this role. I use daily tecnologies as git, kafka, kubernets, jira, docker, kustumize, Maven, Mongodb and Lombok."
             title="2021 - present"
             id="1010"
@@ -152,11 +154,10 @@
             :span2="span2"
             @update:title="updateTitle"
             @update:text="updateText"
-        />
+        /> -->
         <ComponentWrap
-                text="Other experience"
-                id="1012"
-                :text="getById(1012).text"
+                id="1008"
+                :text="getById(1008).text"
                 :css="{
                     'padding-left': '20%',
                     'text-align': 'start',
@@ -167,13 +168,10 @@
                 @update:text="updateText"
         />
         <ComponentWrap
-            text="<b>Freelancer</b><br/>
-            Eventually I build websites using AngularJS and Vue.js as main front-end frameworks with bootstrap or pure CSS. Also I have some projects of mine I work on my free times as a hobby, APIs built in NestJs, Python, Java and PHP."
-            title="2015 - present"
-            id="1013"
-            :text="getById(1013).text"
-            :title="getById(1013).title"
-            :css="{ ...base_css, 'display': 'flex' }"
+            id="1009"
+            :text="getById(1009)?.text"
+            :title="getById(1009)?.title"
+            :css="{ ...base_css, 'display': 'flex', 'margin-bottom': '30px' }"
             :span1="span1"
             :span2="span2"
             @update:title="updateTitle"
@@ -297,7 +295,18 @@
             title: null,
             text: isEnglish ? 'Work experience' : 'Experiencias',
             norender: true
-        }
+        },
+        {
+            id: 1008,
+            text: isEnglish ? 'Other experience' : 'Outras experiências',
+            norender: true
+        },
+        {
+            id: 1009,
+            title: isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
+            text: isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
+            norender: true
+        },
     ]);
 
     const educationComponents = ref([]);
@@ -317,7 +326,7 @@
         educationComponents.value.push({
             id: 2000,
             title: '2020 - 2024',
-            text: isEnglish ? 'Add Education' : 'Adicionar Educação',
+            text: isEnglish ? 'Add Education (click here)' : 'Adicionar Educação (clicar aqui)',
             norender: false
         });
     }
@@ -327,7 +336,7 @@
         educationComponents.value.push({
             id: newId,
             title: 'Date in here',
-            text: isEnglish ? 'Add Education' : 'Adicionar Educação',
+            text: isEnglish ? 'Add Education (click here)' : 'Adicionar Educação (clicar aqui)',
             norender: false
         });
     };
@@ -355,7 +364,7 @@
         experiencesComponents.value.push({
             id: 3000,
             title: '2020 - present',
-            text: isEnglish ? 'Add experience' : 'Adicionar experiência profissional',
+            text: isEnglish ? 'Add experience (click here)' : 'Adicionar experiência profissional (clicar aqui)',
             norender: false
         });
     }
@@ -365,7 +374,7 @@
         experiencesComponents.value.push({
             id: newId,
             title: '2020 - present',
-            text: isEnglish ? 'Add experience' : 'Adicionar experiência profissional',
+            text: isEnglish ? 'Add experience (click here)' : 'Adicionar experiência profissional (clicar aqui)',
             norender: false
         });
     };
@@ -401,7 +410,8 @@
         // If not found, try to find it in educationComponents
         if (!component) {
             component = educationComponents.value.find(c => c.id === Number(id));
-        }else if (!component) {
+        }
+        if (!component) {
             component = experiencesComponents.value.find(c => c.id === Number(id));
         }
 
@@ -412,19 +422,25 @@
     };
 
     const updateText = ({ id, text }) => {
+
         // First, try to find the component in additionalComponents
         let component = additionalComponents.value.find(c => c.id === Number(id));
 
         // If not found, try to find it in educationComponents
         if (!component) {
             component = educationComponents.value.find(c => c.id === Number(id));
-        }else if (!component) {
+        }
+
+        // If still not found, try to find it in experiencesComponents
+        if (!component) {
             component = experiencesComponents.value.find(c => c.id === Number(id));
         }
 
-        // If component is found in either array, update the text
+        // If component is found in any array, update the text
         if (component) {
             component.text = text;
+        } else {
+            console.error(`Component with id ${id} not found.`);
         }
     };
 

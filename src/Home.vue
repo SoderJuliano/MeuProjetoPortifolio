@@ -307,11 +307,42 @@ export default {
   },
   methods: {
     async resetPassword() {
-      const response = await funcs.resetPassword(this.user._id);
-      if(response?.status === 200) {
-        this.fireGlobalAlert(this.languageIsEN()? "Password reset email sent successfully." : "Email de redefinição de senha enviado com sucesso.");
-      }else {
-        this.fireGlobalAlert(this.languageIsEN()? "Failed to send password reset email." : "Falha ao enviar email de redefinição de senha.");
+      try {
+        // Make the API call to reset the password
+        const response = await funcs.resetPassword(this.user._id);
+        
+        // Check if the response status is 200 (success)
+        if (response?.status === 200) {
+          this.fireGlobalAlert(
+            this.languageIsEN()
+              ? "Password reset email sent successfully."
+              : "Email de redefinição de senha enviado com sucesso."
+          );
+        } else {
+          this.fireGlobalAlert(
+            this.languageIsEN()
+              ? "Failed to send password reset email."
+              : "Falha ao enviar email de redefinição de senha."
+          );
+        }
+      } catch (error) {
+        // Handle the error in the catch block
+        if (error.response && error.response.status === 409) {
+          this.fireGlobalAlert(
+            this.languageIsEN()
+              ? "A conflict occurred. Password reset not possible at the moment."
+              : "Ocorreu um conflito. Redefinição de senha não possível no momento."
+          );
+        } else {
+          this.fireGlobalAlert(
+            this.languageIsEN()
+              ? "Failed to send password reset email."
+              : "Falha ao enviar email de redefinição de senha."
+          );
+        }
+
+        // Optionally log the error for debugging purposes
+        console.error('Password reset error:', error);
       }
     },
     toggleSync(val) {

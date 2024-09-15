@@ -6,7 +6,15 @@
         </div>
         <div class="span2" :style="span2">
             <span v-if="!isEditingText" @click="editText" v-html="text"></span>
-            <input v-else type="text" v-model="editableText" @blur="saveText" @keyup.enter="saveText" />
+            <div  v-else-if="textArea && isEditingText" >
+                <textarea
+                rows="4"
+                cols="50"
+                type="text" v-model="editableText"
+            />
+            <span class="saveTextArea" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
+            </div>
+            <input v-else-if="!textArea && isEditingText" type="text" v-model="editableText" @blur="saveText" @keyup.enter="saveText" />
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
     </div>
@@ -25,6 +33,8 @@ const props = defineProps({
     block: Boolean,
     span1: Object,
     span2: Object,
+    textArea: Boolean,
+    textAreaSaveBnt: String,
     removeBnt: {
         type: Boolean,
         default: false,
@@ -37,6 +47,8 @@ const isEditingTitle = ref(false);
 const isEditingText = ref(false);
 const editableTitle = ref(props.title);
 const editableText = ref(props.text);
+const textAreaSave = ref(props.textAreaSaveBnt);
+
 
 // Methods to handle editing
 const editTitle = () => {
@@ -58,12 +70,57 @@ const saveText = () => {
     emit('update:text', { id: props.id, text: editableText.value });
 };
 
+const saveTextArea = () => {
+    let text = editableText.value;
+
+    // Verifica se o texto já contém tags HTML
+    const hasHtmlTags = /<\/?(b|span|br)\s*\/?>/i.test(text);
+
+    // Se o texto não tiver tags HTML, aplica a formatação
+    if (!hasHtmlTags) {
+        // Separar o texto por quebras de linha
+        let lines = text.split('\n');
+
+        // Verifica se a primeira linha tem uma quebra e aplica <b></b>
+        if (lines.length > 1) {
+        lines[0] = `<b>${lines[0]}</b>`;
+        }
+
+        // Envolve as outras linhas com <span></span>
+        for (let i = 1; i < lines.length; i++) {
+        lines[i] = `<span>${lines[i]}</span>`;
+        }
+
+        // Junta as linhas e adiciona <br /> onde houver quebra de linha
+        text = lines.join('<br />');
+    }
+
+    // Atualiza o valor e emite o evento com o texto formatado
+    editableText.value = text;
+    isEditingText.value = false;
+    emit('update:text', { id: props.id, text: editableText.value });
+};
+
+
 const removeComponent = () => {
     emit('remove');
 };
 </script>
 
 <style scoped>
+.saveTextArea {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    position: absolute;
+    margin-left: -20px;
+    margin-top: -5px;
+    border-radius: 8px;
+}
+textarea {
+    padding: 10px;
+    border-radius: 8px;
+}
 .remove-button {
     cursor: pointer;
     font-size: 24px;
@@ -95,6 +152,8 @@ margin-bottom: 8px;
 input {
 flex: 80%;
 margin-left: 10px;
+padding: 10px;
+border-radius: 8px;
 }
 
 @media print {
