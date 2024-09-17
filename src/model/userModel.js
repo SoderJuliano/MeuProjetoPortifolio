@@ -25,7 +25,12 @@ export default class User {
         }
     };
     userExperiences = [];
-    imgForReal = 0
+    imgForReal = 0;
+    language = {
+        level: "",
+        details: ""
+    }
+    otherInfos = ""
 
     getNameFromLocalStorage() {
         let name = "";

@@ -35,6 +35,7 @@ const props = defineProps({
     span2: Object,
     textArea: Boolean,
     textAreaSaveBnt: String,
+    noBoldText: Boolean,
     removeBnt: {
         type: Boolean,
         default: false,
@@ -81,14 +82,22 @@ const saveTextArea = () => {
         // Separar o texto por quebras de linha
         let lines = text.split('\n');
 
-        // Verifica se a primeira linha tem uma quebra e aplica <b></b>
-        if (lines.length > 1) {
-        lines[0] = `<b>${lines[0]}</b>`;
+        // Verifica se a propriedade noBoldText é verdadeira
+        if (props.noBoldText) {
+            // Envolve a primeira linha com <span></span>
+            if (lines.length > 1) {
+                lines[0] = `<span class="bold">${lines[0]}</span>`;
+            }
+        } else {
+            // Envolve a primeira linha com <b></b>
+            if (lines.length > 1) {
+                lines[0] = `<b>${lines[0]}</b>`;
+            }
         }
 
         // Envolve as outras linhas com <span></span>
         for (let i = 1; i < lines.length; i++) {
-        lines[i] = `<span>${lines[i]}</span>`;
+            lines[i] = `<span>${lines[i]}</span>`;
         }
 
         // Junta as linhas e adiciona <br /> onde houver quebra de linha

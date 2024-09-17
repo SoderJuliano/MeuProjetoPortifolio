@@ -128,33 +128,6 @@
             <!-- Plus icon to add more education components -->
             <div @click="addExperiencesComponents" class="plus-icon">+</div>
         </div>
-
-
-        <!-- <ComponentWrap
-            text="<b>ViaHub</b><br/>I work as a fullstack software engineer building rest APIs with Java (8, 11, 13, 17, 21) and making front-ends with AngularJS, Vue.js and React.js. Also had experience with Flutter/Draft on this role. I use daily tecnologies as git, kafka, kubernets, jira, docker, kustumize, Maven, Mongodb and Lombok."
-            title="2021 - present"
-            id="1010"
-            :text="getById(1010).text"
-            :title="getById(1010).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            text="<b>Inova Eletronic Systems</b><br/>
-            I use to work as a fullstack Softwere Developer building Rest APIs with Golang and front-ends with AngularJs. Also I used to wotk with SASS, JENKINS, Buckets AWS, AWS database S3, AWS Loadbalance, Docker and SemanticsUI as default css framework."
-            title="2020 - 2021"
-            id="1011"
-            :text="getById(1011).text"
-            :title="getById(1011).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        /> -->
         <ComponentWrap
                 id="1008"
                 :text="getById(1008).text"
@@ -176,42 +149,47 @@
             :span2="span2"
             @update:title="updateTitle"
             @update:text="updateText"
+            textArea="true"
+            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
         />
         <ComponentWrap
-            text="Portuguese: Native speaker.<br/>English: fair, listening I am able to understand anything from a native speaker, but limited to common phrases when I communicate. I studied English for 4 years and lived in Alabama USA for 9 months."
-            title="Languages"
-            id="1014"
-            :text="getById(1014).text"
-            :title="getById(1014).title"
+            id="1010"
+            :text="getById(1010).text"
+            :title="getById(1010).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
             @update:title="updateTitle"
             @update:text="updateText"
+            textArea="true"
+            noBoldText="true"
+            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
         />
         <ComponentWrap
-            text="Team work<br/>Agile development<br/>Leadership experience<br/>I adapt quickly<br/>I work well under pressure"
-            title="Other skills"
-            id="1015"
-            :text="getById(1015).text"
-            :title="getById(1015).title"
+            id="1011"
+            :text="getById(1011).text"
+            :title="getById(1011).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
             @update:title="updateTitle"
             @update:text="updateText"
+            textArea="true"
+            noBoldText="true"
+            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
         />
         <ComponentWrap
-            text="I trevaled to United States of America twice in 2012 and 2013 to work and provide training ia a subsidiary Brazilian company totaling 9 months working abrod, in which I was congratuleted for the great work when I was pesponsible for the night shift for three months."
-            title="Personal"
-            id="1016"
-            :text="getById(1016).text"
-            :title="getById(1016).title"
+            id="1012"
+            :text="getById(1012).text"
+            :title="getById(1012).title"
             :css="{ ...base_css, 'display': 'flex' }"
             :span1="span1"
             :span2="span2"
             @update:title="updateTitle"
             @update:text="updateText"
+            textArea="true"
+            noBoldText="true"
+            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
         />
         <!-- Loop through additional ComponentWraps -->
         <ComponentWrap
@@ -305,6 +283,24 @@
             id: 1009,
             title: isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
             text: isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
+            norender: true
+        },
+        {
+            id: 1010,
+            title: isEnglish ? 'Languages' : 'línguas',
+            text: isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.',
+            norender: true
+        },
+        {
+            id: 1011,
+            title: isEnglish ? 'Other skills' : 'Outras habilidades',
+            text: isEnglish ? 'ex. Team work.' : 'exemplo, trabalho em time.',
+            norender: true
+        },
+        {
+            id: 1012,
+            title: isEnglish ? 'Personal' : 'Pessoal',
+            text: props?.user?.resume ? props.user.resume : isEnglish ? 'about you.' : 'sobre você.',
             norender: true
         },
     ]);
