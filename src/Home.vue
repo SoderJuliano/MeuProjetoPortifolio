@@ -162,6 +162,7 @@
         v-if="this.configs.getTemplate() == 3"
         :user="user"
         :language="this.configs.getLanguage()"
+        @updateName="updateName"
       />
     </div>
     <div class="footer">

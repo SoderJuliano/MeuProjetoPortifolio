@@ -215,7 +215,7 @@
 
 <script setup>
     import ComponentWrap from '../components/componentesCompartilhados/ComponentWrap.vue';
-    import { ref } from 'vue';
+    import { ref, watch, defineEmits } from 'vue';
     import { defineProps } from 'vue';
 
     const props = defineProps({
@@ -440,6 +440,15 @@
         }
     };
 
+    // Emits
+    const emit = defineEmits(['updateName']);
+    // update name
+    watch(() => getById(1000).text, (newText, oldText) => {
+        if (newText !== oldText) {
+            console.log("O texto foi alterado:", newText);
+            emit('updateName', { id: 1000, newText });
+        }
+    });
 
 
     let base_css = {
