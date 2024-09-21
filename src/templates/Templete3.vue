@@ -215,7 +215,7 @@
 
 <script setup>
     import ComponentWrap from '../components/componentesCompartilhados/ComponentWrap.vue';
-    import { ref, watch, defineEmits } from 'vue';
+    import { ref, watch, defineEmits, reactive } from 'vue';
     import { defineProps } from 'vue';
 
     const props = defineProps({
@@ -223,6 +223,7 @@
         language: String
     });
 
+    let localUpdatedUser = reactive({ ...props.user });
     const isEnglish = props.language == 'us-en';
 
     const additionalComponents = ref([
@@ -360,7 +361,7 @@
         experiencesComponents.value.push({
             id: 3000,
             title: '2020 - present',
-            text: isEnglish ? 'Add experience (click here)' : 'Adicionar experiência profissional (clicar aqui)',
+            text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
             norender: false
         });
     }
@@ -370,7 +371,7 @@
         experiencesComponents.value.push({
             id: newId,
             title: '2020 - present',
-            text: isEnglish ? 'Add experience (click here)' : 'Adicionar experiência profissional (clicar aqui)',
+            text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
             norender: false
         });
     };
@@ -400,93 +401,149 @@
     };
 
     const updateTitle = ({ id, title }) => {
-    // First, try to find the component in additionalComponents
-        let component = additionalComponents.value.find(c => c.id === Number(id));
+        // Find the corresponding component (education or experience)
+        let component = additionalComponents.value.find(c => c.id === Number(id))
+            || educationComponents.value.find(c => c.id === Number(id))
+            || experiencesComponents.value.find(c => c.id === Number(id));
 
-        // If not found, try to find it in educationComponents
-        if (!component) {
-            component = educationComponents.value.find(c => c.id === Number(id));
-        }
-        if (!component) {
-            component = experiencesComponents.value.find(c => c.id === Number(id));
-        }
+        // Parse the title into start and end dates (e.g., "2024-09 - 2024-10")
+        const [dateHired, dateFired] = title.split(' - ');
 
-        // If component is found in either array, update the title
+        // If component found, update the title
         if (component) {
             component.title = title;
+
+            // Update localUpdatedUser based on the component ID
+            const experience = localUpdatedUser.userExperiences.find(ex => 3000 + ex.id === component.id);
+            if (experience) {
+                experience.dateHired = dateHired ? dateHired.trim() : experience.dateHired;
+                experience.dateFired = dateFired ? dateFired.trim() : experience.dateFired;
+            }
         }
     };
 
     const updateText = ({ id, text }) => {
-
-        // First, try to find the component in additionalComponents
         let component = additionalComponents.value.find(c => c.id === Number(id));
+
+        if (component) {
+            component.text = text;
+        }
 
         // If not found, try to find it in educationComponents
         if (!component) {
             component = educationComponents.value.find(c => c.id === Number(id));
+            if (component) {
+                component.text = text;
+            }
+            localUpdatedUser.education = educationComponents.value.map(c => c.text);
         }
 
-        // If still not found, try to find it in experiencesComponents
         if (!component) {
             component = experiencesComponents.value.find(c => c.id === Number(id));
+            if (component) {
+                component.text = text;
+
+                // Try to find the corresponding experience in localUpdatedUser.userExperiences
+                const experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                    ex => 3000 + ex.id === component.id
+                );
+
+                let updatedExperience;
+
+                const strippedTextParts = text.includes('<br/>') ? text.split('<br/>') : text.split('<br />');
+                if(strippedTextParts.length < 2) {
+                    console.log(strippedTextParts)
+                    updatedExperience = {
+                        position: '',
+                        company: '',
+                        description: strippedTextParts[0]
+                    };
+                }else {
+                    let stripedFirstPart = strippedTextParts[0].replaceAll('<b>', '');
+                    stripedFirstPart = stripedFirstPart.replaceAll('</b>', '');
+                    const parts = stripedFirstPart.includes('-') ? stripedFirstPart.split('-') : stripedFirstPart
+                    const position = parts[0] || '';
+                    const company = parts[1] || '';
+
+                    let description = strippedTextParts[1] ? strippedTextParts[1] : ''
+
+                    description = description.replace('<span>', '');
+                    description = description.replace('</span>', '');
+
+                    // Verificar se há descrição
+                    updatedExperience = {
+                        position: position.trim(),
+                        company: company.trim(),
+                        description: description.trim()
+                    }
+                }
+                if (experienceIndex !== -1) {
+                    // Update the existing experience
+                    localUpdatedUser.userExperiences[experienceIndex] = {
+                        ...localUpdatedUser.userExperiences[experienceIndex],
+                        ...updatedExperience
+                    };
+                } else {
+                    // If no matching experience is found, add a new one
+                    localUpdatedUser.userExperiences.push({
+                        ...updatedExperience,
+                        id: component.id - 3000 // Make sure to align the id logic with your structure
+                    });
+                }
+            }
         }
 
-        // If component is found in any array, update the text
-        if (component) {
-            component.text = text;
-        } else {
+        if (!component) {
             console.error(`Component with id ${id} not found.`);
+        } else {
+            console.log('sending update user from text update method');
+            emit('updateUser', localUpdatedUser);
         }
     };
-
-    // Emits
-    // const emit = defineEmits(['updateName']);
-    // update name
-    // watch(() => getById(1000).text, (newText, oldText) => {
-    //     if (newText !== oldText) {
-    //         console.log("O texto foi alterado:", newText);
-    //         emit('updateName', newText);
-    //     }
-    // });
-
 
     const emit = defineEmits(['updateUser']);
 
     // Watch the `additionalComponents` deeply for any changes
     watch(additionalComponents, (newComponents) => {
-    const updatedUser = { ...props.user };  // Clone the user object
+        const updatedUser = { ...props.user };  // Clone the user object
 
-    newComponents.forEach(component => {
-        // Update user fields based on component `id`
-        switch (component.id) {
-        case 1000:
-            updatedUser.name = component.text;
-            break;
-        case 1001:
-            updatedUser.contact.adress = component.text;
-            break;
-        case 1002:
-            updatedUser.contact.phone[0] = component.text;
-            break;
-        case 1003:
-            updatedUser.contact.email[0] = component.text;
-            break;
-        case 1004:
-            updatedUser.profession = component.text;
-        case 1005:
-            updatedUser.hability = component.text;
-        break;
-        // Handle other cases for different ids...
-        case 1012:
-            updatedUser.resume = component.text;
-            break;
+        newComponents.forEach(component => {
+            // Update user fields based on component `id`
+            switch (component.id) {
+            case 1000:
+                updatedUser.name = component.text;
+                break;
+            case 1001:
+                updatedUser.contact.adress = component.text;
+                break;
+            case 1002:
+                updatedUser.contact.phone[0] = component.text;
+                break;
+            case 1003:
+                updatedUser.contact.email[0] = component.text;
+                break;
+            case 1004:
+                updatedUser.profession = component.text;
+            case 1005:
+                updatedUser.hability = component.text;
+                break;
+            case 1012:
+                updatedUser.resume = component.text;
+                break;
+            }
+        });
+
+        emit('updateUser', updatedUser);
+    }, { deep: true });
+
+    // educationComponents
+    watch(() => localUpdatedUser.education, (newEducation, oldEducation) => {
+        if (newEducation !== oldEducation) {
+            console.log("EDUCVATION foi alterado:", newEducation);
+            emit('updateUser', localUpdatedUser);
         }
     });
 
-    // Emit the updated user object
-    emit('updateUser', updatedUser);
-    }, { deep: true });
 
 
     let base_css = {
