@@ -259,7 +259,7 @@
         {
             id: 1005,
             title: isEnglish ? 'Skills summary' : 'Habilidades',
-            text: props.user.ability ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
+            text: props.user.hability ? props.user.hability : isEnglish ? 'Type in here' : 'Digite aqui',
             norender: true
         },
         {
@@ -441,14 +441,52 @@
     };
 
     // Emits
-    const emit = defineEmits(['updateName']);
+    // const emit = defineEmits(['updateName']);
     // update name
-    watch(() => getById(1000).text, (newText, oldText) => {
-        if (newText !== oldText) {
-            console.log("O texto foi alterado:", newText);
-            emit('updateName', { id: 1000, newText });
+    // watch(() => getById(1000).text, (newText, oldText) => {
+    //     if (newText !== oldText) {
+    //         console.log("O texto foi alterado:", newText);
+    //         emit('updateName', newText);
+    //     }
+    // });
+
+
+    const emit = defineEmits(['updateUser']);
+
+    // Watch the `additionalComponents` deeply for any changes
+    watch(additionalComponents, (newComponents) => {
+    const updatedUser = { ...props.user };  // Clone the user object
+
+    newComponents.forEach(component => {
+        // Update user fields based on component `id`
+        switch (component.id) {
+        case 1000:
+            updatedUser.name = component.text;
+            break;
+        case 1001:
+            updatedUser.contact.adress = component.text;
+            break;
+        case 1002:
+            updatedUser.contact.phone[0] = component.text;
+            break;
+        case 1003:
+            updatedUser.contact.email[0] = component.text;
+            break;
+        case 1004:
+            updatedUser.profession = component.text;
+        case 1005:
+            updatedUser.hability = component.text;
+        break;
+        // Handle other cases for different ids...
+        case 1012:
+            updatedUser.resume = component.text;
+            break;
         }
     });
+
+    // Emit the updated user object
+    emit('updateUser', updatedUser);
+    }, { deep: true });
 
 
     let base_css = {

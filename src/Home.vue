@@ -162,7 +162,7 @@
         v-if="this.configs.getTemplate() == 3"
         :user="user"
         :language="this.configs.getLanguage()"
-        @updateName="updateName"
+        @updateUser="updateUser"
       />
     </div>
     <div class="footer">
@@ -566,7 +566,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      console.log('user update', userData);
+      // console.log('user update', userData);
       // todo saveIntoDatabase
       if(this.syncUser) {
         this.doUpdateUserAsync();
@@ -633,6 +633,7 @@ export default {
       } else {
         console.error('Unexpected user type or value:', typeof this.user, this.user);
       }
+      this.updateUser(this.user);
     },
     setFont(fnt) {
       this.font = fnt;

@@ -159,10 +159,14 @@ margin-bottom: 8px;
 }
 
 input {
-flex: 80%;
-margin-left: 10px;
-padding: 10px;
-border-radius: 8px;
+    flex: 80%;
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+input {
+    min-width: 70%;
 }
 
 @media print {
