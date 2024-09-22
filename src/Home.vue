@@ -566,7 +566,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData) {
-      // console.log('user update', userData);
+      console.log('user update', userData);
       // todo saveIntoDatabase
       if(this.syncUser) {
         this.doUpdateUserAsync();

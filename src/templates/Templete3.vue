@@ -91,16 +91,16 @@
             <div @click="addEducationComponent" class="plus-icon">+</div>
         </div>
         <ComponentWrap
-                id="1007"
-                :text="getById(1007).text"
-                :css="{
-                    'padding-left': '20%',
-                    'text-align': 'start',
-                    'margin-bottom': '0px',
-                    'margin-top': '20px',
-                    'font-weight': 'bold'
-                }"
-                @update:text="updateText"
+            id="1007"
+            :text="getById(1007).text"
+            :css="{
+                'padding-left': '20%',
+                'text-align': 'start',
+                'margin-bottom': '0px',
+                'margin-top': '20px',
+                'font-weight': 'bold'
+            }"
+            @update:text="updateText"
         />
 
 <!-- Experiencies -->
@@ -478,7 +478,6 @@
                     }
                 }
                 if (experienceIndex !== -1) {
-                    // Update the existing experience
                     localUpdatedUser.userExperiences[experienceIndex] = {
                         ...localUpdatedUser.userExperiences[experienceIndex],
                         ...updatedExperience
@@ -505,35 +504,35 @@
 
     // Watch the `additionalComponents` deeply for any changes
     watch(additionalComponents, (newComponents) => {
-        const updatedUser = { ...props.user };  // Clone the user object
 
         newComponents.forEach(component => {
             // Update user fields based on component `id`
             switch (component.id) {
-            case 1000:
-                updatedUser.name = component.text;
-                break;
-            case 1001:
-                updatedUser.contact.adress = component.text;
-                break;
-            case 1002:
-                updatedUser.contact.phone[0] = component.text;
-                break;
-            case 1003:
-                updatedUser.contact.email[0] = component.text;
-                break;
-            case 1004:
-                updatedUser.profession = component.text;
-            case 1005:
-                updatedUser.hability = component.text;
-                break;
-            case 1012:
-                updatedUser.resume = component.text;
-                break;
-            }
+                case 1000:
+                    localUpdatedUser.name = component.text;
+                    break;
+                case 1001:
+                    localUpdatedUser.contact.adress = component.text;
+                    break;
+                case 1002:
+                    localUpdatedUser.contact.phone[0] = component.text;
+                    break;
+                case 1003:
+                    localUpdatedUser.contact.email[0] = component.text;
+                    break;
+                case 1004:
+                    localUpdatedUser.profession = component.text;
+                    break;
+                case 1005:
+                    localUpdatedUser.hability = component.text;
+                    break;
+                case 1012:
+                    localUpdatedUser.resume = component.text;
+                    break;
+                }
         });
 
-        emit('updateUser', updatedUser);
+        emit('updateUser', localUpdatedUser);
     }, { deep: true });
 
     // educationComponents

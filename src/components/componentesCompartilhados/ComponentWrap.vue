@@ -2,7 +2,12 @@
     <div class="component" :class="{'block-layout': block}" :style="css">
         <div class="span1" :style="span1">
             <span v-if="!isEditingTitle" @click="editTitle">{{ title }}</span>
-            <input v-else type="text" v-model="editableTitle" @blur="saveTitle" @keyup.enter="saveTitle" />
+            <input @focus="$event.target.select()"
+                v-else type="text"
+                v-model="editableTitle"
+                @blur="saveTitle"
+                @keyup.enter="saveTitle"
+            />
         </div>
         <div class="span2" :style="span2">
             <span v-if="!isEditingText" @click="editText" v-html="text"></span>
@@ -10,11 +15,19 @@
                 <textarea
                 rows="4"
                 cols="50"
-                type="text" v-model="editableText"
+                type="text"
+                v-model="editableText"
+                @focus="$event.target.select()"
             />
             <span class="saveTextArea" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
             </div>
-            <input v-else-if="!textArea && isEditingText" type="text" v-model="editableText" @blur="saveText" @keyup.enter="saveText" />
+            <input v-else-if="!textArea && isEditingText"
+                type="text"
+                v-model="editableText"
+                @blur="saveText"
+                @keyup.enter="saveText"
+                @focus="$event.target.select()"
+            />
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
     </div>
