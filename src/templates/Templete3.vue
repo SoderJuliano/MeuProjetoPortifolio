@@ -120,9 +120,12 @@
                 :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
                 :id="component.id"
                 removeBnt="true"
+                :job="component.job"
+                :jobs="props.user?.userExperiences"
                 @update:title="updateTitle"
                 @update:text="updateText"
                 @remove="removeExperiencesComponents(index)"
+                @update-experiencias="updateUserExperiecies"
             ></ComponentWrap>
 
             <!-- Plus icon to add more education components -->
@@ -354,6 +357,7 @@
                 id: 3000 + index, // Generate ID starting from 3000
                 title: ex.dateHired ? ex.dateHired + ' - ' + ex.dateFired : isEnglish ? 'Add date' : 'Adicionar data',
                 text: innerText ? innerText : '',
+                job: ex || {},
                 norender: false
             });
         });
@@ -362,6 +366,7 @@
             id: 3000,
             title: '2020 - present',
             text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
+            job: {},
             norender: false
         });
     }
@@ -372,6 +377,7 @@
             id: newId,
             title: '2020 - present',
             text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
+            job: {},
             norender: false
         });
     };
@@ -534,6 +540,13 @@
 
         emit('updateUser', localUpdatedUser);
     }, { deep: true });
+
+
+    const updateUserExperiecies = (experiencies) => {
+        console.log('tempolate3 novas experiencias', experiencies)
+        this.localUpdatedUser.userExperiences = experiencies;
+        emit('updateUser', localUpdatedUser);
+    }
 
     // educationComponents
     watch(() => localUpdatedUser.education, (newEducation, oldEducation) => {

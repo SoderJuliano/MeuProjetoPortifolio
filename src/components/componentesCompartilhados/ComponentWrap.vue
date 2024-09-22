@@ -20,7 +20,9 @@
                 @focus="$event.target.select()"
             />
             <span class="saveTextArea" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
-            </div>
+            <span class="cancelEdit" @click="cancelTextArea">{{ textAreaCancelBnt ? textAreaSaveBnt : "cancel" }}</span>
+            <span class="editWithModal" @click="editar(job?.id)">{{ editAreaCancelBnt ? editAreaSaveBnt : "edit" }}</span>
+        </div>
             <input v-else-if="!textArea && isEditingText"
                 type="text"
                 v-model="editableText"
@@ -31,11 +33,20 @@
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
     </div>
+    <div v-if="showEditing == job?.id"   class="job-edit">
+        <wrappEditModel
+            :job="getJobModel(job)"
+            :language="language"
+            @editar-end="editar"
+            @update-experiencias="updateExperiencias(job)"
+        />
+    </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { defineProps } from 'vue';
+import jobModel from '../../model/jobModel';
 
 // Define the props
 const props = defineProps({
@@ -48,21 +59,43 @@ const props = defineProps({
     span2: Object,
     textArea: Boolean,
     textAreaSaveBnt: String,
+    textAreaCancelBnt: String,
     noBoldText: Boolean,
+    jobs: Array,
+    job: Object,
+    language: String,
     removeBnt: {
         type: Boolean,
         default: false,
     }
 });
-const emit = defineEmits(['update:title', 'update:text', 'remove']);
+const emit = defineEmits(['update:title', 'update:text', 'remove', 'update-experiencias']);
 
 // Local state for editing
 const isEditingTitle = ref(false);
 const isEditingText = ref(false);
 const editableTitle = ref(props.title);
 const editableText = ref(props.text);
-const textAreaSave = ref(props.textAreaSaveBnt);
+const showEditing = ref(null);
 
+
+const updateExperiencias = (job) => {
+    this.jobs.forEach((each, index) => {
+        if (each.id === job.id) {
+        this.jobs[index] = job;
+        }
+    });
+    this.$emit("update-experiencias", this.jobs);
+}
+
+const getJobModel = (item) => {
+        const model = new jobModel();
+        return model.retrieveJob(item);
+}
+
+const editar = (val) => {
+    this.showEditing = val
+}
 
 // Methods to handle editing
 const editTitle = () => {
@@ -78,6 +111,10 @@ const saveTitle = () => {
 const editText = () => {
     isEditingText.value = true;
 };
+
+const cancelTextArea = () => {
+    isEditingText.value = false;
+}
 
 const saveText = () => {
     isEditingText.value = false;
@@ -123,6 +160,11 @@ const saveTextArea = () => {
     emit('update:text', { id: props.id, text: editableText.value });
 };
 
+const openModal = () => {
+    if(props.id >= 3000 && props.id <= 4000) {
+        emit('editarExperiencias');
+    }
+}
 
 const removeComponent = () => {
     emit('remove');
@@ -139,6 +181,29 @@ const removeComponent = () => {
     margin-top: -5px;
     border-radius: 8px;
 }
+
+.cancelEdit {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 35px;
+    border-radius: 8px;
+}
+
+.editWithModal {
+    padding: 5px;
+    background-color: black;
+    color: white;
+    position: absolute;
+    margin-left: 30px;
+    margin-top: -5px;
+    border-radius: 8px;
+    min-width: 40px;
+    text-align: center;
+}
+
 textarea {
     padding: 10px;
     border-radius: 8px;

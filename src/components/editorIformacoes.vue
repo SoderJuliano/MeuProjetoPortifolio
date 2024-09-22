@@ -222,8 +222,8 @@ export default {
                 this.ptitle = this.language == 'pt-br' ? 'Data de admicao' : 'Date when start to work here'
                 this.ptitle2 = this.language == 'pt-br' ? 'Data de demicao' : 'Date of your last day working here'
             }else{
-                this.userData.userExperiences[this.currentJobId].setDateHired($("#input-value-date1").val())
-                this.userData.userExperiences[this.currentJobId].setDateFired($("#input-value-date2").val())
+                this.userData?.userExperiences[this.currentJobId]?.setDateHired($("#input-value-date1").val())
+                this.userData?.userExperiences[this.currentJobId]?.setDateFired($("#input-value-date2").val())
                 //// console.log(this.userData.userExperiences[this.currentJobId])
                 // console.log(`$("#input-value-date1").val()`)
                 // console.log($("#input-value-date1").val())

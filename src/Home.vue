@@ -99,7 +99,7 @@
     </div>
     <div style="display: contents;" id="template">
       <template1
-        v-if="this.configs.getTemplate() == 1"
+        v-if="configs.getTemplate() == 1"
         :language="this.configs.getLanguage()"
         @update-user="updateUser"
         @local-update-user="updateUser"
@@ -129,7 +129,7 @@
         :user="user"
       />
       <template2
-        v-if="this.configs.getTemplate() == 2"
+        v-if="configs.getTemplate() == 2"
         :language="this.configs.getLanguage()"
         @add-info="addInfo"
         @add-resumo="editarResumo"
@@ -159,7 +159,7 @@
       />
       <Template3
         class="template"
-        v-if="this.configs.getTemplate() == 3"
+        v-if="configs.getTemplate() == 3"
         :user="user"
         :language="this.configs.getLanguage()"
         @updateUser="updateUser"
@@ -585,7 +585,6 @@ export default {
         }
     },
     adicionarExperiencias(experiencias) {
-      console.log(experiencias)
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
@@ -755,7 +754,7 @@ export default {
             ? "Write about you"
             : "Sobre voce";
           this.modal.placeholder1 = this.languageIsEN()
-            ? "Talk what kind of people you are"
+            ? "Talk what kind of person you are"
             : "Descreva que tipo de proficional voce e...";
           this.modal.list = this.user.competence;
 
