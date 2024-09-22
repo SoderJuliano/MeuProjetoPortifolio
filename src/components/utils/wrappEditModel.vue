@@ -6,14 +6,14 @@
         <div class="item" >
             <span>Position: </span><input id="position" type="text" :value="job?.position"  />
         </div>
-        <div v-if="job?.dateHired.length == 10" class="item">
+        <div v-if="job?.dateHired?.length == 10" class="item">
             <span>Date Start: </span><input type="date" :value="job?.dateHired" />
         </div>
         <div v-else class="item" >
             <span>Date start: </span><input id="dateStart" type="month" :value="job?.dateHired"  />
         </div>
 
-        <div v-if="job?.dateHired.length == 10" class="item" >
+        <div v-if="job?.dateHired?.length == 10" class="item" >
             <span>Date end: </span><input id="dateEnd" type="date" :value="job?.dateFired"  />
         </div>
         <div v-else class="item" >
@@ -23,8 +23,8 @@
             <span>Description: </span><textarea id="description" cols="40" rows="5" :value="job?.description"  />
         </div>
         <div class="div-bnts">
-            <button @click="updateExperiences">{{this.language.includes("pt") ? "Atualizar" : "Update"}}</button>
-            <button @click="editarEnd">{{this.language.includes("pt") ? "Fechar" : "Close"}}</button>
+            <button @click="updateExperiences">{{this.language?.includes("pt") ? "Atualizar" : "Update"}}</button>
+            <button @click="editarEnd">{{this.language?.includes("pt") ? "Fechar" : "Close"}}</button>
         </div>
     </div>
     <div v-if="job == null && text == null && data" class="wrapMain">

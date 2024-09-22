@@ -21,7 +21,7 @@
             />
             <span class="saveTextArea" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
             <span class="cancelEdit" @click="cancelTextArea">{{ textAreaCancelBnt ? textAreaSaveBnt : "cancel" }}</span>
-            <span class="editWithModal" @click="editar(job?.id)">{{ editAreaCancelBnt ? editAreaSaveBnt : "edit" }}</span>
+            <span class="editWithModal" @click="editar(job?.id)">{{ editAreaSaveBnt ? editAreaSaveBnt : "edit" }}</span>
         </div>
             <input v-else-if="!textArea && isEditingText"
                 type="text"
@@ -33,7 +33,7 @@
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
     </div>
-    <div v-if="showEditing == job?.id"   class="job-edit">
+    <div v-if="showEditing === job?.id"   class="job-edit">
         <wrappEditModel
             :job="getJobModel(job)"
             :language="language"
@@ -47,6 +47,7 @@
 import { ref } from 'vue';
 import { defineProps } from 'vue';
 import jobModel from '../../model/jobModel';
+import wrappEditModel from "../../components/utils/wrappEditModel.vue";
 
 // Define the props
 const props = defineProps({
@@ -85,7 +86,7 @@ const updateExperiencias = (job) => {
         this.jobs[index] = job;
         }
     });
-    this.$emit("update-experiencias", this.jobs);
+    emit("update-experiencias", this.jobs);
 }
 
 const getJobModel = (item) => {
@@ -94,7 +95,7 @@ const getJobModel = (item) => {
 }
 
 const editar = (val) => {
-    this.showEditing = val
+    showEditing.value = val
 }
 
 // Methods to handle editing

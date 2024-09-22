@@ -122,6 +122,7 @@
                 removeBnt="true"
                 :job="component.job"
                 :jobs="props.user?.userExperiences"
+                :language="props.language"
                 @update:title="updateTitle"
                 @update:text="updateText"
                 @remove="removeExperiencesComponents(index)"
@@ -353,11 +354,12 @@
             let innerText = ex.position ? "<b>"+ex.position+" - </b>" : "";
             innerText += ex.company ? "<b>"+ex.company+"</b><br/>" : "<br/>";
             innerText += ex.description ? ex.description : "";
+            const id = ex.id ? ex.id : index;
             experiencesComponents.value.push({
                 id: 3000 + index, // Generate ID starting from 3000
                 title: ex.dateHired ? ex.dateHired + ' - ' + ex.dateFired : isEnglish ? 'Add date' : 'Adicionar data',
                 text: innerText ? innerText : '',
-                job: ex || {},
+                job: { ...ex, id } || {},
                 norender: false
             });
         });
@@ -366,7 +368,9 @@
             id: 3000,
             title: '2020 - present',
             text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
-            job: {},
+            job: {
+                id: 0
+            },
             norender: false
         });
     }
@@ -377,7 +381,7 @@
             id: newId,
             title: '2020 - present',
             text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
-            job: {},
+            job: {id : newId},
             norender: false
         });
     };
