@@ -33,12 +33,13 @@
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
     </div>
-    <div v-if="showEditing === job?.id"   class="job-edit">
+    <div v-if="showEditing === job?.id" class="job-edit">
         <wrappEditModel
             :job="getJobModel(job)"
             :language="language"
+            :wrapMainCss="{ border: 'solid 1px black', width: '80%', 'margin-top': '-200px' }"
             @editar-end="editar"
-            @update-experiencias="updateExperiencias(job)"
+            @update-experiencias="updateExperiencias"
         />
     </div>
 </template>
@@ -78,20 +79,32 @@ const isEditingText = ref(false);
 const editableTitle = ref(props.title);
 const editableText = ref(props.text);
 const showEditing = ref(null);
+const experiencies = ref(props.jobs)
 
 
 const updateExperiencias = (job) => {
-    this.jobs.forEach((each, index) => {
-        if (each.id === job.id) {
-        this.jobs[index] = job;
-        }
-    });
-    emit("update-experiencias", this.jobs);
-}
+    console.log('experiencies.value', experiencies.value);
+    console.log("job que veio ", job);
+
+    // Check if experiencies.value is an array
+    if (Array.isArray(experiencies.value)) {
+        experiencies.value.forEach((each, index) => {
+            if (each.id === job.id) {
+                // Update the job in the experiencies array
+                experiencies.value[index] = job; // Use experiencies.value, not this.jobs
+            }
+        });
+    } else {
+        console.error("experiencies.value is not an array");
+    }
+
+    // Emit the updated array
+    emit("update-experiencias", experiencies.value);
+};
 
 const getJobModel = (item) => {
-        const model = new jobModel();
-        return model.retrieveJob(item);
+    const model = new jobModel();
+    return model.retrieveJob(item);
 }
 
 const editar = (val) => {
@@ -173,6 +186,19 @@ const removeComponent = () => {
 </script>
 
 <style scoped>
+span {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+.job-edit {
+    display: flex;
+    justify-content: center;
+}
+
 .saveTextArea {
     padding: 5px;
     background-color: black;

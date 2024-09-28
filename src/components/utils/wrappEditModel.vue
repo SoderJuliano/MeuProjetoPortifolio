@@ -1,5 +1,5 @@
 <template>
-    <div v-if="job" class="wrapMain" >
+    <div :style="wrapMainCss" v-if="job" class="wrapMain" >
         <div class="item" >
             <span>Comapny: </span><input id="company" type="text" :value="job?.company"  />
         </div>
@@ -62,7 +62,11 @@ export default {
         objeto: Object,
         textItem: String,
         textIndex: Number,
-        event: String
+        event: String,
+        wrapMainCss: {
+            type: Object,
+            default: () => ({})
+        }
     },
     emits: [
         "update-experiences", "editar-end",
@@ -87,6 +91,8 @@ export default {
             this.job.setDateHired($('#dateStart').val())
             this.job.setDateFired($('#dateEnd').val())
             this.job.setDescription($('#description').val())
+
+            console.log('before emit ', this.job)
             this.$emit("update-experiencias", this.job)
 
             setTimeout(() => {
@@ -126,6 +132,18 @@ export default {
 }
 </script>
 <style scoped >
+    input {
+        cursor: pointer;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    textarea {
+        cursor: pointer;
+    }
+
     .wrapMain {
         width: 92%;
         height: 100%;
@@ -176,6 +194,5 @@ export default {
         .wrapMain {
             width: 80vw;
         }
-        
     }
 </style>

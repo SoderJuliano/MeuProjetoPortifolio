@@ -349,31 +349,41 @@
 
     const experiencesComponents = ref([]);
 
-    if (props.user.userExperiences && props.user.userExperiences.length > 0) {
-        props.user.userExperiences.forEach((ex, index) => {
-            let innerText = ex.position ? "<b>"+ex.position+" - </b>" : "";
-            innerText += ex.company ? "<b>"+ex.company+"</b><br/>" : "<br/>";
-            innerText += ex.description ? ex.description : "";
-            const id = ex.id ? ex.id : index;
+    const updateUserExperiecies = (experiencies) => {
+        // Replace the whole array instead of mutating it
+        localUpdatedUser.userExperiences = [...experiencies];
+        emit('updateUser', { ...localUpdatedUser });
+    };
+
+    // Watch for changes in props.user.userExperiences
+    watch(() => props.user.userExperiences, (newExperiences) => {
+        experiencesComponents.value = []; // Reset the array
+        if (newExperiences && newExperiences.length > 0) {
+            newExperiences.forEach((ex, index) => {
+                let innerText = ex.position ? "<b>"+ex.position+" - </b>" : "";
+                innerText += ex.company ? "<b>"+ex.company+"</b><br/>" : "<br/>";
+                innerText += ex.description ? ex.description : "";
+                const id = ex.id ? ex.id : index;
+                experiencesComponents.value.push({
+                    id: 3000 + index,
+                    title: ex.dateHired ? ex.dateHired + ' - ' + ex.dateFired : isEnglish ? 'Add date' : 'Adicionar data',
+                    text: innerText ? innerText : '',
+                    job: { ...ex, id } || {},
+                    norender: false
+                });
+            });
+        } else {
             experiencesComponents.value.push({
-                id: 3000 + index, // Generate ID starting from 3000
-                title: ex.dateHired ? ex.dateHired + ' - ' + ex.dateFired : isEnglish ? 'Add date' : 'Adicionar data',
-                text: innerText ? innerText : '',
-                job: { ...ex, id } || {},
+                id: 3000,
+                title: '2020 - present',
+                text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
+                job: {
+                    id: 0
+                },
                 norender: false
             });
-        });
-    } else {
-        experiencesComponents.value.push({
-            id: 3000,
-            title: '2020 - present',
-            text: isEnglish ? '(click here) position - company ↵ description' : '(clicar aqui) cargo - empresa ↵ descricao',
-            job: {
-                id: 0
-            },
-            norender: false
-        });
-    }
+        }
+    }, { immediate: true }); // This will run on component mount as well
 
     const addExperiencesComponents = () => {
         const newId = 3000 + experiencesComponents.value.length;
@@ -384,6 +394,15 @@
             job: {id : newId},
             norender: false
         });
+        localUpdatedUser.userExperiences.push({
+            id: newId,
+            position: '',
+            company: '',
+            description: '',
+            dateHired: '',
+            dateFired: '',
+        })
+        emit('updateUser', { ...localUpdatedUser });
     };
 
     const removeExperiencesComponents = (index) => {
@@ -545,22 +564,12 @@
         emit('updateUser', localUpdatedUser);
     }, { deep: true });
 
-
-    const updateUserExperiecies = (experiencies) => {
-        console.log('tempolate3 novas experiencias', experiencies)
-        this.localUpdatedUser.userExperiences = experiencies;
-        emit('updateUser', localUpdatedUser);
-    }
-
     // educationComponents
     watch(() => localUpdatedUser.education, (newEducation, oldEducation) => {
         if (newEducation !== oldEducation) {
-            console.log("EDUCVATION foi alterado:", newEducation);
             emit('updateUser', localUpdatedUser);
         }
     });
-
-
 
     let base_css = {
             'margin-top': '10px',
