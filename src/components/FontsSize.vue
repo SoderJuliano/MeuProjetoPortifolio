@@ -179,6 +179,7 @@ p
 }
 
 .fonts-size-item .closeDiv {
+    position: relative;
     left: 0%;
 }
 

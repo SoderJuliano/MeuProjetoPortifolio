@@ -148,7 +148,6 @@ export default {
 }
 @media screen and(max-width: 1000px) {
     .fonts-container{
-        overflow: scroll;
         width: 100%;
         background-color: white;
     }
@@ -182,8 +181,6 @@ export default {
   justify-self: center;
   width: 100%;
   z-index: 1;
-  overflow-y: scroll;
-  overflow-x: hidden;
   padding: 15px;
   border-style: solid;
   border-color: black;

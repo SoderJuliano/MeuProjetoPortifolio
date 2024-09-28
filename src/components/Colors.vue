@@ -74,10 +74,10 @@ export default {
 <style>
 .closeDiv {
   text-align: center;
-  position: relative;
+  position: absolute;
   width: 40px;
   padding: 10px;
-  left: 70%;
+  left: 90%;
   border-radius: 5px;
   border: solid 1px black;
   font-size: 20px !important;

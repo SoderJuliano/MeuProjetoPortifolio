@@ -211,6 +211,7 @@ img:active
         background-color: whitesmoke;
         border-radius: 10px;
         cursor: pointer;
+        margin-left: 5px;
     }
 
     .tip-conteiner-content:hover #closer

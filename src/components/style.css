@@ -73,7 +73,6 @@ img {
         display: block;
         height: 400px;
         width: 250px;
-        overflow-y: scroll;
         justify-content: center;
     }
     .select-template{
@@ -98,8 +97,7 @@ img {
         border-radius: 5px;
     }
 
-    .dropdown-templates{
-        height: 200px;
+    .dropdown-templates {
         justify-content: space-around;
         width: 350px;
         margin-left: 15px;
