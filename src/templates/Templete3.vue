@@ -317,8 +317,8 @@
         props.user.grade.forEach((grade, index) => {
             educationComponents.value.push({
                 id: 2000 + index, // Generate ID starting from 2000
-                title: grade.length > 0 ? grade : 'Add education',
-                text: isEnglish ? 'Education' : 'Educação',
+                text: grade.length > 0 ? grade : 'Add education',
+                title: isEnglish ? '2020 - 2021' : '2020 - 2021',
                 norender: false
             });
         });
@@ -344,6 +344,7 @@
 
     const removeEducationComponent = (index) => {
         educationComponents.value.splice(index, 1);
+        localUpdatedUser.grade.splice(index, 1);
     };
 
 
@@ -464,7 +465,7 @@
             if (component) {
                 component.text = text;
             }
-            localUpdatedUser.education = educationComponents.value.map(c => c.text);
+            localUpdatedUser.grade = educationComponents.value.map(c => c.text);
         }
 
         if (!component) {
@@ -565,7 +566,7 @@
     }, { deep: true });
 
     // educationComponents
-    watch(() => localUpdatedUser.education, (newEducation, oldEducation) => {
+    watch(() => localUpdatedUser.grade, (newEducation, oldEducation) => {
         if (newEducation !== oldEducation) {
             emit('updateUser', localUpdatedUser);
         }
