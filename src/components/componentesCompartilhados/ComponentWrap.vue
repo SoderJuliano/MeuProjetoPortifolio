@@ -19,9 +19,9 @@
                 v-model="editableText"
                 @focus="$event.target.select()"
             />
-            <span class="saveTextArea" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
-            <span class="cancelEdit" @click="cancelTextArea">{{ textAreaCancelBnt ? textAreaSaveBnt : "cancel" }}</span>
-            <span class="editWithModal" @click="editar(job?.id)">{{ editAreaSaveBnt ? editAreaSaveBnt : "edit" }}</span>
+            <span class="saveTextArea experienciesOptionButton" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
+            <span class="cancelEdit experienciesOptionButton" @click="cancelTextArea">{{ textAreaCancelBnt ? textAreaSaveBnt : "cancel" }}</span>
+            <span class="editWithModal experienciesOptionButton" @click="editar(job?.id)">{{ editAreaSaveBnt ? editAreaSaveBnt : "edit" }}</span>
         </div>
             <input v-else-if="!textArea && isEditingText"
                 type="text"
@@ -38,6 +38,8 @@
             :job="getJobModel(job)"
             :language="language"
             :wrapMainCss="{ border: 'solid 1px black', width: '80%', 'margin-top': '-200px' }"
+            :areaCss="{ border: 'dashed 1px gray' }"
+            :inputCss="{ border: 'dashed 1px gray' }"
             @editar-end="editar"
             @update-experiencias="updateExperiencias"
         />
@@ -200,35 +202,30 @@ button {
 }
 
 .saveTextArea {
-    padding: 5px;
-    background-color: black;
-    color: white;
     position: absolute;
     margin-left: -20px;
     margin-top: -5px;
-    border-radius: 8px;
 }
 
 .cancelEdit {
-    padding: 5px;
-    background-color: black;
-    color: white;
     position: absolute;
     margin-left: -20px;
     margin-top: 35px;
-    border-radius: 8px;
 }
 
 .editWithModal {
+    position: absolute;
+    margin-left: 35px;
+    margin-top: -5px;
+}
+
+.experienciesOptionButton {
     padding: 5px;
     background-color: black;
-    color: white;
-    position: absolute;
-    margin-left: 30px;
-    margin-top: -5px;
-    border-radius: 8px;
-    min-width: 40px;
     text-align: center;
+    color: white;
+    border-radius: 8px;
+    width: 40px;
 }
 
 textarea {

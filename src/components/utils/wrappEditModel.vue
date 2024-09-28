@@ -1,10 +1,10 @@
 <template>
     <div :style="wrapMainCss" v-if="job" class="wrapMain" >
         <div class="item" >
-            <span>Comapny: </span><input id="company" type="text" :value="job?.company"  />
+            <span>Comapny: </span><input :style="inputCss" id="company" type="text" :value="job?.company"  />
         </div>
         <div class="item" >
-            <span>Position: </span><input id="position" type="text" :value="job?.position"  />
+            <span>Position: </span><input :style="inputCss" id="position" type="text" :value="job?.position"  />
         </div>
         <div v-if="job?.dateHired?.length == 10" class="item">
             <span>Date Start: </span><input type="date" :value="job?.dateHired" />
@@ -20,7 +20,7 @@
             <span>Date end: </span><input id="dateEnd" type="month" :value="job?.dateFired"  />
         </div>
         <div class="item" >
-            <span>Description: </span><textarea id="description" cols="40" rows="5" :value="job?.description"  />
+            <span>Description: </span><textarea :style="areaCss" id="description" cols="40" rows="5" :value="job?.description"  />
         </div>
         <div class="div-bnts">
             <button @click="updateExperiences">{{this.language?.includes("pt") ? "Atualizar" : "Update"}}</button>
@@ -66,7 +66,15 @@ export default {
         wrapMainCss: {
             type: Object,
             default: () => ({})
-        }
+        },
+        inputCss: {
+            type: Object,
+            default: () => ({})
+        },
+        areaCss: {
+            type: Object,
+            default: () => ({})
+        },
     },
     emits: [
         "update-experiences", "editar-end",

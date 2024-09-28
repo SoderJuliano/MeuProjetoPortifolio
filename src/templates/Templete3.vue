@@ -408,6 +408,8 @@
 
     const removeExperiencesComponents = (index) => {
         experiencesComponents.value.splice(index, 1);
+        localUpdatedUser.userExperiences.splice(index, 1);
+        emit('updateUser', localUpdatedUser);
     };
 
 
