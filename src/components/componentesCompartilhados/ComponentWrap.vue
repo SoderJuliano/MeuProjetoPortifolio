@@ -89,14 +89,17 @@ const updateExperiencias = (job) => {
     console.log("job que veio ", job);
 
     // Check if experiencies.value is an array
-    if (Array.isArray(experiencies.value)) {
+    if (Array.isArray(experiencies.value) && experiencies.value.length > 0) {
         experiencies.value.forEach((each, index) => {
             if (each.id === job.id) {
                 // Update the job in the experiencies array
                 experiencies.value[index] = job; // Use experiencies.value, not this.jobs
             }
         });
-    } else {
+    } else if (Array.isArray(experiencies.value) && experiencies.value.length == 0) {
+        experiencies.value.push(job);
+    }
+    else {
         console.error("experiencies.value is not an array");
     }
 
@@ -110,6 +113,7 @@ const getJobModel = (item) => {
 }
 
 const editar = (val) => {
+    cancelTextArea();
     showEditing.value = val
 }
 

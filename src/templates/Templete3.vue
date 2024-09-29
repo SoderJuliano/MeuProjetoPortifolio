@@ -380,9 +380,10 @@
                 innerText += ex.company ? "<b>"+ex.company+"</b><br/>" : "<br/>";
                 innerText += ex.description ? ex.description : "";
                 const id = ex.id ? ex.id : index;
+                const dataFiredContent = ex.dateFired ? ex.dateFired : isEnglish ? "current job" : "trabalho atual"
                 experiencesComponents.value.push({
                     id: 3000 + index,
-                    title: ex.dateHired ? ex.dateHired + ' - ' + ex.dateFired : isEnglish ? 'Add date' : 'Adicionar data',
+                    title: ex.dateHired ? ex.dateHired + ' - ' + dataFiredContent : isEnglish ? 'Add date' : 'Adicionar data',
                     text: innerText ? innerText : '',
                     job: { ...ex, id } || {},
                     norender: false
