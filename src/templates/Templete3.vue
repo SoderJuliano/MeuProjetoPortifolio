@@ -313,17 +313,19 @@
     const educationComponents = ref([]);
 
     if (props.user.grade && props.user.grade.length > 0) {
-        // Iterate over the grade array and push components into educationComponents
+        // Itera sobre o array de grades e empurra componentes para educationComponents
         props.user.grade.forEach((grade, index) => {
+            const ano = extrairDatas(grade);
+            const textoSemDatas = removerDatas(grade); // Remove datas do texto
+
             educationComponents.value.push({
-                id: 2000 + index, // Generate ID starting from 2000
-                text: grade.length > 0 ? grade : 'Add education',
-                title: isEnglish ? '2020 - 2021' : '2020 - 2021',
+                id: 2000 + index, // Gera ID começando de 2000
+                text: textoSemDatas.length > 0 ? textoSemDatas : isEnglish ? 'Add education' : 'Adicionar educação',
+                title: ano != null ? ano.anoInicio + ' - ' + ano.anoFim : '2020 - 2021',
                 norender: false
             });
         });
     } else {
-        // Add a default component if the grade array is empty
         educationComponents.value.push({
             id: 2000,
             title: '2020 - 2024',
@@ -343,10 +345,23 @@
     };
 
     const removeEducationComponent = (index) => {
+        alert(index)
         educationComponents.value.splice(index, 1);
         localUpdatedUser.grade.splice(index, 1);
+        emit('updateUser', localUpdatedUser)
     };
 
+    // educationComponents
+    watch(() => localUpdatedUser.grade, (newEducation, oldEducation) => {
+        if (newEducation !== oldEducation) {
+            emit('updateUser', localUpdatedUser);
+        }
+    });
+
+    const updateLocalUserGradeData = (index, title, text) => {
+        localUpdatedUser.grade[index] = title + ' ' + text;
+        emit('updateUser', localUpdatedUser);
+    }
 
     const experiencesComponents = ref([]);
 
@@ -433,27 +448,33 @@
     };
 
     const updateTitle = ({ id, title }) => {
-        // Find the corresponding component (education or experience)
+        // Encontre o componente correspondente (educação ou experiência)
         let component = additionalComponents.value.find(c => c.id === Number(id))
             || educationComponents.value.find(c => c.id === Number(id))
             || experiencesComponents.value.find(c => c.id === Number(id));
 
-        // Parse the title into start and end dates (e.g., "2024-09 - 2024-10")
-        const [dateHired, dateFired] = title.split(' - ');
-
-        // If component found, update the title
+        // Se um componente foi encontrado
         if (component) {
+            // Atualiza o título do componente
             component.title = title;
 
-            // Update localUpdatedUser based on the component ID
+            // Parseie o título em datas de início e fim (ex: "2024-09 - 2024-10")
+            const [dateHired, dateFired] = title.split(' - ');
+
+            // Atualiza localUpdatedUser com base no ID do componente
             const experience = localUpdatedUser.userExperiences.find(ex => 3000 + ex.id === component.id);
             if (experience) {
                 experience.dateHired = dateHired ? dateHired.trim() : experience.dateHired;
                 experience.dateFired = dateFired ? dateFired.trim() : experience.dateFired;
             }
+
+            // Se o componente for do tipo educação, atualize o texto da grade
+            if (educationComponents.value.some(c => c.id === Number(id))) {
+                const index = component.id - 2000; // Calcule o índice correto
+                updateLocalUserGradeData(index, title, component.text);
+            }
         }
     };
-
     const updateText = ({ id, text }) => {
         let component = additionalComponents.value.find(c => c.id === Number(id));
 
@@ -467,7 +488,7 @@
             if (component) {
                 component.text = text;
             }
-            localUpdatedUser.grade = educationComponents.value.map(c => c.text);
+            localUpdatedUser.grade = educationComponents.value.map(c => `${c.title} ${c.text}`);
         }
 
         if (!component) {
@@ -518,7 +539,7 @@
                     // If no matching experience is found, add a new one
                     localUpdatedUser.userExperiences.push({
                         ...updatedExperience,
-                        id: component.id - 3000 // Make sure to align the id logic with your structure
+                        id: component.id - 3000
                     });
                 }
             }
@@ -527,7 +548,6 @@
         if (!component) {
             console.error(`Component with id ${id} not found.`);
         } else {
-            console.log('sending update user from text update method');
             emit('updateUser', localUpdatedUser);
         }
     };
@@ -567,12 +587,6 @@
         emit('updateUser', localUpdatedUser);
     }, { deep: true });
 
-    // educationComponents
-    watch(() => localUpdatedUser.grade, (newEducation, oldEducation) => {
-        if (newEducation !== oldEducation) {
-            emit('updateUser', localUpdatedUser);
-        }
-    });
 
     let base_css = {
             'margin-top': '10px',
@@ -589,6 +603,36 @@
             'font-size': '18px'
         }
     let span2 = {'width': '70%', 'text-align': 'start', 'font-size': '18px'}
+
+
+    function extrairDatas(texto) {
+        // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
+        const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})?/;
+
+        // Executa a RegEx no texto fornecido
+        const resultado = texto.match(regex);
+
+        // Se o regex encontrar datas, extrair as duas partes (ano inicial e final)
+        if (resultado) {
+            const anoInicio = resultado[1]; // Primeiro grupo de captura (primeiro ano)
+            const anoFim = resultado[2] || null; // Segundo grupo de captura (segundo ano), pode ser nulo
+
+            return {
+                anoInicio,
+                anoFim
+            };
+        }
+
+        // Retorna null se não encontrar datas
+        return null;
+    }
+
+    function removerDatas(texto) {
+        // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
+        const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})? ?/g;
+        // Substitui as datas por uma string vazia
+        return texto.replace(regex, '').trim(); // Remove as datas e espaços extras
+    }
 </script>
 
 <style scoped>
