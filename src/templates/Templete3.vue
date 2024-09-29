@@ -405,7 +405,7 @@
     }, { immediate: true }); // This will run on component mount as well
 
     const addExperiencesComponents = () => {
-        const newId = 3000 + experiencesComponents.value.length;
+        const newId = generateNewId();
         experiencesComponents.value.push({
             id: newId,
             title: '2020 - present',
@@ -422,6 +422,18 @@
             dateFired: '',
         })
         emit('updateUser', { ...localUpdatedUser });
+    };
+
+    const generateNewId = () => {
+        // Começa com o ID base
+        let newId = experiencesComponents.value.length;
+
+        // Verifica se o ID já existe na lista
+        while (localUpdatedUser.userExperiences.some(component => component.id === newId)) {
+            newId++; // Incrementa o ID até encontrar um disponível
+        }
+
+        return newId + 3000; // Retorna o novo ID disponível
     };
 
     const removeExperiencesComponents = (index) => {
