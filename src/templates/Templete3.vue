@@ -345,7 +345,6 @@
     };
 
     const removeEducationComponent = (index) => {
-        alert(index)
         educationComponents.value.splice(index, 1);
         localUpdatedUser.grade.splice(index, 1);
         emit('updateUser', localUpdatedUser)
@@ -366,8 +365,11 @@
     const experiencesComponents = ref([]);
 
     const updateUserExperiecies = (experiencies) => {
-        // Replace the whole array instead of mutating it
         localUpdatedUser.userExperiences = [...experiencies];
+
+        // precisa garantir reatividade
+        Object.assign(localUpdatedUser, { userExperiences: [...experiencies] });
+
         emit('updateUser', { ...localUpdatedUser });
     };
 
@@ -527,7 +529,6 @@
 
                 const strippedTextParts = text.includes('<br/>') ? text.split('<br/>') : text.split('<br />');
                 if(strippedTextParts.length < 2) {
-                    console.log(strippedTextParts)
                     updatedExperience = {
                         position: '',
                         company: '',

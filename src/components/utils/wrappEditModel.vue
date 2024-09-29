@@ -100,7 +100,6 @@ export default {
             this.job.setDateFired($('#dateEnd').val())
             this.job.setDescription($('#description').val())
 
-            console.log('before emit ', this.job)
             this.$emit("update-experiencias", this.job)
 
             setTimeout(() => {

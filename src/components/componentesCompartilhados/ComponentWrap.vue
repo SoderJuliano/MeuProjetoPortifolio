@@ -85,15 +85,17 @@ const experiencies = ref(props.jobs)
 
 
 const updateExperiencias = (job) => {
-    console.log('experiencies.value', experiencies.value);
-    console.log("job que veio ", job);
-
     // Check if experiencies.value is an array
     if (Array.isArray(experiencies.value) && experiencies.value.length > 0) {
         experiencies.value.forEach((each, index) => {
-            if (each.id === job.id) {
-                // Update the job in the experiencies array
-                experiencies.value[index] = job; // Use experiencies.value, not this.jobs
+            console.log('each', each)
+            if (each.id === job.id || each.id === job.id - 3000) {
+                let updatedJob = { ...job };
+                // Preserva o id original do item no array
+                updatedJob.id = experiencies.value[index].id;
+                console.log('updatedJob ', updatedJob);
+                // Atualiza o item no array com o novo job
+                experiencies.value[index] = updatedJob;
             }
         });
     } else if (Array.isArray(experiencies.value) && experiencies.value.length == 0) {
@@ -103,7 +105,7 @@ const updateExperiencias = (job) => {
         console.error("experiencies.value is not an array");
     }
 
-    // Emit the updated array
+    console.log('antes do emil do array ', experiencies.value)
     emit("update-experiencias", experiencies.value);
 };
 
