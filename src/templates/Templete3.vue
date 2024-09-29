@@ -411,7 +411,7 @@
             norender: false
         });
         localUpdatedUser.userExperiences.push({
-            id: newId,
+            id: newId - 3000,
             position: '',
             company: '',
             description: '',
@@ -448,33 +448,54 @@
     };
 
     const updateTitle = ({ id, title }) => {
-        // Encontre o componente correspondente (educação ou experiência)
+        // Find the corresponding component (education or experience)
         let component = additionalComponents.value.find(c => c.id === Number(id))
             || educationComponents.value.find(c => c.id === Number(id))
             || experiencesComponents.value.find(c => c.id === Number(id));
 
-        // Se um componente foi encontrado
-        if (component) {
-            // Atualiza o título do componente
-            component.title = title;
+            if (component) {
+                // Update the title of the component
+                component.title = title;
 
-            // Parseie o título em datas de início e fim (ex: "2024-09 - 2024-10")
-            const [dateHired, dateFired] = title.split(' - ');
+                let dateHired = null;
+                let dateFired = null;
 
-            // Atualiza localUpdatedUser com base no ID do componente
-            const experience = localUpdatedUser.userExperiences.find(ex => 3000 + ex.id === component.id);
-            if (experience) {
-                experience.dateHired = dateHired ? dateHired.trim() : experience.dateHired;
-                experience.dateFired = dateFired ? dateFired.trim() : experience.dateFired;
-            }
+                // Determine the date format from the title
+                if (title.includes(' - ')) {
+                    // Format: "2024-01 - 2024-11" or "2020 - 2021"
+                    [dateHired, dateFired] = title.split(' - ').map(date => date.trim());
+                } else if (title.includes('-')) {
+                    // Format: "2020 - current job" or "2020 - trabalho atual"
+                    const parts = title.split('-').map(part => part.trim());
+                    dateHired = parts[0];  // The starting year
+                    dateFired = null;       // Set dateFired to null for current jobs
+                } else {
+                    // Single year or job description
+                    dateHired = title.trim();
+                    dateFired = null; // No end date if only a single year or current job
+                }
 
-            // Se o componente for do tipo educação, atualize o texto da grade
+                // Update localUpdatedUser based on the component ID
+                const experienceIndex = localUpdatedUser.userExperiences.findIndex(ex => ex.id === component.id - 3000);
+                if (experienceIndex !== -1) {
+                    // Update the existing experience
+                    localUpdatedUser.userExperiences[experienceIndex].dateHired = dateHired || localUpdatedUser.userExperiences[experienceIndex].dateHired; // Update only if a new value is present
+                    localUpdatedUser.userExperiences[experienceIndex].dateFired = dateFired; // Set to null to indicate current job
+                    // Emit the updated user
+                    emit('updateUser', localUpdatedUser);
+                } else {
+                    console.warn('Experience not found:', component.id);
+                }
+
+            // If the component is of type education, update the text in the grade
             if (educationComponents.value.some(c => c.id === Number(id))) {
-                const index = component.id - 2000; // Calcule o índice correto
+                const index = component.id - 2000; // Calculate the correct index
                 updateLocalUserGradeData(index, title, component.text);
             }
         }
     };
+
+
     const updateText = ({ id, text }) => {
         let component = additionalComponents.value.find(c => c.id === Number(id));
 
