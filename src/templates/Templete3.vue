@@ -211,6 +211,20 @@
             @remove="removeComponent(index)"
         />
 
+        <div v-for="(item, index) in props.user?.otherInfos" :key="index">
+            <ComponentWrap
+                :id="index"
+                :title="item?.split(';')[0] || 'Title'"
+                :text="item?.split(';')[1] || 'Text'"
+                otherInfosUpdate="true"
+                removeBnt="true"
+                :css="{ ...base_css, 'display': 'flex' }"
+                @remove="removeOtherInfosText(index)"
+                @other-infos:title="otherInfosTitleUpdate"
+                @other-infos:text="otherInfosTextUpdate"
+            />
+        </div>
+
         <!-- Plus icon to add more ComponentWraps -->
         <div @click="addComponent" class="plus-icon">+</div>
         <div class="footer"></div>
@@ -286,8 +300,10 @@
         },
         {
             id: 1009,
-            title: isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
-            text: isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
+            title: props?.user?.otherExperiencies?.title ? props.user.otherExperiencies.title :
+            isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
+            text: props?.user?.otherExperiencies?.text ? props?.user?.otherExperiencies?.text :
+            isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
             norender: true
         },
         {
@@ -445,11 +461,13 @@
 
     // Function to add a new ComponentWrap instance
     const addComponent = () => {
-        additionalComponents.value.push({
-            id: additionalComponents.value.length + 1,
-            text: "New Text Here",
-            title: "New Title Here"
-        });
+        // additionalComponents.value.push({
+        //     id: additionalComponents.value.length + 1,
+        //     text: "New Text Here",
+        //     title: "New Title Here"
+        // });
+        localUpdatedUser.otherInfos.push("title;text");
+        emit('updateUser', localUpdatedUser);
     };
 
     const getById = (id) => {
@@ -462,6 +480,13 @@
         }
     };
 
+    const removeOtherInfosText = (index) => {
+        if(index !== undefined && localUpdatedUser.otherInfos.length > index) {
+            localUpdatedUser.otherInfos.splice(index, 1);
+            emit('updateUser', localUpdatedUser);
+        }
+    }
+
     const updateTitle = ({ id, title }) => {
         // Find the corresponding component (education or experience)
         let component = additionalComponents.value.find(c => c.id === Number(id))
@@ -471,6 +496,10 @@
             if (component) {
                 // Update the title of the component
                 component.title = title;
+
+                if(Number(id) === 1009) {
+                    localUpdatedUser.otherExperiencies.title = title;
+                }
 
                 let dateHired = null;
                 let dateFired = null;
@@ -516,6 +545,10 @@
 
         if (component) {
             component.text = text;
+
+            if (Number(id) === 1009) {
+                localUpdatedUser.otherExperiencies.text = text;
+            }
         }
 
         // If not found, try to find it in educationComponents
@@ -667,6 +700,28 @@
         const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})? ?/g;
         // Substitui as datas por uma string vazia
         return texto.replace(regex, '').trim(); // Remove as datas e espaços extras
+    }
+
+    const otherInfosTitleUpdate = (updateItem) => {
+        const bkText = localUpdatedUser.otherInfos[updateItem.index];
+        const parts = bkText.split(';');
+        if( parts.length > 1) {
+            localUpdatedUser.otherInfos[updateItem.index] = updateItem.value + ';' + parts[1];
+        }else {
+            localUpdatedUser.otherInfos[updateItem.index] = updateItem.value + ';';
+        }
+        emit('updateUser', localUpdatedUser);
+    }
+
+    const otherInfosTextUpdate = (updateItem) => {
+        const bkText = localUpdatedUser.otherInfos[updateItem.index];
+        const parts = bkText.split(';');
+        if( parts.length > 1) {
+            localUpdatedUser.otherInfos[updateItem.index] = parts[0] + ';' +updateItem.value;
+        }else {
+            localUpdatedUser.otherInfos[updateItem.index] = ';' + updateItem.value;
+        }
+        emit('updateUser', localUpdatedUser);
     }
 </script>
 

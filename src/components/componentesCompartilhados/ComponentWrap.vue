@@ -71,9 +71,18 @@ const props = defineProps({
     removeBnt: {
         type: Boolean,
         default: false,
+    },
+    otherInfosUpdate: {
+        type: Boolean,
+        default: false
     }
 });
-const emit = defineEmits(['update:title', 'update:text', 'remove', 'update-experiencias']);
+const emit = defineEmits(['update:title',
+    'update:text',
+    'remove',
+    'update-experiencias',
+    'other-infos:title',
+    'other-infos:text']);
 
 // Local state for editing
 const isEditingTitle = ref(false);
@@ -82,7 +91,6 @@ const editableTitle = ref(props.title);
 const editableText = ref(props.text);
 const showEditing = ref(null);
 const experiencies = ref(props.jobs)
-
 
 const updateExperiencias = (job) => {
     // Check if experiencies.value is an array
@@ -126,8 +134,11 @@ const editTitle = () => {
 
 const saveTitle = () => {
     isEditingTitle.value = false;
-    console.log("'update:title', { id: props.id, title: editableTitle.value }", { id: props.id, title: editableTitle.value })
-    emit('update:title', { id: props.id, title: editableTitle.value });
+    if(props.otherInfosUpdate) {
+        emit('other-infos:title', { index: props.id, value: editableTitle.value });
+    }else {
+        emit('update:title', { id: props.id, title: editableTitle.value });
+    }
 };
 
 const editText = () => {
@@ -140,6 +151,9 @@ const cancelTextArea = () => {
 
 const saveText = () => {
     isEditingText.value = false;
+    if(props.otherInfosUpdate) {
+        emit('other-infos:text', { index: props.id, value: editableTitle.value });
+    }
     emit('update:text', { id: props.id, text: editableText.value });
 };
 

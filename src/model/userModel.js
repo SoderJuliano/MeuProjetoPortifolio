@@ -30,7 +30,11 @@ export default class User {
         level: "",
         details: ""
     }
-    otherInfos = ""
+    otherInfos = [];
+    otherExperiencies = {
+        title: '',
+        text: ''
+    };
 
     getNameFromLocalStorage() {
         let name = "";
@@ -117,6 +121,7 @@ export default class User {
         this.realImg = user.realImg;
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
+        this.otherInfos = user.otherInfos;
         this.setName(user.name);
     }
 
