@@ -1,5 +1,14 @@
 <template>
-    <div class="component" :class="{'block-layout': block}" :style="css">
+    <!-- listOfStrigs -->
+    <div class="component" :style="css" v-if="editableList.length">
+        <div class="listTitle" :style="listTitleCss">{{ listTitle || 'Lista' }}</div>
+        <div class="list" :style="listCss" v-for="(item, index) in editableList" :key="index">
+            <p style="width: 100%;" v-if="!isEditing[index]" @click="editItem(index)">{{ item }}</p>
+            <input v-else v-model="editableList[index]" @blur="saveItem(index)" @keyup.enter="saveItem(index)" />
+        </div>
+    </div>
+<!-- Non lists -->
+    <div v-else class="component" :class="{'block-layout': block}" :style="css">
         <div class="span1" :style="span1">
             <span v-if="!isEditingTitle" @click="editTitle">{{ title }}</span>
             <input @focus="$event.target.select()"
@@ -21,7 +30,7 @@
             />
             <span class="saveTextArea experienciesOptionButton" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
             <span class="cancelEdit experienciesOptionButton" @click="cancelTextArea">{{ textAreaCancelBnt ? textAreaSaveBnt : "cancel" }}</span>
-            <span class="editWithModal experienciesOptionButton" @click="editar(job?.id)">{{ editAreaSaveBnt ? editAreaSaveBnt : "edit" }}</span>
+            <span v-if="job" class="editWithModal experienciesOptionButton" @click="editar(job?.id)">{{ editAreaSaveBnt ? editAreaSaveBnt : "edit" }}</span>
         </div>
             <input v-else-if="!textArea && isEditingText"
                 type="text"
@@ -35,6 +44,7 @@
     </div>
     <div v-if="showEditing === job?.id" class="job-edit">
         <wrappEditModel
+            v-if="job"
             :job="getJobModel(job)"
             :language="language"
             :wrapMainCss="{ border: 'solid 1px black', width: '80%', 'margin-top': '-200px' }"
@@ -47,7 +57,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { defineProps } from 'vue';
 import jobModel from '../../model/jobModel';
 import wrappEditModel from "../../components/utils/wrappEditModel.vue";
@@ -75,14 +85,42 @@ const props = defineProps({
     otherInfosUpdate: {
         type: Boolean,
         default: false
-    }
+    },
+    listOfStrings: {
+        type: Array,
+        default: () => []
+    },
+    listTitle: String,
+    listTitleCss: Object,
+    listCss: Object
 });
+
+
+
 const emit = defineEmits(['update:title',
     'update:text',
     'remove',
     'update-experiencias',
     'other-infos:title',
-    'other-infos:text']);
+    'other-infos:text',
+    'updated-list'
+]);
+
+// Lists update
+const editableList = ref([...props.listOfStrings]);
+const isEditing = ref(props.listOfStrings.map(() => false));
+const editItem = (index) => {
+    isEditing.value[index] = true;
+};
+const saveItem = (index) => {
+    isEditing.value[index] = false;
+    emit('updated-list', editableList.value);
+};
+
+watch(() => props.listOfStrings, (newList) => {
+  editableList.value = [...newList];
+});
+// Lists update finish
 
 // Local state for editing
 const isEditingTitle = ref(false);
@@ -152,7 +190,7 @@ const cancelTextArea = () => {
 const saveText = () => {
     isEditingText.value = false;
     if(props.otherInfosUpdate) {
-        emit('other-infos:text', { index: props.id, value: editableTitle.value });
+        emit('other-infos:text', { index: props.id, value: editableText.value });
     }
     emit('update:text', { id: props.id, text: editableText.value });
 };
@@ -208,6 +246,10 @@ const removeComponent = () => {
 </script>
 
 <style scoped>
+.list:not(:first-child) {
+    margin-left: 30%;
+}
+
 span {
     cursor: pointer;
 }
@@ -308,6 +350,13 @@ input {
     }
     .remove-button {
         display: none;
+    }
+
+    /* Corrige os 7% a mais que é colocado no modo normal
+    se não retirar o texto fica deslocado quando imprime
+    */
+    .span2 {
+        margin-left: 0% !important;
     }
 }
 </style>

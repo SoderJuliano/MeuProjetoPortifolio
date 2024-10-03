@@ -171,16 +171,12 @@
         />
         <ComponentWrap
             id="1011"
-            :text="getById(1011).text"
-            :title="getById(1011).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            noBoldText="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+            :css="{ ...base_css, 'display': 'flex', 'flex-wrap': 'wrap', 'margin-top': '20px', 'margin-bottom': '30px' }"
+            :listCss="{'width': '70%', 'height': '30px', 'text-align': 'start', 'color': 'black', 'display': 'block'}"
+            :listTitleCss="{'width': '25%', 'height': '100%', 'text-align': 'start', 'font-weight': 'bold'}"
+            :listTitle="isEnglish ? 'Competences' : 'Competências'"
+            :listOfStrings="props.user?.competence"
+            @updated-list="updateCompetence"
         />
         <ComponentWrap
             id="1012"
@@ -214,10 +210,12 @@
         <div v-for="(item, index) in props.user?.otherInfos" :key="index">
             <ComponentWrap
                 :id="index"
-                :title="item?.split(';')[0] || 'Title'"
-                :text="item?.split(';')[1] || 'Text'"
+                :title="item?.split(';')[0] || ''"
+                :text="item?.split(';')[1] || ''"
                 otherInfosUpdate="true"
                 removeBnt="true"
+                :span1="span1"
+                :span2="{...span2, 'margin-left': '7%'}"
                 :css="{ ...base_css, 'display': 'flex' }"
                 @remove="removeOtherInfosText(index)"
                 @other-infos:title="otherInfosTitleUpdate"
@@ -312,12 +310,12 @@
             text: isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.',
             norender: true
         },
-        {
-            id: 1011,
-            title: isEnglish ? 'Other skills' : 'Outras habilidades',
-            text: isEnglish ? 'ex. Team work.' : 'exemplo, trabalho em time.',
-            norender: true
-        },
+        // {
+        //     id: 1011,
+        //     title: isEnglish ? 'Other skills' : 'Outras habilidades',
+        //     text: isEnglish ? 'ex. Team work.' : 'exemplo, trabalho em time.',
+        //     norender: true
+        // },
         {
             id: 1012,
             title: isEnglish ? 'Personal' : 'Pessoal',
@@ -717,10 +715,16 @@
         const bkText = localUpdatedUser.otherInfos[updateItem.index];
         const parts = bkText.split(';');
         if( parts.length > 1) {
-            localUpdatedUser.otherInfos[updateItem.index] = parts[0] + ';' +updateItem.value;
+            localUpdatedUser.otherInfos[updateItem.index] = parts[0] + ';' + updateItem.value;
         }else {
             localUpdatedUser.otherInfos[updateItem.index] = ';' + updateItem.value;
         }
+        emit('updateUser', localUpdatedUser);
+    }
+
+
+    const updateCompetence = (updatedList) => {
+        localUpdatedUser.competence = updatedList;
         emit('updateUser', localUpdatedUser);
     }
 </script>

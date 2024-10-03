@@ -122,6 +122,7 @@ export default class User {
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
         this.otherInfos = user.otherInfos;
+        this.otherExperiencies = user.otherExperiencies;
         this.setName(user.name);
     }
 
