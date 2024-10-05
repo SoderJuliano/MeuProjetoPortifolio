@@ -285,7 +285,7 @@ export default {
         contact: {
           email: [],
           phone: [],
-          adress: "",
+          address: "",
         },
         userExperiences: [],
       },

@@ -126,7 +126,7 @@ export function saveUserInfosInDataBase(user, newUser) {
       "contact": {
         "email": emails,
         "phone": phoneNumbers,
-        "address": {
+        "adressObject": {
           "country": user?.contact?.adressObject?.country,
           "state": user?.contact?.adressObject?.state,
           "city": user?.contact?.adressObject?.city,
@@ -134,7 +134,7 @@ export function saveUserInfosInDataBase(user, newUser) {
           "number": user?.contact?.adressObject?.number,
           "district": user?.contact?.adressObject?.district
         },
-        "adressAsString": user?.contact?.addressObject ? JSON.stringify(user.contact.addressObject) : null,
+        "address": user?.contact?.address ? user?.contact?.address : null,
       },
     }
 
