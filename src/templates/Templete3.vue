@@ -252,7 +252,10 @@
         {
             id: 1001,
             title:null,
-            text: props.user.contact.adress ? props.user.contact?.adress : isEnglish ? 'Your adress: Type in here' : 'Seu endereço: Digite aqui',
+            text: props.user.contact.address ?
+                props.user.contact?.address : isEnglish ?
+                'Your address: Type in here' :
+                'Seu endereço: Digite aqui',
             norender: true
         },
         {
@@ -537,6 +540,73 @@
         }
     };
 
+    const updateAddress = (text) => {
+        // Inicializa o objeto adressObject se ele não existir
+        if (!localUpdatedUser.contact.adressObject) {
+            localUpdatedUser.contact.adressObject = {
+                street: '',
+                number: '',
+                district: '',
+                city: '',
+                state: '',
+                country: ''
+            };
+        }
+
+        let address = localUpdatedUser.contact.adressObject;
+
+        // Usa regex para capturar o número (primeira sequência de dígitos no texto)
+        const numberMatch = text.match(/\d+/);
+        if (numberMatch) {
+            address.number = numberMatch[0]; // Captura o número
+        }
+
+        // Remove espaços extras e divide por vírgulas, hífens, ponto final ou ponto e vírgula
+        let parts = text.split(/,| - |\.|;/).map(part => part.trim());
+
+        parts.forEach((part, index) => {
+            part = part.trim(); // Limpar espaços em branco
+
+            // Verifica se é rua/avenida
+            if (part.toLowerCase().includes('rua') || part.toLowerCase().includes('street') ||
+                part.toLowerCase().includes('avenida') || part.toLowerCase().includes('avenue') ||
+                part.toLowerCase().includes('av.')) {
+                address.street = part.replace(/\d+/, '').trim(); // Remove o número da rua
+            }
+
+            // Verifica se é bairro/distrito. Evita confundir com o número ou cidade/estado
+            if (part.toLowerCase().includes('bairro') || part.toLowerCase().includes('district') ||
+                (!part.match(/\d+/) && !part.toLowerCase().includes('rua') && !part.toLowerCase().includes('avenida') &&
+                !part.includes(' - ') && index > 0 && index < parts.length - 2)) {
+                address.district = part;
+            }
+
+            // Verifica cidade e estado juntos (último segmento após o último hífen)
+            if (index === parts.length - 2 && part.includes(" - ")) {
+                let [city, state] = part.split(" - ");
+                address.city = city.trim();
+                address.state = state.trim();
+            }
+
+            // Verifica estado (quando isolado e abreviado)
+            if (part.length === 2 && /^[A-Z]{2}$/.test(part)) {
+                address.state = part;
+            }
+
+            // Verifica se é país (última parte ou seguido por ponto final/ponto e vírgula)
+            if (index === parts.length - 1 && (part.toLowerCase().includes('brasil') || part.toLowerCase().includes('country'))) {
+                address.country = part;
+            }
+        });
+
+        // Atualiza o campo de endereço com o texto original
+        localUpdatedUser.contact.address = text;
+        // Atualiza o objeto de endereço completo
+        localUpdatedUser.contact.adressObject = address;
+
+        // Emite o evento com o usuário atualizado
+        emit('updateUser', localUpdatedUser);
+    };
 
     const updateText = ({ id, text }) => {
         let component = additionalComponents.value.find(c => c.id === Number(id));
@@ -546,6 +616,8 @@
 
             if (Number(id) === 1009) {
                 localUpdatedUser.otherExperiencies.text = text;
+            }else if (Number(id) === 1001) {
+                updateAddress(text);
             }
         }
 
@@ -630,7 +702,7 @@
                     localUpdatedUser.name = component.text;
                     break;
                 case 1001:
-                    localUpdatedUser.contact.adress = component.text;
+                    localUpdatedUser.contact.address = component.text;
                     break;
                 case 1002:
                     localUpdatedUser.contact.phone[0] = component.text;

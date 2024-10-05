@@ -120,7 +120,7 @@ export function saveUserInfosInDataBase(user, newUser) {
       "competence": user.competence,
       "social": user.social,
       "grade": user.grade,
-      "ability": user.ability,
+      "ability": user.hability,
       "avatarImg": user.avatarImg,
       "realImg": user.realImg,
       "contact": {

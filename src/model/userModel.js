@@ -14,7 +14,7 @@ export default class User {
     contact = {
         email : [],
         phone : [],
-        adress : "",
+        address : "",
         adressObject : {
             country : "",
             state : "",
