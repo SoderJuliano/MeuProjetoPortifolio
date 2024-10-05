@@ -48,9 +48,10 @@ export default {
             const headers = {
                 'Content-Type': 'application/json',
             };
+            const isDragoniteTip = index > 6 || item.content.includes("[en]")
             let data = {
                 "id": String(item.id),
-                "key": index > 6 ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
+                "key": isDragoniteTip ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
             };
             if (item.appUrl) {
                 data.appUrl = String(item.appUrl);
