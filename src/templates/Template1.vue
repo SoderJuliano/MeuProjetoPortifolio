@@ -113,7 +113,7 @@ export default {
 }
 </script>
 <style scoped>
-@media screen and (min-width: 1001px){
+@media screen and (min-width: 1300px){
   .custom-container{
     width: 70%;
     justify-content: start;

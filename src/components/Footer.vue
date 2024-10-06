@@ -8,7 +8,9 @@
         @click="changefontM"
         @now-template1="this.$emit('now-template1')"
         @now-template2="this.$emit('now-template2')"
+        @now-template3="this.$emit('now-template3')"
         @update-user="update"
+        @login="showLogin"
     />
     <div class="footer">
         <img @click="hover = true" v-if="hover==false" @mousedown="hover = true" src="../icons/menustatic.png" alt="">
@@ -47,8 +49,14 @@ export default {
         language: String,
         user: Object
     },
-    emits:["language-update", "font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color"],
+    emits:["language-update", "font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color", "login"],
     methods:{
+        showLogin() {
+            this.$emit('login');
+            setTimeout(() => {
+                this.menuDown();
+            }, 500);
+        },
         update(val) {
             this.$emit("update-user", val);
             $(".footer-menu-bar").css("display", "none");

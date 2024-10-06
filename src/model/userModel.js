@@ -1,6 +1,8 @@
+import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelete } from '../components/configs/requests';
 export default class User {
     id = 0;
-    name = "";
+    _id = "";
+    name = this.getNameFromLocalStorage();
     profession = "";
     resume = "";
     competence = [];
@@ -12,7 +14,7 @@ export default class User {
     contact = {
         email : [],
         phone : [],
-        adress : "",
+        address : "",
         adressObject : {
             country : "",
             state : "",
@@ -23,12 +25,69 @@ export default class User {
         }
     };
     userExperiences = [];
-    imgForReal = 0
+    imgForReal = 0;
+    language = {
+        level: "",
+        details: ""
+    }
+    otherInfos = [];
+    otherExperiencies = {
+        title: '',
+        text: ''
+    };
+
+    getNameFromLocalStorage() {
+        let name = "";
+        let user = JSON.parse(localStorage.getItem("user-pt"));
+        if(user) {
+            console.log('user pt')
+            name = user.name;
+        }else {
+            user = JSON.parse(localStorage.getItem("user-en"));
+            if(user) {
+                console.log('user en')
+                name = user.name;
+            }
+        }
+        return name;
+    }
 
     constructor() {
         this.id = this.id == 0 ? Math.random() : this.id;
     }
 
+    async requestDeleteThisUser() {
+        return await requestDelete(this._id, this?.contact?.email[0]);
+    }
+
+    async getBackEndDataAndResolveYourSelf(login) {
+        const response = await loginUser(login.email, login.userId, login.password);
+        if(response?.status == 200){
+            this.updator(response?.data.content);
+            return this;
+        }else {
+            return null;
+        }
+    }
+
+    // Updates the user if the user's name changes or if the user has been created
+    // on the backend.
+    async updateUserName() {
+        updateUser(this.name, this.contact.email[0]);
+    }
+
+    // newUser = true and false here means, true new user, false update existing user
+    async saveIntoDatabase(newUser) {
+        return await saveUserInfosInDataBase(this, newUser);
+    }
+
+    async firstLogin(email, password) {
+        // console.log("firstLogin");
+        if (typeof email === 'string') {
+            return await saveLogin(email, password, this._id);
+        }
+        return await saveLogin(email[0], password, this._id);
+    }
 
     updateToParente(name, val) {
         this.$emit(name, val);
@@ -40,20 +99,39 @@ export default class User {
         return this;
     }
 
+    setName(name) {
+        if(name != this.name) {
+            this.name = name;
+            if (this._id.length == 24) {
+                this.updateUserName();
+            }
+        }
+    }
     updator(user)
     {
         this.id = user.id;
-        this.name = user.name;
+        this._id = user._id ? user._id : "";
         this.profession = user.profession;
         this.resume = user.resume;
         this.competence = user.competence;
         this.social = user.social;
         this.grade = user.grade;
-        this.hability = user.hability;
+        this.hability = user?.hability ? user.hability : user?.ability;
         this.avatarImg = user.avatarImg;
         this.realImg = user.realImg;
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
+        this.otherInfos = user.otherInfos;
+        this.otherExperiencies = user.otherExperiencies;
+        this.setName(user.name);
+    }
+
+    getId() {
+        return this._id ? this._id : this.id;
+    }
+
+    getEmails() {
+        return this.contact?.email;
     }
 
     setAdressPart(witch, value) {
@@ -109,6 +187,18 @@ export default class User {
                 break;
             default:
                 break;
+        }
+    }
+
+    findAndRetrieveInfos(language) {
+        const en = localStorage.getItem('user-en');
+        const pt = localStorage.getItem('user-pt');
+        if(language == null) {
+            return en ? en : pt;
+        }else if(language == 'user-en') {
+            return en;
+        }else {
+            return pt;
         }
     }
 }

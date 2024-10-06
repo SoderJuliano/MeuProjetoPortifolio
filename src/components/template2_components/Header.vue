@@ -30,7 +30,7 @@
 </template>
 <script>
 
-import funcs from "../componentesCompartilhados/util/functions";
+import funcs from "../componentesCompartilhados/utilJS/functions";
 import CenterImg from "../../components/utils/centerImg.vue";
 import CenterImgOpenclose from "../../components/utils/centerImgOpenClose.vue";
 import $ from "jquery";
@@ -246,6 +246,8 @@ export default {
     min-height: 200px;
     background-color: gray;
     z-index: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 
