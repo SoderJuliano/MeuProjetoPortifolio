@@ -333,6 +333,13 @@ input {
     min-width: 70%;
 }
 
+@media screen and (max-width: 768px) {
+    .component {
+        padding-right: 2% !important;
+        padding-left: 2% !important;
+    }
+}
+
 @media print {
     span {
         font-size: 70%;

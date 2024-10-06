@@ -457,7 +457,6 @@
         }
     });
 
-
     const updateLocalUserGradeData = (index, title, text) => {
         localUpdatedUser.grade[index] = title + ' ' + text;
         emit('updateUser', localUpdatedUser);

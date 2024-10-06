@@ -73,16 +73,22 @@ export default {
 
 <style>
 .closeDiv {
-  text-align: center;
-  position: absolute;
-  width: 40px;
-  padding: 10px;
-  left: 90%;
-  border-radius: 5px;
-  border: solid 1px black;
-  font-size: 20px !important;
-  background-color: red;
-  color: white;
+    text-align: center;
+    position: absolute;
+    width: 40px;
+    padding: 10px;
+    left: 90%;
+    border-radius: 5px;
+    border: solid 1px black;
+    font-size: 20px !important;
+    background-color: red;
+    color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .closeDiv {
+        left: 80%;
+    }
 }
 
 .colors-container {

@@ -298,12 +298,10 @@ export default {
                 }, 200);
               } else if(response.status == 201) {
                 this.isANewUser = true;
-                // alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
                 this.showAlertComponent(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
               } else if (response.status == 200) {
                 this.isANewUser = false;
-                //alert("Salvo com sucesso!", response.data);
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
               }
             }

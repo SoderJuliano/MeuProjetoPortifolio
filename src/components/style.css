@@ -82,6 +82,7 @@ img {
     }
     .select-template button{
         margin-top: 5px;
+        width: 200px;
     }
 
     /* .container tem um padding que fica estranho no mobile, isso corrige */

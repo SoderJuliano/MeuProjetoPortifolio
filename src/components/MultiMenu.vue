@@ -39,6 +39,10 @@
                 @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')" />
             <p class="multimenu-line"></p>
         </div>
+        <div class="option">
+            <p class="tside" @click="$emit('login')" >LOGIN</p>
+            <p class="multimenu-line"></p>
+        </div>
     </div>
 </template>
 
@@ -53,7 +57,7 @@ import Templates from "./multimenuComponentes/Templates.vue";
 
 export default {
     name: "multi-menu",
-    emits: ["changefont", "update-configs", "update-user", 'now-template1', 'now-template2', 'now-template3'],
+    emits: ["changefont", "update-configs", "update-user", 'now-template1', 'now-template2', 'now-template3', 'login'],
     components: {
         Fonts,
         Colors,

@@ -91,6 +91,7 @@
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
         @now-template3="change_template(3)"
+        @login="showLogin"
         class="multi-menu-class"
         @changefont="changefont"
         @click="changeOptions"
@@ -180,6 +181,7 @@
           @change-main-color="changeMainColor"
           @change-font-color="changeFontColor"
           @update-user="updateUser"
+          @login="showLogin"
         />
       </div>
     </div>
@@ -311,7 +313,6 @@ export default {
       try {
         // Make the API call to reset the password
         const response = await funcs.resetPassword(this.user._id);
-        
         // Check if the response status is 200 (success)
         if (response?.status === 200) {
           this.fireGlobalAlert(
@@ -401,7 +402,7 @@ export default {
       }
       this.showAlertErrorToTrue()
     },
-    showLogin(){
+    showLogin() {
       this.inlogin = true
     },
     showAlertToTrue() {
