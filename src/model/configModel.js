@@ -3,7 +3,7 @@ export default class PageConfig {
 
     language = 'pt-br';
     imageURL = "";
-    template = 3;
+    template = 1;
     font = "Oswald";
     fontSize = "15px";
     fontSizeTitles = "17px";

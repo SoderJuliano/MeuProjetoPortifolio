@@ -43,7 +43,7 @@ export default {
             $(".ajsut-img").css({"display": "flex", "z-index": "0"});
             $(".template1-formacao-container").css({"z-index": "3"});
             $("#headericon").css({"z-index": "2"});
-            // define para 0 para não atrapalhar as ações de botões de edição no corpo do t2
+            // define para 0 para nãoatrapalhar as ações de botões de edição no corpo do t2
             $(".container-header").css({"z-index": "0"});
         },
         open() {
@@ -93,11 +93,10 @@ export default {
         },
     },
     mounted() {
-        // Will close till to better ux
-        // need to wait some mls to load every z-index than execute clone that put index to 0
-        setTimeout(() => {
-            this.close();
-        }, 400);
+        // console.log("recived userData")
+        // console.log(this.userData)
+        // console.log("user")
+        // console.log(this.user)
     }
 }
 

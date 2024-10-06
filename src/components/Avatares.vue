@@ -191,6 +191,7 @@ export default {
     margin-top: -15px;
     justify-content: space-around;
     display: none;
+    overflow-y: scroll;
 }
 
 @media screen and (max-width: 1000px) {
