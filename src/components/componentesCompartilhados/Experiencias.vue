@@ -71,7 +71,6 @@ export default {
   },
   methods:{
       updateExperiencias(job) {
-        console.log(job)
         this.jobs.forEach((each, index) => {
           if (each.id === job.id) {
             this.jobs[index] = job;

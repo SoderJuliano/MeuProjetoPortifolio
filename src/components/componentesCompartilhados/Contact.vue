@@ -43,7 +43,7 @@ export default {
         return {/*
             email: [],
             phone: [],
-            adress: '', */
+            address: '', */
             tstyle: "contact-template"+this.template,
         }
     },

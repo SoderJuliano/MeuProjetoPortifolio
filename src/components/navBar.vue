@@ -37,6 +37,11 @@
                     <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
                     <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
                     <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
+                    <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
+                    <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
+                    <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
+                    <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">{{this.getResetPasswordText()}}</a>
+                    <a v-on:click="deleteLocalData()" class="dropdown-item" href="#">{{ getDeleteLocalData() }}</a>
                   </div>
                   </li>
                   <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
@@ -52,40 +57,99 @@
                 </div>
         </nav>
         <nav class="navbar-login">
-          <button @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <button v-if="!isLoggedIn || !this.user.name" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <button @click="isLoggedInClicked = !isLoggedInClicked" v-else-if="isLoggedIn">
+            <img src="../assets/navbar/check.png" alt="ok">
+            <span>{{ this.user.name.split(' ')[0] }}</span>
+          </button>
+        <div v-if="isLoggedIn && isLoggedInClicked" class="toggle-container">
+          <span class="toggle-text">
+            {{ this.language == 'us-en' ? 'syncronized' : 'sincronizado' }}
+          </span>
+          <input
+            type="checkbox"
+            id="syncToggle"
+            class="toggle-input"
+            :checked="syncUser"
+            @change="this.$emit('toggle-sync', !syncUser)"
+          >
+          <label for="syncToggle" class="toggle-label"></label>
+        </div>
         </nav>
     </div>
   <options-menu
     @close="closeMenu"
     :show = show
   />
+  <SimpleAlerts
+    @close="closeSimpleAlert"
+    :title="alertTitle"
+    :message="alertMessage"
+    :show="showAlert"
+    :customProperties="alert"
+    :custom="customAlert"
+    >
+  </SimpleAlerts>
+  <GlobalModal
+      ref="globalModal"
+      :title="globalModalTitle"
+      :message="globalModalMessage"
+    >
+    <div class="globalModal">
+      <input id="input-token" type="text">
+      <button @click="submitDeleteToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
+    </div>
+    </GlobalModal>
 </template>
 
 <script>
 import UserModel from '../model/userModel.js';
 import $ from 'jquery';
 import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
+import 'simple-alerts/dist/simpleAlertsVue.css';
+import SimpleAlerts from 'simple-alerts';
+import GlobalModal from './componentesCompartilhados/GlobalModal.vue';
+import { deleteUser } from "./configs/requests.js";
 
 export default {
     name: 'nav-bar',
     props: {
+      logedIn: Boolean,
       language: String,
       user: Object,
-      inlogin: Boolean
+      inlogin: Boolean,
+      syncUser: Boolean,
     },
     data() {
       return{
+        isLoggedInClicked: false,
+        isLoggedIn: this.logedIn,
         show: false,
         myInfo: false,
         info: false,
         language: this.language,
         // null is the default value for isAnewUser, after try save infos gonna figure it out
         isANewUser: null,
-        login: this.inlogin != null ? this.inlogin : false
+        login: this.inlogin != null ? this.inlogin : false,
+        alertTitle: null,
+        alertMessage: null,
+        showAlert: false,
+        globalModalTitle: '',
+        globalModalMessage: '',
+        customAlert: { type: Boolean, value: false },
+        alert: {
+          autoClose: false,
+          timer: 5000,
+          backgroundColor: 'black',
+          textColor: 'white',
+          closeButtonText: 'Close',
+        },
       }
     },
     components: {
-      downloadDoc
+      downloadDoc,
+      SimpleAlerts,
+      GlobalModal
     },
     emits:[
       'close',
@@ -99,9 +163,106 @@ export default {
       'change-main-color',
       'change-font-color',
       'update-social',
-      'show-login'
+      'show-login',
+      'ativationAccount',
+      'check-abra-messages',
+      'toggle-sync',
+      'reset-password'
     ],
     methods:{
+      deleteLocalData() {
+        localStorage.removeItem("configs");
+        localStorage.removeItem("user-pt");
+        localStorage.removeItem("user-en");
+        setTimeout(() => {
+          window.location.reload()
+        }, 900);
+      },
+      getDeleteLocalData() {
+        return this.language == 'us-en' ? 'Delete all my account data from my browser' : 'Apagar todos dados da conta do meu anvegador';
+      },
+      getResetPasswordText() {
+        return this.language == 'us-en' ? 'Reset Password' : 'Recuperar senha';
+      },
+      openCloseTips(value) {
+        if(value) {
+          $(".tip-conteiner-content").css({"display": "none"});
+        }else {
+          $(".tip-conteiner-content").css({"display": "block"});
+        }
+      },
+      confirmDeleteAccount() {
+        this.globalModalTitle = this.language == 'us-en' ? 'Confirm Account Deletion' : 'Confirmar deleção da conta';
+        this.globalModalMessage = this.language == 'us-en' ? 'Are you sure you want to delete your account?' : "Você tem certeza de que deseja deletar sua conta?";
+        this.$refs.globalModal.open();
+      },
+      getActivateAccText() {
+        return this.language == 'us-en' ? 'Insert activation token' : 'Inserir token de ativação';
+      },
+      async submitDeleteToken() {
+        const token = $("#input-token").val();
+        if(token == null || token == "" || token == "undefined") {
+            return;
+        }
+        await deleteUser(this.user._id, token).then((response) => {
+          // console.log(response);
+          if (response?.status == 200) {
+              localStorage.removeItem("user-pt");
+              localStorage.removeItem("user-en");
+              this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+              this.$refs.globalModal.close();
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 3000);
+              return;
+          } else {
+            this.alertTitle = this.language == 'us-en' ? 'Error' : 'Erro';
+            this.alertMessage = this.language == 'us-en' ? 'Fail. You may start over requesting a new token.' : 'Falha. Talvez tente novamente com um token novo';
+            this.showAlert = true;
+          }
+        });
+      },
+      getDeleteAccText() {
+        return this.language == 'us-en' ? 'Delete my account' : 'Deletar minha conta';
+      },
+      getConfirmDeleteAccText() {
+        return this.language == 'us-en' ? 'Confirm account deletion(insert token)' : 'Confirmar deleção da conta (inserir token)';
+      },
+      async deleteAccount() {
+        if(this.user?._id?.length != 24) {
+            localStorage.removeItem("user-pt");
+            localStorage.removeItem("user-en");
+            this.showAlertComponent(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+            return;
+        }
+        let userFromModer = new UserModel();
+        userFromModer = userFromModer.constructorObject(this.user);
+        const response = await userFromModer.requestDeleteThisUser();
+        if(response && response.status == 200) {
+            this.$emit("check-abra-messages");
+            this.showAlertComponent(
+              this.language == 'us-en' ? response.data.content : "",
+              this.language == 'us-en' ? 'Get the token we send to your e-mail address' : 'Use o token que enviamos para seu e-mail'
+            );
+            this.globalModalTitle = 'Duplo fator de confirmação';
+            this.globalModalMessage = "Confirme a deleção da conta através do token que enviamos para seu email.";
+            this.$refs.globalModal.open();
+            return;
+        }
+        this.showAlertComponent(
+          this.language == 'us-en' ? response.data.content : "",
+          this.language == 'us-en' ? 'Failed to delete the account' : 'Falha ao excluir a conta'
+        );
+      },
+      closeSimpleAlert() {
+        this.showAlert = false
+        this.alertTitle = null;
+        this.alertMessage = null;
+        this.customAlert = false;
+      },
       openLogin(){
         this.login = true;
         this.$emit('show-login');
@@ -116,46 +277,52 @@ export default {
           let userFromModer = new UserModel();
           userFromModer = userFromModer.constructorObject(this.user);
           if(userFromModer.getEmails() == null || userFromModer.getEmails().length == 0) {
-            alert(this.getErroSalvarNoBancoSemInfos());
+            this.showAlertComponent("Error", this.getErroSalvarNoBancoSemInfos());
             return;
           }
           if(userFromModer instanceof UserModel) {
             let response;
             response = await userFromModer.saveIntoDatabase(this.isANewUser);
             if (response) {
-              console.log('response from backend stats -->', response);
+              // console.log('response from backend stats -->', response);
               if (response.status == 422) {
-                console.log('Error: Request failed', response.data);
+                // console.log('Error: Request failed', response.data);
                 this.isANewUser == false;
                 this.$emit('register-error', response.data.message);
               } else if(response.status == 404) {
                 // goes in here is case is a new user
-                console.log('Error: Request failed with status code', response.status);
+                // console.log('Error: Request failed with status code', response.status);
                 this.isANewUser = true;
                 setTimeout(() => {
                   this.dbSave();
                 }, 200);
               } else if(response.status == 201) {
                 this.isANewUser = true;
-                alert("Salvo com sucesso! Agora vamos salvar sua senha.", response.data);
+                this.showAlertComponent(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
               } else if (response.status == 200) {
                 this.isANewUser = false;
-                //alert("Salvo com sucesso!", response.data);
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
               }
             }
           }else {
-            alert("Não foi possível salvar");
+            // alert("Não foi possível salvar");
+            this.showAlertComponent(null, this.getLanguage() == 'us-en' ? "Not possible to save" : "Não foi possível salvar");
           }
           //todo
         } else {
           // Código a ser executado se o usuário clicar em "Cancelar"
-          alert("Você escolheu Não!");
+          // alert("Você escolheu Não!");
+          this.showAlertComponent(null, this.getLanguage() == 'us-en' ? "You choose do not save" : "Você escolheu não salvar");
         }
       },
       getHowLoginText() {
         return this.getLanguage() == 'us-en' ? "How the Login works" : "Como o Login funciona"
+      },
+      showAlertComponent(title, message) {
+        this.alertTitle = title;
+        this.alertMessage = message;
+        this.showAlert = true;
       },
       getErroSalvarNoBancoSemInfos() {
         return this.getLanguage() == 'us-en' ?
@@ -234,22 +401,36 @@ export default {
       closeMenu(){
         this.show = false
       },
-      about(){
-        localStorage.getItem('lng') == 'us-en'
-          ? alert("We are not using cookies and I do not store any information in server-side")
-          : alert("Não usamos cookies e não guardamos nenhuma informação sua")
+      about() {
+        const text = this.language == 'us-en' ?
+        "We store all your information locally in the browser's memory (on localhost). We do not use cookies, nor do we save any of your data on our servers. If you wish to share your information and save it to our database, please click 'Save Remotely' and register."
+        : "Armazenamos todas as suas informações localmente na memória do navegador (em localhost). Não usamos cookies, nem salvamos nenhum dos seus dados em nossos servidores. Se você deseja compartilhar suas informações e salvá-las em nosso banco de dados, clique em 'Salvar remotamente' e registre-se.";
+        this.customAlert = true;
+        this.alertMessage = text;
+        this.alertTitle = 'INFO'
+        this.showAlert = true;
       },
       aboutMe(){
         window.open("https://www.linkedin.com/in/julianosoder/");
       },
       support(){
+        const text = this.language == 'us-en' ?
+        "Support this project with a minimum donation of 0.0001 BTC by using the following link: Payment Request. User-3d1e2 has requested a payment of 0.0001 BTC. Click this link to pay: https://s.binance.com/sQe6mcmP."
+        : "Contribua para o desenvolvimento deste projeto com um PIX de qualquer valor para a chave aleatória: baae423e-b98a-4f7b-b32b-fb8174b175b3.";
+        this.customAlert = true;
+        this.alertMessage = text;
+        this.alertTitle = 'SUPPORT'
+        this.showAlert = true;
         // caixa baae423e-b98a-4f7b-b32b-fb8174b175b3
-        localStorage.getItem('lng') != 'us-en'
-          ? alert("Torne-se um apoiador deste projeto com um pix (qualquer valor) para esta chave aleartória -> baae423e-b98a-4f7b-b32b-fb8174b175b3")
-          : alert("Support this project sending money or sharing it with friends")
       },
-      more(){
-        alert("Ainda em desenvolvimento.  Apoie este projeto ;)")
+      more() {
+        const text = this.language == 'us-en' ?
+        "If you'd like to see more of my projects, feel free to follow my GitHub at SoderJuliano(https://github.com/SoderJuliano). You can also visit my personal webpage at https://juliano-soder.netlify.app. This generator is still in development, so please consider supporting it."
+        : "Se você quiser ver mais de meus projetos, fique à vontade para seguir meu GitHub em SoderJuliano. Você também pode visitar minha página pessoal em juliano-soder.netlify.app. Este gerador ainda está em desenvolvimento, então considere apoiá-lo .";
+        this.customAlert = true;
+        this.alertMessage = text;
+        this.alertTitle = 'SUPPORT'
+        this.showAlert = true;
       },
       contact(){
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
@@ -299,12 +480,27 @@ export default {
             this.local_language = newValue;
         },
         isANewUser(newValue){
-          console.log('isANewUser', newValue);
+          // console.log('isANewUser', newValue);
           this.$emit('isANewUser', newValue);
         },
         inlogin(newValue){
-          console.log('inlogin', newValue);
+          // console.log('inlogin', newValue);
           this.login = newValue;
+        },
+        logedIn(newValue) {
+          // console.log('logedIn', newValue);
+          this.isLoggedIn = newValue;
+        },
+        isLoggedInClicked(newValue) {
+          this.openCloseTips(newValue);
+        },
+        syncUser(newValue) {
+          const checkbox = $("#syncToggle");
+          if(newValue == true) {
+            checkbox.prop("checked", true);
+          }else {
+            checkbox.prop("checked", false);
+          }
         }
     }
 }
@@ -347,6 +543,53 @@ export default {
 }
 </style>
 <style scoped>
+/* Toggle start */
+
+.toggle-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+.toggle-text {
+  margin-right: 10px; /* Add spacing between text and toggle */
+}
+
+.toggle-input {
+  display: none;
+}
+
+.toggle-label {
+  display: flex;
+  width: 60px;
+  height: 30px;
+  background-color: rgb(190, 190, 190); /* Default color */
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.toggle-label:before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s ease;
+}
+
+.toggle-input:checked + .toggle-label {
+  background-color: blue; /* Change color when checked */
+}
+
+.toggle-input:checked + .toggle-label:before {
+  transform: translateX(30px); /* Move the switch */
+  background-color: green;
+}
 
 li img {
   width: 50px;
@@ -404,12 +647,30 @@ li img {
   border-radius: 10px;
 }
 
+.navbar-login:hover {
+  background-color: whitesmoke;
+}
+
 .navbar-login button {
   background-color: #3498db;
   color: white;
   padding: 10px;
   font-weight: bolder;
   border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+.navbar-login button:first-child {
+  justify-content: center;
+}
+
+.navbar-login button:last-child img {
+  margin-right: 10px;
+}
+
+.navbar-login button:last-child span {
+  margin-top: 5px;
 }
 
 .dropdown-menu{
@@ -423,9 +684,12 @@ li img {
   width: 150px;
   -webkit-transition-duration: 500ms;
   transition-duration: 500ms;
+  border-radius: 10px;
 }
 .dropdown-item:hover{
-  background-color: gray;
+  background-color: rgb(48, 47, 47);
+  border-radius: 10px;
+  color: white;
 }
 .dropdown-item{
   padding: 10px;

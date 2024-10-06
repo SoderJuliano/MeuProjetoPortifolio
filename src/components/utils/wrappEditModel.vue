@@ -1,30 +1,30 @@
 <template>
-    <div v-if="job" class="wrapMain" >
+    <div :style="wrapMainCss" v-if="job" class="wrapMain" >
         <div class="item" >
-            <span>Comapny: </span><input id="company" type="text" :value="job?.company"  />
+            <span>Comapny: </span><input :style="inputCss" id="company" type="text" :value="job?.company"  />
         </div>
         <div class="item" >
-            <span>Position: </span><input id="position" type="text" :value="job?.position"  />
+            <span>Position: </span><input :style="inputCss" id="position" type="text" :value="job?.position"  />
         </div>
-        <div v-if="job?.dateHired.length == 10" class="item">
+        <div v-if="job?.dateHired?.length == 10" class="item">
             <span>Date Start: </span><input type="date" :value="job?.dateHired" />
         </div>
         <div v-else class="item" >
             <span>Date start: </span><input id="dateStart" type="month" :value="job?.dateHired"  />
         </div>
 
-        <div v-if="job?.dateHired.length == 10" class="item" >
+        <div v-if="job?.dateHired?.length == 10" class="item" >
             <span>Date end: </span><input id="dateEnd" type="date" :value="job?.dateFired"  />
         </div>
         <div v-else class="item" >
             <span>Date end: </span><input id="dateEnd" type="month" :value="job?.dateFired"  />
         </div>
         <div class="item" >
-            <span>Description: </span><textarea id="description" cols="40" rows="5" :value="job?.description"  />
+            <span>Description: </span><textarea :style="areaCss" id="description" cols="40" rows="5" :value="job?.description"  />
         </div>
         <div class="div-bnts">
-            <button @click="updateExperiences">{{this.language.includes("pt") ? "Atualizar" : "Update"}}</button>
-            <button @click="editarEnd">{{this.language.includes("pt") ? "Fechar" : "Close"}}</button>
+            <button @click="updateExperiences">{{this.language?.includes("pt") ? "Atualizar" : "Update"}}</button>
+            <button @click="editarEnd">{{this.language?.includes("pt") ? "Fechar" : "Close"}}</button>
         </div>
     </div>
     <div v-if="job == null && text == null && data" class="wrapMain">
@@ -62,7 +62,19 @@ export default {
         objeto: Object,
         textItem: String,
         textIndex: Number,
-        event: String
+        event: String,
+        wrapMainCss: {
+            type: Object,
+            default: () => ({})
+        },
+        inputCss: {
+            type: Object,
+            default: () => ({})
+        },
+        areaCss: {
+            type: Object,
+            default: () => ({})
+        },
     },
     emits: [
         "update-experiences", "editar-end",
@@ -87,6 +99,7 @@ export default {
             this.job.setDateHired($('#dateStart').val())
             this.job.setDateFired($('#dateEnd').val())
             this.job.setDescription($('#description').val())
+
             this.$emit("update-experiencias", this.job)
 
             setTimeout(() => {
@@ -126,6 +139,18 @@ export default {
 }
 </script>
 <style scoped >
+    input {
+        cursor: pointer;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    textarea {
+        cursor: pointer;
+    }
+
     .wrapMain {
         width: 92%;
         height: 100%;
@@ -176,6 +201,5 @@ export default {
         .wrapMain {
             width: 80vw;
         }
-        
     }
 </style>

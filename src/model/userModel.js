@@ -1,8 +1,8 @@
-import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser } from '../components/configs/requests';
+import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelete } from '../components/configs/requests';
 export default class User {
     id = 0;
     _id = "";
-    name = "";
+    name = this.getNameFromLocalStorage();
     profession = "";
     resume = "";
     competence = [];
@@ -14,7 +14,7 @@ export default class User {
     contact = {
         email : [],
         phone : [],
-        adress : "",
+        address : "",
         adressObject : {
             country : "",
             state : "",
@@ -25,10 +25,39 @@ export default class User {
         }
     };
     userExperiences = [];
-    imgForReal = 0
+    imgForReal = 0;
+    language = {
+        level: "",
+        details: ""
+    }
+    otherInfos = [];
+    otherExperiencies = {
+        title: '',
+        text: ''
+    };
+
+    getNameFromLocalStorage() {
+        let name = "";
+        let user = JSON.parse(localStorage.getItem("user-pt"));
+        if(user) {
+            console.log('user pt')
+            name = user.name;
+        }else {
+            user = JSON.parse(localStorage.getItem("user-en"));
+            if(user) {
+                console.log('user en')
+                name = user.name;
+            }
+        }
+        return name;
+    }
 
     constructor() {
         this.id = this.id == 0 ? Math.random() : this.id;
+    }
+
+    async requestDeleteThisUser() {
+        return await requestDelete(this._id, this?.contact?.email[0]);
     }
 
     async getBackEndDataAndResolveYourSelf(login) {
@@ -53,7 +82,7 @@ export default class User {
     }
 
     async firstLogin(email, password) {
-        console.log("typeof email", typeof email);
+        // console.log("firstLogin");
         if (typeof email === 'string') {
             return await saveLogin(email, password, this._id);
         }
@@ -87,11 +116,13 @@ export default class User {
         this.competence = user.competence;
         this.social = user.social;
         this.grade = user.grade;
-        this.hability = user.hability;
+        this.hability = user?.hability ? user.hability : user?.ability;
         this.avatarImg = user.avatarImg;
         this.realImg = user.realImg;
         this.contact = user.contact;
         this.userExperiences = user.userExperiences;
+        this.otherInfos = user.otherInfos;
+        this.otherExperiencies = user.otherExperiencies;
         this.setName(user.name);
     }
 
@@ -156,6 +187,18 @@ export default class User {
                 break;
             default:
                 break;
+        }
+    }
+
+    findAndRetrieveInfos(language) {
+        const en = localStorage.getItem('user-en');
+        const pt = localStorage.getItem('user-pt');
+        if(language == null) {
+            return en ? en : pt;
+        }else if(language == 'user-en') {
+            return en;
+        }else {
+            return pt;
         }
     }
 }
