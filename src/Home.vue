@@ -242,7 +242,7 @@ export default {
       alertTitle: 'Alert',
       alertMessage: "",
       alert: {
-        autoClose: false,
+        autoClose: true,
         timer: 3000,
         backgroundColor: 'red',
         textColor: 'white',
@@ -404,13 +404,13 @@ export default {
     showLogin(){
       this.inlogin = true
     },
-    showAlertToTrue(){
-      this.showAlert = true
+    showAlertToTrue() {
+      if(!this.showAlert) {this.showAlert = true}
     },
     showAlertErrorToTrue(){
       this.showAlertError = true
     },
-    closeSimpleAlert(){
+    closeSimpleAlert() {
       this.showAlert = false
       this.showAlertError = false
     },
@@ -493,10 +493,13 @@ export default {
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
 
       if(response && response.length > 0) {
-        this.alertTitle = "Você tem novas mensagens";
-        this.alertMessage = "";
-        this.showAlertToTrue();
-        this.newTipMessege = response[0];
+        setTimeout(() => {
+          this.closeSimpleAlert();
+          this.alertTitle = "Você tem novas mensagens";
+          this.alertMessage = "";
+          this.showAlertToTrue();
+          this.newTipMessege = response[0];
+        }, 4000);
       }
 
     },

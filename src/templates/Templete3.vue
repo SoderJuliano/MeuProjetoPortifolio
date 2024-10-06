@@ -374,6 +374,90 @@
         }
     });
 
+    watch(() => props.user, (newUser, oldUser) => {
+        if (newUser !== oldUser) {
+            additionalComponents.value = [
+                {
+                    id: 1000,
+                    title: "RESUME",
+                    text: newUser.name ? newUser.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
+                    norender: true
+                },
+                {
+                    id: 1001,
+                    title: null,
+                    text: newUser.contact.address ?
+                        newUser.contact?.address : isEnglish ?
+                        'Your address: Type in here' :
+                        'Seu endereço: Digite aqui',
+                    norender: true
+                },
+                {
+                    id: 1002,
+                    title: null,
+                    text: newUser.contact.phone.length > 0 ? newUser.contact?.phone[0] : isEnglish ? 'Phone: Type in here' : 'Telefone: Digite aqui',
+                    norender: true
+                },
+                {
+                    id: 1003,
+                    title: null,
+                    text: newUser.contact.email.length > 0 ? newUser.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
+                    norender: true
+                },
+                {
+                    id: 1004,
+                    title: isEnglish ? 'Objective' : 'Objetivo',
+                    text: newUser.profession ? newUser.profession : isEnglish ? 'Type in here' : 'Digite aqui',
+                    norender: true
+                },
+                {
+                    id: 1005,
+                    title: isEnglish ? 'Skills summary' : 'Habilidades',
+                    text: newUser.hability ? newUser.hability : isEnglish ? 'Type in here' : 'Digite aqui',
+                    norender: true
+                },
+                {
+                    id: 1006,
+                    title: null,
+                    text: isEnglish ? 'Education' : 'Educação',
+                    norender: true
+                },
+                {
+                    id: 1007,
+                    title: null,
+                    text: isEnglish ? 'Work experience' : 'Experiencias',
+                    norender: true
+                },
+                {
+                    id: 1008,
+                    text: isEnglish ? 'Other experience' : 'Outras experiências',
+                    norender: true
+                },
+                {
+                    id: 1009,
+                    title: newUser?.otherExperiencies?.title ? newUser.otherExperiencies.title :
+                        isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
+                    text: newUser?.otherExperiencies?.text ? newUser?.otherExperiencies?.text :
+                        isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
+                    norender: true
+                },
+                {
+                    id: 1010,
+                    title: isEnglish ? 'Languages' : 'línguas',
+                    text: isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.',
+                    norender: true
+                },
+                {
+                    id: 1012,
+                    title: isEnglish ? 'Personal' : 'Pessoal',
+                    text: newUser?.resume ? newUser.resume : isEnglish ? 'about you.' : 'sobre você.',
+                    norender: true
+                },
+            ];
+        }
+    });
+
+
     const updateLocalUserGradeData = (index, title, text) => {
         localUpdatedUser.grade[index] = title + ' ' + text;
         emit('updateUser', localUpdatedUser);
