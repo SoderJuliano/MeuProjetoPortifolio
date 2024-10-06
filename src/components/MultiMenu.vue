@@ -34,13 +34,8 @@
         </div>
 
         <div class="option">
-            <Templates
-                :language="language" :template="template" @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')" />
-            <p class="multimenu-line"></p>
-        </div>
-        <div class="option">
-            <p class="tside" @click="$emit('login')" >LOGIN</p>
+            <Templates :language="language" :template="template" @now-template1="this.$emit('now-template1')"
+                @now-template2="this.$emit('now-template2')" />
             <p class="multimenu-line"></p>
         </div>
     </div>
@@ -57,7 +52,7 @@ import Templates from "./multimenuComponentes/Templates.vue";
 
 export default {
     name: "multi-menu",
-    emits: ["changefont", "update-configs", "update-user", 'now-template1', 'now-template2', 'now-template3', 'login'],
+    emits: ["changefont", "update-configs", "update-user"],
     components: {
         Fonts,
         Colors,
@@ -72,6 +67,7 @@ export default {
         user: Object,
         language: String
     },
+    emits: ['now-template1', 'now-template2', 'update-user'],
     methods: {
         update(val) {
             this.$emit("update-user", val);

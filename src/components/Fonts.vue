@@ -143,17 +143,16 @@ export default {
 
   .dropdown-content {
     margin-left: 15px;
-    border-radius: 8px;
   }
 }
 @media screen and(max-width: 1000px) {
     .fonts-container{
+        overflow: scroll;
         width: 100%;
         background-color: white;
     }
     .dropdown-content {
       margin-left: 0px !important;
-      border-radius: 8px;
     }
 }
 
@@ -171,7 +170,6 @@ export default {
   width: 85%;
   position: relative;
   display: inline-block;
-  border-radius: 8px;
 }
 
 .dropdown-content {
@@ -181,13 +179,13 @@ export default {
   justify-self: center;
   width: 100%;
   z-index: 1;
+  overflow-y: scroll;
   padding: 15px;
   border-style: solid;
   border-color: black;
   background-color: rgba(245, 245, 245, 0.719);
   margin-top: -15px;
   justify-content: space-around;
-  border-radius: 8px;
 }
 
 @-webkit-keyframes scale-up-center {

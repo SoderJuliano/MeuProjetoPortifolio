@@ -128,8 +128,6 @@ export default {
     min-height: 400px;
     height: 100%;
     background-color: white;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 @media screen and (max-width: 1000px) {

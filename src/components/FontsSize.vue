@@ -101,7 +101,7 @@ p
 .size-dropdown-content {
   display: none;
   position: absolute;
-  background-color: whitesmoke;
+  background-color: bisque;
   min-width: 100px;
   z-index: 1;
   border-radius: 10px;
@@ -141,7 +141,7 @@ p
 
 .fonts-size-item {
     padding: 20px;
-    background-color: whitesmoke;
+    background-color: bisque;
     width: 35%;
     height: 40%;
     border-radius: 20px;
@@ -179,7 +179,6 @@ p
 }
 
 .fonts-size-item .closeDiv {
-    position: relative;
     left: 0%;
 }
 

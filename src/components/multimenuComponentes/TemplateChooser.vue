@@ -1,22 +1,16 @@
 <template>
     <div class="select-template">
         <button 
-            @click="this.$emit('now-template3')"
-            :style="template == 3 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
-            <p>Normal</p>
-            <img src="../../assets/templatesImg/templete3.png" alt="templateimg" />
-        </button> 
-        <button 
             @click="this.$emit('now-template1')"
             :style="template == 1 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
-            <p>Style 1</p>
+            <p>template1</p>
             <img src="../../assets/templatesImg/template1.png" alt="templateimg" />
         </button> 
         <button 
             @click="this.$emit('now-template2')"
             :style="template == 2 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
         >
-            <p>Style 2</p>
+            <p>template2</p>            
             <img src="../../assets/templatesImg/template2.png" alt="templateimg" />
         </button>
     </div>
@@ -28,7 +22,7 @@ export default {
     props:{
         template: Number
     },
-    emits:['now-template1', 'now-template2', 'now-template3']
+    emits:['now-template1', 'now-template2']
 }
 </script>
 <style scoped>
@@ -38,7 +32,6 @@ button {
     color: black;
     background-color: white;
     margin-left: 10px;
-    width: 40px;
 }
 
 button img {
@@ -48,8 +41,5 @@ button img {
 
 .select-template{
     display: flex;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 </style>
