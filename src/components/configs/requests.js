@@ -136,6 +136,7 @@ export function saveUserInfosInDataBase(user, newUser) {
         },
         "address": user?.contact?.address ? user?.contact?.address : null,
       },
+      "userExperiences": user?.userExperiences
     }
 
     const headers = {
