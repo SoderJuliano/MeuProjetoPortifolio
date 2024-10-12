@@ -61,7 +61,7 @@ export default class User {
     }
 
     async getBackEndDataAndResolveYourSelf(login) {
-        const response = await loginUser(login.email, login.userId, login.password);
+        const response = await loginUser(login.email, login.userId, login.password, login.language);
         if(response?.status == 200){
             this.updator(response?.data.content);
             return this;

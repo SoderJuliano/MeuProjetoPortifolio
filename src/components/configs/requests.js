@@ -6,7 +6,7 @@ let apiUrl = DRAGONITE_ENV2;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
-
+// Webhook pergar url dragonite
 export async function getLastEnvUrl() {
   try {
     // Make the API request to get the notifications
@@ -34,6 +34,7 @@ export async function getLastEnvUrl() {
   }
 }
 
+// Notificações dragonite
 export function getDragoniteMesseges(key) {
   axios.defaults.baseURL = 'https://abra-api.top';
   return axios.get(`/notifications/retrieve?key=${key}`)
@@ -45,6 +46,7 @@ export function getDragoniteMesseges(key) {
     });
 }
 
+// Criar notificação
 export function setNewNotification(data) {
     axios.defaults.baseURL = 'https://abra-api.top';
     return axios.post('/notifications', data).then((response) => {
@@ -53,6 +55,8 @@ export function setNewNotification(data) {
     });
 }
 
+// Primeiro login
+// Tem o user id
 export function saveLogin(email, password, userId) {
   const login = {
     "email": email,
@@ -72,6 +76,7 @@ export function saveLogin(email, password, userId) {
   });
 }
 
+// Login
 export function loginUser(email, userId, password, language) {
   const login = {
     "email": email,
@@ -93,6 +98,7 @@ export function loginUser(email, userId, password, language) {
   });
 }
 
+// Salvar ou atualizar dados de usuaário
 export function saveUserInfosInDataBase(user, newUser, language) {
   let phoneNumbers = [];
   let emails = [];
@@ -244,7 +250,7 @@ export function activateAccount(id, token, email, language) {
   }
 
 // /activate/{id}/{code}
-  return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, null, { headers }).then((response) => {
+  return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, data, { headers }).then((response) => {
     return response;
   }).catch(error => {
     console.error('Erro durante delete user', error);

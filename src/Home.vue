@@ -228,6 +228,7 @@ import SimpleAlerts from 'simple-alerts';
 import 'simple-alerts/dist/simpleAlertsVue.css';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
+import User from "./model/userModel.js";
 
 export default {
   name: "Home",
@@ -370,6 +371,10 @@ export default {
         if (response && response?.status === 200) {
           // Handle success
           this.fireGlobalAlert("Success! Agora você pode acessar sua conta de qualquer dispositivo.");
+          let userFromModer = new UserModel();
+          userFromModer = userFromModer.constructorObject(response.content);
+          // true notSync, login should not call bk unnecessary
+          this.updateUser(userFromModer, true);
           this.logedIn = true;
         } else {
           // Handle non-200 responses
@@ -467,9 +472,13 @@ export default {
       }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
         let responseUser;
         if(typeof email == 'string') {
-          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email, "password": password, "userId": this.user._id});
+          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf(
+            {"email": email, "password": password, "userId": this.user._id, "language" : this.configs.getLanguage()}
+          );
         }else {
-          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email[0], "password": password, "userId": this.user._id});
+          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf(
+            {"email": email[0], "password": password, "userId": this.user._id, "language" : this.configs.getLanguage()}
+          );
         }
         // console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {

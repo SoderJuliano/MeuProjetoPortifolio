@@ -10,14 +10,16 @@
             <div v-for="(tip, index) in tips" v-bind:key="tip.id">
                 <div style="color: gray;" class="theTip" v-if="tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span>
-                    <span class="tip-read">Ok</span>
+                    <span class="tip-read">{{lang.includes("en") ? "read" : "lido"}} - ☑</span>
                     <p>{{ tip.content }}</p>
                     <button @click="deleteTip(tip, index)">delete</button>
                 </div>
             </div>
             <div v-for="tip in tips" v-bind:key="tip.id">
-                <div style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
-                    <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
+                <div @click="checked(tip)" style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
+                    <span>{{tip.title}}</span><span class="tip-read">{{lang.includes("en") ? "read" : "lido"}}
+                        <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off">
+                    </span>
                     <p>{{ tip.content }}</p>
                 </div>
             </div>
