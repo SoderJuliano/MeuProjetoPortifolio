@@ -106,7 +106,7 @@ export default {
           this.imageURL = this.userData.realImg;
       },
       language: function(newVal) {
-        console.log("language changed to => "+newVal)
+        // console.log("language changed to => "+newVal)
         this.userData = this.user;
       }
     },

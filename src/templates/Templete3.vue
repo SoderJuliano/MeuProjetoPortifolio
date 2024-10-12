@@ -804,8 +804,6 @@
                     break;
                 }
         });
-
-        emit('updateUser', localUpdatedUser);
     }, { deep: true });
 
 

@@ -26,7 +26,7 @@ export default class User {
     };
     userExperiences = [];
     imgForReal = 0;
-    language = {
+    spokenLanguages = {
         level: "",
         details: ""
     }
@@ -35,12 +35,12 @@ export default class User {
         title: '',
         text: ''
     };
+    language = '';
 
     getNameFromLocalStorage() {
         let name = "";
         let user = JSON.parse(localStorage.getItem("user-pt"));
         if(user) {
-            console.log('user pt')
             name = user.name;
         }else {
             user = JSON.parse(localStorage.getItem("user-en"));
@@ -73,12 +73,12 @@ export default class User {
     // Updates the user if the user's name changes or if the user has been created
     // on the backend.
     async updateUserName() {
-        updateUser(this.name, this.contact.email[0]);
+        updateUser(this.name, this.contact.email[0], this.language);
     }
 
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
-        return await saveUserInfosInDataBase(this, newUser);
+        return await saveUserInfosInDataBase(this, newUser, this.language);
     }
 
     async firstLogin(email, password) {
@@ -124,6 +124,8 @@ export default class User {
         this.otherInfos = user.otherInfos;
         this.otherExperiencies = user.otherExperiencies;
         this.setName(user.name);
+        this.spokenLanguages = user.spokenLanguages;
+        this.language = user.language
     }
 
     getId() {

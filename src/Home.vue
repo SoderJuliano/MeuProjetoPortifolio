@@ -245,7 +245,7 @@ export default {
       alertMessage: "",
       alert: {
         autoClose: true,
-        timer: 3000,
+        timer: 2000,
         backgroundColor: 'red',
         textColor: 'white',
         closeButtonText: 'Close',
@@ -364,7 +364,7 @@ export default {
       bnt.prop("disabled", true);
       try {
         const token = $("#input-token").val();
-        const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0]);
+        const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0], this.configs.getLanguage());
         console.log("response:", response);
 
         if (response && response?.status === 200) {
@@ -426,7 +426,7 @@ export default {
         this.inOnboarding = true;
         this.inlogin = true;
         this.user._id = id;
-        this.updateUser(this.user);
+        this.updateUser(this.user, true);
       }else if(this.user?._id?.length == 24 && !newUser) {
         // Despite that we sava the id on the first registerying, we made the register and the all data
         // saves using the emai and not the id, we will have the id more for some front step controller
@@ -473,7 +473,8 @@ export default {
         }
         // console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {
-          this.updateUser(responseUser)
+          // true notSync, login should not call bk unnecessary
+          this.updateUser(responseUser, true)
           // when login then we can tur on sycn, not before to not make an unecessary
           // PUT request to update user into backend
           this.toggleSync(true);
@@ -489,6 +490,9 @@ export default {
           this.alertMessage = "Email ou senha inválidos";
           this.showAlertErrorToTrue();
           this.inlogin = false;
+          setTimeout(() => {
+            this.closeSimpleAlert();
+          }, 2000);
         }
       }
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
@@ -507,16 +511,16 @@ export default {
     handleUpdateFormacao(value) {
       console.log(value)
       this.user.grade = value;
-      this.updateUser(this.user);
+      this.updateUser(this.user, false);
     },
     handleUpdateSocial(value) {
       console.log("handleUpdateSocial", value)
       this.user.social = value;
-      this.updateUser(this.user);
+      this.updateUser(this.user, false);
     },
     updateCompetences(value) {
       this.user.competence = value;
-      this.updateUser(this.user);
+      this.updateUser(this.user, false);
     },
     updateConfigs(){
       this.configs.updateMyself();
@@ -569,10 +573,10 @@ export default {
       this.configs.setMainColor(color);
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
-    updateUser(userData) {
-      // console.log('user update', userData);
+    updateUser(userData, notSync) {
+      console.log('user update', userData);
       // todo saveIntoDatabase
-      if(this.syncUser) {
+      if(this.syncUser && !notSync) {
         this.doUpdateUserAsync();
       }
       this.user = userData;
@@ -622,21 +626,25 @@ export default {
         localStorage.setItem("configs", JSON.stringify(this.configs));
 
         this.getUserData();
+
+        // update localStorage when language changes as well
+        this.updateUser(this.user, true);
       }
       // console.log("finished lupdate")
     },
     updateName(name) {
-      if (this.user instanceof UserModel) {
+      if (this.user instanceof UserModel && name != this.user.mame) {
         this.user.setName(name);
-      } else if (typeof this.user !== 'undefined' && this.user !== null) {
+        this.updateUser(this.user, false);
+      } else if (typeof this.user !== 'undefined' && this.user !== null && name != this.user.mame) {
         const userFromModer = new UserModel();
         userFromModer.constructorObject(this.user);
         // userFromModer.setName(name);
         this.user = userFromModer;
+        this.updateUser(this.user, false);
       } else {
         console.error('Unexpected user type or value:', typeof this.user, this.user);
       }
-      this.updateUser(this.user);
     },
     setFont(fnt) {
       this.font = fnt;
@@ -979,18 +987,19 @@ export default {
     },
     getUserData() {
       try {
-        const lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
-        // console.log('found')
-        // console.log(lsUser)
+        let lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
+        console.log('found')
+        console.log(lsUser)
         if(lsUser == null) {
           lsUser = JSON.parse(localStorage.getItem("user"));
         }
         if(lsUser != null) {
           let userFromModer = new UserModel();
           userFromModer = userFromModer.constructorObject(lsUser);
+          userFromModer.language = this.configs.getLanguage();
           this.user = userFromModer;
-          // console.log('set')
-          // console.log(this.user)
+          console.log('set')
+          console.log(this.user)
         }
       }catch (err) {
         // console.log(err);
@@ -1281,6 +1290,7 @@ export default {
     }
   }
 };
+
 </script>
 
 <style>

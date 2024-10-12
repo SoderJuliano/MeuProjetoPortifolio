@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DRAGONITE_ENV, DRAGONITE_ENV2, setDragoniteEnv } from '../configs/envs.js';
 
-let apiUrl = DRAGONITE_ENV;
+let apiUrl = DRAGONITE_ENV2;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -20,9 +20,9 @@ export async function getLastEnvUrl() {
 
       // Update DRAGONITE_ENV if content exists in the last notification
       if (lastNotification && lastNotification.content) {
-        setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
+        // setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
         console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
-        apiUrl = lastNotification.content;
+        // apiUrl = lastNotification.content;
       } else {
         console.error('No valid content found in the last notification.');
       }
@@ -72,11 +72,12 @@ export function saveLogin(email, password, userId) {
   });
 }
 
-export function loginUser(email, userId, password) {
+export function loginUser(email, userId, password, language) {
   const login = {
     "email": email,
     "password":  password,
-    "userId": userId
+    "userId": userId,
+    "language": language
   }
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
@@ -92,7 +93,7 @@ export function loginUser(email, userId, password) {
   });
 }
 
-export function saveUserInfosInDataBase(user, newUser) {
+export function saveUserInfosInDataBase(user, newUser, language) {
   let phoneNumbers = [];
   let emails = [];
 
@@ -136,7 +137,8 @@ export function saveUserInfosInDataBase(user, newUser) {
         },
         "address": user?.contact?.address ? user?.contact?.address : null,
       },
-      "userExperiences": user?.userExperiences
+      "userExperiences": user?.userExperiences,
+      "language": language
     }
 
     const headers = {
@@ -169,10 +171,11 @@ export function saveUserInfosInDataBase(user, newUser) {
 }
 
 
-export function updateUser(name, email) {
+export function updateUser(name, email, language) {
   const data = {
     name,
     email,
+    language
   };
 
   const headers = {
@@ -196,13 +199,17 @@ export function updateUser(name, email) {
   });
 }
 
-export function requestDelete(id, email) {
+export function requestDelete(id, email, language) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
 
-  return axios.patch(`${apiUrl}/user/request/${id}/${email}/delete`, null, { headers }).then((response) => {
+  const data = {
+    "language": language
+  }
+
+  return axios.patch(`${apiUrl}/user/request/${id}/${email}/delete`, data, { headers }).then((response) => {
     // console.log('chamada DELETE executada');
     // console.log(response.data);
     return response;
@@ -226,11 +233,16 @@ export function deleteUser(id, token) {
   });
 }
 
-export function activateAccount(id, token, email) {
+export function activateAccount(id, token, email, language) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
+
+  const data = {
+    "language" : language
+  }
+
 // /activate/{id}/{code}
   return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, null, { headers }).then((response) => {
     return response;
