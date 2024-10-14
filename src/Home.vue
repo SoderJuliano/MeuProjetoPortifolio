@@ -366,7 +366,7 @@ export default {
       try {
         const token = $("#input-token").val();
         const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0], this.configs.getLanguage());
-        console.log("response:", response);
+        // console.log("response:", response);
 
         if (response && response?.status === 200) {
           // Handle success
@@ -421,8 +421,8 @@ export default {
       this.showAlertError = false
     },
     registerUser(id, newUser) {
-      console.log('id', id)
-      console.log('newUser', newUser)
+      // console.log('id', id)
+      // console.log('newUser', newUser)
       if(this.user?._id == id) {
         this.inlogin = false;
       }else if (this.user?._id?.length < 24 && this.user?._id != id) {
@@ -518,12 +518,12 @@ export default {
 
     },
     handleUpdateFormacao(value) {
-      console.log(value)
+      // console.log(value)
       this.user.grade = value;
       this.updateUser(this.user, false);
     },
     handleUpdateSocial(value) {
-      console.log("handleUpdateSocial", value)
+      // console.log("handleUpdateSocial", value)
       this.user.social = value;
       this.updateUser(this.user, false);
     },
@@ -583,7 +583,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData, notSync) {
-      console.log('user update', userData);
+      // console.log('user update', userData);
       // todo saveIntoDatabase
       if(this.syncUser && !notSync) {
         this.doUpdateUserAsync();
@@ -595,9 +595,9 @@ export default {
       let userFromModel = new UserModel();
         userFromModel = userFromModel.constructorObject(this.user);
         const response = await userFromModel.saveIntoDatabase(false);
-        console.log('user on update user', response);
+        // console.log('user on update user', response);
         if(response.status != 200) {
-          console.log('user on update user status', response.status);
+          // console.log('user on update user status', response.status);
           this.syncUser = false;
         }
     },
@@ -621,10 +621,10 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
       if(this.configs.getTemplate() == 2) {
         $(".footer .close-bnt").css({"right": "60px"})
-        console.log('set t2')
+        // console.log('set t2')
       }else {
         $(".footer .close-bnt").css({"right": "30px"})
-        console.log('set t1')
+        // console.log('set t1')
       }
     },
     lupdate(lng) {
@@ -997,8 +997,8 @@ export default {
     getUserData() {
       try {
         let lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
-        console.log('found')
-        console.log(lsUser)
+        // console.log('found')
+        // console.log(lsUser)
         if(lsUser == null) {
           lsUser = JSON.parse(localStorage.getItem("user"));
         }
@@ -1007,8 +1007,8 @@ export default {
           userFromModer = userFromModer.constructorObject(lsUser);
           userFromModer.language = this.configs.getLanguage();
           this.user = userFromModer;
-          console.log('set')
-          console.log(this.user)
+          // console.log('set')
+          // console.log(this.user)
         }
       }catch (err) {
         // console.log(err);
@@ -1289,13 +1289,40 @@ export default {
     this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
   },
-  mounted() {
-    this.configs.setIconsCollor();
-    if (this.user?._id?.length == 24) {
-      this.inlogin = true;
-      this.inOnboarding = false;
-    } else {
+  async mounted() {
+    try {
+      const res = await funcs.ping();
+
+      this.configs.setIconsCollor();
+
+      const isUserIdValid = this.user?._id?.length === 24;
+      const isConnected = !!res.data;
+
+      if (isUserIdValid && isConnected) {
+        this.inlogin = true;
+        this.inOnboarding = false;
+      } else {
+        this.inlogin = false;
+        const lng = JSON.parse(localStorage.getItem("configs")).language;
+        this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes ("en") ? "No connection" : "Sem conexão",
+          "content": lng.includes("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
+          "language": this.lang,
+          "read": false
+        }
+      }
+    } catch (error) {
+      console.error('Error during ping:', error);
       this.inlogin = false;
+      const lng = JSON.parse(localStorage.getItem("configs")).language;
+      this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes("en") ? "No connection" : "Sem conexão",
+          "content": lng.includes ("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
+          "language": this.lang,
+          "read": false
+        }
     }
   }
 };

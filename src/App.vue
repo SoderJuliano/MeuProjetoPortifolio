@@ -22,7 +22,7 @@ export default {
     },
     async mounted() {
         const uri = window.location.href;
-        console.log(uri);
+        // console.log(uri);
         if(uri == 'http://localhost:8080/#' || 'http://localhost:8080/' || uri == 'https://custom-cv-online.netlify.app/') {
             this.activeComp = 'Home';
         }else if(uri.includes('recover/password')) {

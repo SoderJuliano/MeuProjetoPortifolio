@@ -290,3 +290,14 @@ export function setNewPassword(id, password, token) {
     throw error;
   });
 }
+
+export async function ping() {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return await axios.get(`${apiUrl}/ping`, { headers }).then((response) => {
+    return response;
+  });
+}
