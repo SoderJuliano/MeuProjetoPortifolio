@@ -1,4 +1,6 @@
 <template>
+<!-- 
+  <button @click="testMethod">test alert here</button> -->
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -21,10 +23,11 @@
   </SimpleAlerts>
 
   <SimpleAlerts
+    ref="alertComponent"
     @close="closeSimpleAlert"
     :title="alertTitle"
     :message="alertMessage"
-    :show="showAlert"
+    
     >
   </SimpleAlerts>
 
@@ -225,16 +228,17 @@ import * as funcs from "./components/configs/requests.js";
 import * as functions from "./components/componentesCompartilhados/utilJS/functions.js";
 import diagramsModal from "./components/tips/diagramsModal.vue";
 import SimpleAlerts from 'simple-alerts';
+import { showAlert } from 'simple-alerts/dist/showAlert.js'
 import 'simple-alerts/dist/simpleAlertsVue.css';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
-import User from "./model/userModel.js";
 
 export default {
   name: "Home",
   emits: ["close"],
   data() {
     return {
+      alertComponent: null,
       syncUser: false,
       logedIn: false,
       globalModalTitle: '',
@@ -310,6 +314,9 @@ export default {
     GlobalModal,
   },
   methods: {
+    // testMethod() {
+    //   showAlert("hello world")
+    // },
     async resetPassword() {
       try {
         // Make the API call to reset the password
@@ -1290,6 +1297,15 @@ export default {
     this.getUserData();
   },
   async mounted() {
+    
+    console.log(this.$refs.alertComponent);  // Verifique se está retornando o componente corretamente
+    // Verifique se o método alert está acessível
+    if (typeof this.$refs.alertComponent.alert === 'function') {
+      console.log('Método alert disponível');
+    } else {
+      console.log('Método alert não disponível');
+    }
+
     try {
       const res = await funcs.ping();
 
