@@ -280,6 +280,7 @@ img{
         overflow-y: scroll;
         cursor: pointer;
         right: 0;
+        margin-top: 50px;
     }
     .multiMenu::-webkit-scrollbar {
         width: 16px;
