@@ -172,7 +172,7 @@
     <div class="footer">
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-down.png" alt="menu up"/>
       <span class="footer-mobile-title">FreeHubCV</span>
-      <div class="footer-menu-bar" style="display: none;" >
+      <div class="footer-menu-bar" style="display: none; position: relative;" >
         <Footer
           :language="this.configs.getLanguage()"
           @language-update="lupdate"
@@ -574,10 +574,33 @@ export default {
       $('.iconsChooser').css({'display': 'flex'})
     },
     footerUp() {
-      $(".footer-menu-bar").css("display", "block");
-      $(".menuupimg").css("display", "none");
-      $(".menuupimg-down").css("display", "block");
+      // Hide the 'up' image smoothly
+      $(".menuupimg").fadeOut(100);
+
+      // Show the 'down' image smoothly
+      $(".menuupimg-down").fadeIn(500);
+
+      // Show the footer-menu-bar and animate it sliding in from left to right
+      $(".footer-menu-bar")
+        .css({
+          "display": "block",  // Make it visible
+          "left": "-100%",     // Start from off-screen
+          "width": "20dvw"
+        })
+        .animate({
+          left: "0%",           // Animate to fully visible position
+          width: "100dvw"
+        }, 1000);               // 500ms animation
+
+        $(".footer-mobile-title").css({
+          "left": "30%"
+        })
     },
+    // footerUp() {
+    //   $(".footer-menu-bar").css("display", "block");
+    //   $(".menuupimg").css("display", "none");
+    //   $(".menuupimg-down").css("display", "block");
+    // },
     changefont(newFont) {
       this.configs.setFont(newFont);
       localStorage.setItem("configs", JSON.stringify(this.configs));

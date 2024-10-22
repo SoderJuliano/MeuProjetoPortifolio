@@ -67,6 +67,9 @@ export default {
             $(".footer-menu-bar").css("display", "none");
             $(".menuupimg").css("display", "block");
             $(".menuupimg-down").css("display", "none");
+            $(".footer-mobile-title").css({
+                "left": "30%"
+            })
         },
         changefontM(p){
             // formas
@@ -219,7 +222,7 @@ export default {
 .footer span {
     padding: 5px;
     width: 60px;
-    margin: auto 40px;
+    margin: auto 10px;
     border: solid 1px black;
     border-radius: 15px;
     text-align: center;
@@ -243,7 +246,6 @@ img{
 .close-bnt {
     right: 30px;
     width: 40px;
-    position: absolute;
     justify-content: center;
 }
 .multiMenu{
@@ -253,6 +255,7 @@ img{
     bottom: 20px;
     background-color: white;
     top: 0px;
+    right: 0;
     z-index: 10;
 }
 /* 
@@ -267,14 +270,16 @@ img{
     .multiMenu-options.multiMenu{
         position: relative;
         padding: 10px;
-        width: 90vw;
+        width: 100dvw;
         height: calc(100% - 40px);
         position: fixed;
         bottom: 20px;
         top: 0%;
+        left: 0;
         z-index: 10;
         overflow-y: scroll;
         cursor: pointer;
+        right: 0;
     }
     .multiMenu::-webkit-scrollbar {
         width: 16px;

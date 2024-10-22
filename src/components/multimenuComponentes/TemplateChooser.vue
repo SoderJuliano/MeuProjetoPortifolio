@@ -46,10 +46,11 @@ button img {
     height: 80px;
 }
 
-.select-template{
+.select-template {
     display: flex;
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-top: 55px;
 }
 </style>
