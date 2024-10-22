@@ -170,7 +170,8 @@
       />
     </div>
     <div class="footer">
-      <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
+      <img class="menuupimg" @click="footerUp" src="./assets/arrow-down.png" alt="menu up"/>
+      <span class="footer-mobile-title">FreeHubCV</span>
       <div class="footer-menu-bar" style="display: none;" >
         <Footer
           :language="this.configs.getLanguage()"
@@ -1403,7 +1404,9 @@ export default {
 
   .footer {
     position: fixed;
-    bottom: 0;
+    /* width: 93dvw !important; */
+    left: 0;
+    top: 0;
     background-color: #FFF;
     width: 100%;
     height: 40px;
@@ -1421,6 +1424,13 @@ export default {
 
   .menuupimg-down {
     display: none;
+  }
+
+  .menuupimg {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    margin-top: 10px;
   }
 
 }
@@ -1573,14 +1583,31 @@ body{
   0%{
     transform: scale(0.8);
   }
-  
+
   50%{
     transform: scale(1.2);
   }
-  
+
   100%{
     transform: scale(0.8);
   }
 }
 
+</style>
+<style scoped>
+.footer-mobile-title {
+  align-self: center;
+  position: relative;
+}
+
+@media screen and (min-width: 500px) {
+  .footer-mobile-title {
+    left: 40%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .footer-mobile-title {
+    left: 30%;
+  }
+}
 </style>

@@ -21,7 +21,7 @@
         <imprimir
             class="imprimirbotao"
         />
-        <img class="menuupimg-down" @click="menuDown" src="../assets/arrow-down.png" alt="menu down"/>
+        <img class="menuupimg-down" @click="menuDown" src="../assets/arrow-up.png" alt="menu down"/>
     </div>
 </template>
 
