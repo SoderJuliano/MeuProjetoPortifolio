@@ -428,9 +428,11 @@ export default {
       this.showAlert = false
       this.showAlertError = false
     },
-    registerUser(id, newUser) {
-      // console.log('id', id)
+    registerUser(data, newUser) {
+      // console.log('id agora data', data)
       // console.log('newUser', newUser)
+
+      const id = data._id;
       if(this.user?._id == id) {
         this.inlogin = false;
       }else if (this.user?._id?.length < 24 && this.user?._id != id) {
@@ -449,7 +451,7 @@ export default {
       }else if(this.user?._id?.length == 24 && newUser) {
         // Precisa atualizar o id aqui, caso contrario a request
         // pra cadastrar o login pode ir com id errado
-        this.user._id = id;
+        this.updateUser(data, true);
         this.inOnboarding = true;
         this.inlogin = true;
       }

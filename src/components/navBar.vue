@@ -301,10 +301,10 @@ export default {
                 //todo aqui
                 this.isANewUser = true;
                 this.showAlertComponent(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
-                this.$emit('register-user', response.data.content._id, this.isANewUser);
+                this.$emit('register-user', userFromModel.constructorObject(response.data.content), this.isANewUser);
               } else if (response.status == 200) {
                 this.isANewUser = false;
-                this.$emit('register-user', response.data.content._id, this.isANewUser);
+                this.$emit('register-user', userFromModel.constructorObject(response.data.content), this.isANewUser);
               }
             }
           }else {

@@ -381,7 +381,7 @@ export default {
             endereco += endereco.split("").length > 0 ? "." : "";
             endereco = endereco.replaceAll(", .", ".");
 
-            this.userData.contact.adress = endereco;
+            this.userData.contact.address = endereco;
 
             this.updateUser()
         },
