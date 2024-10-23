@@ -18,7 +18,7 @@
     :message="alertMessage"
     :customProperties="alert"
     custom="true"
-    :show="showAlertError"
+    show="showAlertError"
     >
   </SimpleAlerts>
 
@@ -447,6 +447,9 @@ export default {
         this.inOnboarding = false;
         this.inlogin = true;
       }else if(this.user?._id?.length == 24 && newUser) {
+        // Precisa atualizar o id aqui, caso contrario a request
+        // pra cadastrar o login pode ir com id errado
+        this.user._id = id;
         this.inOnboarding = true;
         this.inlogin = true;
       }
@@ -1321,7 +1324,6 @@ export default {
     this.getUserData();
   },
   async mounted() {
-    
     console.log(this.$refs.alertComponent);  // Verifique se está retornando o componente corretamente
     // Verifique se o método alert está acessível
     if (typeof this.$refs.alertComponent.alert === 'function') {

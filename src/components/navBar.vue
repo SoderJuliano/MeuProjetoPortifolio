@@ -238,9 +238,9 @@ export default {
             }, 3000);
             return;
         }
-        let userFromModer = new UserModel();
-        userFromModer = userFromModer.constructorObject(this.user);
-        const response = await userFromModer.requestDeleteThisUser();
+        let userFromModel = new UserModel();
+        userFromModel = userFromModel.constructorObject(this.user);
+        const response = await userFromModel.requestDeleteThisUser();
         if(response && response.status == 200) {
             this.$emit("check-abra-messages");
             this.showAlertComponent(
@@ -274,15 +274,16 @@ export default {
         const confirmed = confirm(this.getAlertConfirmText());
 
         if (confirmed) {
-          let userFromModer = new UserModel();
-          userFromModer = userFromModer.constructorObject(this.user);
-          if(userFromModer.getEmails() == null || userFromModer.getEmails().length == 0) {
+          let userFromModel = new UserModel();
+          userFromModel = userFromModel.constructorObject(this.user);
+          const emails = Array.from(userFromModel.getEmails());
+          if (emails == null || emails.length === 0) {
             this.showAlertComponent("Error", this.getErroSalvarNoBancoSemInfos());
             return;
           }
-          if(userFromModer instanceof UserModel) {
+          if(userFromModel instanceof UserModel) {
             let response;
-            response = await userFromModer.saveIntoDatabase(this.isANewUser);
+            response = await userFromModel.saveIntoDatabase(this.isANewUser);
             if (response) {
               // console.log('response from backend stats -->', response);
               if (response.status == 422) {
@@ -297,6 +298,7 @@ export default {
                   this.dbSave();
                 }, 200);
               } else if(response.status == 201) {
+                //todo aqui
                 this.isANewUser = true;
                 this.showAlertComponent(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
                 this.$emit('register-user', response.data.content._id, this.isANewUser);
@@ -331,7 +333,8 @@ export default {
       },
       getAlertConfirmText() {
         return this.getLanguage() == 'us-en' ?
-        "Is Ok save all yor information in our database?" : "Podemos salvar todas suas informações em nosso banco de dados?"
+        "Is Ok save all yor information in our database?" 
+        : "Podemos salvar todas suas informações em nosso banco de dados?"
       },
       exemplesText(){
         return this.getLanguage() == 'us-en' ? "See more" : "Mais Exemplos"
