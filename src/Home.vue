@@ -1,6 +1,4 @@
 <template>
-<!-- 
-  <button @click="testMethod">test alert here</button> -->
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -18,16 +16,15 @@
     :message="alertMessage"
     :customProperties="alert"
     custom="true"
-    show="showAlertError"
+    :show="showAlertError"
     >
   </SimpleAlerts>
 
   <SimpleAlerts
-    ref="alertComponent"
     @close="closeSimpleAlert"
     :title="alertTitle"
     :message="alertMessage"
-    
+    :show="show"
     >
   </SimpleAlerts>
 
@@ -231,6 +228,7 @@ import diagramsModal from "./components/tips/diagramsModal.vue";
 import SimpleAlerts from 'simple-alerts';
 import { showAlert } from 'simple-alerts/dist/showAlert.js'
 import 'simple-alerts/dist/simpleAlertsVue.css';
+import AlertComponent from 'simple-alerts';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
 
@@ -257,7 +255,7 @@ export default {
         closeButtonText: 'Close',
       },
       customAlert: false,
-      showAlert: false,
+      show: false,
       showAlertError: false,
       diagram: null,
       showDiagramsModal: false,
@@ -313,6 +311,7 @@ export default {
     SimpleAlerts,
     Loader,
     GlobalModal,
+    AlertComponent
   },
   methods: {
     // testMethod() {
@@ -419,13 +418,13 @@ export default {
       this.inlogin = true
     },
     showAlertToTrue() {
-      if(!this.showAlert) {this.showAlert = true}
+      if(!this.showAlert) {this.show = true}
     },
     showAlertErrorToTrue(){
       this.showAlertError = true
     },
     closeSimpleAlert() {
-      this.showAlert = false
+      this.show = false
       this.showAlertError = false
     },
     registerUser(data, newUser) {
@@ -493,21 +492,21 @@ export default {
             {"email": email[0], "password": password, "userId": this.user._id, "language" : this.configs.getLanguage()}
           );
         }
-        // console.log('response from backend login -->', responseUser);
+        console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {
           // true notSync, login should not call bk unnecessary
           this.updateUser(responseUser, true)
           // when login then we can tur on sycn, not before to not make an unecessary
           // PUT request to update user into backend
           this.toggleSync(true);
-          // console.log('response app', responseUser)
+          console.log('response app', responseUser)
           this.alertTitle = "Bem vindo de volta!";
           this.alertMessage = "Você já possui uma conta no CustomCV!";
           this.showAlertToTrue();
           this.inlogin = false;
           this.logedIn = true;
         }else if (responseUser == null) {
-          // console.log('response app', responseUser)
+          console.log('response app', responseUser)
           this.alertTitle = "Erro ao fazer login";
           this.alertMessage = "Email ou senha inválidos";
           this.showAlertErrorToTrue();
@@ -1326,14 +1325,6 @@ export default {
     this.getUserData();
   },
   async mounted() {
-    console.log(this.$refs.alertComponent);  // Verifique se está retornando o componente corretamente
-    // Verifique se o método alert está acessível
-    if (typeof this.$refs.alertComponent.alert === 'function') {
-      console.log('Método alert disponível');
-    } else {
-      console.log('Método alert não disponível');
-    }
-
     try {
       const res = await funcs.ping();
 
@@ -1341,13 +1332,14 @@ export default {
 
       const isUserIdValid = this.user?._id?.length === 24;
       const isConnected = !!res.data;
-
+      const lng = JSON.parse(localStorage.getItem("configs")).language;
       if (isUserIdValid && isConnected) {
         this.inlogin = true;
         this.inOnboarding = false;
+        const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
+        showAlert(malert);
       } else {
         this.inlogin = false;
-        const lng = JSON.parse(localStorage.getItem("configs")).language;
         this.newTipMessege = {
           "id": Math.random(),
           "title": lng.includes ("en") ? "No connection" : "Sem conexão",
@@ -1360,6 +1352,8 @@ export default {
       console.error('Error during ping:', error);
       this.inlogin = false;
       const lng = JSON.parse(localStorage.getItem("configs")).language;
+      const malert = lng.includes("en") ? "No conection with the server" : "Sem conexão com o servidor";
+      showAlert(malert);
       this.newTipMessege = {
           "id": Math.random(),
           "title": lng.includes("en") ? "No connection" : "Sem conexão",

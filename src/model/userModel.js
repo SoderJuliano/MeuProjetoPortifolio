@@ -193,14 +193,16 @@ export default class User {
     }
 
     findAndRetrieveInfos(language) {
-        const en = localStorage.getItem('user-en');
-        const pt = localStorage.getItem('user-pt');
-        if(language == null) {
-            return en ? en : pt;
-        }else if(language == 'user-en') {
-            return en;
-        }else {
-            return pt;
+        let lan = null;
+        if(language === 'us-en') {
+            lan = 'user-en';
+        }else if(language === 'pt-br') {
+            lan = 'user-pt';
+        }else if (language === 'user-en' || language === 'user-pt') {
+            lan = language;
         }
+
+        const user  = localStorage.getItem(lan);
+        return JSON.parse(user);
     }
 }

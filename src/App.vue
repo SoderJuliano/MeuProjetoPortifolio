@@ -13,7 +13,8 @@ export default {
         Home,
         PasswordReset,
         NotFound
-    },data() {
+    },
+    data() {
         return {
             activeComp: null,
             componentProps: {},
@@ -22,17 +23,21 @@ export default {
     },
     async mounted() {
         const uri = window.location.href;
-        // console.log(uri);
-        if(uri == 'http://localhost:8080/#' || 'http://localhost:8080/' || uri == 'https://custom-cv-online.netlify.app/') {
+        console.log(uri);
+
+        if (uri === 'http://localhost:8080/#' ||
+            uri === 'http://localhost:8080/' ||
+            uri === 'https://custom-cv-online.netlify.app/') {
             this.activeComp = 'Home';
-        }else if(uri.includes('recover/password')) {
+        } else if (uri.includes('recover/password')) {
             this.newPassword = uri.split('newPasswordToken=')[1];
             this.activeComp = PasswordReset;
             this.componentProps = { newPassword: this.newPassword };
-        }else {
+        } else {
             this.activeComp = 'NotFound';
         }
-        await await funcs.getLastEnvUrl();
+
+        await funcs.getLastEnvUrl();
     }
 }
 </script>

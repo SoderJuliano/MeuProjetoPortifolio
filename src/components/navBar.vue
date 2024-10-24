@@ -40,7 +40,9 @@
                     <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
                     <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
                     <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
-                    <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">{{this.getResetPasswordText()}}</a>
+                    <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">
+                      {{this.getResetPasswordText()}}
+                    </a>
                     <a v-on:click="deleteLocalData()" class="dropdown-item" href="#">{{ getDeleteLocalData() }}</a>
                   </div>
                   </li>
