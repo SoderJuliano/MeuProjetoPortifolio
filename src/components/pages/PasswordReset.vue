@@ -121,7 +121,6 @@
     const submitNewPassword = async () => {
         try {
             const u = new UserModel();
-            console.log(selectedLanguage.value)
             let us = u.findAndRetrieveInfos(selectedLanguage.value);
 
             const response = await setNewPassword(us._id, password.value, window.location.href.split('newPasswordToken=')[1]);
