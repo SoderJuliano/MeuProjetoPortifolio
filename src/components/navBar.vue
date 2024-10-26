@@ -327,6 +327,7 @@ export default {
         this.alertTitle = title;
         this.alertMessage = message;
         this.showAlert = true;
+        this.forceCloseAlerts();
       },
       getErroSalvarNoBancoSemInfos() {
         return this.getLanguage() == 'us-en' ?
@@ -414,6 +415,11 @@ export default {
         this.alertMessage = text;
         this.alertTitle = 'INFO'
         this.showAlert = true;
+      },
+      forceCloseAlerts() {
+        setTimeout(() => {
+          this.showAlert = false;
+        }, 3000);
       },
       aboutMe(){
         window.open("https://www.linkedin.com/in/julianosoder/");

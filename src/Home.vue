@@ -9,7 +9,10 @@
       <button id="submit-token" @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
     </div>
     </GlobalModal>
+
+  <!-- A LOADER -->
   <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
+
   <SimpleAlerts
     @close="closeSimpleAlert"
     :title="alertTitle"
@@ -619,6 +622,7 @@ export default {
     },
     updateUser(userData, notSync) {
       // console.log('user update', userData);
+      // console.log("not sync", notSync)
       // todo saveIntoDatabase
       if(this.syncUser && !notSync) {
         this.doUpdateUserAsync();
@@ -627,14 +631,16 @@ export default {
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     async doUpdateUserAsync() {
+      this.loading = true;
       let userFromModel = new UserModel();
         userFromModel = userFromModel.constructorObject(this.user);
         const response = await userFromModel.saveIntoDatabase(false);
-        // console.log('user on update user', response);
+        console.log('user on update user', response);
         if(response.status != 200) {
-          // console.log('user on update user status', response.status);
+          console.log('user on update user status', response.status);
           this.syncUser = false;
         }
+      this.loading = false;
     },
     adicionarExperiencias(experiencias) {
       this.user.userExperiences = experiencias;

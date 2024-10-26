@@ -39,8 +39,12 @@
                 @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')" />
             <p class="multimenu-line"></p>
         </div>
-        <div class="option">
+        <div v-if="mobileOptions" class="option">
             <p class="tside" @click="$emit('login')" >LOGIN</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div @click="update(this.user)" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "SAVE" : "SALVAR" }}</p>
             <p class="multimenu-line"></p>
         </div>
     </div>
@@ -75,8 +79,26 @@ export default {
     methods: {
         update(val) {
             this.$emit("update-user", val);
+        },
+        checkWindowWidth() {
+            this.mobileOptions = window.innerWidth < 720;
+        },
+        isEnglish() {
+            return this.language.includes("en");
         }
-    }
+    },
+    data() {
+        return {
+            mobileOptions: false
+        }
+    },
+    mounted() {
+        this.checkWindowWidth();
+        window.addEventListener('resize', this.checkWindowWidth); // Update on window resize
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.checkWindowWidth); // Clean up the event listener
+    },
 };
 </script>
 <style scoped>

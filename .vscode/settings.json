@@ -19,5 +19,9 @@
         "titleBar.inactiveForeground": "#e7e7e799",
         "commandCenter.border": "#e7e7e799"
     },
-    "peacock.color": "#2F4F4F"
+    "peacock.color": "#2F4F4F",
+
+    // Adicione as configurações de fonte aqui
+    "editor.fontFamily": "'Cascadia Code NF', 'Cascadia Code', 'Courier New', monospace",
+    "editor.fontLigatures": true
 }

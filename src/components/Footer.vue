@@ -58,7 +58,7 @@ export default {
             }, 500);
         },
         update(val) {
-            this.$emit("update-user", val);
+            this.$emit("update-user", val, false);
             $(".footer-menu-bar").css("display", "none");
             $(".menuupimg").css("display", "block");
             $(".menuupimg-down").css("display", "none");
