@@ -280,8 +280,7 @@ export default {
       // user: new userModel() futuro trabalhar com classes
       user:
       {
-        id: Math.floor(Math.random() * 1000),
-        _id: "",
+        _id: Math.floor(Math.random() * 1000).toString(),
         name: "",
         profession: "",
         resume: "",
@@ -376,7 +375,7 @@ export default {
       try {
         const token = $("#input-token").val();
         const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0], this.configs.getLanguage());
-        // console.log("response:", response);
+        console.log("response:", response);
 
         if (response && response?.status === 200) {
           // Handle success

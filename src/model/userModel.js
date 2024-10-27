@@ -1,6 +1,5 @@
 import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelete } from '../components/configs/requests';
 export default class User {
-    id = 0;
     _id = "";
     name = this.getNameFromLocalStorage();
     profession = "";
@@ -53,7 +52,7 @@ export default class User {
     }
 
     constructor() {
-        this.id = this.id == 0 ? Math.random() : this.id;
+        this._id = this._id == 0 ? Math.random().toString() : this._id;
     }
 
     async requestDeleteThisUser() {
@@ -78,7 +77,14 @@ export default class User {
 
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
-        return await saveUserInfosInDataBase(this, newUser, this.language);
+        const configs = JSON.parse(localStorage.getItem('configs'));
+        let lan = null;
+        if(!this.language || this.language === '') {
+            lan = configs.language;
+        }else {
+            lan = this.language;
+        }
+        return await saveUserInfosInDataBase(this, newUser, lan);
     }
 
     async firstLogin(email, password) {
@@ -109,8 +115,13 @@ export default class User {
     }
     updator(user)
     {
-        this.id = user.id;
-        this._id = user._id ? user._id : "";
+        if(user._id && user._id.length === 24) {
+            this._id = user._id;
+        }else if(user.id && user.id.length === 24) {
+            this._id = user.id;
+        }else {
+            this._id = "";
+        }
         this.profession = user.profession;
         this.resume = user.resume;
         this.competence = user.competence;
@@ -129,7 +140,7 @@ export default class User {
     }
 
     getId() {
-        return this._id ? this._id : this.id;
+        return this._id;
     }
 
     getEmails() {
