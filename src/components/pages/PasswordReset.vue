@@ -4,8 +4,10 @@
         <!-- Select para escolha do idioma -->
     <div class="language-select">
         <label for="language">
-            {{selectedLanguage === 'pt-br' ? 'Selecione o idioma:' : 'Select Language:'}}</label>
-        <select id="language" v-model="selectedLanguage" 
+            {{selectedLanguage === 'pt-br' ? 'Idioma: ' : 'Language: '}}</label>
+        <select id="language"
+        v-model="selectedLanguage"
+        disabled
         @change="changeLanguage">
             <option value="en-us">English (US)</option>
             <option value="pt-br">Português (BR)</option>

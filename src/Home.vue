@@ -1463,6 +1463,7 @@ export default {
 @media screen and (min-width: 1001px) {
   .template {
     margin: 0 auto;
+    max-width: 1200px;
   }
   .main {
     display: flex;

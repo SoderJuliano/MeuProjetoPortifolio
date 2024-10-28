@@ -636,6 +636,7 @@ li img {
   position: relative;
 }
 .navbar {
+  max-width: 1000px;
   justify-content: center;
   padding: 10px;
   height: 100%;
