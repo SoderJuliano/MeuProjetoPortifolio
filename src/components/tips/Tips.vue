@@ -50,11 +50,13 @@ export default {
         deleteTip(item, index) {
             if(item.local) {
                 this.tips.splice(index, 1);
+                localStorage.setItem('deletedDefaultNotifications'+'-'+item.language, true);
+                localStorage.setItem('tips', JSON.stringify(this.tips))
             }else {
                 const headers = {
                 'Content-Type': 'application/json',
                 };
-                const isDragoniteTip = index > 6 || item.content.includes("[en]")
+                const isDragoniteTip = !item.local
                 let data = {
                     "id": String(item.id),
                     "key": isDragoniteTip ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
@@ -69,7 +71,7 @@ export default {
                 axios.delete(`/notifications/delete`, { headers, data })
                 .then(() => {
                     this.tips.splice(index, 1);
-                    localStorage.setItem('deletedDefaultNotifications', true);
+                    localStorage.setItem('deletedDefaultNotifications'+'-'+item.language, true);
                 })
                 .catch(error => {
                     console.error('Error deleting tip:', error);
@@ -99,12 +101,14 @@ export default {
                 if (tip.id == event.id) {
                     tip.read = true;  // Mark as read locally
 
-                    // Attempt to mark it as read on the backend
-                    axios.patch(`/notifications/${tip.id}`)
+                    if(!tip.local) {
+                        // Attempt to mark it as read on the backend
+                        axios.patch(`/notifications/${tip.id}`)
                         .catch(error => {
                             // If there's an error (like the notification doesn't exist), handle it silently
                             console.error(`Notification with id ${tip.id} does not exist on the backend.`);
                         });
+                    }
                 }
             });
 

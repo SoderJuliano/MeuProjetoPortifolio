@@ -588,6 +588,7 @@ export default {
   margin-top: 10px;
   text-align: center;
   padding: 5px;
+  min-height: 30px;
 }
 
 .data-container {
