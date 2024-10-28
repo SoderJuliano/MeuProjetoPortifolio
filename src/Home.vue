@@ -1350,7 +1350,8 @@ export default {
           "title": lng.includes ("en") ? "No connection" : "Sem conexão",
           "content": lng.includes("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
           "language": this.lang,
-          "read": false
+          "read": false,
+          "local": true
         }
       }
     } catch (error) {
@@ -1364,7 +1365,8 @@ export default {
           "title": lng.includes("en") ? "No connection" : "Sem conexão",
           "content": lng.includes ("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
           "language": this.lang,
-          "read": false
+          "read": false,
+          "local": true
         }
     }
   }

@@ -46,30 +46,35 @@ export default {
         keyDragonite: String,
     },
     methods: {
+        // Caso seja uma mensagem de altera local, não vai chamar a api
         deleteTip(item, index) {
-            const headers = {
-                'Content-Type': 'application/json',
-            };
-            const isDragoniteTip = index > 6 || item.content.includes("[en]")
-            let data = {
-                "id": String(item.id),
-                "key": isDragoniteTip ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
-            };
-            if (item.appUrl) {
-                data.appUrl = String(item.appUrl);
-            }
-            if (item.user) {
-                data.user = String(item.user);
-            }
-
-            axios.delete(`/notifications/delete`, { headers, data })
-            .then(() => {
+            if(item.local) {
                 this.tips.splice(index, 1);
-                localStorage.setItem('deletedDefaultNotifications', true);
-            })
-            .catch(error => {
-                console.error('Error deleting tip:', error);
-            });
+            }else {
+                const headers = {
+                'Content-Type': 'application/json',
+                };
+                const isDragoniteTip = index > 6 || item.content.includes("[en]")
+                let data = {
+                    "id": String(item.id),
+                    "key": isDragoniteTip ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
+                };
+                if (item.appUrl) {
+                    data.appUrl = String(item.appUrl);
+                }
+                if (item.user) {
+                    data.user = String(item.user);
+                }
+
+                axios.delete(`/notifications/delete`, { headers, data })
+                .then(() => {
+                    this.tips.splice(index, 1);
+                    localStorage.setItem('deletedDefaultNotifications', true);
+                })
+                .catch(error => {
+                    console.error('Error deleting tip:', error);
+                });
+            }
         },
         asTipToShow(){
             let ptbrTips = []
@@ -145,7 +150,8 @@ export default {
             title: newMessage.title,
             content: newMessage.content,
             language: this.lang,
-            read: false
+            read: false,
+            local: newMessage?.local
             };
             // Create a new array reference to trigger reactivity
             this.tips = [...this.tips, newTip];
