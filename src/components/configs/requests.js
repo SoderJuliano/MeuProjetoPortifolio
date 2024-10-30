@@ -91,6 +91,8 @@ export function loginUser(email, userId, password, language) {
 
   return axios.post(`${apiUrl}/user/login`, login, { headers }).then((response) => {
     console.log("register newLogin response ", response);
+    const token = response.headers['token'];
+    document.cookie = `jwt=${token}; path=/; max-age=${7 * 24 * 60 * 60}`;
     return response;
   }).catch((error) => {
     console.log("register newLogin error ", error);

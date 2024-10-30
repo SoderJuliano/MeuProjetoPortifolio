@@ -234,6 +234,8 @@ import 'simple-alerts/dist/simpleAlertsVue.css';
 import AlertComponent from 'simple-alerts';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
+import AuthService from '@/services/authService';
+import authService from "./services/authService.js";
 
 export default {
   name: "Home",
@@ -1118,8 +1120,14 @@ export default {
       const isUserIdValid = this.user?._id?.length === 24;
       const isConnected = !!res.data;
       const lng = JSON.parse(localStorage.getItem("configs")).language;
-      if (isUserIdValid && isConnected) {
+      const authenticated = authService.getIdUsuario() === this.user?._id;
+
+      if (isUserIdValid && isConnected && !authenticated) {
         this.inlogin = true;
+        this.inOnboarding = false;
+        showAlert(malert);
+      } else if(isUserIdValid && isConnected && authenticated) {
+        this.logedIn = true;
         this.inOnboarding = false;
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
         showAlert(malert);
