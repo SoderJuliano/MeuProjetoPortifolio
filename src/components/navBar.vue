@@ -92,6 +92,16 @@
     :custom="customAlert"
     >
   </SimpleAlerts>
+  <SimpleAlerts
+      :title="confirmTitle"
+      :message="confirmText"
+      :show="showConfirm"
+      :customProperties="customConfirm"
+      confirm="true"
+      custom="true"
+      @close="closeSimpleAlert"
+      @confirm="confirmChangeLanguage"
+  />
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -124,6 +134,10 @@ export default {
     },
     data() {
       return{
+        lng: this.language ?? null,
+        showConfirm: false,
+        confirmTitle: "",
+        confirmText: "",
         isLoggedInClicked: false,
         isLoggedIn: this.logedIn,
         show: false,
@@ -146,6 +160,9 @@ export default {
           textColor: 'white',
           closeButtonText: 'Close',
         },
+        customConfirm: {
+          autoClose: false
+        }
       }
     },
     components: {
@@ -172,6 +189,25 @@ export default {
       'reset-password'
     ],
     methods:{
+      confirmChangeLanguage(value) {
+        if(value) {
+          this.$emit('language-update', this.lng)
+          this.lng == "pt-br" ?
+          (document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "blue",
+          document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "white",
+          document.getElementsByClassName("bnt-languages")[1].style.color = "black",
+          document.getElementsByClassName("bnt-languages")[0].style.color = "white"
+          )
+          : (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
+          document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white",
+          document.getElementsByClassName("bnt-languages")[0].style.color = "black",
+          document.getElementsByClassName("bnt-languages")[1].style.color = "white")
+          this.showConfirm = false;
+        }else {
+          this.lng = this.language;
+          this.showConfirm = false;
+        }
+      },
       deleteLocalData() {
         localStorage.removeItem("configs");
         localStorage.removeItem("user-pt");
@@ -336,7 +372,7 @@ export default {
       },
       getAlertConfirmText() {
         return this.getLanguage() == 'us-en' ?
-        "Is Ok save all yor information in our database?" 
+        "Is Ok save all yor information in our database?"
         : "Podemos salvar todas suas informações em nosso banco de dados?"
       },
       exemplesText(){
@@ -467,17 +503,19 @@ export default {
 
       },
       changeLanguage(lng){
-        this.$emit('language-update', lng)
-        lng == "pt-br" ?
-        (document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "blue",
-        document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "white",
-        document.getElementsByClassName("bnt-languages")[1].style.color = "black",
-        document.getElementsByClassName("bnt-languages")[0].style.color = "white"
+        this.getLanguage() == 'us-en'
+        ? (
+          this.confirmTitle = "Change language changes user`s data",
+          this.confirmText = "Each language is a different user, you can keep different data in each language.",
+          this.showConfirm = true
         )
-        : (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
-        document.getElementsByClassName("bnt-languages")[0].style.backgroundColor = "white",
-        document.getElementsByClassName("bnt-languages")[0].style.color = "black",
-        document.getElementsByClassName("bnt-languages")[1].style.color = "white")
+        :
+        (
+          this.confirmTitle = "Trocar de linguage altera dados de usuário",
+          this.confirmText = "Cada linguagem é um usuário diferente, você pode manter dados distintos em cada uma das linguagens.",
+          this.showConfirm = true
+        )
+        this.lng = lng;
       }
     },
     mounted(){

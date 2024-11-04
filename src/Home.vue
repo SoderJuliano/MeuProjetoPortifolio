@@ -671,6 +671,7 @@ export default {
     },
     lupdate(lng) {
       // console.log('executing lupdate')
+      this.user = [];
       if(lng){
         this.configs.setLanguage(lng);
         this.updateLocalStorageKey(lng);
@@ -1042,7 +1043,7 @@ export default {
         // console.log('found')
         // console.log(lsUser)
         if(lsUser == null) {
-          lsUser = JSON.parse(localStorage.getItem("user"));
+          lsUser = new UserModel();
         }
         if(lsUser != null) {
           let userFromModer = new UserModel();
