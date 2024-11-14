@@ -1126,6 +1126,7 @@ export default {
       if (isUserIdValid && isConnected && !authenticated) {
         this.inlogin = true;
         this.inOnboarding = false;
+        const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
         showAlert(malert);
       } else if(isUserIdValid && isConnected && authenticated) {
         this.logedIn = true;
