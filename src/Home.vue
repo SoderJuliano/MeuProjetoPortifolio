@@ -234,7 +234,7 @@ import 'simple-alerts/dist/simpleAlertsVue.css';
 import AlertComponent from 'simple-alerts';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
-import AuthService from '@/services/authService';
+import * as localStorageService from "./components/services/LocalStorageService.js";
 import authService from "./services/authService.js";
 
 export default {
@@ -387,6 +387,7 @@ export default {
           // true notSync, login should not call bk unnecessary
           this.updateUser(userFromModer, true);
           this.logedIn = true;
+          localStorageService.setAccActived(userFromModer.getEmails[0], userFromModer._id);
         } else {
           // Handle non-200 responses
           this.fireGlobalAlert(response?.data || "An error occurred");
@@ -509,6 +510,7 @@ export default {
           this.showAlertToTrue();
           this.inlogin = false;
           this.logedIn = true;
+          localStorageService.setAccActived(email[0] ? email[0] : email, this.user._id);
         }else if (responseUser == null) {
           console.log('response app', responseUser)
           this.alertTitle = "Erro ao fazer login";

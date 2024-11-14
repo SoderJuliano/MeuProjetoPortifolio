@@ -35,6 +35,7 @@
             :block="true"
             :css="base_css"
             @update:text="updateText"
+            :class="getById(1003).lockEmail ? 'unclickable' : ''"
         />
         <ComponentWrap
             id="1004"
@@ -233,6 +234,7 @@
     import ComponentWrap from '../components/componentesCompartilhados/ComponentWrap.vue';
     import { ref, watch, defineEmits, reactive } from 'vue';
     import { defineProps } from 'vue';
+    import * as localStorageService from '../components/services/LocalStorageService.js';
 
     const props = defineProps({
         user: Object,
@@ -268,7 +270,8 @@
             id: 1003,
             title:null,
             text: props.user.contact.email.length > 0 ? props.user.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
-            norender: true
+            norender: true,
+            lockEmail: localStorageService.getAccActivedEmail() === props.user.contact?.email[0] ? true : false
         },
         {
             id: 1004,
@@ -910,6 +913,13 @@
     height: 40px;
     display: block;
 }
+
+.unclickable {
+    pointer-events: none;
+    user-select: none;
+    cursor: default;
+}
+
 @media print {
     .template {
         margin-top: 10px;
