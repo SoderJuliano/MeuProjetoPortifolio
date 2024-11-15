@@ -75,6 +75,7 @@ export default {
                 })
                 .catch(error => {
                     this.tips.splice(index, 1);
+                    localStorage.setItem('tips', JSON.stringify(this.tips))
                     console.error('Error deleting tip:', error);
                 });
             }

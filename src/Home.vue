@@ -298,6 +298,7 @@ export default {
           address: "",
         },
         userExperiences: [],
+        spokenLanguages: []
       },
     }
   },
@@ -322,9 +323,13 @@ export default {
     //   showAlert("hello world")
     // },
     async resetPassword() {
+      let response = null;
       try {
-        // Make the API call to reset the password
-        const response = await funcs.resetPassword(this.user._id);
+        if(!this.user._id) {
+          response = await funcs.resetPasswordByEmail(this.user.contact.email[0], this.configs.getLanguage());
+        }else {
+          response = await funcs.resetPassword(this.user._id);
+        }
         // Check if the response status is 200 (success)
         if (response?.status === 200) {
           this.fireGlobalAlert(

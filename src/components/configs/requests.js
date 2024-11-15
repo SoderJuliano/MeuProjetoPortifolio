@@ -274,6 +274,23 @@ export function resetPassword(id) {
   });
 }
 
+export function resetPasswordByEmail(email, language) {
+  const encodedEmail = encodeURIComponent(email); // Codificando o e-mail
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.patch(`${apiUrl}/user/recover/${encodedEmail}/${language}/password`, null, { headers })
+    .then((response) => {
+      return response;
+    })
+    .catch(error => {
+      console.error('Erro durante reset password', error);
+      throw error;
+    });
+}
+
 export function setNewPassword(id, password, token) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',

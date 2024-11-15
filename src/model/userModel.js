@@ -25,10 +25,10 @@ export default class User {
     };
     userExperiences = [];
     imgForReal = 0;
-    spokenLanguages = {
+    spokenLanguages = [{
         level: "",
         details: ""
-    }
+    }];
     otherInfos = [];
     otherExperiencies = {
         title: '',

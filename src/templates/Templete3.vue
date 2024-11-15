@@ -447,7 +447,9 @@
                 {
                     id: 1010,
                     title: isEnglish ? 'Languages' : 'línguas',
-                    text: isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.',
+                    text: newUser?.spokenLanguages?.length
+                        ? newUser.spokenLanguages.map(lang => lang.details).join('\n')
+                        : (isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.'),
                     norender: true
                 },
                 {
@@ -584,8 +586,12 @@
                 // Update the title of the component
                 component.title = title;
 
-                if(Number(id) === 1009) {
-                    localUpdatedUser.otherExperiencies.title = title;
+                if (Number(id) === 1009) {
+                    localUpdatedUser.otherExperiencies = {
+                        ...localUpdatedUser?.otherExperiencies,
+                        title: title,
+                        text: localUpdatedUser?.otherExperiencies?.text || ''
+                    };
                 }
 
                 let dateHired = null;
@@ -701,9 +707,27 @@
             component.text = text;
 
             if (Number(id) === 1009) {
-                localUpdatedUser.otherExperiencies.text = text;
-            }else if (Number(id) === 1001) {
+                localUpdatedUser.otherExperiencies = {
+                    ...localUpdatedUser?.otherExperiencies,
+                    text: text
+                };
+            }
+            else if (Number(id) === 1001) {
                 updateAddress(text);
+            }
+            else if (Number(id) === 1010) {
+                const detailsString = text.split('\n').join('; '); // Divide o texto por quebras de linha e junta com um separador, como `; `.
+
+                localUpdatedUser.spokenLanguages = localUpdatedUser.spokenLanguages.map((lang, index) => {
+                    // Verifica se o índice do item atual é o desejado (por exemplo, o primeiro item) e atualiza o campo `details`.
+                    if (index === 0) {
+                        return {
+                            ...lang,
+                            details: detailsString // Atualiza o campo details com a string formatada
+                        };
+                    }
+                    return lang; // Retorna os outros itens sem alterações.
+                });
             }
         }
 
