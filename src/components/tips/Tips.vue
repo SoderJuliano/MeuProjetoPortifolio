@@ -74,6 +74,7 @@ export default {
                     localStorage.setItem('deletedDefaultNotifications'+'-'+item.language, true);
                 })
                 .catch(error => {
+                    this.tips.splice(index, 1);
                     console.error('Error deleting tip:', error);
                 });
             }

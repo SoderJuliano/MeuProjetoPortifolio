@@ -383,7 +383,7 @@ export default {
           // Handle success
           this.fireGlobalAlert("Success! Agora você pode acessar sua conta de qualquer dispositivo.");
           let userFromModer = new UserModel();
-          userFromModer = userFromModer.constructorObject(response.content);
+          userFromModer = userFromModer.constructorObject(response.data.content);
           // true notSync, login should not call bk unnecessary
           this.updateUser(userFromModer, true);
           this.logedIn = true;
@@ -1137,29 +1137,41 @@ export default {
         showAlert(malert);
       } else {
         this.inlogin = false;
-        this.newTipMessege = {
-          "id": Math.random(),
-          "title": lng.includes ("en") ? "No connection" : "Sem conexão",
-          "content": lng.includes("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
-          "language": this.lang,
-          "read": false,
-          "local": true
-        }
+        // Pode apenas não ter dadaos salvos
+        // this.newTipMessege = {
+        //   "id": Math.random(),
+        //   "title": lng.includes ("en") ? "No connection" : "Sem conexão",
+        //   "content": lng.includes("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
+        //   "language": this.lang,
+        //   "read": false,
+        //   "local": true
+        // }
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.error('Error during ping:', error);
       this.inlogin = false;
+
       const lng = JSON.parse(localStorage.getItem("configs")).language;
-      const malert = lng.includes("en") ? "No conection with the server" : "Sem conexão com o servidor";
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleString(); // Formato local, ex: '15/11/2024, 10:30:00'
+
+      const malert = lng.includes("en")
+          ? `No connection with the server. Please try again later (${formattedDate}).`
+          : `Sem conexão com o servidor. Por favor, tente novamente mais tarde (${formattedDate}).`;
+
       showAlert(malert);
+
       this.newTipMessege = {
           "id": Math.random(),
           "title": lng.includes("en") ? "No connection" : "Sem conexão",
-          "content": lng.includes ("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
+          "content": lng.includes("en")
+              ? `The server is not available at the moment (${formattedDate}). Please try again later.`
+              : `O servidor não está disponível no momento (${formattedDate}). Por favor, tente novamente mais tarde.`,
           "language": this.lang,
           "read": false,
           "local": true
-        }
+      }
     }
   }
 };

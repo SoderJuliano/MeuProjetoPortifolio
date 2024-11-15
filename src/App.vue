@@ -22,6 +22,7 @@ export default {
         }
     },
     async mounted() {
+        await funcs.getLastEnvUrl();
         const uri = window.location.href;
         console.log(uri);
 
@@ -36,8 +37,6 @@ export default {
         } else {
             this.activeComp = 'NotFound';
         }
-
-        await funcs.getLastEnvUrl();
     }
 }
 </script>

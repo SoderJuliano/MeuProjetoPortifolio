@@ -115,9 +115,9 @@ export default class User {
     }
     updator(user)
     {
-        if(user._id && user._id.length === 24) {
+        if(user?._id && user._id.length === 24) {
             this._id = user._id;
-        }else if(user.id && user.id.length === 24) {
+        }else if(user?.id && user.id.length === 24) {
             this._id = user.id;
         }else {
             this._id = "";
@@ -127,7 +127,7 @@ export default class User {
         this.competence = user.competence;
         this.social = user.social;
         this.grade = user.grade;
-        this.hability = user?.hability ? user.hability : user?.ability;
+        this.ability = user?.hability ? user.hability : user?.ability;
         this.avatarImg = user.avatarImg;
         this.realImg = user.realImg;
         this.contact = user.contact;
