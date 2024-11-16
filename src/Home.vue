@@ -1351,7 +1351,7 @@ export default {
 
 /* animated bg css */
 body{
-  background: #3399ff;
+  background: #9fcfff;
 }
 
 
