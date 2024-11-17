@@ -122,6 +122,7 @@ import 'simple-alerts/dist/simpleAlertsVue.css';
 import SimpleAlerts from 'simple-alerts';
 import GlobalModal from './componentesCompartilhados/GlobalModal.vue';
 import { deleteUser } from "./configs/requests.js";
+import * as localStorageService from './services/LocalStorageService.js';
 
 export default {
     name: 'nav-bar',
@@ -327,6 +328,7 @@ export default {
           }
           if(userFromModel instanceof UserModel) {
             let response;
+            this.isANewUser = !localStorageService.isNOTANewUser();
             response = await userFromModel.saveIntoDatabase(this.isANewUser);
             if (response) {
               // console.log('response from backend stats -->', response);

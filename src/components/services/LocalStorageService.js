@@ -33,4 +33,11 @@ export function getAccActivedEmail() {
     return null;
 }
 
+export function setNoNewUser() {
+    localStorage.setItem('notNew', true);
+}
+
+export function isNOTANewUser() {
+    return localStorage.getItem('notNew')
+}
 

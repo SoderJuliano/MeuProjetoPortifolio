@@ -393,6 +393,7 @@ export default {
           this.updateUser(userFromModer, true);
           this.logedIn = true;
           localStorageService.setAccActived(userFromModer.getEmails[0], userFromModer._id);
+          localStorageService.setNoNewUser();
         } else {
           // Handle non-200 responses
           this.fireGlobalAlert(response?.data || "An error occurred");

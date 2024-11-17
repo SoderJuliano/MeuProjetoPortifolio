@@ -1,4 +1,5 @@
 import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelete } from '../components/configs/requests';
+import * as localStorageService from '../components/services/LocalStorageService.js';
 export default class User {
     _id = "";
     name = this.getNameFromLocalStorage();
@@ -63,6 +64,7 @@ export default class User {
         const response = await loginUser(login.email, login.userId, login.password, login.language);
         if(response?.status == 200){
             this.updator(response?.data.content);
+            localStorageService.setNoNewUser();
             return this;
         }else {
             return null;
