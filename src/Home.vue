@@ -1136,22 +1136,35 @@ export default {
         this.inOnboarding = false;
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
         showAlert(malert);
+
+        this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes("en") ? "Tip on login" : "Dica ao logar-se",
+          "content": lng.includes("en")
+              ? "If you have unsaved changes, login will overwrite them with the last saved state."
+              : "Se você dados locais não salvos, ao logar-se eles serão sobreescritos pelo último save.",
+          "language": this.lang,
+          "read": false,
+          "local": true
+        }
       } else if(isUserIdValid && isConnected && authenticated) {
         this.logedIn = true;
         this.inOnboarding = false;
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
         showAlert(malert);
+
+        this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+          "content": lng.includes("en")
+              ? "If you are loged in and the togle of syncing data is on the data will auto update based on changes."
+              : "Se você estiver logado e o botão de sincronização estiver ativo, os dados serão atualizados automativamente ao serem alterados.",
+          "language": this.lang,
+          "read": false,
+          "local": true
+        }
       } else {
         this.inlogin = false;
-        // Pode apenas não ter dadaos salvos
-        // this.newTipMessege = {
-        //   "id": Math.random(),
-        //   "title": lng.includes ("en") ? "No connection" : "Sem conexão",
-        //   "content": lng.includes("en") ? "The server it`s not avaiable at the moment." : "O servidor não está disponível no momento.",
-        //   "language": this.lang,
-        //   "read": false,
-        //   "local": true
-        // }
       }
     }
     catch (error) {
