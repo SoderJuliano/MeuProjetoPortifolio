@@ -52,5 +52,6 @@ button img {
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 55px;
+    z-index: 2;
 }
 </style>

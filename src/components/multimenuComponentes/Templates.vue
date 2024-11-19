@@ -59,6 +59,7 @@ export default {
         left: 0;
         width: 90vw;
         height: 100%;
+        z-index: 1;
     }
 }
 </style>

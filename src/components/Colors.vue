@@ -87,7 +87,11 @@ export default {
 
 @media screen and (max-width: 768px) {
     .closeDiv {
-        left: 80%;
+        left: 90%;
+        top: 5px;
+        width: 20px;
+        height: 25px;
+        padding: 5px;
     }
 }
 
