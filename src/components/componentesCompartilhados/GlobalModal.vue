@@ -70,4 +70,12 @@ export default {
     font-size: 18px;
     cursor: pointer;
 }
+
+@media screen and (max: 786px) {
+    .modal-content {
+        position: absolute !important;
+        width: 50dvw !important;
+        justify-self: center !important;
+    }
+}
 </style>

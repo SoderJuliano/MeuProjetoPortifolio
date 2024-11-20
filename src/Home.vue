@@ -1163,6 +1163,19 @@ export default {
           "read": false,
           "local": true
         }
+
+        setTimeout(() => {
+          this.newTipMessege = {
+            "id": Math.random(),
+            "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+            "content": lng.includes("en")
+                ? "The sync toggle stay under your name, make it visible clicking over your name on the right edge."
+                : "O botão de sincronização está no canto direito abaixo do seu nome, clique no seu nome para ele aparecer.",
+            "language": this.lang,
+            "read": false,
+            "local": true
+          }
+        }, 500);
       } else {
         this.inlogin = false;
       }

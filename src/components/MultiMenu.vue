@@ -47,6 +47,36 @@
             <p class="tside">{{ this.isEnglish() ? "SAVE" : "SALVAR" }}</p>
             <p class="multimenu-line"></p>
         </div>
+        <div id="accDelete" @click="deleteAccount" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "DELETE MY ACCOUNT" : "DELETAR MINHA CONTA"}}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "INSERT DELETE CONFIRMATION TOKEN" : "INSERIR TOKEN DE CONFIRMAÇÃO PARA DELEÇÃO"}}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "RECOVER PASSWORD" : "RECUPERAR SENHA" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "INSERT ACTIVATION TOKEN" : "INSERIR TOKEN DE ATIVAÇÃO DA CONTA" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "DELETE ALL MY DATA FROM THIS BROWSER" : "APAGAR TODOS OS MEUS DADOS DO NAVEGADOR" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <GlobalModal
+            ref="globalModal"
+            :title="globalModalTitle"
+            :message="globalModalMessage"
+            >
+            <div class="globalModal">
+            <input id="input-token" type="text">
+            <button @click="submitDeleteToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
+            </div>
+        </GlobalModal>
     </div>
 </template>
 
@@ -58,6 +88,9 @@ import pageColor from "./pageColor.vue";
 import Avatares from "./Avatares.vue";
 import PicureShape from "./PictureShape.vue";
 import Templates from "./multimenuComponentes/Templates.vue";
+import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
+import UserModel from "../model/userModel";
+import { showAlert } from 'simple-alerts/dist/showAlert.js';
 
 export default {
     name: "multi-menu",
@@ -69,12 +102,19 @@ export default {
         Avatares,
         PicureShape,
         Templates,
-        FontsSize
+        FontsSize,
+        GlobalModal
     },
     props: {
         template: Number,
         user: Object,
         language: String
+    },
+    data() {
+        return {
+            globalModalTitle: '',
+            globalModalMessage: '',
+        }
     },
     methods: {
         update(val) {
@@ -85,7 +125,38 @@ export default {
         },
         isEnglish() {
             return this.language.includes("en");
-        }
+        },
+
+        // código copiado do navbar
+        async deleteAccount() {
+            if(this.user?._id?.length != 24) {
+                localStorage.removeItem("user-pt");
+                localStorage.removeItem("user-en");
+                showAlert(this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                return;
+            }
+            let userFromModel = new UserModel();
+            userFromModel = userFromModel.constructorObject(this.user);
+            const response = await userFromModel.requestDeleteThisUser();
+            if(response && response.status == 200) {
+                this.$emit("check-abra-messages");
+                showAlert(
+                    this.language == 'us-en' ? response.data.content : "",
+                    this.language == 'us-en' ? 'Get the token we send to your e-mail address' : 'Use o token que enviamos para seu e-mail'
+                );
+                this.globalModalTitle = 'Duplo fator de confirmação';
+                this.globalModalMessage = "Confirme a deleção da conta através do token que enviamos para seu email.";
+                this.$refs.globalModal.open();
+                return;
+            }
+            showAlert(
+                this.language == 'us-en' ? response.data.content : "",
+                this.language == 'us-en' ? 'Failed to delete the account' : 'Falha ao excluir a conta'
+            );
+        },
     },
     data() {
         return {
