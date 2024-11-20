@@ -2,7 +2,7 @@
     <div class="template">
         <ComponentWrap
             id="1000"
-            :title="getById(1000).title"
+            :title="getById(1000)?.title"
             :text="getById(1000).text"
             :block="true"
             :css="{
@@ -241,119 +241,165 @@
         language: String
     });
 
-    let localUpdatedUser = reactive({ ...props.user });
-    const isEnglish = props.language == 'us-en';
+    let localUpdatedUser = reactive({
+        ...props.user,
+        otherInfos: props.user.otherInfos || []
+    });
+    const additionalComponents = ref([]);
+    let isEnglish = props.language == 'us-en';
 
-    const additionalComponents = ref([
-        {
-            id: 1000,
-            title: "RESUME",
-            text: props.user.name ? props.user.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
-            norender: true
-        },
-        {
-            id: 1001,
-            title:null,
-            text: props.user.contact.address ?
-                props.user.contact?.address : isEnglish ?
-                'Your address: Type in here' :
-                'Seu endereço: Digite aqui',
-            norender: true
-        },
-        {
-            id: 1002,
-            title:null,
-            text: props.user.contact.phone.length > 0 ? props.user.contact?.phone[0] : isEnglish ? 'Phone: Type in here' : 'Telefone: Digite aqui',
-            norender: true
-        },
-        {
-            id: 1003,
-            title:null,
-            text: props.user.contact.email.length > 0 ? props.user.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
-            norender: true,
-            lockEmail: localStorageService.getAccActivedEmail() === props.user.contact?.email[0] ? true : false
-        },
-        {
-            id: 1004,
-            title: isEnglish ? 'Objective' : 'Objetivo',
-            text: props.user.profession ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
-            norender: true
-        },
-        {
-            id: 1005,
-            title: isEnglish ? 'Skills summary' : 'Habilidades',
-            text: props.user.hability ? props.user.hability : isEnglish ? 'Type in here' : 'Digite aqui',
-            norender: true
-        },
-        {
-            id: 1006,
-            title: null,
-            text: isEnglish ? 'Education' : 'Educação',
-            norender: true
-        },
-        {
-            id: 1007,
-            title: null,
-            text: isEnglish ? 'Work experience' : 'Experiencias',
-            norender: true
-        },
-        {
-            id: 1008,
-            text: isEnglish ? 'Other experience' : 'Outras experiências',
-            norender: true
-        },
-        {
-            id: 1009,
-            title: props?.user?.otherExperiencies?.title ? props.user.otherExperiencies.title :
-            isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
-            text: props?.user?.otherExperiencies?.text ? props?.user?.otherExperiencies?.text :
-            isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
-            norender: true
-        },
-        {
-            id: 1010,
-            title: isEnglish ? 'Languages' : 'línguas',
-            text: isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.',
-            norender: true
-        },
-        // {
-        //     id: 1011,
-        //     title: isEnglish ? 'Other skills' : 'Outras habilidades',
-        //     text: isEnglish ? 'ex. Team work.' : 'exemplo, trabalho em time.',
-        //     norender: true
-        // },
-        {
-            id: 1012,
-            title: isEnglish ? 'Personal' : 'Pessoal',
-            text: props?.user?.resume ? props.user.resume : isEnglish ? 'about you.' : 'sobre você.',
-            norender: true
-        },
-    ]);
+    // Function to initialize additionalComponents based on language
+    const initializeAdditionalComponents = () => {
+        isEnglish = props.language == 'us-en';
+
+        additionalComponents.value = [
+            {
+                id: 1000,
+                title: "RESUME",
+                text: props.user.name ? props.user.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
+                norender: true
+            },
+            {
+                id: 1001,
+                title:null,
+                text: props.user.contact.address ?
+                    props.user.contact?.address : isEnglish ?
+                    'Your address: Type in here' :
+                    'Seu endereço: Digite aqui',
+                norender: true
+            },
+            {
+                id: 1002,
+                title:null,
+                text: props.user.contact.phone.length > 0 ? props.user.contact?.phone[0] : isEnglish ? 'Phone: Type in here' : 'Telefone: Digite aqui',
+                norender: true
+            },
+            {
+                id: 1003,
+                title:null,
+                text: props.user.contact.email.length > 0 ? props.user.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
+                norender: true,
+                lockEmail: localStorageService.getAccActivedEmail() === props.user.contact?.email[0] ? true : false
+            },
+            {
+                id: 1004,
+                title: isEnglish ? 'Objective' : 'Objetivo',
+                text: props.user.profession ? props.user.profession : isEnglish ? 'Type in here' : 'Digite aqui',
+                norender: true
+            },
+            {
+                id: 1005,
+                title: isEnglish ? 'Skills summary' : 'Habilidades',
+                text: props.user.hability ? props.user.hability : isEnglish ? 'Type in here' : 'Digite aqui',
+                norender: true
+            },
+            {
+                id: 1006,
+                title: null,
+                text: isEnglish ? 'Education' : 'Educação',
+                norender: true
+            },
+            {
+                id: 1007,
+                title: null,
+                text: isEnglish ? 'Work experience' : 'Experiencias',
+                norender: true
+            },
+            {
+                id: 1008,
+                text: isEnglish ? 'Other experience' : 'Outras experiências',
+                norender: true
+            },
+            {
+                id: 1009,
+                title: props?.user?.otherExperiencies?.title ? props.user.otherExperiencies.title :
+                isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
+                text: props?.user?.otherExperiencies?.text ? props?.user?.otherExperiencies?.text :
+                isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
+                norender: true
+            },
+            {
+                id: 1010,
+                title: isEnglish ? 'Languages' : 'línguas',
+                text: isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.',
+                norender: true
+            },
+            // {
+            //     id: 1011,
+            //     title: isEnglish ? 'Other skills' : 'Outras habilidades',
+            //     text: isEnglish ? 'ex. Team work.' : 'exemplo, trabalho em time.',
+            //     norender: true
+            // },
+            {
+                id: 1012,
+                title: isEnglish ? 'Personal' : 'Pessoal',
+                text: props?.user?.resume ? props.user.resume : isEnglish ? 'about you.' : 'sobre você.',
+                norender: true
+            },
+        ]
+    }
+
+    // Initialize components when the component is created
+    initializeAdditionalComponents();
+
+    // Watch for changes in the language prop
+    watch(() => props.language, (newLang) => {
+        initializeAdditionalComponents();
+    });
+
 
     const educationComponents = ref([]);
 
-    if (props.user.grade && props.user.grade.length > 0) {
-        // Itera sobre o array de grades e empurra componentes para educationComponents
-        props.user.grade.forEach((grade, index) => {
-            const ano = extrairDatas(grade);
-            const textoSemDatas = removerDatas(grade); // Remove datas do texto
+    // if (props.user.grade && props.user.grade.length > 0) {
+    //     // Itera sobre o array de grades e empurra componentes para educationComponents
+    //     props.user.grade.forEach((grade, index) => {
+    //         const ano = extrairDatas(grade);
+    //         const textoSemDatas = removerDatas(grade); // Remove datas do texto
 
+    //         educationComponents.value.push({
+    //             id: 2000 + index, // Gera ID começando de 2000
+    //             text: textoSemDatas.length > 0 ? textoSemDatas : isEnglish ? 'Add education' : 'Adicionar educação',
+    //             title: ano != null ? ano.anoInicio + ' - ' + ano.anoFim : '2020 - 2021',
+    //             norender: false
+    //         });
+    //     });
+    // } else {
+    //     educationComponents.value.push({
+    //         id: 2000,
+    //         title: '2020 - 2024',
+    //         text: isEnglish ? 'Add Education (click here)' : 'Adicionar Educação (clicar aqui)',
+    //         norender: false
+    //     });
+    // }
+
+    // Function to initialize education components
+    const initializeEducationComponents = () => {
+        educationComponents.value = []; // Clear existing components
+        const isEnglish = props.language == 'us-en';
+
+        if (props.user.grade && props.user.grade.length > 0) {
+            props.user.grade.forEach((grade, index) => {
+                const ano = extrairDatas(grade);
+                const textoSemDatas = removerDatas(grade);
+                educationComponents.value.push({
+                    id: 2000 + index,
+                    text: textoSemDatas.length > 0 ? textoSemDatas : isEnglish ? 'Add education' : 'Adicionar educação',
+                    title: ano != null ? ano.anoInicio + ' - ' + ano.anoFim : '2020 - 2021',
+                    norender: false
+                });
+            });
+        } else {
             educationComponents.value.push({
-                id: 2000 + index, // Gera ID começando de 2000
-                text: textoSemDatas.length > 0 ? textoSemDatas : isEnglish ? 'Add education' : 'Adicionar educação',
-                title: ano != null ? ano.anoInicio + ' - ' + ano.anoFim : '2020 - 2021',
+                id: 2000,
+                title: '2020 - 2024',
+                text: isEnglish ? 'Add Education (click here)' : 'Adicionar Educação (clicar aqui)',
                 norender: false
             });
-        });
-    } else {
-        educationComponents.value.push({
-            id: 2000,
-            title: '2020 - 2024',
-            text: isEnglish ? 'Add Education (click here)' : 'Adicionar Educação (clicar aqui)',
-            norender: false
-        });
-    }
-
+        }
+    };
+    // Initialize components when the component is created
+    initializeEducationComponents();
+    
     const addEducationComponent = () => {
         const newId = 2000 + educationComponents.value.length;
         educationComponents.value.push({
@@ -377,90 +423,99 @@
         }
     });
 
+    // watch(() => props.user, (newUser, oldUser) => {
+    //     if (newUser !== oldUser) {
+    //         additionalComponents.value = [
+    //             {
+    //                 id: 1000,
+    //                 title: "RESUME",
+    //                 text: newUser.name ? newUser.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1001,
+    //                 title: null,
+    //                 text: newUser.contact.address ?
+    //                     newUser.contact?.address : isEnglish ?
+    //                     'Your address: Type in here' :
+    //                     'Seu endereço: Digite aqui',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1002,
+    //                 title: null,
+    //                 text: newUser.contact.phone.length > 0 ? newUser.contact?.phone[0] : isEnglish ? 'Phone: Type in here' : 'Telefone: Digite aqui',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1003,
+    //                 title: null,
+    //                 text: newUser.contact.email.length > 0 ? newUser.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1004,
+    //                 title: isEnglish ? 'Objective' : 'Objetivo',
+    //                 text: newUser.profession ? newUser.profession : isEnglish ? 'Type in here' : 'Digite aqui',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1005,
+    //                 title: isEnglish ? 'Skills summary' : 'Habilidades',
+    //                 text: newUser.hability ? newUser.hability : isEnglish ? 'Type in here' : 'Digite aqui',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1006,
+    //                 title: null,
+    //                 text: isEnglish ? 'Education' : 'Educação',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1007,
+    //                 title: null,
+    //                 text: isEnglish ? 'Work experience' : 'Experiencias',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1008,
+    //                 text: isEnglish ? 'Other experience' : 'Outras experiências',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1009,
+    //                 title: newUser?.otherExperiencies?.title ? newUser.otherExperiencies.title :
+    //                     isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
+    //                 text: newUser?.otherExperiencies?.text ? newUser?.otherExperiencies?.text :
+    //                     isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1010,
+    //                 title: isEnglish ? 'Languages' : 'línguas',
+    //                 text: newUser?.spokenLanguages?.length
+    //                     ? newUser.spokenLanguages.map(lang => lang.details).join('\n')
+    //                     : (isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.'),
+    //                 norender: true
+    //             },
+    //             {
+    //                 id: 1012,
+    //                 title: isEnglish ? 'Personal' : 'Pessoal',
+    //                 text: newUser?.resume ? newUser.resume : isEnglish ? 'about you.' : 'sobre você.',
+    //                 norender: true
+    //             },
+    //         ];
+    //     }
+    // });
+
+    // Watch for changes in the user prop
     watch(() => props.user, (newUser, oldUser) => {
         if (newUser !== oldUser) {
-            additionalComponents.value = [
-                {
-                    id: 1000,
-                    title: "RESUME",
-                    text: newUser.name ? newUser.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
-                    norender: true
-                },
-                {
-                    id: 1001,
-                    title: null,
-                    text: newUser.contact.address ?
-                        newUser.contact?.address : isEnglish ?
-                        'Your address: Type in here' :
-                        'Seu endereço: Digite aqui',
-                    norender: true
-                },
-                {
-                    id: 1002,
-                    title: null,
-                    text: newUser.contact.phone.length > 0 ? newUser.contact?.phone[0] : isEnglish ? 'Phone: Type in here' : 'Telefone: Digite aqui',
-                    norender: true
-                },
-                {
-                    id: 1003,
-                    title: null,
-                    text: newUser.contact.email.length > 0 ? newUser.contact?.email[0] : isEnglish ? 'Email: Type in here' : 'E-mail: Digite aqui',
-                    norender: true
-                },
-                {
-                    id: 1004,
-                    title: isEnglish ? 'Objective' : 'Objetivo',
-                    text: newUser.profession ? newUser.profession : isEnglish ? 'Type in here' : 'Digite aqui',
-                    norender: true
-                },
-                {
-                    id: 1005,
-                    title: isEnglish ? 'Skills summary' : 'Habilidades',
-                    text: newUser.hability ? newUser.hability : isEnglish ? 'Type in here' : 'Digite aqui',
-                    norender: true
-                },
-                {
-                    id: 1006,
-                    title: null,
-                    text: isEnglish ? 'Education' : 'Educação',
-                    norender: true
-                },
-                {
-                    id: 1007,
-                    title: null,
-                    text: isEnglish ? 'Work experience' : 'Experiencias',
-                    norender: true
-                },
-                {
-                    id: 1008,
-                    text: isEnglish ? 'Other experience' : 'Outras experiências',
-                    norender: true
-                },
-                {
-                    id: 1009,
-                    title: newUser?.otherExperiencies?.title ? newUser.otherExperiencies.title :
-                        isEnglish ? 'May type Date 2019-2020' : 'Talvez uma data 2019-2020',
-                    text: newUser?.otherExperiencies?.text ? newUser?.otherExperiencies?.text :
-                        isEnglish ? 'A description what you had been doing' : 'Uma descrição do que você fez',
-                    norender: true
-                },
-                {
-                    id: 1010,
-                    title: isEnglish ? 'Languages' : 'línguas',
-                    text: newUser?.spokenLanguages?.length
-                        ? newUser.spokenLanguages.map(lang => lang.details).join('\n')
-                        : (isEnglish ? 'ex. Portuguese: Native speaker.' : 'exemplo, nativo falante de português.'),
-                    norender: true
-                },
-                {
-                    id: 1012,
-                    title: isEnglish ? 'Personal' : 'Pessoal',
-                    text: newUser?.resume ? newUser.resume : isEnglish ? 'about you.' : 'sobre você.',
-                    norender: true
-                },
-            ];
+            localUpdatedUser = reactive({ ...newUser }); // Update local user
+            initializeEducationComponents(); // Reinitialize education components
+            initializeAdditionalComponents(); // Reinitialize additional components
         }
-    });
+    }, { immediate: true }); // Run immediately on component mount
 
     const updateLocalUserGradeData = (index, title, text) => {
         localUpdatedUser.grade[index] = title + ' ' + text;
@@ -549,12 +604,21 @@
 
 
     // Function to add a new ComponentWrap instance
+    // const addComponent = () => {
+    //     // additionalComponents.value.push({
+    //     //     id: additionalComponents.value.length + 1,
+    //     //     text: "New Text Here",
+    //     //     title: "New Title Here"
+    //     // });
+    //     localUpdatedUser.otherInfos.push("title;text");
+    //     emit('updateUser', localUpdatedUser);
+    // };
+    // Function to add a new ComponentWrap instance
     const addComponent = () => {
-        // additionalComponents.value.push({
-        //     id: additionalComponents.value.length + 1,
-        //     text: "New Text Here",
-        //     title: "New Title Here"
-        // });
+        // Ensure otherInfos is an array before pushing
+        if (!localUpdatedUser.otherInfos) {
+            localUpdatedUser.otherInfos = []; // Initialize if it's null or undefined
+        }
         localUpdatedUser.otherInfos.push("title;text");
         emit('updateUser', localUpdatedUser);
     };

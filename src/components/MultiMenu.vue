@@ -68,10 +68,10 @@
             <p class="multimenu-line"></p>
         </div>
         <GlobalModal
-            ref="globalModal"
-            :title="globalModalTitle"
-            :message="globalModalMessage"
+            ref="globalModalMultimenu"
             >
+            <h1>{{ this.globalModalTitleMultimenu }}</h1>
+            <p>{{ this.globalModalMessageMultimenu }}</p>
             <div class="globalModal">
             <input id="input-token" type="text">
             <button @click="submitDeleteToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
@@ -112,8 +112,8 @@ export default {
     },
     data() {
         return {
-            globalModalTitle: '',
-            globalModalMessage: '',
+            globalModalTitleMultimenu: '',
+            globalModalMessageMultimenu: '',
         }
     },
     methods: {
@@ -140,16 +140,17 @@ export default {
             }
             let userFromModel = new UserModel();
             userFromModel = userFromModel.constructorObject(this.user);
-            const response = await userFromModel.requestDeleteThisUser();
+            // const response = await userFromModel.requestDeleteThisUser();
+            const response = {status: 200, data: {content: "salvo com sucesso"}}
             if(response && response.status == 200) {
-                this.$emit("check-abra-messages");
                 showAlert(
                     this.language == 'us-en' ? response.data.content : "",
                     this.language == 'us-en' ? 'Get the token we send to your e-mail address' : 'Use o token que enviamos para seu e-mail'
                 );
-                this.globalModalTitle = 'Duplo fator de confirmação';
-                this.globalModalMessage = "Confirme a deleção da conta através do token que enviamos para seu email.";
-                this.$refs.globalModal.open();
+                this.globalModalTitleMultimenu = this.isEnglish() ? 'Double confirmation factor' : 'Duplo fator de confirmação';
+                this.globalModalMessageMultimenu = this.isEnglish() ? 'Confirm account deletion using the token we sent to your email.' :
+                "Confirme a deleção da conta através do token que enviamos para seu email.";
+                this.$refs.globalModalMultimenu.open();
                 return;
             }
             showAlert(
@@ -169,6 +170,11 @@ export default {
     },
     beforeUnmount() {
         window.removeEventListener('resize', this.checkWindowWidth); // Clean up the event listener
+    },
+    watch: {
+        language(newLang, oldLang) {
+            console.log(`Language changed from ${oldLang} to ${newLang}`);
+        }
     },
 };
 </script>

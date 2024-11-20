@@ -678,7 +678,7 @@ export default {
       }
     },
     lupdate(lng) {
-      // console.log('executing lupdate')
+      console.log('executing lupdate')
       this.user = [];
       if(lng){
         this.configs.setLanguage(lng);
@@ -690,7 +690,7 @@ export default {
         // update localStorage when language changes as well
         this.updateUser(this.user, true);
       }
-      // console.log("finished lupdate")
+      console.log("finished lupdate")
     },
     updateName(name) {
       if (this.user instanceof UserModel && name != this.user.mame) {
