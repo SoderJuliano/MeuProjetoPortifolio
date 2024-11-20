@@ -236,6 +236,7 @@ import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
 import * as localStorageService from "./components/services/LocalStorageService.js";
 import authService from "./services/authService.js";
+import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
 
 export default {
   name: "Home",
@@ -632,11 +633,14 @@ export default {
     updateUser(userData, notSync) {
       // console.log('user update', userData);
       // console.log("not sync", notSync)
+      // console.log("isMobilePortrait() && !notSync", isMobilePortrait() && !notSync)
+      this.user = userData;
       // todo saveIntoDatabase
       if(this.syncUser && !notSync) {
         this.doUpdateUserAsync();
+      }else if(isMobilePortrait() && !notSync) {
+        this.doUpdateUserAsync();
       }
-      this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     async doUpdateUserAsync() {

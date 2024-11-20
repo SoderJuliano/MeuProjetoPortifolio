@@ -101,7 +101,8 @@ return window.innerWidth <= 1000;
 }
 
 export function isMobilePortrait() {
-return window.innerWidth <= 600;
+    // console.log("mobile = "+window.innerWidth <= 600);
+    return window.innerWidth <= 600;
 }
 
 export function heavyEventHandling(p, $, configs) {

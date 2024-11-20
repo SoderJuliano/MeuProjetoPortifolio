@@ -91,6 +91,7 @@ import Templates from "./multimenuComponentes/Templates.vue";
 import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
 import UserModel from "../model/userModel";
 import { showAlert } from 'simple-alerts/dist/showAlert.js';
+import authService from "../services/authService";
 
 export default {
     name: "multi-menu",
@@ -118,7 +119,8 @@ export default {
     },
     methods: {
         update(val) {
-            this.$emit("update-user", val);
+            const authenticated = authService.getIdUsuario() === this.user?._id;
+            this.$emit("update-user", val, authenticated);
         },
         checkWindowWidth() {
             this.mobileOptions = window.innerWidth < 720;

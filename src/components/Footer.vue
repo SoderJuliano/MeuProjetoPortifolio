@@ -30,6 +30,7 @@ import MultiMenu from './MultiMenu.vue'
 import imprimir from './Imprimir-bnt.vue'
 import TemplateChooser from './multimenuComponentes/TemplateChooser.vue'
 import $ from 'jquery'
+import { isMobilePortrait } from './componentesCompartilhados/utilJS/functions'
 
 export default {
     name: 'footermenu',
@@ -57,8 +58,10 @@ export default {
                 this.menuDown();
             }, 500);
         },
-        update(val) {
-            this.$emit("update-user", val, false);
+        update(val, authenticad) {
+            // Quando o update vem do mobile e estiver autenticado, vai ser feito request pro back-end
+            const sync = authenticad === isMobilePortrait();
+            this.$emit("update-user", val, !sync);
             $(".footer-menu-bar").css("display", "none");
             $(".menuupimg").css("display", "block");
             $(".menuupimg-down").css("display", "none");
