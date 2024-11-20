@@ -140,8 +140,8 @@ export default {
             }
             let userFromModel = new UserModel();
             userFromModel = userFromModel.constructorObject(this.user);
-            // const response = await userFromModel.requestDeleteThisUser();
-            const response = {status: 200, data: {content: "salvo com sucesso"}}
+            const response = await userFromModel.requestDeleteThisUser();
+            // const response = {status: 200, data: {content: "salvo com sucesso"}}
             if(response && response.status == 200) {
                 showAlert(
                     this.language == 'us-en' ? response.data.content : "",
@@ -240,6 +240,21 @@ export default {
         background-color: white;
         overflow: scroll;
         cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .close-bnt {
+        top: -20px;
+        right: -30%;
+    }
+
+    #input-token {
+        width: 100%;
+    }
+
+    .globalModal button {
+        margin: 0%;
     }
 }
 </style>

@@ -22,17 +22,17 @@ export default {
     }
     },
     data() {
-    return {
-        isVisible: false
-    };
-    },
-    methods: {
-    open() {
-        this.isVisible = true;
-    },
-    close() {
-        this.isVisible = false;
-    }
+        return {
+            isVisible: false
+        };
+        },
+        methods: {
+        open() {
+            this.isVisible = true;
+        },
+        close() {
+            this.isVisible = false;
+        }
     }
 };
 </script>
@@ -71,11 +71,15 @@ export default {
     cursor: pointer;
 }
 
-@media screen and (max: 786px) {
+@media screen and (max-width: 786px) {
     .modal-content {
         position: absolute !important;
         width: 50dvw !important;
         justify-self: center !important;
+    }
+
+    .modal-overlay {
+        width: 100dvw;
     }
 }
 </style>
