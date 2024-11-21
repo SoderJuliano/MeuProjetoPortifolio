@@ -186,6 +186,8 @@
           @change-font-color="changeFontColor"
           @update-user="updateUser"
           @login="showLogin"
+          @reset-password="resetPassword"
+          @ativationAccount="showGlobalModal"
         />
       </div>
     </div>
@@ -416,6 +418,7 @@ export default {
       this.showAlertToTrue();
     },
     showGlobalModal() {
+      this.globalModalTitle = this.configs.getLanguage().includes('en') ? 'Insert Token' : 'Inserir o token',
       this.$refs.globalModal.open();
     },
     alertErrorFromBkend(msg){
@@ -1478,5 +1481,11 @@ body{
   .footer-mobile-title {
     left: 30%;
   }
+}
+
+@media screen and (max-width: 768px) {
+  #input-token {
+        width: 100%;
+    }
 }
 </style>

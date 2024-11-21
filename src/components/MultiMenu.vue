@@ -51,19 +51,19 @@
             <p class="tside">{{ this.isEnglish() ? "DELETE MY ACCOUNT" : "DELETAR MINHA CONTA"}}</p>
             <p class="multimenu-line"></p>
         </div>
-        <div v-if="mobileOptions">
+        <div @click="insertDeleteToken" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "INSERT DELETE CONFIRMATION TOKEN" : "INSERIR TOKEN DE CONFIRMAÇÃO PARA DELEÇÃO"}}</p>
             <p class="multimenu-line"></p>
         </div>
-        <div v-if="mobileOptions">
+        <div v-on:click="this.$emit('reset-password')" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "RECOVER PASSWORD" : "RECUPERAR SENHA" }}</p>
             <p class="multimenu-line"></p>
         </div>
-        <div v-if="mobileOptions">
+        <div v-on:click="this.$emit('ativationAccount')" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "INSERT ACTIVATION TOKEN" : "INSERIR TOKEN DE ATIVAÇÃO DA CONTA" }}</p>
             <p class="multimenu-line"></p>
         </div>
-        <div v-if="mobileOptions">
+        <div v-on:click="deleteLocalData()" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "DELETE ALL MY DATA FROM THIS BROWSER" : "APAGAR TODOS OS MEUS DADOS DO NAVEGADOR" }}</p>
             <p class="multimenu-line"></p>
         </div>
@@ -92,10 +92,20 @@ import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
 import UserModel from "../model/userModel";
 import { showAlert } from 'simple-alerts/dist/showAlert.js';
 import authService from "../services/authService";
+import { deleteUser } from "./configs/requests.js";
 
 export default {
     name: "multi-menu",
-    emits: ["changefont", "update-configs", "update-user", 'now-template1', 'now-template2', 'now-template3', 'login'],
+    emits: ["changefont",
+    "update-configs",
+    "update-user",
+    'now-template1',
+    'now-template2',
+    'now-template3',
+    'login',
+    'reset-password',
+    'ativationAccount',
+],
     components: {
         Fonts,
         Colors,
@@ -159,6 +169,41 @@ export default {
                 this.language == 'us-en' ? response.data.content : "",
                 this.language == 'us-en' ? 'Failed to delete the account' : 'Falha ao excluir a conta'
             );
+        },
+        insertDeleteToken() {
+            this.globalModalTitleMultimenu = this.isEnglish() ? 'Double confirmation factor' : 'Duplo fator de confirmação';
+            this.globalModalMessageMultimenu = this.isEnglish() ? 'Confirm account deletion(insert token).' :
+            "Confirmar deleção da conta (inserir token).";
+            this.$refs.globalModalMultimenu.open();
+        },
+        async submitDeleteToken() {
+            const token = $("#input-token").val();
+            if(token == null || token == "" || token == "undefined") {
+                return;
+            }
+            await deleteUser(this.user._id, token).then((response) => {
+            // console.log(response);
+            if (response?.status == 200) {
+                localStorage.removeItem("user-pt");
+                localStorage.removeItem("user-en");
+                showAlert(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+                this.$refs.globalModal.close();
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 3000);
+                return;
+            } else {
+                showAlert('us-en' ? 'Fail. You may start over requesting a new token.' : 'Falha. Talvez tente novamente com um token novo');
+            }
+            });
+        },
+        deleteLocalData() {
+            localStorage.removeItem("configs");
+            localStorage.removeItem("user-pt");
+            localStorage.removeItem("user-en");
+            setTimeout(() => {
+            window.location.reload()
+            }, 900);
         },
     },
     data() {

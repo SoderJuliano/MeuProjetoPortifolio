@@ -11,6 +11,8 @@
         @now-template3="this.$emit('now-template3')"
         @update-user="update"
         @login="showLogin"
+        @reset-password="this.$emit('reset-password')"
+        @ativationAccount="this.$emit('ativationAccount')"
     />
     <div class="footer">
         <img @click="hover = true" v-if="hover==false" @mousedown="hover = true" src="../icons/menustatic.png" alt="">
@@ -50,7 +52,17 @@ export default {
         language: String,
         user: Object
     },
-    emits:["language-update", "font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color", "login"],
+    emits:[
+        "language-update",
+        "font-changed",
+        "now-template2",
+        "now-template1",
+        "change-main-color",
+        "change-font-color",
+        "login",
+        'reset-password',
+        'ativationAccount'
+    ],
     methods:{
         showLogin() {
             this.$emit('login');

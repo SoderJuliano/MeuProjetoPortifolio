@@ -81,5 +81,15 @@ export default {
     .modal-overlay {
         width: 100dvw;
     }
+
+    .close-btn[data-v-18dc0ffe] {
+        position: absolute;
+        top: 0px;
+        right: -20%;
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
 }
 </style>
