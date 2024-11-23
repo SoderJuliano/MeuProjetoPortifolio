@@ -353,6 +353,10 @@ input {
     min-width: 70%;
 }
 
+.img-delete {
+    display: none;
+}
+
 @media screen and (max-width: 768px) {
     .component {
         padding-right: 2% !important;
