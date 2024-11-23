@@ -47,6 +47,7 @@
             />
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
+        <img v-if="removeBnt" @click="removeComponent" src="../../icons/remove.png" alt="delete" class="img-delete">
     </div>
     <div v-if="showEditing === job?.id" class="job-edit">
         <wrappEditModel
@@ -124,7 +125,7 @@ const saveItem = (index) => {
 };
 
 watch(() => props.listOfStrings, (newList) => {
-  editableList.value = [...newList];
+    editableList.value = [...newList];
 });
 // Lists update finish
 
@@ -357,6 +358,19 @@ input {
         padding-right: 2% !important;
         padding-left: 2% !important;
     }
+
+    .remove-button {
+        display: none;
+    }
+
+    .img-delete {
+        display: block;
+        position: absolute;
+        right: 20px;
+        width: 40px;
+        z-index: 2;
+        margin-top: 10px;
+    }
 }
 
 @media print {
@@ -383,6 +397,10 @@ input {
     */
     .span2 {
         margin-left: 0% !important;
+    }
+
+    .img-delete {
+        display: none;
     }
 }
 </style>
