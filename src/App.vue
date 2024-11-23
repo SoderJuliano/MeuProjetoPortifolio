@@ -26,9 +26,15 @@ export default {
         const uri = window.location.href;
         console.log(uri);
 
-        if (uri === 'http://localhost:8080/#' ||
-            uri === 'http://localhost:8080/' ||
-            uri === 'https://custom-cv-online.netlify.app/') {
+        const homeHosts = ['http://localhost:8080/#',
+            'http://localhost:8080/',
+            'https://custom-cv-online.netlify.app/',
+            'https://julianosodermeugeradoronline-dev.netlify.app/',
+            'https://freehubcv.top',
+            'https://freehubcv.top/#'
+        ]
+
+        if (homeHosts.some(host => uri === host)) {
             this.activeComp = 'Home';
         } else if (uri.includes('recover/password')) {
             this.newPassword = uri.split('newPasswordToken=')[1];
