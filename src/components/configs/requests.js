@@ -6,7 +6,7 @@ let apiUrl = DRAGONITE_ENV;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
 
-
+// Webhook pergar url dragonite
 export async function getLastEnvUrl() {
   try {
     // Make the API request to get the notifications
@@ -34,6 +34,7 @@ export async function getLastEnvUrl() {
   }
 }
 
+// Notificações dragonite
 export function getDragoniteMesseges(key) {
   axios.defaults.baseURL = 'https://abra-api.top';
   return axios.get(`/notifications/retrieve?key=${key}`)
@@ -45,6 +46,7 @@ export function getDragoniteMesseges(key) {
     });
 }
 
+// Criar notificação
 export function setNewNotification(data) {
     axios.defaults.baseURL = 'https://abra-api.top';
     return axios.post('/notifications', data).then((response) => {
@@ -53,6 +55,8 @@ export function setNewNotification(data) {
     });
 }
 
+// Primeiro login
+// Tem o user id
 export function saveLogin(email, password, userId) {
   const login = {
     "email": email,
@@ -72,11 +76,13 @@ export function saveLogin(email, password, userId) {
   });
 }
 
-export function loginUser(email, userId, password) {
+// Login
+export function loginUser(email, userId, password, language) {
   const login = {
     "email": email,
     "password":  password,
-    "userId": userId
+    "userId": userId,
+    "language": language
   }
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
@@ -85,6 +91,8 @@ export function loginUser(email, userId, password) {
 
   return axios.post(`${apiUrl}/user/login`, login, { headers }).then((response) => {
     console.log("register newLogin response ", response);
+    const token = response.headers['token'];
+    document.cookie = `jwt=${token}; path=/; max-age=${7 * 24 * 60 * 60}`;
     return response;
   }).catch((error) => {
     console.log("register newLogin error ", error);
@@ -92,7 +100,8 @@ export function loginUser(email, userId, password) {
   });
 }
 
-export function saveUserInfosInDataBase(user, newUser) {
+// Salvar ou atualizar dados de usuaário
+export function saveUserInfosInDataBase(user, newUser, language) {
   let phoneNumbers = [];
   let emails = [];
 
@@ -136,6 +145,8 @@ export function saveUserInfosInDataBase(user, newUser) {
         },
         "address": user?.contact?.address ? user?.contact?.address : null,
       },
+      "userExperiences": user?.userExperiences,
+      "language": language
     }
 
     const headers = {
@@ -168,10 +179,11 @@ export function saveUserInfosInDataBase(user, newUser) {
 }
 
 
-export function updateUser(name, email) {
+export function updateUser(name, email, language) {
   const data = {
     name,
     email,
+    language
   };
 
   const headers = {
@@ -195,13 +207,17 @@ export function updateUser(name, email) {
   });
 }
 
-export function requestDelete(id, email) {
+export function requestDelete(id, email, language) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
 
-  return axios.patch(`${apiUrl}/user/request/${id}/${email}/delete`, null, { headers }).then((response) => {
+  const data = {
+    "language": language
+  }
+
+  return axios.patch(`${apiUrl}/user/request/${id}/${email}/delete`, data, { headers }).then((response) => {
     // console.log('chamada DELETE executada');
     // console.log(response.data);
     return response;
@@ -225,13 +241,18 @@ export function deleteUser(id, token) {
   });
 }
 
-export function activateAccount(id, token, email) {
+export function activateAccount(id, token, email, language) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
   };
+
+  const data = {
+    "language" : language
+  }
+
 // /activate/{id}/{code}
-  return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, null, { headers }).then((response) => {
+  return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, data, { headers }).then((response) => {
     return response;
   }).catch(error => {
     console.error('Erro durante delete user', error);
@@ -253,6 +274,23 @@ export function resetPassword(id) {
   });
 }
 
+export function resetPasswordByEmail(email, language) {
+  const encodedEmail = encodeURIComponent(email); // Codificando o e-mail
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.patch(`${apiUrl}/user/recover/${encodedEmail}/${language}/password`, null, { headers })
+    .then((response) => {
+      return response;
+    })
+    .catch(error => {
+      console.error('Erro durante reset password', error);
+      throw error;
+    });
+}
+
 export function setNewPassword(id, password, token) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
@@ -269,5 +307,16 @@ export function setNewPassword(id, password, token) {
   }).catch(error => {
     console.error('Erro durante reset password', error);
     throw error;
+  });
+}
+
+export async function ping() {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return await axios.get(`${apiUrl}/ping`, { headers }).then((response) => {
+    return response;
   });
 }

@@ -39,10 +39,44 @@
                 @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')" />
             <p class="multimenu-line"></p>
         </div>
-        <div class="option">
+        <div v-if="mobileOptions" class="option">
             <p class="tside" @click="$emit('login')" >LOGIN</p>
             <p class="multimenu-line"></p>
         </div>
+        <div @click="update(this.user)" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "SAVE" : "SALVAR" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div id="accDelete" @click="deleteAccount" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "DELETE MY ACCOUNT" : "DELETAR MINHA CONTA"}}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div @click="insertDeleteToken" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "INSERT DELETE CONFIRMATION TOKEN" : "INSERIR TOKEN DE CONFIRMAÇÃO PARA DELEÇÃO"}}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-on:click="this.$emit('reset-password')" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "RECOVER PASSWORD" : "RECUPERAR SENHA" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-on:click="this.$emit('ativationAccount')" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "INSERT ACTIVATION TOKEN" : "INSERIR TOKEN DE ATIVAÇÃO DA CONTA" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-on:click="deleteLocalData()" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "DELETE ALL MY DATA FROM THIS BROWSER" : "APAGAR TODOS OS MEUS DADOS DO NAVEGADOR" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <GlobalModal
+            ref="globalModalMultimenu"
+            >
+            <h1>{{ this.globalModalTitleMultimenu }}</h1>
+            <p>{{ this.globalModalMessageMultimenu }}</p>
+            <div class="globalModal">
+            <input id="input-token" type="text">
+            <button @click="submitDeleteToken()">{{ this.language == 'us-en' ? "Submit token" : "Enviar token" }}</button>
+            </div>
+        </GlobalModal>
     </div>
 </template>
 
@@ -54,10 +88,24 @@ import pageColor from "./pageColor.vue";
 import Avatares from "./Avatares.vue";
 import PicureShape from "./PictureShape.vue";
 import Templates from "./multimenuComponentes/Templates.vue";
+import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
+import UserModel from "../model/userModel";
+import { showAlert } from 'simple-alerts/dist/showAlert.js';
+import authService from "../services/authService";
+import { deleteUser } from "./configs/requests.js";
 
 export default {
     name: "multi-menu",
-    emits: ["changefont", "update-configs", "update-user", 'now-template1', 'now-template2', 'now-template3', 'login'],
+    emits: ["changefont",
+    "update-configs",
+    "update-user",
+    'now-template1',
+    'now-template2',
+    'now-template3',
+    'login',
+    'reset-password',
+    'ativationAccount',
+],
     components: {
         Fonts,
         Colors,
@@ -65,18 +113,116 @@ export default {
         Avatares,
         PicureShape,
         Templates,
-        FontsSize
+        FontsSize,
+        GlobalModal
     },
     props: {
         template: Number,
         user: Object,
         language: String
     },
+    data() {
+        return {
+            globalModalTitleMultimenu: '',
+            globalModalMessageMultimenu: '',
+        }
+    },
     methods: {
         update(val) {
-            this.$emit("update-user", val);
+            const authenticated = authService.getIdUsuario() === this.user?._id;
+            this.$emit("update-user", val, authenticated);
+        },
+        checkWindowWidth() {
+            this.mobileOptions = window.innerWidth < 720;
+        },
+        isEnglish() {
+            return this.language.includes("en");
+        },
+
+        // código copiado do navbar
+        async deleteAccount() {
+            if(this.user?._id?.length != 24) {
+                localStorage.removeItem("user-pt");
+                localStorage.removeItem("user-en");
+                showAlert(this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                return;
+            }
+            let userFromModel = new UserModel();
+            userFromModel = userFromModel.constructorObject(this.user);
+            const response = await userFromModel.requestDeleteThisUser();
+            // const response = {status: 200, data: {content: "salvo com sucesso"}}
+            if(response && response.status == 200) {
+                showAlert(
+                    this.language == 'us-en' ? response.data.content : "",
+                    this.language == 'us-en' ? 'Get the token we send to your e-mail address' : 'Use o token que enviamos para seu e-mail'
+                );
+                this.globalModalTitleMultimenu = this.isEnglish() ? 'Double confirmation factor' : 'Duplo fator de confirmação';
+                this.globalModalMessageMultimenu = this.isEnglish() ? 'Confirm account deletion using the token we sent to your email.' :
+                "Confirme a deleção da conta através do token que enviamos para seu email.";
+                this.$refs.globalModalMultimenu.open();
+                return;
+            }
+            showAlert(
+                this.language == 'us-en' ? response.data.content : "",
+                this.language == 'us-en' ? 'Failed to delete the account' : 'Falha ao excluir a conta'
+            );
+        },
+        insertDeleteToken() {
+            this.globalModalTitleMultimenu = this.isEnglish() ? 'Double confirmation factor' : 'Duplo fator de confirmação';
+            this.globalModalMessageMultimenu = this.isEnglish() ? 'Confirm account deletion(insert token).' :
+            "Confirmar deleção da conta (inserir token).";
+            this.$refs.globalModalMultimenu.open();
+        },
+        async submitDeleteToken() {
+            const token = $("#input-token").val();
+            if(token == null || token == "" || token == "undefined") {
+                return;
+            }
+            await deleteUser(this.user._id, token).then((response) => {
+            // console.log(response);
+            if (response?.status == 200) {
+                localStorage.removeItem("user-pt");
+                localStorage.removeItem("user-en");
+                showAlert(null, this.language == 'us-en' ? 'Deleted successfully!' : "Deletado com sucesso!");
+                this.$refs.globalModal.close();
+                setTimeout(() => {
+                    window.location.href = "/";
+                }, 3000);
+                return;
+            } else {
+                showAlert('us-en' ? 'Fail. You may start over requesting a new token.' : 'Falha. Talvez tente novamente com um token novo');
+            }
+            });
+        },
+        deleteLocalData() {
+            localStorage.removeItem("configs");
+            localStorage.removeItem("user-pt");
+            localStorage.removeItem("user-en");
+            setTimeout(() => {
+            window.location.reload()
+            }, 900);
+        },
+    },
+    data() {
+        return {
+            mobileOptions: false
         }
-    }
+    },
+    mounted() {
+        this.checkWindowWidth();
+        window.addEventListener('resize', this.checkWindowWidth); // Update on window resize
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.checkWindowWidth); // Clean up the event listener
+    },
+    watch: {
+        language(newLang, oldLang) {
+            console.log(`Language changed from ${oldLang} to ${newLang}`);
+        }
+    },
 };
 </script>
 <style scoped>
@@ -141,6 +287,21 @@ export default {
         background-color: white;
         overflow: scroll;
         cursor: pointer;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .close-bnt {
+        top: -20px;
+        right: -30%;
+    }
+
+    #input-token {
+        width: 100%;
+    }
+
+    .globalModal button {
+        margin: 0%;
     }
 }
 </style>

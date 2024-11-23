@@ -1,6 +1,6 @@
 import { saveUserInfosInDataBase, saveLogin, loginUser, updateUser, requestDelete } from '../components/configs/requests';
+import * as localStorageService from '../components/services/LocalStorageService.js';
 export default class User {
-    id = 0;
     _id = "";
     name = this.getNameFromLocalStorage();
     profession = "";
@@ -26,21 +26,21 @@ export default class User {
     };
     userExperiences = [];
     imgForReal = 0;
-    language = {
+    spokenLanguages = [{
         level: "",
         details: ""
-    }
+    }];
     otherInfos = [];
     otherExperiencies = {
         title: '',
         text: ''
     };
+    language = '';
 
     getNameFromLocalStorage() {
         let name = "";
         let user = JSON.parse(localStorage.getItem("user-pt"));
         if(user) {
-            console.log('user pt')
             name = user.name;
         }else {
             user = JSON.parse(localStorage.getItem("user-en"));
@@ -53,7 +53,7 @@ export default class User {
     }
 
     constructor() {
-        this.id = this.id == 0 ? Math.random() : this.id;
+        this._id = this._id == 0 ? Math.random().toString() : this._id;
     }
 
     async requestDeleteThisUser() {
@@ -61,9 +61,10 @@ export default class User {
     }
 
     async getBackEndDataAndResolveYourSelf(login) {
-        const response = await loginUser(login.email, login.userId, login.password);
+        const response = await loginUser(login.email, login.userId, login.password, login.language);
         if(response?.status == 200){
             this.updator(response?.data.content);
+            localStorageService.setNoNewUser();
             return this;
         }else {
             return null;
@@ -73,12 +74,19 @@ export default class User {
     // Updates the user if the user's name changes or if the user has been created
     // on the backend.
     async updateUserName() {
-        updateUser(this.name, this.contact.email[0]);
+        updateUser(this.name, this.contact.email[0], this.language);
     }
 
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
-        return await saveUserInfosInDataBase(this, newUser);
+        const configs = JSON.parse(localStorage.getItem('configs'));
+        let lan = null;
+        if(!this.language || this.language === '') {
+            lan = configs.language;
+        }else {
+            lan = this.language;
+        }
+        return await saveUserInfosInDataBase(this, newUser, lan);
     }
 
     async firstLogin(email, password) {
@@ -109,14 +117,19 @@ export default class User {
     }
     updator(user)
     {
-        this.id = user.id;
-        this._id = user._id ? user._id : "";
+        if(user?._id && user._id.length === 24) {
+            this._id = user._id;
+        }else if(user?.id && user.id.length === 24) {
+            this._id = user.id;
+        }else {
+            this._id = "";
+        }
         this.profession = user.profession;
         this.resume = user.resume;
         this.competence = user.competence;
         this.social = user.social;
         this.grade = user.grade;
-        this.hability = user?.hability ? user.hability : user?.ability;
+        this.ability = user?.hability ? user.hability : user?.ability;
         this.avatarImg = user.avatarImg;
         this.realImg = user.realImg;
         this.contact = user.contact;
@@ -124,10 +137,12 @@ export default class User {
         this.otherInfos = user.otherInfos;
         this.otherExperiencies = user.otherExperiencies;
         this.setName(user.name);
+        this.spokenLanguages = user.spokenLanguages;
+        this.language = user.language
     }
 
     getId() {
-        return this._id ? this._id : this.id;
+        return this._id;
     }
 
     getEmails() {
@@ -191,14 +206,16 @@ export default class User {
     }
 
     findAndRetrieveInfos(language) {
-        const en = localStorage.getItem('user-en');
-        const pt = localStorage.getItem('user-pt');
-        if(language == null) {
-            return en ? en : pt;
-        }else if(language == 'user-en') {
-            return en;
-        }else {
-            return pt;
+        let lan = null;
+        if(language === 'us-en') {
+            lan = 'user-en';
+        }else if(language === 'pt-br') {
+            lan = 'user-pt';
+        }else if (language === 'user-en' || language === 'user-pt') {
+            lan = language;
         }
+
+        const user  = localStorage.getItem(lan);
+        return JSON.parse(user);
     }
 }

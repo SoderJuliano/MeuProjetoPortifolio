@@ -4,8 +4,8 @@
         <p class="tside" @click="openTemplates">TEMPLATES</p>
     </div>
     <div class="dropdown-templates">
-        <div class="closeDiv" @click="closeDiv()">X</div>
-        <TemplateChooser 
+        <div class="closeDiv" style="margin-top: 50px;" @click="closeDiv()">X</div>
+        <TemplateChooser
             :template="template"
             @now-template1="this.$emit('now-template1')"
             @now-template2="this.$emit('now-template2')"
@@ -59,6 +59,7 @@ export default {
         left: 0;
         width: 90vw;
         height: 100%;
+        z-index: 1;
     }
 }
 </style>

@@ -10,14 +10,16 @@
             <div v-for="(tip, index) in tips" v-bind:key="tip.id">
                 <div style="color: gray;" class="theTip" v-if="tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span>
-                    <span class="tip-read">Ok</span>
+                    <span class="tip-read">{{lang.includes("en") ? "read" : "lido"}} - ☑</span>
                     <p>{{ tip.content }}</p>
                     <button @click="deleteTip(tip, index)">delete</button>
                 </div>
             </div>
             <div v-for="tip in tips" v-bind:key="tip.id">
-                <div style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
-                    <span>{{tip.title}}</span><span class="tip-read">off <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off"></span>
+                <div @click="checked(tip)" style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
+                    <span>{{tip.title}}</span><span class="tip-read">{{lang.includes("en") ? "read" : "lido"}}
+                        <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off">
+                    </span>
                     <p>{{ tip.content }}</p>
                 </div>
             </div>
@@ -44,30 +46,39 @@ export default {
         keyDragonite: String,
     },
     methods: {
+        // Caso seja uma mensagem de altera local, não vai chamar a api
         deleteTip(item, index) {
-            const headers = {
-                'Content-Type': 'application/json',
-            };
-            const isDragoniteTip = index > 6 || item.content.includes("[en]")
-            let data = {
-                "id": String(item.id),
-                "key": isDragoniteTip ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
-            };
-            if (item.appUrl) {
-                data.appUrl = String(item.appUrl);
-            }
-            if (item.user) {
-                data.user = String(item.user);
-            }
-
-            axios.delete(`/notifications/delete`, { headers, data })
-            .then(() => {
+            if(item.local) {
                 this.tips.splice(index, 1);
-                localStorage.setItem('deletedDefaultNotifications', true);
-            })
-            .catch(error => {
-                console.error('Error deleting tip:', error);
-            });
+                localStorage.setItem('deletedDefaultNotifications'+'-'+item.language, true);
+                localStorage.setItem('tips', JSON.stringify(this.tips))
+            }else {
+                const headers = {
+                'Content-Type': 'application/json',
+                };
+                const isDragoniteTip = !item.local
+                let data = {
+                    "id": String(item.id),
+                    "key": isDragoniteTip ? String(this.keyDragonite) : "https://custom-cv-online.netlify.app",
+                };
+                if (item.appUrl) {
+                    data.appUrl = String(item.appUrl);
+                }
+                if (item.user) {
+                    data.user = String(item.user);
+                }
+
+                axios.delete(`/notifications/delete`, { headers, data })
+                .then(() => {
+                    this.tips.splice(index, 1);
+                    localStorage.setItem('deletedDefaultNotifications'+'-'+item.language, true);
+                })
+                .catch(error => {
+                    this.tips.splice(index, 1);
+                    localStorage.setItem('tips', JSON.stringify(this.tips))
+                    console.error('Error deleting tip:', error);
+                });
+            }
         },
         asTipToShow(){
             let ptbrTips = []
@@ -87,92 +98,101 @@ export default {
         close(){
             this.showTip = false;
         },
-        checked(event){
+        checked(event) {
             this.tips.map(tip => {
-                if(tip.id == event.id){
-                    tip.read = true;
-                    axios.patch(`/notifications/${tip.id}`)
+                if (tip.id == event.id) {
+                    tip.read = true;  // Mark as read locally
+
+                    if(!tip.local) {
+                        // Attempt to mark it as read on the backend
+                        axios.patch(`/notifications/${tip.id}`)
+                        .catch(error => {
+                            // If there's an error (like the notification doesn't exist), handle it silently
+                            console.error(`Notification with id ${tip.id} does not exist on the backend.`);
+                        });
+                    }
                 }
-            })
-            localStorage.setItem('tips', JSON.stringify(this.tips))
+            });
+
+            // Update the localStorage with the updated tips array
+            localStorage.setItem('tips', JSON.stringify(this.tips));
         },
         verificarTips() {
-            const intervaloInicial = 2000; // 2 segundos
-            const intervaloRecorrente = 4000; // 4 segundos
+            const intervaloInicial = 2000; // 2 seconds
+            const intervaloRecorrente = 4000; // 4 seconds
+
+            const mergeTips = (localStorageTips) => {
+                localStorageTips.forEach(storedTip => {
+                    const existingTip = this.tips.find(tip => tip.id === storedTip.id);
+                    if (!existingTip) {
+                        this.tips.push(storedTip);
+                    }
+                });
+            };
 
             const intervalId = setInterval(() => {
-                this.tips = JSON.parse(localStorage.getItem('tips')) || [];
-
-                if (this.tips.length > 0) {
-                clearInterval(intervalId); // Parar a verificação quando tips.length for maior que zero
-                // console.log('tips.length é maior que zero!');
+                const localStorageTips = JSON.parse(localStorage.getItem('tips')) || [];
+                if (localStorageTips.length > 0) {
+                    mergeTips(localStorageTips); // Merge without overwriting existing tips
+                    clearInterval(intervalId); // Stop checking once tips are available
                 }
             }, intervaloInicial);
 
             setInterval(() => {
                 if (this.tips.length === 0) {
-                // console.log('tips.length ainda é zero. Verificando novamente...');
-                clearInterval(intervalId);
-
-                const novoIntervalId = setInterval(() => {
-                    this.tips = JSON.parse(localStorage.getItem('tips')) || [];
-
-                    if (this.tips.length > 0) {
-                        clearInterval(novoIntervalId);
-                        // console.log('tips.length é maior que zero!');
-                    }
-                }, intervaloRecorrente);
+                    const novoIntervalId = setInterval(() => {
+                        const localStorageTips = JSON.parse(localStorage.getItem('tips')) || [];
+                        if (localStorageTips.length > 0) {
+                            mergeTips(localStorageTips); // Merge without overwriting existing tips
+                            clearInterval(novoIntervalId);
+                        }
+                    }, intervaloRecorrente);
                 }
             }, intervaloRecorrente);
+        },
+        addTip(newMessage) {
+            const newTip = {
+            id: newMessage.id,
+            title: newMessage.title,
+            content: newMessage.content,
+            language: this.lang,
+            read: false,
+            local: newMessage?.local
+            };
+            // Create a new array reference to trigger reactivity
+            this.tips = [...this.tips, newTip];
+            console.log('Updated tips:', this.tips);
         }
     },
     mounted() {
         console.log('key ', this.keyDragonite);
         this.verificarTips();
-        // setTimeout(() => {
-        //     this.tips = JSON.parse(localStorage.getItem('tips')) || [];
-        // }, 2000);
         },
     watch: {
-        tips(newValue, oldValue){
-            // console.log("someData changed!");
-            // console.log(oldValue.length);
-            // console.log(newValue.length);
-            if(newValue.length != oldValue.length && newValue.length != 0){
-                this.showTip = true;
+        tips(newValue, oldValue) {
+            console.log("tips changed! Old:", oldValue.length, "New:", newValue.length);
+            if (newValue.length !== oldValue.length && newValue.length !== 0) {
+            this.showTip = true;
             }
         },
         novaMensagem(newValue) {
-            if(newValue != null)
-            {
+            console.log("novaMensagem", newValue);
+            if (newValue) {
                 const existingTip = this.tips.find(tip => tip.id === newValue.id && tip.language === this.lang);
                 if (!existingTip) {
-                    const newTip = {
-                        id: newValue.id,
-                        title: newValue.title,
-                        content: newValue.content,
-                        language: this.lang,
-                        read: newValue.read
-                    }
-                    this.tips.push(newTip);
+                    this.addTip(newValue);
                 }
             }
         },
         novasMensagens(newValue) {
-            if(newValue.length > 0)
-            {
-                console.log('novas mensagens', newValue)
-                this.novasMensagens.forEach(novaMensagem => {
-                    const newTip = {
-                        id: novaMensagem.id,
-                        title: novaMensagem.title,
-                        content: novaMensagem.content,
-                        language: this.lang,
-                        read: false
-                    }
-                    this.tips.push(newTip);
-                    // this.language.includes('pt-br') ? this.ptbrTips.push(novaMensagem) : this.usenTips.push(novaMensagem);
-                });
+            if (newValue && newValue.length > 0) {
+            console.log('novasMensagens', newValue);
+            newValue.forEach(novaMensagem => {
+                const existingTip = this.tips.find(tip => tip.id === novaMensagem.id && tip.language === this.lang);
+                if (!existingTip) {
+                this.addTip(novaMensagem);
+                }
+            });
             }
         }
     }

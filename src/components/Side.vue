@@ -39,9 +39,9 @@
           <img @click="toglePhoneMask()" src="../icons/phone/disabled.svg" id="disabled" class="phone-disabled">
         </div>
         <div class="data-container">
-          <img @click="$emit('choose-addressIcon')" v-if="user.contact.adress" src="../icons/adress.png" alt="adress"
+          <img @click="$emit('choose-addressIcon')" v-if="user.contact.address" src="../icons/adress.png" alt="adress"
             class="adress-icon" />
-          <span class="endereco-text">{{ user.contact.adress }}</span>
+          <span class="endereco-text">{{ user.contact.address }}</span>
         </div>
       </div>
     </div>
@@ -588,6 +588,7 @@ export default {
   margin-top: 10px;
   text-align: center;
   padding: 5px;
+  min-height: 30px;
 }
 
 .data-container {

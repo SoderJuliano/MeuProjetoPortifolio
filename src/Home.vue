@@ -9,7 +9,10 @@
       <button id="submit-token" @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
     </div>
     </GlobalModal>
+
+  <!-- A LOADER -->
   <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
+
   <SimpleAlerts
     @close="closeSimpleAlert"
     :title="alertTitle"
@@ -24,7 +27,7 @@
     @close="closeSimpleAlert"
     :title="alertTitle"
     :message="alertMessage"
-    :show="showAlert"
+    :show="show"
     >
   </SimpleAlerts>
 
@@ -167,8 +170,9 @@
       />
     </div>
     <div class="footer">
-      <img class="menuupimg" @click="footerUp" src="./assets/arrow-up.png" alt="menu up"/>
-      <div class="footer-menu-bar" style="display: none;" >
+      <img class="menuupimg" @click="footerUp" src="./assets/arrow-down.png" alt="menu up"/>
+      <span class="footer-mobile-title">FreeHubCV</span>
+      <div class="footer-menu-bar" style="display: none; position: relative;" >
         <Footer
           :language="this.configs.getLanguage()"
           @language-update="lupdate"
@@ -182,6 +186,8 @@
           @change-font-color="changeFontColor"
           @update-user="updateUser"
           @login="showLogin"
+          @reset-password="resetPassword"
+          @ativationAccount="showGlobalModal"
         />
       </div>
     </div>
@@ -225,15 +231,21 @@ import * as funcs from "./components/configs/requests.js";
 import * as functions from "./components/componentesCompartilhados/utilJS/functions.js";
 import diagramsModal from "./components/tips/diagramsModal.vue";
 import SimpleAlerts from 'simple-alerts';
+import { showAlert } from 'simple-alerts/dist/showAlert.js'
 import 'simple-alerts/dist/simpleAlertsVue.css';
+import AlertComponent from 'simple-alerts';
 import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
+import * as localStorageService from "./components/services/LocalStorageService.js";
+import authService from "./services/authService.js";
+import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
 
 export default {
   name: "Home",
   emits: ["close"],
   data() {
     return {
+      alertComponent: null,
       syncUser: false,
       logedIn: false,
       globalModalTitle: '',
@@ -245,13 +257,13 @@ export default {
       alertMessage: "",
       alert: {
         autoClose: true,
-        timer: 3000,
+        timer: 2000,
         backgroundColor: 'red',
         textColor: 'white',
         closeButtonText: 'Close',
       },
       customAlert: false,
-      showAlert: false,
+      show: false,
       showAlertError: false,
       diagram: null,
       showDiagramsModal: false,
@@ -273,8 +285,7 @@ export default {
       // user: new userModel() futuro trabalhar com classes
       user:
       {
-        id: Math.floor(Math.random() * 1000),
-        _id: "",
+        _id: Math.floor(Math.random() * 1000).toString(),
         name: "",
         profession: "",
         resume: "",
@@ -290,6 +301,7 @@ export default {
           address: "",
         },
         userExperiences: [],
+        spokenLanguages: []
       },
     }
   },
@@ -307,12 +319,20 @@ export default {
     SimpleAlerts,
     Loader,
     GlobalModal,
+    AlertComponent
   },
   methods: {
+    // testMethod() {
+    //   showAlert("hello world")
+    // },
     async resetPassword() {
+      let response = null;
       try {
-        // Make the API call to reset the password
-        const response = await funcs.resetPassword(this.user._id);
+        if(!this.user._id) {
+          response = await funcs.resetPasswordByEmail(this.user.contact.email[0], this.configs.getLanguage());
+        }else {
+          response = await funcs.resetPassword(this.user._id);
+        }
         // Check if the response status is 200 (success)
         if (response?.status === 200) {
           this.fireGlobalAlert(
@@ -364,13 +384,19 @@ export default {
       bnt.prop("disabled", true);
       try {
         const token = $("#input-token").val();
-        const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0]);
+        const response = await funcs.activateAccount(this.user._id, token, this.user.contact.email[0], this.configs.getLanguage());
         console.log("response:", response);
 
         if (response && response?.status === 200) {
           // Handle success
           this.fireGlobalAlert("Success! Agora você pode acessar sua conta de qualquer dispositivo.");
+          let userFromModer = new UserModel();
+          userFromModer = userFromModer.constructorObject(response.data.content);
+          // true notSync, login should not call bk unnecessary
+          this.updateUser(userFromModer, true);
           this.logedIn = true;
+          localStorageService.setAccActived(userFromModer.getEmails[0], userFromModer._id);
+          localStorageService.setNoNewUser();
         } else {
           // Handle non-200 responses
           this.fireGlobalAlert(response?.data || "An error occurred");
@@ -392,6 +418,7 @@ export default {
       this.showAlertToTrue();
     },
     showGlobalModal() {
+      this.globalModalTitle = this.configs.getLanguage().includes('en') ? 'Insert Token' : 'Inserir o token',
       this.$refs.globalModal.open();
     },
     alertErrorFromBkend(msg){
@@ -406,18 +433,20 @@ export default {
       this.inlogin = true
     },
     showAlertToTrue() {
-      if(!this.showAlert) {this.showAlert = true}
+      if(!this.showAlert) {this.show = true}
     },
     showAlertErrorToTrue(){
       this.showAlertError = true
     },
     closeSimpleAlert() {
-      this.showAlert = false
+      this.show = false
       this.showAlertError = false
     },
-    registerUser(id, newUser) {
-      console.log('id', id)
-      console.log('newUser', newUser)
+    registerUser(data, newUser) {
+      // console.log('id agora data', data)
+      // console.log('newUser', newUser)
+
+      const id = data._id;
       if(this.user?._id == id) {
         this.inlogin = false;
       }else if (this.user?._id?.length < 24 && this.user?._id != id) {
@@ -426,7 +455,7 @@ export default {
         this.inOnboarding = true;
         this.inlogin = true;
         this.user._id = id;
-        this.updateUser(this.user);
+        this.updateUser(this.user, true);
       }else if(this.user?._id?.length == 24 && !newUser) {
         // Despite that we sava the id on the first registerying, we made the register and the all data
         // saves using the emai and not the id, we will have the id more for some front step controller
@@ -434,6 +463,9 @@ export default {
         this.inOnboarding = false;
         this.inlogin = true;
       }else if(this.user?._id?.length == 24 && newUser) {
+        // Precisa atualizar o id aqui, caso contrario a request
+        // pra cadastrar o login pode ir com id errado
+        this.updateUser(data, true);
         this.inOnboarding = true;
         this.inlogin = true;
       }
@@ -467,28 +499,37 @@ export default {
       }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
         let responseUser;
         if(typeof email == 'string') {
-          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email, "password": password, "userId": this.user._id});
+          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf(
+            {"email": email, "password": password, "userId": this.user._id, "language" : this.configs.getLanguage()}
+          );
         }else {
-          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf({"email": email[0], "password": password, "userId": this.user._id});
+          responseUser = await userFromModel.getBackEndDataAndResolveYourSelf(
+            {"email": email[0], "password": password, "userId": this.user._id, "language" : this.configs.getLanguage()}
+          );
         }
-        // console.log('response from backend login -->', responseUser);
+        console.log('response from backend login -->', responseUser);
         if (responseUser?._id.length == 24) {
-          this.updateUser(responseUser)
+          // true notSync, login should not call bk unnecessary
+          this.updateUser(responseUser, true)
           // when login then we can tur on sycn, not before to not make an unecessary
           // PUT request to update user into backend
           this.toggleSync(true);
-          // console.log('response app', responseUser)
+          console.log('response app', responseUser)
           this.alertTitle = "Bem vindo de volta!";
           this.alertMessage = "Você já possui uma conta no CustomCV!";
           this.showAlertToTrue();
           this.inlogin = false;
           this.logedIn = true;
+          localStorageService.setAccActived(email[0] ? email[0] : email, this.user._id);
         }else if (responseUser == null) {
-          // console.log('response app', responseUser)
+          console.log('response app', responseUser)
           this.alertTitle = "Erro ao fazer login";
           this.alertMessage = "Email ou senha inválidos";
           this.showAlertErrorToTrue();
           this.inlogin = false;
+          setTimeout(() => {
+            this.closeSimpleAlert();
+          }, 2000);
         }
       }
       const response = await funcs.getDragoniteMesseges(this.user?.contact?.email[0]+this.user?._id);
@@ -505,18 +546,18 @@ export default {
 
     },
     handleUpdateFormacao(value) {
-      console.log(value)
+      // console.log(value)
       this.user.grade = value;
-      this.updateUser(this.user);
+      this.updateUser(this.user, false);
     },
     handleUpdateSocial(value) {
-      console.log("handleUpdateSocial", value)
+      // console.log("handleUpdateSocial", value)
       this.user.social = value;
-      this.updateUser(this.user);
+      this.updateUser(this.user, false);
     },
     updateCompetences(value) {
       this.user.competence = value;
-      this.updateUser(this.user);
+      this.updateUser(this.user, false);
     },
     updateConfigs(){
       this.configs.updateMyself();
@@ -553,10 +594,33 @@ export default {
       $('.iconsChooser').css({'display': 'flex'})
     },
     footerUp() {
-      $(".footer-menu-bar").css("display", "block");
-      $(".menuupimg").css("display", "none");
-      $(".menuupimg-down").css("display", "block");
+      // Hide the 'up' image smoothly
+      $(".menuupimg").fadeOut(100);
+
+      // Show the 'down' image smoothly
+      $(".menuupimg-down").fadeIn(500);
+
+      // Show the footer-menu-bar and animate it sliding in from left to right
+      $(".footer-menu-bar")
+        .css({
+          "display": "block",  // Make it visible
+          "left": "-100%",     // Start from off-screen
+          "width": "20dvw"
+        })
+        .animate({
+          left: "0%",           // Animate to fully visible position
+          width: "100dvw"
+        }, 1000);               // 500ms animation
+
+        $(".footer-mobile-title").css({
+          "left": "30%"
+        })
     },
+    // footerUp() {
+    //   $(".footer-menu-bar").css("display", "block");
+    //   $(".menuupimg").css("display", "none");
+    //   $(".menuupimg-down").css("display", "block");
+    // },
     changefont(newFont) {
       this.configs.setFont(newFont);
       localStorage.setItem("configs", JSON.stringify(this.configs));
@@ -569,16 +633,21 @@ export default {
       this.configs.setMainColor(color);
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
-    updateUser(userData) {
+    updateUser(userData, notSync) {
       // console.log('user update', userData);
+      // console.log("not sync", notSync)
+      // console.log("isMobilePortrait() && !notSync", isMobilePortrait() && !notSync)
+      this.user = userData;
       // todo saveIntoDatabase
-      if(this.syncUser) {
+      if(this.syncUser && !notSync) {
+        this.doUpdateUserAsync();
+      }else if(isMobilePortrait() && !notSync) {
         this.doUpdateUserAsync();
       }
-      this.user = userData;
       localStorage.setItem(this.localStorageKey, JSON.stringify(userData));
     },
     async doUpdateUserAsync() {
+      this.loading = true;
       let userFromModel = new UserModel();
         userFromModel = userFromModel.constructorObject(this.user);
         const response = await userFromModel.saveIntoDatabase(false);
@@ -587,6 +656,7 @@ export default {
           console.log('user on update user status', response.status);
           this.syncUser = false;
         }
+      this.loading = false;
     },
     adicionarExperiencias(experiencias) {
       this.user.userExperiences = experiencias;
@@ -608,35 +678,40 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
       if(this.configs.getTemplate() == 2) {
         $(".footer .close-bnt").css({"right": "60px"})
-        console.log('set t2')
+        // console.log('set t2')
       }else {
         $(".footer .close-bnt").css({"right": "30px"})
-        console.log('set t1')
+        // console.log('set t1')
       }
     },
     lupdate(lng) {
-      // console.log('executing lupdate')
+      console.log('executing lupdate')
+      this.user = [];
       if(lng){
         this.configs.setLanguage(lng);
         this.updateLocalStorageKey(lng);
         localStorage.setItem("configs", JSON.stringify(this.configs));
 
         this.getUserData();
+
+        // update localStorage when language changes as well
+        this.updateUser(this.user, true);
       }
-      // console.log("finished lupdate")
+      console.log("finished lupdate")
     },
     updateName(name) {
-      if (this.user instanceof UserModel) {
+      if (this.user instanceof UserModel && name != this.user.mame) {
         this.user.setName(name);
-      } else if (typeof this.user !== 'undefined' && this.user !== null) {
+        this.updateUser(this.user, false);
+      } else if (typeof this.user !== 'undefined' && this.user !== null && name != this.user.mame) {
         const userFromModer = new UserModel();
         userFromModer.constructorObject(this.user);
         // userFromModer.setName(name);
         this.user = userFromModer;
+        this.updateUser(this.user, false);
       } else {
         console.error('Unexpected user type or value:', typeof this.user, this.user);
       }
-      this.updateUser(this.user);
     },
     setFont(fnt) {
       this.font = fnt;
@@ -979,15 +1054,16 @@ export default {
     },
     getUserData() {
       try {
-        const lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
+        let lsUser = JSON.parse(localStorage.getItem(this.localStorageKey));
         // console.log('found')
         // console.log(lsUser)
         if(lsUser == null) {
-          lsUser = JSON.parse(localStorage.getItem("user"));
+          lsUser = new UserModel();
         }
         if(lsUser != null) {
           let userFromModer = new UserModel();
           userFromModer = userFromModer.constructorObject(lsUser);
+          userFromModer.language = this.configs.getLanguage();
           this.user = userFromModer;
           // console.log('set')
           // console.log(this.user)
@@ -1002,265 +1078,6 @@ export default {
   // fim methods
 
   beforeMount() {
-    if(!localStorage.getItem('deletedDefaultNotifications')) {
-      axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
-
-      axios.defaults.headers.common['Content-Type'] = 'application/json';
-      axios.defaults.headers.common['Accept'] = 'application/json';
-
-      // Configuração de CORS
-      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-      axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
-      axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
-
-      $.getJSON("https://api.ipify.org/?format=json", function(e) {
-        const data = {
-          user: e.ip,
-          url: "https://custom-cv-online.netlify.app",
-          key: "https://custom-cv-online.netlify.app"
-        }
-
-        const header = {
-          "accept": "application/json",
-          "content-type": "application/json"
-        };
-
-        axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
-          { headers: header })
-          .then( response => {
-            // console.log(response.data)
-            let easyEnter = false;
-            let facilSalvar = false;
-            let icones = false;
-            let icons = false;
-            let habilidades = false;
-            let skills = false;
-
-            response.data.forEach(element => {
-              // console.log('element')
-              // console.log(element)
-                if(element.title.includes('Icones')) {
-                  icones = true;
-                }else if(element.title.includes('Icons')) {
-                  icons = true;
-                }else if (element.title.includes('Habilidades')) {
-                  habilidades = true;
-                }else if(element.title.includes('Skills')) {
-                  skills = true;
-                }else if(element.title.includes('Salvamento fácil')) {
-                  facilSalvar = true;
-                }else if (element.title.includes('Easy enter')) {
-                  easyEnter = true;
-                }
-            });
-
-            // console.log('easyEnter', easyEnter);
-            // console.log('facilSalvar', facilSalvar);
-            // console.log('icones', icones);
-            // console.log('icons', icons);
-
-            if(easyEnter == false) {
-              funcs.setNewNotification({
-                title: "Easy enter",
-                language: "us-en",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change.",
-                read: false
-              })
-            }
-            if(facilSalvar == false) {
-              funcs.setNewNotification({
-                title: "Salvamento fácil",
-                language: "pt-br",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
-                read: false
-              })
-            }
-            if(habilidades == false) {
-              funcs.setNewNotification({
-                title: "Habilidades",
-                language: "pt-br",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "Você pode por varias habilidadedes separadas por virgula (,).",
-                read: false
-              })
-            }
-            if(skills == false) {
-              funcs.setNewNotification({
-                title: "Skills",
-                language: "us-en",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "You can write many skills puting comma (,) between them.",
-                read: false
-              })
-            }
-            if(icons == false) {
-              funcs.setNewNotification({
-                title: "Icons",
-                language: "us-en",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "You can click over some icons to see other options.",
-                read: false
-              })
-            }
-            if(icones == false) {
-              funcs.setNewNotification({
-                title: "Icones",
-                language: "pt-br",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "Você pode clicar sobre alguns icons para ver outras opções.",
-                read: false
-              })
-            }
-
-            localStorage.setItem('tips', JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            if(error.response == null){
-              console.error('Ocorreu uma exeção');
-              console.error(error);
-              return;
-            }
-            // console.log(error.response.data);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
-
-            // if the notifications do no exist at all create all of them over there
-            if(error.response.status == 404){
-
-              funcs.setNewNotification({
-                title: "Icones",
-                language: "pt-br",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "Você pode clicar sobre alguns icons para ver outras opções.",
-                read: false
-              })
-
-              funcs.setNewNotification({
-                title: "Icons",
-                language: "us-en",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "You can click over some icons to see other options.",
-                read: false
-              })
-
-              funcs.setNewNotification({
-                title: "Skills",
-                language: "us-en",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "You can write many skills puting comma (,) between them.",
-                read: false
-              })
-
-              funcs.setNewNotification({
-                title: "Habilidades",
-                language: "pt-br",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "Você pode por varias habilidadedes separadas por virgula (,).",
-                read: false
-              })
-
-              funcs.setNewNotification({
-                title: "Salvamento fácil",
-                language: "pt-br",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
-                read: false
-              })
-
-              funcs.setNewNotification({
-                title: "Easy enter",
-                language: "us-en",
-                app: "custom-cv-online",
-                appUrl: "https://custom-cv-online.netlify.app",
-                user: e.ip,
-                key: "https://custom-cv-online.netlify.app",
-                content: "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change.",
-                read: false
-              })
-                .then(function (response) {
-                  if(response.status == 201){
-                    axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
-                    { headers: header })
-                      .then( response => {
-                        // console.log(response.data)
-                        localStorage.setItem('tips', JSON.stringify(response.data));
-                      });
-                  }
-                })
-                .catch(function (error) {
-                  // console.log(error);
-                });
-            }
-          });
-        });
-    }else {
-      // Else - caso no localhost tenha a variavel deletedDefaultNotifications é porque
-      // já foi apagado as mensagens default e não deve criar nosvas, apenas buscar as que ainda existem
-      axios.defaults.baseURL = 'https://abra-api.top'; // Defina a URL base da sua API
-
-      axios.defaults.headers.common['Content-Type'] = 'application/json';
-      axios.defaults.headers.common['Accept'] = 'application/json';
-
-      // Configuração de CORS
-      axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-      axios.defaults.headers.common['Access-Control-Allow-Methods'] = 'GET,HEAD,PATCH,POST,DELETE';
-      axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Accept';
-
-      const header = {
-          "accept": "application/json",
-          "content-type": "application/json"
-      };
-
-      $.getJSON("https://api.ipify.org/?format=json", function(e) {
-        const data = {
-          user: e.ip,
-          url: "https://custom-cv-online.netlify.app",
-          key: "https://custom-cv-online.netlify.app"
-        }
-        axios.get(`/notifications/retrieve?url=https://custom-cv-online.netlify.app&key=https://custom-cv-online.netlify.app&user=${e.ip}`,
-                    { headers: header })
-                      .then( response => {
-                        // console.log(response.data)
-                        localStorage.setItem('tips', JSON.stringify(response.data));
-                      });
-      });
-    }
-
     // General configs
     if(!localStorage.getItem("configs")){
       this.configs = new PageConfig();
@@ -1268,19 +1085,136 @@ export default {
     }else{
       this.configs = new PageConfig().recoverConfigs();
     }
+    if(!localStorage.getItem('deletedDefaultNotifications'+'-'+this.configs.getLanguage())) {
+      const lang = this.configs.getLanguage();
+      const icons = {
+          "id": Math.random(),
+          "title": lang.includes("en") ? "Icons" : "Icones",
+          "content": lang.includes("en") ? "You can click over some icons to see other options."
+          : "Você pode clicar sobre alguns icons para ver outras opções.",
+          "language": lang,
+          "read": false,
+          "local": true
+      }
+
+      const skills = {
+          "id": Math.random(),
+          "title": lang.includes("en") ? "Skills" : "Habilidades",
+          "content": lang.includes("en") ? "You can write many skills puting comma (,) between them"
+          : "Você pode por varias habilidadedes separadas por virgula (,).",
+          "language": lang,
+          "read": false,
+          "local": true
+      }
+
+      const input = {
+          "id": Math.random(),
+          "title": lang.includes("en") ? "Easy input" : "Salvamento fácil",
+          "content": lang.includes("en") ?
+          "[PC] - You can press 'ENTER' to save the value inside you input, do not need go over save button. In text area, where you can go to next line with 'ENTER', just press 'SHIFT'+'ENTER' to commit your change."
+          : "[PC] - É possivel clicar 'ENTER' para salvar um valor preenchido em qualquer campo. Em campos grandes de texto, onde você usa o enter pra ir pra linha abaixo, você pode apertar 'SHIFT'+'ENTER' pra salvar.",
+          "language": lang,
+          "read": false,
+          "local": true
+      }
+
+      //newListOfAbraMessages
+      let listOfMessagens = [icons, skills, input];
+
+      localStorage.setItem('tips', JSON.stringify(listOfMessagens));
+
+    }
     this.localStorageKey = this.configs.getLanguage().includes("pt") ? "user-pt" : "user-en";
     this.getUserData();
   },
-  mounted() {
-    this.configs.setIconsCollor();
-    if (this.user?._id?.length == 24) {
-      this.inlogin = true;
-      this.inOnboarding = false;
-    } else {
+  async mounted() {
+    try {
+      const res = await funcs.ping();
+
+      this.configs.setIconsCollor();
+
+      const isUserIdValid = this.user?._id?.length === 24;
+      const isConnected = !!res.data;
+      const lng = JSON.parse(localStorage.getItem("configs")).language;
+      const authenticated = authService.getIdUsuario() === this.user?._id;
+
+      if (isUserIdValid && isConnected && !authenticated) {
+        this.inlogin = true;
+        this.inOnboarding = false;
+        const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
+        showAlert(malert);
+
+        this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes("en") ? "Tip on login" : "Dica ao logar-se",
+          "content": lng.includes("en")
+              ? "If you have unsaved changes, login will overwrite them with the last saved state."
+              : "Se você dados locais não salvos, ao logar-se eles serão sobreescritos pelo último save.",
+          "language": this.lang,
+          "read": false,
+          "local": true
+        }
+      } else if(isUserIdValid && isConnected && authenticated) {
+        this.logedIn = true;
+        this.inOnboarding = false;
+        const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
+        showAlert(malert);
+
+        this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+          "content": lng.includes("en")
+              ? "If you are loged in and the togle of syncing data is on the data will auto update based on changes."
+              : "Se você estiver logado e o botão de sincronização estiver ativo, os dados serão atualizados automativamente ao serem alterados.",
+          "language": this.lang,
+          "read": false,
+          "local": true
+        }
+
+        setTimeout(() => {
+          this.newTipMessege = {
+            "id": Math.random(),
+            "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+            "content": lng.includes("en")
+                ? "The sync toggle stay under your name, make it visible clicking over your name on the right edge."
+                : "O botão de sincronização está no canto direito abaixo do seu nome, clique no seu nome para ele aparecer.",
+            "language": this.lang,
+            "read": false,
+            "local": true
+          }
+        }, 500);
+      } else {
+        this.inlogin = false;
+      }
+    }
+    catch (error) {
+      console.error('Error during ping:', error);
       this.inlogin = false;
+
+      const lng = JSON.parse(localStorage.getItem("configs")).language;
+      const currentDate = new Date();
+      const formattedDate = currentDate.toLocaleString(); // Formato local, ex: '15/11/2024, 10:30:00'
+
+      const malert = lng.includes("en")
+          ? `No connection with the server. Please try again later (${formattedDate}).`
+          : `Sem conexão com o servidor. Por favor, tente novamente mais tarde (${formattedDate}).`;
+
+      showAlert(malert);
+
+      this.newTipMessege = {
+          "id": Math.random(),
+          "title": lng.includes("en") ? "No connection" : "Sem conexão",
+          "content": lng.includes("en")
+              ? `The server is not available at the moment (${formattedDate}). Please try again later.`
+              : `O servidor não está disponível no momento (${formattedDate}). Por favor, tente novamente mais tarde.`,
+          "language": this.lang,
+          "read": false,
+          "local": true
+      }
     }
   }
 };
+
 </script>
 
 <style>
@@ -1341,7 +1275,9 @@ export default {
 
   .footer {
     position: fixed;
-    bottom: 0;
+    /* width: 93dvw !important; */
+    left: 0;
+    top: 0;
     background-color: #FFF;
     width: 100%;
     height: 40px;
@@ -1361,10 +1297,18 @@ export default {
     display: none;
   }
 
+  .menuupimg {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
 }
 @media screen and (min-width: 1001px) {
   .template {
     margin: 0 auto;
+    max-width: 1200px;
   }
   .main {
     display: flex;
@@ -1441,7 +1385,7 @@ export default {
 
 /* animated bg css */
 body{
-  background: #3399ff;
+  background: #9fcfff;
 }
 
 
@@ -1511,14 +1455,37 @@ body{
   0%{
     transform: scale(0.8);
   }
-  
+
   50%{
     transform: scale(1.2);
   }
-  
+
   100%{
     transform: scale(0.8);
   }
 }
 
+</style>
+<style scoped>
+.footer-mobile-title {
+  align-self: center;
+  position: relative;
+}
+
+@media screen and (min-width: 500px) {
+  .footer-mobile-title {
+    left: 40%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .footer-mobile-title {
+    left: 30%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #input-token {
+        width: 100%;
+    }
+}
 </style>

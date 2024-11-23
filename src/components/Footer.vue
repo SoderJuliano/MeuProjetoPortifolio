@@ -11,6 +11,8 @@
         @now-template3="this.$emit('now-template3')"
         @update-user="update"
         @login="showLogin"
+        @reset-password="this.$emit('reset-password')"
+        @ativationAccount="this.$emit('ativationAccount')"
     />
     <div class="footer">
         <img @click="hover = true" v-if="hover==false" @mousedown="hover = true" src="../icons/menustatic.png" alt="">
@@ -21,7 +23,7 @@
         <imprimir
             class="imprimirbotao"
         />
-        <img class="menuupimg-down" @click="menuDown" src="../assets/arrow-down.png" alt="menu down"/>
+        <img class="menuupimg-down" @click="menuDown" src="../assets/arrow-up.png" alt="menu down"/>
     </div>
 </template>
 
@@ -30,6 +32,7 @@ import MultiMenu from './MultiMenu.vue'
 import imprimir from './Imprimir-bnt.vue'
 import TemplateChooser from './multimenuComponentes/TemplateChooser.vue'
 import $ from 'jquery'
+import { isMobilePortrait } from './componentesCompartilhados/utilJS/functions'
 
 export default {
     name: 'footermenu',
@@ -49,7 +52,17 @@ export default {
         language: String,
         user: Object
     },
-    emits:["language-update", "font-changed", "now-template2", "now-template1", "change-main-color", "change-font-color", "login"],
+    emits:[
+        "language-update",
+        "font-changed",
+        "now-template2",
+        "now-template1",
+        "change-main-color",
+        "change-font-color",
+        "login",
+        'reset-password',
+        'ativationAccount'
+    ],
     methods:{
         showLogin() {
             this.$emit('login');
@@ -57,8 +70,10 @@ export default {
                 this.menuDown();
             }, 500);
         },
-        update(val) {
-            this.$emit("update-user", val);
+        update(val, authenticad) {
+            // Quando o update vem do mobile e estiver autenticado, vai ser feito request pro back-end
+            const sync = authenticad === isMobilePortrait();
+            this.$emit("update-user", val, !sync);
             $(".footer-menu-bar").css("display", "none");
             $(".menuupimg").css("display", "block");
             $(".menuupimg-down").css("display", "none");
@@ -67,6 +82,9 @@ export default {
             $(".footer-menu-bar").css("display", "none");
             $(".menuupimg").css("display", "block");
             $(".menuupimg-down").css("display", "none");
+            $(".footer-mobile-title").css({
+                "left": "30%"
+            })
         },
         changefontM(p){
             // formas
@@ -219,7 +237,7 @@ export default {
 .footer span {
     padding: 5px;
     width: 60px;
-    margin: auto 40px;
+    margin: auto 10px;
     border: solid 1px black;
     border-radius: 15px;
     text-align: center;
@@ -243,7 +261,6 @@ img{
 .close-bnt {
     right: 30px;
     width: 40px;
-    position: absolute;
     justify-content: center;
 }
 .multiMenu{
@@ -253,6 +270,7 @@ img{
     bottom: 20px;
     background-color: white;
     top: 0px;
+    right: 0;
     z-index: 10;
 }
 /* 
@@ -267,14 +285,17 @@ img{
     .multiMenu-options.multiMenu{
         position: relative;
         padding: 10px;
-        width: 90vw;
+        width: 100dvw;
         height: calc(100% - 40px);
         position: fixed;
         bottom: 20px;
         top: 0%;
+        left: 0;
         z-index: 10;
         overflow-y: scroll;
         cursor: pointer;
+        right: 0;
+        margin-top: 50px;
     }
     .multiMenu::-webkit-scrollbar {
         width: 16px;

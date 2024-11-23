@@ -20,9 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="fonts-size-item">
-                <div class="closeDiv" @click="closeDiv()">X</div>
-            </div>
+            <div class="closeDiv" @click="closeDiv()">x</div>
             <div class="fonts-size-item">
                 <div class="fonts-size-options">
                     <p @click="setFontWeight('lighter')" style="font-weight: lighter;">
@@ -181,6 +179,12 @@ p
 .fonts-size-item .closeDiv {
     position: relative;
     left: 0%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 6px;
+    left: 85%;
 }
 
 .fonts-size-options p:active{

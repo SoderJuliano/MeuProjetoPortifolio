@@ -364,7 +364,11 @@ button {
 
 @media screen and (max-width: 1000px) {
     button {
-        width: 100%;
+        width: 100% !important;
+    }
+
+    button:first-child {
+        margin-top: 50px;
     }
 
     .contact-template2 {

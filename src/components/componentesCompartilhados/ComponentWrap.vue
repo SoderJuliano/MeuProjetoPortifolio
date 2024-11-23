@@ -4,7 +4,11 @@
         <div class="listTitle" :style="listTitleCss">{{ listTitle || 'Lista' }}</div>
         <div class="list" :style="listCss" v-for="(item, index) in editableList" :key="index">
             <p style="width: 100%;" v-if="!isEditing[index]" @click="editItem(index)">{{ item }}</p>
-            <input v-else v-model="editableList[index]" @blur="saveItem(index)" @keyup.enter="saveItem(index)" />
+            <input
+            @keyup.esc="cancelEditing('array', index)"
+            v-else v-model="editableList[index]"
+            @blur="saveItem(index)"
+            @keyup.enter="saveItem(index)" />
         </div>
     </div>
 <!-- Non lists -->
@@ -12,6 +16,7 @@
         <div class="span1" :style="span1">
             <span v-if="!isEditingTitle" @click="editTitle">{{ title }}</span>
             <input @focus="$event.target.select()"
+                @keyup.esc="cancelEditing('title', null)"
                 v-else type="text"
                 v-model="editableTitle"
                 @blur="saveTitle"
@@ -38,9 +43,11 @@
                 @blur="saveText"
                 @keyup.enter="saveText"
                 @focus="$event.target.select()"
+                @keyup.esc="cancelEditing('text', null)"
             />
         </div>
         <span v-if="removeBnt" @click="removeComponent" class="remove-button">-</span>
+        <img v-if="removeBnt" @click="removeComponent" src="../../icons/remove.png" alt="delete" class="img-delete">
     </div>
     <div v-if="showEditing === job?.id" class="job-edit">
         <wrappEditModel
@@ -118,7 +125,7 @@ const saveItem = (index) => {
 };
 
 watch(() => props.listOfStrings, (newList) => {
-  editableList.value = [...newList];
+    editableList.value = [...newList];
 });
 // Lists update finish
 
@@ -129,6 +136,19 @@ const editableTitle = ref(props.title);
 const editableText = ref(props.text);
 const showEditing = ref(null);
 const experiencies = ref(props.jobs)
+
+const cancelEditing = (where, index) => {
+    if(where === 'title') {
+        editableTitle.value = props.title;
+        isEditingTitle.value = false;
+    }else if(where === 'text') {
+        editableText.value = props.text;
+        isEditingText.value = false;
+    }else if(where === 'array') {
+        editableList.value[index] = props.listOfStrings[index];
+        isEditing.value[index] = false;
+    }
+}
 
 const updateExperiencias = (job) => {
     // Check if experiencies.value is an array
@@ -338,6 +358,19 @@ input {
         padding-right: 2% !important;
         padding-left: 2% !important;
     }
+
+    .remove-button {
+        display: none;
+    }
+
+    .img-delete {
+        display: block;
+        position: absolute;
+        right: 20px;
+        width: 40px;
+        z-index: 2;
+        margin-top: 10px;
+    }
 }
 
 @media print {
@@ -364,6 +397,10 @@ input {
     */
     .span2 {
         margin-left: 0% !important;
+    }
+
+    .img-delete {
+        display: none;
     }
 }
 </style>

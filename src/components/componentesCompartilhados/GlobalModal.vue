@@ -22,17 +22,17 @@ export default {
     }
     },
     data() {
-    return {
-        isVisible: false
-    };
-    },
-    methods: {
-    open() {
-        this.isVisible = true;
-    },
-    close() {
-        this.isVisible = false;
-    }
+        return {
+            isVisible: false
+        };
+        },
+        methods: {
+        open() {
+            this.isVisible = true;
+        },
+        close() {
+            this.isVisible = false;
+        }
     }
 };
 </script>
@@ -69,5 +69,27 @@ export default {
     border: none;
     font-size: 18px;
     cursor: pointer;
+}
+
+@media screen and (max-width: 786px) {
+    .modal-content {
+        position: absolute !important;
+        width: 50dvw !important;
+        justify-self: center !important;
+    }
+
+    .modal-overlay {
+        width: 100dvw;
+    }
+
+    .close-btn[data-v-18dc0ffe] {
+        position: absolute;
+        top: 0px;
+        right: -20%;
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+    }
 }
 </style>
