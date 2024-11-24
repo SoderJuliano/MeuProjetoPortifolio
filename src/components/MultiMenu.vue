@@ -55,7 +55,7 @@
             <p class="tside">{{ this.isEnglish() ? "INSERT DELETE CONFIRMATION TOKEN" : "INSERIR TOKEN DE CONFIRMAÇÃO PARA DELEÇÃO"}}</p>
             <p class="multimenu-line"></p>
         </div>
-        <div v-on:click="this.$emit('reset-password')" v-if="mobileOptions">
+        <div v-on:click="(this.$emit('reset-password'), this.menuDown())" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "RECOVER PASSWORD" : "RECUPERAR SENHA" }}</p>
             <p class="multimenu-line"></p>
         </div>
@@ -93,6 +93,7 @@ import UserModel from "../model/userModel";
 import { showAlert } from 'simple-alerts/dist/showAlert.js';
 import authService from "../services/authService";
 import { deleteUser } from "./configs/requests.js";
+import $ from 'jquery';
 
 export default {
     name: "multi-menu",
@@ -128,6 +129,15 @@ export default {
         }
     },
     methods: {
+        menuDown(){
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+            $(".footer-menu-bar").css("display", "none");
+            $(".menuupimg").css("display", "block");
+            $(".menuupimg-down").css("display", "none");
+            $(".footer-mobile-title").css({
+                "left": "30%"
+            })
+        },
         update(val) {
             const authenticated = authService.getIdUsuario() === this.user?._id;
             this.$emit("update-user", val, authenticated);

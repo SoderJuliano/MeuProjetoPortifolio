@@ -281,6 +281,8 @@ export function resetPasswordByEmail(email, language) {
     'Content-Type': 'application/json',
   };
 
+  alert('recuperando by email, '+email)
+
   return axios.patch(`${apiUrl}/user/recover/${encodedEmail}/${language}/password`, null, { headers })
     .then((response) => {
       return response;
