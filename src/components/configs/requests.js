@@ -266,7 +266,11 @@ export function resetPassword(id) {
     'Content-Type': 'application/json',
   };
 
-  return axios.patch(`${apiUrl}/user/recover/${id}/password`, null, { headers }).then((response) => {
+  const body = {
+    host: window.location.origin
+  };
+
+  return axios.patch(`${apiUrl}/user/recover/${id}/password`, body, { headers }).then((response) => {
     return response;
   }).catch(error => {
     console.error('Erro durante reset password', error);
@@ -281,9 +285,11 @@ export function resetPasswordByEmail(email, language) {
     'Content-Type': 'application/json',
   };
 
-  alert('recuperando by email, '+email)
+  const body = {
+    host: window.location.origin
+  };
 
-  return axios.patch(`${apiUrl}/user/recover/${encodedEmail}/${language}/password`, null, { headers })
+  return axios.patch(`${apiUrl}/user/recover/${encodedEmail}/${language}/password`, body, { headers })
     .then((response) => {
       return response;
     })
