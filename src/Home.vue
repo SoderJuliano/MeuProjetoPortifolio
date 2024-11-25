@@ -353,8 +353,8 @@ export default {
         if (error.response && error.response.status === 409) {
           this.fireGlobalAlert(
             this.languageIsEN()
-              ? "A conflict occurred. Password reset not possible at the moment."
-              : "Ocorreu um conflito. Redefinição de senha não possível no momento."
+              ? "A conflict occurred. Password reset not possible at the moment. May reset local data on the option 'Delete browser data'"
+              : "Ocorreu um conflito. Redefinição de senha não possível no momento. Use a opção 'Apagar dados do navegador'"
           );
         } else {
           this.fireGlobalAlert(
