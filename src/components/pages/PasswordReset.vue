@@ -70,7 +70,7 @@
     import 'simple-alerts/dist/simpleAlertsVue.css';
 
      // Função para buscar as configs do localStorage
-     const getConfigsFromLocalStorage = () => {
+    const getConfigsFromLocalStorage = () => {
         const configs = localStorage.getItem('configs');
         return configs ? JSON.parse(configs) : null;
     };

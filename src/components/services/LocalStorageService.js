@@ -37,6 +37,10 @@ export function setNoNewUser() {
     localStorage.setItem('notNew', true);
 }
 
+export function setNewUser() {
+    localStorage.removeItem('notNew');
+}
+
 export function isNOTANewUser() {
     return localStorage.getItem('notNew')
 }
