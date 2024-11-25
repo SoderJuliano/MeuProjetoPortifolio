@@ -322,15 +322,17 @@ export default {
     AlertComponent
   },
   methods: {
-    // testMethod() {
-    //   showAlert("hello world")
-    // },
     async resetPassword() {
       let response = null;
       try {
-        if(!this.user._id) {
+        if(!this.user._id && this.user?.contact?.email.length > 0) {
           response = await funcs.resetPasswordByEmail(this.user.contact.email[0], this.configs.getLanguage());
-        }else {
+        }else if(!this.user._id && (this.user?.contact?.email[0] === undefined || this.user?.contact?.email[0] === null)){
+          showAlert(this.configs.getLanguage().includes("en") ? "First add an email to your cv and then try again" : "Primeiro adicione u email ao cv, depois tente novamente");
+          return;
+        }
+        else {
+          alert(this.user?.contact?.email[0])
           response = await funcs.resetPassword(this.user._id);
         }
         // Check if the response status is 200 (success)
