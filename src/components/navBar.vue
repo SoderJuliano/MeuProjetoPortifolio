@@ -340,6 +340,7 @@ export default {
                 // goes in here is case is a new user
                 // console.log('Error: Request failed with status code', response.status);
                 this.isANewUser = true;
+                localStorageService.setNewUser()
                 setTimeout(() => {
                   this.dbSave();
                 }, 200);
@@ -352,6 +353,8 @@ export default {
                 this.isANewUser = false;
                 this.$emit('register-user', userFromModel.constructorObject(response.data.content), this.isANewUser);
               }
+            }else {
+              this.isANewUser = true;
             }
           }else {
             // alert("Não foi possível salvar");

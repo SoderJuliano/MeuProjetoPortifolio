@@ -332,7 +332,6 @@ export default {
           return;
         }
         else {
-          alert(this.user?.contact?.email[0])
           response = await funcs.resetPassword(this.user._id);
         }
         // Check if the response status is 200 (success)
