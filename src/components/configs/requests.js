@@ -299,7 +299,7 @@ export function resetPasswordByEmail(email, language) {
     });
 }
 
-export function setNewPassword(id, password, token) {
+export function setNewPassword(id, password, token, email, language) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
@@ -307,7 +307,9 @@ export function setNewPassword(id, password, token) {
   const data = {
     'id': id,
     'password': password,
-    'token': token
+    'token': token,
+    'email': email,
+    'language': language
   }
 
   return axios.patch(`${apiUrl}/user/request/setPassword`, data, { headers }).then((response) => {

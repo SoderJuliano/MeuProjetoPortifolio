@@ -29,7 +29,9 @@ export default {
         const homeHosts = ['http://localhost:8080/#',
             'http://localhost:8080/',
             'https://custom-cv-online.netlify.app/',
+            'https://custom-cv-online.netlify.app/#',
             'https://julianosodermeugeradoronline-dev.netlify.app/',
+            'https://julianosodermeugeradoronline-dev.netlify.app/#',
             'https://freehubcv.top',
             'https://freehubcv.top/#'
         ]

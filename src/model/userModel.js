@@ -149,6 +149,10 @@ export default class User {
         return this.contact?.email;
     }
 
+    getEmail() {
+        return this.contact?.email[0];
+    }
+
     setAdressPart(witch, value) {
         // console.log('setting witch: '+witch+' and value: '+value);
         if (!this.contact.adressObject) {
