@@ -121,11 +121,13 @@
     const password = ref(props.newPassword || '');
 
     const submitNewPassword = async () => {
+        const u = new UserModel();
+            let us = u.findAndRetrieveInfos(selectedLanguage.value);
         try {
             const u = new UserModel();
             let us = u.findAndRetrieveInfos(selectedLanguage.value);
 
-            const response = await setNewPassword(us._id, password.value, window.location.href.split('newPasswordToken=')[1]);
+            const response = await setNewPassword(us._id, password.value, window.location.href.split('newPasswordToken=')[1], us.contact.email[0], configs?.language);
             console.log(response);
 
             if (response.status === 200) {

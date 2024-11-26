@@ -45,3 +45,10 @@ export function isNOTANewUser() {
     return localStorage.getItem('notNew')
 }
 
+export function getUserPT() {
+    return JSON.parse(localStorage.getItem('user-pt'));
+}
+
+export function getUserEN() {
+    return JSON.parse(localStorage.getItem('user-en'));
+}
