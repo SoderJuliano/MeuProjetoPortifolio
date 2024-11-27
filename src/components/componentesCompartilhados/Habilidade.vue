@@ -1,14 +1,14 @@
 <template>
   <div :class="cstyle">
       <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
-        <showSwitcher :className="cstyle" :startShowing="user.hability != ''" />
+        <showSwitcher :className="cstyle" :startShowing="user.ability != ''" />
         <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
         <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
-      <div v-if="user.hability" :class="hcstyle">
+      <div v-if="user.ability" :class="hcstyle">
           <img @click="this.$emit('choose-skillIcon')" src="../../icons/html.png" class="habilidade-icon"/>
               <span  class="data-text-habilidades">
-                <div v-for="(item, index) in user.hability.split(',')" :key="index" >
+                <div v-for="(item, index) in user.ability.split(',')" :key="index" >
                   <li>{{item}}</li>
                 </div>
               </span>

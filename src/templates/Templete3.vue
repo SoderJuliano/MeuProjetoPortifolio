@@ -290,7 +290,7 @@
             {
                 id: 1005,
                 title: isEnglish ? 'Skills summary' : 'Habilidades',
-                text: props.user.hability ? props.user.hability : isEnglish ? 'Type in here' : 'Digite aqui',
+                text: props.user.ability ? props.user.ability : isEnglish ? 'Type in here' : 'Digite aqui',
                 norender: true
             },
             {
@@ -791,7 +791,7 @@
                     localUpdatedUser.profession = component.text;
                     break;
                 case 1005:
-                    localUpdatedUser.hability = component.text;
+                    localUpdatedUser.ability = component.text;
                     break;
                 case 1012:
                     localUpdatedUser.resume = component.text;
