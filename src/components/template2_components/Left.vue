@@ -38,7 +38,7 @@
             :titulo="titles.habilidades"
             :language="language"
             backgroundColor="#808080"
-            :hability="hability"
+            :ability="ability"
             template=2
             :user="user"
             :sideColor="sideColor"
