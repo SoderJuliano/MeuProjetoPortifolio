@@ -293,7 +293,7 @@ export default {
         competence: [],
         social: [],
         grade: [],
-        hability: "",
+        ability: "",
         avatarImg: "",
         realImg: "",
         contact: {
@@ -665,7 +665,7 @@ export default {
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarNovaHabilidade(habilidade) {
-      this.user.hability = habilidade;
+      this.user.ability = habilidade;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarNovaFormacao(formacao) {
@@ -889,10 +889,10 @@ export default {
             ? strings[1].tHere
             : strings[0].tHere;
           this.showDivModal();
-          if (this.user.hability) {
+          if (this.user.ability) {
             setTimeout(() => {
               document.getElementById("modal-input").value =
-                this.user.hability + ",";
+                this.user.ability + ",";
             }, 800);
           }
           break;
