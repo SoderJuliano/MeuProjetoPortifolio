@@ -1141,13 +1141,16 @@ export default {
       const userId =  authService.getIdUsuario();
       const authenticated = userId === this.user?._id;
 
-      // buscar dados mais atualizados do lojista
-      const response = await getUser(userId);
-        console.log("response", response)
-        if(response.status === 200){
-          this.user = response.data.content;
-          // return
-        }
+      if(authenticated) {
+        this.syncUser = true;
+        // buscar dados mais atualizados do lojista
+        const response = await getUser(userId);
+          console.log("response", response)
+          if(response.status === 200){
+            this.user = response.data.content;
+            // return
+          }
+      }
 
       if (isUserIdValid && isConnected && !authenticated) {
         this.inlogin = true;
