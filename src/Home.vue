@@ -239,6 +239,7 @@ import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue"
 import * as localStorageService from "./components/services/LocalStorageService.js";
 import authService from "./services/authService.js";
 import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
+import { getUser } from "./components/configs/requests.js";
 
 export default {
   name: "Home",
@@ -1137,11 +1138,21 @@ export default {
       const isUserIdValid = this.user?._id?.length === 24;
       const isConnected = !!res.data;
       const lng = JSON.parse(localStorage.getItem("configs")).language;
-      const authenticated = authService.getIdUsuario() === this.user?._id;
+      const userId =  authService.getIdUsuario();
+      const authenticated = userId === this.user?._id;
+
+      // buscar dados mais atualizados do lojista
+      const response = await getUser(userId);
+        console.log("response", response)
+        if(response.status === 200){
+          this.user = response.data.content;
+          // return
+        }
 
       if (isUserIdValid && isConnected && !authenticated) {
         this.inlogin = true;
         this.inOnboarding = false;
+
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
         showAlert(malert);
 

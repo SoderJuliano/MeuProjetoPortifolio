@@ -324,9 +324,22 @@ export async function ping() {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true', // Adicionando o cabeçalho customizado
   };
 
   return await axios.get(`${apiUrl}/ping`, { headers }).then((response) => {
+    return response;
+  });
+}
+
+export async function getUser(id) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true', // Adicionando o cabeçalho customizado
+  };
+
+  return await axios.get(`${apiUrl}/user/${id}`, { headers }).then((response) => {
     return response;
   });
 }
