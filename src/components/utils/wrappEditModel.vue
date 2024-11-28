@@ -20,7 +20,14 @@
             <span>Date end: </span><input id="dateEnd" type="month" :value="job?.dateFired"  />
         </div>
         <div class="item" >
-            <span>Description: </span><textarea :style="areaCss" id="description" cols="40" rows="5" :value="job?.description"  />
+            <span>Description: </span>
+            <textarea
+            :style="areaCss"
+            id="description"
+            cols="40" rows="5"
+            :value="job?.description"
+            @keydown="handleKeydown"
+            />
         </div>
         <div class="div-bnts">
             <button @click="updateExperiences">{{this.language?.includes("pt") ? "Atualizar" : "Update"}}</button>
@@ -93,6 +100,12 @@ export default {
         }
     },
     methods: {
+        handleKeydown(event) {
+            if (event.shiftKey && event.key === 'Enter') {
+                event.preventDefault(); // Para evitar a nova linha com o enter
+                this.updateExperiences();
+            }
+        },
         updateExperiences() {
             this.job.setCompany($('#company').val())
             this.job.setPosition($('#position').val())
