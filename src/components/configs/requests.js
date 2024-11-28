@@ -146,7 +146,9 @@ export function saveUserInfosInDataBase(user, newUser, language) {
         "address": user?.contact?.address ? user?.contact?.address : null,
       },
       "userExperiences": user?.userExperiences,
-      "language": language
+      "language": language,
+      "spokenLanguages": user?.spokenLanguages,
+      "otherInfos": user?.otherInfos
     }
 
     const headers = {
