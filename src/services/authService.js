@@ -15,6 +15,18 @@ class AuthService {
         const payload = JSON.parse(atob(token.split('.')[1])); // Decodifica a parte payload do token
         return payload ? payload.sub : null; // Retorna o ID do usuário
     }
+
+    // Método para realizar logoff
+    logoff() {
+        // Deletar o jwt dos cookies
+        document.cookie = 'jwt=; Max-Age=0; path=/'; // Define um cookie vazio e expira imediatamente
+
+        // Apagar tudo do localStorage
+        localStorage.clear(); // Limpa todos os dados do localStorage
+        setTimeout(() => {
+            window.location.reload();
+        }, 400);
+    }
 }
 
 export default new AuthService();

@@ -32,6 +32,7 @@
                 type="text"
                 v-model="editableText"
                 @focus="$event.target.select()"
+                @keydown="handleKeydown"
             />
             <span class="saveTextArea experienciesOptionButton" @click="saveTextArea">{{ textAreaSaveBnt ? textAreaSaveBnt : "save" }}</span>
             <span class="cancelEdit experienciesOptionButton" @click="cancelTextArea">{{ textAreaCancelBnt ? textAreaSaveBnt : "cancel" }}</span>
@@ -262,6 +263,14 @@ const openModal = () => {
 
 const removeComponent = () => {
     emit('remove');
+};
+
+
+const handleKeydown = (event) => {
+    if (event.shiftKey && event.key === 'Enter') {
+        event.preventDefault();
+        saveTextArea();
+    }
 };
 </script>
 

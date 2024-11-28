@@ -64,19 +64,21 @@
             <img src="../assets/navbar/check.png" alt="ok">
             <span>{{ this.user.name.split(' ')[0] }}</span>
           </button>
-        <div v-if="isLoggedIn && isLoggedInClicked" class="toggle-container">
-          <span class="toggle-text">
-            {{ this.language == 'us-en' ? 'syncronized' : 'sincronizado' }}
-          </span>
-          <input
-            type="checkbox"
-            id="syncToggle"
-            class="toggle-input"
-            :checked="syncUser"
-            @change="this.$emit('toggle-sync', !syncUser)"
-          >
-          <label for="syncToggle" class="toggle-label"></label>
-        </div>
+          <div v-if="isLoggedIn && isLoggedInClicked" class="toggle-container">
+            <span class="toggle-text">
+              {{ this.language == 'us-en' ? 'syncronized' : 'sincronizado' }}
+              <img src="@/assets/navbar/question.svg" @click="questionHandler" alt="Question Icon" width="20" height="20" />
+            </span>
+            <input
+              type="checkbox"
+              id="syncToggle"
+              class="toggle-input"
+              :checked="syncUser"
+              @change="this.$emit('toggle-sync', !syncUser)"
+            >
+            <label for="syncToggle" class="toggle-label"></label>
+          </div>
+          <button v-if="isLoggedInClicked" class="logoff" @click="logoff()" >{{ this.language.includes('pt-br') ? 'Deslogar' : 'Logout' }}</button>
         </nav>
     </div>
   <options-menu
@@ -120,9 +122,11 @@ import $ from 'jquery';
 import downloadDoc from './componentesCompartilhados/downloadDoc.vue';
 import 'simple-alerts/dist/simpleAlertsVue.css';
 import SimpleAlerts from 'simple-alerts';
+import { showAlert } from 'simple-alerts/dist/showAlert.js'
 import GlobalModal from './componentesCompartilhados/GlobalModal.vue';
 import { deleteUser } from "./configs/requests.js";
 import * as localStorageService from './services/LocalStorageService.js';
+import authService from "../services/authService.js";
 
 export default {
     name: 'nav-bar',
@@ -191,6 +195,13 @@ export default {
       'reset-password'
     ],
     methods:{
+      logoff() {
+        authService.logoff();
+      },
+      questionHandler(){
+        showAlert(this.language.includes('pt-br') ? 'Manter essa opção ativa garante que a cada alteração seus dados sejam salvos no back-end' :
+        'Keep this option on grants that all changes on your cv will be sync with the back-end');
+      },
       confirmChangeLanguage(value) {
         if(value) {
           this.$emit('language-update', this.lng)
@@ -825,8 +836,12 @@ li{
   display: flex;
 }
 
+.logoff {
+  margin-top: 20px;
+  padding: 15px !important;
+}
+
 @media screen and (max-width: 1000px) {
-  
   /* Menu sandwish desapear when screen is less than 1000px */
   #showMenu {
     display: none !important;
