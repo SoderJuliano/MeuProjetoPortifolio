@@ -101,7 +101,7 @@
         @close="close"
       />
     </div>
-    <div style="display: contents;" id="template">
+    <div  id="template">
       <template1
         v-if="configs.getTemplate() == 1"
         :language="this.configs.getLanguage()"

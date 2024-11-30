@@ -566,3 +566,50 @@ button {
         width: 95% !important;
     }
 }
+
+
+
+/* CSS com o comportamento de impressão */
+.print {
+    display: block;
+}
+
+.print .social-template2 {
+    width: 95% !important;
+}
+
+.print .template {
+    width: 100vw !important;
+    height: 100vh !important;
+    border-radius: 0px !important;
+}
+
+.print .template {
+    margin-top: 10px;
+    border: none;
+    background-color: white;
+}
+.print .footer {
+    display: none;
+}
+.print .plus-icon
+{
+    display: none;
+}
+
+.print .template {
+    border: none;
+}
+
+/* Definir o comportamento para a borda da div */
+.print #template {
+border: none !important;
+}
+
+.print #template, #template * {
+    border: none !important;
+}
+
+.print .template, .template * {
+border: none !important;
+}
