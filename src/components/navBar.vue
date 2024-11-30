@@ -676,23 +676,21 @@ export default {
           const imgProps = pdf.getImageProperties(imgData);
           const pdfWidth = pdf.internal.pageSize.getWidth();
           const pdfHeight = pdf.internal.pageSize.getHeight();
-          // Calcula altura proporcional da imagem com base na largura da página
           const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
           let heightLeft = imgHeight;
           let position = 0;
 
-          // Adiciona páginas conforme necessário
+          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+          heightLeft -= pdfHeight;
+
           while (heightLeft > 0) {
+            position -= pdfHeight; // Subtrair para mover a posição para cima
+            pdf.addPage();
             pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
             heightLeft -= pdfHeight;
-            position -= pdfHeight; // Move para próxima página
+          }
 
-            if (heightLeft > 0) {
-                pdf.addPage();
-                position = 0; // Reiniciar posição no topo da nova página
-            }
-        }
           resolve(pdf.output('blob'));
         });
       },

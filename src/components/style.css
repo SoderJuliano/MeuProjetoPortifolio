@@ -604,6 +604,7 @@ button {
 /* Definir o comportamento para a borda da div */
 .print #template {
 border: none !important;
+height: 100% !important;
 }
 
 .print #template, #template * {
@@ -650,6 +651,7 @@ border: none !important;
     display: flex;
     flex-direction: row;
     align-items: stretch; /* Garante que os elementos internos cresçam juntos */
+    height: 100% !important;
 }
 
 
