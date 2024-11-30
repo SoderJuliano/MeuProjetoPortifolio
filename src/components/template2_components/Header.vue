@@ -312,6 +312,7 @@ export default {
     position: relative;
     width: 150px;
     height: 150px;
+    object-fit: cover; /* Mantém proporção correta */
 }
 
 .img-pic {

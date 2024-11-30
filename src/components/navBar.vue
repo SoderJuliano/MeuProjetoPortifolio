@@ -108,6 +108,16 @@
       @close="closeSimpleAlert"
       @confirm="confirmChangeLanguage"
   />
+  <SimpleAlerts
+      :title="confirmShareTitle"
+      :message="confirmShareText"
+      :show="showShareConfirm"
+      :customProperties="customConfirm"
+      confirm="true"
+      custom="true"
+      @close="closeSimpleAlert"
+      @confirm="confirmSahre"
+  />
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -145,6 +155,10 @@ export default {
     },
     data() {
       return{
+        pdf: null,
+        showShareConfirm: false,
+        confirmShareText: "",
+        confirmShareTitle: "",
         showQrCode: false,
         lng: this.language ?? null,
         showConfirm: false,
@@ -315,6 +329,7 @@ export default {
         );
       },
       closeSimpleAlert() {
+        console.log("recEbi os emits")
          // Remove os elementos dinamicamente adicionados
         $(".inner-alert").find("#btc-address").remove();
         $(".inner-alert").find("#copy-address-btn").remove();
@@ -550,17 +565,10 @@ export default {
         // console.log("side: " + sideHeight)
         // console.log("main-container: " + mainHeight )
 
-        sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
-        if(mainHeight > sideHeight && mainHeight > 950){
-          $(".side").height(mainHeight)
-        }else{
-          $(".main-container").height(sideHeight+50)
-        }
+        sideHeight > mainHeight ? $(".main-container").height(sideHeight) : $(".side").height(mainHeight)
+        $("#template").height($(".side").height())
 
         window.print()
-
-        $(".side").height(sideHeight)
-        $(".main-container").height(mainHeight)
 
       },
       changeLanguage(lng) {
@@ -599,11 +607,11 @@ export default {
           const canvas = await html2canvas(curriculo, {
             logging: false,
             useCORS: true,
-            scale: 2,  // Ajuste o scale para uma renderização melhor
-            width: curriculo.scrollWidth,  // Ajusta a largura do canvas
-            height: curriculo.scrollHeight, // Ajusta a altura do canvas
-            x: 0,  // Posição X
-            y: 0,  // Posição Y
+            scale: 2, // Ajuste o scale para melhor qualidade
+            width: curriculo.scrollWidth,  // Captura toda a largura do conteúdo
+            height: curriculo.scrollHeight, // Captura toda a altura do conteúdo
+            windowWidth: curriculo.scrollWidth,  // Simula a largura da janela para capturar todo o conteúdo
+            windowHeight: curriculo.scrollHeight, // Simula a altura da janela
           });
 
           // Obtém o conteúdo do canvas como uma imagem em formato JPEG
@@ -611,6 +619,8 @@ export default {
 
           // Cria o PDF usando a imagem capturada
           const pdfBlob = await this.createPdfFromImage(imgData);
+
+          this.pdf = pdfBlob;
 
           // Verifica se o dispositivo suporta compartilhamento
           if (navigator.share) {
@@ -625,8 +635,11 @@ export default {
             console.log("Compartilhamento bem-sucedido");
           } else {
             console.warn("Compartilhamento não suportado neste dispositivo. Abrindo cliente de e-mail...");
-            this.downloadPdf(pdfBlob);
-            this.openEmailClient("curriculo.pdf");
+            this.confirmShareText = this.language.includes("en") ? "Can not provide share between apps, but i can open your email and download the file as pdf." :
+            "Sem suporte para compartilhar via apps, mas posso abrir o cliente d eemail e baixar o cv para um pdf."
+            this.confirmShareTitle = this.language.includes("en") ? "Confirm this action?" : "Confirma essas ação?"
+            this.showShareConfirm = true;
+            return;
           }
         } catch (error) {
           console.error("Erro ao gerar o PDF:", error);
@@ -659,20 +672,30 @@ export default {
 
       async createPdfFromImage(imgData) {
         return new Promise((resolve) => {
-          const width = 595; // Largura padrão A4
-          const height = 842; // Altura padrão A4
-
-          // Cria o PDF com margens ajustadas
           const pdf = new jsPDF('p', 'pt', 'a4');
+          const imgProps = pdf.getImageProperties(imgData);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          // Calcula altura proporcional da imagem com base na largura da página
+          const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-          // Se você estiver usando margens personalizadas, defina-as assim
-          const margin = 0; // Ajuste para remover margens extras
-          pdf.addImage(imgData, 'JPEG', margin, margin, width - 2 * margin, height - 2 * margin);
+          let heightLeft = imgHeight;
+          let position = 0;
 
+          // Adiciona páginas conforme necessário
+          while (heightLeft > 0) {
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+            heightLeft -= pdfHeight;
+            position -= pdfHeight; // Move para próxima página
+
+            if (heightLeft > 0) {
+                pdf.addPage();
+                position = 0; // Reiniciar posição no topo da nova página
+            }
+        }
           resolve(pdf.output('blob'));
         });
       },
-
       downloadPdf(pdfBlob) {
         const date = new Date();
         const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
@@ -704,6 +727,13 @@ export default {
         window.location.href = mailtoLink;
       },
       //! Share PDF end!
+      async confirmSahre(val) {
+        if(val) {
+          this.downloadPdf(this.pdf);
+          this.openEmailClient("curriculo.pdf");
+        }
+        return;
+      },
     },
     mounted(){
       this.language == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",

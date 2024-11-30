@@ -571,7 +571,7 @@ button {
 
 /* CSS com o comportamento de impressão */
 .print {
-    display: block;
+    display: block !important;
 }
 
 .print .social-template2 {
@@ -613,3 +613,43 @@ border: none !important;
 .print .template, .template * {
 border: none !important;
 }
+
+.print .main-open-close {
+    display: none;
+}
+
+.print #enabled {
+    display: none;
+}
+
+.print .editar {
+    display: none;
+}
+
+.print .icon-show-title {
+    display: none;
+}
+
+.print .remove-bnt {
+    display: none;
+}
+
+#template {
+    display: contents;
+}
+
+.print .side {
+    height: 110% !important;
+}
+
+.print .template-data {
+    background: none;
+}
+
+.print .custom-container.template {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; /* Garante que os elementos internos cresçam juntos */
+}
+
+
