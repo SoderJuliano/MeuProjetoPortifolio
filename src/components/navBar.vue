@@ -729,6 +729,8 @@ export default {
         if(val) {
           this.downloadPdf(this.pdf);
           this.openEmailClient("curriculo.pdf");
+        }else {
+          this.showShareConfirm = false;
         }
         return;
       },
