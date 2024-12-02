@@ -67,6 +67,10 @@
             <p class="tside">{{ this.isEnglish() ? "DELETE ALL MY DATA FROM THIS BROWSER" : "APAGAR TODOS OS MEUS DADOS DO NAVEGADOR" }}</p>
             <p class="multimenu-line"></p>
         </div>
+        <div v-on:click="share()" v-if="mobileOptions">
+            <p class="tside">{{ this.isEnglish() ? "SHARE" : "COMPARTILHAR" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
         <GlobalModal
             ref="globalModalMultimenu"
             >
@@ -94,6 +98,7 @@ import { showAlert } from 'simple-alerts/dist/showAlert.js';
 import authService from "../services/authService";
 import { deleteUser } from "./configs/requests.js";
 import $ from 'jquery';
+import ShareService from '../services/ShareService.js'
 
 export default {
     name: "multi-menu",
@@ -129,6 +134,9 @@ export default {
         }
     },
     methods: {
+        share() {
+            ShareService.share();
+        },
         menuDown(){
             $("html, body").animate({ scrollTop: 0 }, "fast");
             $(".footer-menu-bar").css("display", "none");
