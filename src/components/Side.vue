@@ -361,6 +361,7 @@ export default {
 .side {
   display: block;
   box-shadow: 0 0 50px #ccc;
+  flex: none;
 }
 
 .template-data {

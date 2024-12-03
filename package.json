@@ -13,8 +13,10 @@
     "bootstrap-icons": "^1.7.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "html2canvas": "^1.4.1",
     "jquery": "^3.6.3",
-    "simple-alerts": "^0.3.10",
+    "jspdf": "^2.5.2",
+    "simple-alerts": "^0.3.11",
     "vue": "^3.0.0",
     "vue-cli": "^1.2.0"
   },

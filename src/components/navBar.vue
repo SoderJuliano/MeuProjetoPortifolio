@@ -21,6 +21,10 @@
                   <a v-on:click="dbSave()" class="nav-link">{{ this.printDatadaseText() }}</a>
                 </li>
                 <li class="nav-item">
+                  <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDklEQVR4nO2Yv0scQRTHB4UkmFQpEhJPb97ZmV77VKnExtYdgqQ4PNLHPbY1u7EQbt4hEQRL/4CzswxpTIoUwdYmpAic75mQkB8bVlH2li1297ydW5gPTHnzvp837x7HCWGxWCxjiWoHYfyMshZo2n+0E05VVwA5BE0fZrHfqK4Acig19+ualisrAJcv8Q+QN4UXTlRTAK8OHTWQHxgVmNM/ZqDL64B0CJo/A/J5elhOPRLpVHbOFksXqHW/TwPyjkT6nScwpEv8lJpfliYg8WxJaqZhg0NcAOlFKQJScwuQ/t5g+FPo9hdyhy8iEHU+LbzU9CkagbkOP3kYfLmb9llIE9DUq73t3y8UPq9ANPPJsZGafoGmZpZ1CKbXqETeTYZvID/NWguuw/O3euf82VDB8wpcrEpNfxJdbFbmpwRc7PnBmRcH4WSeWhJ5t74X3hE3SWYBTb1BgQI7exRkFZDIJ3GB2S7Ni4oJcFxgvvP1nhgHVNYRSuxvMS4oK2AYZV/AMMq+gGGUfQHDqBL/lRgJVsB0A5XhEVLD1ndcn+MXrHmbNVESauPNTLy20w4o9yWO678f6ILr96KLRTnhDwdrB+9yX+Rs+K3kMxo8zdwCrdb2beUGH02Hd9zgeMXzbokirL7amjYp4bjB8XPv9WMxDJG9agfr0Rwmv9ijCe1zVCsam8Kdt1gsFlEW/wFewL4UtVpN6wAAAABJRU5ErkJggg==" alt="share-3">
+                  <a v-on:click="generateAndSharePdf" class="nav-link">{{ 'Share' }}</a>
+                </li>
+                <li class="nav-item">
                   <downloadDoc text="DOWNLOAD" />
                 </li>
                 <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
@@ -104,6 +108,16 @@
       @close="closeSimpleAlert"
       @confirm="confirmChangeLanguage"
   />
+  <SimpleAlerts
+      :title="confirmShareTitle"
+      :message="confirmShareText"
+      :show="showShareConfirm"
+      :customProperties="customConfirm"
+      confirm="true"
+      custom="true"
+      @close="closeSimpleAlert"
+      @confirm="confirmSahre"
+  />
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -127,6 +141,8 @@ import GlobalModal from './componentesCompartilhados/GlobalModal.vue';
 import { deleteUser } from "./configs/requests.js";
 import * as localStorageService from './services/LocalStorageService.js';
 import authService from "../services/authService.js";
+import html2canvas from 'html2canvas';
+import { jsPDF } from "jspdf";
 
 export default {
     name: 'nav-bar',
@@ -139,6 +155,10 @@ export default {
     },
     data() {
       return{
+        pdf: null,
+        showShareConfirm: false,
+        confirmShareText: "",
+        confirmShareTitle: "",
         showQrCode: false,
         lng: this.language ?? null,
         showConfirm: false,
@@ -309,6 +329,7 @@ export default {
         );
       },
       closeSimpleAlert() {
+        console.log("recEbi os emits")
          // Remove os elementos dinamicamente adicionados
         $(".inner-alert").find("#btc-address").remove();
         $(".inner-alert").find("#copy-address-btn").remove();
@@ -544,20 +565,13 @@ export default {
         // console.log("side: " + sideHeight)
         // console.log("main-container: " + mainHeight )
 
-        sideHeight > 950 ? $(".side").height(sideHeight) : $(".side").css("height", "100vh")
-        if(mainHeight > sideHeight && mainHeight > 950){
-          $(".side").height(mainHeight)
-        }else{
-          $(".main-container").height(sideHeight+50)
-        }
+        sideHeight > mainHeight ? $(".main-container").height(sideHeight) : $(".side").height(mainHeight)
+        $("#template").height($(".side").height())
 
         window.print()
 
-        $(".side").height(sideHeight)
-        $(".main-container").height(mainHeight)
-
       },
-      changeLanguage(lng){
+      changeLanguage(lng) {
         this.getLanguage() == 'us-en'
         ? (
           this.confirmTitle = "Change language changes user`s data",
@@ -571,7 +585,155 @@ export default {
           this.showConfirm = true
         )
         this.lng = lng;
-      }
+      },
+
+      //! Share PDF init
+      async generateAndSharePdf() {
+        try {
+          // Obtém a referência ao template
+          const curriculo = document.getElementById("template");
+
+          if (!curriculo) {
+            throw new Error("Referência ao currículo não encontrada.");
+          }
+
+            // Adiciona a classe de impressão ao elemento
+            curriculo.classList.add('print');
+
+          // Aguardar até que a renderização do Vue seja concluída
+          await this.$nextTick();
+
+          // Converte o currículo em um canvas usando html2canvas
+          const canvas = await html2canvas(curriculo, {
+            logging: false,
+            useCORS: true,
+            scale: 2, // Ajuste o scale para melhor qualidade
+            width: curriculo.scrollWidth,  // Captura toda a largura do conteúdo
+            height: curriculo.scrollHeight, // Captura toda a altura do conteúdo
+            windowWidth: curriculo.scrollWidth,  // Simula a largura da janela para capturar todo o conteúdo
+            windowHeight: curriculo.scrollHeight, // Simula a altura da janela
+          });
+
+          // Obtém o conteúdo do canvas como uma imagem em formato JPEG
+          const imgData = canvas.toDataURL("image/jpeg");
+
+          // Cria o PDF usando a imagem capturada
+          const pdfBlob = await this.createPdfFromImage(imgData);
+
+          this.pdf = pdfBlob;
+
+          // Verifica se o dispositivo suporta compartilhamento
+          if (navigator.share) {
+            const file = new File([pdfBlob], "curriculo.pdf", { type: "application/pdf" });
+
+            await navigator.share({
+              title: "Compartilhar Currículo",
+              text: "Veja o meu currículo!",
+              files: [file],
+            });
+
+            console.log("Compartilhamento bem-sucedido");
+          } else {
+            console.warn("Compartilhamento não suportado neste dispositivo. Abrindo cliente de e-mail...");
+            this.confirmShareText = this.language.includes("en") ? "Can not provide share between apps, but i can open your email and download the file as pdf." :
+            "Sem suporte para compartilhar via apps, mas posso abrir o cliente d eemail e baixar o cv para um pdf."
+            this.confirmShareTitle = this.language.includes("en") ? "Confirm this action?" : "Confirma essas ação?"
+            this.showShareConfirm = true;
+            return;
+          }
+        } catch (error) {
+          console.error("Erro ao gerar o PDF:", error);
+        }
+      },
+
+      htmlToCanvas(element) {
+        return new Promise((resolve) => {
+          const canvas = document.createElement("canvas");
+          const context = canvas.getContext("2d");
+
+          // Define o tamanho do canvas com base no elemento
+          const rect = element.getBoundingClientRect();
+          canvas.width = rect.width;
+          canvas.height = rect.height;
+
+          // Renderiza o conteúdo como imagem simples
+          context.fillStyle = "#fff"; // Fundo branco
+          context.fillRect(0, 0, canvas.width, canvas.height);
+          context.font = "16px Arial"; // Estilo de texto básico
+          context.fillStyle = "#000"; // Cor do texto
+
+          Array.from(element.children).forEach((child, index) => {
+            context.fillText(child.innerText, 10, (index + 1) * 20);
+          });
+
+          resolve(canvas);
+        });
+      },
+
+      async createPdfFromImage(imgData) {
+        return new Promise((resolve) => {
+          const pdf = new jsPDF('p', 'pt', 'a4');
+          const imgProps = pdf.getImageProperties(imgData);
+          const pdfWidth = pdf.internal.pageSize.getWidth();
+          const pdfHeight = pdf.internal.pageSize.getHeight();
+          const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+          let heightLeft = imgHeight;
+          let position = 0;
+
+          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+          heightLeft -= pdfHeight;
+
+          while (heightLeft > 0) {
+            position -= pdfHeight; // Subtrair para mover a posição para cima
+            pdf.addPage();
+            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+            heightLeft -= pdfHeight;
+          }
+
+          resolve(pdf.output('blob'));
+        });
+      },
+      downloadPdf(pdfBlob) {
+        const date = new Date();
+        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+        const formattedTime = `${date.getHours().toString().padStart(2, "0")}-${date.getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
+        const fileName = `cv-${formattedDate}-${formattedTime}.pdf`;
+
+        const url = URL.createObjectURL(pdfBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      },
+
+      openEmailClient(fileName) {
+        const email = "seuemail@exemplo.com";
+        const subject = "Meu Currículo";
+        const body = `Segue em anexo meu currículo (${fileName}). Por favor, revise! Seu arquivo está na sua pasta de downloads.`;
+
+        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // Abrir cliente de email
+        window.location.href = mailtoLink;
+      },
+      //! Share PDF end!
+      async confirmSahre(val) {
+        if(val) {
+          this.downloadPdf(this.pdf);
+          this.openEmailClient("curriculo.pdf");
+        }else {
+          this.showShareConfirm = false;
+        }
+        return;
+      },
     },
     mounted(){
       this.language == "us-en" ? (document.getElementsByClassName("bnt-languages")[1].style.backgroundColor = "blue",
