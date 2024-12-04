@@ -605,6 +605,7 @@ button {
 .print #template {
 border: none !important;
 height: 100% !important;
+top: 0 !important;
 }
 
 .print #template, #template * {
@@ -714,6 +715,11 @@ border: none !important;
     width: 155px;
     height: 150px;
 }
+
+.print .footer {
+    display: none;
+}
+
 /*
 .print #template .title {
     border-bottom: 2px solid !important;
