@@ -29,7 +29,6 @@ class ShareService {
               height: curriculo.scrollHeight * scale, // Scale the height accordingly
               windowWidth: fixedWidth,  // Simulate the fixed width
               windowHeight: curriculo.scrollHeight * scale, // Simulate the height
-              backgroundColor: null,
             });
   
             // Obtém o conteúdo do canvas como uma imagem em formato JPEG

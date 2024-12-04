@@ -137,6 +137,7 @@ export default {
     },
     methods: {
         async share() {
+            $(".footer").css({"display": "none !important"})
             // Create a loading message element
             const loadingElement = $('<div id="loading"><p>Carregando...</p></div>');
             $("#app").append(loadingElement); // Append to #app
