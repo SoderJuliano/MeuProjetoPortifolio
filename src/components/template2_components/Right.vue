@@ -62,7 +62,7 @@ export default {
         },
         getStyle(){
             return{
-                "border-left": "2px solid "+this.sideColor,
+                "border-left": "2px solid "+this.sideColor+"!important",
             }
         }
     },

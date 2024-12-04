@@ -101,7 +101,7 @@ export default {
           return{
               'background-color': `${this.cor}`,
               'color': `${this.fontColor}`,
-              "border-bottom": "1px solid "+this.sideColor,
+              "border-bottom": "1px solid "+this.sideColor+"!important",
               "text-align": this.template == 2 ? "start" : "center",
               "width": this.template == 2 ? "" : "98.35% !important"
           }

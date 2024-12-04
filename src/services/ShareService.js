@@ -15,16 +15,21 @@ class ShareService {
   
               // Adiciona a classe de impressão ao elemento
               curriculo.classList.add('print');
+
+            // Set a fixed width for the canvas
+            const fixedWidth = 1201; // Adjust to your desired width
+            const scale = fixedWidth / curriculo.offsetWidth;
   
             // Converte o currículo em um canvas usando html2canvas
             const canvas = await html2canvas(curriculo, {
               logging: false,
               useCORS: true,
-              scale: 2, // Ajuste o scale para melhor qualidade
-              width: curriculo.scrollWidth,  // Captura toda a largura do conteúdo
-              height: curriculo.scrollHeight, // Captura toda a altura do conteúdo
-              windowWidth: curriculo.scrollWidth,  // Simula a largura da janela para capturar todo o conteúdo
-              windowHeight: curriculo.scrollHeight, // Simula a altura da janela
+              scale: scale, // Adjust the scale based on the fixed width
+              width: fixedWidth,  // Use the fixed width
+              height: curriculo.scrollHeight * scale, // Scale the height accordingly
+              windowWidth: fixedWidth,  // Simulate the fixed width
+              windowHeight: curriculo.scrollHeight * scale, // Simulate the height
+              backgroundColor: null,
             });
   
             // Obtém o conteúdo do canvas como uma imagem em formato JPEG

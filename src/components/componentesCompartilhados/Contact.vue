@@ -93,7 +93,7 @@ export default {
         },
         getStyle(){
             return {
-                "border-bottom": "1px solid "+this.sideColor,
+                "border-bottom": "1px solid "+this.sideColor+"!important",
                 "width": this.template == 2 ? "90%" : "100% !important"
             }
         }
