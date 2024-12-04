@@ -204,7 +204,7 @@ export default {
 }
 
 .template2-formacao-container span {
-  width: 100%;
+  width: 92%;
   position: absolute;
   top: 50%;
   left: 40px;
@@ -258,6 +258,9 @@ export default {
   .template2-formacao-container {
     width: 80% !important;
     padding: 5px;
+  }
+  .template2-formacao-container span {
+    width: 80%;
   }
 }
 @media (min-width: 1000px) {

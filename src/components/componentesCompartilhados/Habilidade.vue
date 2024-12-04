@@ -46,7 +46,7 @@ export default {
     },
     getStyle(){
       return this.template == 2 ? {
-        'border-bottom': '1px solid '+this.sideColor,
+        'border-bottom': '1px solid '+this.sideColor+"!important",
       } : ""
     }
   }

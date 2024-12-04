@@ -654,4 +654,67 @@ border: none !important;
     height: 100% !important;
 }
 
+.print .img-delete {
+    display: none;
+}
 
+.print .template2-remove-bnt {
+    display: none;
+}
+
+.print .editar-animado-habilidade {
+    display: none;
+}
+
+.print .icon-show-titleicon-show-title {
+    display: none;
+}
+
+.print .main-open-close.ajust-img-open-close {
+    display: none;
+}
+
+.print .icon-show-title {
+    display: none;
+}
+
+.print .headericon {
+    display: none;
+}
+
+/* Tempalte 1 fix pdf share issues */
+
+/* .print .side {
+    width: 30% !important;
+    font-size: 7px;
+} */
+
+#loading {
+    position: absolute; /* Position relative to the #app element */
+    top: 80%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the element's own size */
+    z-index: 9999; /* High z-index to stay on top */
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional shadow for better visibility */
+    display: none; /* Hidden by default */
+}
+
+.print .pic {
+    object-fit: cover;
+    width: 152px;
+    height: 150px;
+}
+
+
+.print .img-pic {
+    object-fit: cover;
+    width: 155px;
+    height: 150px;
+}
+/*
+.print #template .title {
+    border-bottom: 2px solid !important;
+} */

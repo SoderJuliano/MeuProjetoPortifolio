@@ -43,7 +43,7 @@ export default {
         ? {
             'text-align': 'start',
             'font-weight': 'bolder !important',
-            'border-bottom': '1px solid '+this.sideColor,
+            'border-bottom': '1px solid '+this.sideColor+"!important",
             'width': '90%'
           }
         : {

@@ -86,7 +86,7 @@ export default {
         },
         getStyle(){
             return{
-                "border-bottom": "1px solid "+this.sideColor
+                "border-bottom": "1px solid "+this.sideColor+"!important"
             }
         },
         hovert(){

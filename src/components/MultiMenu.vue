@@ -98,11 +98,12 @@ import { showAlert } from 'simple-alerts/dist/showAlert.js';
 import authService from "../services/authService";
 import { deleteUser } from "./configs/requests.js";
 import $ from 'jquery';
-import ShareService from '../services/ShareService.js'
+import ShareService from '../services/ShareService.js';
 
 export default {
     name: "multi-menu",
-    emits: ["changefont",
+    emits: [
+    "changefont",
     "update-configs",
     "update-user",
     'now-template1',
@@ -131,11 +132,32 @@ export default {
         return {
             globalModalTitleMultimenu: '',
             globalModalMessageMultimenu: '',
+            loading: false,
         }
     },
     methods: {
-        share() {
-            ShareService.share();
+        async share() {
+            // Create a loading message element
+            const loadingElement = $('<div id="loading"><p>Carregando...</p></div>');
+            $("#app").append(loadingElement); // Append to #app
+            loadingElement.show(); // Show loading message
+
+            let loadingDots = 0;
+
+            // Interval to update the loading message
+            const interval = setInterval(() => {
+                loadingDots = (loadingDots + 1) % 4; // Cycle through 0 to 3 dots
+                loadingElement.html(`<p>Carregando${'.'.repeat(loadingDots)}</p>`);
+            }, 500); // Update every 500ms
+
+            await ShareService.share();
+
+            clearInterval(interval); // Stop updating the loading message
+
+            setTimeout(() => {
+                loadingElement.remove(); // Remove loading message after 2 seconds
+                window.location.reload(); // Reload the page
+            }, 2000);
         },
         menuDown(){
             $("html, body").animate({ scrollTop: 0 }, "fast");
