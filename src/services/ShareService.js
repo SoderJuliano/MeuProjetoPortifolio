@@ -26,7 +26,7 @@ class ShareService {
               useCORS: true,
               scale: scale, // Adjust the scale based on the fixed width
               width: fixedWidth,  // Use the fixed width
-              height: curriculo.scrollHeight * scale, // Scale the height accordingly
+              height: curriculo.scrollHeight, // Scale the height accordingly * scale before
               windowWidth: fixedWidth,  // Simulate the fixed width
               windowHeight: curriculo.scrollHeight * scale, // Simulate the height
             });
