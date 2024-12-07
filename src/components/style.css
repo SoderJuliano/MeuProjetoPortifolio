@@ -679,7 +679,7 @@ border: none !important;
     display: none;
 }
 
-.print .headericon {
+.print #headericon {
     display: none;
 }
 
@@ -719,8 +719,3 @@ border: none !important;
 .print .footer {
     display: none;
 }
-
-/*
-.print #template .title {
-    border-bottom: 2px solid !important;
-} */
