@@ -71,6 +71,7 @@ export default {
                 axios.delete(`/notifications/delete`, { headers, data })
                 .then(() => {
                     this.tips.splice(index, 1);
+                    localStorage.setItem('tips', JSON.stringify(this.tips))
                     localStorage.setItem('deletedDefaultNotifications'+'-'+item.language, true);
                 })
                 .catch(error => {
