@@ -408,7 +408,7 @@
     };
     // Initialize components when the component is created
     initializeEducationComponents();
-    
+
     const addEducationComponent = () => {
         const newId = 2000 + educationComponents.value.length;
         educationComponents.value.push({
@@ -527,7 +527,7 @@
     };
 
     const addComponent = () => {
-        // Ensure otherInfos is an array before pushing
+        // Ensuring otherInfos is an array before pushing
         if (!localUpdatedUser.otherInfos) {
             localUpdatedUser.otherInfos = []; // Initialize if it's null or undefined
         }
@@ -708,6 +708,9 @@
                         }
                     });
                 }
+            }
+            else if (Number(id) === 1012) {
+                localUpdatedUser.resume = text;
             }
         }
 
