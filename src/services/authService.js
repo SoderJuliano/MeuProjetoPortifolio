@@ -27,6 +27,11 @@ class AuthService {
             window.location.reload();
         }, 400);
     }
+
+    deleteCookies() {
+        // Deletar o jwt dos cookies
+        document.cookie = 'jwt=; Max-Age=0; path=/'; // Define um cookie vazio e expira imediatamente
+    }
 }
 
 export default new AuthService();

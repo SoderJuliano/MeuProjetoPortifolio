@@ -693,9 +693,10 @@ export default {
         this.configs.setLanguage(lng);
         this.updateLocalStorageKey(lng);
         localStorage.setItem("configs", JSON.stringify(this.configs));
-
+        authService.deleteCookies();
         this.getUserData();
-
+        this.inlogin = true;
+        this.inOnboarding = false;
         // update localStorage when language changes as well
         this.updateUser(this.user, true);
       }
