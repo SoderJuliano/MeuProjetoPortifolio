@@ -33,7 +33,8 @@ export default {
             'https://julianosodermeugeradoronline-dev.netlify.app/',
             'https://julianosodermeugeradoronline-dev.netlify.app/#',
             'https://freehubcv.top',
-            'https://freehubcv.top/#'
+            'https://freehubcv.top/#',
+            'https://freehubcv.top/',
         ]
 
         if (homeHosts.some(host => uri === host)) {
