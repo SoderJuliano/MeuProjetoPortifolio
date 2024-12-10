@@ -695,6 +695,7 @@ export default {
         localStorage.setItem("configs", JSON.stringify(this.configs));
         authService.deleteCookies();
         this.getUserData();
+        this.logedIn = false;
         this.inlogin = true;
         this.inOnboarding = false;
         // update localStorage when language changes as well
