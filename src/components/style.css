@@ -608,12 +608,12 @@ height: 100% !important;
 top: 0 !important;
 }
 
-.print #template, #template * {
+.print #templat * {
     border: none !important;
 }
 
-.print .template, .template * {
-border: none !important;
+.print .template * {
+    order: none !important;
 }
 
 .print .main-open-close {
