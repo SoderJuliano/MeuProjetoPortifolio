@@ -36,7 +36,9 @@
         <div class="option">
             <Templates
                 :language="language" :template="template" @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')" />
+                @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')"
+                @now-template4="this.$emit('now-template4')"
+                />
             <p class="multimenu-line"></p>
         </div>
         <div v-if="mobileOptions" class="option">
@@ -109,6 +111,7 @@ export default {
     'now-template1',
     'now-template2',
     'now-template3',
+    'now-template4',
     'login',
     'reset-password',
     'ativationAccount',

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DRAGONITE_ENV, DRAGONITE_ENV2, setDragoniteEnv } from '../configs/envs.js';
 
-let apiUrl = DRAGONITE_ENV;
+let apiUrl = DRAGONITE_ENV2;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -20,9 +20,9 @@ export async function getLastEnvUrl() {
 
       // Update DRAGONITE_ENV if content exists in the last notification
       if (lastNotification && lastNotification.content) {
-        setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
+        // setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
         console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
-        apiUrl = lastNotification.content;
+        // apiUrl = lastNotification.content;
       } else {
         console.error('No valid content found in the last notification.');
       }

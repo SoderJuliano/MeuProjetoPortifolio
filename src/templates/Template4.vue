@@ -4,13 +4,16 @@
         <div class="row"><h1>JULIANO SODER</h1></div>
         <div class="row">
             <p>
-                <span>email</span>
-                <span>portifolio</span>
+                <span>EMAIL: {{ localUser.email }}</span>
+                <span>|</span>
+                <span>PROTFOLIO/SITE {{ localUser.social[0] }}</span>
             </p>
         </div>
         <div class="row">
-            <span>PHONE: XXXXX-XXXXX</span>
-            <span>ADDRES: Your addres</span>
+            <p>
+                <span>PHONE: XXXXX-XXXXX</span>
+                <span>ADDRES: Your addres</span>
+            </p>
         </div>
         <div class="dividedline"></div>
         <div class="summary">
@@ -42,3 +45,61 @@
         </div>
     </div>
 </template>
+
+<script setup>
+    import { defineProps, reactive } from 'vue';
+
+
+    const props = defineProps({
+        user: Object,
+        language: String
+    });
+
+    let localUser = reactive({
+        ...props.user
+    });
+
+
+
+
+</script>
+
+<style scoped>
+    .template {
+        max-width: 1200px;
+        margin-top: 30px;
+        width: 100%;
+        min-height: 100vh;
+        max-height: 100%;
+        border: solid white 1px;
+        box-shadow: 0px 0px 10px 2px gray;
+        background-color: white;
+    }
+
+    .row {
+        width: 100%;
+
+        && h1, h3 {
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            padding: 10px;
+        }
+
+        && h1 {
+            font-size: 55px;
+        }
+
+        && p {
+            text-align: center;
+        }
+    }
+
+    .dividedline {
+        width: 90%;
+        height: 0%;
+        border-bottom: solid 2px gray;
+        justify-self: center;
+        margin: 0 auto;
+    }
+</style>

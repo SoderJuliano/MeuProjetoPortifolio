@@ -19,6 +19,13 @@
             <p>Style 2</p>
             <img src="../../assets/templatesImg/template2.png" alt="templateimg" />
         </button>
+        <button
+            @click="this.$emit('now-template4')"
+            :style="template == 4 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
+        >
+            <p>Normal 2</p>
+            <img src="" alt="templateimg" />
+        </button>
     </div>
 </template>
 
@@ -28,7 +35,7 @@ export default {
     props:{
         template: Number
     },
-    emits:['now-template1', 'now-template2', 'now-template3']
+    emits:['now-template1', 'now-template2', 'now-template3', 'now-template4']
 }
 </script>
 <style scoped>
