@@ -1,49 +1,75 @@
 <template>
     <div class="template">
-        <div class="row"><h3>SOFTWARE ENGINEER</h3></div>
-        <div class="row"><h1>JULIANO SODER</h1></div>
-        <div class="row">
+        <div class="row"><h3>{{ props.user.progession ?? "MY PROFESSION" }}</h3></div>
+        <div @click="$emit('add-nome')" class="row"><h1>{{ props.user.name ?? "MY NAME" }}</h1></div>
+        <div @click="$emit('add-info')" class="row">
             <p>
-                <span>EMAIL: {{ localUser.contact.email[0] ?? "email" }}</span>
+                <span>EMAIL: {{ props.user.contact.email[0] ?? "email" }}</span>
                 <span class="separator">|</span>
-                <span> PROTFOLIO/SITE {{ localUser.social[0] ?? "phone" }}</span>
+                <span> PROTFOLIO/SITE {{ props.user.social[0] ?? "webpage" }}</span>
             </p>
         </div>
-        <div class="row">
+        <div @click="$emit('add-info')" class="row">
             <p>
-                <span>PHONE: {{ localUser.contact.phone[0] ?? "phone" }}</span>
-                <span>ADDRES: {{ localUser.contact.address ?? "Address" }}</span>
+                <span>PHONE: {{ props.user.contact.phone[0] ?? "phone" }}</span>
+                <span>ADDRES: {{ props.user.contact.address ? adressObject : "Address" }}</span>
             </p>
         </div>
         <div class="dividedline"></div>
-        <div class="summary">
+        <div @click="$emit('add-resumo')" class="summary">
             <h4>SUMMARY</h4>
-            <p>{{ localUser.resume ?? "Summary" }}</p>
+            <p>{{ props.user.resume ? props.user.resume : "Summary" }}</p>
         </div>
         <div class="dividedline"></div>
         <div class="row">
             <div class="main">
                 <div class="left">
-                    <div class="education">
+                    <div v-if="props.user.grade.length > 0" @click="$emit('add-formacao')"
+                        class="education">
                         <h4>EDUCATION</h4>
-                        <p>Pós graduado em Ciência de dados pela UNIASSELVI</p>
-                        <P>Graduado em análise e desenvolvimento de software</P>
+                        <div v-for="(item, index) in props.user.grade" :key="index">
+                            {{ index+1 + " - " +item }}
+                        </div>
                     </div>
-                    <div class="skills">
+                    <div v-else class="education" @click="$emit('add-formacao')">
+                        <h4>EDUCATION</h4>
+                        <p>1 - School at ...</p>
+                        <p>2 - University at ...</p>
+                    </div>
+                    <div v-if="!props.user?.ability" @click="$emit('add-habilidade')"
+                        class="skills">
                         <h4>SKILLS</h4>
                         <p>Skill 1</p>
                         <p>Skill 2</p>
                         <p>Skill 3</p>
                     </div>
+                    <div v-else @click="$emit('add-habilidade')" class="skills">
+                        <h4>SKILLS</h4>
+                        <div v-for="item in localAbility.split(',')" :key="item">
+                            * {{ item }}
+                        </div>
+                    </div>
                 </div>
                 <div class="horizontalline"></div>
                 <div class="right">
-                    <div class="experiencies">
+                    <div @click="$emit('add-experiencia')"
+                    v-if="props.user.userExperiences.length === 0"
+                    class="experiencies">
                         <h4>WORK EXPERIENCE</h4>
                         <div class="work">
                             <p>Job title</p>
                             <p><span>Company name</span><span>/ 2021 - present</span></p>
                             <p>Description</p>
+                        </div>
+                    </div>
+                    <div v-else @click="$emit('add-experiencia')">
+                        <h4>WORK EXPERIENCE</h4>
+                        <div v-for="item in props.user.userExperiences" :key="item.id">
+                            <div class="work">
+                                <p>{{ item.position }}</p>
+                                <p><span>{{ item.company }}</span><span>/ {{ item.dateHired +"-"+ item.dateFired}} present</span></p>
+                                <p>{{ item.description }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -53,7 +79,7 @@
 </template>
 
 <script setup>
-    import { defineProps, reactive } from 'vue';
+    import { defineProps, defineEmits, watchEffect, ref } from 'vue';
 
 
     const props = defineProps({
@@ -61,13 +87,20 @@
         language: String
     });
 
-    let localUser = reactive({
-        ...props.user
+    const emit = defineEmits([
+        'add-nome',
+        'add-info',
+        'add-resumo',
+        'add-formacao',
+        'add-habilidade',
+        'add-experiencia'
+    ]);
+
+    const localAbility = ref(props.user?.ability);
+
+    watchEffect(() => {
+        localAbility.value = props.user?.ability || null;
     });
-
-
-    console.log("user t4", localUser)
-
 </script>
 
 <style scoped>
@@ -90,6 +123,7 @@
             text-transform: uppercase;
             letter-spacing: 10px;
             padding: 10px;
+            cursor: pointer;
         }
 
         && h1 {
@@ -101,6 +135,7 @@
             justify-content: center; /* Centraliza os itens horizontalmente */
             align-items: center;
             display: flex;
+            cursor: pointer;
 
             && span {
                 margin: 0 10px; /* Espaçamento entre o texto e o separador */
@@ -121,6 +156,7 @@
 
                 && .education {
                     text-align: start;
+                    cursor: pointer;
 
                     && p {
                         justify-content: start;
@@ -129,6 +165,7 @@
 
                 && .skills {
                     text-align: start;
+                    cursor: pointer;
 
                     && p {
                         justify-content: start;
@@ -170,6 +207,7 @@
         width: 100%;
         display: block;
         padding: 0 5%;
+        cursor: pointer;
 
         && h4 {
             font-size: 26px;
@@ -179,6 +217,13 @@
             text-align: start;
             justify-content: start;
             padding-top: 10px;
+        }
+    }
+
+    .work {
+        && p:first-child {
+            text-transform: uppercase;
+            font-weight: bold;
         }
     }
 

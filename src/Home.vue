@@ -174,6 +174,12 @@
         v-if="configs.getTemplate() == 4"
         :user="user"
         :language="this.configs.getLanguage()"
+        @add-nome="editarNome"
+        @add-info="addInfo"
+        @add-resumo="editarResumo"
+        @add-experiencia="editarExperiencias"
+        @add-formacao="this.showModal('formacao')"
+        @add-habilidade="this.showModal('habilidade')"
       />
     </div>
     <div class="footer">
