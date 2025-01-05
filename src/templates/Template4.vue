@@ -30,7 +30,7 @@
                         <div v-for="(item, index) in props.user.grade" :key="index">
                             <div>
                                 {{ index+1 + " - " +item }}
-                                <img :src="deleteIcon" alt="X" class="delete">
+                                <img @click="deleteEducation(index)" :src="deleteIcon" alt="x" class="delete">
                             </div>
                         </div>
                     </div>
@@ -55,21 +55,22 @@
                 </div>
                 <div class="horizontalline"></div>
                 <div class="right">
-                    <div @click="$emit('add-experiencia')"
-                    v-if="props.user.userExperiences.length === 0"
-                    class="experiencies">
-                        <h4>WORK EXPERIENCE</h4>
+                    <div v-if="props.user.userExperiences.length === 0" class="experiencies">
+                        <h4 @click="$emit('add-experiencia')">WORK EXPERIENCE</h4>
                         <div class="work">
                             <p>Job title</p>
                             <p><span>Company name</span><span>/ 2021 - present</span></p>
                             <p>Description</p>
                         </div>
                     </div>
-                    <div v-else @click="$emit('add-experiencia')">
-                        <h4>WORK EXPERIENCE</h4>
+                    <div v-else>
+                        <h4 @click="$emit('add-experiencia')">WORK EXPERIENCE</h4>
                         <div v-for="item in props.user.userExperiences" :key="item.id">
                             <div class="work">
-                                <p>{{ item.position }}</p>
+                                <p>
+                                    {{ item.position }}
+                                    <img @click="deleteWork(item.id)" class="delete" :src="deleteIcon" alt="x">
+                                </p>
                                 <p><span>{{ item.company }}</span><span>/ {{ item.dateHired +"-"+ item.dateFired}} present</span></p>
                                 <p>{{ item.description }}</p>
                             </div>
@@ -96,7 +97,9 @@
         'add-resumo',
         'add-formacao',
         'add-habilidade',
-        'add-experiencia'
+        'add-experiencia',
+        'delete-from-education',
+        'delete-from-experiences'
     ]);
 
     const localAbility = ref(props.user?.ability);
@@ -106,6 +109,15 @@
     });
 
     const deleteIcon = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADXklEQVR4nO2Z2U7bUBCGeZa2dGULhITEWciCs0GgZSlIVcVFH6A3tOx7xXNVRaLqK6BSEi/ZbJaEq5JkqnGUioJrH09Q6wuPNFfxxffZv8+ZE3d1OeWUU07Zsq6y85ladkG8yi5AbWIeauPYr6GWwZ6Dahp7Fqop7BmoJmfgMjHdav5Vq8dean0Rn2p1bBIuothZOI9gT8D5KPY4nIexM3AWysBZMN3qQArOuJSgcqmUZYHaxLxgA3hQuSQovkSe8AT+M3ygBa/6E6D6EkB5AraBV308QcBG8MrIGEXAPvCKlyJgI3jFG6cI2Ade8RAEWOHV+BSIkXEoRbPM8IVAEvJ+HspckgleGY5RBMzhK/FJOH3zDmpH30Ba2wU5nDGFl7gECMvbUDv8CicziyD7eVP4ijtKEGC48wh/raiA1azXQdr8BFI4/Vd4keNBXNvTrsW6rijwffotlEZ4Q3iigHHmMTZ452+WJrGxD1IoZQrfruqXI8h5YobwlaEIQcDkhcXMY2xuA/2WCCZN4Zv1OghLGyB5Y4bwlcFR6wIsqw1mXlq/CwaNBkjbByBwiRb8qo5oowHi+j7kPVFT+DJZgGGpRAlR70mgxNbBvcCXXWGCgIV1Xg6ldUGh0dRgO4UvD4SIAhY2KTmYAnF1567EPcCX+ykChB1WCiRBXNnR3oE78M0mGb7cH6QJWB0PcJPSoqQjgHFCgZw7ahm+1EcQIMObRWhtD3JDEUvwpd4AUaBDeIzN7Ti1JHbh1BVmhi/1cgSBTuHbL+yHTd3fhNVdyKEEA3yphyLAAM+ySeWHo5Bf2tCXWNmGH/1BU/jiCz9FwHwkxqlSdzxY2fljtcm7IyB83NK99vT9MggoYQBffO6zLmB2GMF5HkdiM/j2apMbDOvG6fLzIZz0cIbwRAHjkxQeRk5mF7WR2Ay+vdpg5m/G6We5AseZOZD7AobwxWcjBAGGP50K/oQ2z1cPj7SpkmWTyg2EtNjgnT/OzIHAAF986qUImP9jhicpPIzgPM8yErdXG8w8xkZmhC+QBDo4gFvdpEom8IUnHoqAfeALjwkCdoIvdA8TBGwEL3e7iQI2gZcfUQRsBC8/HCIIaF9G7AEvP3BZ/8CBn3VUPy/YAV5+6EpaFnDKKaec6voX9QukVjNwcptqWQAAAABJRU5ErkJggg==";
+
+    const deleteEducation = (index) => {
+        emit('delete-from-education', index);
+    }
+
+    const deleteWork = (id) => {
+        emit('delete-from-experiences', id);
+    }
+
 </script>
 
 <style scoped>
@@ -173,10 +185,10 @@
                         height: 24px;
                         z-index: 2;
                     }
+                }
 
-                    && h4:hover::before {
-                        content: "ADD NEW ";
-                    }
+                && .education:hover h4::before {
+                    content: "ADD NEW ";
                 }
 
                 && .skills {
@@ -196,11 +208,19 @@
                     justify-content: start;
                     text-align: start;
 
-
                     && span {
                         margin: 0;
                     }
                 }
+
+                && h4 {
+                    cursor: pointer;
+                }
+            }
+
+            .right:hover h4::before {
+                content: "ADD NEW ";
+                cursor: pointer;
             }
 
             && .horizontalline {
@@ -241,6 +261,11 @@
         && p:first-child {
             text-transform: uppercase;
             font-weight: bold;
+
+            .delete {
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 

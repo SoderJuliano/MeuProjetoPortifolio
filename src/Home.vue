@@ -180,6 +180,8 @@
         @add-experiencia="editarExperiencias"
         @add-formacao="this.showModal('formacao')"
         @add-habilidade="this.showModal('habilidade')"
+        @delete-from-education="deleteFromEducation"
+        @delete-from-experiences="deleteFromExperiences"
       />
     </div>
     <div class="footer">
@@ -339,6 +341,23 @@ export default {
     AlertComponent
   },
   methods: {
+    deleteFromExperiences(id) {
+        const index = this.user?.userExperiences?.findIndex(item => item.id === id);
+        if (index > -1) {
+            this.user.userExperiences.splice(index, 1);
+            this.updateUser(this.user, true);
+        } else {
+            console.error("ID not found");
+        }
+    },
+    deleteFromEducation(index) {
+        if (index > -1 && index < this.user.grade.length) {
+            this.user.grade.splice(index, 1);
+            this.updateUser(this.user, true);
+        } else {
+            console.error("Índice inválido");
+        }
+    },
     async resetPassword() {
       let response = null;
       try {
