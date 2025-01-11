@@ -293,4 +293,22 @@
             display: none;
         }
     }
+
+    @media screen and (max-width: 786px) {
+        .template {
+            width: 100dvw !important;
+        }
+
+        .row {
+            && p {
+                flex-direction: column;
+            }
+        }
+
+        .main {
+            && .horizontalline {
+                display: none;
+            }
+        }
+    }
 </style>
