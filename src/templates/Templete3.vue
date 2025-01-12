@@ -359,28 +359,6 @@
 
     const educationComponents = ref([]);
 
-    // if (props.user.grade && props.user.grade.length > 0) {
-    //     // Itera sobre o array de grades e empurra componentes para educationComponents
-    //     props.user.grade.forEach((grade, index) => {
-    //         const ano = extrairDatas(grade);
-    //         const textoSemDatas = removerDatas(grade); // Remove datas do texto
-
-    //         educationComponents.value.push({
-    //             id: 2000 + index, // Gera ID começando de 2000
-    //             text: textoSemDatas.length > 0 ? textoSemDatas : isEnglish ? 'Add education' : 'Adicionar educação',
-    //             title: ano != null ? ano.anoInicio + ' - ' + ano.anoFim : '2020 - 2021',
-    //             norender: false
-    //         });
-    //     });
-    // } else {
-    //     educationComponents.value.push({
-    //         id: 2000,
-    //         title: '2020 - 2024',
-    //         text: isEnglish ? 'Add Education (click here)' : 'Adicionar Educação (clicar aqui)',
-    //         norender: false
-    //     });
-    // }
-
     // Function to initialize education components
     const initializeEducationComponents = () => {
         educationComponents.value = []; // Clear existing components

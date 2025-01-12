@@ -1,6 +1,8 @@
 <template>
     <div class="template">
-        <div class="row"><h3>{{ props.user.progession ?? "MY PROFESSION" }}</h3></div>
+        <div @click="$emit('add-profession')" class="row">
+            <h3>{{ props.user?.profession == null || props.user.profession == "" ? "MY PROFESSION" : props.user.profession  }}</h3>
+        </div>
         <div @click="$emit('add-nome')" class="row"><h1>{{ props.user.name ?? "MY NAME" }}</h1></div>
         <div @click="$emit('add-info')" class="row">
             <p>
@@ -12,7 +14,7 @@
         <div @click="$emit('add-info')" class="row">
             <p>
                 <span>PHONE: {{ props.user.contact.phone[0] ?? "phone" }}</span>
-                <span>ADDRES: {{ props.user.contact.address ? adressObject : "Address" }}</span>
+                <span>ADDRES: {{ props.user.contact.address ? props.user.contact.address : "Address" }}</span>
             </p>
         </div>
         <div class="dividedline"></div>
@@ -99,7 +101,8 @@
         'add-habilidade',
         'add-experiencia',
         'delete-from-education',
-        'delete-from-experiences'
+        'delete-from-experiences',
+        'add-profession'
     ]);
 
     const localAbility = ref(props.user?.ability);

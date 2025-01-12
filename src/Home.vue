@@ -182,6 +182,7 @@
         @add-habilidade="this.showModal('habilidade')"
         @delete-from-education="deleteFromEducation"
         @delete-from-experiences="deleteFromExperiences"
+        @add-profession="editarProfissao"
       />
     </div>
     <div class="footer">
