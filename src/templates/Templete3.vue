@@ -235,6 +235,7 @@
     import { ref, watch, defineEmits, reactive } from 'vue';
     import { defineProps } from 'vue';
     import * as localStorageService from '../components/services/LocalStorageService.js';
+    import { showAlert } from 'simple-alerts/dist/showAlert.js'
 
     const props = defineProps({
         user: Object,
@@ -779,7 +780,11 @@
                     localUpdatedUser.contact.phone[0] = component.text;
                     break;
                 case 1003:
-                    localUpdatedUser.contact.email[0] = component.text;
+                    if (validateEmail(component.text)) {
+                        localUpdatedUser.contact.email[0] = component.text;
+                    } else {
+                        showAlert("email inválido");
+                    }
                     break;
                 case 1004:
                     localUpdatedUser.profession = component.text;
@@ -811,6 +816,10 @@
         }
     let span2 = {'width': '70%', 'text-align': 'start', 'font-size': '18px'}
 
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
 
     function extrairDatas(texto) {
         // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
