@@ -555,6 +555,13 @@ button {
         padding: 0% !important;   
         background-color: transparent !important; 
     }
+
+    .midle-options {
+        && button {
+            margin-top: 30px !important;
+            height: 60px;
+        }
+    }
 }
 
 @media (max-width: 660px) {
