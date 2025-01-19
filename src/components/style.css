@@ -545,6 +545,16 @@ button {
         margin-top: -230px !important;
         left: 35% !important;
     }
+
+    .navbar {
+        width: 100% !important;
+    }
+    
+    .navbar-login {
+        margin-top: 95px !important;
+        padding: 0% !important;   
+        background-color: transparent !important; 
+    }
 }
 
 @media (max-width: 660px) {
