@@ -90,11 +90,19 @@ export default class User {
     }
 
     async firstLogin(email, password) {
-        // console.log("firstLogin");
-        if (typeof email === 'string') {
-            return await saveLogin(email, password, this._id);
+
+        const configs = JSON.parse(localStorage.getItem('configs'));
+        let lan = null;
+        if(!this.language || this.language === '') {
+            lan = configs.language;
+        }else {
+            lan = this.language;
         }
-        return await saveLogin(email[0], password, this._id);
+
+        if (typeof email === 'string') {
+            return await saveLogin(email, password, this._id, lan);
+        }
+        return await saveLogin(email[0], password, this._id, lan);
     }
 
     updateToParente(name, val) {

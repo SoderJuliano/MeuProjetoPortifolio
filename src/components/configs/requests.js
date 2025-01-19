@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DRAGONITE_ENV, DRAGONITE_ENV2, setDragoniteEnv } from '../configs/envs.js';
 
-let apiUrl = DRAGONITE_ENV;
+let apiUrl = DRAGONITE_ENV2;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -57,11 +57,12 @@ export function setNewNotification(data) {
 
 // Primeiro login
 // Tem o user id
-export function saveLogin(email, password, userId) {
+export function saveLogin(email, password, userId, language) {
   const login = {
     "email": email,
     "password":  password,
-    "userId": userId
+    "userId": userId,
+    "language": language
   }
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
