@@ -314,4 +314,10 @@
             }
         }
     }
+
+    @media screen and (max-width:1300px) and (min-width: 768px) {
+        .main {
+            justify-content: flex-start !important;
+        }
+    }
 </style>

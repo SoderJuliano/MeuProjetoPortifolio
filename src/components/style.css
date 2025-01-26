@@ -511,7 +511,7 @@ button {
     /* Sobreescreve the default behavior */
     .multiMenu-options.multi-menu-class:hover {
         background-color: white !important;
-        transform: perspective(0px) rotateY(0deg);
+        /* transform: perspective(0px) rotateY(0deg); */
     }
 
     /* Container central quando  a janela estiver entre 1000 e 1300
