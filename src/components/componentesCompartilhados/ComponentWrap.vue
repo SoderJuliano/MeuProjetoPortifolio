@@ -152,8 +152,9 @@ const cancelEditing = (where, index) => {
 }
 
 const updateExperiencias = (job) => {
+    console.log('job ', job)
     // Check if experiencies.value is an array
-    if (Array.isArray(experiencies.value) && experiencies.value.length > 0) {
+    if (Array.isArray(experiencies.value) && experiencies.value.length > 1) {
         experiencies.value.forEach((each, index) => {
             console.log('each', each)
             if (each.id === job.id || each.id === job.id - 3000) {
@@ -167,6 +168,8 @@ const updateExperiencias = (job) => {
         });
     } else if (Array.isArray(experiencies.value) && experiencies.value.length == 0) {
         experiencies.value.push(job);
+    } else if (Array.isArray(experiencies.value) && experiencies.value.length == 1) {
+        experiencies.value[0] = job;
     }
     else {
         console.error("experiencies.value is not an array");
