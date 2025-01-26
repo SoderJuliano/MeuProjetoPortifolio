@@ -152,7 +152,6 @@ const cancelEditing = (where, index) => {
 }
 
 const updateExperiencias = (job) => {
-    console.log('job ', job)
     // Check if experiencies.value is an array
     if (Array.isArray(experiencies.value) && experiencies.value.length > 1) {
         experiencies.value.forEach((each, index) => {
