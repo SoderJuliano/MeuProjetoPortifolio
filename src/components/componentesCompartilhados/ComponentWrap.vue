@@ -125,6 +125,15 @@ const saveItem = (index) => {
     emit('updated-list', editableList.value);
 };
 
+// Update values here in the child component based on fathers one
+watch(() => props.text, (newText) => {
+    editableText.value = newText;
+});
+// Update values here in the child component based on fathers one
+watch(() => props.title, (newTitle) => {
+    editableTitle.value = newTitle;
+});
+
 watch(() => props.listOfStrings, (newList) => {
     editableList.value = [...newList];
 });
