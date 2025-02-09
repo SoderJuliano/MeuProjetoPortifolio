@@ -46,7 +46,14 @@
     @add-profissao="editarProfissao"
     @update-user="updateUser"
   />
+  <Nav 
+    v-if="minimalist"
+    :language="this.configs.getLanguage()"
+    @language-update="lupdate"
+    >
+  </Nav>
   <nav-bar
+    v-if="!minimalist"
     :language="this.configs.getLanguage()"
     @close="close"
     @language-update="lupdate"
@@ -240,12 +247,14 @@ import * as localStorageService from "./components/services/LocalStorageService.
 import authService from "./services/authService.js";
 import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
 import { getUser } from "./components/configs/requests.js";
+import Nav from "./components/navbar/Nav.vue"
 
 export default {
   name: "Home",
   emits: ["close"],
   data() {
     return {
+      minimalist: true,
       alertComponent: null,
       syncUser: false,
       logedIn: false,
@@ -320,7 +329,8 @@ export default {
     SimpleAlerts,
     Loader,
     GlobalModal,
-    AlertComponent
+    AlertComponent,
+    Nav
   },
   methods: {
     async resetPassword() {
