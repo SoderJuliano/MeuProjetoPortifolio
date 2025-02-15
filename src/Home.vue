@@ -50,7 +50,12 @@
     v-if="minimalist"
     :language="this.configs.getLanguage()"
     @language-update="lupdate"
-    >
+    @now-template1="change_template(1)"
+    @now-template2="change_template(2)"
+    @now-template3="change_template(3)"
+    @update-configs="updateConfigs"
+    :template="this.configs.getTemplate()"
+  >
   </Nav>
   <nav-bar
     v-if="!minimalist"
