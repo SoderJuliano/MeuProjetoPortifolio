@@ -1,4 +1,3 @@
-
 input{
     padding: 5px;
 }
@@ -532,8 +531,11 @@ button {
     }
     .navbar-login {
         position: relative !important;
-        height: 60px !important;
-        top: -15px !important;
+        height: 90px !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        margin-left: 10px !important;
+        /* top: -15px !important; */
         min-width: 250px !important;
     }
 }
@@ -735,4 +737,46 @@ top: 0 !important;
 
 .print .footer {
     display: none;
+}
+
+/* Estilos para o botão de login */
+.navbar-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  margin-top: 20px; /* Afasta do topo */
+}
+
+.navbar-login button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bolder;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto !important; /* Sobrescreve o width 100% em media queries */
+  margin: 0 !important; /* Remove margins indesejadas */
+}
+
+.navbar-login button:hover {
+  background-color: #2980b9;
+}
+
+.navbar-login button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Ajuste específico para telas médias */
+@media (max-width: 1000px) and (min-width: 660px) {
+  .navbar-login {
+    margin-top: 20px !important; /* Sobrescreve o margin-top anterior */
+    padding: 10px !important;
+    background-color: transparent;
+  }
 }

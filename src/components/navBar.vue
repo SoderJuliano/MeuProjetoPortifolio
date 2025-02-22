@@ -905,7 +905,6 @@ li img {
 }
 
 .navbar-login {
-  justify-content: right;
   position: absolute;
   right: 0;
   align-self: right;

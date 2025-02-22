@@ -1310,6 +1310,12 @@ export default {
   cursor: pointer;
 }
 
+@media screen and (max-width: 1900px) and (min-width: 1000px) {
+  .multi-menu-class {
+    transform: none;
+  }
+}
+
 @media screen and (max-width: 1000px) {
   .main {
     display: block;
