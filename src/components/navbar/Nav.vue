@@ -474,6 +474,12 @@ watch(() => props.user, (newVal) => {
   padding: 1rem;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  margin-left: 3%;
+  margin-right: 3%;
+  border-color: black;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .undernav > div {
