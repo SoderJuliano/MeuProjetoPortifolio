@@ -314,4 +314,23 @@
             }
         }
     }
+
+    @media screen and (max-width: 1900px) and (min-width: 768px) {
+        .horizontalline {
+            display: none;
+        }
+
+        .main {
+            display: block;
+
+            && .left, .right {
+                width: 100%;
+                display: block;
+            }
+
+            && .right {
+                margin-left: 0;
+            }
+        }
+    }
 </style>
