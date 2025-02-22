@@ -8,7 +8,7 @@
     <span @click="setItem('print')" class="item">Print</span>
     <span @click="setItem('info')" class="item">Info</span>
     <span @click="setItem('about')" class="item">About</span>
-    <span @click="setItem('login')" class="item">Login</span>
+    <span @click="setItem('login')" class="item">{{ isLoggedIn ? user?.name?.split(' ')[0] : 'Login' }}</span>
   </div>
   <div v-if="item" class="undernav">
     <!-- Menu options -->
@@ -113,10 +113,9 @@
     <!-- Login options -->
     <div v-if="item === 'login'" class="login">
       <div v-if="!isLoggedIn">
-        <p @click="openLogin">{{ getLanguage() === 'en-us' ? 'Login' : 'Entrar' }}</p>
+        <p @click="emit('show-login')">{{ getLanguage() === 'en-us' ? 'Login' : 'Entrar' }}</p>
       </div>
       <div v-else>
-        <p>{{ user?.name?.split(' ')[0] }}</p>
         <p @click="toggleSync">{{ getLanguage() === 'en-us' ? 'Sync: ' : 'Sincronizar: ' }}{{ syncUser ? 'On' : 'Off' }}</p>
         <p @click="logoff">{{ getLanguage() === 'en-us' ? 'Logout' : 'Sair' }}</p>
       </div>
@@ -134,16 +133,27 @@ import UserModel from '../../model/userModel.js';
 import ShareService from '../../services/ShareService.js';
 import $ from 'jquery';
 import PageConfig from '../../model/configModel';
+import { showAlert } from 'simple-alerts/dist/showAlert.js';
+import 'simple-alerts/dist/simpleAlertsVue.css';
+import SimpleAlerts from 'simple-alerts';
 
 // VARS
 const item = ref(null);
 const isLoggedIn = ref(false);
-const showAlert = ref(false);
+const alertVisible = ref(false);
 const alertTitle = ref(null);
 const alertMessage = ref(null);
 const activeSection = ref(null);
 const fontSize = ref(14);
 const fontWeight = ref('normal');
+const customAlert = ref(false);
+const alert = ref({
+  autoClose: true,
+  timer: 2000,
+  backgroundColor: 'black',
+  textColor: 'white',
+  closeButtonText: 'Close'
+});
 
 // PROPS AND EMITS
 const props = defineProps({
@@ -189,6 +199,19 @@ const emit = defineEmits([
 ]);
 
 // METHODS
+function more() {
+  showAlert(getLanguage() === 'en-us' ?
+  "If you'd like to see more of my projects, feel free to follow my GitHub at SoderJuliano(https://github.com/SoderJuliano). You can also visit my personal webpage at https://juliano-soder.netlify.app. This generator is still in development, so please consider supporting it."
+  : "Se você quiser ver mais de meus projetos, fique à vontade para seguir meu GitHub em SoderJuliano. Você também pode visitar minha página pessoal em juliano-soder.netlify.app. Este gerador ainda está em desenvolvimento, então considere apoiá-lo .");
+  setTimeout(() => {
+    window.open("https://github.com/SoderJuliano");
+  }, 2000);
+}
+
+function imprimir () {
+  window.print();
+}
+
 function setItem(option) {
   item.value = item.value === option ? null : option;
 }
@@ -293,7 +316,13 @@ function handleSaveResponse(response, userFromModel, isANewUser) {
 function showAlertComponent(title, message) {
   alertTitle.value = title;
   alertMessage.value = message;
-  showAlert.value = true;
+  alertVisible.value = true;
+}
+
+function closeSimpleAlert() {
+  alertVisible.value = false;
+  alertTitle.value = null;
+  alertMessage.value = null;
 }
 
 function deleteLocalData() {
@@ -370,6 +399,43 @@ function selectTemplate(number) {
   }
   item.value = null;
 }
+
+  function about() {
+    const message = getLanguage() === 'en-us'
+      ? 'This is a free online CV generator.'
+      : 'Este é um gerador de currículo online gratuito.';
+    showAlert(message);
+  }
+
+  function aboutMe(){
+    window.open("https://www.linkedin.com/in/julianosoder/");
+  }
+
+  function support(){
+    const message = getLanguage() === 'en-us' 
+      ? 'Support the project by sharing it with your friends!' 
+      : 'Apoie o projeto compartilhando com seus amigos!';
+    showAlert(message);
+  }
+
+  function howToLogin() {
+    const message = getLanguage() === 'en-us'
+      ? 'Login with your email to save your CV online.'
+      : 'Faça login com seu email para salvar seu currículo online.';
+    showAlert(message);
+  }
+
+  function deleteAccount() {
+    const confirmed = confirm(getLanguage() === 'en-us' ? 'Are you sure you want to delete your account?' : 'Tem certeza que deseja deletar sua conta?');
+    if (confirmed) {
+      // Implemente a lógica para deletar a conta do usuário
+      console.log('Conta deletada');
+    }
+  }
+
+  function contact(){
+    window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
+  }
 
 // WATCHERS
 watch(() => props.language, (newVal, oldVal) => {
@@ -542,5 +608,15 @@ watch(() => props.user, (newVal) => {
   background-color: #3498db;
   color: white;
   border-color: #3498db;
+}
+
+@media print {
+  .navbar {
+    display: none;
+  }
+
+  .undernav {
+    display: none;
+  }
 }
 </style>
