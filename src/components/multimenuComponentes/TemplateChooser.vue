@@ -24,7 +24,7 @@
             :style="template == 4 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
         >
             <p>Normal 2</p>
-            <img src="" alt="templateimg" />
+            <img src="../../assets/templatesImg/template4.png" alt="templateimg" />
         </button>
     </div>
 </template>

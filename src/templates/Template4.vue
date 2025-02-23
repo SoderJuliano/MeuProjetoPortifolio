@@ -3,24 +3,24 @@
         <div @click="$emit('add-profession')" class="row">
             <h3>{{ props.user?.profession == null || props.user.profession == "" ? "MY PROFESSION" : props.user.profession  }}</h3>
         </div>
-        <div @click="$emit('add-nome')" class="row"><h1>{{ props.user.name ?? "MY NAME" }}</h1></div>
+        <div @click="$emit('add-nome')" class="row"><h1>{{ props.user.name || (isPortuguese ? "MEU NOME" : "MY NAME") }}</h1></div>
         <div @click="$emit('add-info')" class="row">
             <p>
-                <span>EMAIL: {{ props.user.contact.email[0] ?? "email" }}</span>
+                <span>EMAIL: {{ props.user.contact.email[0] ?? (isPortuguese ? "email" : "EMAIL") }}</span>
                 <span class="separator">|</span>
-                <span> PROTFOLIO/SITE {{ props.user.social[0] ?? "webpage" }}</span>
+                <span> PROTFOLIO/SITE {{ props.user.social[0] ?? (isPortuguese ? "webpage" : "PORTFOLIO/SITE") }}</span>
             </p>
         </div>
         <div @click="$emit('add-info')" class="row">
             <p>
-                <span>PHONE: {{ props.user.contact.phone[0] ?? "phone" }}</span>
-                <span>ADDRES: {{ props.user.contact.address ? props.user.contact.address : "Address" }}</span>
+                <span>PHONE: {{ props.user.contact.phone[0] ?? (isPortuguese ? "phone" : "PHONE") }}</span>
+                <span>ADDRES: {{ props.user.contact.address ? props.user.contact.address : (isPortuguese ? "Address" : "ADDRESS") }}</span>
             </p>
         </div>
         <div class="dividedline"></div>
         <div @click="$emit('add-resumo')" class="summary">
-            <h4>SUMMARY</h4>
-            <p>{{ props.user.resume ? props.user.resume : "Summary" }}</p>
+            <h4>{{ isPortuguese ? "RESUMO" : "SUMMARY" }}</h4>
+            <p>{{ props.user.resume ? props.user.resume : (isPortuguese ? "Resumo" : "SUMMARY") }}</p>
         </div>
         <div class="dividedline"></div>
         <div class="row">
@@ -28,7 +28,7 @@
                 <div class="left">
                     <div v-if="props.user.grade.length > 0"
                         class="education">
-                        <h4 @click="$emit('add-formacao')">EDUCATION</h4>
+                        <h4 @click="$emit('add-formacao')">{{ isPortuguese ? "FORMAÇÃO" : "EDUCATION" }}</h4>
                         <div v-for="(item, index) in props.user.grade" :key="index">
                             <div>
                                 {{ index+1 + " - " +item }}
@@ -37,19 +37,19 @@
                         </div>
                     </div>
                     <div v-else class="education" @click="$emit('add-formacao')">
-                        <h4>EDUCATION</h4>
+                        <h4>{{ isPortuguese ? "FORMAÇÃO" : "EDUCATION" }}</h4>
                         <p>1 - School at ...</p>
                         <p>2 - University at ...</p>
                     </div>
                     <div v-if="!props.user?.ability" @click="$emit('add-habilidade')"
                         class="skills">
-                        <h4>SKILLS</h4>
+                        <h4>{{ isPortuguese ? "HABILIDADES" : "SKILLS" }}</h4>
                         <p>Skill 1</p>
                         <p>Skill 2</p>
                         <p>Skill 3</p>
                     </div>
                     <div v-else @click="$emit('add-habilidade')" class="skills">
-                        <h4>SKILLS</h4>
+                        <h4>{{ isPortuguese ? "HABILIDADES" : "SKILLS" }}</h4>
                         <div v-for="item in localAbility.split(',')" :key="item">
                             * {{ item }}
                         </div>
@@ -58,7 +58,7 @@
                 <div class="horizontalline"></div>
                 <div class="right">
                     <div v-if="props.user.userExperiences.length === 0" class="experiencies">
-                        <h4 @click="$emit('add-experiencia')">WORK EXPERIENCE</h4>
+                        <h4 @click="$emit('add-experiencia')">{{ isPortuguese ? "EXPERIÊNCIA PROFISSIONAL" : "WORK EXPERIENCE" }}</h4>
                         <div class="work">
                             <p>Job title</p>
                             <p><span>Company name</span><span>/ 2021 - present</span></p>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                     <div v-else>
-                        <h4 @click="$emit('add-experiencia')">WORK EXPERIENCE</h4>
+                        <h4 @click="$emit('add-experiencia')">{{ isPortuguese ? "EXPERIÊNCIA PROFISSIONAL" : "WORK EXPERIENCE" }}</h4>
                         <div v-for="item in props.user.userExperiences" :key="item.id">
                             <div class="work">
                                 <p>
