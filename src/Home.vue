@@ -1289,10 +1289,11 @@ export default {
 }
 
 .main.template {
-  width: 70%;
+  width: 100%;
   height: 100%;
   margin-top: 20px;
   border-radius: 10px;
+  padding: 0px;
 }
 
 .multi-menu-class:hover {
