@@ -4,11 +4,11 @@
             <h3>{{ props.user?.profession == null || props.user.profession == "" ? "MY PROFESSION" : props.user.profession  }}</h3>
         </div>
         <div @click="$emit('add-nome')" class="row"><h1>{{ props.user.name || (isPortuguese ? "MEU NOME" : "MY NAME") }}</h1></div>
-        <div @click="$emit('add-info')" class="row">
+        <div class="row">
             <p>
-                <span>EMAIL: {{ props.user.contact.email[0] ?? (isPortuguese ? "email" : "EMAIL") }}</span>
+                <span @click="$emit('add-info')" >EMAIL: {{ props.user.contact.email[0] ?? (isPortuguese ? "email" : "EMAIL") }}</span>
                 <span class="separator">|</span>
-                <span> PROTFOLIO/SITE {{ props.user.social[0] ?? (isPortuguese ? "webpage" : "PORTFOLIO/SITE") }}</span>
+                <span @click="$emit('add-SocialLink')">{{ props.user.social[props.user?.social?.length - 1] ?? (isPortuguese ? "webpage" : "PORTFOLIO/SITE") }}</span>
             </p>
         </div>
         <div @click="$emit('add-info')" class="row">
@@ -102,7 +102,8 @@
         'add-experiencia',
         'delete-from-education',
         'delete-from-experiences',
-        'add-profession'
+        'add-profession',
+        'add-SocialLink'
     ]);
 
     const localAbility = ref(props.user?.ability);

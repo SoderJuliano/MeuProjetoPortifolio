@@ -183,6 +183,7 @@
         @delete-from-education="deleteFromEducation"
         @delete-from-experiences="deleteFromExperiences"
         @add-profession="editarProfissao"
+        @add-SocialLink="this.showModal('socialLink')"
       />
     </div>
     <div class="footer">
@@ -560,13 +561,13 @@ export default {
           this.logedIn = true;
           localStorageService.setAccActived(email[0] ? email[0] : email, this.user._id);
         }else if (responseUser == null) {
-          console.log('response app', responseUser)
           this.alertTitle = "Erro ao fazer login";
           this.alertMessage = "Email ou senha inválidos";
           this.showAlertErrorToTrue();
           this.inlogin = false;
           setTimeout(() => {
             this.closeSimpleAlert();
+            this.inlogin = true;
           }, 2000);
         }
       }
