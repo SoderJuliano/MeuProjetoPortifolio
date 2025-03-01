@@ -591,7 +591,7 @@ export default {
       async generateAndSharePdf() {
       try {
         // Obtém a referência ao template
-        const curriculo = document.getElementById("template");
+        const curriculo = document.getElementById("app");
 
         if (!curriculo) {
           throw new Error("Referência ao currículo não encontrada.");
