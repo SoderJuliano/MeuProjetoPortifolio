@@ -35,6 +35,7 @@ export default {
             'https://freehubcv.top',
             'https://freehubcv.top/#',
             'https://freehubcv.top/',
+            'http://192.168.1.138:8080/'
         ]
 
         if (homeHosts.some(host => uri === host)) {
