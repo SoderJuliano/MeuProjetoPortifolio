@@ -45,7 +45,6 @@ export default {
     display: flex;
     align-items: center;
     gap: 6px;
-    width: 120px;
     border: solid black 1px;
     border-radius: 20px;
     padding: 2px 0; /* Reduzido o padding vertical */

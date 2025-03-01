@@ -249,7 +249,8 @@ export default {
 .imprimirbotao {
     display: flex;
     align-items: center;
-    margin: 0 10px;
+    margin: 0 5px;
+    padding: 5px;
 }
 
 .imprimirbotao:active {
@@ -281,7 +282,7 @@ img{
 
 @media screen and (max-width: 700px) and (min-width: 400px) {
     .imprimirbotao{
-        margin: 5px 10px;
+        margin: 2px 10px;
     }
     .multiMenu-options.multiMenu{
         position: relative;
