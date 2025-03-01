@@ -589,74 +589,72 @@ export default {
       },
 
       async generateAndSharePdf() {
-      try {
-        // Obtém a referência ao template
-        const curriculo = document.getElementById("app");
+        try {
+          const curriculo = document.getElementById("template");
 
-        if (!curriculo) {
-          throw new Error("Referência ao currículo não encontrada.");
+          if (!curriculo) {
+            throw new Error("Referência ao currículo não encontrada.");
+          }
+
+          curriculo.classList.add('print');
+          await this.$nextTick();
+
+          // Gera o PDF usando o novo método
+          const pdfBlob = await this.createPdfFromHtml(curriculo);
+
+          if (navigator.share) {
+            const file = new File([pdfBlob], "curriculo.pdf", { type: "application/pdf" });
+            await navigator.share({
+              title: "Compartilhar Currículo",
+              text: "Veja o meu currículo!",
+              files: [file],
+            });
+            console.log("Compartilhamento bem-sucedido");
+          } else {
+            console.warn("Compartilhamento não suportado. Abrindo cliente de e-mail...");
+            this.confirmShareText = this.language.includes("en") 
+              ? "Can not provide share between apps, but I can open your email and download the file as pdf." 
+              : "Sem suporte para compartilhar via apps, mas posso abrir o cliente de email e baixar o CV como PDF.";
+            this.confirmShareTitle = this.language.includes("en") 
+              ? "Confirm this action?" 
+              : "Confirma essa ação?";
+            this.showShareConfirm = true;
+          }
+        } catch (error) {
+          console.error("Erro ao gerar o PDF:", error);
         }
+      },
 
-        // Adiciona a classe de impressão ao elemento
-        curriculo.classList.add('print');
+      async createPdfFromHtml(element) {
+        // Captura o conteúdo HTML como uma imagem usando html2canvas
+        const canvas = await html2canvas(element, {
+          scale: 2, // Aumenta a qualidade da imagem
+          useCORS: true, // Permite carregar recursos externos (se necessário)
+          logging: false, // Desativa logs para melhor desempenho
+        });
 
-        // Aguardar até que a renderização do Vue seja concluída
-        await this.$nextTick();
+        // Converte o canvas para uma imagem (formato JPEG ou PNG)
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-        // Gera o PDF a partir do conteúdo HTML
-        const pdfBlob = await this.createPdfFromHtml(curriculo);
+        // Cria um novo documento PDF
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.addPage([canvas.width, canvas.height]); // Tamanho da página baseado no canvas
 
-        // Verifica se o dispositivo suporta compartilhamento
-        if (navigator.share) {
-          // Cria um arquivo a partir do Blob
-          const file = new File([pdfBlob], "curriculo.pdf", { type: "application/pdf" });
+        // Adiciona a imagem ao PDF
+        const img = await pdfDoc.embedJpg(imgData); // Use embedPng se estiver usando PNG
+        page.drawImage(img, {
+          x: 0,
+          y: 0,
+          width: canvas.width,
+          height: canvas.height,
+        });
 
-          // Compartilha o arquivo
-          await navigator.share({
-            title: "Compartilhar Currículo",
-            text: "Veja o meu currículo!",
-            files: [file],
-          });
+        // Salva o PDF como um array de bytes
+        const pdfBytes = await pdfDoc.save();
 
-          console.log("Compartilhamento bem-sucedido");
-        } else {
-          console.warn("Compartilhamento não suportado neste dispositivo. Abrindo cliente de e-mail...");
-          this.confirmShareText = this.language.includes("en") 
-            ? "Can not provide share between apps, but I can open your email and download the file as pdf." 
-            : "Sem suporte para compartilhar via apps, mas posso abrir o cliente de email e baixar o CV como PDF.";
-          this.confirmShareTitle = this.language.includes("en") 
-            ? "Confirm this action?" 
-            : "Confirma essa ação?";
-          this.showShareConfirm = true;
-          return;
-        }
-      } catch (error) {
-        console.error("Erro ao gerar o PDF:", error);
-      }
-    },
-
-    async createPdfFromHtml(curriculo) {
-      // Cria um novo documento PDF
-      const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([595, 842]); // Tamanho A4 em pontos (largura, altura)
-
-      // Obtém o conteúdo HTML do template
-      const htmlContent = curriculo.innerText; // Usar innerText para evitar tags HTML
-
-      // Adiciona o conteúdo ao PDF
-      page.drawText(htmlContent, {
-        x: 50,
-        y: 750,
-        size: 12,
-        color: rgb(0, 0, 0), // Cor do texto (preto)
-      });
-
-      // Salva o PDF como um array de bytes
-      const pdfBytes = await pdfDoc.save();
-
-      // Retorna o PDF como um Blob
-      return new Blob([pdfBytes], { type: 'application/pdf' });
-    },
+        // Retorna o PDF como um Blob
+        return new Blob([pdfBytes], { type: 'application/pdf' });
+      },
 
       //! Share PDF init
       // async generateAndSharePdf() {
