@@ -35,21 +35,31 @@ export default {
 }
 </script>
 <style scoped>
-.print-icon{
-    width: 25%;
-    height: 15px;
-    position: relative;
-    align-self: center;
-    justify-self: start;
+.print-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
 }
+
 .print-div {
     display: flex;
+    align-items: center;
+    gap: 6px;
     width: 120px;
     border: solid black 1px;
     border-radius: 20px;
-    position: relative;
+    padding: 2px 0; /* Reduzido o padding vertical */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    height: 24px; /* Altura fixa para corresponder ao botão de idioma */
 }
-.impreimir-text{
-        padding: 3%;
+
+.print-div:hover {
+    background-color: #f5f5f5;
+}
+
+.impreimir-text {
+    font-size: 14px;
+    margin-right: 8px;
 }
 </style>
