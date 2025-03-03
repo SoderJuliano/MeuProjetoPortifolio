@@ -346,7 +346,7 @@ export default {
             this.updateUser()
         },
         adicionarHabilidade(){
-            this.userData.hability = $("#modal-input").val()
+            this.userData.ability = $("#modal-input").val()
             this.updateUser()
         },
         addSocialLink(){
