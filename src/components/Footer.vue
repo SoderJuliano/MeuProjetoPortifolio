@@ -9,6 +9,7 @@
         @now-template1="this.$emit('now-template1')"
         @now-template2="this.$emit('now-template2')"
         @now-template3="this.$emit('now-template3')"
+        @now-template4="this.$emit('now-template4')"
         @update-user="update"
         @login="showLogin"
         @reset-password="this.$emit('reset-password')"
@@ -57,6 +58,8 @@ export default {
         "font-changed",
         "now-template2",
         "now-template1",
+        "now-template3",
+        "now-template4",
         "change-main-color",
         "change-font-color",
         "login",
@@ -244,11 +247,10 @@ export default {
 }
 
 .imprimirbotao {
-    position: relative;
-    align-self: center;
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
     padding: 5px;
-    height: 25px !important;
-    width: 100px !important;
 }
 
 .imprimirbotao:active {
@@ -280,7 +282,7 @@ img{
 
 @media screen and (max-width: 700px) and (min-width: 400px) {
     .imprimirbotao{
-        margin: 10px 10px;
+        margin: 2px 10px;
     }
     .multiMenu-options.multiMenu{
         position: relative;

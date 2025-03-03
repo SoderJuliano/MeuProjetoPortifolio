@@ -94,6 +94,7 @@
         @now-template1="change_template(1)"
         @now-template2="change_template(2)"
         @now-template3="change_template(3)"
+        @now-template4="change_template(4)"
         @login="showLogin"
         class="multi-menu-class"
         @changefont="changefont"
@@ -168,6 +169,22 @@
         :language="this.configs.getLanguage()"
         @updateUser="updateUser"
       />
+      <Template4
+        class="template"
+        v-if="configs.getTemplate() == 4"
+        :user="user"
+        :language="this.configs.getLanguage()"
+        @add-nome="editarNome"
+        @add-info="addInfo"
+        @add-resumo="editarResumo"
+        @add-experiencia="editarExperiencias"
+        @add-formacao="this.showModal('formacao')"
+        @add-habilidade="this.showModal('habilidade')"
+        @delete-from-education="deleteFromEducation"
+        @delete-from-experiences="deleteFromExperiences"
+        @add-profession="editarProfissao"
+        @add-SocialLink="this.showModal('socialLink')"
+      />
     </div>
     <div class="footer">
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-down.png" alt="menu up"/>
@@ -182,6 +199,7 @@
           @now-template1="change_template(1)"
           @now-template2="change_template(2)"
           @now-template3="change_template(3)"
+          @now-template4="change_template(4)"
           @change-main-color="changeMainColor"
           @change-font-color="changeFontColor"
           @update-user="updateUser"
@@ -220,6 +238,7 @@ import navBar from "./components/navBar.vue";
 import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
+import Template4 from "./templates/Template4.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -314,6 +333,7 @@ export default {
     Template1,
     Template2,
     Template3,
+    Template4,
     Tips,
     login,
     diagramsModal,
@@ -323,6 +343,23 @@ export default {
     AlertComponent
   },
   methods: {
+    deleteFromExperiences(id) {
+        const index = this.user?.userExperiences?.findIndex(item => item.id === id);
+        if (index > -1) {
+            this.user.userExperiences.splice(index, 1);
+            this.updateUser(this.user, true);
+        } else {
+            console.error("ID not found");
+        }
+    },
+    deleteFromEducation(index) {
+        if (index > -1 && index < this.user.grade.length) {
+            this.user.grade.splice(index, 1);
+            this.updateUser(this.user, true);
+        } else {
+            console.error("Índice inválido");
+        }
+    },
     async resetPassword() {
       let response = null;
       try {
@@ -524,13 +561,13 @@ export default {
           this.logedIn = true;
           localStorageService.setAccActived(email[0] ? email[0] : email, this.user._id);
         }else if (responseUser == null) {
-          console.log('response app', responseUser)
           this.alertTitle = "Erro ao fazer login";
           this.alertMessage = "Email ou senha inválidos";
           this.showAlertErrorToTrue();
           this.inlogin = false;
           setTimeout(() => {
             this.closeSimpleAlert();
+            this.inlogin = true;
           }, 2000);
         }
       }
@@ -1253,10 +1290,11 @@ export default {
 }
 
 .main.template {
-  width: 70%;
+  width: 100%;
   height: 100%;
   margin-top: 20px;
   border-radius: 10px;
+  padding: 0px;
 }
 
 .multi-menu-class:hover {
@@ -1272,6 +1310,12 @@ export default {
   -webkit-transition-duration: 450ms;
   transition-duration: 450ms;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1900px) and (min-width: 1000px) {
+  .multi-menu-class {
+    transform: none;
+  }
 }
 
 @media screen and (max-width: 1000px) {

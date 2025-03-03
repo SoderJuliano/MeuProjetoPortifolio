@@ -1,4 +1,3 @@
-
 input{
     padding: 5px;
 }
@@ -30,6 +29,7 @@ img {
 .custom-container.template {
     background-color: white;
     border-radius: 10px;
+    width: 100%;
 }
 
 /* deixar igual os dois lados dos containers t2 */
@@ -59,6 +59,48 @@ img {
         margin-left: 0px !important;
     }
 
+    .main {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin-top: 50px;
+        padding: 0;
+    }
+
+    #template {
+        width: 100% !important;
+        min-width: unset !important;
+        padding: 0;
+        margin: 0;
+    }
+
+    .template {
+        width: 100% !important;
+        min-width: unset !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .custom-container.template {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .main-left, .right {
+        display: none;
+    }
+
+    .footer {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100% !important;
+        height: 40px;
+        background-color: #FFF;
+        z-index: 11;
+    }
 }
 
 @media (min-width: 1000px) {
@@ -88,6 +130,11 @@ img {
     /* .container tem um padding que fica estranho no mobile, isso corrige */
     .contact-template2 {
         margin-left: -10px !important;
+    }
+
+    .template {
+        width: 100vw !important;
+        overflow-x: hidden;
     }
 }
 
@@ -487,7 +534,7 @@ button {
     margin-left: 10px;
 }
 /* Medidas que ainda não eram cobertas  */
-@media (max-width: 1300px) and (min-width: 1000px) {
+@media (max-width: 1900px) and (min-width: 1000px) {
     .right {
         display: none;
     }
@@ -532,8 +579,11 @@ button {
     }
     .navbar-login {
         position: relative !important;
-        height: 60px !important;
-        top: -15px !important;
+        height: 90px !important;
+        padding: 0 !important;
+        margin-top: 0 !important;
+        margin-left: 10px !important;
+        /* top: -15px !important; */
         min-width: 250px !important;
     }
 }
@@ -544,6 +594,23 @@ button {
     .balao {
         margin-top: -230px !important;
         left: 35% !important;
+    }
+
+    .navbar {
+        width: 100% !important;
+    }
+    
+    .navbar-login {
+        margin-top: 95px !important;
+        padding: 0% !important;   
+        background-color: transparent !important; 
+    }
+
+    .midle-options {
+        && button {
+            margin-top: 30px !important;
+            height: 60px;
+        }
     }
 }
 
@@ -718,4 +785,202 @@ top: 0 !important;
 
 .print .footer {
     display: none;
+}
+
+/* Estilos para o botão de login */
+.navbar-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  margin-top: 20px; /* Afasta do topo */
+}
+
+.navbar-login button {
+  background-color: #3498db;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bolder;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto !important; /* Sobrescreve o width 100% em media queries */
+  margin: 0 !important; /* Remove margins indesejadas */
+}
+
+.navbar-login button:hover {
+  background-color: #2980b9;
+}
+
+.navbar-login button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+/* Ajuste específico para telas médias */
+@media (max-width: 1000px) and (min-width: 660px) {
+  .navbar-login {
+    margin-top: 20px !important; /* Sobrescreve o margin-top anterior */
+    padding: 10px !important;
+    background-color: transparent;
+  }
+}
+
+/* Ajustes para o summary */
+.summary {
+  position: relative;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.summary p {
+  margin: 0;
+  white-space: pre-wrap; /* Preserva quebras de linha e espaços */
+  line-height: 1.5;
+  text-align: justify;
+}
+
+/* Ajuste para o container pai */
+.template-data {
+  position: relative;
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  background-color: rgba(255, 240, 240, 0.41);
+  border-radius: 5px;
+}
+
+/* Ajuste para telas menores */
+@media screen and (max-width: 768px) {
+  .summary {
+    padding: 5px;
+  }
+  
+  .summary p {
+    font-size: 0.9em;
+  }
+  
+  .template-data {
+    padding: 10px;
+  }
+}
+
+/* Ajuste para centralização do template */
+.main {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.main-left {
+  width: 25%;
+}
+
+#template {
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  min-width: 1000px;
+}
+
+.template {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.right {
+  width: 25%;
+}
+
+/* Ajustes específicos apenas para template2 */
+.template2-container {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.template2-container .row {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.template2-container .resumo,
+.template2-container .competencias,
+.template2-container .contato,
+.template2-container .social {
+  padding: 10px 0;
+  width: 100%;
+}
+
+/* Ajuste para zoom out */
+@media screen and (min-width: 1001px) {
+  .main {
+    padding: 0 20px;
+  }
+
+  #template {
+    flex: 0 0 auto;
+  }
+}
+
+/* Ajuste para telas muito grandes */
+@media screen and (min-width: 2000px) {
+  .main {
+    max-width: 2400px;
+    margin: 0 auto;
+  }
+}
+
+/* Remove os estilos específicos de template */
+.template {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Remove os media queries adicionados */
+@media screen and (min-width: 1001px) {
+  .template {
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  .main {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-around;
+  }
+  .main-left {
+    width: 25%;
+    height: 100vh;
+    padding: 1px;
+    margin-right: 5px;
+  }
+  .right {
+    width: 25%;
+    margin: 0 auto;
+  }
+}
+@media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .print {
+      width: 100%;
+      height: 100%;
+      page-break-inside: avoid; /* Evita quebras de página dentro do conteúdo */
+    }
+    h1, h2, h3 {
+      page-break-after: avoid; /* Evita quebras de página após títulos */
+    }
+    p {
+      page-break-inside: avoid; /* Evita quebras de página dentro de parágrafos */
+    }
 }

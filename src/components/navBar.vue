@@ -143,6 +143,7 @@ import * as localStorageService from './services/LocalStorageService.js';
 import authService from "../services/authService.js";
 import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
+import { PDFDocument, rgb } from 'pdf-lib';
 
 export default {
     name: 'nav-bar',
@@ -587,132 +588,200 @@ export default {
         this.lng = lng;
       },
 
-      //! Share PDF init
       async generateAndSharePdf() {
         try {
-          // Obtém a referência ao template
           const curriculo = document.getElementById("template");
 
           if (!curriculo) {
             throw new Error("Referência ao currículo não encontrada.");
           }
 
-            // Adiciona a classe de impressão ao elemento
-            curriculo.classList.add('print');
-
-          // Aguardar até que a renderização do Vue seja concluída
+          curriculo.classList.add('print');
           await this.$nextTick();
 
-          // Converte o currículo em um canvas usando html2canvas
-          const canvas = await html2canvas(curriculo, {
-            logging: false,
-            useCORS: true,
-            scale: 2, // Ajuste o scale para melhor qualidade
-            width: curriculo.scrollWidth,  // Captura toda a largura do conteúdo
-            height: curriculo.scrollHeight, // Captura toda a altura do conteúdo
-            windowWidth: curriculo.scrollWidth,  // Simula a largura da janela para capturar todo o conteúdo
-            windowHeight: curriculo.scrollHeight, // Simula a altura da janela
-          });
+          // Gera o PDF usando o novo método
+          const pdfBlob = await this.createPdfFromHtml(curriculo);
 
-          // Obtém o conteúdo do canvas como uma imagem em formato JPEG
-          const imgData = canvas.toDataURL("image/jpeg");
-
-          // Cria o PDF usando a imagem capturada
-          const pdfBlob = await this.createPdfFromImage(imgData);
-
-          this.pdf = pdfBlob;
-
-          // Verifica se o dispositivo suporta compartilhamento
           if (navigator.share) {
             const file = new File([pdfBlob], "curriculo.pdf", { type: "application/pdf" });
-
             await navigator.share({
               title: "Compartilhar Currículo",
               text: "Veja o meu currículo!",
               files: [file],
             });
-
             console.log("Compartilhamento bem-sucedido");
           } else {
-            console.warn("Compartilhamento não suportado neste dispositivo. Abrindo cliente de e-mail...");
-            this.confirmShareText = this.language.includes("en") ? "Can not provide share between apps, but i can open your email and download the file as pdf." :
-            "Sem suporte para compartilhar via apps, mas posso abrir o cliente d eemail e baixar o cv para um pdf."
-            this.confirmShareTitle = this.language.includes("en") ? "Confirm this action?" : "Confirma essas ação?"
+            console.warn("Compartilhamento não suportado. Abrindo cliente de e-mail...");
+            this.confirmShareText = this.language.includes("en") 
+              ? "Can not provide share between apps, but I can open your email and download the file as pdf." 
+              : "Sem suporte para compartilhar via apps, mas posso abrir o cliente de email e baixar o CV como PDF.";
+            this.confirmShareTitle = this.language.includes("en") 
+              ? "Confirm this action?" 
+              : "Confirma essa ação?";
             this.showShareConfirm = true;
-            return;
           }
         } catch (error) {
           console.error("Erro ao gerar o PDF:", error);
         }
       },
 
-      htmlToCanvas(element) {
-        return new Promise((resolve) => {
-          const canvas = document.createElement("canvas");
-          const context = canvas.getContext("2d");
-
-          // Define o tamanho do canvas com base no elemento
-          const rect = element.getBoundingClientRect();
-          canvas.width = rect.width;
-          canvas.height = rect.height;
-
-          // Renderiza o conteúdo como imagem simples
-          context.fillStyle = "#fff"; // Fundo branco
-          context.fillRect(0, 0, canvas.width, canvas.height);
-          context.font = "16px Arial"; // Estilo de texto básico
-          context.fillStyle = "#000"; // Cor do texto
-
-          Array.from(element.children).forEach((child, index) => {
-            context.fillText(child.innerText, 10, (index + 1) * 20);
-          });
-
-          resolve(canvas);
+      async createPdfFromHtml(element) {
+        // Captura o conteúdo HTML como uma imagem usando html2canvas
+        const canvas = await html2canvas(element, {
+          scale: 2, // Aumenta a qualidade da imagem
+          useCORS: true, // Permite carregar recursos externos (se necessário)
+          logging: false, // Desativa logs para melhor desempenho
         });
-      },
 
-      async createPdfFromImage(imgData) {
-        return new Promise((resolve) => {
-          const pdf = new jsPDF('p', 'pt', 'a4');
-          const imgProps = pdf.getImageProperties(imgData);
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = pdf.internal.pageSize.getHeight();
-          const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        // Converte o canvas para uma imagem (formato JPEG ou PNG)
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
 
-          let heightLeft = imgHeight;
-          let position = 0;
+        // Cria um novo documento PDF
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.addPage([canvas.width, canvas.height]); // Tamanho da página baseado no canvas
 
-          pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
-          heightLeft -= pdfHeight;
-
-          while (heightLeft > 0) {
-            position -= pdfHeight; // Subtrair para mover a posição para cima
-            pdf.addPage();
-            pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
-            heightLeft -= pdfHeight;
-          }
-
-          resolve(pdf.output('blob'));
+        // Adiciona a imagem ao PDF
+        const img = await pdfDoc.embedJpg(imgData); // Use embedPng se estiver usando PNG
+        page.drawImage(img, {
+          x: 0,
+          y: 0,
+          width: canvas.width,
+          height: canvas.height,
         });
-      },
-      downloadPdf(pdfBlob) {
-        const date = new Date();
-        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
-          .toString()
-          .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-        const formattedTime = `${date.getHours().toString().padStart(2, "0")}-${date.getMinutes()
-          .toString()
-          .padStart(2, "0")}`;
-        const fileName = `cv-${formattedDate}-${formattedTime}.pdf`;
 
-        const url = URL.createObjectURL(pdfBlob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        // Salva o PDF como um array de bytes
+        const pdfBytes = await pdfDoc.save();
+
+        // Retorna o PDF como um Blob
+        return new Blob([pdfBytes], { type: 'application/pdf' });
       },
+
+      //! Share PDF init
+      // async generateAndSharePdf() {
+      //   try {
+      //     // Obtém a referência ao template
+      //     const curriculo = document.getElementById("template");
+
+      //     if (!curriculo) {
+      //       throw new Error("Referência ao currículo não encontrada.");
+      //     }
+
+      //       // Adiciona a classe de impressão ao elemento
+      //       curriculo.classList.add('print');
+
+      //     // Aguardar até que a renderização do Vue seja concluída
+      //     await this.$nextTick();
+
+      //     // Converte o currículo em um canvas usando html2canvas
+      //     const canvas = await html2canvas(curriculo, {
+      //       logging: false,
+      //       useCORS: true,
+      //       scale: 2, // Ajuste o scale para melhor qualidade
+      //       width: curriculo.scrollWidth,  // Captura toda a largura do conteúdo
+      //       height: curriculo.scrollHeight, // Captura toda a altura do conteúdo
+      //       windowWidth: curriculo.scrollWidth,  // Simula a largura da janela para capturar todo o conteúdo
+      //       windowHeight: curriculo.scrollHeight, // Simula a altura da janela
+      //     });
+
+      //     // Obtém o conteúdo do canvas como uma imagem em formato JPEG
+      //     const imgData = canvas.toDataURL("image/jpeg");
+
+      //     // Cria o PDF usando a imagem capturada
+      //     const pdfBlob = await this.createPdfFromImage(imgData);
+
+      //     this.pdf = pdfBlob;
+
+      //     // Verifica se o dispositivo suporta compartilhamento
+      //     if (navigator.share) {
+      //       const file = new File([pdfBlob], "curriculo.pdf", { type: "application/pdf" });
+
+      //       await navigator.share({
+      //         title: "Compartilhar Currículo",
+      //         text: "Veja o meu currículo!",
+      //         files: [file],
+      //       });
+
+      //       console.log("Compartilhamento bem-sucedido");
+      //     } else {
+      //       console.warn("Compartilhamento não suportado neste dispositivo. Abrindo cliente de e-mail...");
+      //       this.confirmShareText = this.language.includes("en") ? "Can not provide share between apps, but i can open your email and download the file as pdf." :
+      //       "Sem suporte para compartilhar via apps, mas posso abrir o cliente d eemail e baixar o cv para um pdf."
+      //       this.confirmShareTitle = this.language.includes("en") ? "Confirm this action?" : "Confirma essas ação?"
+      //       this.showShareConfirm = true;
+      //       return;
+      //     }
+      //   } catch (error) {
+      //     console.error("Erro ao gerar o PDF:", error);
+      //   }
+      // },
+
+      // htmlToCanvas(element) {
+      //   return new Promise((resolve) => {
+      //     const canvas = document.createElement("canvas");
+      //     const context = canvas.getContext("2d");
+
+      //     // Define o tamanho do canvas com base no elemento
+      //     const rect = element.getBoundingClientRect();
+      //     canvas.width = rect.width;
+      //     canvas.height = rect.height;
+
+      //     // Renderiza o conteúdo como imagem simples
+      //     context.fillStyle = "#fff"; // Fundo branco
+      //     context.fillRect(0, 0, canvas.width, canvas.height);
+      //     context.font = "16px Arial"; // Estilo de texto básico
+      //     context.fillStyle = "#000"; // Cor do texto
+
+      //     Array.from(element.children).forEach((child, index) => {
+      //       context.fillText(child.innerText, 10, (index + 1) * 20);
+      //     });
+
+      //     resolve(canvas);
+      //   });
+      // },
+
+      // async createPdfFromImage(imgData) {
+      //   return new Promise((resolve) => {
+      //     const pdf = new jsPDF('p', 'pt', 'a4');
+      //     const imgProps = pdf.getImageProperties(imgData);
+      //     const pdfWidth = pdf.internal.pageSize.getWidth();
+      //     const pdfHeight = pdf.internal.pageSize.getHeight();
+      //     const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      //     let heightLeft = imgHeight;
+      //     let position = 0;
+
+      //     pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+      //     heightLeft -= pdfHeight;
+
+      //     while (heightLeft > 0) {
+      //       position -= pdfHeight; // Subtrair para mover a posição para cima
+      //       pdf.addPage();
+      //       pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, imgHeight);
+      //       heightLeft -= pdfHeight;
+      //     }
+
+      //     resolve(pdf.output('blob'));
+      //   });
+      // },
+      // downloadPdf(pdfBlob) {
+      //   const date = new Date();
+      //   const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1)
+      //     .toString()
+      //     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+      //   const formattedTime = `${date.getHours().toString().padStart(2, "0")}-${date.getMinutes()
+      //     .toString()
+      //     .padStart(2, "0")}`;
+      //   const fileName = `cv-${formattedDate}-${formattedTime}.pdf`;
+
+      //   const url = URL.createObjectURL(pdfBlob);
+      //   const a = document.createElement("a");
+      //   a.href = url;
+      //   a.download = fileName;
+      //   document.body.appendChild(a);
+      //   a.click();
+      //   document.body.removeChild(a);
+      //   URL.revokeObjectURL(url);
+      // },
 
       openEmailClient(fileName) {
         const email = "seuemail@exemplo.com";
@@ -905,7 +974,6 @@ li img {
 }
 
 .navbar-login {
-  justify-content: right;
   position: absolute;
   right: 0;
   align-self: right;

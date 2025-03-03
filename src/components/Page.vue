@@ -171,7 +171,6 @@ export default {
     min-height: 850px;
     height: 100%;
     width: 60%;
-    min-width: 600px;
     padding-left: 30px;
     /* box-shadow: 0 0 50px #ccc; */
   }
