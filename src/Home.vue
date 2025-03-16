@@ -1131,8 +1131,8 @@ export default {
       const icons = {
           "id": Math.random(),
           "title": lang.includes("en") ? "Icons" : "Icones",
-          "content": lang.includes("en") ? "You can click over some icons to see other options."
-          : "Você pode clicar sobre alguns icons para ver outras opções.",
+          "content": lang.includes("en") ? "You can click over some icons to see other options in Style 1 and 2 cvs."
+          : "Você pode clicar sobre alguns icons para ver outras opções nos cvs style 1 e 2.",
           "language": lang,
           "read": false,
           "local": true
@@ -1203,11 +1203,25 @@ export default {
           "title": lng.includes("en") ? "Tip on login" : "Dica ao logar-se",
           "content": lng.includes("en")
               ? "If you have unsaved changes, login will overwrite them with the last saved state."
-              : "Se você dados locais não salvos, ao logar-se eles serão sobreescritos pelo último save.",
+              : "Se você têm dados locais não salvos, ao logar-se eles serão sobreescritos pelo último save.",
           "language": this.lang,
           "read": false,
           "local": true
         }
+
+        setTimeout(() => {
+          this.newTipMessege = {
+            "id": Math.random(),
+            "title": lng.includes("en") ? "Tip on save your data" : "Dica ao salvar dados",
+            "content": lng.includes("en")
+                ? "All local changes will override server changes if you click Save remotly button."
+                : "Todas as alterações locais vão sobrescrever os dados do servidor quando clicar em Salvar na nuvem.",
+            "language": this.lang,
+            "read": false,
+            "local": true
+          }
+        }, 500);
+        
       } else if(isUserIdValid && isConnected && authenticated) {
         this.logedIn = true;
         this.inOnboarding = false;
