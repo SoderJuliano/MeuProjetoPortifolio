@@ -128,6 +128,7 @@
   <!-- Confirm AI -->
    <!-- TODO -->
   <SimpleAlerts
+    class="AIAlert"
     :title="confirmAITitle"
     :message="confirmAIText"
     :show="showConfirmAI"
@@ -136,8 +137,8 @@
     :custom="true"
     @close="closeSimpleAlert"
     @confirm="ConfirmGenerateCV"
-    :confirmText="ingles ? 'Yes' : 'Sim'"
-    :confirmmCancelText="ingles ? 'Cancel' : 'Cancelar'"
+    :confirmText="this.language.includes('en') ? 'Yes' : 'Sim'"
+    :confirmmCancelText="this.language.includes('en') ? 'Cancel' : 'Cancelar'"
   />
   <GlobalModal
       ref="globalModal"
@@ -177,10 +178,9 @@ export default {
     },
     data() {
       return{
-        ingles: this.language.includes("en"),
-        confirmAITitle: this.ingles ? "Generate data with AI" : "Gerar dados com uma IA",
-        confirmAIText: this.ingles ? "Generate for free now!" : "Gere de graça agora!",
-        inputProfessionConfirm: this.ingles ? "For which position do you want to generate a resume?" : "Para qual posição você deseja gerar um currículo?",
+        confirmAITitle: this.language.includes("en") ? "Generate data with AI" : "Gerar dados com uma IA",
+        confirmAIText: this.language.includes("en") ? "Generate for free now!" : "Gere de graça agora!",
+        inputProfessionConfirm: this.language.includes("en") ? "For which position do you want to generate a resume?" : "Para qual cargo você deseja gerar um currículo?",
         showConfirmAI: false,
         pdf: null,
         showShareConfirm: false,
@@ -247,7 +247,65 @@ export default {
         // chamar backend
       },
       generateFullCV() {
+        if(this.user.profession == null || this.user.profession == "") {
+          this.confirmAIText = this.inputProfessionConfirm;
+
+          $('.confirm-buttons').hide();
+    
+          $(document).ready(function() {
+
+            $('.input-class').remove();
+            $('.ok-button').remove();
+
+              var inputElement = $('<input>', {
+                  type: 'text',
+                  placeholder: this.ingles ? 'Input your desired role' : 'Coloque seu cargo',
+                  class: 'input-class',
+                  css: {
+                    padding: '10px',
+                    borderRadius: '10px',
+                    marginTop: '10px',
+                    border: 'solid black 1px'
+                  }
+              });
+
+              var okButton = $('<button>', {
+                  text: this.ingles? 'Set!' : 'Definir',
+                  class: 'ok-button',
+                  css: {
+                    minWidth: '40px',
+                    width: '100px',
+                    padding: '5px',
+                    marginLeft: '5px'
+                  }
+              });
+
+              if ($('.AIAlert .input-class').length === 0)$('.AIAlert .inner-alert p').append(inputElement);
+              if ($('.AIAlert .ok-button').length === 0) $('.AIAlert .input-class').after(okButton);
+
+
+
+              okButton.on('click', function() {
+                // Mostra a div confirm-buttons
+                $('.confirm-buttons').show();
+
+                // Obtém o valor do campo de entrada com a classe .input-class
+                var inputValue = $('.AIAlert .input-class').val();
+
+                const titleInnertText = $('.AIAlert .inner-alert h3').text();
+                
+                if (titleInnertText.includes('Generate')) {
+                    $('.inner-alert p').text("Generate for free now a " + inputValue + " resume!");
+                } else {
+                    $('.inner-alert p').text("Gere de graça agora um currículo para " + inputValue + "!");
+                } 
+                $('.confirm-buttons').show();
+            });
+          });
+        }
+        
         this.showConfirmAI = true;
+
       },
       logoff() {
         authService.logoff();
