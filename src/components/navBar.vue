@@ -178,6 +178,7 @@ export default {
     },
     data() {
       return{
+        userProfessionAI: null,
         confirmAITitle: this.language.includes("en") ? "Generate data with AI" : "Gerar dados com uma IA",
         confirmAIText: this.language.includes("en") ? "Generate for free now!" : "Gere de graça agora!",
         inputProfessionConfirm: this.language.includes("en") ? "For which position do you want to generate a resume?" : "Para qual cargo você deseja gerar um currículo?",
@@ -245,10 +246,19 @@ export default {
       ConfirmGenerateCV(confirm) {
         if(!confirm) this.showConfirmAI = false;
         // chamar backend
+
+        if(this.user.profession == null || this.user.profession == "") {
+          alert(sessionStorage.getItem('iaProfession'));
+        }  
+
+        this.showConfirmAI = false;      
       },
       generateFullCV() {
         if(this.user.profession == null || this.user.profession == "") {
           this.confirmAIText = this.inputProfessionConfirm;
+
+          const titleInnertText = $('.AIAlert .inner-alert h3').text();
+          const english = titleInnertText.includes('Generate');
 
           $('.confirm-buttons').hide();
     
@@ -259,7 +269,7 @@ export default {
 
               var inputElement = $('<input>', {
                   type: 'text',
-                  placeholder: this.ingles ? 'Input your desired role' : 'Coloque seu cargo',
+                  placeholder: english ? 'Input your desired role' : 'Coloque seu cargo',
                   class: 'input-class',
                   css: {
                     padding: '10px',
@@ -270,7 +280,7 @@ export default {
               });
 
               var okButton = $('<button>', {
-                  text: this.ingles? 'Set!' : 'Definir',
+                  text: english ? 'Set!' : 'Definir',
                   class: 'ok-button',
                   css: {
                     minWidth: '40px',
@@ -292,9 +302,9 @@ export default {
                 // Obtém o valor do campo de entrada com a classe .input-class
                 var inputValue = $('.AIAlert .input-class').val();
 
-                const titleInnertText = $('.AIAlert .inner-alert h3').text();
+                sessionStorage.setItem('iaProfession', inputValue);
                 
-                if (titleInnertText.includes('Generate')) {
+                if (english) {
                     $('.inner-alert p').text("Generate for free now a " + inputValue + " resume!");
                 } else {
                     $('.inner-alert p').text("Gere de graça agora um currículo para " + inputValue + "!");
