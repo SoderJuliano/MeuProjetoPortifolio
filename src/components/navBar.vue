@@ -245,13 +245,25 @@ export default {
     methods:{
       ConfirmGenerateCV(confirm) {
         if(!confirm) this.showConfirmAI = false;
-        // chamar backend
+
+        $('.confirm-buttons button').hide();
+
+        this.language.includes("en") ? $('.confirm-buttons').text("🤖 Generating...") : $('.confirm-buttons').text("🤖 Criando...");
+
+        let iaProfession = null;
 
         if(this.user.profession == null || this.user.profession == "") {
           alert(sessionStorage.getItem('iaProfession'));
-        }  
+          aiProfession = sessionStorage("iaProfession");
+        }else {
+          iaProfession = this.user.profession;
+        }
 
-        this.showConfirmAI = false;      
+        
+
+        // this.showConfirmAI = false; 
+        // Restore when finished
+        $('.confirm-buttons button').show();
       },
       generateFullCV() {
         if(this.user.profession == null || this.user.profession == "") {
@@ -294,7 +306,6 @@ export default {
               if ($('.AIAlert .ok-button').length === 0) $('.AIAlert .input-class').after(okButton);
 
 
-
               okButton.on('click', function() {
                 // Mostra a div confirm-buttons
                 $('.confirm-buttons').show();
@@ -310,12 +321,10 @@ export default {
                     $('.inner-alert p').text("Gere de graça agora um currículo para " + inputValue + "!");
                 } 
                 $('.confirm-buttons').show();
-            });
+              });
           });
         }
-        
         this.showConfirmAI = true;
-
       },
       logoff() {
         authService.logoff();

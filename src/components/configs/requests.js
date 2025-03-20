@@ -347,3 +347,24 @@ export async function getUser(id) {
     return response;
   });
 }
+
+export async function generateFullCv(data) {
+  // Make global const header later
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+
+  const ip = getIp();
+
+  const body = {
+    newPrompt: data.profession,
+    ip: ip,
+    email: data.email,
+    language: data.language
+  }
+
+  return await axios.post(``)
+}
