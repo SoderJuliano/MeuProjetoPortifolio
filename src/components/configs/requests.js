@@ -340,7 +340,7 @@ export async function getUser(id) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'true', // Adicionando o cabeçalho customizado
+    'ngrok-skip-browser-warning': 'true',
   };
 
   return await axios.get(`${apiUrl}/user/${id}`, { headers }).then((response) => {
@@ -356,7 +356,6 @@ export async function generateFullCv(data) {
     'ngrok-skip-browser-warning': 'true',
   };
 
-
   const ip = getIp();
 
   const body = {
@@ -366,5 +365,22 @@ export async function generateFullCv(data) {
     language: data.language
   }
 
-  return await axios.post(``)
+  const endpoint = `${apiUrl}/generate-cv`;
+
+  return await axios.post(endpoint, body, headers).then((response) => {
+    console.log('generateFullCv', response);
+    return response;
+  })
+}
+
+function getIp() {
+  fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    console.log('O IP do usuário é:', ip);
+    return data.ip;
+  })
+  .catch(error => {
+    console.error('Erro ao obter o IP:', error);
+  });
 }
