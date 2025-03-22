@@ -362,7 +362,7 @@ export async function generateFullCv(data) {
     newPrompt: data.profession,
     ip: ip,
     email: data.email,
-    language: data.language
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
   }
 
   const endpoint = `${apiUrl}/generate-cv`;

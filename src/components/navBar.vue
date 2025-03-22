@@ -166,6 +166,7 @@ import authService from "../services/authService.js";
 import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 import { PDFDocument, rgb } from 'pdf-lib';
+import { generateFullCv } from '../components/configs/requests.js';
 
 export default {
     name: 'nav-bar',
@@ -178,6 +179,7 @@ export default {
     },
     data() {
       return{
+        iaProfession: null,
         userProfessionAI: null,
         confirmAITitle: this.language.includes("en") ? "Generate data with AI" : "Gerar dados com uma IA",
         confirmAIText: this.language.includes("en") ? "Generate for free now!" : "Gere de graça agora!",
@@ -250,15 +252,21 @@ export default {
 
         this.language.includes("en") ? $('.confirm-buttons').text("🤖 Generating...") : $('.confirm-buttons').text("🤖 Criando...");
 
-        let iaProfession = null;
-
         if(this.user.profession == null || this.user.profession == "") {
           alert(sessionStorage.getItem('iaProfession'));
-          aiProfession = sessionStorage("iaProfession");
+          this.aiProfession = sessionStorage("iaProfession");
         }else {
-          iaProfession = this.user.profession;
+          this.iaProfession = this.user.profession;
         }
 
+        const body = {
+          profession: this.iaProfession,
+          email: this.user?.contact?.email[0],
+          language: this.language
+        }
+        const response = generateFullCv(body);
+        console.log(response)
+        localStorage("tempUser", response)
         
 
         // this.showConfirmAI = false; 

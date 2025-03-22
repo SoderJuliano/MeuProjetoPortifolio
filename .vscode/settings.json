@@ -23,5 +23,11 @@
 
     // Adicione as configurações de fonte aqui
     "editor.fontFamily": "'Cascadia Code NF', 'Cascadia Code', 'Courier New', monospace",
-    "editor.fontLigatures": true
+    "editor.fontLigatures": true,
+    "editor.selectionClipboard": false,
+    "editor.quickSuggestions": {
+        "comments": "off",
+        "strings": "off",
+        "other": "off"
+    }
 }
