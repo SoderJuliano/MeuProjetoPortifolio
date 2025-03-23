@@ -20,9 +20,9 @@ export async function getLastEnvUrl() {
 
       // Update DRAGONITE_ENV if content exists in the last notification
       if (lastNotification && lastNotification.content) {
-        setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
+        //setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
         console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
-        apiUrl = lastNotification.content;
+        //apiUrl = lastNotification.content;
       } else {
         console.error('No valid content found in the last notification.');
       }
@@ -356,14 +356,17 @@ export async function generateFullCv(data) {
     'ngrok-skip-browser-warning': 'true',
   };
 
-  const ip = getIp();
+  const ip = await getIp();
 
   const body = {
     newPrompt: data.profession,
     ip: ip,
     email: data.email,
+    agent: true,
     language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
   }
+
+  console.log(body)
 
   const endpoint = `${apiUrl}/generate-cv`;
 
@@ -374,13 +377,14 @@ export async function generateFullCv(data) {
 }
 
 function getIp() {
-  fetch('https://api.ipify.org?format=json')
-  .then(response => response.json())
-  .then(data => {
-    console.log('O IP do usuário é:', ip);
-    return data.ip;
-  })
-  .catch(error => {
-    console.error('Erro ao obter o IP:', error);
-  });
+  return fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      console.log('O IP do usuário é:', data.ip);
+      return data.ip;
+    })
+    .catch(error => {
+      console.error('Erro ao obter o IP:', error);
+      return null;
+    });
 }

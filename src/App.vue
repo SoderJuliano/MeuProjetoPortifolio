@@ -44,7 +44,11 @@ export default {
             this.newPassword = uri.split('newPasswordToken=')[1];
             this.activeComp = PasswordReset;
             this.componentProps = { newPassword: this.newPassword };
-        } else {
+        } 
+        else if (uri.includes("tempUser")) {
+            this.activeComp = "TempUser";
+        }
+        else {
             this.activeComp = 'NotFound';
         }
     }

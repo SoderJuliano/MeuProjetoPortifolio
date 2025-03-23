@@ -179,8 +179,7 @@ export default {
     },
     data() {
       return{
-        iaProfession: null,
-        userProfessionAI: null,
+        backupUser: null,
         confirmAITitle: this.language.includes("en") ? "Generate data with AI" : "Gerar dados com uma IA",
         confirmAIText: this.language.includes("en") ? "Generate for free now!" : "Gere de graça agora!",
         inputProfessionConfirm: this.language.includes("en") ? "For which position do you want to generate a resume?" : "Para qual cargo você deseja gerar um currículo?",
@@ -245,33 +244,31 @@ export default {
       'reset-password'
     ],
     methods:{
-      ConfirmGenerateCV(confirm) {
+      async ConfirmGenerateCV(confirm) {
         if(!confirm) this.showConfirmAI = false;
 
         $('.confirm-buttons button').hide();
 
+        let iaProfession = this.user.profession;
+
         this.language.includes("en") ? $('.confirm-buttons').text("🤖 Generating...") : $('.confirm-buttons').text("🤖 Criando...");
 
-        if(this.user.profession == null || this.user.profession == "") {
-          alert(sessionStorage.getItem('iaProfession'));
-          this.aiProfession = sessionStorage("iaProfession");
-        }else {
-          this.iaProfession = this.user.profession;
-        }
+        if(!iaProfession) iaProfession = sessionStorage.getItem("iaProfession");
 
+        alert(iaProfession)
         const body = {
-          profession: this.iaProfession,
+          profession: iaProfession,
           email: this.user?.contact?.email[0],
           language: this.language
         }
-        const response = generateFullCv(body);
-        console.log(response)
-        localStorage("tempUser", response)
-        
+        const response = await generateFullCv(body);
+        console.log(response.data)
+        localStorage.setItem("backupUser", JSON.stringify(this.user))
+        localStorage.setItem("tempUser", JSON.stringify(response.data))
 
-        // this.showConfirmAI = false; 
-        // Restore when finished
-        $('.confirm-buttons button').show();
+        this.showConfirmAI = false; 
+        
+        window.location.href = "/tempUser";
       },
       generateFullCV() {
         if(this.user.profession == null || this.user.profession == "") {
