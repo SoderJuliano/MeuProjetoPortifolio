@@ -279,6 +279,10 @@ const handleKeydown = (event) => {
     margin-left: 30%;
 }
 
+.list {
+    margin-bottom: 15px;
+}
+
 span {
     cursor: pointer;
 }
