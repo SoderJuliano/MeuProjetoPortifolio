@@ -6,13 +6,15 @@ import Home from './Home.vue';
 import PasswordReset from './components/pages/PasswordReset.vue';
 import NotFound from './components/pages/NotFound.vue';
 import * as funcs from "./components/configs/requests.js";
+import TempUser from "./TempUser.vue";
 
 export default {
     name: "App",
     components: {
         Home,
         PasswordReset,
-        NotFound
+        NotFound,
+        TempUser
     },
     data() {
         return {
