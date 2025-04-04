@@ -10,18 +10,25 @@
                     </div>
 
                     <div class="modal-internal-content">
+                        <!-- Não lembro porque a 3 anos atrás fiz assim, mas vai ficar assim agora -->
                         <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                         <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
+                        <div class="aboutyou-ia">
+                            <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
+                            <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
+                            <div class="do-action" v-if="isEnglish">Go!</div>
+                            <div class="do-action" v-else>Melhorar!</div>
+                        </div>
                     </div>
 
                     <span class="balao" v-if="mainTitle == 'Habilidade' && title == 'Habilidade' && language == 'pt-br'">
                         Separe as habilidades por vírgula.
                     </span>
 
-                    <br><br>
+                    <br v-if="!title=='Write about you'"><br>
                     <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
                         <p style="margin-right: 10px" >{{title2}}</p>
                         <input @keydown.enter="pressedEnter()" id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
@@ -151,7 +158,8 @@ export default {
             simplifiedDate: true,
             mainTitleCaps: this.mainTitle.toUpperCase(),
             pressed: false,
-            isPageLink: false
+            isPageLink: false,
+            isEnglish: true,
         }
     },
     components: {
@@ -438,6 +446,8 @@ export default {
         }
     },
     mounted() {
+        this.isEnglish = this.language.includes("en") ? true : false;
+
         this.userData = new UserModel();
         this.userData = this.userData.constructorObject(this.user);
 
@@ -486,6 +496,35 @@ button {
 
 <style scoped>
 
+.aboutyou-ia {
+    display: flex;
+    position: relative;
+    margin: 10px;
+    justify-content: space-around;
+
+    && .do-action {
+            border: solid 1px black;
+            padding: 10px;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-flex;       /* Usa flexbox para melhor centralização */
+            justify-content: center;    /* Centraliza horizontalmente */
+            align-items: center;        /* Centraliza verticalmente */
+            width: 50px;               /* Largura fixa para formar um círculo perfeito */
+            height: 50px;              /* Altura igual à largura */
+            line-height: 1;            /* Remove espaçamento extra do texto */
+            font-size: 16px;           /* Tamanho adequado para o texto */
+            cursor: pointer;           /* Muda cursor para indicar ação */
+        }
+
+            /* Opcional: efeitos de hover */
+            .do-action:hover {
+                background-color: #f0f0f0;
+                transform: scale(1.05);
+                transition: all 0.2s ease;
+            }
+}
+
 .adress-form {
     display: flex;
     flex-wrap: wrap;
@@ -500,11 +539,11 @@ button {
     margin-bottom: 10px;
 }
 
-.save-bnt {
+/* .save-bnt {
     background-color: white;
     border-radius: 20px;
     font-size: 16px;
-}
+} */
 .main-modal-container {
     position: absolute;
     top: 0;
