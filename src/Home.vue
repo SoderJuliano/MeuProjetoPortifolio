@@ -1120,13 +1120,11 @@ export default {
 
   beforeMount() {
     // General configs
-    if(!localStorage.getItem("configs")){
-      this.configs = new PageConfig();
-      localStorage.setItem("configs", JSON.stringify(this.configs));
-    }else{
+    if(!localStorage.getItem("configs")) {
+      window.location.href = "/welcome"
+    } else {
       this.configs = new PageConfig().recoverConfigs();
-    }
-    if(!localStorage.getItem('deletedDefaultNotifications'+'-'+this.configs.getLanguage())) {
+    } if(!localStorage.getItem('deletedDefaultNotifications'+'-'+this.configs.getLanguage())) {
       const lang = this.configs.getLanguage();
       const icons = {
           "id": Math.random(),

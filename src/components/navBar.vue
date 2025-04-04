@@ -69,7 +69,9 @@
                 </div>
         </nav>
         <nav class="navbar-login">
-          <button v-if="!isLoggedIn || !this.user.name" @click="openLogin" :disabled="this.login">{{this.login ? "Login..." : "Login"}}</button>
+          <span v-if="isLoggedInClicked" @click="isLoggedInClicked = false" class="mini-close">x</span>
+          <button v-if="!isLoggedIn || !this.user.name" @click="openLogin" :disabled="this.login">
+            {{this.login ? "Login..." : "Login"}}</button>
           <button @click="isLoggedInClicked = !isLoggedInClicked" v-else-if="isLoggedIn">
             <img src="../assets/navbar/check.png" alt="ok">
             <span>{{ this.user.name.split(' ')[0] }}</span>
@@ -1002,8 +1004,27 @@ export default {
 }
 </style>
 <style scoped>
-/* Toggle start */
+.mini-close {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  top: -5px;
+  border: solid 1px black;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  line-height: 1;
+  padding: 0;
+  background-color: red;
+  color: white;
+}
 
+
+/* Toggle start */
 .toggle-container {
   position: relative;
   display: flex;
@@ -1105,6 +1126,7 @@ li img {
   padding: 10px;
   background-color: rgba(245, 245, 245, 0.205);
   border-radius: 10px;
+  display:block;
 }
 
 .navbar-login:hover {

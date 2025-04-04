@@ -8,7 +8,15 @@
             <p>
                 <span @click="$emit('add-info')" >EMAIL: {{ props.user.contact.email[0] ?? (isPortuguese ? "email" : "EMAIL") }}</span>
                 <span class="separator">|</span>
-                <span @click="$emit('add-SocialLink')">{{ props.user.social[props.user?.social?.length - 1] ?? (isPortuguese ? "webpage" : "PORTFOLIO/SITE") }}</span>
+                <span @click="$emit('add-SocialLink')">
+                    {{
+                        Array.isArray(props.user?.social) && props.user?.social?.length
+                        ? props.user.social[props.user.social.length - 1]
+                        : isPortuguese
+                        ? "webpage"
+                        : "PORTFOLIO/SITE"
+                    }}
+                </span>
             </p>
         </div>
         <div @click="$emit('add-info')" class="row">
@@ -27,7 +35,7 @@
         <div class="row">
             <div class="main">
                 <div class="left">
-                    <div v-if="props.user.grade.length > 0"
+                    <div v-if="props.user.grade?.length > 0"
                         class="education">
                         <h4 @click="$emit('add-formacao')">{{ isPortuguese ? "FORMAÇÃO" : "EDUCATION" }}</h4>
                         <div v-for="(item, index) in props.user.grade" :key="index">

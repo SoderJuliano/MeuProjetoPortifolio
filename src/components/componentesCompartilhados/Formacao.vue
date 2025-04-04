@@ -3,7 +3,7 @@
       <p :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
           <showSwitcher
             :className="containerstyle"
-            :startShowing="user.grade.length > 0"
+            :startShowing="user.grade?.length > 0"
             />
           <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
           <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-formacao" @click="$emit('add-formacao')"/>

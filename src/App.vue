@@ -7,6 +7,7 @@ import PasswordReset from './components/pages/PasswordReset.vue';
 import NotFound from './components/pages/NotFound.vue';
 import * as funcs from "./components/configs/requests.js";
 import TempUser from "./TempUser.vue";
+import WelcomePage from "./templates/FirstIn.vue";
 
 export default {
     name: "App",
@@ -14,7 +15,8 @@ export default {
         Home,
         PasswordReset,
         NotFound,
-        TempUser
+        TempUser,
+        WelcomePage
     },
     data() {
         return {
@@ -49,6 +51,9 @@ export default {
         } 
         else if (uri.includes("tempUser")) {
             this.activeComp = "TempUser";
+        }
+        else if(uri.includes("welcome")) {
+            this.activeComp = "WelcomePage"
         }
         else {
             this.activeComp = 'NotFound';
