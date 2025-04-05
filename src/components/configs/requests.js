@@ -376,6 +376,34 @@ export async function generateFullCv(data) {
   })
 }
 
+export async function improveText(data) {
+  // Make global const header later
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: data.text,
+    ip: ip,
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  console.log(body)
+
+  const endpoint = `${apiUrl}/improve-text`;
+
+  return await axios.post(endpoint, body, headers).then((response) => {
+    console.log('improveText', response);
+    return response;
+  })
+}
+
 function getIp() {
   return fetch('https://api.ipify.org?format=json')
     .then(response => response.json())

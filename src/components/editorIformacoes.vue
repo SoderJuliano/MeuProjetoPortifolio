@@ -16,11 +16,11 @@
                         <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
                         <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
                         <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
-                        <div class="aboutyou-ia">
+                        <div v-if="title=='Sobre voce' || title=='Write about you'" class="aboutyou-ia">
                             <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
                             <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
-                            <div class="do-action" v-if="isEnglish">Go!</div>
-                            <div class="do-action" v-else>Melhorar!</div>
+                            <div @click="go('aboutyou-ia')" class="do-action" v-if="isEnglish">Go!</div>
+                            <div @click="go('aboutyou-ia')" class="do-action" v-else>Melhorar!</div>
                         </div>
                     </div>
 
@@ -142,7 +142,8 @@ import UserModel from '../model/userModel';
 import IconChooser from './iconComponent/IconChooser.vue';
 import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from 'jquery';
-
+import { showAlert } from 'simple-alerts/dist/showAlert.js';
+import { improveText } from '../components/configs/requests.js';
 
 export default {
     name: 'modal-input',
@@ -179,6 +180,44 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        go(val) {
+            if (val === 'aboutyou-ia') {
+                this.handleAboutYouIA();
+                return;
+            }
+            
+            // Aqui você pode adicionar outros casos posteriormente
+            // Exemplo:
+            // if (val === 'outro-caso') {
+            //     this.handleOutroCaso();
+            // }
+        },
+        
+        async handleAboutYouIA() {
+            if (!$('#modal-input').val().trim()) {
+                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Input is empty 🤖' : 'O campo esta vaziu 🤖');
+                return;
+            }
+
+            if ($('#modal-input').val().trim().length < 10) {
+                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Minimum 10 characters 🤖' : 'Mínimo 10 caracteres 🤖');
+                return;
+            }
+            
+            const response = await improveText(
+                {
+                    text: $('#modal-input').val().trim(),
+                    email: this.userData?.contact?.email[0],
+                    language: this.language
+                }
+            );
+
+            console.log(response.data);
+            $('#modal-input').val(response.data);
+            $('.aboutyou-ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
+            $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
+            $('.aboutyou-ia').closest('button').prop('disabled', true);
+        },
         check(event) {
             this.isPageLink = event.target.checked;
         },
