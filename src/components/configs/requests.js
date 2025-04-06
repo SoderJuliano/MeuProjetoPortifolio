@@ -401,7 +401,10 @@ export async function improveText(data) {
   return await axios.post(endpoint, body, headers).then((response) => {
     console.log('improveText', response);
     return response;
-  })
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
+    throw error;
+  });
 }
 
 function getIp() {

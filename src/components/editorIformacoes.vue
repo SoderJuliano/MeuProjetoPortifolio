@@ -13,14 +13,33 @@
                         <!-- Não lembro porque a 3 anos atrás fiz assim, mas vai ficar assim agora -->
                         <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
-                        <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
+                        <textarea 
+                            v-if="title=='Sobre voce' || title=='Write about you'"
+                            name="area" id="modal-input"
+                            @keydown.enter="pressedShifAndEnter"
+                            cols="40" rows="5"
+                            :placeholder="`${this.placeholder}`">
+                        </textarea>
+                        <textarea
+                            v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')"
+                            @keydown.enter="pressedShifAndEnter"
+                            cols="40" rows="5" 
+                            id="modal-input"
+                            type="text"
+                            :placeholder="`${this.placeholder}`">
+                        </textarea>
+                        <input
+                            v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')"
+                            @keydown.enter="pressedEnter()"
+                            id="modal-input"
+                            type="text"
+                            :placeholder="`${this.placeholder}`" 
+                        >
                         <div v-if="title=='Sobre voce' || title=='Write about you'" class="aboutyou-ia">
                             <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
                             <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
                             <div @click="go('aboutyou-ia')" class="do-action" v-if="isEnglish">Go!</div>
-                            <div @click="go('aboutyou-ia')" class="do-action" v-else>Melhorar!</div>
+                            <div @click="go('aboutyou-ia')" class="do-action" v-else>Vai!</div>
                         </div>
                     </div>
 
@@ -181,6 +200,12 @@ export default {
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
         go(val) {
+            $('.do-action').css({
+                'opacity': '0.5',
+                'cursor': 'not-allowed',
+                'pointer-events': 'none'
+            });
+
             if (val === 'aboutyou-ia') {
                 this.handleAboutYouIA();
                 return;
@@ -191,32 +216,51 @@ export default {
             // if (val === 'outro-caso') {
             //     this.handleOutroCaso();
             // }
+            
         },
         
         async handleAboutYouIA() {
             if (!$('#modal-input').val().trim()) {
-                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Input is empty 🤖' : 'O campo esta vaziu 🤖');
+                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Input is empty 🤖' : 'O campo esta vazio 🤖');
+            
+                $('.do-action').css({
+                    'opacity': '1',
+                    'cursor': 'pointer',
+                    'pointer-events': 'auto'
+                });
                 return;
             }
 
             if ($('#modal-input').val().trim().length < 10) {
                 $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Minimum 10 characters 🤖' : 'Mínimo 10 caracteres 🤖');
+    
+                $('.do-action').css({
+                    'opacity': '1',
+                    'cursor': 'pointer',
+                    'pointer-events': 'auto'
+                });
                 return;
             }
+            try {
+                const response = await improveText(
+                    {
+                        text: $('#modal-input').val().trim(),
+                        email: this.userData?.contact?.email[0],
+                        language: this.language
+                    }
+                );
+                $('#modal-input').val(response.data);
+                $('.aboutyou-ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
+                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
+            }catch (error) {
+                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
+            }
             
-            const response = await improveText(
-                {
-                    text: $('#modal-input').val().trim(),
-                    email: this.userData?.contact?.email[0],
-                    language: this.language
-                }
-            );
-
-            console.log(response.data);
-            $('#modal-input').val(response.data);
-            $('.aboutyou-ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
-            $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
-            $('.aboutyou-ia').closest('button').prop('disabled', true);
+            $('.do-action').css({
+                'opacity': '1',
+                'cursor': 'pointer',
+                'pointer-events': 'auto'
+            });
         },
         check(event) {
             this.isPageLink = event.target.checked;
