@@ -20,9 +20,9 @@ export async function getLastEnvUrl() {
 
       // Update DRAGONITE_ENV if content exists in the last notification
       if (lastNotification && lastNotification.content) {
-        //setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
+        setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
         console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
-        //apiUrl = lastNotification.content;
+        apiUrl = lastNotification.content;
       } else {
         console.error('No valid content found in the last notification.');
       }
@@ -400,6 +400,39 @@ export async function improveText(data) {
 
   return await axios.post(endpoint, body, headers).then((response) => {
     console.log('improveText', response);
+    return response;
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
+    throw error;
+  });
+}
+
+export async function improveTextLlama(data) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const instructions = data?.language?.includes("pt-br") 
+    ? "Melhore o texto a seguir, sem explicações ou comentários, apenas melhore esse texto: "
+    : "Please improve the folowing text, no explanation, no coments, improved text only: ";
+
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: instructions+data.text,
+    ip: ip,
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  console.log(body)
+
+  const endpoint = `${apiUrl}/llama3`;
+
+  return await axios.post(endpoint, body, headers).then((response) => {
     return response;
   }).catch(error => {
     console.error('Erro durante chamada IA', error);

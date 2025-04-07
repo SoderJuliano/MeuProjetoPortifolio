@@ -161,8 +161,7 @@ import UserModel from '../model/userModel';
 import IconChooser from './iconComponent/IconChooser.vue';
 import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from 'jquery';
-import { showAlert } from 'simple-alerts/dist/showAlert.js';
-import { improveText } from '../components/configs/requests.js';
+import { improveText, improveTextLlama } from '../components/configs/requests.js';
 
 export default {
     name: 'modal-input',
@@ -231,6 +230,8 @@ export default {
                 return;
             }
 
+            $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Generating, hold on 🤖' : 'Gerando, aguenta ai 🤖');
+
             if ($('#modal-input').val().trim().length < 10) {
                 $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Minimum 10 characters 🤖' : 'Mínimo 10 caracteres 🤖');
     
@@ -242,13 +243,22 @@ export default {
                 return;
             }
             try {
-                const response = await improveText(
+                // const response = await improveText(
+                //     {
+                //         text: $('#modal-input').val().trim(),
+                //         email: this.userData?.contact?.email[0],
+                //         language: this.language
+                //     }
+                // );
+                
+                const response = await improveTextLlama(
                     {
                         text: $('#modal-input').val().trim(),
                         email: this.userData?.contact?.email[0],
                         language: this.language
                     }
                 );
+
                 $('#modal-input').val(response.data);
                 $('.aboutyou-ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
                 $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
