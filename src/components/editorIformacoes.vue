@@ -35,11 +35,11 @@
                             type="text"
                             :placeholder="`${this.placeholder}`" 
                         >
-                        <div v-if="title=='Sobre voce' || title=='Write about you'" class="aboutyou-ia">
+                        <div v-if="title=='Sobre voce' || title=='Write about you'" class="ia">
                             <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
                             <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
-                            <div @click="go('aboutyou-ia')" class="do-action" v-if="isEnglish">Go!</div>
-                            <div @click="go('aboutyou-ia')" class="do-action" v-else>Vai!</div>
+                            <div @click="go('about-you-ia')" class="do-action" v-if="isEnglish">Go!</div>
+                            <div @click="go('about-you-ia')" class="do-action" v-else>Vai!</div>
                         </div>
                     </div>
 
@@ -89,7 +89,21 @@
 
                     <div v-if="ptitle3" class="modal-internal-content">
                         <p style="margin-right: 10px;">{{ptitle3}}</p>
-                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="40" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                        <textarea 
+                            @keydown.enter.shift="pressedEnterOk()"
+                            id="modal-input3"
+                            cols="40" rows="5"
+                            :placeholder=this.getJobDescriptionPlaceholderText()>
+                        </textarea>
+                    </div>
+                    <!-- Para aparecer apenas na descrição do trabalho -->
+                    <div v-if="(ptitle3 == 'Description' || ptitle3 == 'Descrição')
+                    && (this.mainTitleValue() == 'RESUMO PROFISSIONAL' || this.mainTitleValue() == 'PROFESSIONAL HISTORY')"
+                    class="ia">
+                        <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
+                        <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
+                        <div @click="go('job-description-ia')" class="do-action" v-if="isEnglish">Go!</div>
+                        <div @click="go('job-description-ia')" class="do-action" v-else>Vai!</div>
                     </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
@@ -198,6 +212,10 @@ export default {
     },
     emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
     methods:{
+        mainTitleValue() {
+            return $("#mainTitle").text()
+        },
+
         go(val) {
             $('.do-action').css({
                 'opacity': '0.5',
@@ -205,22 +223,20 @@ export default {
                 'pointer-events': 'none'
             });
 
-            if (val === 'aboutyou-ia') {
-                this.handleAboutYouIA();
+            if (val === 'about-you-ia') {
+                this.handleAboutYouIA('#modal-input');
                 return;
             }
             
-            // Aqui você pode adicionar outros casos posteriormente
-            // Exemplo:
-            // if (val === 'outro-caso') {
-            //     this.handleOutroCaso();
-            // }
+            if (val === 'job-description-ia') {
+                this.handleAboutYouIA('#modal-input3');
+            }
             
         },
         
-        async handleAboutYouIA() {
-            if (!$('#modal-input').val().trim()) {
-                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Input is empty 🤖' : 'O campo esta vazio 🤖');
+        async handleAboutYouIA(input) {
+            if (!$(input).val().trim()) {
+                $('.ia span:first-child').text(this.isEnglish ? 'Input is empty 🤖' : 'O campo esta vazio 🤖');
             
                 $('.do-action').css({
                     'opacity': '1',
@@ -230,10 +246,10 @@ export default {
                 return;
             }
 
-            $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Generating, hold on 🤖' : 'Gerando, aguenta ai 🤖');
+            $('.ia span:first-child').text(this.isEnglish ? 'Generating, hold on 🤖' : 'Gerando, aguenta ai 🤖');
 
-            if ($('#modal-input').val().trim().length < 10) {
-                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Minimum 10 characters 🤖' : 'Mínimo 10 caracteres 🤖');
+            if ($(input).val().trim().length < 10) {
+                $('.ia span:first-child').text(this.isEnglish ? 'Minimum 10 characters 🤖' : 'Mínimo 10 caracteres 🤖');
     
                 $('.do-action').css({
                     'opacity': '1',
@@ -253,17 +269,17 @@ export default {
                 
                 const response = await improveTextLlama(
                     {
-                        text: $('#modal-input').val().trim(),
+                        text: $(input).val().trim(),
                         email: this.userData?.contact?.email[0],
                         language: this.language
                     }
                 );
 
-                $('#modal-input').val(response.data);
-                $('.aboutyou-ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
-                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
+                $(input).val(response.data);
+                $('.ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
+                $('.ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
             }catch (error) {
-                $('.aboutyou-ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
+                $('.ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
             }
             
             $('.do-action').css({
@@ -589,7 +605,7 @@ button {
 
 <style scoped>
 
-.aboutyou-ia {
+.ia {
     display: flex;
     position: relative;
     margin: 10px;
