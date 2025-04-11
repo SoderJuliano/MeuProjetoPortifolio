@@ -35,7 +35,7 @@
           <img v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon"
             @click="this.$emit('choose-phoneIcon')" />
           <span class="phone-text">{{ normalizePhone(item) }}</span>
-          <img @click="toglePhoneMask()" src="../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
+          <img v-if="item" @click="toglePhoneMask()" src="../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
           <img @click="toglePhoneMask()" src="../icons/phone/disabled.svg" id="disabled" class="phone-disabled">
         </div>
         <div class="data-container">
