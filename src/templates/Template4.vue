@@ -85,10 +85,21 @@
                                 <p><span>{{ item.company }}</span><span>/ {{ item.dateHired +"-"+ item.dateFired}} present</span></p>
                                 <p>{{ item.description }}</p>
                                 <span
-                                    v-if="Array.isArray(props.user?.contact?.email) && props.user.contact.email.length > 0"
-                                    @click="improveText(item.description)"
-                                    class="ia">
+                                    v-if="loggedIn && Array.isArray(props.user?.contact?.email) && props.user.contact.email.length > 0"
+                                    @click="improveText(item)"
+                                    class="ia"
+                                    :disabled="loading[item.id] || false"
+                                >
+                                    <span v-if="loading[item.id]">
+                                        <i class="spinner-emoji">⚙️</i>
+                                        {{ isPortuguese ? "Processando..." : "Processing..." }}
+                                    </span>
+                                    <span v-else>
                                         {{ isPortuguese ? "Melhorar com IA 🤖" : "Improve text 🤖" }}
+                                    </span>
+                                </span>
+                                <span class="ia" v-else-if="successIAText && !loggedIn">
+                                        {{ successIAText }}
                                 </span>
                             </div>
                         </div>
@@ -101,7 +112,9 @@
 
 <script setup>
     import { defineProps, defineEmits, watch, ref } from 'vue';
-    import { improvetTextLlama } from '../components/configs/requests';
+    import { improveTextLlama } from '../components/configs/requests';
+    import authService from '../services/authService';
+    import { showAlert } from 'simple-alerts/dist/showAlert.js'
 
     const props = defineProps({
         user: Object,
@@ -109,6 +122,12 @@
     });
 
     let isPortuguese = props.language.includes("pt");
+
+    const loading = ref({});
+
+    const successIAText = ref(null);
+
+    let loggedIn = authService.hasToken();
 
     const emit = defineEmits([
         'add-nome',
@@ -145,16 +164,39 @@
         emit('delete-from-experiences', id);
     }
     
-    const improveText = (text) => {
-        improvetTextLlama({
-            text: text.trim(),
-            email: props.user?.contact?.email[0],
-            language: props.language
-        });
+    const improveText = async (item) => {
+        try {
+            loading.value[item.id] = true;
+
+            const response = await improveTextLlama({
+                text: item.description.trim(),
+                email: props.user?.contact?.email[0],
+                language: props.language
+            });
+
+            item.description = response.data;
+            successIAText.value = isPortuguese ?
+            "Texto melhorado com sucesso! ✅" 
+            : "Text improved successfully! ✅";
+        } catch (error) {
+            console.error("Erro ao melhorar texto:", error);
+            loggedIn = false;
+            showAlert(isPortuguese ? 
+            'Função temporariamente indisponível, botão será desabilitado momentaniamente'
+            : 'Function unavailable, button will be disabled for now'
+            );
+        } finally {
+            loading.value[item.id] = false;
+        }
+
     } 
 </script>
 
 <style scoped>
+    .spinner-emoji {
+        display: inline-block;
+        animation: spin-gear 1.5s linear infinite;
+    }
     .ia {
         pointer-events: none;
         opacity: 0;
