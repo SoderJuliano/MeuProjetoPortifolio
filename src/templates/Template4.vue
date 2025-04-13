@@ -84,7 +84,12 @@
                                 </p>
                                 <p><span>{{ item.company }}</span><span>/ {{ item.dateHired +"-"+ item.dateFired}} present</span></p>
                                 <p>{{ item.description }}</p>
-                                <span class="ia">{{ isPortuguese ? "Melhorar com IA 🤖" : "Improve text 🤖" }}</span>
+                                <span
+                                    v-if="Array.isArray(props.user?.contact?.email) && props.user.contact.email.length > 0"
+                                    @click="improveText(item.description)"
+                                    class="ia">
+                                        {{ isPortuguese ? "Melhorar com IA 🤖" : "Improve text 🤖" }}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -96,7 +101,7 @@
 
 <script setup>
     import { defineProps, defineEmits, watch, ref } from 'vue';
-
+    import { improvetTextLlama } from '../components/configs/requests';
 
     const props = defineProps({
         user: Object,
@@ -139,7 +144,14 @@
     const deleteWork = (id) => {
         emit('delete-from-experiences', id);
     }
-
+    
+    const improveText = (text) => {
+        improvetTextLlama({
+            text: text.trim(),
+            email: props.user?.contact?.email[0],
+            language: props.language
+        });
+    } 
 </script>
 
 <style scoped>
@@ -157,7 +169,8 @@
     }
 
     .ia:hover {
-        background-color: yellow;
+        background-color: black;
+        color: white;
     }
 
     h4 {
