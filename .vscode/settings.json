@@ -22,7 +22,7 @@
     "peacock.color": "#2F4F4F",
 
     // Adicione as configurações de fonte aqui
-    "editor.fontFamily": "'Cascadia Code NF', 'Cascadia Code', 'Courier New', monospace",
+    "editor.fontFamily": "'Comic Code Ligatures', 'Comic Code', monospace",
     "editor.fontLigatures": true,
     "editor.selectionClipboard": false,
     "editor.quickSuggestions": {

@@ -144,17 +144,33 @@
 
 <style scoped>
     .ia {
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
         position: absolute;
         padding: 10px;
         border: solid 1px black;
         display: inline-flexbox;
-        right: 20px;
+        right: 40px;
         top: 20px;
         cursor:pointer;
     }
 
     .ia:hover {
         background-color: yellow;
+    }
+
+    h4 {
+        padding: 1px;
+        padding-left: 0px;
+        border: solid 1px transparent;
+        /* transition: border-color 0.3s ease; */
+        transition: all 0.3s ease;
+    }
+
+    h4:hover {
+        border: solid 1px black;
+        padding-left: 5px;
     }
 
     .template {
@@ -235,6 +251,10 @@
                         justify-content: start;
                     }
                 }
+
+                && .skills:hover h4::before {
+                    content: "ADD NEW ";
+                }
             }
 
             && .right {
@@ -306,6 +326,11 @@
             }
         }
     }
+    
+    .work:hover .ia {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
     @media print {
         .template {
@@ -329,6 +354,10 @@
 
         .delete {
             display: none;
+        }
+
+        h4 {
+            border: none;
         }
     }
 
