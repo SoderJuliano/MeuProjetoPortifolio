@@ -85,7 +85,10 @@
                                 <p><span>{{ item.company }}</span><span>/ {{ item.dateHired +"-"+ item.dateFired}} present</span></p>
                                 <p>{{ item.description }}</p>
                                 <span
-                                    v-if="loggedIn && Array.isArray(props.user?.contact?.email) && props.user.contact.email.length > 0"
+                                    v-if="loggedIn
+                                    && Array.isArray(props.user?.contact?.email)
+                                    && props.user.contact.email.length > 0
+                                    && successIAText == null"
                                     @click="improveText(item)"
                                     class="ia"
                                     :disabled="loading[item.id] || false"
@@ -98,7 +101,7 @@
                                         {{ isPortuguese ? "Melhorar com IA 🤖" : "Improve text 🤖" }}
                                     </span>
                                 </span>
-                                <span class="ia" v-else-if="successIAText && !loggedIn">
+                                <span class="ia" v-else-if="loading[item.id] == false && successIAText != null">
                                         {{ successIAText }}
                                 </span>
                             </div>

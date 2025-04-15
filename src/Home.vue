@@ -1409,6 +1409,11 @@ export default {
   }
 }
 @media print {
+  
+  .main-alert.show {
+    display: none;
+  }
+
   .navbar-login {
     display: none;
   }
@@ -1426,6 +1431,11 @@ export default {
   .main {
     display: flex;
     width: 100% !important;
+    width: 100dvw !important;
+    /* Template style 2 tava ficando com uma margem gigante
+    foi resolvido com margin e left 0 */
+    left: 0px;
+    margin: 0px !important; 
     position: absolute;
     top: 0 !important;
     -webkit-print-color-adjust: exact;

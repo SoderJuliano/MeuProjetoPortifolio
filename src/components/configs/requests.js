@@ -20,9 +20,9 @@ export async function getLastEnvUrl() {
 
       // Update DRAGONITE_ENV if content exists in the last notification
       if (lastNotification && lastNotification.content) {
-        setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
-        console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
-        apiUrl = lastNotification.content;
+        // setDragoniteEnv(lastNotification.content); // Update the exported DRAGONITE_ENV
+        // console.log(`Updated DRAGONITE_ENV to: ${lastNotification.content}`);
+        // apiUrl = lastNotification.content;
       } else {
         console.error('No valid content found in the last notification.');
       }
@@ -415,7 +415,7 @@ export async function improveTextLlama(data) {
   };
 
   const instructions = data?.language?.includes("pt-br") 
-    ? "Melhore o texto a seguir, sem explicações ou comentários, apenas melhore esse texto: "
+    ? "Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
     : "Please improve the folowing text, no explanation, no coments, improved text only: ";
 
   const ip = await getIp();
