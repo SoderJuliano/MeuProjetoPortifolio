@@ -75,14 +75,32 @@
                         </div>
                     </div>
                     <div v-else>
-                        <h4 @click="$emit('add-experiencia')">{{ isPortuguese ? "EXPERIÊNCIA PROFISSIONAL" : "WORK EXPERIENCE" }}</h4>
+                        <h4 @click="$emit('add-experiencia')">
+                            {{ isPortuguese ? "EXPERIÊNCIA PROFISSIONAL" : "WORK EXPERIENCE" }}
+                        </h4>
                         <div v-for="item in props.user.userExperiences" :key="item.id">
                             <div class="work">
                                 <p>
                                     {{ item.position }}
                                     <img @click="deleteWork(item.id)" class="delete" :src="deleteIcon" alt="x">
                                 </p>
-                                <p><span>{{ item.company }}</span><span>/ {{ item.dateHired +"-"+ item.dateFired}} present</span></p>
+                                <p>
+                                    <span>{{ item.company }}</span>
+                                    <span v-if="!item.editing">
+                                        / {{ formatDateRange(item.dateHired, item.dateFired) }}
+                                        <img @click="enableEditing(item)"
+                                        class="edit-icon"
+                                        src="../assets/edit-pen.png"
+                                        alt="✏️"
+                                        title="Editar datas">
+                                    </span>
+                                    <span v-else class="date-editor">
+                                        <input v-model="item.tempDateHired" type="text" placeholder="Data início">
+                                        <input v-model="item.tempDateFired" type="text" placeholder="Data fim">
+                                        <button @click="saveDates(item)">✓</button>
+                                        <button @click="cancelEditing(item)">✕</button>
+                                    </span>
+                                </p>
                                 <p>{{ item.description }}</p>
                                 <span
                                     v-if="loggedIn
@@ -192,10 +210,77 @@
             loading.value[item.id] = false;
         }
 
-    } 
+    }
+
+    const formatDateRange = (start, end) => {
+        if (!start && !end) return "Período não definido";
+        const endText = (end === "null" || !end) ? "present" : end;
+        return `${start || "?"} - ${endText}`;
+    };
+
+    const enableEditing = (item) => {
+        item.editing = true;
+        item.tempDateHired = item.dateHired;
+        item.tempDateFired = item.dateFired;
+    };
+
+    const cancelEditing = (item) => {
+        item.editing = false;
+    };
+
+    // TODO: Continuar aqui
+    const saveDates = async (item) => {
+        try {
+            // Aqui você faria a chamada API para atualizar no backend
+            item.dateHired = item.tempDateHired;
+            item.dateFired = item.tempDateFired;
+            item.editing = false;
+            
+            // Exemplo de chamada API:
+            // await axios.put(`/api/experiences/${item.id}`, {
+            //     dateHired: item.dateHired,
+            //     dateFired: item.dateFired
+            // });
+        } catch (error) {
+            console.error("Erro ao salvar datas:", error);
+        }
+    };
 </script>
 
 <style scoped>
+
+    .date-editor {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .date-editor input {
+        width: 80px;
+        padding: 2px 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    .date-editor button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .edit-icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 5px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+    }
+
+    .edit-icon:hover {
+        opacity: 1;
+    }
     .spinner-emoji {
         display: inline-block;
         animation: spin-gear 1.5s linear infinite;
@@ -416,6 +501,10 @@
 
         h4 {
             border: none;
+        }
+
+        .edit-icon {
+            display: none;
         }
     }
 
