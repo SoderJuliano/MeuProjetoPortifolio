@@ -9,7 +9,7 @@
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
-        <div class="t2-options-div">
+        <div class="options-div">
           <img 
             v-if="item" 
             :src="editIcon" 
@@ -150,11 +150,12 @@ export default {
   }
 }
 
-.t2-options-div {
-  min-width: 200px;
+.options-div {
+  min-width: 100px;
   position: absolute;
   display: flex;
-  right: 10px;
+  right: 10%;
+  justify-content: space-between;
 
   && {
     .remove-bnt{
