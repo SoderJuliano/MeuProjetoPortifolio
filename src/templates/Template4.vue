@@ -70,7 +70,7 @@
                         <h4 @click="$emit('add-experiencia')">{{ isPortuguese ? "EXPERIÊNCIA PROFISSIONAL" : "WORK EXPERIENCE" }}</h4>
                         <div class="work">
                             <p>Job title</p>
-                            <p><span>Company name</span><span>/ 2021 - present</span></p>
+                            <p><span>Company name</span><span> / 2021 - present</span></p>
                             <p>Description</p>
                         </div>
                     </div>
@@ -85,9 +85,9 @@
                                     <img @click="deleteWork(item.id)" class="delete" :src="deleteIcon" alt="x">
                                 </p>
                                 <p>
-                                    <span>{{ item.company }}</span>
+                                    <span>{{ item.company +' |'}}</span>
                                     <span v-if="!item.editing">
-                                        / {{ formatDateRange(item.dateHired, item.dateFired) }}
+                                          {{ '| '+formatDateRange(item.dateHired, item.dateFired) }}
                                         <img @click="enableEditing(item)"
                                         class="edit-icon"
                                         src="../assets/edit-pen.png"
@@ -97,13 +97,14 @@
                                     <span v-else class="date-editor">
                                         <input v-model="item.tempDateHired" type="text" placeholder="Data início">
                                         <input v-model="item.tempDateFired" type="text" placeholder="Data fim">
-                                        <button @click="saveDates(item)">✓</button>
-                                        <button @click="cancelEditing(item)">✕</button>
+                                        <button @click="saveDates(item)">[✓]</button>
+                                        <button @click="cancelEditing(item)">[✕]</button>
                                     </span>
                                 </p>
                                 <p>{{ item.description }}</p>
                                 <span
                                     v-if="loggedIn
+                                    && showIABnt
                                     && Array.isArray(props.user?.contact?.email)
                                     && props.user.contact.email.length > 0
                                     && successIAText == null"
@@ -150,6 +151,8 @@
 
     let loggedIn = authService.hasToken();
 
+    const showIABnt = ref(true)
+
     const emit = defineEmits([
         'add-nome',
         'add-info',
@@ -160,7 +163,8 @@
         'delete-from-education',
         'delete-from-experiences',
         'add-profession',
-        'add-SocialLink'
+        'add-SocialLink',
+        'updateUser'
     ]);
 
     const localAbility = ref(props.user?.ability ? props.user.ability : props?.user?.hability);
@@ -219,6 +223,7 @@
     };
 
     const enableEditing = (item) => {
+        showIABnt.value = false;
         item.editing = true;
         item.tempDateHired = item.dateHired;
         item.tempDateFired = item.dateFired;
@@ -226,23 +231,39 @@
 
     const cancelEditing = (item) => {
         item.editing = false;
+        showIABnt.value = true;
     };
 
-    // TODO: Continuar aqui
     const saveDates = async (item) => {
         try {
-            // Aqui você faria a chamada API para atualizar no backend
+            // Atualiza as datas temporárias para as definitivas
             item.dateHired = item.tempDateHired;
             item.dateFired = item.tempDateFired;
             item.editing = false;
-            
-            // Exemplo de chamada API:
-            // await axios.put(`/api/experiences/${item.id}`, {
-            //     dateHired: item.dateHired,
-            //     dateFired: item.dateFired
-            // });
+
+            // Encontra o índice do item no array userExperiences (agora usando props.user)
+            const experienceIndex = props.user.userExperiences.findIndex(
+                exp => exp.company === item.company
+            );
+
+            if (experienceIndex !== -1) {
+                // Cria uma cópia do array para imutabilidade
+                const updatedExperiences = [...props.user.userExperiences];
+                
+                // Atualiza o item específico
+                updatedExperiences[experienceIndex] = item;
+
+                // Emite o evento com o usuário atualizado (sem .value)
+                emit('updateUser', {
+                    ...props.user, // Acessa a prop diretamente
+                    userExperiences: updatedExperiences
+                });
+            }
+
+            showIABnt.value = true;
         } catch (error) {
             console.error("Erro ao salvar datas:", error);
+            showIABnt.value = true;
         }
     };
 </script>

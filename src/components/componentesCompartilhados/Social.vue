@@ -123,6 +123,7 @@ export default {
 
 .remove-bnt {
     position: absolute;
+    width: 100px;
     margin-left: 70px;
 }
 

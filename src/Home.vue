@@ -184,6 +184,7 @@
         @delete-from-experiences="deleteFromExperiences"
         @add-profession="editarProfissao"
         @add-SocialLink="this.showModal('socialLink')"
+        @updateUser="updateUser"
       />
     </div>
     <div class="footer">
@@ -690,9 +691,9 @@ export default {
       let userFromModel = new UserModel();
         userFromModel = userFromModel.constructorObject(this.user);
         const response = await userFromModel.saveIntoDatabase(false);
-        console.log('user on update user', response);
+        // console.log('user on update user', response);
         if(response.status != 200) {
-          console.log('user on update user status', response.status);
+          // console.log('user on update user status', response.status);
           this.syncUser = false;
         }
       this.loading = false;
