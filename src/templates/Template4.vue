@@ -27,7 +27,7 @@
 
         </div>
         <div class="dividedline"></div>
-        <div @click="$emit('add-resumo')" class="summary">
+        <div @click="addSummary" class="summary">
             <h4>{{ isPortuguese ? "RESUMO" : "SUMMARY" }}</h4>
             <p>{{ props.user.resume ? props.user.resume : (isPortuguese ? "Resumo" : "SUMMARY") }}</p>
         </div>
@@ -266,6 +266,13 @@
             showIABnt.value = true;
         }
     };
+
+    const addSummary = () => {
+        emit('add-resumo');
+        setTimeout(() => {
+            document.getElementById("modal-input").value = props.user?.resume;
+        }, 900)
+    }
 </script>
 
 <style scoped>
