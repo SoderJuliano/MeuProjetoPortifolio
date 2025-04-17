@@ -282,11 +282,11 @@ export default {
                 $('.ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
             }
             
-            $('.do-action').css({
-                'opacity': '1',
-                'cursor': 'pointer',
-                'pointer-events': 'auto'
-            });
+            // $('.do-action').css({
+            //     'opacity': '1',
+            //     'cursor': 'pointer',
+            //     'pointer-events': 'auto'
+            // });
         },
         check(event) {
             this.isPageLink = event.target.checked;

@@ -30,6 +30,9 @@
         <div @click="addSummary" class="summary">
             <h4>{{ isPortuguese ? "RESUMO" : "SUMMARY" }}</h4>
             <p>{{ props.user.resume ? props.user.resume : (isPortuguese ? "Resumo" : "SUMMARY") }}</p>
+            <span @click="addSummary" class="ia">
+                {{ isPortuguese ? "Melhorar com IA 🤖" : "Improve text 🤖" }}
+            </span>
         </div>
         <div class="dividedline"></div>
         <div class="row">
@@ -187,6 +190,14 @@
 
     const deleteWork = (id) => {
         emit('delete-from-experiences', id);
+    }
+
+    const improveResume = async (text) => {
+        try {
+            
+        } catch (error) {
+
+        }
     }
     
     const improveText = async (item) => {
@@ -499,6 +510,11 @@
     }
     
     .work:hover .ia {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .summary:hover .ia {
         opacity: 1;
         pointer-events: auto;
     }
