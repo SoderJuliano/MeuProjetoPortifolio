@@ -281,6 +281,8 @@ export default {
             }catch (error) {
                 $('.ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
             }
+
+            // IF PREMIUN ACCOUNT
             
             // $('.do-action').css({
             //     'opacity': '1',

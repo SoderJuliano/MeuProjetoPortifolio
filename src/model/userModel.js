@@ -36,6 +36,7 @@ export default class User {
         text: ''
     };
     language = '';
+    premium = false;
 
     getNameFromLocalStorage() {
         let name = "";
