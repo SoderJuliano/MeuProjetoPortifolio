@@ -428,8 +428,6 @@ export async function improveTextLlama(data) {
     language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
   }
 
-  console.log(body)
-
   const endpoint = `${apiUrl}/llama3`;
 
   return await axios.post(endpoint, body, headers).then((response) => {
@@ -451,4 +449,52 @@ function getIp() {
       console.error('Erro ao obter o IP:', error);
       return null;
     });
+}
+
+export async function confirmPayment(paymentId) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const body = {
+    paymentId: paymentId,
+    userId: this.userId,
+    email: this.email,
+    amount: this.amount,
+    status: 'PENDENTE',
+    createdAt: new Date().toISOString(),
+  };
+
+  try {
+    return await axios.post('/api/payments/create', body, { headers });
+  } catch (error) {
+    console.error('Payment registration failed:', error);
+  }
+}
+
+export async function createPayment({ paymentId, userId, email, amount }) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const body = {
+    paymentId,
+    userId,
+    email,
+    amount,
+    status: 'PENDENTE',
+    createdAt: new Date().toISOString(),
+  };
+
+  try {
+    const response = await axios.post('/api/payments/create', body, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao registrar pagamento:', error);
+    throw error;
+  }
 }
