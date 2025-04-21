@@ -61,9 +61,12 @@
           <button class="modal-close" @click="closeModal">✖</button>
         </div>
       </div>
-  
-      <div class="footer">
-        <p><strong>FreeHub</strong> has been under development for over 2 years. Premium subscriptions and donations help improve infrastructure and bring new features to life. Thank you for your support!</p>
+      <div class="footer-plans">
+          <p><strong>FreeHub</strong> has been under development for over 2 years. Premium subscriptions and donations help improve infrastructure and bring new features to life. Thank you for your support!</p>
+          <p style="font-size: 0.8rem; margin-top: 0.5rem;">
+            <em>Premium plans are non-refundable. If you click SELECT you agre with terms. 
+            <a href="/terms" target="_blank">View full terms</a>.</em>
+          </p>
       </div>
     </div>
   </template>
@@ -350,9 +353,12 @@
     transition: all 0.3s ease;
   }
   
-  .footer {
+  .footer-plans {
     margin-top: 3rem;
     font-size: 0.95rem;
     color: #666;
+    /* display: block;
+    position:fixed;
+    bottom: 10px; */
   }
   </style>

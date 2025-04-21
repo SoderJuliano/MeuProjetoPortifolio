@@ -9,6 +9,7 @@ import * as funcs from "./components/configs/requests.js";
 import TempUser from "./TempUser.vue";
 import WelcomePage from "./templates/FirstIn.vue";
 import Plans from "./premium/Plans.vue";
+import TermsOfService from "./premium/TermsOfService.vue";
 
 export default {
     name: "App",
@@ -18,7 +19,8 @@ export default {
         NotFound,
         TempUser,
         WelcomePage,
-        Plans
+        Plans,
+        TermsOfService
     },
     data() {
         return {
@@ -59,6 +61,9 @@ export default {
         }
         else if (uri.includes("choose-your-plan")){
             this.activeComp = "Plans";
+        }
+        else if (uri.includes("terms")){
+            this.activeComp = "TermsOfService";
         }
         else {
             this.activeComp = 'NotFound';
