@@ -1158,8 +1158,21 @@ export default {
           "local": true
       }
 
+      const plans = {
+        "id": Math.random(),
+        "title": lang.includes("en") ? "Premium plan" : "Plano premium",
+        "content": lang.includes("en") ?
+        "[PC] - Upgrade to our Premium Plan for unlimited AI-powered features at an unbeatable price! You'll get access to exclusive tools - including beta features currently in testing and upcoming releases."
+        : "[PC] - Temos um plano premiun que garante acesso ilimitado a funcionalidades de IA, SUPER EM CONTA, e que vai te dar muitas novas funcionalidades, muitas ainda que estão em teste ou em fasze de implantação.",
+        "language": lang,
+        "read": false,
+        "local": true,
+        "button": true,
+        "buttonText": "Go / Ver"
+      }
+
       //newListOfAbraMessages
-      let listOfMessagens = [icons, skills, input];
+      let listOfMessagens = [icons, skills, input, plans];
 
       localStorage.setItem('tips', JSON.stringify(listOfMessagens));
 
