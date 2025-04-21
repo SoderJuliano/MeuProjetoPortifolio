@@ -1168,7 +1168,7 @@ export default {
         "read": false,
         "local": true,
         "button": true,
-        "buttonText": "Go / Ver"
+        "buttonText": lang.includes("en") ? "Check out" : "Ver agora"
       }
 
       //newListOfAbraMessages
