@@ -498,3 +498,13 @@ export async function createPayment({ paymentId, userId, email, amount }) {
     throw error;
   }
 }
+
+// export async function isPremium(email) {
+//   const headers = {
+//     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+//     'Content-Type': 'application/json',
+//     'ngrok-skip-browser-warning': 'true',
+//   };
+
+
+// }

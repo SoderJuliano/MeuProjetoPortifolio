@@ -274,21 +274,40 @@ export default {
                         language: this.language
                     }
                 );
-
+                console.log("response", response)
+                console.log("response", response.status)
                 $(input).val(response.data);
                 $('.ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
                 $('.ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
+           
+                if(response?.status === 500) {
+
+                    $('.ia span:first-child').text(this.isEnglish 
+                    ? 'An error occurred, try again later 🤖' 
+                    : 'Ocorreu um erro, tende denovo mais tarde 🤖');
+
+                }
             }catch (error) {
+                console.log("error", error)
                 $('.ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
+                return;
             }
 
             // IF PREMIUN ACCOUNT
+
+            if(this.userData?.premium) {
+                $('.do-action').css({
+                    'opacity': '1',
+                    'cursor': 'pointer',
+                    'pointer-events': 'auto'
+                });
+            }else {
+                $('.ia span:first-child').text(this.isEnglish 
+                ? 'You can try as many times you want when registering a premium account 🤖' 
+                : 'Pode repetir a chamada quantas vezes quiser com uma conta premium 🤖');
+            }
             
-            // $('.do-action').css({
-            //     'opacity': '1',
-            //     'cursor': 'pointer',
-            //     'pointer-events': 'auto'
-            // });
+            
         },
         check(event) {
             this.isPageLink = event.target.checked;

@@ -192,13 +192,13 @@
         emit('delete-from-experiences', id);
     }
 
-    const improveResume = async (text) => {
-        try {
+    // const improveResume = async (text) => {
+    //     try {
             
-        } catch (error) {
+    //     } catch (error) {
 
-        }
-    }
+    //     }
+    // }
     
     const improveText = async (item) => {
         try {
