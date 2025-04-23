@@ -174,7 +174,9 @@
 
     watch(() => props.user,
     	(u) => { 
-            localAbility.value = u?.ability || null; console.log("New user", u); },
+            localAbility.value = u?.ability || null; console.log("New user", u); 
+            loggedIn = authService.hasToken();
+        },
     	{ deep: true }
     );
 
