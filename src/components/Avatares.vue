@@ -1,6 +1,8 @@
 <template>
     <div class="avatares-container">
-        <p class="tside" @click="openContainer()">{{ this.language.includes("en") ? "CHOOSE AN AVATAR" : "ESCOLHA UM AVATAR"}}</p>
+        <p class="tside" @click="openContainer()">
+            {{ this.language.includes("en") ? "CHOOSE AN AVATAR" : "ESCOLHA UM AVATAR"}}
+        </p>
         <div class="avatares-subcontainer">
             <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="avatar-line">

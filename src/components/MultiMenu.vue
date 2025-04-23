@@ -13,22 +13,32 @@
             <p class="multimenu-line second"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <Colors :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <pageColor :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
-            <Avatares :user="user" :language="language" @update-user="update" />
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
+        <Avatares :user="user"
+        :language="language"
+        @update-user="update" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <PicureShape :language="language" />
             <p class="multimenu-line"></p>
         </div>
