@@ -523,12 +523,24 @@ export default {
 
   /** ver isso */
   .side {
-    min-height: 900px;
-    height: 100%;
     width: 40%;
     justify-content: center;
     font-size: 12px;
     word-break: break-all !important;
+  }
+
+  .side {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    height: auto;
+    box-decoration-break: clone;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Garante que o conteúdo interno não quebre inadequadamente */
+  .side > * {
+    page-break-inside: avoid;
   }
 
   .pic {
@@ -590,6 +602,7 @@ export default {
   text-align: center;
   padding: 5px;
   min-height: 30px;
+  border-radius: 5px;
 }
 
 .data-container {

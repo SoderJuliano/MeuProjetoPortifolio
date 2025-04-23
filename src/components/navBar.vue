@@ -677,17 +677,57 @@ export default {
         window.location.href = "mailto:juliano_soder@hotmail.com?subject=Hi there&body=message%20goes%20here";
       },
       imprimir(){
-        const sideHeight = $(".side").height()
-        const mainHeight = $(".main-container").width()
+        // const sideHeight = $(".side").height()
+        // const mainHeight = $(".main-container").width()
 
-        // console.log("side: " + sideHeight)
-        // console.log("main-container: " + mainHeight )
+        // // console.log("side: " + sideHeight)
+        // // console.log("main-container: " + mainHeight )
 
-        sideHeight > mainHeight ? $(".main-container").height(sideHeight) : $(".side").height(mainHeight)
-        $("#template").height($(".side").height())
+        // sideHeight > mainHeight ? $(".main-container").height(sideHeight) : $(".side").height(mainHeight)
+        // $("#template").height($(".side").height())
+
+        this.adjustForPrint();
 
         window.print()
 
+      },
+      calculatePageHeight() {
+        // Valores padrão para A4 em diferentes DPI
+        const A4_HEIGHT_MM = 297;
+        const MM_TO_INCH = 25.4;
+        const DEFAULT_DPI = 96;
+        
+        // Calcula a altura com margem de segurança (5% a mais)
+        return Math.round((A4_HEIGHT_MM * DEFAULT_DPI / MM_TO_INCH) * 1.05);
+      },
+      adjustForPrint() {
+        const side = document.querySelector('.side');
+        if (!side) return;
+
+        // Calcula a altura necessária
+        const pageHeight = this.calculatePageHeight();
+        const sideHeight = side.scrollHeight;
+        const pagesNeeded = Math.ceil(sideHeight / pageHeight);
+
+        // Aplica a altura dinamicamente
+        if (pagesNeeded > 1) {
+          side.style.height = `${pagesNeeded * 100}vh`;
+          side.style.minHeight = `${pagesNeeded * 100}vh`;
+          
+          // Força o repaint antes da impressão
+          void side.offsetHeight;
+        }
+
+        // Configura um timeout para garantir que o ajuste seja aplicado
+        setTimeout(() => {
+          window.print();
+          
+          // Reseta após a impressão (opcional)
+          setTimeout(() => {
+            side.style.height = '';
+            side.style.minHeight = '';
+          }, 1000);
+        }, 100);
       },
       changeLanguage(lng) {
         this.getLanguage() == 'us-en'
