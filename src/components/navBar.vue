@@ -1,72 +1,94 @@
 <template>
     <div class="container-fluid">
-        <nav class="navbar">
+      <nav class="navbar" :class="{ 'navbar-collapsed': isCollapsed }">
             <div class="nav-item is-right">
-                <img id="showMenu" v-if="show==false" @click="showMenu"  src="../icons/menustatic.png" alt="menu">
+                <img 
+                  id="showMenu"
+                  v-if="show==false"
+                  @click="showMenu"
+                  src="../icons/menustatic.png" 
+                  alt="menu">
                 <button class="bnt-close" v-else @click="close">
                     X
                 </button>
             </div>
-              <div class="midle-options">
-                <button @click="changeLanguage('pt-br')" class="bnt-languages">
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACZklEQVR4nO2W70tTURjHz/9VkvmjVC5qQ2IlBPkDfKVvxNheBEpZL+pNBAVtgwRf6sTfA/EHm0gqiixY0WglWYa1XViRSfGV59Kt1HvvOXf3bDg5X3hgcMfd+Xy/z3meMaakpKSkpHQWpEWbUU7FFED0jCfQOtmIeKoKq68v4sZUY3kB3I/XQ/9YAeydMyr/6Twer9SdfoDWP66bBz9eMtNgsgGOu25XstJgsgB4rhcrDSYDwMr17NtLCD0Lor07gsv+MaM6usMIhYLGM1lpMC8Adq4vzLaj/loUF65MWRY9W4x1SEmDFQpg1+t0+ErfpO3hzaLvWEHkXabhGsCp13PvfAjeTeDWnTUEB9fR2ZuAr20OlT5riIbro8hlaj3dDVcAvAmzuTEPKx0c/MbLV1kMj6bR1bd8BCgcCniaVEIAohNm+UUaG8kvSKzuYn1rD6k3OrK5/RNA2x++4eGTJGqvzhgXGx4mFRdAdK5T1fmtL27zzTkEBtcwHnuPrP7zL8jO7nf0P1gRerddGlyAgaUGfN0RA3CaPGZVt0zj3qMtZLbzBsSP/V9C7yYTycyCWsg/0YSZZDX3R2jm8wDMqmqZxtOhFNKZz9z3UvtSG3u+xLw0aEmJApg19Py2a9c9jVGnNGjDirTRvzE6Aj1T49p1KYvMLg1aTqKLbCnWVpDrmgwApzQIgpaUk/NWh48Lui4NwCkN2rC0pDp7IsZ4paLPkXDgRNvoLl2XDuBmUslwXSsGAO9ueO11rVQAIml4dV0rNoBdGrJc10oF8P8fQZmua6UEKHYxBRA9ZQkoKSkpKSmxMtQhlLbo6Z/lAAQAAAAASUVORK5CYII=">
-                </button>
-                <button @click="changeLanguage('us-en')" class="bnt-languages">
-                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+klEQVR4nO2VrQoCQRSFx5eybhAWtmkSxGLWJzD4ACbrWn0FFxQVDGKzCQo2g2lAFydZruyCFg3uMr/O+eDA3HYP9565jAEAAADAMERUCRoJyZaoVZWJ/aWBqDWn0Xj/bqBo3etvcxkxEDZndDjdKGMw3FHRut1dU3p/5MremQF+TZWJfZtAPDnSanOhemdJZerp4pzrNQHtBgLJMmIgkpgD7SEOJefAyDcaS8yB83eA685AJPkOaDUQ4g4kH3fA+QwIGKj+PgGVgdMSYm5BU9xrA0Jh4LT8QsKCpoTXBrgFe829DjF33YCwYK+F1yEWLhsAAAAAAGCleAKWmufwwWk9CQAAAABJRU5ErkJggg==">
-                </button>
-              </div>
-              <div class="right-options">
-                <li class="nav-item">
-                  <svg class="li-img-ia" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
-                  <linearGradient id="SVGID_1__JV8I2qAOf5Ts_gr1" x1="37.562" x2="10.438" y1="10.438" y2="37.561" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#60e8fe"></stop><stop offset=".033" stop-color="#6ae9fe"></stop><stop offset=".197" stop-color="#97f0fe"></stop><stop offset=".362" stop-color="#bdf5ff"></stop><stop offset=".525" stop-color="#dafaff"></stop><stop offset=".687" stop-color="#eefdff"></stop><stop offset=".846" stop-color="#fbfeff"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient><path fill="url(#SVGID_1__JV8I2qAOf5Ts_gr1)" d="M40.475,20.803c0.774-2.528,0.53-5.23-0.722-7.583c-2.018-3.792-6.225-5.638-10.284-5.086	c-1.802-1.935-4.265-3.074-6.929-3.166c-4.294-0.149-7.996,2.572-9.547,6.363c-2.576,0.593-4.794,2.156-6.206,4.417	c-2.275,3.643-1.771,8.21,0.737,11.449c-0.774,2.528-0.53,5.23,0.722,7.583c2.018,3.792,6.225,5.638,10.284,5.086	c1.802,1.935,4.265,3.074,6.929,3.167c4.293,0.148,7.996-2.573,9.547-6.364c2.576-0.593,4.794-2.156,6.205-4.417	C43.487,28.607,42.983,24.041,40.475,20.803z"></path><path fill="#10cfe3" d="M38.844,17.559l-7.523-4.343c-0.493-0.284-1.1-0.285-1.594-0.003l-10.245,5.855l0.021-4.018l7.913-4.569	c3.445-1.989,7.938-1.371,10.44,1.722c0.594,0.734,1.04,1.539,1.341,2.382c0.211,0.592,0.772,0.984,1.4,0.984	c1.037,0,1.772-1.03,1.421-2.006c-0.416-1.158-1.033-2.265-1.853-3.275c-2.488-3.065-6.393-4.357-10.151-3.807	c-1.987-2.124-4.699-3.373-7.63-3.473c-4.733-0.161-8.814,2.839-10.525,7.018c-2.842,0.654-5.289,2.378-6.847,4.873	c-3.318,5.313-1.284,12.41,4.142,15.543l7.523,4.343c0.493,0.284,1.1,0.285,1.594,0.003l10.245-5.855l-0.021,4.018l-7.902,4.563	c-3.448,1.991-7.945,1.378-10.451-1.715c-0.591-0.73-1.035-1.53-1.336-2.368c-0.212-0.591-0.772-0.982-1.4-0.982h0	c-1.039,0-1.774,1.033-1.421,2.01c0.326,0.901,0.774,1.771,1.344,2.589c2.43,3.487,6.613,5.039,10.645,4.465	c1.987,2.129,4.7,3.381,7.634,3.483c4.736,0.163,8.82-2.838,10.531-7.02c2.841-0.654,5.288-2.378,6.844-4.872	C46.303,27.788,44.269,20.691,38.844,17.559z M34,33.723c0,4.324-3.313,8.077-7.633,8.269c-1.837,0.082-3.585-0.463-5.024-1.496	c0.274-0.13,0.546-0.266,0.812-0.42l7.521-4.342c0.493-0.285,0.799-0.81,0.802-1.38l0.054-9.883c0.003-0.55-0.441-0.999-0.992-1	c-0.549-0.002-0.995,0.441-0.998,0.99l-0.011,2.172L18.498,32.37l-7.918-4.571c-3.745-2.163-5.339-6.908-3.345-10.745	c0.848-1.633,2.196-2.875,3.812-3.605C11.022,13.753,11,14.058,11,14.367v8.684c0,0.569,0.302,1.095,0.794,1.382l8.73,5.055	c0.475,0.275,1.082,0.113,1.358-0.361c0.277-0.476,0.114-1.085-0.362-1.361L14,23.42v-9.143c0-4.325,3.313-8.077,7.634-8.269	c1.835-0.081,3.582,0.462,5.02,1.494c-0.264,0.127-0.526,0.259-0.782,0.407l-7.548,4.357c-0.494,0.285-0.799,0.81-0.802,1.38	l-0.054,9.797c-0.003,0.55,0.441,0.999,0.992,1c0.549,0.002,0.995-0.441,0.998-0.99l0.011-2.087l4.552-2.603L34,24.58V33.723z M40.765,30.946c-0.848,1.633-2.195,2.875-3.812,3.604C36.978,34.248,37,33.944,37,33.636v-8.687c0-0.569-0.302-1.095-0.794-1.382	l-10.191-5.943l3.487-1.994l7.918,4.571C41.165,22.364,42.759,27.109,40.765,30.946z"></path>
-                  </svg>
-                  <a @click="generateFullCV()" class="nav-link">Autopreencher com IA</a>
-                </li>
-                <li class="nav-item">
-                  <img class="li-img" src="../icons/database.png" alt="database">
-                  <a v-on:click="dbSave()" class="nav-link">{{ this.printDatadaseText() }}</a>
-                </li>
-                <li class="nav-item">
-                  <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDklEQVR4nO2Yv0scQRTHB4UkmFQpEhJPb97ZmV77VKnExtYdgqQ4PNLHPbY1u7EQbt4hEQRL/4CzswxpTIoUwdYmpAic75mQkB8bVlH2li1297ydW5gPTHnzvp837x7HCWGxWCxjiWoHYfyMshZo2n+0E05VVwA5BE0fZrHfqK4Acig19+ualisrAJcv8Q+QN4UXTlRTAK8OHTWQHxgVmNM/ZqDL64B0CJo/A/J5elhOPRLpVHbOFksXqHW/TwPyjkT6nScwpEv8lJpfliYg8WxJaqZhg0NcAOlFKQJScwuQ/t5g+FPo9hdyhy8iEHU+LbzU9CkagbkOP3kYfLmb9llIE9DUq73t3y8UPq9ANPPJsZGafoGmZpZ1CKbXqETeTYZvID/NWguuw/O3euf82VDB8wpcrEpNfxJdbFbmpwRc7PnBmRcH4WSeWhJ5t74X3hE3SWYBTb1BgQI7exRkFZDIJ3GB2S7Ni4oJcFxgvvP1nhgHVNYRSuxvMS4oK2AYZV/AMMq+gGGUfQHDqBL/lRgJVsB0A5XhEVLD1ndcn+MXrHmbNVESauPNTLy20w4o9yWO678f6ILr96KLRTnhDwdrB+9yX+Rs+K3kMxo8zdwCrdb2beUGH02Hd9zgeMXzbokirL7amjYp4bjB8XPv9WMxDJG9agfr0Rwmv9ijCe1zVCsam8Kdt1gsFlEW/wFewL4UtVpN6wAAAABJRU5ErkJggg==" alt="share-3">
-                  <a v-on:click="generateAndSharePdf" class="nav-link">{{ 'Share' }}</a>
-                </li>
-                <li class="nav-item">
-                  <downloadDoc text="DOWNLOAD" />
-                </li>
-                <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
-                  <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABPklEQVR4nO2XMW7CQBBF9xQgJOi8orcPYM0UPsesb0CTc/gSFCAkbpFELnOOBAWkFFSLHIwEimAXcHY2ZJ70Gwr4z/MRQilBEP4PVb21IaJE4AxygVomdB8yoZppQohom4S6ALafJwJ/9gJENCKiBRFtjDGWM7TvsCzLcnxN+Q/u4uZnVk03H4FFBGXtmcx9BNhnY9r0Xie2/zI5fm3tFOAubY7SlO8/nwi4v9jcpY0jImDkAkYmdJHDz3isUS64C6II4ANOKE1Tq7W2SZIEidbaZlnWncChPE6/giRpJToTaJ7G9xsGEtBdX4DrHxneKLCJVQAAPp0CALC8RmDw9HZ3Kv8LzHwExoi4ik0AAN7zPB8qH4qiGCHiHADW3BOCfYeZd/lLhBJQv0VXExKBW3nICVUisA13AUEQVHTsABN3zNX4tTuWAAAAAElFTkSuQmCC">
-                  <a href="#" class="nav-link">{{this.printText()}}</a>
-                </li>
-                <li @click="showDropDown(1)" class="nav-item" id="navbarDropdown">
-                  <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABFUlEQVR4nGNgGEoguOmAYXTH4Y6YjkPtoS37DehiaVLvsZbKZfdfd217/x+EK5bdf53Yd6yZppbGdhwIqlv1+GP39g//kTFILL7zUADNLE6ecHIVuqUwnNx/YiXNLE6fcm4zLotBcjSzOKHr2MTOre8wLAWJJXQdmUgzi/1KN/BmTbtwoXv7eySL3//PnHb+Qmj9fh4GWoLQ+v0SyRNOrcqZcelKzvRLV5InnF7pW7lHnGFYgdiuIxMT+09MwoVB8jSxOH/OtUe4UjMIg+RpYnFC7/E9WdMu7gLh6uUPP9DNYkK+H7WYJiB/NKi3jyYuGoH80cS1fTRx0bF2ql7+8ANMHqSWbvVxN61qqlgCLRC6tEaoBQAx5jQdfEl+ZQAAAABJRU5ErkJggg==">
-                  <a class="nav-link" href="#" >
-                    {{this.informacoesText()}}
+
+            <div class="toggle-icon" @click="toggleNavbar">
+              <svg v-if="isCollapsed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 21 12 15 6"></polyline>
+              </svg>
+              <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 3 12 9 6"></polyline>
+              </svg>
+            </div>
+
+
+            <div
+              class="midle-options"
+              :class="{ 'fade-out': isCollapsed, 'fade-in': !isCollapsed }"
+            >
+              <button @click="changeLanguage('pt-br')" class="bnt-languages">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACZklEQVR4nO2W70tTURjHz/9VkvmjVC5qQ2IlBPkDfKVvxNheBEpZL+pNBAVtgwRf6sTfA/EHm0gqiixY0WglWYa1XViRSfGV59Kt1HvvOXf3bDg5X3hgcMfd+Xy/z3meMaakpKSkpHQWpEWbUU7FFED0jCfQOtmIeKoKq68v4sZUY3kB3I/XQ/9YAeydMyr/6Twer9SdfoDWP66bBz9eMtNgsgGOu25XstJgsgB4rhcrDSYDwMr17NtLCD0Lor07gsv+MaM6usMIhYLGM1lpMC8Adq4vzLaj/loUF65MWRY9W4x1SEmDFQpg1+t0+ErfpO3hzaLvWEHkXabhGsCp13PvfAjeTeDWnTUEB9fR2ZuAr20OlT5riIbro8hlaj3dDVcAvAmzuTEPKx0c/MbLV1kMj6bR1bd8BCgcCniaVEIAohNm+UUaG8kvSKzuYn1rD6k3OrK5/RNA2x++4eGTJGqvzhgXGx4mFRdAdK5T1fmtL27zzTkEBtcwHnuPrP7zL8jO7nf0P1gRerddGlyAgaUGfN0RA3CaPGZVt0zj3qMtZLbzBsSP/V9C7yYTycyCWsg/0YSZZDX3R2jm8wDMqmqZxtOhFNKZz9z3UvtSG3u+xLw0aEmJApg19Py2a9c9jVGnNGjDirTRvzE6Aj1T49p1KYvMLg1aTqKLbCnWVpDrmgwApzQIgpaUk/NWh48Lui4NwCkN2rC0pDp7IsZ4paLPkXDgRNvoLl2XDuBmUslwXSsGAO9ueO11rVQAIml4dV0rNoBdGrJc10oF8P8fQZmua6UEKHYxBRA9ZQkoKSkpKSmxMtQhlLbo6Z/lAAQAAAAASUVORK5CYII=">
+              </button>
+              <button @click="changeLanguage('us-en')" class="bnt-languages">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA+klEQVR4nO2VrQoCQRSFx5eybhAWtmkSxGLWJzD4ACbrWn0FFxQVDGKzCQo2g2lAFydZruyCFg3uMr/O+eDA3HYP9565jAEAAADAMERUCRoJyZaoVZWJ/aWBqDWn0Xj/bqBo3etvcxkxEDZndDjdKGMw3FHRut1dU3p/5MremQF+TZWJfZtAPDnSanOhemdJZerp4pzrNQHtBgLJMmIgkpgD7SEOJefAyDcaS8yB83eA685AJPkOaDUQ4g4kH3fA+QwIGKj+PgGVgdMSYm5BU9xrA0Jh4LT8QsKCpoTXBrgFe829DjF33YCwYK+F1yEWLhsAAAAAAGCleAKWmufwwWk9CQAAAABJRU5ErkJggg==">
+              </button>
+            </div>
+            <div
+              class="right-options"
+              :class="{ 'fade-out': isCollapsed, 'fade-in': !isCollapsed }"  
+            >
+              <li class="nav-item">
+                <svg class="li-img-ia" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 48 48">
+                <linearGradient id="SVGID_1__JV8I2qAOf5Ts_gr1" x1="37.562" x2="10.438" y1="10.438" y2="37.561" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#60e8fe"></stop><stop offset=".033" stop-color="#6ae9fe"></stop><stop offset=".197" stop-color="#97f0fe"></stop><stop offset=".362" stop-color="#bdf5ff"></stop><stop offset=".525" stop-color="#dafaff"></stop><stop offset=".687" stop-color="#eefdff"></stop><stop offset=".846" stop-color="#fbfeff"></stop><stop offset="1" stop-color="#fff"></stop></linearGradient><path fill="url(#SVGID_1__JV8I2qAOf5Ts_gr1)" d="M40.475,20.803c0.774-2.528,0.53-5.23-0.722-7.583c-2.018-3.792-6.225-5.638-10.284-5.086	c-1.802-1.935-4.265-3.074-6.929-3.166c-4.294-0.149-7.996,2.572-9.547,6.363c-2.576,0.593-4.794,2.156-6.206,4.417	c-2.275,3.643-1.771,8.21,0.737,11.449c-0.774,2.528-0.53,5.23,0.722,7.583c2.018,3.792,6.225,5.638,10.284,5.086	c1.802,1.935,4.265,3.074,6.929,3.167c4.293,0.148,7.996-2.573,9.547-6.364c2.576-0.593,4.794-2.156,6.205-4.417	C43.487,28.607,42.983,24.041,40.475,20.803z"></path><path fill="#10cfe3" d="M38.844,17.559l-7.523-4.343c-0.493-0.284-1.1-0.285-1.594-0.003l-10.245,5.855l0.021-4.018l7.913-4.569	c3.445-1.989,7.938-1.371,10.44,1.722c0.594,0.734,1.04,1.539,1.341,2.382c0.211,0.592,0.772,0.984,1.4,0.984	c1.037,0,1.772-1.03,1.421-2.006c-0.416-1.158-1.033-2.265-1.853-3.275c-2.488-3.065-6.393-4.357-10.151-3.807	c-1.987-2.124-4.699-3.373-7.63-3.473c-4.733-0.161-8.814,2.839-10.525,7.018c-2.842,0.654-5.289,2.378-6.847,4.873	c-3.318,5.313-1.284,12.41,4.142,15.543l7.523,4.343c0.493,0.284,1.1,0.285,1.594,0.003l10.245-5.855l-0.021,4.018l-7.902,4.563	c-3.448,1.991-7.945,1.378-10.451-1.715c-0.591-0.73-1.035-1.53-1.336-2.368c-0.212-0.591-0.772-0.982-1.4-0.982h0	c-1.039,0-1.774,1.033-1.421,2.01c0.326,0.901,0.774,1.771,1.344,2.589c2.43,3.487,6.613,5.039,10.645,4.465	c1.987,2.129,4.7,3.381,7.634,3.483c4.736,0.163,8.82-2.838,10.531-7.02c2.841-0.654,5.288-2.378,6.844-4.872	C46.303,27.788,44.269,20.691,38.844,17.559z M34,33.723c0,4.324-3.313,8.077-7.633,8.269c-1.837,0.082-3.585-0.463-5.024-1.496	c0.274-0.13,0.546-0.266,0.812-0.42l7.521-4.342c0.493-0.285,0.799-0.81,0.802-1.38l0.054-9.883c0.003-0.55-0.441-0.999-0.992-1	c-0.549-0.002-0.995,0.441-0.998,0.99l-0.011,2.172L18.498,32.37l-7.918-4.571c-3.745-2.163-5.339-6.908-3.345-10.745	c0.848-1.633,2.196-2.875,3.812-3.605C11.022,13.753,11,14.058,11,14.367v8.684c0,0.569,0.302,1.095,0.794,1.382l8.73,5.055	c0.475,0.275,1.082,0.113,1.358-0.361c0.277-0.476,0.114-1.085-0.362-1.361L14,23.42v-9.143c0-4.325,3.313-8.077,7.634-8.269	c1.835-0.081,3.582,0.462,5.02,1.494c-0.264,0.127-0.526,0.259-0.782,0.407l-7.548,4.357c-0.494,0.285-0.799,0.81-0.802,1.38	l-0.054,9.797c-0.003,0.55,0.441,0.999,0.992,1c0.549,0.002,0.995-0.441,0.998-0.99l0.011-2.087l4.552-2.603L34,24.58V33.723z M40.765,30.946c-0.848,1.633-2.195,2.875-3.812,3.604C36.978,34.248,37,33.944,37,33.636v-8.687c0-0.569-0.302-1.095-0.794-1.382	l-10.191-5.943l3.487-1.994l7.918,4.571C41.165,22.364,42.759,27.109,40.765,30.946z"></path>
+                </svg>
+                <a @click="generateFullCV()" class="nav-link">Autopreencher com IA</a>
+              </li>
+              <li class="nav-item">
+                <img class="li-img" src="../icons/database.png" alt="database">
+                <a v-on:click="dbSave()" class="nav-link">{{ this.printDatadaseText() }}</a>
+              </li>
+              <li class="nav-item">
+                <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDklEQVR4nO2Yv0scQRTHB4UkmFQpEhJPb97ZmV77VKnExtYdgqQ4PNLHPbY1u7EQbt4hEQRL/4CzswxpTIoUwdYmpAic75mQkB8bVlH2li1297ydW5gPTHnzvp837x7HCWGxWCxjiWoHYfyMshZo2n+0E05VVwA5BE0fZrHfqK4Acig19+ualisrAJcv8Q+QN4UXTlRTAK8OHTWQHxgVmNM/ZqDL64B0CJo/A/J5elhOPRLpVHbOFksXqHW/TwPyjkT6nScwpEv8lJpfliYg8WxJaqZhg0NcAOlFKQJScwuQ/t5g+FPo9hdyhy8iEHU+LbzU9CkagbkOP3kYfLmb9llIE9DUq73t3y8UPq9ANPPJsZGafoGmZpZ1CKbXqETeTYZvID/NWguuw/O3euf82VDB8wpcrEpNfxJdbFbmpwRc7PnBmRcH4WSeWhJ5t74X3hE3SWYBTb1BgQI7exRkFZDIJ3GB2S7Ni4oJcFxgvvP1nhgHVNYRSuxvMS4oK2AYZV/AMMq+gGGUfQHDqBL/lRgJVsB0A5XhEVLD1ndcn+MXrHmbNVESauPNTLy20w4o9yWO678f6ILr96KLRTnhDwdrB+9yX+Rs+K3kMxo8zdwCrdb2beUGH02Hd9zgeMXzbokirL7amjYp4bjB8XPv9WMxDJG9agfr0Rwmv9ijCe1zVCsam8Kdt1gsFlEW/wFewL4UtVpN6wAAAABJRU5ErkJggg==" alt="share-3">
+                <a v-on:click="generateAndSharePdf" class="nav-link">{{ 'Share' }}</a>
+              </li>
+              <li class="nav-item">
+                <downloadDoc text="DOWNLOAD" />
+              </li>
+              <li v-on:click="imprimir" class="nav-item" id="imprimir-item">
+                <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABPklEQVR4nO2XMW7CQBBF9xQgJOi8orcPYM0UPsesb0CTc/gSFCAkbpFELnOOBAWkFFSLHIwEimAXcHY2ZJ70Gwr4z/MRQilBEP4PVb21IaJE4AxygVomdB8yoZppQohom4S6ALafJwJ/9gJENCKiBRFtjDGWM7TvsCzLcnxN+Q/u4uZnVk03H4FFBGXtmcx9BNhnY9r0Xie2/zI5fm3tFOAubY7SlO8/nwi4v9jcpY0jImDkAkYmdJHDz3isUS64C6II4ANOKE1Tq7W2SZIEidbaZlnWncChPE6/giRpJToTaJ7G9xsGEtBdX4DrHxneKLCJVQAAPp0CALC8RmDw9HZ3Kv8LzHwExoi4ik0AAN7zPB8qH4qiGCHiHADW3BOCfYeZd/lLhBJQv0VXExKBW3nICVUisA13AUEQVHTsABN3zNX4tTuWAAAAAElFTkSuQmCC">
+                <a href="#" class="nav-link">{{this.printText()}}</a>
+              </li>
+              <li @click="showDropDown(1)" class="nav-item" id="navbarDropdown">
+                <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABFUlEQVR4nGNgGEoguOmAYXTH4Y6YjkPtoS37DehiaVLvsZbKZfdfd217/x+EK5bdf53Yd6yZppbGdhwIqlv1+GP39g//kTFILL7zUADNLE6ecHIVuqUwnNx/YiXNLE6fcm4zLotBcjSzOKHr2MTOre8wLAWJJXQdmUgzi/1KN/BmTbtwoXv7eySL3//PnHb+Qmj9fh4GWoLQ+v0SyRNOrcqZcelKzvRLV5InnF7pW7lHnGFYgdiuIxMT+09MwoVB8jSxOH/OtUe4UjMIg+RpYnFC7/E9WdMu7gLh6uUPP9DNYkK+H7WYJiB/NKi3jyYuGoH80cS1fTRx0bF2ql7+8ANMHqSWbvVxN61qqlgCLRC6tEaoBQAx5jQdfEl+ZQAAAABJRU5ErkJggg==">
+                <a class="nav-link" href="#" >
+                  {{this.informacoesText()}}
+                </a>
+                <div v-if="info" class="dropdown-menu" >
+                  <a v-on:click="about" class="dropdown-item" href="#">{{this.sobreSiteText()}}</a>
+                  <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
+                  <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
+                  <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
+                  <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
+                  <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
+                  <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
+                  <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">
+                    {{this.getResetPasswordText()}}
                   </a>
-                  <div v-if="info" class="dropdown-menu" >
-                    <a v-on:click="about" class="dropdown-item" href="#">{{this.sobreSiteText()}}</a>
-                    <a v-on:click="more" class="dropdown-item" href="#">{{this.exemplesText()}}</a>
-                    <a v-on:click="support" class="dropdown-item" href="#">{{this.suportText()}}</a>
-                    <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
-                    <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
-                    <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
-                    <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
-                    <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">
-                      {{this.getResetPasswordText()}}
-                    </a>
-                    <a v-on:click="deleteLocalData()" class="dropdown-item" href="#">{{ getDeleteLocalData() }}</a>
-                  </div>
-                  </li>
-                  <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
-                    <img class="li-img" src="data:image/png;base64,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">
-                    <a class="nav-link" href="#" >
-                      {{this.sobreSiteMim().toUpperCase()}}
-                    </a>
-                    <div v-if="myInfo" class="dropdown-menu" >
-                      <a v-on:click="aboutMe" class="dropdown-item">{{this.sobreSiteMim()}}</a>
-                      <a v-on:click="contact" class="dropdown-item">{{this.contatoText()}}</a>
-                    </div>
-                  </li>
+                  <a v-on:click="deleteLocalData()" class="dropdown-item" href="#">{{ getDeleteLocalData() }}</a>
                 </div>
+                </li>
+                <li @click="showDropDown(2)" class="nav-item" id="navbarDropdown">
+                  <img class="li-img" src="data:image/png;base64,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">
+                  <a class="nav-link" href="#" >
+                    {{this.sobreSiteMim().toUpperCase()}}
+                  </a>
+                  <div v-if="myInfo" class="dropdown-menu" >
+                    <a v-on:click="aboutMe" class="dropdown-item">{{this.sobreSiteMim()}}</a>
+                    <a v-on:click="contact" class="dropdown-item">{{this.contatoText()}}</a>
+                  </div>
+                </li>
+              </div>
         </nav>
         <nav class="navbar-login">
           <span v-if="isLoggedInClicked" @click="isLoggedInClicked = false" class="mini-close">x</span>
@@ -219,7 +241,8 @@ export default {
         },
         customConfirm: {
           autoClose: false
-        }
+        },
+        isCollapsed: false,
       }
     },
     components: {
@@ -246,6 +269,9 @@ export default {
       'reset-password'
     ],
     methods:{
+      toggleNavbar() {
+        this.isCollapsed = !this.isCollapsed;
+      },
       async ConfirmGenerateCV(confirm) {
         if(!confirm) this.showConfirmAI = false;
 
@@ -1043,7 +1069,23 @@ export default {
   font-size: 16px;
 }
 </style>
+
 <style scoped>
+
+.open-close-icon {
+  width: 40px;
+  height: 100%;
+  margin: 10px;
+
+  && img {
+    width: 40px;
+  }
+}
+
+#showMenu {
+  width: 35px;
+}
+
 .mini-close {
   position: absolute;
   cursor: pointer;
@@ -1144,6 +1186,7 @@ li img {
   display: flex;
   position: relative;
 }
+
 .navbar {
   max-width: 1000px;
   max-height: 60px;
@@ -1157,6 +1200,35 @@ li img {
   box-shadow: black -1px 2px 5px;
   display: flex;
   background-color: whitesmoke;
+  transition: width 1s ease-in-out;
+  transition: color 1s, background-color 0.5s;
+}
+
+.navbar-collapsed {
+  width: 50px !important;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.toggle-icon {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.toggle-icon:hover .midle-options {
+  display: none;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: -10;
 }
 
 .navbar-login {
@@ -1226,6 +1298,8 @@ li{
 .nav-item.is-right{
   width: 100px;
   display: flex;
+  position: absolute;
+  left: 10px;
 }
 .right-options{
   position: relative;
