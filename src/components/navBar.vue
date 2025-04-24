@@ -1162,6 +1162,10 @@ li img {
   .bnt-languages{
     display: none;
   }
+
+  .toggle-icon {
+    display: none;
+  }
 }
 .bnt-languages {
   min-width: 80px;

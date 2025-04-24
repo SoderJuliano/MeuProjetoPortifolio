@@ -584,6 +584,8 @@ button {
         margin-left: 10px !important;
         /* top: -15px !important; */
         min-width: 250px !important;
+        justify-content: center !important;
+        display: flex !important;
     }
 }
 /* fim */
@@ -600,16 +602,21 @@ button {
     }
     
     .navbar-login {
-        margin-top: 95px !important;
         padding: 0% !important;   
         background-color: transparent !important; 
+        position: absolute !important;
+        top: 120px;
     }
 
     .midle-options {
         && button {
-            margin-top: 30px !important;
             height: 60px;
+            margin-top: 0px;
         }
+    }
+
+    .bnt-languages {
+        width: 20px !important;
     }
 }
 
