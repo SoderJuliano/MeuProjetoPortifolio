@@ -444,8 +444,8 @@ export default {
   }
 
   .pic {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
@@ -527,15 +527,13 @@ export default {
     justify-content: center;
     font-size: 12px;
     word-break: break-all !important;
-  }
-
-  .side {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     height: auto;
     box-decoration-break: clone;
     position: relative;
     z-index: 1;
+    margin-top: 10px;
   }
 
   /* Garante que o conteúdo interno não quebre inadequadamente */
@@ -544,8 +542,8 @@ export default {
   }
 
   .pic {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
