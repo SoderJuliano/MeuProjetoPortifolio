@@ -3,7 +3,12 @@
     <div id="contatoAndPic">
       <div class="ajsut-img">
         <CenterImg :language="language" />
-        <CenterImgOpenclose :language="language" :user="userData" @user-update="reEmit" class="ajust-img-open-close" />
+        <CenterImgOpenclose 
+          :language="language"
+          :user="userData"
+          @user-update="reEmit"
+          class="ajust-img-open-close"
+        />
       </div>
       <div class="pic">
         <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic"
@@ -215,6 +220,10 @@ export default {
       else if (this.userData.avatarImg.length > 5) {
         $(".img-avatar").css("display", "block");
         this.avatarImg = this.userData.avatarImg;
+        
+        setTimeout(() => {
+          $(".ajsut-img").css({ "display": "none", "z-index": "-1" });
+        }, 800)
       }
     },
     showEditarContato() {
@@ -334,8 +343,8 @@ export default {
 }
 
 .img-avatar {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
 }
 
 .data-container {
@@ -378,8 +387,8 @@ export default {
   }
 
   .pic {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;

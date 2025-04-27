@@ -41,7 +41,10 @@
                             <div @click="go('about-you-ia')" class="do-action" v-if="isEnglish">Go!</div>
                             <div @click="go('about-you-ia')" class="do-action" v-else>Vai!</div>
                         </div>
-                        <div @click="closeAndshowLogin()" v-else class="ai-tip">
+                        <div @click="closeAndshowLogin()"
+                            v-else-if="!loggedIn && (title=='Sobre voce' || title=='Write about you')"
+                            class="ai-tip"
+                        >
                             <span v-if="isEnglish">🚀 Log in to unlock AI-powered features!</span>
                             <span v-else>🚀 Faça login para desbloquear recursos com IA!</span>
                         </div>
@@ -101,7 +104,7 @@
                         </textarea>
                     </div>
                     <!-- Para aparecer apenas na descrição do trabalho -->
-                    <div v-if="(ptitle3 == 'Description' || ptitle3 == 'Descrição')
+                    <div v-if="loggedIn && (ptitle3 == 'Description' || ptitle3 == 'Descrição')
                     && (this.mainTitleValue() == 'RESUMO PROFISSIONAL' || this.mainTitleValue() == 'PROFESSIONAL HISTORY')"
                     class="ia">
                         <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
@@ -109,11 +112,31 @@
                         <div @click="go('job-description-ia')" class="do-action" v-if="isEnglish">Go!</div>
                         <div @click="go('job-description-ia')" class="do-action" v-else>Vai!</div>
                     </div>
+                    <div @click="closeAndshowLogin()"
+                            v-else-if="!loggedIn && (ptitle3 == 'Description' || ptitle3 == 'Descrição')"
+                            class="ai-tip"
+                        >
+                        <span v-if="isEnglish">🚀 Log in to unlock AI-powered features!</span>
+                        <span v-else>🚀 Faça login para desbloquear recursos com IA!</span>
+                    </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
 
-                    <button class="bnt-proximo" v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
-                    <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Cancelar" : "Cancel"}}</button>
+                    <button class="bnt-proximo" 
+                        v-if="ptitle"
+                        @click="proximo(title)">
+                        {{language == 'pt-br' ? "Proximo" : "Next"}}
+                    </button>
+                    <button
+                        class="save-bnt"
+                        v-else
+                        v-on:click=add(ptitle3)>
+                        {{language == 'pt-br' ? "Salvar" : "Save"}}
+                    </button>
+                    <button 
+                        v-on:click="cancelar()">
+                        {{language == 'pt-br' ? "Cancelar" : "Cancel"}}
+                    </button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
@@ -180,7 +203,7 @@ import IconChooser from './iconComponent/IconChooser.vue';
 import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from 'jquery';
 import { improveText, improveTextLlama } from '../components/configs/requests.js';
-import { authService } from '../services/authService.js';
+import authService from '../services/authService.js';
 
 export default {
     name: 'modal-input',
@@ -230,7 +253,7 @@ export default {
             this.cancelar();
             this.$emit('login');
         },
-        
+
         mainTitleValue() {
             return $("#mainTitle").text()
         },
@@ -542,12 +565,20 @@ export default {
 
             this.updateUser()
         },
+        
         returnIfNotEmpty(item) {
             if(item.length > 0) {
                 return item;
             }
         },
         cancelar(){
+
+            // Wen next is pressed, an new job was already insert on jobs array,
+            // then we remove it back when user cancel
+            if($("#mainTitle").text() === 'PROFESSIONAL HISTORY') {
+                this.userData.userExperiences.pop();
+            }
+
             document.getElementsByClassName("main-modal-container")[0].style.width = "2%";
             document.getElementsByClassName("main-modal-container")[0].style.heigth = "2%";
             document.getElementsByClassName("main-modal-container")[0].style.opacity = "0";

@@ -570,9 +570,11 @@ button {
         display: flex;
         margin-top: 20px;
     }
+
     .ajsut-img {
         margin-left: 10%;
     }
+    
     .navbar {
         width: 100% !important;
     }
@@ -778,15 +780,15 @@ top: 0 !important;
 
 .print .pic {
     object-fit: cover;
-    width: 152px;
-    height: 150px;
+    width: 182px;
+    height: 180px;
 }
 
 
 .print .img-pic {
     object-fit: cover;
-    width: 155px;
-    height: 150px;
+    width: 185px;
+    height: 180px;
 }
 
 .print .footer {

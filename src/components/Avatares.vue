@@ -135,7 +135,7 @@ export default {
             $(".pic .img-pic").css({"display": "none"});
 
             setTimeout(() => {
-                $(".pic .img-avatar").css({"display": "block","width": "150px", "height": "150px", "border-radius": "50%", "padding": "0px"});
+                $(".pic .img-avatar").css({"display": "block","width": "180px", "height": "180px", "border-radius": "50%", "padding": "0px"});
             }, 400);
         },
         openContainer(){
