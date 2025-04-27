@@ -83,7 +83,7 @@
             <p class="tside">{{ this.isEnglish() ? "SHARE" : "COMPARTILHAR" }}</p>
             <p class="multimenu-line"></p>
         </div>
-        <div class="option">
+        <div v-if="!user.premium" class="option">
             <p class="tside">
                 <a
                     href="/choose-your-plan"
@@ -301,6 +301,7 @@ a {
     position: relative;
     right: 10px;
     top: 10px;
+    cursor: pointer;
 }
 
 .header {

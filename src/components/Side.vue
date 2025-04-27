@@ -637,9 +637,9 @@ export default {
 
 .ajsut-img {
   z-index: 0;
-  margin-top: 65px;
+  margin-top: 95px;
   flex-direction: column;
-  width: 25%;
+  width: 20%;
   height: 510px;
   justify-content: center;
   align-items: center;
@@ -659,7 +659,7 @@ export default {
   display: block;
   position: relative;
   z-index: 16;
-  margin-left: 225px;
+  margin-left: 260px;
   margin-top: -445px;
   background-color: rgba(245, 245, 245, 0.521);
   border-radius: 25px;
@@ -690,6 +690,13 @@ export default {
   #contatoAndPic {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 1230px) and (min-width: 1000px) {
+  .ajust-img-open-close {
+    position: relative !important;
+    left: 0% !important;
   }
 }
 </style>

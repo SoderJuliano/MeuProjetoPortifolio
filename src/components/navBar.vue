@@ -1204,8 +1204,7 @@ li img {
   box-shadow: black -1px 2px 5px;
   display: flex;
   background-color: whitesmoke;
-  transition: width 1s ease-in-out;
-  transition: color 1s, background-color 0.5s;
+  transition: width 1s ease-in-out, color 1s, background-color 0.5s;
 }
 
 .navbar-collapsed {
@@ -1213,9 +1212,17 @@ li img {
   background-color: transparent;
   border: none;
   box-shadow: none;
+
+  && .toggle-icon {
+     transition: all 1s;
+    position: absolute;
+    left: 70%;
+  }
 }
 
 .toggle-icon {
+  left: 30%;
+  transition: all 1s;
   cursor: pointer;
   margin-right: 10px;
 }
@@ -1226,7 +1233,7 @@ li img {
 
 .fade-in {
   opacity: 1;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 2s ease-in-out;
 }
 
 .fade-out {
@@ -1324,6 +1331,7 @@ li{
   min-width: 40px;
   height: 40px;
   border-radius: 10px;
+  cursor: pointer;
 }
 .midle-options{
   justify-content: center;

@@ -1321,6 +1321,7 @@ export default {
   margin-top: 20px;
   border-radius: 10px;
   padding: 0px;
+  margin-top: 10%;
 }
 
 .multi-menu-class:hover {
@@ -1328,6 +1329,7 @@ export default {
 }
 
 .multi-menu-class {
+  margin-top: 10%;
   position: relative;
   padding: 30px;
   opacity: 0;
