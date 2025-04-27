@@ -256,7 +256,7 @@
         additionalComponents.value = [
             {
                 id: 1000,
-                title: "RESUME",
+                title: isEnglish ? "RESUME" : "CURRÍCULO",
                 text: props.user.name ? props.user.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
                 norender: true
             },
@@ -777,13 +777,23 @@
                     localUpdatedUser.contact.address = component.text;
                     break;
                 case 1002:
-                    localUpdatedUser.contact.phone[0] = component.text;
+                    if (localUpdatedUser.contact) {
+                        // Ensure phone is an array
+                        if (!Array.isArray(localUpdatedUser.contact.phone)) {
+                        localUpdatedUser.contact.phone = [];
+                        }
+                        localUpdatedUser.contact.phone[0] = component.text || '';
+                    }
                     break;
                 case 1003:
                     if (validateEmail(component.text)) {
+                        if (localUpdatedUser.contact) {
+                        // Ensure email is an array
+                        if (!Array.isArray(localUpdatedUser.contact.email)) {
+                            localUpdatedUser.contact.email = [];
+                        }
                         localUpdatedUser.contact.email[0] = component.text;
-                    } else {
-                        showAlert("email inválido");
+                        }
                     }
                     break;
                 case 1004:
