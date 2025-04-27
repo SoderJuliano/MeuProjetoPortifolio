@@ -45,6 +45,7 @@
     @update-name="updateName"
     @add-profissao="editarProfissao"
     @update-user="updateUser"
+    @login="showLogin"
   />
   <nav-bar
     :language="this.configs.getLanguage()"

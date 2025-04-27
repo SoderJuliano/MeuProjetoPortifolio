@@ -35,11 +35,15 @@
                             type="text"
                             :placeholder="`${this.placeholder}`" 
                         >
-                        <div v-if="title=='Sobre voce' || title=='Write about you'" class="ia">
+                        <div v-if="loggedIn && (title=='Sobre voce' || title=='Write about you')" class="ia">
                             <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
                             <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
                             <div @click="go('about-you-ia')" class="do-action" v-if="isEnglish">Go!</div>
                             <div @click="go('about-you-ia')" class="do-action" v-else>Vai!</div>
+                        </div>
+                        <div @click="closeAndshowLogin()" v-else class="ai-tip">
+                            <span v-if="isEnglish">🚀 Log in to unlock AI-powered features!</span>
+                            <span v-else>🚀 Faça login para desbloquear recursos com IA!</span>
                         </div>
                     </div>
 
@@ -176,6 +180,7 @@ import IconChooser from './iconComponent/IconChooser.vue';
 import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from 'jquery';
 import { improveText, improveTextLlama } from '../components/configs/requests.js';
+import { authService } from '../services/authService.js';
 
 export default {
     name: 'modal-input',
@@ -193,6 +198,7 @@ export default {
             pressed: false,
             isPageLink: false,
             isEnglish: true,
+            loggedIn: false,
         }
     },
     components: {
@@ -210,8 +216,21 @@ export default {
         language: String,
         user: Object,
     },
-    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
+    emits:[
+        "update-name",
+        "add-profissao",
+        "adicionar-formacao",
+        "adicionar-habilidade",
+        "update-experiences",
+        "update-user",
+        "login"
+    ],
     methods:{
+        closeAndshowLogin() {
+            this.cancelar();
+            this.$emit('login');
+        },
+        
         mainTitleValue() {
             return $("#mainTitle").text()
         },
@@ -609,6 +628,7 @@ export default {
             handler() {
                 let model = new UserModel();
                 this.userData = model.constructorObject(this.user);
+                this.loggedIn = authService.hasToken();
             }
         }
     }
@@ -625,6 +645,48 @@ button {
 </style>
 
 <style scoped>
+
+.ai-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background-color: #f0f4ff; /* Light blue background for a friendly feel */
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.ai-tip:hover {
+  transform: translateY(-2px); /* Subtle hover effect */
+}
+
+/* Optional: If you want to style the existing .ia or .do-action classes */
+.ia {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.do-action {
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.do-action:hover {
+  background-color: #0056b3;
+}
 
 .ia {
     display: flex;

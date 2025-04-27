@@ -30,7 +30,7 @@
         <div @click="addSummary" class="summary">
             <h4>{{ isPortuguese ? "RESUMO" : "SUMMARY" }}</h4>
             <p>{{ props.user.resume ? props.user.resume : (isPortuguese ? "Resumo" : "SUMMARY") }}</p>
-            <span @click="addSummary" class="ia">
+            <span v-if="loggedIn" @click="addSummary" class="ia">
                 {{ isPortuguese ? "Melhorar com IA 🤖" : "Improve text 🤖" }}
             </span>
         </div>
