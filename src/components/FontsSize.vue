@@ -1,45 +1,51 @@
 <template>
-    <div class="fonts-size">
-        <p @click="showMenu()">{{this.language.includes("en") ? "FONT SIZE" : "TAMANHO DA FONTE"}}</p>
-        <div class="fonts-size-dropdown">
-            <div class="fonts-size-item">
-                <p>Font Size {{this.size}} pixels</p>
-                <div class="dropdown">
-                    <button @click="showOptions()" class="dropbtn">{{this.size}}</button>
-                    <p @click="miniClose" class="mini-close">x</p>
-                    <div class="size-dropdown-content">
-                        <p @click="changeSize(12)">12</p>
-                        <p @click="changeSize(13)">13</p>
-                        <p @click="changeSize(14)">14</p>
-                        <p @click="changeSize(15)">15</p>
-                        <p @click="changeSize(16)">16</p>
-                        <p @click="changeSize(17)">17</p>
-                        <p @click="changeSize(18)">18</p>
-                        <p @click="changeSize(19)">19</p>
-                        <p @click="changeSize(20)">20</p>
+    <div class="font-size-control">
+        <p class="tside" @click="showMenu()">
+            {{ language.includes("en") ? "FONT SIZE" : "TAMANHO DA FONTE" }}
+        </p>
+        
+        <div class="font-size-panel" v-show="isOpen" @click.self="closeDiv">
+            <div class="panel-content">
+                <button class="close-btn" @click="closeDiv">×</button>
+                
+                <div class="control-group">
+                    <h3>{{ language.includes("en") ? "Font Size" : "Tamanho da Fonte" }}</h3>
+                    <div class="size-selector">
+                        <div class="current-size" @click="showOptions">
+                            {{ size }}px
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="size-options">
+                            <div v-for="option in [12,13,14,15,16,17,18,19,20]" 
+                                 :key="option"
+                                 class="size-option"
+                                 :class="{active: size === option}"
+                                 @click="changeSize(option)">
+                                {{ option }}px
+                            </div>
+                        </div>
+                        <span class="mini-close" @click.stop="miniClose">×</span>
                     </div>
                 </div>
-            </div>
-            <div class="closeDiv" @click="closeDiv()">x</div>
-            <div class="fonts-size-item">
-                <div class="fonts-size-options">
-                    <p @click="setFontWeight('lighter')" style="font-weight: lighter;">
-                        <span v-if="this.fontweight === 'lighter'">* </span>
-                        lighter</p>
-                    <p @click="setFontWeight('normal')" style="font-weight: normal;">
-                        <span v-if="this.fontweight === 'normal'">* </span>
-                        normal</p>
-                    <p @click="setFontWeight('bold')" style="font-weight: bold;">
-                        <span v-if="this.fontweight === 'bold'">* </span>
-                        bold</p>
-                    <p @click="setFontWeight('bolder')" style="font-weight: bolder;">
-                        <span v-if="this.fontweight === 'bolder'" >* </span>
-                        bolder</p>
+                
+                <div class="control-group">
+                    <h3>{{ language.includes("en") ? "Font Weight" : "Peso da Fonte" }}</h3>
+                    <div class="weight-options">
+                        <button v-for="weight in ['lighter', 'normal', 'bold', 'bolder']"
+                                :key="weight"
+                                :class="['weight-option', {active: fontweight === weight}]"
+                                :style="{fontWeight: weight}"
+                                @click="setFontWeight(weight)">
+                            {{ weight }}
+                            <span v-if="fontweight === weight" class="checkmark">✓</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script>
 import $ from 'jquery'
 
@@ -51,144 +57,237 @@ export default {
     data() {
         return {
             size: 14,
-            fontweight: "normal"
+            fontweight: "normal",
+            isOpen: false
         }
     },
     methods: {
         closeDiv() {
-            $(".fonts-size-dropdown").css({"display": "none"})
+            this.isOpen = false;
         },
         showMenu() {
-            $(".fonts-size-dropdown").css({"display": "flex"})
+            this.isOpen = true;
         },
         showOptions() {
-            $(".size-dropdown-content").css({"display": "block"})
-            $(".mini-close").css({"display": "flex"})
+            $(".size-options").css({"display": "block"});
+            $(".mini-close").css({"display": "flex"});
         },
         changeSize(newSize) {
             this.size = newSize;
-            $(".main").css({"font-size": this.size})
-            $(".side").css({"font-size": this.size})
+            $(".main").css({"font-size": this.size});
+            $(".side").css({"font-size": this.size});
+            this.miniClose();
         },
         miniClose() {
-            $(".size-dropdown-content").css({"display": "none"})
-            $(".mini-close").css({"display": "none"})
+            $(".size-options").css({"display": "none"});
+            $(".mini-close").css({"display": "none"});
         },
         setFontWeight(val) {
             this.fontweight = val;
-            $(".main").css({"font-weight": this.fontweight})
-            $(".side").css({"font-weight": this.fontweight})
+            $(".main").css({"font-weight": this.fontweight});
+            $(".side").css({"font-weight": this.fontweight});
         }
-    },
+    }
 }
 </script>
+
 <style scoped>
-
-p 
-{
-    margin-left: 10px;
+.font-size-control {
+    /* position: relative; */
 }
 
-.font-size {
+.font-size-toggle {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.font-size-toggle:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.font-size-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    flex-direction: column;
-    width: 85%;
-    align-self: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.size-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: whitesmoke;
-  min-width: 100px;
-  z-index: 1;
-  border-radius: 10px;
-  border: 1px solid gray;
-}
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.size-dropdown-content p {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: center
-}
-
-.size-dropdown-content p:hover {
+.panel-content {
     background-color: white;
-    border-radius: 10px;
-} 
+    border-radius: 12px;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+}
 
-.fonts-size-dropdown {
-    display: none;
-    transition: ease-in-out 300ms;
-    width: 80%;
-    height: 400px;
+.close-btn {
     position: absolute;
-    background-color: white;
-    border: 1px solid black;
-    padding: 10px;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
 }
 
-.fonts-size-item {
-    padding: 20px;
-    background-color: whitesmoke;
-    width: 35%;
-    height: 40%;
-    border-radius: 20px;
+.close-btn:hover {
+    color: #333;
+}
+
+.control-group {
+    margin-bottom: 25px;
+}
+
+.control-group h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 16px;
+}
+
+.size-selector {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.current-size {
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+    border: 1px solid #ddd;
+}
+
+.current-size:hover {
+    background-color: #e9e9e9;
+}
+
+.arrow {
+    font-size: 12px;
+    color: #666;
+}
+
+.size-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.size-option {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.size-option:hover {
+    background-color: #f0f0f0;
+}
+
+.size-option.active {
+    background-color: #e3f2fd;
+    color: #1976d2;
 }
 
 .mini-close {
     display: none;
     position: absolute;
-    right: 5px;
-    top: 20px;
-    width: 20px;
-    height: 20px;
-    font-weight: bolder;
-    text-align: center;
-    background-color: red;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    background-color: #ff4444;
     color: white;
-    z-index: 2;
+    border: none;
     border-radius: 50%;
-    align-items: center;
+    cursor: pointer;
     justify-content: center;
+    align-items: center;
+    z-index: 11;
+    font-size: 14px;
+    padding: 0;
 }
 
-.dropbtn {
-    min-width: 110px;
-    border-radius: 10px;
-    justify-self: center;
+.weight-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
-.closeDiv {
-    justify-self: center;
-    align-self: center;
-    margin: auto auto;
-}
-
-.fonts-size-item .closeDiv {
+.weight-option {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
     position: relative;
-    left: 0%;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 0;
-    top: 6px;
-    left: 85%;
 }
 
-.fonts-size-options p:active{
-    transform: scale(.9);
+.weight-option:hover {
+    background-color: #f0f0f0;
 }
 
+.weight-option.active {
+    background-color: #e3f2fd;
+    border-color: #90caf9;
+}
+
+.checkmark {
+    margin-left: 5px;
+    color: #1976d2;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+    .panel-content {
+        width: 95%;
+        padding: 20px 15px;
+    }
+    
+    .weight-options {
+        grid-template-columns: 1fr;
+    }
+}
 </style>

@@ -45,7 +45,9 @@
 
         <div class="option">
             <Templates
-                :language="language" :template="template" @now-template1="this.$emit('now-template1')"
+                :language="language"
+                :template="template"
+                @now-template1="this.$emit('now-template1')"
                 @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')"
                 @now-template4="this.$emit('now-template4')"
             />

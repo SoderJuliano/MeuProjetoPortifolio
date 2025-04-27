@@ -6,7 +6,7 @@
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
     <div class="dropdown-templates">
         <div class="closeDiv" style="margin-top: 50px;" @click="closeDiv()">X</div>
-        <h3 class="dropdown-title">Escolha um Template</h3>
+        <h3 class="dropdown-title">{{ this.language.includes("en") ? "Choose a template" : "Escolha um template"}}</h3>
         <TemplateChooser
             :template="template"
             @now-template1="this.$emit('now-template1')"
@@ -28,6 +28,7 @@ export default {
     emits:['now-template1', 'now-template2', 'now-template3','now-template4'],
     props:{
         template: Number,
+        language: String
     },
     components: {
         TemplateChooser
