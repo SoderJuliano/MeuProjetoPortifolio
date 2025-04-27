@@ -988,4 +988,12 @@ top: 0 !important;
     p {
       page-break-inside: avoid; /* Evita quebras de página dentro de parágrafos */
     }
+
+    .navbar-login {
+        display: none;
+
+        && button {
+            display: none !important;
+        }
+    }
 }
