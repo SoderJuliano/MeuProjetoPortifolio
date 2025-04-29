@@ -6,9 +6,14 @@
     >
     <div class="globalModal">
       <input id="input-token" type="text">
-      <button id="submit-token" @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
+      <button
+        id="submit-token"
+        @click="submitToken()">
+        {{ this.languageIsEN() ? "Submit token" : "Enviar token" }}
+      </button>
+      <a @click="pedirUmTokenNovo" >Pedir um token novo</a>
     </div>
-    </GlobalModal>
+  </GlobalModal>
 
   <!-- A LOADER -->
   <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
@@ -77,6 +82,7 @@
     @login="login"
     @cancel="cancelLogin"
     @alert="fireGlobalAlert"
+    @email-updated="updateEmail"
   ></login>
   <diagrams-modal
     :diagram="diagram"
@@ -260,7 +266,7 @@ import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue"
 import * as localStorageService from "./components/services/LocalStorageService.js";
 import authService from "./services/authService.js";
 import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
-import { getUser } from "./components/configs/requests.js";
+import { getUser, resendConfirmationAccEmail } from "./components/configs/requests.js";
 
 export default {
   name: "Home",
@@ -345,6 +351,30 @@ export default {
     AlertComponent
   },
   methods: {
+    async pedirUmTokenNovo() {
+      try {
+        const response = await resendConfirmationAccEmail(this.user.contact.email[0],
+          this.configs.language
+        );
+        
+        if(response.status === 200) { 
+          $(".globalModal a")
+            .text(this.languageIsEN() ? 'New token sent' : 'Token novo enviado')
+            .off('click') 
+            .css('pointer-events', 'none') 
+            .css('opacity', '0.5'); 
+        }
+      } catch (error) {
+        console.error('Failed to resend confirmation:', error);
+        // alert(this.languageIsEN() ? 'Failed to send token' : 'Falha ao enviar token');
+      }
+    },
+    updateEmail(newEmail) {
+      if(this.user.contact) {
+        this.user.contact.email[0] = newEmail;
+        localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
+      }
+    },
     deleteFromExperiences(id) {
         const index = this.user?.userExperiences?.findIndex(item => item.id === id);
         if (index > -1) {
@@ -518,9 +548,30 @@ export default {
     cancelLogin() {
       this.inlogin = false;
     },
-    async login(email, password) {
+    async login(email, password, register) {
       let userFromModel = new UserModel();
       userFromModel = userFromModel.constructorObject(this.user);
+      if(register) {
+        this.logedIn = false;
+        this.inlogin = false;
+        this.inOnboarding = true;
+        const response = await userFromModel.saveIntoDatabase(true);
+
+        if (response) {
+          if (response.status == 422) {
+            this.isANewUser == false;
+          } else if(response.status == 201) {
+            this.isANewUser = true;
+            showAlert(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
+            userFromModel = await userFromModel.constructorObject(response?.data.content);
+            this.user = userFromModel;
+            this.user.language = this.configs.language;
+          } else if (response.status == 200) {
+            this.isANewUser = false;
+          }
+        }
+      }
+
       if(userFromModel instanceof UserModel && this.inOnboarding == true) {
         const response = await userFromModel.firstLogin(email, password);
         // console.log('response from backend login -->', response);

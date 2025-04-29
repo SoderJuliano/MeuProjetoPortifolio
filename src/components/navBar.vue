@@ -71,7 +71,11 @@
                   <a v-on:click="hotToLogin" class="dropdown-item" href="#">{{this.getHowLoginText()}}</a>
                   <a v-on:click="deleteAccount" class="dropdown-item" href="#">{{this.getDeleteAccText()}}</a>
                   <a v-on:click="confirmDeleteAccount" class="dropdown-item" href="#">{{ this.getConfirmDeleteAccText() }}</a>
-                  <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">{{this.getActivateAccText()}}</a>
+
+                  <a v-on:click="this.$emit('ativationAccount')" class="dropdown-item" href="#">
+                    {{this.getActivateAccText()}}
+                  </a>
+
                   <a v-on:click="this.$emit('reset-password')" class="dropdown-item" href="#">
                     {{this.getResetPasswordText()}}
                   </a>
@@ -283,7 +287,6 @@ export default {
 
         if(!iaProfession) iaProfession = sessionStorage.getItem("iaProfession");
 
-        alert(iaProfession)
         const body = {
           profession: iaProfession,
           email: this.user?.contact?.email[0],
@@ -492,7 +495,14 @@ export default {
         this.$emit('show-login-diagram', 'login');
       },
       async dbSave() {
-        const confirmed = confirm(this.getAlertConfirmText());
+        const notNew = localStorage.getItem('notNew')|| false;
+        let confirmed = false;
+        
+        if(notNew) {
+          confirmed = true;
+        }else {
+          confirmed = confirm(this.getAlertConfirmText());
+        }
 
         if (confirmed) {
           let userFromModel = new UserModel();
@@ -526,6 +536,7 @@ export default {
                 this.showAlertComponent(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
                 this.$emit('register-user', userFromModel.constructorObject(response.data.content), this.isANewUser);
               } else if (response.status == 200) {
+                this.showAlertComponent(null, "Salvo com sucesso!");
                 this.isANewUser = false;
                 this.$emit('register-user', userFromModel.constructorObject(response.data.content), this.isANewUser);
               }

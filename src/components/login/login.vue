@@ -13,7 +13,14 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input id="email" type="text" class="form-control" placeholder="email" v-model="email">
+                    <input
+                        id="email"
+                        type="email"
+                        class="form-control"
+                        placeholder="email"
+                        v-model="emailData"
+                        @blur="validateAndEmit"
+                    >
                 </div>
                 <div class="form-group">
                     <div v-if="!showPassword" class="pass-container">
@@ -75,7 +82,7 @@ export default {
     },
     data() {
         return {
-            email: this.email,
+            emailData: this.email || "",
             password: "",
             repeatPassword: "",
             passwordMeetTheRequirements: false,
@@ -85,7 +92,7 @@ export default {
             register: this.inOnboarding
         }
     },
-    emits: ['login', 'cancel', 'alert'],
+    emits: ['login', 'cancel', 'alert', 'email-updated'],
     methods: {
         login() {
             if(!this.passwordMeetTheRequirements) {
@@ -93,9 +100,7 @@ export default {
                 return;
             }
             this.inRequest = true;
-            // Using jquery for be sure that the email will be send its the email got fron email's input
-            // and not the one got from the props
-            this.$emit('login', $('#email').val(), this.password);
+            this.$emit('login', $('#email').val(), this.password, this.register);
         },
         cancel() {
             this.$emit('cancel');
@@ -111,6 +116,14 @@ export default {
                 this.passwordMeetTheRequirements = false;
             }
         },
+        validateAndEmit() {
+            const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.emailData);
+            if (isValid) {
+                this.$emit('email-updated', this.emailData);
+            } else {
+                console.error('E-mail inválido!', this.emailData);
+            }
+        }
     }
 }
 </script>

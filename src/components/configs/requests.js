@@ -508,3 +508,22 @@ export async function createPayment({ paymentId, userId, email, amount }) {
 
 
 // }
+
+export async function resendConfirmationAccEmail(email, language) {
+  const encodedEmail = encodeURIComponent(email);
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.post(`${apiUrl}/user/resendConfirmationAccEmail/${encodedEmail}/${language}`, 
+    null, { headers, timeout: 10000 })
+    .then((response) => {
+      return response;
+    })
+    .catch(error => {
+      console.error('Erro durante envio de email: ', error);
+      throw error;
+    });
+
+}
