@@ -1255,38 +1255,7 @@ export default {
           }
       }
 
-      if (isUserIdValid && isConnected && !authenticated) {
-        this.inlogin = true;
-        this.inOnboarding = false;
-
-        const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
-        showAlert(malert);
-
-        this.newTipMessege = {
-          "id": Math.random(),
-          "title": lng.includes("en") ? "Tip on login" : "Dica ao logar-se",
-          "content": lng.includes("en")
-              ? "If you have unsaved changes, login will overwrite them with the last saved state."
-              : "Se você têm dados locais não salvos, ao logar-se eles serão sobreescritos pelo último save.",
-          "language": this.lang,
-          "read": false,
-          "local": true
-        }
-
-        setTimeout(() => {
-          this.newTipMessege = {
-            "id": Math.random(),
-            "title": lng.includes("en") ? "Tip on save your data" : "Dica ao salvar dados",
-            "content": lng.includes("en")
-                ? "All local changes will override server changes if you click Save remotly button."
-                : "Todas as alterações locais vão sobrescrever os dados do servidor quando clicar em Salvar na nuvem.",
-            "language": this.lang,
-            "read": false,
-            "local": true
-          }
-        }, 500);
-        
-      } else if(isUserIdValid && isConnected && authenticated) {
+     else if(isUserIdValid && isConnected && authenticated) {
         this.logedIn = true;
         this.inOnboarding = false;
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
@@ -1306,7 +1275,7 @@ export default {
         setTimeout(() => {
           this.newTipMessege = {
             "id": Math.random(),
-            "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+            "title": lng.includes("en") ? "Tip of autosave" : "Dica para auto salvar dados",
             "content": lng.includes("en")
                 ? "The sync toggle stay under your name, make it visible clicking over your name on the right edge."
                 : "O botão de sincronização está no canto direito abaixo do seu nome, clique no seu nome para ele aparecer.",

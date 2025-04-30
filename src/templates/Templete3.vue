@@ -841,7 +841,7 @@
         // Se o regex encontrar datas, extrair as duas partes (ano inicial e final)
         if (resultado) {
             const anoInicio = resultado[1]; // Primeiro grupo de captura (primeiro ano)
-            const anoFim = resultado[2] || null; // Segundo grupo de captura (segundo ano), pode ser nulo
+            const anoFim = resultado[2] || (isEnglish ? 'ongoing' : 'em curso'); // Segundo grupo de captura (segundo ano), pode ser nulo
 
             return {
                 anoInicio,
@@ -857,7 +857,12 @@
         // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
         const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})? ?/g;
         // Substitui as datas por uma string vazia
-        return texto.replace(regex, '').trim(); // Remove as datas e espaços extras
+        let textoLimpo = texto.replace(regex, '').trim(); // Remove as datas e espaços extras
+    
+        // Remove "ongoing" ou "em curso" se for a primeira palavra após a remoção da data
+        textoLimpo = textoLimpo.replace(/^(ongoing|em curso)\s*/i, '').trim();
+    
+        return textoLimpo;
     }
 
     const otherInfosTitleUpdate = (updateItem) => {
