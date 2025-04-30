@@ -1,77 +1,93 @@
 <template>
     <div class="template">
-        <ComponentWrap
-            id="1000"
-            :title="getById(1000)?.title"
-            :text="getById(1000).text"
-            :block="true"
-            :css="{
-                'margin-top': '50px',
-                'text-align': 'center',
-                'font-size': '36px',
-                'padding-left': '20%',
-                'padding-right': '20%'
-                }"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1001"
-            :text="getById(1001).text"
-            :block="true"
-            :css="base_css"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1002"
-            :text="getById(1002).text"
-            :block="true"
-            :css="base_css"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1003"
-            :text="getById(1003).text"
-            :block="true"
-            :css="base_css"
-            @update:text="updateText"
-            :class="getById(1003).lockEmail ? 'unclickable' : ''"
-        />
-        <ComponentWrap
-            id="1004"
-            :text="getById(1004).text"
-            :title="getById(1004).title"
-            :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1005"
-            :text="getById(1005).text"
-            :title="getById(1005).title"
-            :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
+        <div class="component">
+            <ComponentWrap
+                id="1000"
+                :title="getById(1000)?.title"
+                :text="getById(1000).text"
+                :block="true"
+                :css="{
+                    'margin-top': '50px',
+                    'text-align': 'center',
+                    'font-size': '36px',
+                    'padding-left': '20%',
+                    'padding-right': '20%'
+                    }"
+                @update:title="updateTitle"
+                @update:text="updateText"
+            />
+        </div>
+        
+        <div class="component">
+            <ComponentWrap
+                id="1001"
+                :text="getById(1001).text"
+                :block="true"
+                :css="base_css"
+                @update:text="updateText"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1002"
+                :text="getById(1002).text"
+                :block="true"
+                :css="base_css"
+                @update:text="updateText"
+            />
+        </div>
+
+        <div class="component">
+            <ComponentWrap
+                id="1003"
+                :text="getById(1003).text"
+                :block="true"
+                :css="base_css"
+                @update:text="updateText"
+                :class="getById(1003).lockEmail ? 'unclickable' : ''"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1004"
+                :text="getById(1004).text"
+                :title="getById(1004).title"
+                :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1005"
+                :text="getById(1005).text"
+                :title="getById(1005).title"
+                :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+            />
+        </div>
         <!-- <br/> -->
-        <ComponentWrap
-            id="1006"
-            :text="getById(1006).text"
-            :css="{
-                'padding-left': '20%',
-                'text-align': 'start',
-                'margin-bottom': '0px',
-                'margin-top': '20px',
-                'font-weight': 'bold'
-            }"
-            @update:text="updateText"
-        />
+        <div class="component">
+            <ComponentWrap
+                id="1006"
+                :text="getById(1006).text"
+                :css="{
+                    'padding-left': '20%',
+                    'text-align': 'start',
+                    'margin-bottom': '0px',
+                    'margin-top': '20px',
+                    'font-weight': 'bold'
+                }"
+                @update:text="updateText"
+            />
+        </div>
         <!-- Education -->
-        <div>
+        <div class="component">
             <!-- Loop through educationComponents -->
             <ComponentWrap
                 v-for="(component, index) in educationComponents.filter(c => !c.norender)"
@@ -91,23 +107,25 @@
             <!-- Plus icon to add more education components -->
             <div @click="addEducationComponent" class="plus-icon">+</div>
         </div>
-        <ComponentWrap
-            id="1007"
-            :text="getById(1007).text"
-            :css="{
-                'padding-left': '20%',
-                'text-align': 'start',
-                'margin-bottom': '0px',
-                'margin-top': '20px',
-                'font-weight': 'bold'
-            }"
-            @update:text="updateText"
-        />
+        <div class="component">
+            <ComponentWrap
+                id="1007"
+                :text="getById(1007).text"
+                :css="{
+                    'padding-left': '20%',
+                    'text-align': 'start',
+                    'margin-bottom': '0px',
+                    'margin-top': '20px',
+                    'font-weight': 'bold'
+                }"
+                @update:text="updateText"
+            />
+        </div>
 
 <!-- Experiencies -->
 
 
-        <div>
+        <div class="component">
             <!-- Loop through educationComponents -->
             <ComponentWrap
                 v-for="(component, index) in experiencesComponents.filter(c => !c.norender)"
@@ -128,12 +146,14 @@
                 @update:text="updateText"
                 @remove="removeExperiencesComponents(index)"
                 @update-experiencias="updateUserExperiecies"
+                class="component"
             ></ComponentWrap>
 
             <!-- Plus icon to add more education components -->
             <div @click="addExperiencesComponents" class="plus-icon">+</div>
         </div>
-        <ComponentWrap
+        <div class="component">
+            <ComponentWrap
                 id="1008"
                 :text="getById(1008).text"
                 :css="{
@@ -144,71 +164,85 @@
                     'font-weight': 'bold'
                 }"
                 @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1009"
-            :text="getById(1009)?.text"
-            :title="getById(1009)?.title"
-            :css="{ ...base_css, 'display': 'flex', 'margin-bottom': '30px' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
-        />
-        <ComponentWrap
-            id="1010"
-            :text="getById(1010).text"
-            :title="getById(1010).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            noBoldText="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
-        />
-        <ComponentWrap
-            id="1011"
-            :css="{ ...base_css, 'display': 'flex', 'flex-wrap': 'wrap', 'margin-top': '20px', 'margin-bottom': '30px' }"
-            :listCss="{'width': '70%', 'height': '30px', 'text-align': 'start', 'color': 'black', 'display': 'block'}"
-            :listTitleCss="{'width': '25%', 'height': '100%', 'text-align': 'start', 'font-weight': 'bold'}"
-            :listTitle="isEnglish ? 'Competences' : 'Competências'"
-            :listOfStrings="props.user?.competence"
-            @updated-list="updateCompetence"
-        />
-        <ComponentWrap
-            id="1012"
-            :text="getById(1012).text"
-            :title="getById(1012).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            noBoldText="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
-        />
-        <!-- Loop through additional ComponentWraps -->
-        <ComponentWrap
-            v-for="(component, index) in additionalComponents.filter(c => !c.norender)"
-            :key="index"
-            :text="component.text"
-            :title="component.title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            :id="component.id"
-            removeBnt="true"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            @remove="removeComponent(index)"
-        />
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1009"
+                :text="getById(1009)?.text"
+                :title="getById(1009)?.title"
+                :css="{ ...base_css, 'display': 'flex', 'margin-bottom': '30px' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                textArea="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+                />
+        </div>
 
-        <div v-for="(item, index) in props.user?.otherInfos" :key="index">
+        <div class="component">
+            <ComponentWrap
+                id="1010"
+                :text="getById(1010).text"
+                :title="getById(1010).title"
+                :css="{ ...base_css, 'display': 'flex' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                textArea="true"
+                noBoldText="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1011"
+                :css="{ ...base_css, 'display': 'flex', 'flex-wrap': 'wrap', 'margin-top': '20px', 'margin-bottom': '30px' }"
+                :listCss="{'width': '70%', 'height': '30px', 'text-align': 'start', 'color': 'black', 'display': 'block'}"
+                :listTitleCss="{'width': '25%', 'height': '100%', 'text-align': 'start', 'font-weight': 'bold'}"
+                :listTitle="isEnglish ? 'Competences' : 'Competências'"
+                :listOfStrings="props.user?.competence"
+                @updated-list="updateCompetence"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1012"
+                :text="getById(1012).text"
+                :title="getById(1012).title"
+                :css="{ ...base_css, 'display': 'flex' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                textArea="true"
+                noBoldText="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+                />
+        </div>
+        <!-- Loop through additional ComponentWraps -->
+        <div class="component">
+            <ComponentWrap
+                v-for="(component, index) in additionalComponents.filter(c => !c.norender)"
+                :key="index"
+                :text="component.text"
+                :title="component.title"
+                :css="{ ...base_css, 'display': 'flex' }"
+                :span1="span1"
+                :span2="span2"
+                :id="component.id"
+                removeBnt="true"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                @remove="removeComponent(index)"
+            />
+        </div>
+
+        <div
+            class="component" 
+            v-for="(item, index) in props.user?.otherInfos" :key="index">
             <ComponentWrap
                 :id="index"
                 :title="item?.split(';')[0] || ''"
@@ -221,6 +255,7 @@
                 @remove="removeOtherInfosText(index)"
                 @other-infos:title="otherInfosTitleUpdate"
                 @other-infos:text="otherInfosTextUpdate"
+                class="component"
             />
         </div>
 
@@ -811,12 +846,12 @@
 
 
     let base_css = {
-            'margin-top': '10px',
             'text-align': 'center',
             'font-size': '16px',
             'padding-left': '20%',
             'padding-right': '20%',
-            'justify-content': 'space-between'
+            'justify-content': 'space-between',
+             'margin-top': 'min(20px, 2vh)'
             }
     let span1 = {
             'font-weight': 'bolder',
@@ -941,6 +976,11 @@
     .plus-icon
     {
         display: none;
+    }
+
+    .component {
+        margin-top: min(20px, 2vh);
+        font-size: clamp(14px, 2vw, 20px)
     }
 }
 </style>
