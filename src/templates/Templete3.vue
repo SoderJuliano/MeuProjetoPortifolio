@@ -823,14 +823,15 @@
                 case 1003:
                     if (validateEmail(component.text)) {
                         if (localUpdatedUser.contact) {
-                        // Ensure email is an array
+                            // Ensure email is an array
+                            if (!Array.isArray(localUpdatedUser.contact.email)) {
+                                localUpdatedUser.contact.email = [];
+                            }
+                            localUpdatedUser.contact.email[0] = component.text;
+                        }
+                    }else {
                         showAlert(isEnglish ? 
                         "Email not valid, try another" : "Email inválido, tente outro");
-                        if (!Array.isArray(localUpdatedUser.contact.email)) {
-                            localUpdatedUser.contact.email = [];
-                        }
-                        localUpdatedUser.contact.email[0] = component.text;
-                        }
                     }
                     break;
                 case 1004:
