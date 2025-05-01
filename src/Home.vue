@@ -421,13 +421,21 @@ export default {
         : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
         '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
 
-        this.user.resume = await funcs.improveTextLlama({
+        const response = await funcs.improveTextLlama({
                             text: this.user.resume.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
                             customPrompt: instructions
                           });
         this.loading = false;
+
+
+        console.log('ia responde', response)
+
+        alert(response)
+
+        this.user.resume = response;
+
         return;
       }
       
@@ -1330,11 +1338,13 @@ export default {
 
       this.configs.setIconsCollor();
 
-      const isUserIdValid = this.user?._id?.length === 24;
+      const isUserIdValid = this.user?._id?.length === 24 ||
+      this.user?.id?.length === 24;
+
       const isConnected = !!res.data;
       const lng = JSON.parse(localStorage.getItem("configs")).language;
       const userId =  authService.getIdUsuario();
-      const authenticated = userId === this.user?._id;
+      const authenticated = userId === (this.user?._id || this.user?.id);
 
       if(authenticated) {
         this.syncUser = true;
@@ -1347,7 +1357,7 @@ export default {
           }
       }
 
-     else if(isUserIdValid && isConnected && authenticated) {
+     if(isUserIdValid && isConnected && authenticated) {
         this.logedIn = true;
         this.inOnboarding = false;
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
