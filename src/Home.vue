@@ -401,12 +401,31 @@ export default {
       }
       
       // RESUME IMPROVING
+      // Com conteúdo
       if(this.user?.resume && this.user?.resume != '') {
         this.user.resume = await funcs.improveTextLlama({
                             text: this.user.resume.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
-                            customPrompt: true
+                          });
+        this.loading = false;
+        return;
+      }
+      // Sem conteúdo 
+      else if (this.user?.resume == 'about you.' 
+      || this.user?.resume == 'sobre você.' ) {
+
+        const instructions = this.languageIsEN() 
+        ? 'Create a good short summary about me as a ' + this.user.profession + 
+        'and return only the texto you got, no comments, no explanations, only the generated text.' 
+        : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
+        '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
+
+        this.user.resume = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
                           });
         this.loading = false;
         return;

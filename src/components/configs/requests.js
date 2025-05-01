@@ -414,14 +414,21 @@ export async function improveTextLlama(data) {
     'ngrok-skip-browser-warning': 'true',
   };
 
-  const instructions = data?.language?.includes("pt-br") 
+  let instructions = null;
+
+  if(!data.customPrompt) {
+    instructions = data?.language?.includes("pt-br") 
     ? "Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
     : "Please improve the folowing text, no explanation, no coments, improved text only: ";
-
+    instructions = instructions+data.text;
+  }else {
+    instructions = data.customPrompt;
+  }
+  
   const ip = await getIp();
 
   const body = {
-    newPrompt: instructions+data.text,
+    newPrompt: instructions,
     ip: ip,
     email: data.email,
     agent: false,
