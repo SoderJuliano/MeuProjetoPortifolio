@@ -403,14 +403,24 @@ export default {
       // RESUME IMPROVING
       // Com conteúdo
       if(this.user?.resume && this.user?.resume != '') {
-        this.user.resume = await funcs.improveTextLlama({
+        const response = await funcs.improveTextLlama({
                             text: this.user.resume.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
                           });
+
+
+        // console.log('ia responde', response)
+
+        // alert(response.data)
+
+        this.user.resume = response.data;
+        this.updateUser(this.user, false);
         this.loading = false;
         return;
       }
+
+      // RESUME IMPROVING
       // Sem conteúdo 
       else if (this.user?.resume == 'about you.' 
       || this.user?.resume == 'sobre você.' ) {
@@ -427,16 +437,97 @@ export default {
                             language: this.configs.language,
                             customPrompt: instructions
                           });
+
+        this.user.resume = response.data;
+        this.updateUser(this.user, false);
+
         this.loading = false;
-
-
-        console.log('ia responde', response)
-
-        alert(response)
-
-        this.user.resume = response;
-
         return;
+      }
+
+
+      // SKILLS - no skill
+      const emptyPlaceholders = ['', 'Digite aqui', 'Type in here'];
+      if (!!this.user.ability || emptyPlaceholders.includes(this.user.ability)) {
+        const instructions = this.languageIsEN() 
+        ? 'Create good skill for a ' + this.user.profession + 
+        'and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        : 'Crie um bom conjunto de habilidades para ' + this.user.profession + 
+        '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
+
+        const response = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+        
+        this.user.ability = response.data;
+        this.updateUser(this.user, false);
+
+        this.loading = false;
+        return;
+      }
+
+      // Skill - with skills
+      else if(this.user?.ability && !emptyPlaceholders.includes(this.user.ability)) {
+        const instructions = this.languageIsEN() 
+        ? 'Review those skills for a position of ' + this.user.profession + 
+        '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
+        '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
+      
+        const response = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+        
+        this.user.ability = response.data;
+        this.updateUser(this.user, false);
+
+        this.loading = false;
+        return;
+      }
+
+      // WORK - no-job
+      if(this.user.userExperiences?.length === 0) {
+        const instructions = this.languageIsEN() 
+        ? 'Imageine a job position that match my skills:' +this.user.ability + '. With tille' + this.user.profession + 
+        '. Then I need you return a string containing a json strigify object inside as the exemple: '+
+        ' {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}.'+
+        ' In English'+
+        '. No comments or aditional infos just the string json for response.' 
+        : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
+        '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
+        'Sem informações adicionais, apenas responda com a string json. Em português, apenas position, company,'+
+        'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
+      
+        try {
+          const response = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+
+          this.user.userExperiences = [response.data];
+          this.updateUser(this.user, false);
+
+          this.loading = false;
+          return;
+        } catch (ex) {
+          // Verifica se é um erro Axios com status 422
+          const status = ex?.response?.status;
+          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+          showAlert(mensagem);
+
+          if (status === 422) {
+            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+          }
+        }
       }
       
     },
@@ -815,7 +906,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData, notSync) {
-      // console.log('user update', userData);
+      // console.log('user update', userData.profession);
       // console.log("not sync", notSync)
       // console.log("isMobilePortrait() && !notSync", isMobilePortrait() && !notSync)
       this.user = userData;

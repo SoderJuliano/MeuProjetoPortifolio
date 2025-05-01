@@ -473,6 +473,7 @@
 
     // Watch for changes in props.user.userExperiences
     watch(() => props.user.userExperiences, (newExperiences) => {
+        console.log('newExperiences', newExperiences)
         experiencesComponents.value = []; // Reset the array
         if (newExperiences && newExperiences.length > 0) {
             newExperiences.forEach((ex, index) => {
@@ -535,6 +536,12 @@
     };
 
     const removeExperiencesComponents = (index) => {
+        if(localUpdatedUser.userExperiences.length === 1 || !Array.isArray(localUpdatedUser.userExperiences)) {
+            experiencesComponents.value = [];
+            localUpdatedUser.userExperiences = [];
+            emit('updateUser', localUpdatedUser);
+            return;
+        }
         experiencesComponents.value.splice(index, 1);
         localUpdatedUser.userExperiences.splice(index, 1);
         emit('updateUser', localUpdatedUser);
@@ -792,9 +799,12 @@
 
         if (!component) {
             console.error(`Component with id ${id} not found.`);
-        } else {
-            emit('updateUser', localUpdatedUser);
         }
+        
+        // Manda as vars antigas se não esperar um pouco
+        setTimeout(() => {
+            emit('updateUser', localUpdatedUser);
+        }, 300);
     };
 
     const emit = defineEmits(['updateUser']);
@@ -930,6 +940,23 @@
         localUpdatedUser.competence = updatedList;
         emit('updateUser', localUpdatedUser);
     }
+    
+
+    // When genereted ai in home component need this to update in html text
+    watch (() => props.user.resume, (newResume) => {
+        const component = additionalComponents.value.find(c => c.id === 1012);
+        if(component) {
+            component.text = newResume;
+        }
+    });
+
+    // When genereted ai in home component need this to update in html text
+    watch (() => props.user.ability, (newAbility) => {
+        const component = additionalComponents.value.find(c => c.id === 1005);
+        if(component) {
+            component.text = newAbility;
+        }
+    });
 </script>
 
 <style scoped>
