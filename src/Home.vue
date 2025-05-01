@@ -1,4 +1,30 @@
 <template>
+  <div style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+    <button style="
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0, 0, 0, 0.25)'" 
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.2)'"
+    @click="melhorarCurriculo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h9"></path>
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+      </svg>
+      {{ this.languageIsEN() ? 'Improve your CV with AI' : 'Melhore seu CV com IA'}}
+    </button>
+  </div>
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -351,6 +377,42 @@ export default {
     AlertComponent
   },
   methods: {
+    async melhorarCurriculo() {
+      this.loading = true;
+
+      if(!authService.hasToken()) {
+        showAlert(this.languageIsEN() ? "Need login first" : "Precisa fazer login primeiro");
+        this.loading = false;
+        return;
+      }
+
+      if(!this.user.profession) {
+        showAlert(this.languageIsEN() ? "Insert a profession first" 
+        : "Inseria uma profissão primeiro");
+        this.loading = false;
+        return;
+      }
+
+      if(!this.user?.contact?.email.length > 0) {
+        showAlert(this.languageIsEN() ? "Insert an email first" 
+        : "Inseria um email primeiro");
+        this.loading = false;
+        return;
+      }
+      
+      // RESUME IMPROVING
+      if(this.user?.resume && this.user?.resume != '') {
+        this.user.resume = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: true
+                          });
+        this.loading = false;
+        return;
+      }
+      
+    },
     async pedirUmTokenNovo() {
       try {
         const response = await resendConfirmationAccEmail(this.user.contact.email[0],
@@ -1223,8 +1285,19 @@ export default {
         "buttonText": lang.includes("en") ? "Check out" : "Ver agora"
       }
 
+      const esc = {
+        "id": Math.random(),
+        "title": lang.includes("en") ? "Normal template" : "Template normal",
+        "content": lang.includes("en") ?
+        "[PC] - When you inside any input, you can press 'esc' key to leave or cancel editing."
+        : "[PC] - Quando estiver dentro de um campo de texto, aperte a tecla 'esc' para sair ou cancelar.",
+        "language": lang,
+        "read": false,
+        "local": true
+      }
+
       //newListOfAbraMessages
-      let listOfMessagens = [icons, skills, input, plans];
+      let listOfMessagens = [icons, skills, input, plans, esc];
 
       localStorage.setItem('tips', JSON.stringify(listOfMessagens));
 
@@ -1318,7 +1391,14 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(167, 119, 227, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(167, 119, 227, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(167, 119, 227, 0); }
+}
+
 .ripple-background {
   position: relative;
   z-index: -1;

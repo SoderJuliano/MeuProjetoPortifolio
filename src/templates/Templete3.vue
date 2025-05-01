@@ -824,6 +824,8 @@
                     if (validateEmail(component.text)) {
                         if (localUpdatedUser.contact) {
                         // Ensure email is an array
+                        showAlert(isEnglish ? 
+                        "Email not valid, try another" : "Email inválido, tente outro");
                         if (!Array.isArray(localUpdatedUser.contact.email)) {
                             localUpdatedUser.contact.email = [];
                         }
