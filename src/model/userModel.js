@@ -90,7 +90,7 @@ export default class User {
     async firstLogin(email, password) {
 
         const configs = JSON.parse(localStorage.getItem('configs'));
-        this.language = this.configs.language;
+        this.language = configs.language;
 
         if (typeof email === 'string') {
             return await saveLogin(email, password, this._id, this.language);

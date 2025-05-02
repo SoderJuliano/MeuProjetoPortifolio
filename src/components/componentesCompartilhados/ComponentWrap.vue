@@ -152,27 +152,36 @@ const cancelEditing = (where, index) => {
 }
 
 const updateExperiencias = (job) => {
-    // Check if experiencies.value is an array
-    if (Array.isArray(experiencies.value) && experiencies.value.length > 0) {
-        experiencies.value.forEach((each, index) => {
-            console.log('each', each)
-            if (each.id === job.id || each.id === job.id - 3000) {
-                let updatedJob = { ...job };
-                // Preserva o id original do item no array
-                updatedJob.id = experiencies.value[index].id;
-                console.log('updatedJob ', updatedJob);
-                // Atualiza o item no array com o novo job
-                experiencies.value[index] = updatedJob;
-            }
-        });
-    } else if (Array.isArray(experiencies.value) && experiencies.value.length == 0) {
-        experiencies.value.push(job);
-    }
-    else {
-        console.error("experiencies.value is not an array");
+    const experiences = experiencies.value;
+
+    if (!Array.isArray(experiences)) {
+        console.error("Experiences is not an array");
+        return;
     }
 
-    console.log('antes do emil do array ', experiencies.value)
+    if (experiences.length === 0) {
+        experiences.push(job);
+        return;
+    }
+
+    // Find matching experience
+    const matchingExperience = experiences.find((experience) => 
+        experience.id === job.id || 
+        experience.id === job.id - 3000 ||
+        (experience.dateHired === job.dateHired && experience.dateFired === job.dateFired) ||
+        (experience.position === job.position && experience.company === job.company)
+    );
+
+    if (matchingExperience) {
+        const updatedJob = { 
+            ...job, 
+            id: matchingExperience.id
+        };
+    
+        const index = experiences.indexOf(matchingExperience);
+        experiences[index] = updatedJob;
+    }
+
     emit("update-experiencias", experiencies.value);
 };
 

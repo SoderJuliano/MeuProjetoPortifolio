@@ -463,6 +463,7 @@
     const experiencesComponents = ref([]);
 
     const updateUserExperiecies = (experiencies) => {
+        localUpdatedUser.userExperiences = props.user.userExperiences
         localUpdatedUser.userExperiences = [...experiencies];
 
         // precisa garantir reatividade
@@ -512,6 +513,8 @@
             job: {id : newId},
             norender: false
         });
+        //Refletir atualização do props do father component
+        localUpdatedUser.userExperiences = props.user.userExperiences;
         localUpdatedUser.userExperiences.push({
             id: newId - 3000,
             position: '',
@@ -536,7 +539,8 @@
     };
 
     const removeExperiencesComponents = (index) => {
-        if(localUpdatedUser.userExperiences.length === 1 || !Array.isArray(localUpdatedUser.userExperiences)) {
+        if(localUpdatedUser.userExperiences.length === 1 || 
+        !Array.isArray(localUpdatedUser.userExperiences)) {
             experiencesComponents.value = [];
             localUpdatedUser.userExperiences = [];
             emit('updateUser', localUpdatedUser);
@@ -746,53 +750,77 @@
 
         if (!component) {
             component = experiencesComponents.value.find(c => c.id === Number(id));
+            component = experiencesComponents.value.find(c => c.id === Number(id));
             if (component) {
                 component.text = text;
 
-                // Try to find the corresponding experience in localUpdatedUser.userExperiences
-                const experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                // Parse o texto para criar os dados atualizados
+                const strippedTextParts = text.includes('<br/>') ? text.split('<br/>') : text.split('<br />');
+                
+                const updatedExperience = {
+                    position: strippedTextParts.length < 2 
+                        ? '' 
+                        : strippedTextParts[0].replaceAll('<b>', '')
+                                            .replaceAll('</b>', '')
+                                            .split('-')[0]?.trim() || '',
+                    company: strippedTextParts.length < 2 
+                        ? '' 
+                        : strippedTextParts[0].replaceAll('<b>', '')
+                                            .replaceAll('</b>', '')
+                                            .split('-')[1]?.trim() || '',
+                    description: strippedTextParts.length < 2 
+                        ? strippedTextParts[0].trim() 
+                        : (strippedTextParts[1] || '').replace('<span>', '')
+                                                    .replace('</span>', '')
+                                                    .trim()
+                };
+
+                // 1. Primeiro tenta encontrar pelo ID original (3000 + id)
+                let experienceIndex = localUpdatedUser.userExperiences.findIndex(
                     ex => 3000 + ex.id === component.id
                 );
 
-                let updatedExperience;
-
-                const strippedTextParts = text.includes('<br/>') ? text.split('<br/>') : text.split('<br />');
-                if(strippedTextParts.length < 2) {
-                    updatedExperience = {
-                        position: '',
-                        company: '',
-                        description: strippedTextParts[0]
-                    };
-                }else {
-                    let stripedFirstPart = strippedTextParts[0].replaceAll('<b>', '');
-                    stripedFirstPart = stripedFirstPart.replaceAll('</b>', '');
-                    const parts = stripedFirstPart.includes('-') ? stripedFirstPart.split('-') : stripedFirstPart
-                    const position = parts[0] || '';
-                    const company = parts[1] || '';
-
-                    let description = strippedTextParts[1] ? strippedTextParts[1] : ''
-
-                    description = description.replace('<span>', '');
-                    description = description.replace('</span>', '');
-
-                    // Verificar se há descrição
-                    updatedExperience = {
-                        position: position.trim(),
-                        company: company.trim(),
-                        description: description.trim()
-                    }
+                // 2. Se não encontrou pelo ID, tenta encontrar por posição e empresa
+                if (experienceIndex === -1 && updatedExperience.position && updatedExperience.company) {
+                    experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                        ex => ex.position === updatedExperience.position && 
+                            ex.company === updatedExperience.company
+                    );
                 }
+
+                // 3. Se ainda não encontrou, tenta por descrição e posição
+                if (experienceIndex === -1 && updatedExperience.description && updatedExperience.position) {
+                    experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                        ex => ex.description.includes(updatedExperience.description) && 
+                            ex.position === updatedExperience.position
+                    );
+                }
+
+                if (experienceIndex === -1 && updatedExperience.dateHired) {
+                    experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                        ex => ex.dateHired === updatedExperience.dateHired
+                    );
+                }
+
+                // 4. Se encontrou em qualquer dos critérios acima, atualiza
                 if (experienceIndex !== -1) {
                     localUpdatedUser.userExperiences[experienceIndex] = {
                         ...localUpdatedUser.userExperiences[experienceIndex],
-                        ...updatedExperience
+                        ...updatedExperience,
+                        id: localUpdatedUser.userExperiences[experienceIndex].id // Mantém o ID original
                     };
+                    console.log('Experiência atualizada:', localUpdatedUser.userExperiences[experienceIndex]);
                 } else {
-                    // If no matching experience is found, add a new one
+                    // 5. Se não encontrou por nenhum critério, adiciona como NOVA experiência
+                    const newId = Math.max(0, ...localUpdatedUser.userExperiences.map(e => e.id)) + 1;
                     localUpdatedUser.userExperiences.push({
                         ...updatedExperience,
-                        id: component.id - 3000
+                        id: newId,
+                        dateHired: '',
+                        dateFired: '',
+                        isCurrent: false
                     });
+                    console.log('Nova experiência criada:', newId);
                 }
             }
         }
@@ -957,6 +985,10 @@
             component.text = newAbility;
         }
     });
+
+    watch (() => localUpdatedUser.userExperiences, (newArray) => {
+        console.log('localUpdatedUser.userExperiences', newArray)
+    }, { deep: true });
 </script>
 
 <style scoped>

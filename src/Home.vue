@@ -380,116 +380,161 @@ export default {
     async melhorarCurriculo() {
       this.loading = true;
 
-      if(!authService.hasToken()) {
-        showAlert(this.languageIsEN() ? "Need login first" : "Precisa fazer login primeiro");
-        this.loading = false;
-        return;
-      }
+      // if(!authService.hasToken()) {
+      //   showAlert(this.languageIsEN() ? "Need login first" : "Precisa fazer login primeiro");
+      //   this.loading = false;
+      //   return;
+      // }
 
-      if(!this.user.profession) {
-        showAlert(this.languageIsEN() ? "Insert a profession first" 
-        : "Inseria uma profissão primeiro");
-        this.loading = false;
-        return;
-      }
+      // if(!this.user.profession) {
+      //   showAlert(this.languageIsEN() ? "Insert a profession first" 
+      //   : "Inseria uma profissão primeiro");
+      //   this.loading = false;
+      //   return;
+      // }
 
-      if(!this.user?.contact?.email.length > 0) {
-        showAlert(this.languageIsEN() ? "Insert an email first" 
-        : "Inseria um email primeiro");
-        this.loading = false;
-        return;
-      }
+      // if(!this.user?.contact?.email.length > 0) {
+      //   showAlert(this.languageIsEN() ? "Insert an email first" 
+      //   : "Inseria um email primeiro");
+      //   this.loading = false;
+      //   return;
+      // }
       
-      // RESUME IMPROVING
-      // Com conteúdo
-      if(this.user?.resume && this.user?.resume != '') {
-        const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                          });
-
-
-        // console.log('ia responde', response)
-
-        // alert(response.data)
-
-        this.user.resume = response.data;
-        this.updateUser(this.user, false);
-        this.loading = false;
-        return;
-      }
-
-      // RESUME IMPROVING
-      // Sem conteúdo 
-      else if (this.user?.resume == 'about you.' 
-      || this.user?.resume == 'sobre você.' ) {
-
-        const instructions = this.languageIsEN() 
-        ? 'Create a good short summary about me as a ' + this.user.profession + 
-        'and return only the texto you got, no comments, no explanations, only the generated text.' 
-        : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
-        '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
-
-        const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                            customPrompt: instructions
-                          });
-
-        this.user.resume = response.data;
-        this.updateUser(this.user, false);
-
-        this.loading = false;
-        return;
-      }
-
-
-      // SKILLS - no skill
-      const emptyPlaceholders = ['', 'Digite aqui', 'Type in here'];
-      if (!!this.user.ability || emptyPlaceholders.includes(this.user.ability)) {
-        const instructions = this.languageIsEN() 
-        ? 'Create good skill for a ' + this.user.profession + 
-        'and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
-        : 'Crie um bom conjunto de habilidades para ' + this.user.profession + 
-        '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
-
-        const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                            customPrompt: instructions
-                          });
+      // // RESUME IMPROVING
+      // // Com conteúdo
+      // if(this.user?.resume && this.user?.resume != '') {
         
-        this.user.ability = response.data;
-        this.updateUser(this.user, false);
+      //   try{
+      //   const response = await funcs.improveTextLlama({
+      //                       text: this.user.resume.trim(),
+      //                       email: this.user?.contact?.email[0],
+      //                       language: this.configs.language,
+      //                     });
 
-        this.loading = false;
-        return;
-      }
 
-      // Skill - with skills
-      else if(this.user?.ability && !emptyPlaceholders.includes(this.user.ability)) {
-        const instructions = this.languageIsEN() 
-        ? 'Review those skills for a position of ' + this.user.profession + 
-        '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
-        : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
-        '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
+      //   // console.log('ia responde', response)
+
+      //   // alert(response.data)
+
+      //   this.user.resume = response.data;
+      //   this.updateUser(this.user, false);
+      //   this.loading = false;
+      //   return;
+      //   }catch (ex) {
+      //       const status = ex?.response?.status;
+      //       const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+      //       showAlert(mensagem);
+
+      //       if (status === 422) {
+      //         setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+      //       }
+      //   }
+      // }
+
+      // // RESUME IMPROVING
+      // // Sem conteúdo 
+      // else if (this.user?.resume == 'about you.' 
+      // || this.user?.resume == 'sobre você.' ) {
+
+      //   const instructions = this.languageIsEN() 
+      //   ? 'Create a good short summary about me as a ' + this.user.profession + 
+      //   'and return only the texto you got, no comments, no explanations, only the generated text.' 
+      //   : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
+      //   '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
+
+      //   try{
+      //     const response = await funcs.improveTextLlama({
+      //                         text: this.user.resume.trim(),
+      //                         email: this.user?.contact?.email[0],
+      //                         language: this.configs.language,
+      //                         customPrompt: instructions
+      //                       });
+
+      //     this.user.resume = response.data;
+      //     this.updateUser(this.user, false);
+
+      //     this.loading = false;
+      //     return;
+      //   }catch (ex) {
+      //       const status = ex?.response?.status;
+      //       const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+      //       showAlert(mensagem);
+
+      //       if (status === 422) {
+      //         setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+      //       }
+      //   }
+      // }
+
+
+      // // SKILLS - no skill
+      // const emptyPlaceholders = ['', 'Digite aqui', 'Type in here'];
+      // if (!!this.user.ability || emptyPlaceholders.includes(this.user.ability)) {
+      //   const instructions = this.languageIsEN() 
+      //   ? 'Create good skill for a ' + this.user.profession + 
+      //   'and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+      //   : 'Crie um bom conjunto de habilidades para ' + this.user.profession + 
+      //   '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
+
+      //   try {
+      //     const response = await funcs.improveTextLlama({
+      //                         text: this.user.resume.trim(),
+      //                         email: this.user?.contact?.email[0],
+      //                         language: this.configs.language,
+      //                         customPrompt: instructions
+      //                       });
+          
+      //     this.user.ability = response.data;
+      //     this.updateUser(this.user, false);
+
+      //     this.loading = false;
+      //     return;
+      //   }catch (ex) {
+      //       const status = ex?.response?.status;
+      //       const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+      //       showAlert(mensagem);
+
+      //       if (status === 422) {
+      //         setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+      //       }
+      //     }
+      // }
+
+      // // Skill - with skills
+      // else if(this.user?.ability && !emptyPlaceholders.includes(this.user.ability)) {
+      //   const instructions = this.languageIsEN() 
+      //   ? 'Review those skills for a position of ' + this.user.profession + 
+      //   '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+      //   : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
+      //   '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
       
-        const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                            customPrompt: instructions
-                          });
+      //   try {
+      //     const response = await funcs.improveTextLlama({
+      //                       text: this.user.resume.trim(),
+      //                       email: this.user?.contact?.email[0],
+      //                       language: this.configs.language,
+      //                       customPrompt: instructions
+      //                     });
         
-        this.user.ability = response.data;
-        this.updateUser(this.user, false);
+      //     this.user.ability = response.data;
+      //     this.updateUser(this.user, false);
 
-        this.loading = false;
-        return;
-      }
+      //     this.loading = false;
+      //     return;
+      //   }catch (ex) {
+      //     const status = ex?.response?.status;
+      //     const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+      //     showAlert(mensagem);
+
+      //     if (status === 422) {
+      //       setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+      //     }
+      //   }
+      // }
 
       // WORK - no-job
       if(this.user.userExperiences?.length === 0) {
@@ -501,7 +546,7 @@ export default {
         '. No comments or aditional infos just the string json for response.' 
         : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
         '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
-        'Sem informações adicionais, apenas responda com a string json. Em português, apenas position, company,'+
+        'Sem informações adicionais, apenas responda com a string json. Texto em português, em ingles apenas as palavras que formao o json, position, company,'+
         'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
       
         try {
@@ -512,6 +557,7 @@ export default {
                             customPrompt: instructions
                           });
 
+          console.log(response.data)
           this.user.userExperiences = [response.data];
           this.updateUser(this.user, false);
 
@@ -529,6 +575,39 @@ export default {
           }
         }
       }
+
+    // WORK - with job
+    if (this.user.userExperiences?.length > 0) {
+      alert("bora atualizar o array")
+      try {
+        // Using map instead of foreach to properly handle async/await
+        const promises = this.user.userExperiences.map(async (experience, index) => {
+          const response = await funcs.improveTextLlama({
+            text: experience.description.trim(),
+            email: this.user?.contact?.email[0],
+            language: this.configs.language
+          });
+
+          console.log(response.data)
+          
+          // Option 1: Direct modification
+          //experience.description = response.data;
+          
+          // Option 2: Modification by index
+          this.user.userExperiences[index].description = response.data;
+        });
+        
+        await Promise.all(promises); // Wait for all improvements to complete
+
+        this.updateUser(this.user, false);
+
+        this.loading = false;
+        return;
+      } catch (error) {
+        console.error("Error improving experiences:", error);
+        // Handle error as needed
+      }
+    }
       
     },
     async pedirUmTokenNovo() {
@@ -546,7 +625,20 @@ export default {
         }
       } catch (error) {
         console.error('Failed to resend confirmation:', error);
-        // alert(this.languageIsEN() ? 'Failed to send token' : 'Falha ao enviar token');
+
+        const status = error?.response?.status;
+        const mensagem = error?.response?.data || error?.message || 'Erro inesperado';
+
+        showAlert(mensagem);
+        this.$refs.globalModal.close();
+
+        if(status === 400 && mensagem.includes('No login for')) {
+          setTimeout(() => {
+            showAlert(this.languageIsEN() ? "let's register a password first" : "Vamos cadastrar sua senha");
+            this.inOnboarding = true;
+            this.inlogin = true;
+          }, 2000)
+        }
       }
     },
     updateEmail(newEmail) {
@@ -766,7 +858,10 @@ export default {
           "We sent a token to your e-mail, please copy and paste this token in the below field." :
           "Enviamos um token para seu email, copie e cole ele no campo abaixo.";
           this.showGlobalModal();
-          // this.user.getBackEndDataAndResolveYourSelf(response?.data.content);
+          if(!this.user._id) {
+            this.user._id = response.data.content.userId;
+            localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
+          }
         }
       }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
         let responseUser;
