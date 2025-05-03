@@ -291,6 +291,7 @@ import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
 import * as localStorageService from "./components/services/LocalStorageService.js";
 import authService from "./services/authService.js";
+import aiService from './services/AIService';
 import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
 import { getUser, resendConfirmationAccEmail } from "./components/configs/requests.js";
 
@@ -377,6 +378,13 @@ export default {
     AlertComponent
   },
   methods: {
+    async generateExperience() {
+      aiService.user = this.user; // Pass the user data if needed
+      aiService.configs = this.configs; // Pass configs if needed
+      await aiService.generateExtracurricularExperience();
+      this.updateUser(aiService.user, false);
+      this.loading = aiService.loading;
+    },
     async melhorarCurriculo() {
       this.loading = true;
 
@@ -536,78 +544,86 @@ export default {
       //   }
       // }
 
-      // WORK - no-job
-      if(this.user.userExperiences?.length === 0) {
-        const instructions = this.languageIsEN() 
-        ? 'Imageine a job position that match my skills:' +this.user.ability + '. With tille' + this.user.profession + 
-        '. Then I need you return a string containing a json strigify object inside as the exemple: '+
-        ' {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}.'+
-        ' In English'+
-        '. No comments or aditional infos just the string json for response.' 
-        : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
-        '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
-        'Sem informações adicionais, apenas responda com a string json. Texto em português, em ingles apenas as palavras que formao o json, position, company,'+
-        'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
+      // // WORK - no-job
+      // if(this.user.userExperiences?.length === 0) {
+      //   const instructions = this.languageIsEN() 
+      //   ? 'Imageine a job position that match my skills:' +this.user.ability + '. With tille' + this.user.profession + 
+      //   '. Then I need you return a string containing a json strigify object inside as the exemple: '+
+      //   ' {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}.'+
+      //   ' In English'+
+      //   '. No comments or aditional infos just the string json for response.' 
+      //   : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
+      //   '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
+      //   'Sem informações adicionais, apenas responda com a string json. Texto em português, em ingles apenas as palavras que formao o json, position, company,'+
+      //   'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
       
-        try {
-          const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                            customPrompt: instructions
-                          });
+      //   try {
+      //     const response = await funcs.improveTextLlama({
+      //                       text: this.user.resume.trim(),
+      //                       email: this.user?.contact?.email[0],
+      //                       language: this.configs.language,
+      //                       customPrompt: instructions
+      //                     });
 
-          console.log(response.data)
-          this.user.userExperiences = [response.data];
-          this.updateUser(this.user, false);
+      //     console.log(response.data)
+      //     this.user.userExperiences = [response.data];
+      //     this.updateUser(this.user, false);
 
-          this.loading = false;
-          return;
-        } catch (ex) {
-          // Verifica se é um erro Axios com status 422
-          const status = ex?.response?.status;
-          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+      //     this.loading = false;
+      //     return;
+      //   } catch (ex) {
+      //     // Verifica se é um erro Axios com status 422
+      //     const status = ex?.response?.status;
+      //     const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
 
-          showAlert(mensagem);
+      //     showAlert(mensagem);
 
-          if (status === 422) {
-            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
-          }
-        }
-      }
+      //     if (status === 422) {
+      //       setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+      //     }
+      //   }
+      // }
 
-    // WORK - with job
-    if (this.user.userExperiences?.length > 0) {
-      alert("bora atualizar o array")
-      try {
-        // Using map instead of foreach to properly handle async/await
-        const promises = this.user.userExperiences.map(async (experience, index) => {
-          const response = await funcs.improveTextLlama({
-            text: experience.description.trim(),
-            email: this.user?.contact?.email[0],
-            language: this.configs.language
-          });
-
-          console.log(response.data)
+      // // WORK - with job
+      // if (this.user.userExperiences?.length > 0) {
+      //   try {
+      //     // Using map instead of foreach to properly handle async/await
+      //     const promises = this.user.userExperiences.map(async (experience, index) => {
+      //       const response = await funcs.improveTextLlama({
+      //         text: experience.description.trim(),
+      //         email: this.user?.contact?.email[0],
+      //         language: this.configs.language
+      //       });
+            
+      //       // Option 1: Direct modification
+      //       //experience.description = response.data;
+            
+      //       // Option 2: Modification by index
+      //       this.user.userExperiences[index].description = response.data;
+      //     });
           
-          // Option 1: Direct modification
-          //experience.description = response.data;
-          
-          // Option 2: Modification by index
-          this.user.userExperiences[index].description = response.data;
-        });
-        
-        await Promise.all(promises); // Wait for all improvements to complete
+      //     await Promise.all(promises); // Wait for all improvements to complete
 
-        this.updateUser(this.user, false);
+      //     this.updateUser(this.user, false);
 
-        this.loading = false;
-        return;
-      } catch (error) {
-        console.error("Error improving experiences:", error);
-        // Handle error as needed
-      }
-    }
+      //     this.loading = false;
+      //     return;
+      //   } catch (error) {
+      //     console.error("Error improving experiences:", error);
+      //     // Handle error as needed
+      //     const status = ex?.response?.status;
+      //     const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+      //     showAlert(mensagem);
+
+      //     if (status === 422) {
+      //       setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+      //     }
+      //   }
+      // }
+
+      // Outars eperiências
+      this.generateExperience();
       
     },
     async pedirUmTokenNovo() {
@@ -1796,6 +1812,7 @@ export default {
   .navbar {
     display: none !important;
   }
+  
 }
 
 /* animated bg css */

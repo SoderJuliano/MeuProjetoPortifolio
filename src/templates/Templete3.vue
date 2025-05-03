@@ -485,7 +485,8 @@
                 const dataFiredContent = ex.dateFired ? ex.dateFired : isEnglish ? "current job" : "trabalho atual"
                 experiencesComponents.value.push({
                     id: 3000 + index,
-                    title: ex.dateHired ? ex.dateHired + ' - ' + dataFiredContent : isEnglish ? 'Add date' : 'Adicionar data',
+                    title: ex.dateHired ? ex.dateHired +
+                     ' - ' + dataFiredContent : isEnglish ? 'Add date' : 'Adicionar data',
                     text: innerText ? innerText : '',
                     job: { ...ex, id } || {},
                     norender: false
@@ -578,60 +579,104 @@
     }
 
     const updateTitle = ({ id, title }) => {
-        // Find the corresponding component (education or experience)
-        let component = additionalComponents.value.find(c => c.id === Number(id))
-            || educationComponents.value.find(c => c.id === Number(id))
-            || experiencesComponents.value.find(c => c.id === Number(id));
+        const component = findComponentById(id);
+        if (!component) return;
 
-            if (component) {
-                // Update the title of the component
-                component.title = title;
+        component.title = title;
 
-                if (Number(id) === 1009) {
-                    localUpdatedUser.otherExperiencies = {
-                        ...localUpdatedUser?.otherExperiencies,
-                        title: title,
-                        text: localUpdatedUser?.otherExperiencies?.text || ''
-                    };
-                }
+        // Caso especial para otherExperiencies
+        if (Number(id) === 1009) {
+            updateOtherExperiences(title);
+            return;
+        }
 
-                let dateHired = null;
-                let dateFired = null;
-
-                // Determine the date format from the title
-                if (title.includes(' - ')) {
-                    // Format: "2024-01 - 2024-11" or "2020 - 2021"
-                    [dateHired, dateFired] = title.split(' - ').map(date => date.trim());
-                } else if (title.includes('-')) {
-                    // Format: "2020 - current job" or "2020 - trabalho atual"
-                    const parts = title.split('-').map(part => part.trim());
-                    dateHired = parts[0];  // The starting year
-                    dateFired = null;       // Set dateFired to null for current jobs
-                } else {
-                    // Single year or job description
-                    dateHired = title.trim();
-                    dateFired = null; // No end date if only a single year or current job
-                }
-
-                // Update localUpdatedUser based on the component ID
-                const experienceIndex = localUpdatedUser.userExperiences.findIndex(ex => ex.id === component.id - 3000);
-                if (experienceIndex !== -1) {
-                    // Update the existing experience
-                    localUpdatedUser.userExperiences[experienceIndex].dateHired = dateHired || localUpdatedUser.userExperiences[experienceIndex].dateHired; // Update only if a new value is present
-                    localUpdatedUser.userExperiences[experienceIndex].dateFired = dateFired; // Set to null to indicate current job
-                    // Emit the updated user
-                    emit('updateUser', localUpdatedUser);
-                } else {
-                    console.warn('Experience not found:', component.id);
-                }
-
-            // If the component is of type education, update the text in the grade
-            if (educationComponents.value.some(c => c.id === Number(id))) {
-                const index = component.id - 2000; // Calculate the correct index
-                updateLocalUserGradeData(index, title, component.text);
-            }
+        if (isExperienceComponent(id)) {
+            updateExperienceDates(component, title);
+        } else if (isEducationComponent(id)) {
+            updateEducationData(component, title);
         }
     };
+
+    // Funções auxiliares
+    function findComponentById(id) {
+        return additionalComponents.value.find(c => c.id === Number(id)) ||
+            educationComponents.value.find(c => c.id === Number(id)) ||
+            experiencesComponents.value.find(c => c.id === Number(id));
+    }
+
+    function updateOtherExperiences(title) {
+        localUpdatedUser.otherExperiencies = {
+            ...localUpdatedUser?.otherExperiencies,
+            title: title,
+            text: localUpdatedUser?.otherExperiencies?.text || ''
+        };
+    }
+
+    function updateExperienceDates(component, title) {
+        const [dateHired, dateFired] = extractDatesFromTitle(title);
+        const { position, company } = extractPositionAndCompany(component.text);
+        const experienceIndex = findMatchingExperienceIndex(component, position, company, dateHired);
+
+        if (experienceIndex !== -1) {
+            localUpdatedUser.userExperiences[experienceIndex] = {
+                ...localUpdatedUser.userExperiences[experienceIndex],
+                dateHired: dateHired || localUpdatedUser.userExperiences[experienceIndex].dateHired,
+                dateFired: dateFired
+            };
+            emit('updateUser', localUpdatedUser);
+        } else {
+            console.warn('Experience not found:', { 
+                id: component.id, 
+                text: component.text,
+                position,
+                company
+            });
+        }
+    }
+
+    function findMatchingExperienceIndex(component, position, company, dateHired) {
+        const experienceId = component.id - 3000;
+        
+        // Hierarquia de buscas
+        return localUpdatedUser.userExperiences.findIndex(ex => ex.id === experienceId) ||
+            (position && company && localUpdatedUser.userExperiences.findIndex(
+                ex => ex.position === position && ex.company === company)) ||
+            (component.text && localUpdatedUser.userExperiences.findIndex(
+                ex => ex.description.includes(component.text.split('<br/>')[0]?.split('<br />')[0]?.trim() || ''))) ||
+            (dateHired && localUpdatedUser.userExperiences.findIndex(
+                ex => ex.dateHired === dateHired)) ||
+            -1;
+    }
+
+    function extractPositionAndCompany(text) {
+        const positionMatch = text.match(/<b>(.*?) - <\/b>/);
+        const companyMatch = text.match(/<b>(.*?)<\/b>/g);
+        
+        return {
+            position: positionMatch?.[1]?.trim() || '',
+            company: companyMatch?.[companyMatch.length-1]?.replace(/<\/?b>/g, '').trim() || ''
+        };
+    }
+
+    function extractDatesFromTitle(title) {
+        const dateParts = title.split(' - ')
+                            .map(part => part.trim())
+                            .filter(part => /^(\d{2}\/\d{4}|\d{4})$/.test(part));
+        return [dateParts[0], dateParts[1] || null];
+    }
+
+    function isExperienceComponent(id) {
+        return experiencesComponents.value.some(c => c.id === Number(id));
+    }
+
+    function isEducationComponent(id) {
+        return educationComponents.value.some(c => c.id === Number(id));
+    }
+
+    function updateEducationData(component, title) {
+        const index = component.id - 2000;
+        updateLocalUserGradeData(index, title, component.text);
+    }
 
     const updateAddress = (text) => {
         // Inicializa o objeto adressObject se ele não existir
@@ -986,8 +1031,11 @@
         }
     });
 
-    watch (() => localUpdatedUser.userExperiences, (newArray) => {
-        console.log('localUpdatedUser.userExperiences', newArray)
+    watch (() => localUpdatedUser.otherExperiencies, (newEx) => {
+        const component = additionalComponents.value.find(c => c.id === 1009);
+        if(component) {
+            component.text = newEx.text;
+        }
     }, { deep: true });
 </script>
 

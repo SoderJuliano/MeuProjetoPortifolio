@@ -291,6 +291,11 @@ h3:hover .editar-animado{
     margin-top: 20px;
 }
 @media print {
+    /* O shadow do navbar ficava aparecendo, isso resolveu */
+    .container-fluid {
+        display: none !important;
+    }
+
     .not-visible {
         display: none !important;
     }
