@@ -83,6 +83,29 @@ class AIService {
   languageIsEN() {
     return this.configs.language === 'en-us';
   }
+
+
+
+  async improveExtracurricularExperience() {
+    if (this.shouldGenerateExperience(this.user)) return;
+    
+    try {
+      const instructions = this.getImproveExperienceInstructions();
+      const response = await this.fetchImprovedText(instructions);
+      
+      this.updateUserExperience(response.data);
+      this.loading = false;
+    } catch (error) {
+      this.handleGenerationError(error);
+    }
+  }
+
+  getImproveExperienceInstructions() {
+    languageIsEN() ? "Improve this text, no comments or explanations, only return the text "+
+    this.user.otherExperiencies.text
+    : "Melhore esse texto, sem comentarios ou explicações, apenas o texto "+
+    this.user.otherExperiencies.text;
+  }
 }
 
 export default new AIService();
