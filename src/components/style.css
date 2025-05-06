@@ -141,7 +141,6 @@ img {
 @media screen and (min-width: 1001px) {
     .template-data {
         min-height: 100px;
-        background-color: rgb(255 240 240 / 41%);
         border-radius: 5px;
     }
 
@@ -158,7 +157,7 @@ img {
     border-style: solid;
     border-color: black;
     background-color: rgba(245, 245, 245, 0.514);
-    margin-top: -15px;
+    margin-top: 30px;
     position: absolute;
 }
 
@@ -239,10 +238,10 @@ img {
     margin-right: 20px;
 }
 .social-item-template2:hover .remove-bnt-delete{
-    width: 20px;
+    width: 25px;
     position: absolute;
     right: 40px;
-    top: 10px;
+    top: 2px;
     display: flex;
     background-color: #d7d7d7;
 }
@@ -292,6 +291,11 @@ h3:hover .editar-animado{
     margin-top: 20px;
 }
 @media print {
+    /* O shadow do navbar ficava aparecendo, isso resolveu */
+    .container-fluid {
+        display: none !important;
+    }
+
     .not-visible {
         display: none !important;
     }
@@ -551,7 +555,7 @@ button {
         position: absolute !important;
         width: 70vw !important;
         left: 10% !important;
-        top: 10% !important;
+        top: 15% !important;
         background-color: rgba(255, 255, 255, 0.914) !important;
     }
 
@@ -571,9 +575,11 @@ button {
         display: flex;
         margin-top: 20px;
     }
+
     .ajsut-img {
         margin-left: 10%;
     }
+    
     .navbar {
         width: 100% !important;
     }
@@ -585,6 +591,8 @@ button {
         margin-left: 10px !important;
         /* top: -15px !important; */
         min-width: 250px !important;
+        justify-content: center !important;
+        display: flex !important;
     }
 }
 /* fim */
@@ -601,16 +609,21 @@ button {
     }
     
     .navbar-login {
-        margin-top: 95px !important;
         padding: 0% !important;   
         background-color: transparent !important; 
+        position: absolute !important;
+        top: 120px;
     }
 
     .midle-options {
         && button {
-            margin-top: 30px !important;
             height: 60px;
+            margin-top: 0px;
         }
+    }
+
+    .bnt-languages {
+        width: 20px !important;
     }
 }
 
@@ -772,15 +785,15 @@ top: 0 !important;
 
 .print .pic {
     object-fit: cover;
-    width: 152px;
-    height: 150px;
+    width: 182px;
+    height: 180px;
 }
 
 
 .print .img-pic {
     object-fit: cover;
-    width: 155px;
-    height: 150px;
+    width: 185px;
+    height: 180px;
 }
 
 .print .footer {
@@ -851,7 +864,6 @@ top: 0 !important;
   width: 100%;
   padding: 15px;
   box-sizing: border-box;
-  background-color: rgba(255, 240, 240, 0.41);
   border-radius: 5px;
 }
 
@@ -982,5 +994,13 @@ top: 0 !important;
     }
     p {
       page-break-inside: avoid; /* Evita quebras de página dentro de parágrafos */
+    }
+
+    .navbar-login {
+        display: none;
+
+        && button {
+            display: none !important;
+        }
     }
 }

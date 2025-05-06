@@ -10,18 +10,51 @@
                     </div>
 
                     <div class="modal-internal-content">
+                        <!-- Não lembro porque a 3 anos atrás fiz assim, mas vai ficar assim agora -->
                         <p style="margin-right: 10px">{{title == 'Sobre voce' ? 'Sobre você' : title}}</p>
                         <br v-if="title=='Write about you'" />
-                        <textarea v-if="title=='Sobre voce' || title=='Write about you'" name="area" id="modal-input" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" :placeholder="`${this.placeholder}`"></textarea>
-                        <textarea v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')" @keydown.enter="pressedShifAndEnter" cols="40" rows="5" id="modal-input" type="text" :placeholder="`${this.placeholder}`"></textarea>
-                        <input v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')" @keydown.enter="pressedEnter()" id="modal-input" type="text" :placeholder="`${this.placeholder}`" >
+                        <textarea 
+                            v-if="title=='Sobre voce' || title=='Write about you'"
+                            name="area" id="modal-input"
+                            @keydown.enter="pressedShifAndEnter"
+                            cols="40" rows="5"
+                            :placeholder="`${this.placeholder}`">
+                        </textarea>
+                        <textarea
+                            v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')"
+                            @keydown.enter="pressedShifAndEnter"
+                            cols="40" rows="5" 
+                            id="modal-input"
+                            type="text"
+                            :placeholder="`${this.placeholder}`">
+                        </textarea>
+                        <input
+                            v-if="(title != 'Write about you') && (title != 'Sobre voce') && (title != 'Habilidade') && (title != 'Skill')"
+                            @keydown.enter="pressedEnter()"
+                            id="modal-input"
+                            type="text"
+                            :placeholder="`${this.placeholder}`" 
+                        >
+                        <div v-if="loggedIn && (title=='Sobre voce' || title=='Write about you')" class="ia">
+                            <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
+                            <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
+                            <div @click="go('about-you-ia')" class="do-action" v-if="isEnglish">Go!</div>
+                            <div @click="go('about-you-ia')" class="do-action" v-else>Vai!</div>
+                        </div>
+                        <div @click="closeAndshowLogin()"
+                            v-else-if="!loggedIn && (title=='Sobre voce' || title=='Write about you')"
+                            class="ai-tip"
+                        >
+                            <span v-if="isEnglish">🚀 Log in to unlock AI-powered features!</span>
+                            <span v-else>🚀 Faça login para desbloquear recursos com IA!</span>
+                        </div>
                     </div>
 
                     <span class="balao" v-if="mainTitle == 'Habilidade' && title == 'Habilidade' && language == 'pt-br'">
                         Separe as habilidades por vírgula.
                     </span>
 
-                    <br><br>
+                    <br v-if="!title=='Write about you'"><br>
                     <div class="modal-internal-content" v-if="title == 'Nome da empresa' || title == 'Company name'">
                         <p style="margin-right: 10px" >{{title2}}</p>
                         <input @keydown.enter="pressedEnter()" id="modal-input2" v-if="title == 'Nome da empresa' || title == 'Company name'" type="text" :placeholder="`${this.placeholder2}`">
@@ -63,13 +96,47 @@
 
                     <div v-if="ptitle3" class="modal-internal-content">
                         <p style="margin-right: 10px;">{{ptitle3}}</p>
-                        <textarea @keydown.enter.shift="pressedEnterOk()" id="modal-input3" cols="40" rows="5" :placeholder=this.getJobDescriptionPlaceholderText()></textarea>
+                        <textarea 
+                            @keydown.enter.shift="pressedEnterOk()"
+                            id="modal-input3"
+                            cols="40" rows="5"
+                            :placeholder=this.getJobDescriptionPlaceholderText()>
+                        </textarea>
+                    </div>
+                    <!-- Para aparecer apenas na descrição do trabalho -->
+                    <div v-if="loggedIn && (ptitle3 == 'Description' || ptitle3 == 'Descrição')
+                    && (this.mainTitleValue() == 'RESUMO PROFISSIONAL' || this.mainTitleValue() == 'PROFESSIONAL HISTORY')"
+                    class="ia">
+                        <span v-if="isEnglish">Improve this text with AI ⋆✴︎˚｡⋆🤖</span>
+                        <span v-else>Melhorar esse texto com IA ⋆✴︎˚｡⋆🤖</span>
+                        <div @click="go('job-description-ia')" class="do-action" v-if="isEnglish">Go!</div>
+                        <div @click="go('job-description-ia')" class="do-action" v-else>Vai!</div>
+                    </div>
+                    <div @click="closeAndshowLogin()"
+                            v-else-if="!loggedIn && (ptitle3 == 'Description' || ptitle3 == 'Descrição')"
+                            class="ai-tip"
+                        >
+                        <span v-if="isEnglish">🚀 Log in to unlock AI-powered features!</span>
+                        <span v-else>🚀 Faça login para desbloquear recursos com IA!</span>
                     </div>
 
                     <br v-if="ptitle3"><br v-if="ptitle3">
 
-                    <button class="bnt-proximo" v-if="ptitle" @click="proximo(title)">{{language == 'pt-br' ? "Proximo" : "Next"}}</button>
-                    <button class="save-bnt" v-else v-on:click=add(ptitle3)>{{language == 'pt-br' ? "Salvar" : "Save"}}</button><button v-on:click="cancelar">{{language == 'pt-br' ? "Cancelar" : "Cancel"}}</button>
+                    <button class="bnt-proximo" 
+                        v-if="ptitle"
+                        @click="proximo(title)">
+                        {{language == 'pt-br' ? "Proximo" : "Next"}}
+                    </button>
+                    <button
+                        class="save-bnt"
+                        v-else
+                        v-on:click=add(ptitle3)>
+                        {{language == 'pt-br' ? "Salvar" : "Save"}}
+                    </button>
+                    <button 
+                        v-on:click="cancelar()">
+                        {{language == 'pt-br' ? "Cancelar" : "Cancel"}}
+                    </button>
                 </div>
         </div>
         <div v-if="title=='Email'" class="body-modal-container">
@@ -135,7 +202,8 @@ import UserModel from '../model/userModel';
 import IconChooser from './iconComponent/IconChooser.vue';
 import * as funcs from './componentesCompartilhados/utilJS/functions';
 import $ from 'jquery';
-
+import { improveText, improveTextLlama } from '../components/configs/requests.js';
+import authService from '../services/authService.js';
 
 export default {
     name: 'modal-input',
@@ -151,7 +219,9 @@ export default {
             simplifiedDate: true,
             mainTitleCaps: this.mainTitle.toUpperCase(),
             pressed: false,
-            isPageLink: false
+            isPageLink: false,
+            isEnglish: true,
+            loggedIn: false,
         }
     },
     components: {
@@ -169,8 +239,118 @@ export default {
         language: String,
         user: Object,
     },
-    emits:["update-name", "add-profissao", "adicionar-formacao", "adicionar-habilidade", "update-experiences", "update-user"],
+    emits:[
+        "update-name",
+        "add-profissao",
+        "adicionar-formacao",
+        "adicionar-habilidade",
+        "update-experiences",
+        "update-user",
+        "login"
+    ],
     methods:{
+        closeAndshowLogin() {
+            this.cancelar();
+            this.$emit('login');
+        },
+
+        mainTitleValue() {
+            return $("#mainTitle").text()
+        },
+
+        go(val) {
+            $('.do-action').css({
+                'opacity': '0.5',
+                'cursor': 'not-allowed',
+                'pointer-events': 'none'
+            });
+
+            if (val === 'about-you-ia') {
+                this.handleAboutYouIA('#modal-input');
+                return;
+            }
+            
+            if (val === 'job-description-ia') {
+                this.handleAboutYouIA('#modal-input3');
+            }
+            
+        },
+        
+        async handleAboutYouIA(input) {
+            if (!$(input).val().trim()) {
+                $('.ia span:first-child').text(this.isEnglish ? 'Input is empty 🤖' : 'O campo esta vazio 🤖');
+            
+                $('.do-action').css({
+                    'opacity': '1',
+                    'cursor': 'pointer',
+                    'pointer-events': 'auto'
+                });
+                return;
+            }
+
+            $('.ia span:first-child').text(this.isEnglish ? 'Generating, hold on 🤖' : 'Gerando, aguenta ai 🤖');
+
+            if ($(input).val().trim().length < 10) {
+                $('.ia span:first-child').text(this.isEnglish ? 'Minimum 10 characters 🤖' : 'Mínimo 10 caracteres 🤖');
+    
+                $('.do-action').css({
+                    'opacity': '1',
+                    'cursor': 'pointer',
+                    'pointer-events': 'auto'
+                });
+                return;
+            }
+            try {
+                // const response = await improveText(
+                //     {
+                //         text: $('#modal-input').val().trim(),
+                //         email: this.userData?.contact?.email[0],
+                //         language: this.language
+                //     }
+                // );
+                
+                const response = await improveTextLlama(
+                    {
+                        text: $(input).val().trim(),
+                        email: this.userData?.contact?.email[0],
+                        language: this.language
+                    }
+                );
+                console.log("response", response)
+                console.log("response", response.status)
+                $(input).val(response.data);
+                $('.ia span:last-child').text(this.isEnglish ? 'Done!' : 'Feito!');
+                $('.ia span:first-child').text(this.isEnglish ? 'what do you think? 🤖' : 'O que achou? 🤖');
+           
+                if(response?.status === 500) {
+
+                    $('.ia span:first-child').text(this.isEnglish 
+                    ? 'An error occurred, try again later 🤖' 
+                    : 'Ocorreu um erro, tende denovo mais tarde 🤖');
+
+                }
+            }catch (error) {
+                console.log("error", error)
+                $('.ia span:first-child').text(this.isEnglish ? 'Error! Try again later 🤖' : 'Erro! Tente mais tarde 🤖');
+                return;
+            }
+
+            // IF PREMIUN ACCOUNT
+
+            if(this.userData?.premium) {
+                $('.do-action').css({
+                    'opacity': '1',
+                    'cursor': 'pointer',
+                    'pointer-events': 'auto'
+                });
+            }else {
+                $('.ia span:first-child').text(this.isEnglish 
+                ? 'You can try as many times you want when registering a premium account 🤖' 
+                : 'Pode repetir a chamada quantas vezes quiser com uma conta premium 🤖');
+            }
+            
+            
+        },
         check(event) {
             this.isPageLink = event.target.checked;
         },
@@ -385,12 +565,20 @@ export default {
 
             this.updateUser()
         },
+        
         returnIfNotEmpty(item) {
             if(item.length > 0) {
                 return item;
             }
         },
         cancelar(){
+
+            // Wen next is pressed, an new job was already insert on jobs array,
+            // then we remove it back when user cancel
+            if($("#mainTitle").text() === 'PROFESSIONAL HISTORY') {
+                this.userData.userExperiences.pop();
+            }
+
             document.getElementsByClassName("main-modal-container")[0].style.width = "2%";
             document.getElementsByClassName("main-modal-container")[0].style.heigth = "2%";
             document.getElementsByClassName("main-modal-container")[0].style.opacity = "0";
@@ -438,6 +626,8 @@ export default {
         }
     },
     mounted() {
+        this.isEnglish = this.language.includes("en") ? true : false;
+
         this.userData = new UserModel();
         this.userData = this.userData.constructorObject(this.user);
 
@@ -469,6 +659,7 @@ export default {
             handler() {
                 let model = new UserModel();
                 this.userData = model.constructorObject(this.user);
+                this.loggedIn = authService.hasToken();
             }
         }
     }
@@ -486,6 +677,77 @@ button {
 
 <style scoped>
 
+.ai-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background-color: #f0f4ff; /* Light blue background for a friendly feel */
+  border-radius: 8px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.ai-tip:hover {
+  transform: translateY(-2px); /* Subtle hover effect */
+}
+
+/* Optional: If you want to style the existing .ia or .do-action classes */
+.ia {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.do-action {
+  cursor: pointer;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.do-action:hover {
+  background-color: #0056b3;
+}
+
+.ia {
+    display: flex;
+    position: relative;
+    margin: 10px;
+    justify-content: space-around;
+
+    && .do-action {
+            border: solid 1px black;
+            padding: 10px;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-flex;       /* Usa flexbox para melhor centralização */
+            justify-content: center;    /* Centraliza horizontalmente */
+            align-items: center;        /* Centraliza verticalmente */
+            width: 50px;               /* Largura fixa para formar um círculo perfeito */
+            height: 50px;              /* Altura igual à largura */
+            line-height: 1;            /* Remove espaçamento extra do texto */
+            font-size: 16px;           /* Tamanho adequado para o texto */
+            cursor: pointer;           /* Muda cursor para indicar ação */
+        }
+
+            /* Opcional: efeitos de hover */
+            .do-action:hover {
+                background-color: #f0f0f0;
+                transform: scale(1.05);
+                transition: all 0.2s ease;
+            }
+}
+
 .adress-form {
     display: flex;
     flex-wrap: wrap;
@@ -500,11 +762,11 @@ button {
     margin-bottom: 10px;
 }
 
-.save-bnt {
+/* .save-bnt {
     background-color: white;
     border-radius: 20px;
     font-size: 16px;
-}
+} */
 .main-modal-container {
     position: absolute;
     top: 0;

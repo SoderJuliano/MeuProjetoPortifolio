@@ -32,6 +32,11 @@ class AuthService {
         // Deletar o jwt dos cookies
         document.cookie = 'jwt=; Max-Age=0; path=/'; // Define um cookie vazio e expira imediatamente
     }
+
+    hasToken() {
+        const token = this.getToken();
+        return token !== null && token.trim() !== '';
+    }
 }
 
 export default new AuthService();

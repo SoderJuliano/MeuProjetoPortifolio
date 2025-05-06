@@ -1,4 +1,30 @@
 <template>
+  <div style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+    <button style="
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite;
+    " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0, 0, 0, 0.25)'" 
+    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.2)'"
+    @click="melhorarCurriculo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h9"></path>
+        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+      </svg>
+      {{ this.languageIsEN() ? 'Improve your CV with AI' : 'Melhore seu CV com IA'}}
+    </button>
+  </div>
   <GlobalModal
       ref="globalModal"
       :title="globalModalTitle"
@@ -6,9 +32,14 @@
     >
     <div class="globalModal">
       <input id="input-token" type="text">
-      <button id="submit-token" @click="submitToken()">{{ this.languageIsEN() ? "Submit token" : "Enviar token" }}</button>
+      <button
+        id="submit-token"
+        @click="submitToken()">
+        {{ this.languageIsEN() ? "Submit token" : "Enviar token" }}
+      </button>
+      <a @click="pedirUmTokenNovo" >Pedir um token novo</a>
     </div>
-    </GlobalModal>
+  </GlobalModal>
 
   <!-- A LOADER -->
   <Loader :show="loading" :language="this.configs.getLanguage()" ></Loader>
@@ -45,6 +76,7 @@
     @update-name="updateName"
     @add-profissao="editarProfissao"
     @update-user="updateUser"
+    @login="showLogin"
   />
   <nav-bar
     :language="this.configs.getLanguage()"
@@ -76,6 +108,7 @@
     @login="login"
     @cancel="cancelLogin"
     @alert="fireGlobalAlert"
+    @email-updated="updateEmail"
   ></login>
   <diagrams-modal
     :diagram="diagram"
@@ -184,6 +217,7 @@
         @delete-from-experiences="deleteFromExperiences"
         @add-profession="editarProfissao"
         @add-SocialLink="this.showModal('socialLink')"
+        @updateUser="updateUser"
       />
     </div>
     <div class="footer">
@@ -257,8 +291,9 @@ import Loader from "./components/componentesCompartilhados/Loader.vue";
 import GlobalModal from "./components/componentesCompartilhados/GlobalModal.vue";
 import * as localStorageService from "./components/services/LocalStorageService.js";
 import authService from "./services/authService.js";
+import aiService from './services/AIService';
 import { isMobilePortrait } from './components/componentesCompartilhados/utilJS/functions.js';
-import { getUser } from "./components/configs/requests.js";
+import { getUser, resendConfirmationAccEmail } from "./components/configs/requests.js";
 
 export default {
   name: "Home",
@@ -343,6 +378,294 @@ export default {
     AlertComponent
   },
   methods: {
+    async generateExperience() {
+      aiService.user = this.user; // Pass the user data if needed
+      aiService.configs = this.configs; // Pass configs if needed
+      // If exist otherExperiencies will improve
+      await aiService.improveExtracurricularExperience();
+      // If not will generete
+      await aiService.generateExtracurricularExperience();
+      this.updateUser(aiService.user, false);
+      this.loading = aiService.loading;
+    },
+    async melhorarCurriculo() {
+      this.loading = true;
+
+      if(!authService.hasToken()) {
+        showAlert(this.languageIsEN() ? "Need login first" : "Precisa fazer login primeiro");
+        this.loading = false;
+        return;
+      }
+
+      if(!this.user.profession) {
+        showAlert(this.languageIsEN() ? "Insert a profession first" 
+        : "Inseria uma profissão primeiro");
+        this.loading = false;
+        return;
+      }
+
+      if(!this.user?.contact?.email.length > 0) {
+        showAlert(this.languageIsEN() ? "Insert an email first" 
+        : "Inseria um email primeiro");
+        this.loading = false;
+        return;
+      }
+      
+      // RESUME IMPROVING
+      // Com conteúdo
+      if(this.user?.resume && this.user?.resume != '') {
+        
+        try{
+        const response = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                          });
+
+
+        // console.log('ia responde', response)
+
+        // alert(response.data)
+
+        this.user.resume = response.data;
+        this.updateUser(this.user, false);
+        this.loading = false;
+        return;
+        }catch (ex) {
+            const status = ex?.response?.status;
+            const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+            showAlert(mensagem);
+
+            if (status === 422) {
+              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+            }
+        }
+      }
+
+      // RESUME IMPROVING
+      // Sem conteúdo 
+      else if (this.user?.resume == 'about you.' 
+      || this.user?.resume == 'sobre você.' ) {
+
+        const instructions = this.languageIsEN() 
+        ? 'Create a good short summary about me as a ' + this.user.profession + 
+        'and return only the texto you got, no comments, no explanations, only the generated text.' 
+        : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
+        '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
+
+        try{
+          const response = await funcs.improveTextLlama({
+                              text: this.user.resume.trim(),
+                              email: this.user?.contact?.email[0],
+                              language: this.configs.language,
+                              customPrompt: instructions
+                            });
+
+          this.user.resume = response.data;
+          this.updateUser(this.user, false);
+
+          this.loading = false;
+          return;
+        }catch (ex) {
+            const status = ex?.response?.status;
+            const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+            showAlert(mensagem);
+
+            if (status === 422) {
+              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+            }
+        }
+      }
+
+
+      // SKILLS - no skill
+      const emptyPlaceholders = ['', 'Digite aqui', 'Type in here'];
+      if (!!this.user.ability || emptyPlaceholders.includes(this.user.ability)) {
+        const instructions = this.languageIsEN() 
+        ? 'Create good skill for a ' + this.user.profession + 
+        'and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        : 'Crie um bom conjunto de habilidades para ' + this.user.profession + 
+        '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
+
+        try {
+          const response = await funcs.improveTextLlama({
+                              text: this.user.resume.trim(),
+                              email: this.user?.contact?.email[0],
+                              language: this.configs.language,
+                              customPrompt: instructions
+                            });
+          
+          this.user.ability = response.data;
+          this.updateUser(this.user, false);
+
+          this.loading = false;
+          return;
+        }catch (ex) {
+            const status = ex?.response?.status;
+            const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+            showAlert(mensagem);
+
+            if (status === 422) {
+              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+            }
+          }
+      }
+
+      // Skill - with skills
+      else if(this.user?.ability && !emptyPlaceholders.includes(this.user.ability)) {
+        const instructions = this.languageIsEN() 
+        ? 'Review those skills for a position of ' + this.user.profession + 
+        '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
+        '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
+      
+        try {
+          const response = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+        
+          this.user.ability = response.data;
+          this.updateUser(this.user, false);
+
+          this.loading = false;
+          return;
+        }catch (ex) {
+          const status = ex?.response?.status;
+          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+          showAlert(mensagem);
+
+          if (status === 422) {
+            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+          }
+        }
+      }
+
+      // WORK - no-job
+      if(this.user.userExperiences?.length === 0) {
+        const instructions = this.languageIsEN() 
+        ? 'Imageine a job position that match my skills:' +this.user.ability + '. With tille' + this.user.profession + 
+        '. Then I need you return a string containing a json strigify object inside as the exemple: '+
+        ' {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}.'+
+        ' In English'+
+        '. No comments or aditional infos just the string json for response.' 
+        : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
+        '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
+        'Sem informações adicionais, apenas responda com a string json. Texto em português, em ingles apenas as palavras que formao o json, position, company,'+
+        'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
+      
+        try {
+          const response = await funcs.improveTextLlama({
+                            text: this.user.resume.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+
+          console.log(response.data)
+          this.user.userExperiences = [response.data];
+          this.updateUser(this.user, false);
+
+          this.loading = false;
+          return;
+        } catch (ex) {
+          // Verifica se é um erro Axios com status 422
+          const status = ex?.response?.status;
+          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+          showAlert(mensagem);
+
+          if (status === 422) {
+            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+          }
+        }
+      }
+
+      // WORK - with job
+      if (this.user.userExperiences?.length > 0) {
+        try {
+          // Using map instead of foreach to properly handle async/await
+          const promises = this.user.userExperiences.map(async (experience, index) => {
+            const response = await funcs.improveTextLlama({
+              text: experience.description.trim(),
+              email: this.user?.contact?.email[0],
+              language: this.configs.language
+            });
+            
+            // Option 1: Direct modification
+            //experience.description = response.data;
+            
+            // Option 2: Modification by index
+            this.user.userExperiences[index].description = response.data;
+          });
+          
+          await Promise.all(promises); // Wait for all improvements to complete
+
+          this.updateUser(this.user, false);
+
+          this.loading = false;
+          return;
+        } catch (error) {
+          console.error("Error improving experiences:", error);
+          // Handle error as needed
+          const status = ex?.response?.status;
+          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+
+          showAlert(mensagem);
+
+          if (status === 422) {
+            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+          }
+        }
+      }
+
+      // Outars eperiências
+      this.generateExperience();
+      
+    },
+    async pedirUmTokenNovo() {
+      try {
+        const response = await resendConfirmationAccEmail(this.user.contact.email[0],
+          this.configs.language
+        );
+        
+        if(response.status === 200) { 
+          $(".globalModal a")
+            .text(this.languageIsEN() ? 'New token sent' : 'Token novo enviado')
+            .off('click') 
+            .css('pointer-events', 'none') 
+            .css('opacity', '0.5'); 
+        }
+      } catch (error) {
+        console.error('Failed to resend confirmation:', error);
+
+        const status = error?.response?.status;
+        const mensagem = error?.response?.data || error?.message || 'Erro inesperado';
+
+        showAlert(mensagem);
+        this.$refs.globalModal.close();
+
+        if(status === 400 && mensagem.includes('No login for')) {
+          setTimeout(() => {
+            showAlert(this.languageIsEN() ? "let's register a password first" : "Vamos cadastrar sua senha");
+            this.inOnboarding = true;
+            this.inlogin = true;
+          }, 2000)
+        }
+      }
+    },
+    updateEmail(newEmail) {
+      if(this.user.contact) {
+        this.user.contact.email[0] = newEmail;
+        localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
+      }
+    },
     deleteFromExperiences(id) {
         const index = this.user?.userExperiences?.findIndex(item => item.id === id);
         if (index > -1) {
@@ -516,9 +839,30 @@ export default {
     cancelLogin() {
       this.inlogin = false;
     },
-    async login(email, password) {
+    async login(email, password, register) {
       let userFromModel = new UserModel();
       userFromModel = userFromModel.constructorObject(this.user);
+      if(register) {
+        this.logedIn = false;
+        this.inlogin = false;
+        this.inOnboarding = true;
+        const response = await userFromModel.saveIntoDatabase(true);
+
+        if (response) {
+          if (response.status == 422) {
+            this.isANewUser == false;
+          } else if(response.status == 201) {
+            this.isANewUser = true;
+            showAlert(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
+            userFromModel = await userFromModel.constructorObject(response?.data.content);
+            this.user = userFromModel;
+            this.user.language = this.configs.language;
+          } else if (response.status == 200) {
+            this.isANewUser = false;
+          }
+        }
+      }
+
       if(userFromModel instanceof UserModel && this.inOnboarding == true) {
         const response = await userFromModel.firstLogin(email, password);
         // console.log('response from backend login -->', response);
@@ -533,7 +877,10 @@ export default {
           "We sent a token to your e-mail, please copy and paste this token in the below field." :
           "Enviamos um token para seu email, copie e cole ele no campo abaixo.";
           this.showGlobalModal();
-          // this.user.getBackEndDataAndResolveYourSelf(response?.data.content);
+          if(!this.user._id) {
+            this.user._id = response.data.content.userId;
+            localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
+          }
         }
       }else if (userFromModel instanceof UserModel && this.inOnboarding == false) {
         let responseUser;
@@ -673,7 +1020,7 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData, notSync) {
-      // console.log('user update', userData);
+      // console.log('user update', userData.profession);
       // console.log("not sync", notSync)
       // console.log("isMobilePortrait() && !notSync", isMobilePortrait() && !notSync)
       this.user = userData;
@@ -690,9 +1037,9 @@ export default {
       let userFromModel = new UserModel();
         userFromModel = userFromModel.constructorObject(this.user);
         const response = await userFromModel.saveIntoDatabase(false);
-        console.log('user on update user', response);
+        // console.log('user on update user', response);
         if(response.status != 200) {
-          console.log('user on update user status', response.status);
+          // console.log('user on update user status', response.status);
           this.syncUser = false;
         }
       this.loading = false;
@@ -1120,19 +1467,17 @@ export default {
 
   beforeMount() {
     // General configs
-    if(!localStorage.getItem("configs")){
-      this.configs = new PageConfig();
-      localStorage.setItem("configs", JSON.stringify(this.configs));
-    }else{
+    if(!localStorage.getItem("configs")) {
+      window.location.href = "/welcome"
+    } else {
       this.configs = new PageConfig().recoverConfigs();
-    }
-    if(!localStorage.getItem('deletedDefaultNotifications'+'-'+this.configs.getLanguage())) {
+    } if(!localStorage.getItem('deletedDefaultNotifications'+'-'+this.configs.getLanguage())) {
       const lang = this.configs.getLanguage();
       const icons = {
           "id": Math.random(),
           "title": lang.includes("en") ? "Icons" : "Icones",
-          "content": lang.includes("en") ? "You can click over some icons to see other options."
-          : "Você pode clicar sobre alguns icons para ver outras opções.",
+          "content": lang.includes("en") ? "You can click over some icons to see other options in Style 1 and 2 cvs."
+          : "Você pode clicar sobre alguns icons para ver outras opções nos cvs style 1 e 2.",
           "language": lang,
           "read": false,
           "local": true
@@ -1159,8 +1504,32 @@ export default {
           "local": true
       }
 
+      const plans = {
+        "id": Math.random(),
+        "title": lang.includes("en") ? "Premium plan" : "Plano premium",
+        "content": lang.includes("en") ?
+        "[PC] - Upgrade to our Premium Plan for unlimited AI-powered features at an unbeatable price! You'll get access to exclusive tools - including beta features currently in testing and upcoming releases."
+        : "[PC] - Temos um plano premiun que garante acesso ilimitado a funcionalidades de IA, SUPER EM CONTA, e que vai te dar muitas novas funcionalidades, muitas ainda que estão em teste ou em fasze de implantação.",
+        "language": lang,
+        "read": false,
+        "local": true,
+        "button": true,
+        "buttonText": lang.includes("en") ? "Check out" : "Ver agora"
+      }
+
+      const esc = {
+        "id": Math.random(),
+        "title": lang.includes("en") ? "Normal template" : "Template normal",
+        "content": lang.includes("en") ?
+        "[PC] - When you inside any input, you can press 'esc' key to leave or cancel editing."
+        : "[PC] - Quando estiver dentro de um campo de texto, aperte a tecla 'esc' para sair ou cancelar.",
+        "language": lang,
+        "read": false,
+        "local": true
+      }
+
       //newListOfAbraMessages
-      let listOfMessagens = [icons, skills, input];
+      let listOfMessagens = [icons, skills, input, plans, esc];
 
       localStorage.setItem('tips', JSON.stringify(listOfMessagens));
 
@@ -1174,11 +1543,13 @@ export default {
 
       this.configs.setIconsCollor();
 
-      const isUserIdValid = this.user?._id?.length === 24;
+      const isUserIdValid = this.user?._id?.length === 24 ||
+      this.user?.id?.length === 24;
+
       const isConnected = !!res.data;
       const lng = JSON.parse(localStorage.getItem("configs")).language;
       const userId =  authService.getIdUsuario();
-      const authenticated = userId === this.user?._id;
+      const authenticated = userId === (this.user?._id || this.user?.id);
 
       if(authenticated) {
         this.syncUser = true;
@@ -1191,24 +1562,7 @@ export default {
           }
       }
 
-      if (isUserIdValid && isConnected && !authenticated) {
-        this.inlogin = true;
-        this.inOnboarding = false;
-
-        const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
-        showAlert(malert);
-
-        this.newTipMessege = {
-          "id": Math.random(),
-          "title": lng.includes("en") ? "Tip on login" : "Dica ao logar-se",
-          "content": lng.includes("en")
-              ? "If you have unsaved changes, login will overwrite them with the last saved state."
-              : "Se você dados locais não salvos, ao logar-se eles serão sobreescritos pelo último save.",
-          "language": this.lang,
-          "read": false,
-          "local": true
-        }
-      } else if(isUserIdValid && isConnected && authenticated) {
+     if(isUserIdValid && isConnected && authenticated) {
         this.logedIn = true;
         this.inOnboarding = false;
         const malert = lng.includes("en") ? "Welcome back" : "Bem vindo de volta";
@@ -1228,7 +1582,7 @@ export default {
         setTimeout(() => {
           this.newTipMessege = {
             "id": Math.random(),
-            "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+            "title": lng.includes("en") ? "Tip of autosave" : "Dica para auto salvar dados",
             "content": lng.includes("en")
                 ? "The sync toggle stay under your name, make it visible clicking over your name on the right edge."
                 : "O botão de sincronização está no canto direito abaixo do seu nome, clique no seu nome para ele aparecer.",
@@ -1271,7 +1625,14 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(167, 119, 227, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(167, 119, 227, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(167, 119, 227, 0); }
+}
+
 .ripple-background {
   position: relative;
   z-index: -1;
@@ -1295,6 +1656,7 @@ export default {
   margin-top: 20px;
   border-radius: 10px;
   padding: 0px;
+  margin-top: 10%;
 }
 
 .multi-menu-class:hover {
@@ -1302,6 +1664,7 @@ export default {
 }
 
 .multi-menu-class {
+  margin-top: 10%;
   position: relative;
   padding: 30px;
   opacity: 0;
@@ -1397,6 +1760,11 @@ export default {
   }
 }
 @media print {
+  
+  .main-alert.show {
+    display: none;
+  }
+
   .navbar-login {
     display: none;
   }
@@ -1414,6 +1782,11 @@ export default {
   .main {
     display: flex;
     width: 100% !important;
+    width: 100dvw !important;
+    /* Template style 2 tava ficando com uma margem gigante
+    foi resolvido com margin e left 0 */
+    left: 0px;
+    margin: 0px !important; 
     position: absolute;
     top: 0 !important;
     -webkit-print-color-adjust: exact;
@@ -1442,6 +1815,7 @@ export default {
   .navbar {
     display: none !important;
   }
+  
 }
 
 /* animated bg css */

@@ -13,32 +13,44 @@
             <p class="multimenu-line second"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <Colors :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <pageColor :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
-            <Avatares :user="user" :language="language" @update-user="update" />
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
+        <Avatares :user="user"
+        :language="language"
+        @update-user="update" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <PicureShape :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
         <div class="option">
             <Templates
-                :language="language" :template="template" @now-template1="this.$emit('now-template1')"
+                :language="language"
+                :template="template"
+                @now-template1="this.$emit('now-template1')"
                 @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')"
                 @now-template4="this.$emit('now-template4')"
-                />
+            />
             <p class="multimenu-line"></p>
         </div>
         <div v-if="mobileOptions" class="option">
@@ -71,6 +83,16 @@
         </div>
         <div v-on:click="share()" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "SHARE" : "COMPARTILHAR" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-if="!user.premium" class="option">
+            <p class="tside">
+                <a
+                    href="/choose-your-plan"
+                    class="tside">
+                    {{ this.isEnglish() ? "PRMEIUM ACC 🏆" : "CONTA PREMIUM 🏆"  }}
+                </a>
+            </p>
             <p class="multimenu-line"></p>
         </div>
         <GlobalModal
@@ -270,10 +292,18 @@ export default {
 };
 </script>
 <style scoped>
+
+a {
+    text-decoration: none;
+    color: inherit;
+    padding-left: 0px;
+}
+
 .bnt-close {
     position: relative;
     right: 10px;
     top: 10px;
+    cursor: pointer;
 }
 
 .header {

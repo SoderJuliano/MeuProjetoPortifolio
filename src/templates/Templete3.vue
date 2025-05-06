@@ -1,77 +1,93 @@
 <template>
     <div class="template">
-        <ComponentWrap
-            id="1000"
-            :title="getById(1000)?.title"
-            :text="getById(1000).text"
-            :block="true"
-            :css="{
-                'margin-top': '50px',
-                'text-align': 'center',
-                'font-size': '36px',
-                'padding-left': '20%',
-                'padding-right': '20%'
-                }"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1001"
-            :text="getById(1001).text"
-            :block="true"
-            :css="base_css"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1002"
-            :text="getById(1002).text"
-            :block="true"
-            :css="base_css"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1003"
-            :text="getById(1003).text"
-            :block="true"
-            :css="base_css"
-            @update:text="updateText"
-            :class="getById(1003).lockEmail ? 'unclickable' : ''"
-        />
-        <ComponentWrap
-            id="1004"
-            :text="getById(1004).text"
-            :title="getById(1004).title"
-            :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1005"
-            :text="getById(1005).text"
-            :title="getById(1005).title"
-            :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-        />
+        <div class="component">
+            <ComponentWrap
+                id="1000"
+                :title="getById(1000)?.title"
+                :text="getById(1000).text"
+                :block="true"
+                :css="{
+                    'margin-top': '50px',
+                    'text-align': 'center',
+                    'font-size': '36px',
+                    'padding-left': '20%',
+                    'padding-right': '20%'
+                    }"
+                @update:title="updateTitle"
+                @update:text="updateText"
+            />
+        </div>
+        
+        <div class="component">
+            <ComponentWrap
+                id="1001"
+                :text="getById(1001).text"
+                :block="true"
+                :css="base_css"
+                @update:text="updateText"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1002"
+                :text="getById(1002).text"
+                :block="true"
+                :css="base_css"
+                @update:text="updateText"
+            />
+        </div>
+
+        <div class="component">
+            <ComponentWrap
+                id="1003"
+                :text="getById(1003).text"
+                :block="true"
+                :css="base_css"
+                @update:text="updateText"
+                :class="getById(1003).lockEmail ? 'unclickable' : ''"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1004"
+                :text="getById(1004).text"
+                :title="getById(1004).title"
+                :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1005"
+                :text="getById(1005).text"
+                :title="getById(1005).title"
+                :css="{ ...base_css, 'display': 'flex', 'margin-top': '30px' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+            />
+        </div>
         <!-- <br/> -->
-        <ComponentWrap
-            id="1006"
-            :text="getById(1006).text"
-            :css="{
-                'padding-left': '20%',
-                'text-align': 'start',
-                'margin-bottom': '0px',
-                'margin-top': '20px',
-                'font-weight': 'bold'
-            }"
-            @update:text="updateText"
-        />
+        <div class="component">
+            <ComponentWrap
+                id="1006"
+                :text="getById(1006).text"
+                :css="{
+                    'padding-left': '20%',
+                    'text-align': 'start',
+                    'margin-bottom': '0px',
+                    'margin-top': '20px',
+                    'font-weight': 'bold'
+                }"
+                @update:text="updateText"
+            />
+        </div>
         <!-- Education -->
-        <div>
+        <div class="component">
             <!-- Loop through educationComponents -->
             <ComponentWrap
                 v-for="(component, index) in educationComponents.filter(c => !c.norender)"
@@ -91,23 +107,25 @@
             <!-- Plus icon to add more education components -->
             <div @click="addEducationComponent" class="plus-icon">+</div>
         </div>
-        <ComponentWrap
-            id="1007"
-            :text="getById(1007).text"
-            :css="{
-                'padding-left': '20%',
-                'text-align': 'start',
-                'margin-bottom': '0px',
-                'margin-top': '20px',
-                'font-weight': 'bold'
-            }"
-            @update:text="updateText"
-        />
+        <div class="component">
+            <ComponentWrap
+                id="1007"
+                :text="getById(1007).text"
+                :css="{
+                    'padding-left': '20%',
+                    'text-align': 'start',
+                    'margin-bottom': '0px',
+                    'margin-top': '20px',
+                    'font-weight': 'bold'
+                }"
+                @update:text="updateText"
+            />
+        </div>
 
 <!-- Experiencies -->
 
 
-        <div>
+        <div class="component">
             <!-- Loop through educationComponents -->
             <ComponentWrap
                 v-for="(component, index) in experiencesComponents.filter(c => !c.norender)"
@@ -128,12 +146,14 @@
                 @update:text="updateText"
                 @remove="removeExperiencesComponents(index)"
                 @update-experiencias="updateUserExperiecies"
+                class="component"
             ></ComponentWrap>
 
             <!-- Plus icon to add more education components -->
             <div @click="addExperiencesComponents" class="plus-icon">+</div>
         </div>
-        <ComponentWrap
+        <div class="component">
+            <ComponentWrap
                 id="1008"
                 :text="getById(1008).text"
                 :css="{
@@ -144,71 +164,85 @@
                     'font-weight': 'bold'
                 }"
                 @update:text="updateText"
-        />
-        <ComponentWrap
-            id="1009"
-            :text="getById(1009)?.text"
-            :title="getById(1009)?.title"
-            :css="{ ...base_css, 'display': 'flex', 'margin-bottom': '30px' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
-        />
-        <ComponentWrap
-            id="1010"
-            :text="getById(1010).text"
-            :title="getById(1010).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            noBoldText="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
-        />
-        <ComponentWrap
-            id="1011"
-            :css="{ ...base_css, 'display': 'flex', 'flex-wrap': 'wrap', 'margin-top': '20px', 'margin-bottom': '30px' }"
-            :listCss="{'width': '70%', 'height': '30px', 'text-align': 'start', 'color': 'black', 'display': 'block'}"
-            :listTitleCss="{'width': '25%', 'height': '100%', 'text-align': 'start', 'font-weight': 'bold'}"
-            :listTitle="isEnglish ? 'Competences' : 'Competências'"
-            :listOfStrings="props.user?.competence"
-            @updated-list="updateCompetence"
-        />
-        <ComponentWrap
-            id="1012"
-            :text="getById(1012).text"
-            :title="getById(1012).title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            textArea="true"
-            noBoldText="true"
-            :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
-        />
-        <!-- Loop through additional ComponentWraps -->
-        <ComponentWrap
-            v-for="(component, index) in additionalComponents.filter(c => !c.norender)"
-            :key="index"
-            :text="component.text"
-            :title="component.title"
-            :css="{ ...base_css, 'display': 'flex' }"
-            :span1="span1"
-            :span2="span2"
-            :id="component.id"
-            removeBnt="true"
-            @update:title="updateTitle"
-            @update:text="updateText"
-            @remove="removeComponent(index)"
-        />
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1009"
+                :text="getById(1009)?.text"
+                :title="getById(1009)?.title"
+                :css="{ ...base_css, 'display': 'flex', 'margin-bottom': '30px' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                textArea="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+                />
+        </div>
 
-        <div v-for="(item, index) in props.user?.otherInfos" :key="index">
+        <div class="component">
+            <ComponentWrap
+                id="1010"
+                :text="getById(1010).text"
+                :title="getById(1010).title"
+                :css="{ ...base_css, 'display': 'flex' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                textArea="true"
+                noBoldText="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1011"
+                :css="{ ...base_css, 'display': 'flex', 'flex-wrap': 'wrap', 'margin-top': '20px', 'margin-bottom': '30px' }"
+                :listCss="{'width': '70%', 'height': '30px', 'text-align': 'start', 'color': 'black', 'display': 'block'}"
+                :listTitleCss="{'width': '25%', 'height': '100%', 'text-align': 'start', 'font-weight': 'bold'}"
+                :listTitle="isEnglish ? 'Competences' : 'Competências'"
+                :listOfStrings="props.user?.competence"
+                @updated-list="updateCompetence"
+            />
+        </div>
+        <div class="component">
+            <ComponentWrap
+                id="1012"
+                :text="getById(1012).text"
+                :title="getById(1012).title"
+                :css="{ ...base_css, 'display': 'flex' }"
+                :span1="span1"
+                :span2="span2"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                textArea="true"
+                noBoldText="true"
+                :textAreaSaveBnt="props.language.includes('pt') ? 'salvar' : 'save'"
+                />
+        </div>
+        <!-- Loop through additional ComponentWraps -->
+        <div class="component">
+            <ComponentWrap
+                v-for="(component, index) in additionalComponents.filter(c => !c.norender)"
+                :key="index"
+                :text="component.text"
+                :title="component.title"
+                :css="{ ...base_css, 'display': 'flex' }"
+                :span1="span1"
+                :span2="span2"
+                :id="component.id"
+                removeBnt="true"
+                @update:title="updateTitle"
+                @update:text="updateText"
+                @remove="removeComponent(index)"
+            />
+        </div>
+
+        <div
+            class="component" 
+            v-for="(item, index) in props.user?.otherInfos" :key="index">
             <ComponentWrap
                 :id="index"
                 :title="item?.split(';')[0] || ''"
@@ -221,6 +255,7 @@
                 @remove="removeOtherInfosText(index)"
                 @other-infos:title="otherInfosTitleUpdate"
                 @other-infos:text="otherInfosTextUpdate"
+                class="component"
             />
         </div>
 
@@ -256,7 +291,7 @@
         additionalComponents.value = [
             {
                 id: 1000,
-                title: "RESUME",
+                title: isEnglish ? "RESUME" : "CURRÍCULO",
                 text: props.user.name ? props.user.name : isEnglish ? 'Your name: Type in here' : "Seu nome: Digite aqui",
                 norender: true
             },
@@ -428,6 +463,7 @@
     const experiencesComponents = ref([]);
 
     const updateUserExperiecies = (experiencies) => {
+        localUpdatedUser.userExperiences = props.user.userExperiences
         localUpdatedUser.userExperiences = [...experiencies];
 
         // precisa garantir reatividade
@@ -438,6 +474,7 @@
 
     // Watch for changes in props.user.userExperiences
     watch(() => props.user.userExperiences, (newExperiences) => {
+        console.log('newExperiences', newExperiences)
         experiencesComponents.value = []; // Reset the array
         if (newExperiences && newExperiences.length > 0) {
             newExperiences.forEach((ex, index) => {
@@ -448,7 +485,8 @@
                 const dataFiredContent = ex.dateFired ? ex.dateFired : isEnglish ? "current job" : "trabalho atual"
                 experiencesComponents.value.push({
                     id: 3000 + index,
-                    title: ex.dateHired ? ex.dateHired + ' - ' + dataFiredContent : isEnglish ? 'Add date' : 'Adicionar data',
+                    title: ex.dateHired ? ex.dateHired +
+                     ' - ' + dataFiredContent : isEnglish ? 'Add date' : 'Adicionar data',
                     text: innerText ? innerText : '',
                     job: { ...ex, id } || {},
                     norender: false
@@ -476,6 +514,8 @@
             job: {id : newId},
             norender: false
         });
+        //Refletir atualização do props do father component
+        localUpdatedUser.userExperiences = props.user.userExperiences;
         localUpdatedUser.userExperiences.push({
             id: newId - 3000,
             position: '',
@@ -500,6 +540,13 @@
     };
 
     const removeExperiencesComponents = (index) => {
+        if(localUpdatedUser.userExperiences.length === 1 || 
+        !Array.isArray(localUpdatedUser.userExperiences)) {
+            experiencesComponents.value = [];
+            localUpdatedUser.userExperiences = [];
+            emit('updateUser', localUpdatedUser);
+            return;
+        }
         experiencesComponents.value.splice(index, 1);
         localUpdatedUser.userExperiences.splice(index, 1);
         emit('updateUser', localUpdatedUser);
@@ -532,60 +579,104 @@
     }
 
     const updateTitle = ({ id, title }) => {
-        // Find the corresponding component (education or experience)
-        let component = additionalComponents.value.find(c => c.id === Number(id))
-            || educationComponents.value.find(c => c.id === Number(id))
-            || experiencesComponents.value.find(c => c.id === Number(id));
+        const component = findComponentById(id);
+        if (!component) return;
 
-            if (component) {
-                // Update the title of the component
-                component.title = title;
+        component.title = title;
 
-                if (Number(id) === 1009) {
-                    localUpdatedUser.otherExperiencies = {
-                        ...localUpdatedUser?.otherExperiencies,
-                        title: title,
-                        text: localUpdatedUser?.otherExperiencies?.text || ''
-                    };
-                }
+        // Caso especial para otherExperiencies
+        if (Number(id) === 1009) {
+            updateOtherExperiences(title);
+            return;
+        }
 
-                let dateHired = null;
-                let dateFired = null;
-
-                // Determine the date format from the title
-                if (title.includes(' - ')) {
-                    // Format: "2024-01 - 2024-11" or "2020 - 2021"
-                    [dateHired, dateFired] = title.split(' - ').map(date => date.trim());
-                } else if (title.includes('-')) {
-                    // Format: "2020 - current job" or "2020 - trabalho atual"
-                    const parts = title.split('-').map(part => part.trim());
-                    dateHired = parts[0];  // The starting year
-                    dateFired = null;       // Set dateFired to null for current jobs
-                } else {
-                    // Single year or job description
-                    dateHired = title.trim();
-                    dateFired = null; // No end date if only a single year or current job
-                }
-
-                // Update localUpdatedUser based on the component ID
-                const experienceIndex = localUpdatedUser.userExperiences.findIndex(ex => ex.id === component.id - 3000);
-                if (experienceIndex !== -1) {
-                    // Update the existing experience
-                    localUpdatedUser.userExperiences[experienceIndex].dateHired = dateHired || localUpdatedUser.userExperiences[experienceIndex].dateHired; // Update only if a new value is present
-                    localUpdatedUser.userExperiences[experienceIndex].dateFired = dateFired; // Set to null to indicate current job
-                    // Emit the updated user
-                    emit('updateUser', localUpdatedUser);
-                } else {
-                    console.warn('Experience not found:', component.id);
-                }
-
-            // If the component is of type education, update the text in the grade
-            if (educationComponents.value.some(c => c.id === Number(id))) {
-                const index = component.id - 2000; // Calculate the correct index
-                updateLocalUserGradeData(index, title, component.text);
-            }
+        if (isExperienceComponent(id)) {
+            updateExperienceDates(component, title);
+        } else if (isEducationComponent(id)) {
+            updateEducationData(component, title);
         }
     };
+
+    // Funções auxiliares
+    function findComponentById(id) {
+        return additionalComponents.value.find(c => c.id === Number(id)) ||
+            educationComponents.value.find(c => c.id === Number(id)) ||
+            experiencesComponents.value.find(c => c.id === Number(id));
+    }
+
+    function updateOtherExperiences(title) {
+        localUpdatedUser.otherExperiencies = {
+            ...localUpdatedUser?.otherExperiencies,
+            title: title,
+            text: localUpdatedUser?.otherExperiencies?.text || ''
+        };
+    }
+
+    function updateExperienceDates(component, title) {
+        const [dateHired, dateFired] = extractDatesFromTitle(title);
+        const { position, company } = extractPositionAndCompany(component.text);
+        const experienceIndex = findMatchingExperienceIndex(component, position, company, dateHired);
+
+        if (experienceIndex !== -1) {
+            localUpdatedUser.userExperiences[experienceIndex] = {
+                ...localUpdatedUser.userExperiences[experienceIndex],
+                dateHired: dateHired || localUpdatedUser.userExperiences[experienceIndex].dateHired,
+                dateFired: dateFired
+            };
+            emit('updateUser', localUpdatedUser);
+        } else {
+            console.warn('Experience not found:', { 
+                id: component.id, 
+                text: component.text,
+                position,
+                company
+            });
+        }
+    }
+
+    function findMatchingExperienceIndex(component, position, company, dateHired) {
+        const experienceId = component.id - 3000;
+        
+        // Hierarquia de buscas
+        return localUpdatedUser.userExperiences.findIndex(ex => ex.id === experienceId) ||
+            (position && company && localUpdatedUser.userExperiences.findIndex(
+                ex => ex.position === position && ex.company === company)) ||
+            (component.text && localUpdatedUser.userExperiences.findIndex(
+                ex => ex.description.includes(component.text.split('<br/>')[0]?.split('<br />')[0]?.trim() || ''))) ||
+            (dateHired && localUpdatedUser.userExperiences.findIndex(
+                ex => ex.dateHired === dateHired)) ||
+            -1;
+    }
+
+    function extractPositionAndCompany(text) {
+        const positionMatch = text.match(/<b>(.*?) - <\/b>/);
+        const companyMatch = text.match(/<b>(.*?)<\/b>/g);
+        
+        return {
+            position: positionMatch?.[1]?.trim() || '',
+            company: companyMatch?.[companyMatch.length-1]?.replace(/<\/?b>/g, '').trim() || ''
+        };
+    }
+
+    function extractDatesFromTitle(title) {
+        const dateParts = title.split(' - ')
+                            .map(part => part.trim())
+                            .filter(part => /^(\d{2}\/\d{4}|\d{4})$/.test(part));
+        return [dateParts[0], dateParts[1] || null];
+    }
+
+    function isExperienceComponent(id) {
+        return experiencesComponents.value.some(c => c.id === Number(id));
+    }
+
+    function isEducationComponent(id) {
+        return educationComponents.value.some(c => c.id === Number(id));
+    }
+
+    function updateEducationData(component, title) {
+        const index = component.id - 2000;
+        updateLocalUserGradeData(index, title, component.text);
+    }
 
     const updateAddress = (text) => {
         // Inicializa o objeto adressObject se ele não existir
@@ -704,62 +795,89 @@
 
         if (!component) {
             component = experiencesComponents.value.find(c => c.id === Number(id));
+            component = experiencesComponents.value.find(c => c.id === Number(id));
             if (component) {
                 component.text = text;
 
-                // Try to find the corresponding experience in localUpdatedUser.userExperiences
-                const experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                // Parse o texto para criar os dados atualizados
+                const strippedTextParts = text.includes('<br/>') ? text.split('<br/>') : text.split('<br />');
+                
+                const updatedExperience = {
+                    position: strippedTextParts.length < 2 
+                        ? '' 
+                        : strippedTextParts[0].replaceAll('<b>', '')
+                                            .replaceAll('</b>', '')
+                                            .split('-')[0]?.trim() || '',
+                    company: strippedTextParts.length < 2 
+                        ? '' 
+                        : strippedTextParts[0].replaceAll('<b>', '')
+                                            .replaceAll('</b>', '')
+                                            .split('-')[1]?.trim() || '',
+                    description: strippedTextParts.length < 2 
+                        ? strippedTextParts[0].trim() 
+                        : (strippedTextParts[1] || '').replace('<span>', '')
+                                                    .replace('</span>', '')
+                                                    .trim()
+                };
+
+                // 1. Primeiro tenta encontrar pelo ID original (3000 + id)
+                let experienceIndex = localUpdatedUser.userExperiences.findIndex(
                     ex => 3000 + ex.id === component.id
                 );
 
-                let updatedExperience;
-
-                const strippedTextParts = text.includes('<br/>') ? text.split('<br/>') : text.split('<br />');
-                if(strippedTextParts.length < 2) {
-                    updatedExperience = {
-                        position: '',
-                        company: '',
-                        description: strippedTextParts[0]
-                    };
-                }else {
-                    let stripedFirstPart = strippedTextParts[0].replaceAll('<b>', '');
-                    stripedFirstPart = stripedFirstPart.replaceAll('</b>', '');
-                    const parts = stripedFirstPart.includes('-') ? stripedFirstPart.split('-') : stripedFirstPart
-                    const position = parts[0] || '';
-                    const company = parts[1] || '';
-
-                    let description = strippedTextParts[1] ? strippedTextParts[1] : ''
-
-                    description = description.replace('<span>', '');
-                    description = description.replace('</span>', '');
-
-                    // Verificar se há descrição
-                    updatedExperience = {
-                        position: position.trim(),
-                        company: company.trim(),
-                        description: description.trim()
-                    }
+                // 2. Se não encontrou pelo ID, tenta encontrar por posição e empresa
+                if (experienceIndex === -1 && updatedExperience.position && updatedExperience.company) {
+                    experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                        ex => ex.position === updatedExperience.position && 
+                            ex.company === updatedExperience.company
+                    );
                 }
+
+                // 3. Se ainda não encontrou, tenta por descrição e posição
+                if (experienceIndex === -1 && updatedExperience.description && updatedExperience.position) {
+                    experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                        ex => ex.description.includes(updatedExperience.description) && 
+                            ex.position === updatedExperience.position
+                    );
+                }
+
+                if (experienceIndex === -1 && updatedExperience.dateHired) {
+                    experienceIndex = localUpdatedUser.userExperiences.findIndex(
+                        ex => ex.dateHired === updatedExperience.dateHired
+                    );
+                }
+
+                // 4. Se encontrou em qualquer dos critérios acima, atualiza
                 if (experienceIndex !== -1) {
                     localUpdatedUser.userExperiences[experienceIndex] = {
                         ...localUpdatedUser.userExperiences[experienceIndex],
-                        ...updatedExperience
+                        ...updatedExperience,
+                        id: localUpdatedUser.userExperiences[experienceIndex].id // Mantém o ID original
                     };
+                    console.log('Experiência atualizada:', localUpdatedUser.userExperiences[experienceIndex]);
                 } else {
-                    // If no matching experience is found, add a new one
+                    // 5. Se não encontrou por nenhum critério, adiciona como NOVA experiência
+                    const newId = Math.max(0, ...localUpdatedUser.userExperiences.map(e => e.id)) + 1;
                     localUpdatedUser.userExperiences.push({
                         ...updatedExperience,
-                        id: component.id - 3000
+                        id: newId,
+                        dateHired: '',
+                        dateFired: '',
+                        isCurrent: false
                     });
+                    console.log('Nova experiência criada:', newId);
                 }
             }
         }
 
         if (!component) {
             console.error(`Component with id ${id} not found.`);
-        } else {
-            emit('updateUser', localUpdatedUser);
         }
+        
+        // Manda as vars antigas se não esperar um pouco
+        setTimeout(() => {
+            emit('updateUser', localUpdatedUser);
+        }, 300);
     };
 
     const emit = defineEmits(['updateUser']);
@@ -777,13 +895,26 @@
                     localUpdatedUser.contact.address = component.text;
                     break;
                 case 1002:
-                    localUpdatedUser.contact.phone[0] = component.text;
+                    if (localUpdatedUser.contact) {
+                        // Ensure phone is an array
+                        if (!Array.isArray(localUpdatedUser.contact.phone)) {
+                        localUpdatedUser.contact.phone = [];
+                        }
+                        localUpdatedUser.contact.phone[0] = component.text || '';
+                    }
                     break;
                 case 1003:
                     if (validateEmail(component.text)) {
-                        localUpdatedUser.contact.email[0] = component.text;
-                    } else {
-                        showAlert("email inválido");
+                        if (localUpdatedUser.contact) {
+                            // Ensure email is an array
+                            if (!Array.isArray(localUpdatedUser.contact.email)) {
+                                localUpdatedUser.contact.email = [];
+                            }
+                            localUpdatedUser.contact.email[0] = component.text;
+                        }
+                    }else {
+                        showAlert(isEnglish ? 
+                        "Email not valid, try another" : "Email inválido, tente outro");
                     }
                     break;
                 case 1004:
@@ -801,12 +932,12 @@
 
 
     let base_css = {
-            'margin-top': '10px',
             'text-align': 'center',
             'font-size': '16px',
             'padding-left': '20%',
             'padding-right': '20%',
-            'justify-content': 'space-between'
+            'justify-content': 'space-between',
+             'margin-top': 'min(20px, 2vh)'
             }
     let span1 = {
             'font-weight': 'bolder',
@@ -831,7 +962,7 @@
         // Se o regex encontrar datas, extrair as duas partes (ano inicial e final)
         if (resultado) {
             const anoInicio = resultado[1]; // Primeiro grupo de captura (primeiro ano)
-            const anoFim = resultado[2] || null; // Segundo grupo de captura (segundo ano), pode ser nulo
+            const anoFim = resultado[2] || (isEnglish ? 'ongoing' : 'em curso'); // Segundo grupo de captura (segundo ano), pode ser nulo
 
             return {
                 anoInicio,
@@ -847,7 +978,12 @@
         // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
         const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})? ?/g;
         // Substitui as datas por uma string vazia
-        return texto.replace(regex, '').trim(); // Remove as datas e espaços extras
+        let textoLimpo = texto.replace(regex, '').trim(); // Remove as datas e espaços extras
+    
+        // Remove "ongoing" ou "em curso" se for a primeira palavra após a remoção da data
+        textoLimpo = textoLimpo.replace(/^(ongoing|em curso)\s*/i, '').trim();
+    
+        return textoLimpo;
     }
 
     const otherInfosTitleUpdate = (updateItem) => {
@@ -877,6 +1013,30 @@
         localUpdatedUser.competence = updatedList;
         emit('updateUser', localUpdatedUser);
     }
+    
+
+    // When genereted ai in home component need this to update in html text
+    watch (() => props.user.resume, (newResume) => {
+        const component = additionalComponents.value.find(c => c.id === 1012);
+        if(component) {
+            component.text = newResume;
+        }
+    });
+
+    // When genereted ai in home component need this to update in html text
+    watch (() => props.user.ability, (newAbility) => {
+        const component = additionalComponents.value.find(c => c.id === 1005);
+        if(component) {
+            component.text = newAbility;
+        }
+    });
+
+    watch (() => localUpdatedUser.otherExperiencies, (newEx) => {
+        const component = additionalComponents.value.find(c => c.id === 1009);
+        if(component) {
+            component.text = newEx.text;
+        }
+    }, { deep: true });
 </script>
 
 <style scoped>
@@ -926,6 +1086,11 @@
     .plus-icon
     {
         display: none;
+    }
+
+    .component {
+        margin-top: min(20px, 2vh);
+        font-size: clamp(14px, 2vw, 20px)
     }
 }
 </style>

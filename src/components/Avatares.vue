@@ -1,6 +1,8 @@
 <template>
     <div class="avatares-container">
-        <p class="tside" @click="openContainer()">{{ this.language.includes("en") ? "CHOOSE AN AVATAR" : "ESCOLHA UM AVATAR"}}</p>
+        <p class="tside" @click="openContainer()">
+            {{ this.language.includes("en") ? "CHOOSE AN AVATAR" : "ESCOLHA UM AVATAR"}}
+        </p>
         <div class="avatares-subcontainer">
             <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="avatar-line">
@@ -133,7 +135,7 @@ export default {
             $(".pic .img-pic").css({"display": "none"});
 
             setTimeout(() => {
-                $(".pic .img-avatar").css({"display": "block","width": "150px", "height": "150px", "border-radius": "50%", "padding": "0px"});
+                $(".pic .img-avatar").css({"display": "block","width": "180px", "height": "180px", "border-radius": "50%", "padding": "0px"});
             }, 400);
         },
         openContainer(){
@@ -169,10 +171,11 @@ export default {
 
 </style>
 <style>
-.tside{
+.tside {
     width: 60%;
     border-radius: 10px;
     padding: 10px;
+    transition: all 0.3s;
 }
 
 .tside.touch .multimenu-line {

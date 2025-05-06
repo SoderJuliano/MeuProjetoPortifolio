@@ -33,8 +33,8 @@ export default {
     },
     methods: {
         autoAjustar() {
-            $('.img-pic').width(150);
-            $('.img-pic').height(150);
+            $('.img-pic').width(180);
+            $('.img-pic').height(180);
             $('.img-pic').css({ left: '0' + 'px', top: '0' + 'px' });
             $('.img-pic').css({ 'margin-left': '0' + 'px', 'margin-rigth': '0' + 'px' });
         },

@@ -117,7 +117,7 @@ export default {
 
             setTimeout(() => {
                 this.editarEnd();
-            }, 800);
+            }, 700);
         },
         editarEnd() {
             this.$emit("editar-end")
