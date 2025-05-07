@@ -172,7 +172,7 @@
         @add-info="addInfo"
         @add-resumo="editarResumo"
         @adicionar-habilidade="adicionarNovaHabilidade"
-        class="template"
+        class="template t2"
         @add-experiencia="editarExperiencias"
         @add-competencia="editarCompetencias"
         @add-nome="editarNome"
@@ -1648,6 +1648,10 @@ export default {
     height: 100vh !important;
     border-radius: 0px !important;
   }
+
+  button {
+    display: none !important;
+  }
 }
 
 .main.template {
@@ -1657,6 +1661,10 @@ export default {
   border-radius: 10px;
   padding: 0px;
   margin-top: 10%;
+}
+
+.main.template.t2 {
+  display: block !important;
 }
 
 .multi-menu-class:hover {
