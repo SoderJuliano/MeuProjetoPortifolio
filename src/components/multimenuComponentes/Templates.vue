@@ -59,13 +59,14 @@ export default {
     .dropdown-templates {
         display: none;
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 90vw;
+        top: 0% !important;
+        left: 0 !important;
+        right: 0 !important;
         height: 100%;
         z-index: 1;
-        width: 95%;
+        width: 85dvw;
         padding: 20px 10px;
+        transform: none !important;
     }
     
   .template-option {

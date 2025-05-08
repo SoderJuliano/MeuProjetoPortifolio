@@ -48,7 +48,8 @@
                 :language="language"
                 :template="template"
                 @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')"
+                @now-template2="this.$emit('now-template2')" 
+                @now-template3="this.$emit('now-template3')"
                 @now-template4="this.$emit('now-template4')"
             />
             <p class="multimenu-line"></p>
@@ -195,6 +196,7 @@ export default {
             })
         },
         update(val) {
+            $(".navbar__toggle").click();
             const authenticated = authService.getIdUsuario() === this.user?._id;
             this.$emit("update-user", val, authenticated);
         },
@@ -207,6 +209,7 @@ export default {
 
         // código copiado do navbar
         async deleteAccount() {
+            $(".navbar__toggle").click();
             if(this.user?._id?.length != 24) {
                 localStorage.removeItem("user-pt");
                 localStorage.removeItem("user-en");
@@ -237,12 +240,14 @@ export default {
             );
         },
         insertDeleteToken() {
+            $(".navbar__toggle").click();
             this.globalModalTitleMultimenu = this.isEnglish() ? 'Double confirmation factor' : 'Duplo fator de confirmação';
             this.globalModalMessageMultimenu = this.isEnglish() ? 'Confirm account deletion(insert token).' :
             "Confirmar deleção da conta (inserir token).";
             this.$refs.globalModalMultimenu.open();
         },
         async submitDeleteToken() {
+            $(".navbar__toggle").click();
             const token = $("#input-token").val();
             if(token == null || token == "" || token == "undefined") {
                 return;

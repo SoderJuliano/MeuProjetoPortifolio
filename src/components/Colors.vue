@@ -92,6 +92,7 @@ export default {
             $(".dropdown-templates").css({"display": "none"});
         },
         selectColor(color) {
+            $(".navbar__toggle").click();
             this.selectedColor = color;
             this.$emit('update:modelValue', color);
             this.closePanel();

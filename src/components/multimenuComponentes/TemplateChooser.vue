@@ -1,26 +1,26 @@
 <template>
     <div class="select-template">
         <button 
-            @click="this.$emit('now-template3')"
+            @click="select('now-template3')"
             :style="template == 3 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
             <p>Normal</p>
             <img src="../../assets/templatesImg/templete3.png" alt="templateimg" />
         </button> 
         <button 
-            @click="this.$emit('now-template1')"
+            @click="select('now-template1')"
             :style="template == 1 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
             <p>Style 1</p>
             <img src="../../assets/templatesImg/template1.png" alt="templateimg" />
         </button> 
         <button 
-            @click="this.$emit('now-template2')"
+            @click="select('now-template2')"
             :style="template == 2 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
         >
             <p>Style 2</p>
             <img src="../../assets/templatesImg/template2.png" alt="templateimg" />
         </button>
         <button
-            @click="this.$emit('now-template4')"
+            @click="select('now-template4')"
             :style="template == 4 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
         >
             <p>Normal 2</p>
@@ -30,12 +30,26 @@
 </template>
 
 <script>
+import $ from 'jquery';
+
 export default {
     name: "TemplateChooser",
-    props:{
+    props: {
         template: Number
     },
-    emits:['now-template1', 'now-template2', 'now-template3', 'now-template4']
+    emits: [
+        'now-template1',
+         'now-template2',
+        'now-template3',
+        'now-template4',
+        ],
+        methods: {
+            select(val) {
+                this.$emit(val)
+                $(".closeDiv").click();
+                $(".navbar__toggle").click();
+            }
+        }
 }
 </script>
 <style scoped>

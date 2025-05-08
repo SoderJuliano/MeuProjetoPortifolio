@@ -1,9 +1,11 @@
 import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 import { showAlert } from 'simple-alerts/dist/showAlert.js'
+import $ from 'jquery';
 
 class ShareService {
     async share() {
+        $(".navbar__toggle").click();
         //! Share PDF init
         try {
             // Obtém a referência ao template
