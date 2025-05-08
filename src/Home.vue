@@ -220,7 +220,7 @@
         @updateUser="updateUser"
       />
     </div>
-    <div class="footer">
+    <!-- <div class="footer">
       <img class="menuupimg" @click="footerUp" src="./assets/arrow-down.png" alt="menu up"/>
       <span class="footer-mobile-title">FreeHubCV</span>
       <div class="footer-menu-bar" style="display: none; position: relative;" >
@@ -242,7 +242,26 @@
           @ativationAccount="showGlobalModal"
         />
       </div>
-    </div>
+    </div> -->
+
+    <MobileNavbar
+      :language="this.configs.getLanguage()"
+      @language-update="lupdate"
+      :template="this.configs.getTemplate()"
+      @font-changed="setFont"
+      :user="user"
+      @now-template1="change_template(1)"
+      @now-template2="change_template(2)"
+      @now-template3="change_template(3)"
+      @now-template4="change_template(4)"
+      @change-main-color="changeMainColor"
+      @change-font-color="changeFontColor"
+      @update-user="updateUser"
+      @login="showLogin"
+      @reset-password="resetPassword"
+      @ativationAccount="showGlobalModal"
+    ></MobileNavbar>
+
     <div class="right">
       <Tips
         :lang="this.configs.getLanguage()"
@@ -268,6 +287,7 @@
 import Template1 from "./templates/Template1.vue";
 import MultiMenu from "./components/MultiMenu.vue";
 import Footer from "./components/Footer.vue";
+import MobileNavbar from './components/MobileNavbar.vue'
 import navBar from "./components/navBar.vue";
 import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
@@ -375,7 +395,8 @@ export default {
     SimpleAlerts,
     Loader,
     GlobalModal,
-    AlertComponent
+    AlertComponent,
+    MobileNavbar
   },
   methods: {
     async generateExperience() {
@@ -1928,7 +1949,11 @@ body{
 
 @media screen and (max-width: 768px) {
   #input-token {
-        width: 100%;
-    }
+    width: 100%;
+  }
+
+  .footer {
+    display: flex !important;
+  }
 }
 </style>

@@ -329,6 +329,10 @@ h3:hover .editar-animado{
         word-break: break-all;
         max-width: 190px;
     }
+
+    .modal-login-template {
+        display: none !important;
+    }
 }
 
 .social-item-template2 span{
@@ -414,9 +418,6 @@ button {
 }
 
 @media screen and (max-width: 1000px) {
-    button {
-        width: 100% !important;
-    }
 
     button:first-child {
         margin-top: 50px;
@@ -879,6 +880,10 @@ top: 0 !important;
   
   .template-data {
     padding: 10px;
+  }
+
+  .multimenu-line {
+    display: none;
   }
 }
 

@@ -28,6 +28,7 @@ export default {
     position: absolute;
     background-color: white;
     left: 20%;
+    max-height: 100%;
 }
 .header{
     display: flex;

@@ -290,4 +290,10 @@ export default {
         grid-template-columns: 1fr;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .font-size-panel {
+        position: absolute;
+    }
+}
 </style>
