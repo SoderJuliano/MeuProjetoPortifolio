@@ -653,8 +653,6 @@ button {
 /* CSS com o comportamento de impressão */
 .print {
     display: block !important;
-    padding-right: 10%;
-    padding-left: 10%;
 }
 
 .print .social-template2 {
@@ -696,7 +694,7 @@ top: 0 !important;
 }
 
 .print .template * {
-    order: none !important;
+    border: none !important;
 }
 
 .print .main-open-close {
