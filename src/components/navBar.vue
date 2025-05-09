@@ -48,10 +48,10 @@
                 <img class="li-img" src="../icons/database.png" alt="database">
                 <a v-on:click="dbSave()" class="nav-link">{{ this.printDatadaseText() }}</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDklEQVR4nO2Yv0scQRTHB4UkmFQpEhJPb97ZmV77VKnExtYdgqQ4PNLHPbY1u7EQbt4hEQRL/4CzswxpTIoUwdYmpAic75mQkB8bVlH2li1297ydW5gPTHnzvp837x7HCWGxWCxjiWoHYfyMshZo2n+0E05VVwA5BE0fZrHfqK4Acig19+ualisrAJcv8Q+QN4UXTlRTAK8OHTWQHxgVmNM/ZqDL64B0CJo/A/J5elhOPRLpVHbOFksXqHW/TwPyjkT6nScwpEv8lJpfliYg8WxJaqZhg0NcAOlFKQJScwuQ/t5g+FPo9hdyhy8iEHU+LbzU9CkagbkOP3kYfLmb9llIE9DUq73t3y8UPq9ANPPJsZGafoGmZpZ1CKbXqETeTYZvID/NWguuw/O3euf82VDB8wpcrEpNfxJdbFbmpwRc7PnBmRcH4WSeWhJ5t74X3hE3SWYBTb1BgQI7exRkFZDIJ3GB2S7Ni4oJcFxgvvP1nhgHVNYRSuxvMS4oK2AYZV/AMMq+gGGUfQHDqBL/lRgJVsB0A5XhEVLD1ndcn+MXrHmbNVESauPNTLy20w4o9yWO678f6ILr96KLRTnhDwdrB+9yX+Rs+K3kMxo8zdwCrdb2beUGH02Hd9zgeMXzbokirL7amjYp4bjB8XPv9WMxDJG9agfr0Rwmv9ijCe1zVCsam8Kdt1gsFlEW/wFewL4UtVpN6wAAAABJRU5ErkJggg==" alt="share-3">
                 <a v-on:click="generateAndSharePdf" class="nav-link">{{ 'Share' }}</a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <downloadDoc text="DOWNLOAD" />
               </li>

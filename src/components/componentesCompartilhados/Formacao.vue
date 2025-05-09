@@ -1,6 +1,8 @@
 <template>
   <div :class="containerstyle">
-      <p :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+      <p 
+      style="border-bottom: 1px solid rgb(176, 196, 222) !important; text-align: start; background-color: white; color: black;"
+      :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
           <showSwitcher
             :className="containerstyle"
             :startShowing="user.grade?.length > 0"
@@ -267,7 +269,7 @@ export default {
 
   .template2-formacao-title {
     margin-top: 0px;
-    margin-left: 10px !important;
+    margin-left: 20px !important;
   }
 }
 .template1-formacao-title{

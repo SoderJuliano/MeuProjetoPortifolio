@@ -34,6 +34,7 @@
           <p style="background-color:  whitesmoke; padding: 10px; border-radius: 10px;">{{item.description}}</p>
           <div v-if="showEditing == index" class="job-edit">
             <wrappEditModel
+              :textIndex="index"
               :job="getJobModel(item)"
               :language="language"
               @editar-end="editar"
@@ -80,12 +81,8 @@ export default {
     }
   },
   methods:{
-      updateExperiencias(job) {
-        this.jobs.forEach((each, index) => {
-          if (each.id === job.id) {
-            this.jobs[index] = job;
-          }
-        });
+      updateExperiencias(job, i) {
+        this.jobs[i] = job;
         this.$emit("update-experiencias", this.jobs);
       },
       getJobModel(item) {
@@ -147,6 +144,10 @@ export default {
   }
   .job-edit {
     display: none;
+  }
+
+  .title {
+    margin-left: 5px;
   }
 }
 
@@ -216,7 +217,7 @@ export default {
 }
 
 .title {
-    width: 90%;
+    width: 91%;
 }
 .data-container-page-title{
     width: 50%;

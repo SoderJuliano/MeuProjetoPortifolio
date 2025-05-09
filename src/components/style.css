@@ -663,6 +663,7 @@ button {
     width: 100vw !important;
     height: 100vh !important;
     border-radius: 0px !important;
+    margin: 0px !important;
 }
 
 .print .template {
