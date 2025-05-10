@@ -10,6 +10,7 @@ import TempUser from "./TempUser.vue";
 import WelcomePage from "./templates/FirstIn.vue";
 import Plans from "./premium/Plans.vue";
 import TermsOfService from "./premium/TermsOfService.vue";
+import UserView from "./UserView.vue";
 
 export default {
     name: "App",
@@ -20,7 +21,8 @@ export default {
         TempUser,
         WelcomePage,
         Plans,
-        TermsOfService
+        TermsOfService,
+        UserView
     },
     data() {
         return {
@@ -64,6 +66,9 @@ export default {
         }
         else if (uri.includes("terms")){
             this.activeComp = "TermsOfService";
+        }
+        else if (uri.includes("user/view")) {
+            this.activeComp = 'UserView';
         }
         else {
             this.activeComp = 'NotFound';
