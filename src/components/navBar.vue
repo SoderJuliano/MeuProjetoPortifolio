@@ -50,7 +50,18 @@
               </li>
               <li class="nav-item">
                 <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDklEQVR4nO2Yv0scQRTHB4UkmFQpEhJPb97ZmV77VKnExtYdgqQ4PNLHPbY1u7EQbt4hEQRL/4CzswxpTIoUwdYmpAic75mQkB8bVlH2li1297ydW5gPTHnzvp837x7HCWGxWCxjiWoHYfyMshZo2n+0E05VVwA5BE0fZrHfqK4Acig19+ualisrAJcv8Q+QN4UXTlRTAK8OHTWQHxgVmNM/ZqDL64B0CJo/A/J5elhOPRLpVHbOFksXqHW/TwPyjkT6nScwpEv8lJpfliYg8WxJaqZhg0NcAOlFKQJScwuQ/t5g+FPo9hdyhy8iEHU+LbzU9CkagbkOP3kYfLmb9llIE9DUq73t3y8UPq9ANPPJsZGafoGmZpZ1CKbXqETeTYZvID/NWguuw/O3euf82VDB8wpcrEpNfxJdbFbmpwRc7PnBmRcH4WSeWhJ5t74X3hE3SWYBTb1BgQI7exRkFZDIJ3GB2S7Ni4oJcFxgvvP1nhgHVNYRSuxvMS4oK2AYZV/AMMq+gGGUfQHDqBL/lRgJVsB0A5XhEVLD1ndcn+MXrHmbNVESauPNTLy20w4o9yWO678f6ILr96KLRTnhDwdrB+9yX+Rs+K3kMxo8zdwCrdb2beUGH02Hd9zgeMXzbokirL7amjYp4bjB8XPv9WMxDJG9agfr0Rwmv9ijCe1zVCsam8Kdt1gsFlEW/wFewL4UtVpN6wAAAABJRU5ErkJggg==" alt="share-3">
-                <a v-on:click="generateAndSharePdf" class="nav-link">{{ 'Share' }}</a>
+                <a 
+                  v-on:click.prevent="generateAndSharePdf" 
+                  class="nav-link" 
+                  :class="{ 'disabled': isGenerating }"
+                  :disabled="isGenerating"
+                >
+                  <span v-if="!isGenerating">{{ this.language == 'us-en' ? 'Share' : 'Compartilhar' }}</span>
+                  <span v-else class="loading-wrapper">
+                    <span class="spinner"></span>
+                    {{ this.language == 'us-en' ? 'Generating...' : 'Gerando...' }}
+                  </span>
+                </a>
               </li>
               <li class="nav-item">
                 <downloadDoc text="DOWNLOAD" />
@@ -208,6 +219,7 @@ export default {
     },
     data() {
       return{
+        isGenerating: false,
         backupUser: null,
         confirmAITitle: this.language.includes("en") ? "Generate data with AI" : "Gerar dados com uma IA",
         confirmAIText: this.language.includes("en") ? "Generate for free now!" : "Gere de graça agora!",
@@ -784,12 +796,14 @@ export default {
       },
 
       async generateAndSharePdf() {
+        if (this.isGenerating) return;
         try {
+          this.isGenerating = true;
           
           // Generate PDF
           const response = await generatePDF(this.user, this.configs);
 
-          //faz download
+          // faz download
           const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
           const link = document.createElement('a');
           link.href = url;
@@ -851,6 +865,8 @@ export default {
           this.errorMessage = this.language.includes("en")
             ? "Error generating PDF. Please try again."
             : "Erro ao gerar PDF. Por favor, tente novamente.";
+        } finally {
+          this.isGenerating = false;
         }
       },
 
@@ -1234,5 +1250,40 @@ li{
   #showMenu {
     display: none !important;
   }
+}
+
+/* Estilo do spinner */
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 50%;
+  border-top-color: currentColor; /* Usa a cor do texto */
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.loading-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Animação */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Estado desabilitado */
+.disabled {
+  opacity: 0.7;
+  cursor: wait;
+  pointer-events: none;
+}
+
+/* Garante que o link não tenha sublinhado quando desabilitado */
+.nav-link.disabled {
+  text-decoration: none;
 }
 </style>
