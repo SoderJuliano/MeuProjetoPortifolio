@@ -48,10 +48,10 @@
                 <img class="li-img" src="../icons/database.png" alt="database">
                 <a v-on:click="dbSave()" class="nav-link">{{ this.printDatadaseText() }}</a>
               </li>
-              <!-- <li class="nav-item">
+              <li class="nav-item">
                 <img class="li-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACDklEQVR4nO2Yv0scQRTHB4UkmFQpEhJPb97ZmV77VKnExtYdgqQ4PNLHPbY1u7EQbt4hEQRL/4CzswxpTIoUwdYmpAic75mQkB8bVlH2li1297ydW5gPTHnzvp837x7HCWGxWCxjiWoHYfyMshZo2n+0E05VVwA5BE0fZrHfqK4Acig19+ualisrAJcv8Q+QN4UXTlRTAK8OHTWQHxgVmNM/ZqDL64B0CJo/A/J5elhOPRLpVHbOFksXqHW/TwPyjkT6nScwpEv8lJpfliYg8WxJaqZhg0NcAOlFKQJScwuQ/t5g+FPo9hdyhy8iEHU+LbzU9CkagbkOP3kYfLmb9llIE9DUq73t3y8UPq9ANPPJsZGafoGmZpZ1CKbXqETeTYZvID/NWguuw/O3euf82VDB8wpcrEpNfxJdbFbmpwRc7PnBmRcH4WSeWhJ5t74X3hE3SWYBTb1BgQI7exRkFZDIJ3GB2S7Ni4oJcFxgvvP1nhgHVNYRSuxvMS4oK2AYZV/AMMq+gGGUfQHDqBL/lRgJVsB0A5XhEVLD1ndcn+MXrHmbNVESauPNTLy20w4o9yWO678f6ILr96KLRTnhDwdrB+9yX+Rs+K3kMxo8zdwCrdb2beUGH02Hd9zgeMXzbokirL7amjYp4bjB8XPv9WMxDJG9agfr0Rwmv9ijCe1zVCsam8Kdt1gsFlEW/wFewL4UtVpN6wAAAABJRU5ErkJggg==" alt="share-3">
                 <a v-on:click="generateAndSharePdf" class="nav-link">{{ 'Share' }}</a>
-              </li> -->
+              </li>
               <li class="nav-item">
                 <downloadDoc text="DOWNLOAD" />
               </li>
@@ -194,7 +194,7 @@ import authService from "../services/authService.js";
 import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 import { PDFDocument, rgb } from 'pdf-lib';
-import { generateFullCv } from '../components/configs/requests.js';
+import { generateFullCv, generatePDF } from '../components/configs/requests.js';
 
 export default {
     name: 'nav-bar',
@@ -204,6 +204,7 @@ export default {
       user: Object,
       inlogin: Boolean,
       syncUser: Boolean,
+      configs: Object
     },
     data() {
       return{
@@ -784,28 +785,59 @@ export default {
 
       async generateAndSharePdf() {
         try {
-          const curriculo = document.getElementById("template");
+          
+          // Generate PDF
+          const response = await generatePDF(this.user, this.configs);
 
-          if (!curriculo) {
-            throw new Error("Referência ao currículo não encontrada.");
-          }
-
-          curriculo.classList.add('print');
-          await this.$nextTick();
-
-          // Gera o PDF usando o novo método
-          const pdfBlob = await this.createPdfFromHtml(curriculo);
+          //faz download
+          const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', this.user.name+'cv.pdf');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          
+          // Create Blob from response
+          const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
 
           if (navigator.share) {
-            const file = new File([pdfBlob], "curriculo.pdf", { type: "application/pdf" });
+
+            // For mobile devices with Web Share API
+            const file = new File([pdfBlob], this.user.name+"cv.pdf", { 
+              type: "application/pdf",
+              lastModified: new Date().getTime()
+            });
+
+
             await navigator.share({
-              title: "Compartilhar Currículo",
-              text: "Veja o meu currículo!",
+              title: this.language.includes("pt-br") 
+                ? "Compartilhar Currículo" 
+                : "Share Resume",
+              text: this.language.includes("pt-br")
+                ? "Veja o meu currículo!"
+                : "Check out my resume!",
               files: [file],
             });
-            console.log("Compartilhamento bem-sucedido");
+            console.log("Sharing successful");
           } else {
-            console.warn("Compartilhamento não suportado. Abrindo cliente de e-mail...");
+            // Fallback for desktop browsers
+            const pdfUrl = URL.createObjectURL(pdfBlob);
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = 'curriculo.pdf';
+            document.body.appendChild(link);
+            link.click();
+            
+            // Clean up
+            setTimeout(() => {
+              document.body.removeChild(link);
+              URL.revokeObjectURL(pdfUrl);
+            }, 100);
+
+            // Show confirmation dialog for email option
             this.confirmShareText = this.language.includes("en") 
               ? "Can not provide share between apps, but I can open your email and download the file as pdf." 
               : "Sem suporte para compartilhar via apps, mas posso abrir o cliente de email e baixar o CV como PDF.";
@@ -815,71 +847,29 @@ export default {
             this.showShareConfirm = true;
           }
         } catch (error) {
-          console.error("Erro ao gerar o PDF:", error);
+          console.error("Error generating PDF:", error);
+          this.errorMessage = this.language.includes("en")
+            ? "Error generating PDF. Please try again."
+            : "Erro ao gerar PDF. Por favor, tente novamente.";
         }
       },
 
-      async createPdfFromHtml(element) {
-        // Captura o conteúdo HTML como uma imagem usando html2canvas
-        const canvas = await html2canvas(element, {
-          scale: 2, // Aumenta a qualidade da imagem
-          useCORS: true, // Permite carregar recursos externos (se necessário)
-          logging: false, // Desativa logs para melhor desempenho
-        });
-
-        // Converte o canvas para uma imagem (formato JPEG ou PNG)
-        const imgData = canvas.toDataURL('image/jpeg', 1.0);
-
-        // Cria um novo documento PDF
-        const pdfDoc = await PDFDocument.create();
-        const page = pdfDoc.addPage([595, 842]); // Tamanho da página baseado no canvas
-
-        // Calcula a proporção para ajustar a imagem à página
-        const pageWidth = 595;
-        const pageHeight = 842;
-        let imgWidth = canvas.width / 2; // Dividido por 2 devido à scale: 2
-        let imgHeight = canvas.height / 2;
-
-        // Ajusta a imagem para caber na página, preservando a proporção
-        const scale = Math.min(pageWidth / imgWidth, pageHeight / imgHeight);
-        imgWidth *= scale;
-        imgHeight *= scale;
-
-        // Adiciona a imagem ao PDF
-        const img = await pdfDoc.embedJpg(imgData); // Use embedPng se estiver usando PNG
-        page.drawImage(img, {
-          x: 0,
-          y: 0,
-          width: canvas.width,
-          height: canvas.height,
-        });
-
-        // Salva o PDF como um array de bytes
-        const pdfBytes = await pdfDoc.save();
-
-        // Retorna o PDF como um Blob
-        return new Blob([pdfBytes], { type: 'application/pdf' });
-      },
-
-      openEmailClient(fileName) {
-        const email = "seuemail@exemplo.com";
-        const subject = "Meu Currículo";
-        const body = `Segue em anexo meu currículo (${fileName}). Por favor, revise! Seu arquivo está na sua pasta de downloads.`;
-
-        const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        // Abrir cliente de email
-        window.location.href = mailtoLink;
-      },
-      //! Share PDF end!
-      async confirmSahre(val) {
-        if(val) {
-          this.downloadPdf(this.pdf);
-          this.openEmailClient("curriculo.pdf");
-        }else {
-          this.showShareConfirm = false;
-        }
-        return;
+      // Add this method for email fallback
+      async shareViaEmail() {
+        const pdfBlob = await generatePDF(user, configs);
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        
+        const subject = this.language.includes("pt-br") 
+          ? "Meu Currículo" 
+          : "My Resume";
+        const body = this.language.includes("pt-br")
+          ? "Segue em anexo o meu currículo."
+          : "Please find my resume attached.";
+        
+        window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}&attachment=${encodeURIComponent(pdfUrl)}`;
+        
+        // Note: Attachment might not work in all browsers
+        // Alternative is to guide user to download first then attach manually
       },
     },
     mounted(){

@@ -37,7 +37,7 @@
         @click="submitToken()">
         {{ this.languageIsEN() ? "Submit token" : "Enviar token" }}
       </button>
-      <a @click="pedirUmTokenNovo" >Pedir um token novo</a>
+      <a @click="pedirUmTokenNovo" > {{this.languageIsEN() ? "Ask for a new login code" : "Pedir um token novo"}}</a>
     </div>
   </GlobalModal>
 
@@ -95,6 +95,7 @@
     :syncUser="syncUser"
     id="navbar"
     :user="user"
+    :configs="configs"
     :inlogin="inlogin"
     class="navbar navbar-expand-lg navbar-light bg-light"
   >

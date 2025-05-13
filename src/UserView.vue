@@ -1,6 +1,6 @@
 <template>
     <component 
-        :is="templates[configs.template]"
+        :is="templates[configs.template - 1]"
         :user="user"
         :language="this.configs?.language"
     />
@@ -24,7 +24,7 @@ export default {
     },
     data() {
         return {
-            user: Object,
+            user: {},
             configs: JSON.parse(localStorage.getItem("configs")) || {},
             templates: [Template1,
                         Template2,
@@ -32,9 +32,11 @@ export default {
                         Template4]
         }
     },
-    beforeMount() {
+    created() {
         if(this.configs.language.includes('pt-br')) {
             this.user = JSON.parse(localStorage.getItem('user-pt'));
+        }else {
+            this.user = JSON.parse(localStorage.getItem('user-en'));
         }
     }
 }
