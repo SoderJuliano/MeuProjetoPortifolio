@@ -6,13 +6,23 @@ import Home from './Home.vue';
 import PasswordReset from './components/pages/PasswordReset.vue';
 import NotFound from './components/pages/NotFound.vue';
 import * as funcs from "./components/configs/requests.js";
+import TempUser from "./TempUser.vue";
+import WelcomePage from "./templates/FirstIn.vue";
+import Plans from "./premium/Plans.vue";
+import TermsOfService from "./premium/TermsOfService.vue";
+import UserView from "./UserView.vue";
 
 export default {
     name: "App",
     components: {
         Home,
         PasswordReset,
-        NotFound
+        NotFound,
+        TempUser,
+        WelcomePage,
+        Plans,
+        TermsOfService,
+        UserView
     },
     data() {
         return {
@@ -44,7 +54,23 @@ export default {
             this.newPassword = uri.split('newPasswordToken=')[1];
             this.activeComp = PasswordReset;
             this.componentProps = { newPassword: this.newPassword };
-        } else {
+        } 
+        else if (uri.includes("tempUser")) {
+            this.activeComp = "TempUser";
+        }
+        else if(uri.includes("welcome")) {
+            this.activeComp = "WelcomePage";
+        }
+        else if (uri.includes("choose-your-plan")){
+            this.activeComp = "Plans";
+        }
+        else if (uri.includes("terms")){
+            this.activeComp = "TermsOfService";
+        }
+        else if (uri.includes("user/view")) {
+            this.activeComp = 'UserView';
+        }
+        else {
             this.activeComp = 'NotFound';
         }
     }

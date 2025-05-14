@@ -156,8 +156,9 @@ export default {
   text-align: start;
   border-bottom: 1px solid black;
   font-weight: bold;
-  width: 90%;
+  width: 85%;
   margin-top: 0px;
+  margin-left: 30px;
 }
 .template2-title:hover .editar-animado-habilidade{
   display: block;

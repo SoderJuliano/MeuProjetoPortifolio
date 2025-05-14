@@ -3,10 +3,15 @@
         <div :class="tstyle">
             <div class="line">
                 <div v-if="this.userData?.avatarImg?.length > 10" class="l1"></div>
-                <div class="ajsut-img" v-if="userData?.realImg?.length > 10">
+                <div class="ajsut-img" 
+                    v-if="userData?.realImg !== '' && userData?.realImg?.length > 10">
                     <CenterImg :language="language" />
-                    <CenterImgOpenclose :language="language" :user="userData" @user-update="reEmit"
-                        class="ajust-img-open-close" />
+                    <CenterImgOpenclose
+                        :language="language"
+                        :user="userData"
+                        @user-update="reEmit"
+                        class="ajust-img-open-close"
+                    />
                 </div>
                 <div class="pic">
                     <img @click="$refs.imgInput.click()"
@@ -161,7 +166,7 @@ export default {
 
                 setTimeout(() => {
                     this.imageURL = this.userData.realImg;
-                    $(".img-pic").css({ "width": "150px", "height": "150px", "display": "flex" });
+                    $(".img-pic").css({ "width": "180px", "height": "180px", "display": "flex" });
                     // $(".img-pic").attr('src', url);
                 }, 500)
             }
@@ -203,7 +208,7 @@ export default {
     },
     mounted() {
         // console.log("mounted header")
-        $(".img-pic").css({ "width": "150px", "height": "150px" });
+        $(".img-pic").css({ "width": "180px", "height": "180px" });
         $(document).ready(function () {
             function checkWindowSize() {
                 if ($(window).width() < 700) {
@@ -289,20 +294,10 @@ export default {
 }
 
 .img-avatar {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     position: relative;
 }
-
-/* 
-.pic:has(.img-pic) {
-    margin: 0 0;
-    z-index: 10;
-    overflow: hidden;
-    position: relative;
-    width: 150px;
-    height: 150px;
-} */
 
 
 .pic {
@@ -310,8 +305,8 @@ export default {
     margin: 0 0;
     z-index: 10;
     position: relative;
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     object-fit: cover; /* Mantém proporção correta */
 }
 
@@ -325,8 +320,8 @@ export default {
 
 @media screen and (max-width: 1000px) {
     .pic {
-        height: 150px;
-        width: 150px;
+        height: 180px;
+        width: 180px;
     }
 
     .ajsut-img {

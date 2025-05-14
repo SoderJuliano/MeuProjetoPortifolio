@@ -113,11 +113,11 @@ export default {
             this.job.setDateFired($('#dateEnd').val())
             this.job.setDescription($('#description').val())
 
-            this.$emit("update-experiencias", this.job)
+            this.$emit("update-experiencias", this.job, this.index)
 
             setTimeout(() => {
                 this.editarEnd();
-            }, 800);
+            }, 700);
         },
         editarEnd() {
             this.$emit("editar-end")
@@ -162,16 +162,17 @@ export default {
 
     textarea {
         cursor: pointer;
+        min-height: 100px;
     }
 
     .wrapMain {
         width: 92%;
         height: 100%;
-        background-color: #fff;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
         padding: 20px;
+        background-color: gray;
     }
 
     .item {
@@ -189,6 +190,7 @@ export default {
         width: 70%;
         padding: 5px;
         font-size: 16px;
+        background-color: gray;
     }
 
     .item textarea {
@@ -199,13 +201,14 @@ export default {
         height: 100%;
         resize: none;
         padding: 5px;
+        background-color: gray;
     }
 
     .div-bnts {
         display: flex;
         justify-content: space-around;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 90px;
         flex-direction: row;
         flex-wrap: wrap;
     }

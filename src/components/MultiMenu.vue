@@ -13,32 +13,45 @@
             <p class="multimenu-line second"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <Colors :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <pageColor :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
-            <Avatares :user="user" :language="language" @update-user="update" />
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
+        <Avatares :user="user"
+        :language="language"
+        @update-user="update" />
             <p class="multimenu-line"></p>
         </div>
 
-        <div class="option">
+        <div
+        v-if="template == 1 || template == 2"
+        class="option">
             <PicureShape :language="language" />
             <p class="multimenu-line"></p>
         </div>
 
         <div class="option">
             <Templates
-                :language="language" :template="template" @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')" @now-template3="this.$emit('now-template3')"
+                :language="language"
+                :template="template"
+                @now-template1="this.$emit('now-template1')"
+                @now-template2="this.$emit('now-template2')" 
+                @now-template3="this.$emit('now-template3')"
                 @now-template4="this.$emit('now-template4')"
-                />
+            />
             <p class="multimenu-line"></p>
         </div>
         <div v-if="mobileOptions" class="option">
@@ -71,6 +84,16 @@
         </div>
         <div v-on:click="share()" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "SHARE" : "COMPARTILHAR" }}</p>
+            <p class="multimenu-line"></p>
+        </div>
+        <div v-if="!user.premium" class="option">
+            <p class="tside">
+                <a
+                    href="/choose-your-plan"
+                    class="tside">
+                    {{ this.isEnglish() ? "PRMEIUM ACC 🏆" : "CONTA PREMIUM 🏆"  }}
+                </a>
+            </p>
             <p class="multimenu-line"></p>
         </div>
         <GlobalModal
@@ -160,7 +183,7 @@ export default {
 
             setTimeout(() => {
                 loadingElement.remove(); // Remove loading message after 2 seconds
-                window.location.reload(); // Reload the page
+                //window.location.reload(); // Reload the page
             }, 2000);
         },
         menuDown(){
@@ -173,6 +196,7 @@ export default {
             })
         },
         update(val) {
+            $(".navbar__toggle").click();
             const authenticated = authService.getIdUsuario() === this.user?._id;
             this.$emit("update-user", val, authenticated);
         },
@@ -185,6 +209,7 @@ export default {
 
         // código copiado do navbar
         async deleteAccount() {
+            $(".navbar__toggle").click();
             if(this.user?._id?.length != 24) {
                 localStorage.removeItem("user-pt");
                 localStorage.removeItem("user-en");
@@ -215,12 +240,14 @@ export default {
             );
         },
         insertDeleteToken() {
+            $(".navbar__toggle").click();
             this.globalModalTitleMultimenu = this.isEnglish() ? 'Double confirmation factor' : 'Duplo fator de confirmação';
             this.globalModalMessageMultimenu = this.isEnglish() ? 'Confirm account deletion(insert token).' :
             "Confirmar deleção da conta (inserir token).";
             this.$refs.globalModalMultimenu.open();
         },
         async submitDeleteToken() {
+            $(".navbar__toggle").click();
             const token = $("#input-token").val();
             if(token == null || token == "" || token == "undefined") {
                 return;
@@ -270,10 +297,18 @@ export default {
 };
 </script>
 <style scoped>
+
+a {
+    text-decoration: none;
+    color: inherit;
+    padding-left: 0px;
+}
+
 .bnt-close {
     position: relative;
     right: 10px;
     top: 10px;
+    cursor: pointer;
 }
 
 .header {

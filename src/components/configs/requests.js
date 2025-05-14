@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DRAGONITE_ENV, DRAGONITE_ENV2, setDragoniteEnv } from '../configs/envs.js';
 
-let apiUrl = DRAGONITE_ENV2;
+let apiUrl = DRAGONITE_ENV;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -128,7 +128,7 @@ export function saveUserInfosInDataBase(user, newUser, language) {
       "profession": user.profession,
       "resume": user.resume,
       "competence": user.competence,
-      "social": user.social,
+      "social": user?.social,
       "grade": user.grade,
       "ability": user.ability,
       "avatarImg": user.avatarImg,
@@ -340,10 +340,223 @@ export async function getUser(id) {
   const headers = {
     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
     'Content-Type': 'application/json',
-    'ngrok-skip-browser-warning': 'true', // Adicionando o cabeçalho customizado
+    'ngrok-skip-browser-warning': 'true',
   };
 
   return await axios.get(`${apiUrl}/user/${id}`, { headers }).then((response) => {
     return response;
+  });
+}
+
+export async function generateFullCv(data) {
+  // Make global const header later
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: data.profession,
+    ip: ip,
+    email: data.email,
+    agent: true,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  console.log(body)
+
+  const endpoint = `${apiUrl}/generate-cv`;
+
+  return await axios.post(endpoint, body, headers).then((response) => {
+    console.log('generateFullCv', response);
+    return response;
+  })
+}
+
+export async function improveText(data) {
+  // Make global const header later
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: data.text,
+    ip: ip,
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  console.log(body)
+
+  const endpoint = `${apiUrl}/improve-text`;
+
+  return await axios.post(endpoint, body, headers).then((response) => {
+    console.log('improveText', response);
+    return response;
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
+    throw error;
+  });
+}
+
+export async function improveTextLlama(data) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  let instructions = null;
+
+  if(!data.customPrompt) {
+    instructions = data?.language?.includes("pt-br") 
+    ? "Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+    : "Please improve the folowing text, no explanation, no coments, improved text only: ";
+    instructions = instructions+data.text;
+  }else {
+    instructions = data.customPrompt;
+  }
+  
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: instructions,
+    ip: ip,
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  const endpoint = `${apiUrl}/llama3`;
+
+  return await axios.post(endpoint, body, headers).then((response) => {
+    return response;
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
+    throw error;
+  });
+}
+
+function getIp() {
+  return fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      console.log('O IP do usuário é:', data.ip);
+      return data.ip;
+    })
+    .catch(error => {
+      console.error('Erro ao obter o IP:', error);
+      return null;
+    });
+}
+
+export async function confirmPayment(paymentId) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const body = {
+    paymentId: paymentId,
+    userId: this.userId,
+    email: this.email,
+    amount: this.amount,
+    status: 'PENDENTE',
+    createdAt: new Date().toISOString(),
+  };
+
+  try {
+    return await axios.post('/api/payments/create', body, { headers });
+  } catch (error) {
+    console.error('Payment registration failed:', error);
+  }
+}
+
+export async function createPayment({ paymentId, userId, email, amount }) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const body = {
+    paymentId,
+    userId,
+    email,
+    amount,
+    status: 'PENDENTE',
+    createdAt: new Date().toISOString(),
+  };
+
+  try {
+    const response = await axios.post('/api/payments/create', body, { headers });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao registrar pagamento:', error);
+    throw error;
+  }
+}
+
+// export async function isPremium(email) {
+//   const headers = {
+//     Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+//     'Content-Type': 'application/json',
+//     'ngrok-skip-browser-warning': 'true',
+//   };
+
+
+// }
+
+export async function resendConfirmationAccEmail(email, language) {
+  const encodedEmail = encodeURIComponent(email);
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
+
+  return axios.post(`${apiUrl}/user/resendConfirmationAccEmail/${encodedEmail}/${language}`, 
+    null, { headers, timeout: 10000 })
+    .then((response) => {
+      return response;
+    })
+    .catch(error => {
+      console.error('Erro durante envio de email: ', error);
+      throw error;
+    });
+
+}
+
+export async function generatePDF(user, configs) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'Accept': 'application/pdf',
+  };
+
+  const body = {
+    user,
+    configs,
+  };
+
+  return axios.post(`${apiUrl}/api/pdf/convert`, body, {
+    headers,
+    timeout: 10000,
+    responseType: 'blob', // <-- ESSENCIAL!
+  })
+  .then((response) => {
+    return response;
+  })
+  .catch((error) => {
+    console.error('Erro durante geração do pdf no backend: ', error);
+    throw error;
   });
 }

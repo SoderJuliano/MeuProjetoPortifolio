@@ -1,9 +1,11 @@
 <template>
   <div :class="containerstyle">
-      <p :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
+      <p 
+      style="border-bottom: 1px solid rgb(176, 196, 222) !important; text-align: start; background-color: white; color: black;"
+      :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
           <showSwitcher
             :className="containerstyle"
-            :startShowing="user.grade.length > 0"
+            :startShowing="user.grade?.length > 0"
             />
           <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
           <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-formacao" @click="$emit('add-formacao')"/>
@@ -267,7 +269,7 @@ export default {
 
   .template2-formacao-title {
     margin-top: 0px;
-    margin-left: 10px !important;
+    margin-left: 20px !important;
   }
 }
 .template1-formacao-title{

@@ -36,6 +36,7 @@ export default class User {
         text: ''
     };
     language = '';
+    premium = false;
 
     getNameFromLocalStorage() {
         let name = "";
@@ -74,35 +75,27 @@ export default class User {
     // Updates the user if the user's name changes or if the user has been created
     // on the backend.
     async updateUserName() {
+        const configs = JSON.parse(localStorage.getItem('configs'));
+        this.language = configs.language;
         updateUser(this.name, this.contact.email[0], this.language);
     }
 
     // newUser = true and false here means, true new user, false update existing user
     async saveIntoDatabase(newUser) {
         const configs = JSON.parse(localStorage.getItem('configs'));
-        let lan = null;
-        if(!this.language || this.language === '') {
-            lan = configs.language;
-        }else {
-            lan = this.language;
-        }
-        return await saveUserInfosInDataBase(this, newUser, lan);
+        this.language = configs.language;
+        return await saveUserInfosInDataBase(this, newUser, this.language);
     }
 
     async firstLogin(email, password) {
 
         const configs = JSON.parse(localStorage.getItem('configs'));
-        let lan = null;
-        if(!this.language || this.language === '') {
-            lan = configs.language;
-        }else {
-            lan = this.language;
-        }
+        this.language = configs.language;
 
         if (typeof email === 'string') {
-            return await saveLogin(email, password, this._id, lan);
+            return await saveLogin(email, password, this._id, this.language);
         }
-        return await saveLogin(email[0], password, this._id, lan);
+        return await saveLogin(email[0], password, this._id, this.language);
     }
 
     updateToParente(name, val) {
@@ -135,7 +128,7 @@ export default class User {
         this.profession = user.profession;
         this.resume = user.resume;
         this.competence = user.competence;
-        this.social = user.social;
+        this.social = user?.social;
         this.grade = user.grade;
         this.ability = user?.hability ? user.hability : user?.ability;
         this.avatarImg = user.avatarImg;

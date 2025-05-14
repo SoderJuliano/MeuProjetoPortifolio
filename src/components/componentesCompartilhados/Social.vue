@@ -3,7 +3,7 @@
         <div class="social">
             <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
                 {{language == 'pt-br' ? titulo[0] : titulo[1]}}
-                <showSwitcher className="template-data-social" :startShowing="user.social?.length > 0" />
+                <showSwitcher className="template-data-social" :startShowing="user?.social?.length > 0" />
                 <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
                 <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
@@ -63,7 +63,7 @@ export default {
             templateClass: "social-template"+this.template+" title",
             templateClassItemContainer: "social-itens-template"+this.template,
             templateClassItem: "social-item-template"+this.template,
-            social: this.user.social,
+            social: this.user?.social,
             userData: this.user,
             showEditing: null,
             editIcon: svgs.editIcon,
@@ -123,6 +123,7 @@ export default {
 
 .remove-bnt {
     position: absolute;
+    width: 100px;
     margin-left: 70px;
 }
 

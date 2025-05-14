@@ -3,7 +3,12 @@
     <div id="contatoAndPic">
       <div class="ajsut-img">
         <CenterImg :language="language" />
-        <CenterImgOpenclose :language="language" :user="userData" @user-update="reEmit" class="ajust-img-open-close" />
+        <CenterImgOpenclose 
+          :language="language"
+          :user="userData"
+          @user-update="reEmit"
+          class="ajust-img-open-close"
+        />
       </div>
       <div class="pic">
         <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic"
@@ -35,7 +40,7 @@
           <img v-if="item" src="../icons/phone.png" alt="phone" class="phone-icon"
             @click="this.$emit('choose-phoneIcon')" />
           <span class="phone-text">{{ normalizePhone(item) }}</span>
-          <img @click="toglePhoneMask()" src="../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
+          <img v-if="item" @click="toglePhoneMask()" src="../icons/phone/enabled.svg" id="enabled" class="phone-enabled">
           <img @click="toglePhoneMask()" src="../icons/phone/disabled.svg" id="disabled" class="phone-disabled">
         </div>
         <div class="data-container">
@@ -215,6 +220,10 @@ export default {
       else if (this.userData.avatarImg.length > 5) {
         $(".img-avatar").css("display", "block");
         this.avatarImg = this.userData.avatarImg;
+        
+        setTimeout(() => {
+          $(".ajsut-img").css({ "display": "none", "z-index": "-1" });
+        }, 800)
       }
     },
     showEditarContato() {
@@ -334,8 +343,8 @@ export default {
 }
 
 .img-avatar {
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
 }
 
 .data-container {
@@ -378,8 +387,8 @@ export default {
   }
 
   .pic {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
@@ -444,8 +453,8 @@ export default {
   }
 
   .pic {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
@@ -523,17 +532,27 @@ export default {
 
   /** ver isso */
   .side {
-    min-height: 900px;
-    height: 100%;
     width: 40%;
     justify-content: center;
     font-size: 12px;
     word-break: break-all !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    height: auto;
+    box-decoration-break: clone;
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+  }
+
+  /* Garante que o conteúdo interno não quebre inadequadamente */
+  .side > * {
+    page-break-inside: avoid;
   }
 
   .pic {
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     border: 2px solid black;
     align-self: center;
@@ -590,6 +609,7 @@ export default {
   text-align: center;
   padding: 5px;
   min-height: 30px;
+  border-radius: 5px;
 }
 
 .data-container {
@@ -626,9 +646,9 @@ export default {
 
 .ajsut-img {
   z-index: 0;
-  margin-top: 65px;
+  margin-top: 95px;
   flex-direction: column;
-  width: 25%;
+  width: 20%;
   height: 510px;
   justify-content: center;
   align-items: center;
@@ -648,7 +668,7 @@ export default {
   display: block;
   position: relative;
   z-index: 16;
-  margin-left: 225px;
+  margin-left: 260px;
   margin-top: -445px;
   background-color: rgba(245, 245, 245, 0.521);
   border-radius: 25px;
@@ -679,6 +699,13 @@ export default {
   #contatoAndPic {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 1230px) and (min-width: 1000px) {
+  .ajust-img-open-close {
+    position: relative !important;
+    left: 0% !important;
   }
 }
 </style>

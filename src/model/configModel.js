@@ -58,7 +58,6 @@ export default class PageConfig {
 
     // setters
     setLanguage(language) {
-        console.log('new language choiced: '+language)
         this.language = language;
     }
     setImageURL(imageURL) {

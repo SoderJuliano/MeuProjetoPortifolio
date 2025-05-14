@@ -9,9 +9,19 @@
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
-        <div>
-          <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
-          <img v-if="item" @click="removeJob(item)" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
+        <div class="options-div">
+          <img 
+            v-if="item" 
+            :src="editIcon" 
+            @click="editar(index)" 
+            alt="editar" 
+            class="remove-bnt">
+          <img 
+            v-if="item" 
+            @click="removeJob(item)" 
+            class="remove-bnt" 
+            src="../../icons/remove.png" 
+            alt="remove-bnt">
         </div>
           <h3>{{item.position}}</h3>
           <div style="display: flex">
@@ -24,6 +34,7 @@
           <p style="background-color:  whitesmoke; padding: 10px; border-radius: 10px;">{{item.description}}</p>
           <div v-if="showEditing == index" class="job-edit">
             <wrappEditModel
+              :textIndex="index"
               :job="getJobModel(item)"
               :language="language"
               @editar-end="editar"
@@ -70,12 +81,8 @@ export default {
     }
   },
   methods:{
-      updateExperiencias(job) {
-        this.jobs.forEach((each, index) => {
-          if (each.id === job.id) {
-            this.jobs[index] = job;
-          }
-        });
+      updateExperiencias(job, i) {
+        this.jobs[i] = job;
         this.$emit("update-experiencias", this.jobs);
       },
       getJobModel(item) {
@@ -138,6 +145,25 @@ export default {
   .job-edit {
     display: none;
   }
+
+  .title {
+    margin-left: 5px;
+  }
+}
+
+.options-div {
+  min-width: 100px;
+  position: absolute;
+  display: flex;
+  right: 10%;
+  justify-content: space-between;
+
+  && {
+    .remove-bnt{
+      position: relative;
+    }
+  }
+
 }
 
 .job-edit {
@@ -157,12 +183,7 @@ export default {
 .title:hover .editar-animado-resumo{
   display: block;
 }
-.remove-bnt{
-  float: right;
-  position: relative;
-  margin-top: 20px;
-  margin-right: 20px;
-}
+
 .templete1-experiencias-container{
   color: black !important;
   height: 100%;
@@ -196,7 +217,7 @@ export default {
 }
 
 .title {
-    width: 90%;
+    width: 91%;
 }
 .data-container-page-title{
     width: 50%;

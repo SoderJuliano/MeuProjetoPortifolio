@@ -21,6 +21,8 @@
                         <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off">
                     </span>
                     <p>{{ tip.content }}</p>
+
+                    <a href="/choose-your-plan" v-if="tip.button">{{tip?.buttonText}}</a>
                 </div>
             </div>
         </div>
@@ -43,7 +45,7 @@ export default {
         strings: { type: Array },
         novaMensagem: Object,
         novasMensagens: { type: Array },
-        keyDragonite: String,
+        keyDragonite: String
     },
     methods: {
         // Caso seja uma mensagem de altera local, não vai chamar a api
@@ -158,7 +160,9 @@ export default {
             content: newMessage.content,
             language: this.lang,
             read: false,
-            local: newMessage?.local
+            local: newMessage?.local,
+            button: newMessage?.button,
+            buttonText: newMessage?.buttonText 
             };
             // Create a new array reference to trigger reactivity
             this.tips = [...this.tips, newTip];
