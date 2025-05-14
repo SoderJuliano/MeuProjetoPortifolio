@@ -1,5 +1,5 @@
 <template>
-  <div style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+  <div id="AIpowerBNT" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
     <button style="
       background: linear-gradient(135deg, #6e8efb, #a777e3);
       color: white;
@@ -37,7 +37,7 @@
         @click="submitToken()">
         {{ this.languageIsEN() ? "Submit token" : "Enviar token" }}
       </button>
-      <a @click="pedirUmTokenNovo" >Pedir um token novo</a>
+      <a @click="pedirUmTokenNovo" > {{this.languageIsEN() ? "Ask for a new login code" : "Pedir um token novo"}}</a>
     </div>
   </GlobalModal>
 
@@ -95,6 +95,7 @@
     :syncUser="syncUser"
     id="navbar"
     :user="user"
+    :configs="configs"
     :inlogin="inlogin"
     class="navbar navbar-expand-lg navbar-light bg-light"
   >
@@ -410,6 +411,7 @@ export default {
       this.loading = aiService.loading;
     },
     async melhorarCurriculo() {
+      $("#AIpowerBNT :button").prop("disabled", true);
       this.loading = true;
 
       if(!authService.hasToken()) {
@@ -452,14 +454,18 @@ export default {
         this.updateUser(this.user, false);
         this.loading = false;
         return;
-        }catch (ex) {
-            const status = ex?.response?.status;
-            const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+        }catch (error) {
+            const status = error?.response?.status || eerrorx?.status || 500;
+            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
 
             showAlert(mensagem);
 
             if (status === 422) {
               setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+            } else if (status === 401) {
+              this.loading = false; //todo ver aqui so mostro a tela de login de volta
+              setTimeout(() => {showAlert(this.languageIsEN() ? "Redo the login and try again." : "Faça login e tente novamente.")});
+              return;
             }
         }
       }
@@ -488,9 +494,9 @@ export default {
 
           this.loading = false;
           return;
-        }catch (ex) {
-            const status = ex?.response?.status;
-            const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+        }catch (error) {
+            const status = error?.response?.status;
+            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
 
             showAlert(mensagem);
 
@@ -523,9 +529,9 @@ export default {
 
           this.loading = false;
           return;
-        }catch (ex) {
-            const status = ex?.response?.status;
-            const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+        }catch (error) {
+            const status = error?.response?.status;
+            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
 
             showAlert(mensagem);
 
@@ -556,9 +562,9 @@ export default {
 
           this.loading = false;
           return;
-        }catch (ex) {
-          const status = ex?.response?.status;
-          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+        }catch (error) {
+          const status = error?.response?.status;
+          const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
 
           showAlert(mensagem);
 
@@ -595,10 +601,10 @@ export default {
 
           this.loading = false;
           return;
-        } catch (ex) {
+        } catch (error) {
           // Verifica se é um erro Axios com status 422
-          const status = ex?.response?.status;
-          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+          const status = error?.response?.status;
+          const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
 
           showAlert(mensagem);
 
@@ -635,8 +641,8 @@ export default {
         } catch (error) {
           console.error("Error improving experiences:", error);
           // Handle error as needed
-          const status = ex?.response?.status;
-          const mensagem = ex?.response?.data?.message || ex?.message || 'Erro inesperado';
+          const status = error?.response?.status;
+          const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
 
           showAlert(mensagem);
 
@@ -648,6 +654,8 @@ export default {
 
       // Outars eperiências
       this.generateExperience();
+
+      $("#AIpowerBNT :input").prop("disabled", false);
       
     },
     async pedirUmTokenNovo() {

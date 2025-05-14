@@ -183,7 +183,7 @@ export default {
 
             setTimeout(() => {
                 loadingElement.remove(); // Remove loading message after 2 seconds
-                window.location.reload(); // Reload the page
+                //window.location.reload(); // Reload the page
             }, 2000);
         },
         menuDown(){

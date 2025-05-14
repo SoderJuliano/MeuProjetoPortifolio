@@ -534,3 +534,29 @@ export async function resendConfirmationAccEmail(email, language) {
     });
 
 }
+
+export async function generatePDF(user, configs) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'Accept': 'application/pdf',
+  };
+
+  const body = {
+    user,
+    configs,
+  };
+
+  return axios.post(`${apiUrl}/api/pdf/convert`, body, {
+    headers,
+    timeout: 10000,
+    responseType: 'blob', // <-- ESSENCIAL!
+  })
+  .then((response) => {
+    return response;
+  })
+  .catch((error) => {
+    console.error('Erro durante geração do pdf no backend: ', error);
+    throw error;
+  });
+}

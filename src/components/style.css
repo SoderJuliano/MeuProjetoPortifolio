@@ -628,6 +628,12 @@ button {
     }
 }
 
+/* stilo no t1 o titulo estava fincando pro inicio */
+
+.template1-formacao-title.title {
+    text-align: center !important;
+}
+
 @media (max-width: 660px) {
     .balao {
         margin-top: -230px !important;
