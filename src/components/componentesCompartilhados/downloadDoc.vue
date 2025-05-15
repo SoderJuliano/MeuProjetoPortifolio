@@ -1,31 +1,5 @@
 <template>
-    <svg class="li-img" xmlns="http://www.w3.org/2000/svg" width="46.931" height="46.931" id="microsoft-word">
-        <path fill="#41a5ee"
-            d="M44.977 2.933H13.688a1.955 1.955 0 0 0-1.955 1.955v8.311l17.6 5.134 17.6-5.133V4.888a1.955 1.955 0 0 0-1.956-1.955Z">
-        </path>
-        <path fill="#2b7cd3" d="M46.933 13.199h-35.2v10.266l17.6 5.134 17.6-5.133Z"></path>
-        <path fill="#185abd" d="M46.933 23.466h-35.2v10.266l17.6 5.134 17.6-5.133Z"></path>
-        <path fill="#103f91"
-            d="M46.933 33.732h-35.2v8.311a1.955 1.955 0 0 0 1.955 1.955h31.289a1.955 1.955 0 0 0 1.956-1.955Z"></path>
-        <path
-            d="M24.444 10.266H11.733v27.866h12.711a1.961 1.961 0 0 0 1.955-1.955V12.221a1.961 1.961 0 0 0-1.955-1.955Z"
-            opacity=".1"></path>
-        <path
-            d="M22.977 11.733H11.733v27.866h11.244a1.961 1.961 0 0 0 1.956-1.955V13.688a1.961 1.961 0 0 0-1.956-1.955Z"
-            opacity=".2"></path>
-        <path
-            d="M22.977 11.733H11.733v24.932h11.244a1.961 1.961 0 0 0 1.956-1.955V13.688a1.961 1.961 0 0 0-1.956-1.955Z"
-            opacity=".2"></path>
-        <path d="M21.511 11.733h-9.778v24.932h9.778a1.961 1.961 0 0 0 1.955-1.955V13.688a1.961 1.961 0 0 0-1.955-1.955Z"
-            opacity=".2"></path>
-        <path fill="#185abd"
-            d="M1.955 11.733h19.556a1.955 1.955 0 0 1 1.955 1.955v19.556a1.955 1.955 0 0 1-1.955 1.955H1.955A1.955 1.955 0 0 1 0 33.244V13.688a1.955 1.955 0 0 1 1.955-1.955Z">
-        </path>
-        <path fill="#fff"
-            d="M17.526 30.799h-2.639l-3.08-10.12-3.227 10.12H5.94L3.007 16.133h2.64L7.7 26.399l3.08-9.973h2.2l2.933 9.973 2.053-10.266h2.491Z">
-        </path>
-        <path fill="none" d="M0 0h46.931v46.931H0Z"></path>
-    </svg>
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiAgdmlld0JveD0iMCAwIDQ4IDQ4Ij4KICAgICAgICAgICAgICAgIDxwYXRoIGZpbGw9IiMyMTk2RjMiIGQ9Ik00MSwxMEgyNXYyOGgxNmMwLjU1MywwLDEtMC40NDcsMS0xVjExQzQyLDEwLjQ0Nyw0MS41NTMsMTAsNDEsMTB6Ij48L3BhdGg+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTI1IDE1LjAwMUgzOVYxN0gyNXpNMjUgMTlIMzlWMjFIMjV6TTI1IDIzLjAwMUgzOVYyNS4wMDFIMjV6TTI1IDI3LjAwMUgzOVYyOUgyNXpNMjUgMzFIMzlWMzMuMDAxSDI1eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiMwRDQ3QTEiIGQ9Ik0yNyA0Mkw2IDM4IDYgMTAgMjcgNnoiPjwvcGF0aD48cGF0aCBmaWxsPSIjRkZGIiBkPSJNMjEuMTY3LDMxLjAxMkgyMS4xNjdIMTguNDVsLTEuODAyLTguOTg4Yy0wLjA5OC0wLjQ3Ny0wLjE1NS0wLjk5Ni0wLjE3NC0xLjU3NmgtMC4wMzJjLTAuMDQzLDAuNjM3LTAuMTEsMS4xNjItMC4xOTcsMS41NzZsLTEuODUsOC45ODhoLTIuODI3bC0yLjg2LTE0LjAxNGgyLjY3NWwxLjUzNiw5LjMyOGMwLjA2MiwwLjQwNCwwLjExMSwwLjkzOCwwLjE0MywxLjYwN2gwLjA0MmMwLjAxOS0wLjQ5OCwwLjA5OC0xLjA1MSwwLjIyMy0xLjY0NWwxLjk3LTkuMjkxaDIuNjIybDEuNzg1LDkuNDA0YzAuMDYyLDAuMzQ4LDAuMTE5LDAuODQ2LDAuMTcsMS41MTFoMC4wMzFjMC4wMi0wLjUxNSwwLjA3My0xLjAzNSwwLjE2LTEuNTYzbDEuNTAzLTkuMzUyaDIuNDY4TDIxLjE2NywzMS4wMTJ6Ij48L3BhdGg+CiAgICAgICAgICAgICAgICA8L3N2Zz4=" alt="SVG Icon">
     <a href="#" @click="downloadAsDoc" class="nav-link">{{ buttonText }}</a>
 </template>
 
@@ -93,5 +67,17 @@ export default {
     padding: 10px;
     border-radius: 20px;
     font-size: 11px;
+}
+
+img {
+    width: 55px;
+    height: 60px;
+}
+
+@media screen and (max-width: 1500px) {
+    img {
+        width: 35px;
+        height: 35px;
+    }
 }
 </style>

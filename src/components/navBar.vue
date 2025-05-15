@@ -1250,6 +1250,49 @@ li{
   #showMenu {
     display: none !important;
   }
+
+  .navbar {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1500px) and (min-width: 1001px) {
+  .navbar {
+    max-width: 500px !important;
+    justify-content: start;
+
+    && .midle-options {
+      max-width: 100px;
+
+      && .bnt-languages {
+        min-width: 25px;
+        height: 30px;
+
+        && img {
+          width: 25px;
+        }
+      }
+    }
+  }
+  
+  #microsoft-word {
+    height: 30px !important;
+  }
+
+  .nav-item svg {
+    width: 25px;
+    height: 30px;
+  }
+
+  .nav-item img {
+    width: 25px;
+    height: 30px;
+  }
+
+  .nav-item {
+    height: 30px;
+    width: 45px;
+  }
 }
 
 /* Estilo do spinner */
