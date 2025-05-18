@@ -314,6 +314,13 @@ export default {
           localStorage.setItem("tempUser", JSON.stringify(response.data))
         } catch (error) {
           console.error('Error generating CV:', error);
+
+          if (error.response && error.response.status === 422) {
+            this.showConfirmAI = false;
+            console.log('Erro 422 detectado, redirecionando para /choose-your-plan');
+            window.location.href = '/choose-your-plan';
+          }
+
           this.showConfirmAI = false;
           showAlert(this.language.includes('pt-br') ? 'Erro ao gerar o currículo' : 'Error generating CV');
           return;
