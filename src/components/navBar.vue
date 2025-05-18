@@ -295,24 +295,37 @@ export default {
         $('.confirm-buttons button').hide();
 
         let iaProfession = this.user.profession;
+        let iaEmail = this.user.contact.email[0];
 
         this.language.includes("en") ? $('.confirm-buttons').text("🤖 Generating...") : $('.confirm-buttons').text("🤖 Criando...");
 
         if(!iaProfession) iaProfession = sessionStorage.getItem("iaProfession");
+        if(!iaEmail) iaEmail = sessionStorage.getItem("iaEmail");
 
         const body = {
           profession: iaProfession,
-          email: this.user?.contact?.email[0],
+          email: iaEmail,
           language: this.language
         }
-        const response = await generateFullCv(body);
-        console.log(response.data)
-        localStorage.setItem("backupUser", JSON.stringify(this.user))
-        localStorage.setItem("tempUser", JSON.stringify(response.data))
+        try {
+          const response = await generateFullCv(body);
+          console.log(response.data)
+          localStorage.setItem("backupUser", JSON.stringify(this.user))
+          localStorage.setItem("tempUser", JSON.stringify(response.data))
+        } catch (error) {
+          console.error('Error generating CV:', error);
+          this.showConfirmAI = false;
+          showAlert(this.language.includes('pt-br') ? 'Erro ao gerar o currículo' : 'Error generating CV');
+          return;
+        }
 
         this.showConfirmAI = false; 
         
         window.location.href = "/tempUser";
+      },
+      validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
       },
       generateFullCV() {
         if(this.user.profession == null || this.user.profession == "") {
@@ -322,55 +335,86 @@ export default {
           const english = titleInnertText.includes('Generate');
 
           $('.confirm-buttons').hide();
-    
-          $(document).ready(function() {
 
+          $(document).ready(function () {
             $('.input-class').remove();
+            $('.email-input-class').remove();
             $('.ok-button').remove();
 
-              var inputElement = $('<input>', {
-                  type: 'text',
-                  placeholder: english ? 'Input your desired role' : 'Coloque seu cargo',
-                  class: 'input-class',
-                  css: {
-                    padding: '10px',
-                    borderRadius: '10px',
-                    marginTop: '10px',
-                    border: 'solid black 1px'
-                  }
-              });
+            // Campo de entrada para profissão
+            var inputElement = $('<input>', {
+              type: 'text',
+              placeholder: english ? 'Input your desired role' : 'Coloque seu cargo',
+              class: 'input-class',
+              css: {
+                padding: '10px',
+                borderRadius: '10px',
+                marginTop: '10px',
+                border: 'solid black 1px',
+              },
+            });
 
-              var okButton = $('<button>', {
-                  text: english ? 'Set!' : 'Definir',
-                  class: 'ok-button',
-                  css: {
-                    minWidth: '40px',
-                    width: '100px',
-                    padding: '5px',
-                    marginLeft: '5px'
-                  }
-              });
+            // Campo de entrada para email
+            var emailInputElement = $('<input>', {
+              type: 'email',
+              placeholder: english ? 'Input your email' : 'Coloque seu email',
+              class: 'email-input-class',
+              css: {
+                padding: '10px',
+                borderRadius: '10px',
+                marginTop: '10px',
+                border: 'solid black 1px',
+                marginLeft: '5px',
+              },
+            });
 
-              if ($('.AIAlert .input-class').length === 0)$('.AIAlert .inner-alert p').append(inputElement);
-              if ($('.AIAlert .ok-button').length === 0) $('.AIAlert .input-class').after(okButton);
+            // Botão de confirmação
+            var okButton = $('<button>', {
+              text: english ? 'Set!' : 'Definir',
+              class: 'ok-button',
+              css: {
+                minWidth: '40px',
+                width: '100px',
+                padding: '5px',
+                marginLeft: '5px',
+              },
+            });
 
+            // Adiciona os campos e o botão na interface
+            if ($('.AIAlert .input-class').length === 0) $('.AIAlert .inner-alert p').append(inputElement);
+            if ($('.AIAlert .email-input-class').length === 0) $('.AIAlert .inner-alert p').append(emailInputElement);
+            if ($('.AIAlert .ok-button').length === 0) $('.AIAlert .email-input-class').after(okButton);
 
-              okButton.on('click', function() {
-                // Mostra a div confirm-buttons
-                $('.confirm-buttons').show();
+            // Evento de clique no botão
+            okButton.on('click', function () {
+              // Obtém os valores dos campos de entrada
+              var professionValue = $('.AIAlert .input-class').val();
+              var emailValue = $('.AIAlert .email-input-class').val();
 
-                // Obtém o valor do campo de entrada com a classe .input-class
-                var inputValue = $('.AIAlert .input-class').val();
+              // Valida se ambos os campos estão preenchidos
+              if (!professionValue || !emailValue) {
+                alert(english ? 'Please fill in both fields!' : 'Por favor, preencha ambos os campos!');
+                return;
+              }
 
-                sessionStorage.setItem('iaProfession', inputValue);
-                
-                if (english) {
-                    $('.inner-alert p').text("Generate for free now a " + inputValue + " resume!");
-                } else {
-                    $('.inner-alert p').text("Gere de graça agora um currículo para " + inputValue + "!");
-                } 
-                $('.confirm-buttons').show();
-              });
+              // Armazena os valores no sessionStorage
+              sessionStorage.setItem('iaProfession', professionValue);
+              sessionStorage.setItem('iaEmail', emailValue);
+
+              // Atualiza o texto da mensagem
+              if (english) {
+                $('.inner-alert p').text(
+                  "Generate for free now a " + professionValue + " resume! We'll send it to " + emailValue + "."
+                );
+              } else {
+                $('.inner-alert p').text(
+                  "Gere de graça agora um currículo para " + professionValue + "! Enviaremos para " + emailValue + "."
+                );
+              }
+
+              // Mostra os botões de confirmação
+              $('.confirm-buttons').show();
+            });
           });
         }
         this.showConfirmAI = true;

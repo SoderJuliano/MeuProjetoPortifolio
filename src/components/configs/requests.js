@@ -370,7 +370,7 @@ export async function generateFullCv(data) {
 
   const endpoint = `${apiUrl}/generate-cv`;
 
-  return await axios.post(endpoint, body, headers).then((response) => {
+  return await axios.post(endpoint, body, { headers }).then((response) => {
     console.log('generateFullCv', response);
     return response;
   })
@@ -394,11 +394,10 @@ export async function improveText(data) {
     language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
   }
 
-  console.log(body)
-
   const endpoint = `${apiUrl}/improve-text`;
 
-  return await axios.post(endpoint, body, headers).then((response) => {
+  return await axios.post(endpoint, body, { headers })
+  .then((response) => {
     console.log('improveText', response);
     return response;
   }).catch(error => {
@@ -437,7 +436,7 @@ export async function improveTextLlama(data) {
 
   const endpoint = `${apiUrl}/llama3`;
 
-  return await axios.post(endpoint, body, headers).then((response) => {
+  return await axios.post(endpoint, body, { headers }).then((response) => {
     return response;
   }).catch(error => {
     console.error('Erro durante chamada IA', error);
