@@ -3,6 +3,9 @@
         :is="templates[configs.template - 1]"
         :user="user"
         :language="this.configs?.language"
+        :mainColor="this.configs?.mainColor"
+        :sideColor="this.configs?.sideColor"
+        :fontColor="this.configs?.fontColor"
     />
 </template>
 
