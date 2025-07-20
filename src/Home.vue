@@ -880,6 +880,8 @@ export default {
         if (response) {
           if (response.status == 422) {
             this.isANewUser == false;
+            const errorMessageAlert = response.data?.message && this.languageIsEN === "Must have a name" ? "Must have insert a name first on your CV" : "Precisa adicionar o nome ao CV primeiro";  
+            showAlert(errorMessageAlert)
           } else if(response.status == 201) {
             this.isANewUser = true;
             showAlert(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
