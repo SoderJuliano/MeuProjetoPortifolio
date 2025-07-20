@@ -884,7 +884,7 @@ export default {
             showAlert(errorMessageAlert)
           } else if(response.status == 201) {
             this.isANewUser = true;
-            showAlert(null, "Salvo com sucesso! Agora vamos salvar sua senha.");
+            showAlert("Salvo com sucesso! Agora vamos salvar sua senha.");
             userFromModel = await userFromModel.constructorObject(response?.data.content);
             this.user = userFromModel;
             this.user.language = this.configs.language;
