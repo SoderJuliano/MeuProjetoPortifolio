@@ -125,10 +125,7 @@
         :language="this.configs.getLanguage()"
         @update-configs="updateConfigs"
         @update-user="updateUser"
-        @now-template1="change_template(1)"
-        @now-template2="change_template(2)"
-        @now-template3="change_template(3)"
-        @now-template4="change_template(4)"
+        @change-template="change_template"
         @login="showLogin"
         class="multi-menu-class"
         @changefont="changefont"
@@ -137,8 +134,7 @@
       />
     </div>
     <div id="template">
-      <template1
-        v-if="configs.getTemplate() == 1"
+      <component :is="templates[configs.getTemplate() - 1]"
         :language="this.configs.getLanguage()"
         @update-user="updateUser"
         @local-update-user="updateUser"
@@ -166,59 +162,6 @@
         :sideColor="this.configs?.getSideColor()"
         :fontColor="this.configs?.getFontColor()"
         :user="user"
-      />
-      <template2
-        v-if="configs.getTemplate() == 2"
-        :language="this.configs.getLanguage()"
-        @add-info="addInfo"
-        @add-resumo="editarResumo"
-        @adicionar-habilidade="adicionarNovaHabilidade"
-        class="template t2"
-        @add-experiencia="editarExperiencias"
-        @add-competencia="editarCompetencias"
-        @add-nome="editarNome"
-        @choose-skillIcon="editarIcons('skill')"
-        @choose-phoneIcon="editarIcons('phone')"
-        @choose-addressIcon="editarIcons('adress')"
-        @choose-emailIcon="editarIcons('email')"
-        @add-profissao="editarProfissao"
-        @add-formacao="this.showModal('formacao')"
-        @add-habilidade="this.showModal('habilidade')"
-        @add-SocialLink="this.showModal('socialLink')"
-        @choose-educationIcon="editarIcons('education')"
-        @update-competences="updateCompetences"
-        @update-experiences="adicionarExperiencias"
-        @local-update-user="updateUser"
-        @update-user="updateUser"
-        :style="getStyle()"
-        :mainColor="this.configs?.getMainColor()"
-        :sideColor="this.configs?.getSideColor()"
-        :fontColor="this.configs?.getFontColor()"
-        :user="user"
-      />
-      <Template3
-        class="template"
-        v-if="configs.getTemplate() == 3"
-        :user="user"
-        :language="this.configs.getLanguage()"
-        @updateUser="updateUser"
-      />
-      <Template4
-        class="template"
-        v-if="configs.getTemplate() == 4"
-        :user="user"
-        :language="this.configs.getLanguage()"
-        @add-nome="editarNome"
-        @add-info="addInfo"
-        @add-resumo="editarResumo"
-        @add-experiencia="editarExperiencias"
-        @add-formacao="this.showModal('formacao')"
-        @add-habilidade="this.showModal('habilidade')"
-        @delete-from-education="deleteFromEducation"
-        @delete-from-experiences="deleteFromExperiences"
-        @add-profession="editarProfissao"
-        @add-SocialLink="this.showModal('socialLink')"
-        @updateUser="updateUser"
       />
     </div>
     <!-- <div class="footer">
@@ -251,10 +194,7 @@
       :template="this.configs.getTemplate()"
       @font-changed="setFont"
       :user="user"
-      @now-template1="change_template(1)"
-      @now-template2="change_template(2)"
-      @now-template3="change_template(3)"
-      @now-template4="change_template(4)"
+      @change-template="change_template"
       @change-main-color="changeMainColor"
       @change-font-color="changeFontColor"
       @update-user="updateUser"
@@ -294,6 +234,7 @@ import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
+import ModernTemplate from "./templates/ModernTemplate.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -343,6 +284,13 @@ export default {
       showAlertError: false,
       diagram: null,
       showDiagramsModal: false,
+      templates: [
+        Template1,
+        Template2,
+        Template3,
+        Template4,
+        ModernTemplate
+      ],
       // loginTitle, null == default title
       loginTitle: null,
       inlogin: false,
@@ -390,6 +338,7 @@ export default {
     Template2,
     Template3,
     Template4,
+    ModernTemplate,
     Tips,
     login,
     diagramsModal,
@@ -439,7 +388,7 @@ export default {
       if(this.user?.resume && this.user?.resume != '') {
         
         try{
-        const response = await funcs.improveTextLlama({
+        const response = await funcs.improveTextGemini({
                             text: this.user.resume.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
@@ -482,7 +431,7 @@ export default {
         '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
 
         try{
-          const response = await funcs.improveTextLlama({
+          const response = await funcs.improveTextGemini({
                               text: this.user.resume.trim(),
                               email: this.user?.contact?.email[0],
                               language: this.configs.language,
@@ -517,7 +466,7 @@ export default {
         '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
 
         try {
-          const response = await funcs.improveTextLlama({
+          const response = await funcs.improveTextGemini({
                               text: this.user.resume.trim(),
                               email: this.user?.contact?.email[0],
                               language: this.configs.language,
@@ -550,7 +499,7 @@ export default {
         '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
       
         try {
-          const response = await funcs.improveTextLlama({
+          const response = await funcs.improveTextGemini({
                             text: this.user.resume.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
@@ -588,7 +537,7 @@ export default {
         'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
       
         try {
-          const response = await funcs.improveTextLlama({
+          const response = await funcs.improveTextGemini({
                             text: this.user.resume.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
@@ -619,7 +568,7 @@ export default {
         try {
           // Using map instead of foreach to properly handle async/await
           const promises = this.user.userExperiences.map(async (experience, index) => {
-            const response = await funcs.improveTextLlama({
+            const response = await funcs.improveTextGemini({
               text: experience.description.trim(),
               email: this.user?.contact?.email[0],
               language: this.configs.language

@@ -9,10 +9,7 @@
         <h3 class="dropdown-title">{{ this.language.includes("en") ? "Choose a template" : "Escolha um template"}}</h3>
         <TemplateChooser
             :template="template"
-            @now-template1="this.$emit('now-template1')"
-            @now-template2="this.$emit('now-template2')"
-            @now-template3="this.$emit('now-template3')"
-            @now-template4="this.$emit('now-template4')"
+            @change-template="$emit('change-template', $event)"
         />
     </div>
 
@@ -25,7 +22,7 @@ import TemplateChooser from './TemplateChooser.vue'
 
 export default {
     name: 'Templates',
-    emits:['now-template1', 'now-template2', 'now-template3','now-template4'],
+    emits:['change-template'],
     props:{
         template: Number,
         language: String

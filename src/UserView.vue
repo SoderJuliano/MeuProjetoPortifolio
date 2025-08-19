@@ -15,6 +15,7 @@ import Template1 from "./templates/Template1.vue";
 import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
+import ModernTemplate from "./templates/ModernTemplate.vue";
 
 export default {
     name: "userview",
@@ -23,7 +24,8 @@ export default {
         Template1,
         Template2,
         Template3,
-        Template4
+        Template4,
+        ModernTemplate
     },
     data() {
         return {
@@ -32,7 +34,8 @@ export default {
             templates: [Template1,
                         Template2,
                         Template3,
-                        Template4]
+                        Template4,
+                        ModernTemplate]
         }
     },
     created() {

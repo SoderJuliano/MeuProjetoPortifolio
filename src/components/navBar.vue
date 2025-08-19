@@ -1308,6 +1308,11 @@ li{
 }
 
 @media screen and (max-width: 1500px) and (min-width: 1001px) {
+  .nav-item .nav-link {
+    width: 50px;
+    height: auto;
+  }
+
   .navbar {
     max-width: 500px !important;
     justify-content: start;

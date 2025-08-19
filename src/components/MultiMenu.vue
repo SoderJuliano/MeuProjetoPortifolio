@@ -47,10 +47,7 @@
             <Templates
                 :language="language"
                 :template="template"
-                @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')" 
-                @now-template3="this.$emit('now-template3')"
-                @now-template4="this.$emit('now-template4')"
+                @change-template="this.$emit('change-template', $event)"
             />
             <p class="multimenu-line"></p>
         </div>
@@ -131,10 +128,7 @@ export default {
     "changefont",
     "update-configs",
     "update-user",
-    'now-template1',
-    'now-template2',
-    'now-template3',
-    'now-template4',
+    'change-template',
     'login',
     'reset-password',
     'ativationAccount',
