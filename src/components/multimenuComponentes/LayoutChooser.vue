@@ -15,24 +15,21 @@
 import $ from 'jquery';
 
 export default {
-    name: "TemplateChooser",
+    name: "LayoutChooser",
     props: {
         template: Number
     },
-    emits: ['change-template'],
+    emits: ['change-layout'],
     data() {
         return {
             templates: [
-                { id: 1, name: 'Style 1', image: require('../../assets/templatesImg/template1.png') },
-                { id: 2, name: 'Style 2', image: require('../../assets/templatesImg/template2.png') },
-                { id: 3, name: 'Normal', image: require('../../assets/templatesImg/templete3.png') },
-                { id: 4, name: 'Normal 2', image: require('../../assets/templatesImg/template4.png') }
+                { id: 5, name: 'Modern', image: require('../../../new-template.png') }
             ]
         }
     },
     methods: {
         select(templateId) {
-            this.$emit('change-template', templateId);
+            this.$emit('change-layout', templateId);
             $(".closeDiv").click();
             $(".navbar__toggle").click();
         },

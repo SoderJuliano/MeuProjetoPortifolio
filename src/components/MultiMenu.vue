@@ -51,6 +51,14 @@
             />
             <p class="multimenu-line"></p>
         </div>
+        <div class="option">
+            <Layouts
+                :language="language"
+                :template="template"
+                @change-layout="this.$emit('change-layout', $event)"
+            />
+            <p class="multimenu-line"></p>
+        </div>
         <div v-if="mobileOptions" class="option">
             <p class="tside" @click="$emit('login')" >LOGIN</p>
             <p class="multimenu-line"></p>
@@ -114,6 +122,7 @@ import pageColor from "./pageColor.vue";
 import Avatares from "./Avatares.vue";
 import PicureShape from "./PictureShape.vue";
 import Templates from "./multimenuComponentes/Templates.vue";
+import Layouts from "./multimenuComponentes/Layouts.vue";
 import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
 import UserModel from "../model/userModel";
 import { showAlert } from 'simple-alerts/dist/showAlert.js';
@@ -129,6 +138,7 @@ export default {
     "update-configs",
     "update-user",
     'change-template',
+    'change-layout',
     'login',
     'reset-password',
     'ativationAccount',
@@ -140,6 +150,7 @@ export default {
         Avatares,
         PicureShape,
         Templates,
+        Layouts,
         FontsSize,
         GlobalModal
     },

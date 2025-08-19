@@ -126,6 +126,7 @@
         @update-configs="updateConfigs"
         @update-user="updateUser"
         @change-template="change_template"
+        @change-layout="change_layout"
         @login="showLogin"
         class="multi-menu-class"
         @changefont="changefont"
@@ -156,7 +157,7 @@
         @update-experiencias="adicionarExperiencias"
         @update-competences="updateCompetences"
         @update-social="handleUpdateSocial"
-        class="template"
+        :class="{ template: true, t2: configs.getTemplate() == 2 }"
         :style="getStyle()"
         :mainColor="this.configs?.getMainColor()"
         :sideColor="this.configs?.getSideColor()"
@@ -1047,6 +1048,11 @@ export default {
         $(".footer .close-bnt").css({"right": "30px"})
         // console.log('set t1')
       }
+    },
+    change_layout(template) {
+      this.configs.setTemplate(template);
+      localStorage.setItem("configs", JSON.stringify(this.configs));
+      window.location.href = '/user/view';
     },
     lupdate(lng) {
       console.log('executing lupdate')
