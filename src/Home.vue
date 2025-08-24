@@ -383,116 +383,36 @@ export default {
         this.loading = false;
         return;
       }
+
+      const updatedFields = JSON.parse(sessionStorage.getItem('updatedFields')) || [];
       
       // RESUME IMPROVING
-      // Com conteúdo
-      if(this.user?.resume && this.user?.resume != '') {
-        
+      if(this.user?.resume && this.user?.resume != '' && !updatedFields.includes('resume')) {
         try{
-        const response = await funcs.improveTextGemini({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                          });
-
-
-        // console.log('ia responde', response)
-
-        // alert(response.data)
-
-        this.user.resume = response.data;
-        this.updateUser(this.user, false);
-        this.loading = false;
-        return;
+          const response = await funcs.improveTextGemini({
+                              text: this.user.resume.trim(),
+                              email: this.user?.contact?.email[0],
+                              language: this.configs.language,
+                            });
+          this.user.resume = response.data;
+          updatedFields.push('resume');
         }catch (error) {
             const status = error?.response?.status || eerrorx?.status || 500;
             const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
             showAlert(mensagem);
-
             if (status === 422) {
               setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
             } else if (status === 401) {
               this.loading = false; //todo ver aqui so mostro a tela de login de volta
               setTimeout(() => {showAlert(this.languageIsEN() ? "Redo the login and try again." : "Faça login e tente novamente.")});
-              return;
             }
         }
+      } else if (updatedFields.includes('resume')) {
+        showAlert(this.languageIsEN() ? 'Resume already improved in this session.' : 'O resumo já foi melhorado nesta sessão.');
       }
 
-      // RESUME IMPROVING
-      // Sem conteúdo 
-      else if (this.user?.resume == 'about you.' 
-      || this.user?.resume == 'sobre você.' ) {
-
-        const instructions = this.languageIsEN() 
-        ? 'Create a good short summary about me as a ' + this.user.profession + 
-        'and return only the texto you got, no comments, no explanations, only the generated text.' 
-        : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
-        '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
-
-        try{
-          const response = await funcs.improveTextGemini({
-                              text: this.user.resume.trim(),
-                              email: this.user?.contact?.email[0],
-                              language: this.configs.language,
-                              customPrompt: instructions
-                            });
-
-          this.user.resume = response.data;
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
-        }catch (error) {
-            const status = error?.response?.status;
-            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
-            showAlert(mensagem);
-
-            if (status === 422) {
-              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
-            }
-        }
-      }
-
-
-      // SKILLS - no skill
-      const emptyPlaceholders = ['', 'Digite aqui', 'Type in here'];
-      if (!!this.user.ability || emptyPlaceholders.includes(this.user.ability)) {
-        const instructions = this.languageIsEN() 
-        ? 'Create good skill for a ' + this.user.profession + 
-        'and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
-        : 'Crie um bom conjunto de habilidades para ' + this.user.profession + 
-        '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
-
-        try {
-          const response = await funcs.improveTextGemini({
-                              text: this.user.resume.trim(),
-                              email: this.user?.contact?.email[0],
-                              language: this.configs.language,
-                              customPrompt: instructions
-                            });
-          
-          this.user.ability = response.data;
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
-        }catch (error) {
-            const status = error?.response?.status;
-            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
-            showAlert(mensagem);
-
-            if (status === 422) {
-              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
-            }
-          }
-      }
-
-      // Skill - with skills
-      else if(this.user?.ability && !emptyPlaceholders.includes(this.user.ability)) {
+      // SKILLS
+      if(this.user?.ability && !updatedFields.includes('ability')) {
         const instructions = this.languageIsEN() 
         ? 'Review those skills for a position of ' + this.user.profession + 
         '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
@@ -501,112 +421,55 @@ export default {
       
         try {
           const response = await funcs.improveTextGemini({
-                            text: this.user.resume.trim(),
+                            text: this.user.ability.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
                             customPrompt: instructions
                           });
-        
           this.user.ability = response.data;
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
+          updatedFields.push('ability');
         }catch (error) {
           const status = error?.response?.status;
           const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
           showAlert(mensagem);
-
           if (status === 422) {
             setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
           }
         }
+      } else if (updatedFields.includes('ability')) {
+        showAlert(this.languageIsEN() ? 'Skills already improved in this session.' : 'As habilidades já foram melhoradas nesta sessão.');
       }
 
-      // WORK - no-job
-      if(this.user.userExperiences?.length === 0) {
-        const instructions = this.languageIsEN() 
-        ? 'Imageine a job position that match my skills:' +this.user.ability + '. With tille' + this.user.profession + 
-        '. Then I need you return a string containing a json strigify object inside as the exemple: '+
-        ' {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}.'+
-        ' In English'+
-        '. No comments or aditional infos just the string json for response.' 
-        : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
-        '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
-        'Sem informações adicionais, apenas responda com a string json. Texto em português, em ingles apenas as palavras que formao o json, position, company,'+
-        'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
-      
+      // WORK
+      if (this.user.userExperiences?.length > 0 && !updatedFields.includes('experience')) {
         try {
-          const response = await funcs.improveTextGemini({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                            customPrompt: instructions
-                          });
-
-          console.log(response.data)
-          this.user.userExperiences = [response.data];
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
-        } catch (error) {
-          // Verifica se é um erro Axios com status 422
-          const status = error?.response?.status;
-          const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
-          showAlert(mensagem);
-
-          if (status === 422) {
-            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
-          }
-        }
-      }
-
-      // WORK - with job
-      if (this.user.userExperiences?.length > 0) {
-        try {
-          // Using map instead of foreach to properly handle async/await
           const promises = this.user.userExperiences.map(async (experience, index) => {
             const response = await funcs.improveTextGemini({
               text: experience.description.trim(),
               email: this.user?.contact?.email[0],
               language: this.configs.language
             });
-            
-            // Option 1: Direct modification
-            //experience.description = response.data;
-            
-            // Option 2: Modification by index
             this.user.userExperiences[index].description = response.data;
           });
-          
-          await Promise.all(promises); // Wait for all improvements to complete
-
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
+          await Promise.all(promises);
+          updatedFields.push('experience');
         } catch (error) {
           console.error("Error improving experiences:", error);
-          // Handle error as needed
           const status = error?.response?.status;
           const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
           showAlert(mensagem);
-
           if (status === 422) {
             setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
           }
         }
+      } else if (updatedFields.includes('experience')) {
+        showAlert(this.languageIsEN() ? 'Experiences already improved in this session.' : 'As experiências já foram melhoradas nesta sessão.');
       }
 
-      // Outars eperiências
-      this.generateExperience();
-
-      $("#AIpowerBNT :input").prop("disabled", false);
-      
+      this.updateUser(this.user, false);
+      sessionStorage.setItem('updatedFields', JSON.stringify(updatedFields));
+      this.loading = false;
+      $("#AIpowerBNT :button").prop("disabled", false);
     },
     async pedirUmTokenNovo() {
       try {
@@ -1207,11 +1070,10 @@ export default {
           this.modal.placeholder1 = this.languageIsEN()
             ? "Talk what kind of person you are"
             : "Descreva que tipo de proficional voce e...";
-          this.modal.list = this.user.competence;
+          this.modal.list = [];
 
           this.showDivModal();
 
-          $("#modal-input").val($("#resume").text())
           break;
 
         case "experiencias":
