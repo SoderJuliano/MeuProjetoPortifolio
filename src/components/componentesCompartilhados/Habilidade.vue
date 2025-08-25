@@ -2,8 +2,7 @@
   <div :class="cstyle">
       <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <showSwitcher :className="cstyle" :startShowing="user.ability != ''" />
-        <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-habilidade')"/>
-        <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
+        <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div v-if="user.ability" :class="hcstyle">
           <img @click="this.$emit('choose-skillIcon')" src="../../icons/html.png" class="habilidade-icon"/>

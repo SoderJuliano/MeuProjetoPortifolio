@@ -27,7 +27,7 @@
           <showSwitcher className="contato.template-data" :startShowing="user.contact.email.length > 0
             || user.contact.phone.length > 0
             || user.contact.address != '' ? true : false" />
-          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-info')" />
+          <img src="../assets/new_edit_icon.png" alt="editar" class="editar" @click="$emit('add-info')" />
         </p>
         <br />
         <div v-for="(item, index) in user.contact.email" :key="index" class="data-container">

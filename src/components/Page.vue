@@ -6,7 +6,7 @@
           u.name ? u.name : language == "pt-br" ? "Seu nome" : "Your name"
         }}</span>
         <img
-          src="../icons/editar.png"
+          src="../assets/new_edit_icon.png"
           alt="editar"
           class="editar"
           @click="$emit('add-nome')"
@@ -23,7 +23,7 @@
           }}
         </span>
         <img
-          src="../icons/editar.png"
+          src="../assets/new_edit_icon.png"
           alt="editar"
           class="editar"
           @click="$emit('add-profissao')"
