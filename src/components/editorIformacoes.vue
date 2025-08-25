@@ -18,7 +18,8 @@
                             name="area" id="modal-input"
                             @keydown.enter="pressedShifAndEnter"
                             cols="40" rows="5"
-                            :placeholder="`${this.placeholder}`">
+                            :placeholder="`${this.placeholder}`"
+                            v-model="resumeText">
                         </textarea>
                         <textarea
                             v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')"
@@ -222,6 +223,7 @@ export default {
             isPageLink: false,
             isEnglish: true,
             loggedIn: false,
+            resumeText: this.user.resume
         }
     },
     components: {
@@ -462,13 +464,13 @@ export default {
                     break;
                 case 'Sobre voce':
                     //document.getElementById('resume').textContent = document.getElementById('modal-input').value
-                    this.userData.resume = document.getElementById('modal-input').value;
+                    this.userData.resume = this.resumeText;
                     this.updateUser();
                     this.cancelar();
                     break;
                 case 'Write about you':
                     //document.getElementById('resume').textContent = document.getElementById('modal-input').value
-                    this.userData.resume = document.getElementById('modal-input').value;
+                    this.userData.resume = this.resumeText;
                     this.updateUser();
                     this.cancelar();
                     break;

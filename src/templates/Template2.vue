@@ -111,6 +111,7 @@ export default {
 @media print {
     .main{
         box-shadow: none !important;
+        width: 100% !important;
     }
 }
 .main {

@@ -5,6 +5,7 @@
             :className="classToShare"
             :startShowing="jobs?.length > 0"
         />
+        
         <img src="../../icons/editar.png" id="edit-exp" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
         <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
@@ -52,6 +53,7 @@ import showSwitcher from '../iconComponent/showSwitcher.vue';
 import jobModel from '../../model/jobModel.js';
 import wrappEditModel from "../utils/wrappEditModel.vue";
 
+
 export default {
   name: 'Experiencias',
   emits: ['add-experiencia', 'update-experiencias'],
@@ -77,7 +79,8 @@ export default {
       cstyle: 'template'+this.template+'-experiencias-container',
       jobs: this.experiences,
       editIcon: svgs.editIcon,
-      showEditing: null
+      showEditing: null,
+      isImproved: false
     }
   },
   methods:{
@@ -127,6 +130,13 @@ export default {
         this.jobs = this.experiences
       }
     },
+    user: {
+        deep: true,
+        handler() {
+            const updatedFields = JSON.parse(sessionStorage.getItem("updatedFields")) || [];
+            this.isImproved = updatedFields.includes('experience');
+        }
+    }
   }
 }
 </script>
