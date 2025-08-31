@@ -1634,15 +1634,10 @@ export default {
     display: none !important;
   }
   .main {
-    display: flex;
+    display: block; /* Changed from flex to block */
     width: 100% !important;
-    width: 100dvw !important;
-    /* Template style 2 tava ficando com uma margem gigante
-    foi resolvido com margin e left 0 */
-    left: 0px;
-    margin: 0px !important; 
-    position: absolute;
-    top: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact;
   }
 

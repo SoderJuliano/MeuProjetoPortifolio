@@ -108,12 +108,6 @@ export default {
 }
 </script>
 <style scoped>
-@media print {
-    .main{
-        box-shadow: none !important;
-        width: 100% !important;
-    }
-}
 .main {
     display: block;
     box-shadow: 0px 0px 30px 1px;
@@ -140,6 +134,5 @@ export default {
     min-height: 400px;
     height: 100%;
 }
-    
 }
 </style>
