@@ -38,12 +38,25 @@ export default {
                         ModernTemplate]
         }
     },
+    methods: {
+        handleKeyDown(event) {
+            if (event.key === 'Backspace') {
+                window.history.back();
+            }
+        }
+    },
     created() {
         if(this.configs.language.includes('pt-br')) {
             this.user = JSON.parse(localStorage.getItem('user-pt'));
         }else {
             this.user = JSON.parse(localStorage.getItem('user-en'));
         }
+    },
+    mounted() {
+        document.addEventListener('keydown', this.handleKeyDown);
+    },
+    beforeUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown);
     }
 }
 </script>

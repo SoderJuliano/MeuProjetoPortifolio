@@ -94,7 +94,8 @@ export default {
 }
 .a4-size {
     width: 210mm;
-    height: 297mm;
+    min-height: 297mm; /* Changed from height to min-height */
+    height: auto; /* Allow height to grow */
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     margin: 20px auto;
     transform: scale(0.8);

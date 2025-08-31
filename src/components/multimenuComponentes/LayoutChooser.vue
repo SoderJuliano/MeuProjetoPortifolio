@@ -40,26 +40,34 @@ export default {
 }
 </script>
 <style scoped>
+.select-template {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: center; /* Center the items */
+    gap: 15px; /* Add space between items */
+    width: 100%;
+    margin-top: 55px;
+    z-index: 2;
+}
 
 button {
+    flex: 1 1 150px; /* Flex-grow, flex-shrink, flex-basis */
+    max-width: 200px; /* Max width for each card */
     border-radius: 15px;
     color: black;
     background-color: white;
-    margin-left: 10px;
-    width: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+button p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
 }
 
 button img {
-    width: 40px;
-    height: 80px;
-}
-
-.select-template {
-    display: flex;
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-top: 55px;
-    z-index: 2;
+    height: auto;
+    border-radius: 10px;
 }
 </style>

@@ -113,7 +113,7 @@
   ></login>
   <diagrams-modal
     :diagram="diagram"
-    v-if="showDiagramsModal"
+    vif="showDiagramsModal"
     :language="this.configs.getLanguage()"
     @close="this.showDiagramsModalFunction(null)"
   ></diagrams-modal>
@@ -915,7 +915,10 @@ export default {
     change_layout(template) {
       this.configs.setTemplate(template);
       localStorage.setItem("configs", JSON.stringify(this.configs));
-      window.location.href = '/user/view';
+      const newTab = window.open('/user/view', '_blank');
+      if (newTab) {
+        newTab.focus();
+      }
     },
     lupdate(lng) {
       console.log('executing lupdate')
@@ -1634,15 +1637,10 @@ export default {
     display: none !important;
   }
   .main {
-    display: flex;
+    display: block; /* Changed from flex to block */
     width: 100% !important;
-    width: 100dvw !important;
-    /* Template style 2 tava ficando com uma margem gigante
-    foi resolvido com margin e left 0 */
-    left: 0px;
-    margin: 0px !important; 
-    position: absolute;
-    top: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact;
   }
 
@@ -1780,5 +1778,16 @@ body{
   .footer {
     display: flex !important;
   }
+}
+</style>
+<style>
+/* Overrides for ModernTemplate when in Home view to match other templates */
+#template .a4-size {
+  width: 100%;
+  min-height: 1122px; /* Approximately 297mm to avoid layout shifts from content change */
+  height: auto;
+  margin: 0;
+  transform: none;
+  box-shadow: none;
 }
 </style>

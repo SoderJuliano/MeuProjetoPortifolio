@@ -2,8 +2,7 @@
   <div :class="conteinerstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher :className="conteinerstyle" :startShowing="user.competence.length > 0" />
-        <img id="edit-com" src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-competencia')"/>
-        <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
+        <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
@@ -63,14 +62,6 @@ export default {
       },
       editar(val) {
         this.showEditing = val
-      },
-      hovert(){
-        this.template == 2 ?
-        document.getElementById("edit-com").style.display = "none" : ''
-      },
-      leavehovert(){
-        this.template == 2 ?
-        document.getElementById("edit-com").style.display = "block" : ''
       },
       getStyle(){
         return this.template == 1

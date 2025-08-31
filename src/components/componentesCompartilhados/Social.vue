@@ -4,8 +4,7 @@
             <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
                 {{language == 'pt-br' ? titulo[0] : titulo[1]}}
                 <showSwitcher className="template-data-social" :startShowing="user?.social?.length > 0" />
-                <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
-                <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+                <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
         <div v-for="(item, index) in this.userData.social" :key="index" :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" >
@@ -23,7 +22,7 @@
                 <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt editar">
                 <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
-                <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
+                <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../assets/new_edit_icon.png" alt="remove-bnt"/>
             </div>
             <div v-if="showEditing == index" class="obj-edit">
                     <wrappEditModel
@@ -89,13 +88,6 @@ export default {
                 "border-bottom": "1px solid "+this.sideColor+"!important"
             }
         },
-        hovert(){
-            this.template == 2 ?
-            document.getElementById("edit").style.display = "none" : '';
-        },
-        leavehovert(){
-            document.getElementById("edit").style.display = "block";
-        }
     },
     watch: {
         user: function(newVal) {
