@@ -43,44 +43,34 @@ export default {
 }
 </script>
 <style scoped>
-
-button {
-    border-radius: 15px;
-    color: black;
-    background-color: white;
-    margin-left: 10px;
-    width: 40px;
-}
-
-button img {
-    width: 40px;
-    height: 80px;
-}
-
 .select-template {
     display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: center; /* Center the items */
+    gap: 15px; /* Add space between items */
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
     margin-top: 55px;
     z-index: 2;
 }
 
-@media screen and (max-width: 768px) {
-    .select-template {
-        flex-direction: column;
-        align-items: center;
-    }
+button {
+    flex: 1 1 150px; /* Flex-grow, flex-shrink, flex-basis */
+    max-width: 200px; /* Max width for each card */
+    border-radius: 15px;
+    color: black;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
 
-    button {
-        width: 80%; /* Use a percentage width */
-        margin-bottom: 15px; /* Add some space between stacked buttons */
-        margin-left: 0; /* Remove the left margin */
-    }
+button p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
 
-    button img {
-        width: 100%; /* Make the image responsive */
-        height: auto; /* Maintain aspect ratio */
-    }
+button img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
 }
 </style>
