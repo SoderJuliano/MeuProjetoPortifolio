@@ -62,4 +62,22 @@ button img {
     margin-top: 55px;
     z-index: 2;
 }
+
+@media screen and (max-width: 768px) {
+    .select-template {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 80%; /* Use a percentage width */
+        margin-bottom: 15px; /* Add some space between stacked buttons */
+        margin-left: 0; /* Remove the left margin */
+    }
+
+    button img {
+        width: 100%; /* Make the image responsive */
+        height: auto; /* Maintain aspect ratio */
+    }
+}
 </style>

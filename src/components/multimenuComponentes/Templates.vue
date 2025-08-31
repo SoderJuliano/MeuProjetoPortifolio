@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <p class="tside" @click="openTemplates">EDITAR</p>
+        <p class="tside" @click="openTemplates">TEMPLATES DE EDIÇÃO</p>
     </div>
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
     <div class="dropdown-templates-edit" v-if="isOpen">

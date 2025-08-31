@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <p class="tside" @click="openLayouts">LAYOUTS</p>
+        <p class="tside" @click="openLayouts">TEMPLATES</p>
     </div>
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
     <div class="dropdown-templates-layout" v-if="isOpen">
