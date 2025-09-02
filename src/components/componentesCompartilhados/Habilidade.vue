@@ -11,7 +11,7 @@
                   <li>{{item}}</li>
                 </div>
               </span>
-        <img @click="removeHabilidades()" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
+        <img @click="removeHabilidades()" v-if="!viewOnly" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
       </div>
   </div>
 </template>

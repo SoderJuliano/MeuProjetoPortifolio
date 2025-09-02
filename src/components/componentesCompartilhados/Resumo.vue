@@ -19,6 +19,7 @@ export default {
         user: Object,
         template: String,
         fontColor: String,
+        viewOnly: { type: Boolean, default: false }
     },
     emits: ["add-resumo"]
 }

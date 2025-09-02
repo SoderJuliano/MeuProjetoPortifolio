@@ -1,17 +1,17 @@
 <template>
   <div :class="conteinerstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
-        <showSwitcher :className="conteinerstyle" :startShowing="user.competence.length > 0" />
+        <showSwitcher v-if="!viewOnly" :className="conteinerstyle" :startShowing="user.competence.length > 0" />
         <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>
         <span class="data-container-page">{{item}}</span>
-        <div class="bnts">
+        <div class="bnts" v-if="!viewOnly">
           <img v-if="item" @click="removeCompetence" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt">
           <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt">
         </div>
-        <div v-if="showEditing == index" class="competence-edit">
+        <div v-if="showEditing == index && !viewOnly" class="competence-edit">
           <wrappEditModel
             :textItem="item"
             :textIndex="index"
@@ -23,7 +23,9 @@
         </div>
       </div>
   </div>
-</template>
+</template> na rota user/view, o template Classic Inverted ta com icons de edição, esses   │
+│    icons devem ser removidos, os icons de olhos dos titulos também remover do     │
+│    templete nesta rota  
 
 <script>
 import * as svgs from "../utils/svgsText.js";
@@ -37,6 +39,7 @@ export default {
       wrappEditModel
   },
   props: {
+    viewOnly: Boolean,
     titulo: Array,
     language: String,
     backgroundColor: String,

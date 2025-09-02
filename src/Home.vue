@@ -237,6 +237,7 @@ import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
 import CodeCV from "./templates/CodeCV.vue";
+import ClassicInverted from "./templates/ClassicInverted.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -292,7 +293,8 @@ export default {
         Template3,
         Template4,
         ModernTemplate,
-        CodeCV
+        CodeCV,
+        ClassicInverted
       ],
       // loginTitle, null == default title
       loginTitle: null,
@@ -343,6 +345,7 @@ export default {
     Template4,
     ModernTemplate,
     CodeCV,
+    ClassicInverted,
     Tips,
     login,
     diagramsModal,
@@ -1427,7 +1430,7 @@ export default {
         this.newTipMessege = {
           "id": Math.random(),
           "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
-          "content": lng.includes("en")
+          "content": lang.includes("en")
               ? "If you are loged in and the togle of syncing data is on the data will auto update based on changes."
               : "Se você estiver logado e o botão de sincronização estiver ativo, os dados serão atualizados automativamente ao serem alterados.",
           "language": this.lang,

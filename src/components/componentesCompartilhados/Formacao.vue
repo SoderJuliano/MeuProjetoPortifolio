@@ -4,6 +4,7 @@
       style="border-bottom: 1px solid rgb(176, 196, 222) !important; text-align: start; background-color: white; color: black;"
       :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
           <showSwitcher
+            v-if="!viewOnly"
             :className="containerstyle"
             :startShowing="user.grade?.length > 0"
             />
@@ -14,11 +15,11 @@
           <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon" alt="icon"/>
           <span class="data-container">{{item}}</span>
         </div>
-        <div class="bnt-divs">
+        <div class="bnt-divs" v-if="!viewOnly">
             <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
             <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="editar-item">
         </div>
-        <div v-if="showEditing == index" class="competence-edit">
+        <div v-if="showEditing == index && !viewOnly" class="competence-edit">
             <wrappEditModel
               :textItem="item"
               :textIndex="index"
@@ -55,6 +56,7 @@ export default {
     }
   },
   props:{
+    viewOnly: Boolean,
     template: Number,
     titulo: Array,
     language: String,

@@ -17,6 +17,7 @@ import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
 import CodeCV from "./templates/CodeCV.vue";
+import ClassicInverted from "./templates/ClassicInverted.vue";
 
 export default {
     name: "userview",
@@ -27,7 +28,8 @@ export default {
         Template3,
         Template4,
         ModernTemplate,
-        CodeCV
+        CodeCV,
+        ClassicInverted
     },
     data() {
         return {
@@ -38,7 +40,8 @@ export default {
                         Template3,
                         Template4,
                         ModernTemplate,
-                        CodeCV]
+                        CodeCV,
+                        ClassicInverted]
         }
     },
     methods: {

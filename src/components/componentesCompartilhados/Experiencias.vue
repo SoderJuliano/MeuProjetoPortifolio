@@ -2,14 +2,15 @@
   <div :class="mainclass">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
+            v-if="!viewOnly"
             :className="classToShare"
             :startShowing="jobs?.length > 0"
         />
         
-        <img v-if="template== 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        <img v-if="template== 2 && !viewOnly" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
-        <div class="options-div">
+        <div v-if="!viewOnly" class="options-div">
           <img 
             v-if="item" 
             :src="editIcon" 
@@ -58,6 +59,7 @@ export default {
   emits: ['add-experiencia', 'update-experiencias'],
   components: {showSwitcher, wrappEditModel},
   props:{
+    viewOnly: Boolean,
     template: Number,
     titulo: Array,
     language: String,
@@ -259,3 +261,4 @@ export default {
   }
 }
 </style>
+style>
