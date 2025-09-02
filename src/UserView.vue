@@ -16,6 +16,7 @@ import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
+import CodeCV from "./templates/CodeCV.vue";
 
 export default {
     name: "userview",
@@ -25,7 +26,8 @@ export default {
         Template2,
         Template3,
         Template4,
-        ModernTemplate
+        ModernTemplate,
+        CodeCV
     },
     data() {
         return {
@@ -35,7 +37,8 @@ export default {
                         Template2,
                         Template3,
                         Template4,
-                        ModernTemplate]
+                        ModernTemplate,
+                        CodeCV]
         }
     },
     methods: {

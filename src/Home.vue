@@ -236,6 +236,7 @@ import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
+import CodeCV from "./templates/CodeCV.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -290,7 +291,8 @@ export default {
         Template2,
         Template3,
         Template4,
-        ModernTemplate
+        ModernTemplate,
+        CodeCV
       ],
       // loginTitle, null == default title
       loginTitle: null,
@@ -340,6 +342,7 @@ export default {
     Template3,
     Template4,
     ModernTemplate,
+    CodeCV,
     Tips,
     login,
     diagramsModal,
@@ -913,11 +916,15 @@ export default {
       }
     },
     change_layout(template) {
+      console.log("Changing layout to template ID:", template);
       this.configs.setTemplate(template);
       localStorage.setItem("configs", JSON.stringify(this.configs));
       const newTab = window.open('/user/view', '_blank');
       if (newTab) {
         newTab.focus();
+      } else {
+        console.error("Failed to open new tab. Pop-up blocker might be active.");
+        alert("Não foi possível abrir a nova aba. Verifique se o bloqueador de pop-ups está ativo.");
       }
     },
     lupdate(lng) {
@@ -1494,7 +1501,6 @@ export default {
 @media print {
   .template {
     width: 100vw !important;
-    height: 100vh !important;
     border-radius: 0px !important;
   }
 

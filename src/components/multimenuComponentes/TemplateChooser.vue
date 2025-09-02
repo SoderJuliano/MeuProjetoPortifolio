@@ -26,8 +26,8 @@ export default {
                 { id: 1, name: 'Style 1', image: require('../../assets/templatesImg/template1.png') },
                 { id: 2, name: 'Style 2', image: require('../../assets/templatesImg/template2.png') },
                 { id: 3, name: 'Normal', image: require('../../assets/templatesImg/templete3.png') },
-                { id: 4, name: 'Normal 2', image: require('../../assets/templatesImg/template4.png') }
-            ]
+                { id: 4, name: 'Normal 2', image: require('../../assets/templatesImg/template4.png') },
+                ]
         }
     },
     methods: {
