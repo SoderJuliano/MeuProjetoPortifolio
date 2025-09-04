@@ -5,21 +5,20 @@
         <img v-if="user.realImg" :src="user.realImg" alt="User Photo" class="user-photo" />
         <div v-else class="photo-placeholder"></div>
       </div>
-      <div class="code-section">
-        <p><span class="keyword" :style="{ color: mainColor }">enum</span> <span class="variable">PLATFORMS</span> {</p>
-        <p class="indent">Windows, Linux, Mobile, Web</p>
-        <p>}</p>
-      </div>
-      <div class="code-section">
-        <p><span class="keyword" :style="{ color: mainColor }">enum</span> <span class="variable">LANGUAGES</span> {</p>
-        <p class="indent">C#, C++, Python, Java, PHP, HTML, CSS</p>
-        <p>}</p>
-      </div>
-      <div class="code-section">
-        <p><span class="keyword" :style="{ color: mainColor }">const</span> <span class="variable">TOOLS</span> = [</p>
-        <p class="indent"><span class="string">'ReactJS'</span>, <span class="string">'NodeJS'</span>, <span class="string">'VueJS'</span>, <span class="string">'Docker'</span></p>
-        <p class="indent"><span class="string">'GitHub'</span>, <span class="string">'Figma'</span>, <span class="string">'Photoshop'</span></p>
+      <div class="code-section" v-if="user && user.social && user.social.length">
+        <p><span class="keyword" :style="{ color: mainColor }">const</span> <span class="variable">SOCIAL</span> = [</p>
+        <p class="indent" v-for="social in user.social" :key="social"><span class="string">'{{ social }}'</span></p>
         <p>];</p>
+      </div>
+      <div class="code-section" v-if="user && user.competence && user.competence.length">
+        <p><span class="keyword" :style="{ color: mainColor }">const</span> <span class="variable">COMPETENCIAS</span> = [</p>
+        <p class="indent" v-for="comp in user.competence" :key="comp"><span class="string">'{{ comp }}'</span></p>
+        <p>];</p>
+      </div>
+      <div class="code-section" v-if="user && user.spokenLanguages && user.spokenLanguages.length">
+        <p><span class="keyword" :style="{ color: mainColor }">enum</span> <span class="variable">SPOKEN_LANGUAGES</span> {</p>
+        <p class="indent" v-for="lang in user.spokenLanguages" :key="lang.details">{{ lang.details }}</p>
+        <p>}</p>
       </div>
        <div class="code-section">
         <p><span class="keyword" :style="{ color: mainColor }">const</span> <span class="variable">SKILLS</span> = [</p>
