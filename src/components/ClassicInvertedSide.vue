@@ -1,6 +1,6 @@
 <template>
   <div :style="getStyle()" class="side-view">
-    <div class="pic-view">
+    <div class="pic-view" v-if="user.realImg || !viewOnly">
       <img v-if="user.realImg" :src="user.realImg" alt="perfil" class="img-pic-view" />
       <img v-else src="../icons/avatares/no-img.png" class="img-avatar-view" alt="perfil" />
     </div>
@@ -64,6 +64,10 @@ export default {
     user: Object,
     titles: Object,
     language: String,
+    viewOnly: {
+        type: Boolean,
+        default: false
+    }
   },
   name: "ClassicInvertedSide",
   data() {

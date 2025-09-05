@@ -6,6 +6,7 @@
         :mainColor="this.configs?.mainColor"
         :sideColor="this.configs?.sideColor"
         :fontColor="this.configs?.fontColor"
+        :viewOnly="true"
     />
 </template>
 

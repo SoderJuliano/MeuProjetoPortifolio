@@ -10,14 +10,14 @@
           class="ajust-img-open-close"
         />
       </div>
-      <div class="pic">
-        <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic"
+      <div class="pic" v-if="imageURL || avatarImg || !viewOnly">
+        <img v-if="imageURL" :src="imageURL" alt="perfil" class="img-pic"
           :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag" @mousedown="startDrag" />
         <img @click="$refs.fileInput.click()"
-          v-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length > 10" :src="avatarImg"
+          v-else-if="avatarImg" :src="avatarImg"
           alt="perfil-avatar" class="img-avatar" />
         <img @click="$refs.fileInput.click()"
-          v-else-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length < 10" :src="defaultImageURL"
+          v-else :src="defaultImageURL"
           class="img-avatar" alt="perfil" />
       </div>
       <input type="file" id="input" ref="fileInput" style="display: none" @change="onIMGChange" />
@@ -94,6 +94,10 @@ export default {
     user: Object,
     titles: Object,
     language: String,
+    viewOnly: {
+        type: Boolean,
+        default: false
+    }
   },
   name: "Side",
   emits: [

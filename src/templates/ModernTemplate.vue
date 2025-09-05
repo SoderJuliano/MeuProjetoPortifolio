@@ -1,7 +1,7 @@
 <template>
   <div class="resume-container a4-size">
     <div class="left-panel" :style="{ backgroundColor: sideColor }">
-      <div class="photo-container">
+      <div class="photo-container" v-if="user.realImg || !viewOnly">
         <div v-if="user.realImg" class="photo-wrapper">
             <img :src="user.realImg" alt="User Photo" class="user-photo" />
         </div>
@@ -58,6 +58,10 @@ export default {
     sideColor: {
         type: String,
         default: '#B0C4DE'
+    },
+    viewOnly: {
+        type: Boolean,
+        default: false
     }
   },
 };

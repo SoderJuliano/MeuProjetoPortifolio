@@ -1,7 +1,7 @@
 <template>
   <div class="code-cv-container a4-size" :style="{ backgroundColor: '#1e1e1e' }">
     <div class="left-column">
-      <div class="photo-container">
+      <div class="photo-container" v-if="user.realImg || !viewOnly">
         <img v-if="user.realImg" :src="user.realImg" alt="User Photo" class="user-photo" />
         <div v-else class="photo-placeholder"></div>
       </div>
@@ -80,6 +80,10 @@ export default {
     secondaryColor: {
       type: String,
       default: '#FFA500' // Default orange
+    },
+    viewOnly: {
+        type: Boolean,
+        default: false
     }
   },
 };
