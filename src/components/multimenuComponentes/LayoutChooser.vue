@@ -23,7 +23,9 @@ export default {
     data() {
         return {
             templates: [
-                { id: 5, name: 'Modern', image: require('../../../new-template.png') }
+                { id: 5, name: 'Modern', image: require('../../../new-template.png') },
+                { id: 6, name: 'Code CV', image: require('../../assets/templatesImg/code_cv.png') },
+                { id: 7, name: 'Classic Inverted', image: require('../../assets/templatesImg/template_estilo_direita.png') }
             ]
         }
     },

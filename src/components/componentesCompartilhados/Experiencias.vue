@@ -6,7 +6,7 @@
             :startShowing="jobs?.length > 0"
         />
         
-        <img v-if="template== 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        <img src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
         <div class="options-div">
@@ -37,8 +37,7 @@
               :textIndex="index"
               :job="getJobModel(item)"
               :language="language"
-              @editar-end="editar"
-              @update-experiencias="updateExperiencias"
+              @editar-end="editar" @update-experiencias="updateExperiencias"
             />
           </div>
         </div>
@@ -130,7 +129,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@media print{
+ @media print{
 
   .not-visible {
     display: none;
@@ -231,7 +230,7 @@ export default {
   max-height: 100%;
   word-wrap: break-word;
 }
-@media screen and (max-width: 1000px) {
+ @media screen and (max-width: 1000px) {
   .experiencias {
     min-height: 60px;
     height: calc(100% + 100px);
@@ -252,7 +251,7 @@ export default {
   color: black;
 }
 
-@media screen and (max-width: 400px) {
+ @media screen and (max-width: 400px) {
 /* templete 2 tem um padding que deixa estranho isso, esse margin negativo corrige */
   .experiencias.templete2.template-data {
     margin-left: -5px !important;

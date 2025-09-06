@@ -154,4 +154,10 @@ export default {
   color: #333;
 }
 
+@media screen and (min-width: 1981px) {
+  .dropdown-templates-edit {
+    top: 75%;
+  }
+}
+
 </style>

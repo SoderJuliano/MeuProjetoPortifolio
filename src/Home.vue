@@ -76,6 +76,7 @@
     @update-name="updateName"
     @add-profissao="editarProfissao"
     @update-user="updateUser"
+    @add-new-experience="addNewExperience"
     @login="showLogin"
   />
   <nav-bar
@@ -236,6 +237,8 @@ import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
+import CodeCV from "./templates/CodeCV.vue";
+import ClassicInverted from "./templates/ClassicInverted.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -290,7 +293,9 @@ export default {
         Template2,
         Template3,
         Template4,
-        ModernTemplate
+        ModernTemplate,
+        CodeCV,
+        ClassicInverted
       ],
       // loginTitle, null == default title
       loginTitle: null,
@@ -340,6 +345,8 @@ export default {
     Template3,
     Template4,
     ModernTemplate,
+    CodeCV,
+    ClassicInverted,
     Tips,
     login,
     diagramsModal,
@@ -886,6 +893,15 @@ export default {
         }
       this.loading = false;
     },
+    addNewExperience(newJob) {
+      const currentExperiences = this.user.userExperiences || [];
+      const updatedExperiences = [...currentExperiences, newJob];
+      this.user = {
+        ...this.user,
+        userExperiences: updatedExperiences
+      };
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
+    },
     adicionarExperiencias(experiencias) {
       this.user.userExperiences = experiencias;
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
@@ -913,11 +929,15 @@ export default {
       }
     },
     change_layout(template) {
+      console.log("Changing layout to template ID:", template);
       this.configs.setTemplate(template);
       localStorage.setItem("configs", JSON.stringify(this.configs));
       const newTab = window.open('/user/view', '_blank');
       if (newTab) {
         newTab.focus();
+      } else {
+        console.error("Failed to open new tab. Pop-up blocker might be active.");
+        alert("Não foi possível abrir a nova aba. Verifique se o bloqueador de pop-ups está ativo.");
       }
     },
     lupdate(lng) {
@@ -1420,7 +1440,7 @@ export default {
         this.newTipMessege = {
           "id": Math.random(),
           "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
-          "content": lng.includes("en")
+          "content": lang.includes("en")
               ? "If you are loged in and the togle of syncing data is on the data will auto update based on changes."
               : "Se você estiver logado e o botão de sincronização estiver ativo, os dados serão atualizados automativamente ao serem alterados.",
           "language": this.lang,
@@ -1494,7 +1514,6 @@ export default {
 @media print {
   .template {
     width: 100vw !important;
-    height: 100vh !important;
     border-radius: 0px !important;
   }
 
@@ -1729,11 +1748,9 @@ body{
 .shade3{
   opacity: 0.7;
 }
-
 .shade4{
   opacity: 0.8;
 }
-
 .shade5{
   opacity: 0.9;
 }

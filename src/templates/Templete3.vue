@@ -474,9 +474,9 @@
 
     // Watch for changes in props.user.userExperiences
     watch(() => props.user.userExperiences, (newExperiences) => {
-        console.log('newExperiences', newExperiences)
         experiencesComponents.value = []; // Reset the array
         if (newExperiences && newExperiences.length > 0) {
+            localUpdatedUser.userExperiences = newExperiences.map((ex, index) => ({...ex, id: ex.id || index}));
             newExperiences.forEach((ex, index) => {
                 let innerText = ex.position ? "<b>"+ex.position+" - </b>" : "";
                 innerText += ex.company ? "<b>"+ex.company+"</b><br/>" : "<br/>";
@@ -614,8 +614,7 @@
 
     function updateExperienceDates(component, title) {
         const [dateHired, dateFired] = extractDatesFromTitle(title);
-        const { position, company } = extractPositionAndCompany(component.text);
-        const experienceIndex = findMatchingExperienceIndex(component, position, company, dateHired);
+        const experienceIndex = findMatchingExperienceIndex(component);
 
         if (experienceIndex !== -1) {
             localUpdatedUser.userExperiences[experienceIndex] = {
@@ -626,43 +625,18 @@
             emit('updateUser', localUpdatedUser);
         } else {
             console.warn('Experience not found:', { 
-                id: component.id, 
-                text: component.text,
-                position,
-                company
+                id: component.id
             });
         }
     }
 
-    function findMatchingExperienceIndex(component, position, company, dateHired) {
-        const experienceId = component.id - 3000;
-        
-        // Hierarquia de buscas
-        return localUpdatedUser.userExperiences.findIndex(ex => ex.id === experienceId) ||
-            (position && company && localUpdatedUser.userExperiences.findIndex(
-                ex => ex.position === position && ex.company === company)) ||
-            (component.text && localUpdatedUser.userExperiences.findIndex(
-                ex => ex.description.includes(component.text.split('<br/>')[0]?.split('<br />')[0]?.trim() || ''))) ||
-            (dateHired && localUpdatedUser.userExperiences.findIndex(
-                ex => ex.dateHired === dateHired)) ||
-            -1;
-    }
-
-    function extractPositionAndCompany(text) {
-        const positionMatch = text.match(/<b>(.*?) - <\/b>/);
-        const companyMatch = text.match(/<b>(.*?)<\/b>/g);
-        
-        return {
-            position: positionMatch?.[1]?.trim() || '',
-            company: companyMatch?.[companyMatch.length-1]?.replace(/<\/?b>/g, '').trim() || ''
-        };
+    function findMatchingExperienceIndex(component) {
+        return localUpdatedUser.userExperiences.findIndex(ex => ex.id === component.job.id);
     }
 
     function extractDatesFromTitle(title) {
-        const dateParts = title.split(' - ')
-                            .map(part => part.trim())
-                            .filter(part => /^(\d{2}\/\d{4}|\d{4})$/.test(part));
-        return [dateParts[0], dateParts[1] || null];
+        const dateParts = title.split(' - ').map(part => part.trim());
+        return [dateParts[0] || null, dateParts[1] || null];
     }
 
     function isExperienceComponent(id) {
@@ -762,11 +736,11 @@
                 updateAddress(text);
             }
 
-            // "<span class="bold">Português: Nativo;</span><br /><span>Inglês: Avançado;</span>"
+            // "<span class=\"bold\">Português: Nativo;</span><br /><span>Inglês: Avançado;</span>"
             else if (Number(id) === 1010) {
                 let detailsStrings = text.split('\n').join('; '); // Divide o texto por quebras de linha e junta com um separador, como `; `.
                 if(!Array.isArray(detailsStrings) && (detailsStrings.includes("<br"))) {
-                    detailsStrings = detailsStrings.split("<br />");
+                    detailsStrings = detailsStrings.split(/<br\s*\/?>/);
                 }
                 if(!Array.isArray(detailsStrings)) {
                     localUpdatedUser.spokenLanguages = [{details: detailsStrings.replaceAll(/<\/?[^>]+(>|$)/g, "")}];
@@ -954,7 +928,7 @@
 
     function extrairDatas(texto) {
         // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
-        const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})?/;
+        const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})?/; // Added escape for hyphen
 
         // Executa a RegEx no texto fornecido
         const resultado = texto.match(regex);
@@ -976,7 +950,7 @@
 
     function removerDatas(texto) {
         // Expressão regular para capturar o formato de datas como "2020 - 2021", "2020 à 2021" e "2020 -"
-        const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})? ?/g;
+        const regex = /(\d{4})\s*[–\-à]?\s*(\d{4})? ?/g; // Added escape for hyphen
         // Substitui as datas por uma string vazia
         let textoLimpo = texto.replace(regex, '').trim(); // Remove as datas e espaços extras
     
