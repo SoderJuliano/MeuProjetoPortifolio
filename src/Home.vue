@@ -1484,7 +1484,7 @@ export default {
           "content": lng.includes("en")
               ? `The server is not available at the moment (${formattedDate}). Please try again later.`
               : `O servidor não está disponível no momento (${formattedDate}). Por favor, tente novamente mais tarde.`,
-          "language": this.lang,
+          "language": lng,
           "read": false,
           "local": true
       }
