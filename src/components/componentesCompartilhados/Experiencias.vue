@@ -2,15 +2,14 @@
   <div :class="mainclass">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher
-            v-if="!viewOnly"
             :className="classToShare"
             :startShowing="jobs?.length > 0"
         />
         
-        <img v-if="template== 2 && !viewOnly" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        <img src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
-        <div v-if="!viewOnly" class="options-div">
+        <div class="options-div">
           <img 
             v-if="item" 
             :src="editIcon" 
@@ -38,8 +37,7 @@
               :textIndex="index"
               :job="getJobModel(item)"
               :language="language"
-              @editar-end="editar"
-              @update-experiencias="updateExperiencias"
+              @editar-end="editar" @update-experiencias="updateExperiencias"
             />
           </div>
         </div>
@@ -59,7 +57,6 @@ export default {
   emits: ['add-experiencia', 'update-experiencias'],
   components: {showSwitcher, wrappEditModel},
   props:{
-    viewOnly: Boolean,
     template: Number,
     titulo: Array,
     language: String,
@@ -132,7 +129,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@media print{
+ @media print{
 
   .not-visible {
     display: none;
@@ -233,7 +230,7 @@ export default {
   max-height: 100%;
   word-wrap: break-word;
 }
-@media screen and (max-width: 1000px) {
+ @media screen and (max-width: 1000px) {
   .experiencias {
     min-height: 60px;
     height: calc(100% + 100px);
@@ -254,11 +251,10 @@ export default {
   color: black;
 }
 
-@media screen and (max-width: 400px) {
+ @media screen and (max-width: 400px) {
 /* templete 2 tem um padding que deixa estranho isso, esse margin negativo corrige */
   .experiencias.templete2.template-data {
     margin-left: -5px !important;
   }
 }
 </style>
-style>

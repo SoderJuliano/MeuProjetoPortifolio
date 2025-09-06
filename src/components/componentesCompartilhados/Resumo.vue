@@ -1,9 +1,9 @@
 <template>
     <div class="main-resumo-container">
-        <div :style="cor" class="title-container">
-            <p class="titulo">{{language.includes('pt') ? titulo[0] : titulo[1]}}</p>
-            <img v-if="template == 2" @click="$emit('add-resumo')" src="../../assets/new_edit_icon.png" alt="editar" class="editar">
-        </div>
+        <p class="title" :style="getStyle()">
+            {{language.includes('pt') ? titulo[0] : titulo[1]}}
+            <img @click="$emit('add-resumo')" src="../../assets/new_edit_icon.png" alt="editar" class="editar">
+        </p>
         <p id="resume">{{user.resume ? user.resume : language.includes('pt') ? 'sobre você.' : 'about you.'}}
         </p>
     </div>
@@ -21,23 +21,34 @@ export default {
         fontColor: String,
         viewOnly: { type: Boolean, default: false }
     },
-    emits: ["add-resumo"]
+    emits: ["add-resumo"],
+    methods: {
+        getStyle(){
+            return {
+                'background-color': `${this.cor}`,
+                'color': `${this.fontColor}`
+            }
+        }
+    }
 }
 </script>
 
 <style scoped>
-.title-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.titulo {
-    flex-grow: 1;
+.title {
+    width: 98.35%;
+    padding: 10px 0;
 }
 .editar {
     display: none;
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-right: 10px;
 }
-.title-container:hover .editar {
+.title:hover .editar {
     display: block;
+}
+#resume {
+    padding: 10px;
 }
 </style>

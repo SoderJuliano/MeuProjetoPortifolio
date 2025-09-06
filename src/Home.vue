@@ -76,6 +76,7 @@
     @update-name="updateName"
     @add-profissao="editarProfissao"
     @update-user="updateUser"
+    @add-new-experience="addNewExperience"
     @login="showLogin"
   />
   <nav-bar
@@ -891,6 +892,15 @@ export default {
           this.syncUser = false;
         }
       this.loading = false;
+    },
+    addNewExperience(newJob) {
+      const currentExperiences = this.user.userExperiences || [];
+      const updatedExperiences = [...currentExperiences, newJob];
+      this.user = {
+        ...this.user,
+        userExperiences: updatedExperiences
+      };
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarExperiencias(experiencias) {
       this.user.userExperiences = experiencias;
@@ -1738,11 +1748,9 @@ body{
 .shade3{
   opacity: 0.7;
 }
-
 .shade4{
   opacity: 0.8;
 }
-
 .shade5{
   opacity: 0.9;
 }

@@ -2,7 +2,7 @@
   <div :class="conteinerstyle">
       <p @mouseover="hovert" @mouseleave="leavehovert" class="title" :style="getStyle()">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
         <showSwitcher v-if="!viewOnly" :className="conteinerstyle" :startShowing="user.competence.length > 0" />
-        <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
+        <img src="../../assets/new_edit_icon.png" alt="editar" class="editar-competencias-animado" @click="$emit('add-competencia')"/>
       </p>
       <div v-for="(item, index) in userData.competence" :key="index" class="competencias-container">
         <ion-icon style="fill : wheat; margin-top : -5px" name="bulb" size="large"></ion-icon>

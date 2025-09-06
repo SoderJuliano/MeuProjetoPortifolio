@@ -248,7 +248,8 @@ export default {
         "adicionar-habilidade",
         "update-experiences",
         "update-user",
-        "login"
+        "login",
+        "add-new-experience"
     ],
     methods:{
         closeAndshowLogin() {
@@ -410,6 +411,7 @@ export default {
                 // console.log(`$("#input-value-date1").val()`)
                 // console.log($("#input-value-date1").val())
                 this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
+                setTimeout(() => { document.getElementById('modal-input3').value = ''; }, 10);
                 this.ptitle = ''
                 this.ptitle2 = ''
             }
@@ -536,9 +538,9 @@ export default {
             this.updateUser()
         },
         adicionarJobs(){
-            //! Here I put the last modal text area content, the job desciption
-            this.userData.userExperiences[this.currentJobId].setDescription($("#modal-input3").val())
-            this.updateUser();
+            const newJob = this.userData.userExperiences[this.currentJobId];
+            newJob.setDescription($("#modal-input3").val());
+            this.$emit('add-new-experience', newJob);
         },
         updateUser(){
             this.$emit('update-user', this.userData)
