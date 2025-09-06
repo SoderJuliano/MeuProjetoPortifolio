@@ -23,9 +23,7 @@
         </div>
       </div>
   </div>
-</template> na rota user/view, o template Classic Inverted ta com icons de edição, esses   │
-│    icons devem ser removidos, os icons de olhos dos titulos também remover do     │
-│    templete nesta rota  
+</template>  
 
 <script>
 import * as svgs from "../utils/svgsText.js";
