@@ -1426,8 +1426,8 @@ export default {
 
         this.newTipMessege = {
           "id": Math.random(),
-          "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
-          "content": lang.includes("en")
+          "title": lng?.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+          "content": lang?.includes("en")
               ? "If you are loged in and the togle of syncing data is on the data will auto update based on changes."
               : "Se você estiver logado e o botão de sincronização estiver ativo, os dados serão atualizados automativamente ao serem alterados.",
           "language": this.lang,
@@ -1438,8 +1438,8 @@ export default {
         setTimeout(() => {
           this.newTipMessege = {
             "id": Math.random(),
-            "title": lng.includes("en") ? "Tip of autosave" : "Dica para auto salvar dados",
-            "content": lng.includes("en")
+            "title": lng?.includes("en") ? "Tip of autosave" : "Dica para auto salvar dados",
+            "content": lng?.includes("en")
                 ? "The sync toggle stay under your name, make it visible clicking over your name on the right edge."
                 : "O botão de sincronização está no canto direito abaixo do seu nome, clique no seu nome para ele aparecer.",
             "language": this.lang,
@@ -1467,8 +1467,8 @@ export default {
 
       this.newTipMessege = {
           "id": Math.random(),
-          "title": lng.includes("en") ? "No connection" : "Sem conexão",
-          "content": lng.includes("en")
+          "title": lng?.includes("en") ? "No connection" : "Sem conexão",
+          "content": lng?.includes("en")
               ? `The server is not available at the moment (${formattedDate}). Please try again later.`
               : `O servidor não está disponível no momento (${formattedDate}). Por favor, tente novamente mais tarde.`,
           "language": lng,

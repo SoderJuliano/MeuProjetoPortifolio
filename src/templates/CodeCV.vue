@@ -134,6 +134,7 @@ export default {
 }
 
 .left-column {
+  overflow-wrap: anywhere;
   width: 35%;
   padding-right: 20px;
 }
