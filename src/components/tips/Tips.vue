@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div v-for="tip in tips" v-bind:key="tip.id">
-                <div @click="checked(tip)" style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
+                <div @mouseleave="checked(tip)" @click="checked(tip)" style="font-weight: bolder;" class="theTip" v-if="!tip.read && tip?.language == this.lang">
                     <span>{{tip.title}}</span><span class="tip-read">{{lang.includes("en") ? "read" : "lido"}}
                         <input @change="checked(tip)" class="checkbox-tips" type="checkbox" :id="tip.id" :name="tip.title" value="Off">
                     </span>

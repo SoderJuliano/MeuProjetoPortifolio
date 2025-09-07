@@ -10,14 +10,14 @@
           class="ajust-img-open-close"
         />
       </div>
-      <div class="pic">
-        <img v-if="this.imageURL?.length > 10" :src="imageURL" alt="perfil" class="img-pic"
+      <div class="pic" v-if="imageURL || avatarImg || !viewOnly">
+        <img v-if="imageURL" :src="imageURL" alt="perfil" class="img-pic"
           :style="{ left: posX + 'px', top: posY + 'px' }" @touchstart="startDrag" @mousedown="startDrag" />
         <img @click="$refs.fileInput.click()"
-          v-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length > 10" :src="avatarImg"
+          v-else-if="avatarImg" :src="avatarImg"
           alt="perfil-avatar" class="img-avatar" />
         <img @click="$refs.fileInput.click()"
-          v-else-if="this.user?.realImg?.length < 10 && this.user?.avatarImg?.length < 10" :src="defaultImageURL"
+          v-else :src="defaultImageURL"
           class="img-avatar" alt="perfil" />
       </div>
       <input type="file" id="input" ref="fileInput" style="display: none" @change="onIMGChange" />
@@ -27,7 +27,7 @@
           <showSwitcher className="contato.template-data" :startShowing="user.contact.email.length > 0
             || user.contact.phone.length > 0
             || user.contact.address != '' ? true : false" />
-          <img src="../icons/editar.png" alt="editar" class="editar" @click="$emit('add-info')" />
+          <img src="../assets/new_edit_icon.png" alt="editar" class="editar" @click="$emit('add-info')" />
         </p>
         <br />
         <div v-for="(item, index) in user.contact.email" :key="index" class="data-container">
@@ -56,18 +56,18 @@
       @add-formacao="$emit('add-formacao')"
       @choose-educationIcon="$emit('choose-educationIcon')"
       v-if="exibirFormacao" class="template-data" :titulo="titles.formacao" :backgroundColor="cor" :user="this.userData"
-      template=1 :language="language" />
+      template="1" :language="language" />
 
     <Habilidade @choose-skillIcon="$emit('choose-skillIcon')" @add-habilidade="$emit('add-habilidade')"
       @adicionar-habilidade="$emit('adicionar-habilidade')" v-if="exibirHabilidade" class="template-data"
-      :titulo="titles.habilidades" backgroundColor="#808080" :user="this.userData" template=1 :language="language" />
+      :titulo="titles.habilidades" backgroundColor="#808080" :user="this.userData" template="1" :language="language" />
 
     <Social
       @update-user="onUpdateUser"
       @add-SocialLink="$emit('add-SocialLink')"
       v-if="exibirSocial"
       class="template-data"
-      backgroundColor="#808080" :user="this.userData" template=1 :titulo="titles.social" :language="language" />
+      backgroundColor="#808080" :user="this.userData" template="1" :titulo="titles.social" :language="language" />
   </div>
 </template>
 <script>
@@ -94,6 +94,10 @@ export default {
     user: Object,
     titles: Object,
     language: String,
+    viewOnly: {
+        type: Boolean,
+        default: false
+    }
   },
   name: "Side",
   emits: [
