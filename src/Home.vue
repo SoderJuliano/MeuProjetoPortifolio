@@ -894,12 +894,7 @@ export default {
       this.loading = false;
     },
     addNewExperience(newJob) {
-      const currentExperiences = this.user.userExperiences || [];
-      const updatedExperiences = [...currentExperiences, newJob];
-      this.user = {
-        ...this.user,
-        userExperiences: updatedExperiences
-      };
+      this.user?.userExperiences.push(newJob);
       localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarExperiencias(experiencias) {
