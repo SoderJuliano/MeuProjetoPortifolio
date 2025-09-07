@@ -56,18 +56,18 @@
       @add-formacao="$emit('add-formacao')"
       @choose-educationIcon="$emit('choose-educationIcon')"
       v-if="exibirFormacao" class="template-data" :titulo="titles.formacao" :backgroundColor="cor" :user="this.userData"
-      template=1 :language="language" />
+      template="1" :language="language" />
 
     <Habilidade @choose-skillIcon="$emit('choose-skillIcon')" @add-habilidade="$emit('add-habilidade')"
       @adicionar-habilidade="$emit('adicionar-habilidade')" v-if="exibirHabilidade" class="template-data"
-      :titulo="titles.habilidades" backgroundColor="#808080" :user="this.userData" template=1 :language="language" />
+      :titulo="titles.habilidades" backgroundColor="#808080" :user="this.userData" template="1" :language="language" />
 
     <Social
       @update-user="onUpdateUser"
       @add-SocialLink="$emit('add-SocialLink')"
       v-if="exibirSocial"
       class="template-data"
-      backgroundColor="#808080" :user="this.userData" template=1 :titulo="titles.social" :language="language" />
+      backgroundColor="#808080" :user="this.userData" template="1" :titulo="titles.social" :language="language" />
   </div>
 </template>
 <script>

@@ -52,7 +52,6 @@ export default {
   data(){
     return{
       userData: this.user,
-      uExperiences: this.userExperiences,
       titles:
         {
           competencias: ["COMPETÊNCIAS", "COMPETENCE"],

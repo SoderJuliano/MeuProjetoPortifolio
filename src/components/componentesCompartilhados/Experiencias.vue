@@ -62,7 +62,6 @@ export default {
     language: String,
     cor: String,
     sideColor: String,
-    experiences: Array,
     fontColor: String,
     user: Object
   },
@@ -75,7 +74,7 @@ export default {
       lastJobEnd: '',
       classToShare: 'experiencias',
       cstyle: 'template'+this.template+'-experiencias-container',
-      jobs: this.experiences,
+      jobs: this.user?.userExperiences,
       editIcon: svgs.editIcon,
       showEditing: null,
       isImproved: false
@@ -113,7 +112,7 @@ export default {
       deep: true,
       //handle the change
       handler() {
-        this.jobs = this.experiences
+        this.jobs = this.user.userExperiences;
       }
     },
     user: {

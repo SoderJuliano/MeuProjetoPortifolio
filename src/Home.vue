@@ -121,7 +121,7 @@
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
-        :template="this.configs.getTemplate()"
+        :template="Number(this.configs.getTemplate())"
         :user="user"
         :language="this.configs.getLanguage()"
         @update-configs="updateConfigs"
@@ -193,7 +193,7 @@
     <MobileNavbar
       :language="this.configs.getLanguage()"
       @language-update="lupdate"
-      :template="this.configs.getTemplate()"
+      :template="Number(this.configs.getTemplate())"
       @font-changed="setFont"
       :user="user"
       @change-template="change_template"

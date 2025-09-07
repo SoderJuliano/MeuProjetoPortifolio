@@ -17,7 +17,7 @@ export default {
         titulo: Array,
         cor: String,
         user: Object,
-        template: String,
+        template: Number,
         fontColor: String,
         viewOnly: { type: Boolean, default: false }
     },

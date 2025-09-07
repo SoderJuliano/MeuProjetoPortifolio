@@ -50,7 +50,7 @@ export default {
     },
     props:{
         viewOnly: Boolean,
-        template: Number,
+        template: String,
         titulo: Array,
         language: String,
         backgroundColor: String,

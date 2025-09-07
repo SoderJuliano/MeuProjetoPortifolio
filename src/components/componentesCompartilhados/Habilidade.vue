@@ -36,7 +36,7 @@ export default {
     titulo: Array,
     backgroundColor: String,
     user: Object,
-    template: Number,
+    template: String,
     sideColor: String,
   },
   methods:{
