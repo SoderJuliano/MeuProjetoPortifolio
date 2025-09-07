@@ -8,7 +8,7 @@
             :className="containerstyle"
             :startShowing="user.grade?.length > 0"
             />
-          <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-formacao" @click="$emit('add-formacao')"/>
+          <img v-if="template == 1" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-formacao" @click="$emit('add-formacao')"/>
       </p>
       <div class="formacao-item-list" v-for="(item, index) in mygrade" :key="index">
         <div :class="conteinerdata">
@@ -151,7 +151,6 @@ export default {
   width: 20px;
   height: 20px;
   float: right;
-  display: none;
 }
 
 .template1-formacao-container {
@@ -233,9 +232,7 @@ export default {
   display: none;
 }
 
-.template2-formacao:hover .editar-animado-formacao {
-  display: block;
-}
+
 
 .template2-formacao-title {
   text-align: start;
@@ -308,6 +305,9 @@ export default {
   }
   
   .editar-item {
+    display: none;
+  }
+  .editar-animado-formacao {
     display: none;
   }
 }

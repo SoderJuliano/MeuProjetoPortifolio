@@ -2,7 +2,7 @@
   <div :class="cstyle">
       <p :class="tstyle" :style="getStyle()">{{language == "pt-br" ? titulo[0] : titulo[1]}}
         <showSwitcher :className="cstyle" :startShowing="user.ability != ''" />
-        <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
+        <img v-if="template == 1" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-habilidade" @click="$emit('add-habilidade')"/>
       </p>
       <div v-if="user.ability" :class="hcstyle">
           <img @click="this.$emit('choose-skillIcon')" src="../../icons/html.png" class="habilidade-icon"/>
@@ -54,6 +54,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.habilidade-icon {
+  width: 25px;
+  height: 25px;
+  padding-top: 10px;
+  padding-right: 10px;
+}
 .template1-container{
     min-height: 100px;
 }
@@ -61,7 +67,6 @@ export default {
   width: 20px;
   height: 20px;
   float: right;
-  display: none;
 }
 .template1-habilidade-container{
   width: 80%;
@@ -134,56 +139,6 @@ export default {
   .editar-animado-habilidade{
     display: none !important;
   }
-}
-
-.habilidade-icon{
-  width: 25px;
-  height: 25px;
-  padding-top: 20px;
-  position: relative;
-  z-index: 10;
-}
-.data-text-habilidades{
-  min-height: 20px;
-  display: block;
-  padding-top: 16px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.template2-title {
-  text-align: start;
-  border-bottom: 1px solid black;
-  font-weight: bold;
-  width: 85%;
-  margin-top: 0px;
-  margin-left: 30px;
-}
-.template2-title:hover .editar-animado-habilidade{
-  display: block;
-}
-.template2-title:hover .editar{
-  display: none;
-}
-.template2-container{
-  margin-top: 15px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-.template1-title{
-  align-self: center;
-  background-color: white;
-  color: black;
-  font-weight: bolder;
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 0px;
-  margin-top: 10px;
-  text-align: center;
-  padding: 5px;
-}
-@media print{
   .remove-bnt{
     display: none;
   }

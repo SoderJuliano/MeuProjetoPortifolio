@@ -249,7 +249,7 @@ export default {
         "update-experiences",
         "update-user",
         "login",
-        "add-new-experience"
+        "login"
     ],
     methods:{
         closeAndshowLogin() {
@@ -478,10 +478,12 @@ export default {
                     break;
                 case 'Descrição':
                     // sobre experiencia de trabalho
+                    console.log("descricao job")
                     this.adicionarJobs()
                     this.cancelar();
                     break;
                 case 'Description':
+                    console.log("description job")
                     this.adicionarJobs()
                     this.cancelar();
                     break;
@@ -538,11 +540,13 @@ export default {
             this.updateUser()
         },
         adicionarJobs(){
+            console.log("add job")
             const newJob = this.userData.userExperiences[this.currentJobId];
             newJob.setDescription($("#modal-input3").val());
-            this.$emit('add-new-experience', newJob);
+            this.updateUser();
         },
         updateUser(){
+            console.log("update user")
             this.$emit('update-user', this.userData)
         },
         adicionarEndereco(){

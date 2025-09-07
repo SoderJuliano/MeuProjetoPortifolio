@@ -71,12 +71,7 @@
     :user="user"
     :language="this.configs.getLanguage()"
     :template="this.configs.getTemplate()"
-    @adicionar-formacao="adicionarNovaFormacao"
-    @adicionar-habilidade="adicionarNovaHabilidade"
-    @update-name="updateName"
-    @add-profissao="editarProfissao"
-    @update-user="updateUser"
-    @add-new-experience="addNewExperience"
+        @update-user="updateUser",
     @login="showLogin"
   />
   <nav-bar
@@ -869,7 +864,8 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData, notSync) {
-      // console.log('user update', userData.profession);
+      console.log("update user");
+      console.log('user update', userData.profession);
       // console.log("not sync", notSync)
       // console.log("isMobilePortrait() && !notSync", isMobilePortrait() && !notSync)
       this.user = userData;
@@ -892,10 +888,6 @@ export default {
           this.syncUser = false;
         }
       this.loading = false;
-    },
-    addNewExperience(newJob) {
-      this.user?.userExperiences.push(newJob);
-      localStorage.setItem(this.localStorageKey, JSON.stringify(this.user));
     },
     adicionarExperiencias(experiencias) {
       this.user.userExperiences = experiencias;

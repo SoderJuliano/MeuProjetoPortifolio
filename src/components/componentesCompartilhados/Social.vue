@@ -4,7 +4,7 @@
             <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
                 {{language == 'pt-br' ? titulo[0] : titulo[1]}}
                 <showSwitcher v-if="!viewOnly" className="template-data-social" :startShowing="user?.social?.length > 0" />
-                <img v-if="template == 2" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+                <img v-if="template == 1" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
         <div v-for="(item, index) in this.userData.social" :key="index" :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" >
@@ -107,6 +107,12 @@ export default {
 }
 </style>
 <style scoped>
+.editar-animado {
+  width: 20px;
+  height: 20px;
+  float: right;
+}
+
 /* Na lateral fica porbaixo do page no t1 se for position relative  */
 .obj-edit {
     position: relative;
@@ -192,6 +198,9 @@ span {
         display: none;
     }
     .obj-edit {
+        display: none;
+    }
+    .editar-animado {
         display: none;
     }
 }
