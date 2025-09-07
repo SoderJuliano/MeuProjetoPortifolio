@@ -80,7 +80,7 @@ export default {
   }
   .resume-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     border: none !important;
     box-shadow: none !important;
     width: 100% !important;
@@ -88,7 +88,10 @@ export default {
     max-height: none !important;
   }
   .left-panel {
-    height: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   .a4-size {
     box-shadow: none !important;

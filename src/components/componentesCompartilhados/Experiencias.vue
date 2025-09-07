@@ -108,19 +108,13 @@ export default {
       },
   },
   watch: {
-    experiences: {
-      deep: true,
-      //handle the change
-      handler() {
-        this.jobs = this.user.userExperiences;
-      }
-    },
     user: {
-        deep: true,
-        handler() {
-            const updatedFields = JSON.parse(sessionStorage.getItem("updatedFields")) || [];
-            this.isImproved = updatedFields.includes('experience');
-        }
+      deep: true,
+      handler(newUser) {
+        this.jobs = newUser.userExperiences;
+        const updatedFields = JSON.parse(sessionStorage.getItem("updatedFields")) || [];
+        this.isImproved = updatedFields.includes('experience');
+      }
     }
   }
 }
