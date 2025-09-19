@@ -417,8 +417,8 @@ export async function improveTextLlama(data) {
 
   if (!data.customPrompt) {
     instructions = data?.language?.includes("pt-br")
-      ? "Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
-      : "Please improve the folowing text, no explanation, no coments, improved text only: ";
+      ? "Oi. Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+      : "Hi, Please improve the folowing text, no explanation, no coments, improved text only: ";
     instructions = instructions + data.text;
   } else {
     instructions = data.customPrompt;
@@ -599,15 +599,15 @@ function getGeminiInstructions(data) {
 
   if (shortPhrase && !data.customPrompt) {
     let instruction = data?.language?.includes("pt-br")
-      ? "Forneça uma frase melhor pra substituir esta frase, que eu possa usar no meu curriculo. Devolva apenas o texto melhorado, sem comentários ou explicações, quero que responda apenas com a frase melhor que esta: "
-      : "Gimme a better phrase to put on my cv, respond me only with the better version of the following sentence, do not put explanations or comments on the response, gimme a better phrase of this: ";
+      ? "Olá. Forneça uma frase melhor pra substituir esta frase, que eu possa usar no meu curriculo. Devolva apenas o texto melhorado, sem comentários ou explicações, quero que responda apenas com a frase melhor que esta: "
+      : "Hello. Gimme a better phrase to put on my cv, respond me only with the better version of the following sentence, do not put explanations or comments on the response, gimme a better phrase of this: ";
     return instruction + data.text;
   }
 
   if (!data.customPrompt) {
     let instruction = data?.language?.includes("pt-br")
-      ? "Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
-      : "Please improve the folowing text, no explanation, no coments, improved text only: ";
+      ? "Oi. Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+      : "Hi. Please improve the folowing text, no explanation, no coments, improved text only: ";
     return instruction + data.text;
   } else {
     return data.customPrompt;
