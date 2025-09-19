@@ -3,9 +3,8 @@
         <div class="social">
             <h3 @mouseover="hovert" @mouseleave="leavehovert" :class="templateClass" :style="getStyle()">
                 {{language == 'pt-br' ? titulo[0] : titulo[1]}}
-                <showSwitcher className="template-data-social" :startShowing="user?.social?.length > 0" />
-                <img id='edit' src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-SocialLink')"/>
-                <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
+                <showSwitcher v-if="!viewOnly" className="template-data-social" :startShowing="user?.social?.length > 0" />
+                <img v-if="template == 1" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado" @click="$emit('add-SocialLink')"/></h3>
         </div>
         <div v-for="(item, index) in this.userData.social" :key="index" :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" >
@@ -20,10 +19,10 @@
                 <img v-else src="../../icons/page.svg" alt="svg" class="social-icon">
                 <a v-if="item.includes('link:')" :href="item.split('link:')[1]">{{ item.split("link:")[1] }}</a>
                 <span v-else>{{item}}</span>
-                <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt editar">
-                <img @click="remove" :id="`${item}`" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
+                <img v-if="item && !viewOnly" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt editar">
+                <img @click="remove" :id="`${item}`" v-if="!viewOnly" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
-                <img @click="remove" :id="`${item}`" class="remove-bnt-delete" src="../../icons/animados/lixeira.gif" alt="remove-bnt"/>
+                <img @click="remove" :id="`${item}`" v-if="!viewOnly" class="remove-bnt-delete" src="../../assets/new_edit_icon.png" alt="remove-bnt"/>
             </div>
             <div v-if="showEditing == index" class="obj-edit">
                     <wrappEditModel
@@ -50,7 +49,8 @@ export default {
         wrappEditModel
     },
     props:{
-        template: Number,
+        viewOnly: Boolean,
+        template: String,
         titulo: Array,
         language: String,
         backgroundColor: String,
@@ -89,13 +89,6 @@ export default {
                 "border-bottom": "1px solid "+this.sideColor+"!important"
             }
         },
-        hovert(){
-            this.template == 2 ?
-            document.getElementById("edit").style.display = "none" : '';
-        },
-        leavehovert(){
-            document.getElementById("edit").style.display = "block";
-        }
     },
     watch: {
         user: function(newVal) {
@@ -114,6 +107,12 @@ export default {
 }
 </style>
 <style scoped>
+.editar-animado {
+  width: 20px;
+  height: 20px;
+  float: right;
+}
+
 /* Na lateral fica porbaixo do page no t1 se for position relative  */
 .obj-edit {
     position: relative;
@@ -201,6 +200,9 @@ span {
     .obj-edit {
         display: none;
     }
+    .editar-animado {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 1000px) {
@@ -222,3 +224,4 @@ span {
     }
 }
 </style>
+yle>

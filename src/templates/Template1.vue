@@ -52,7 +52,6 @@ export default {
   data(){
     return{
       userData: this.user,
-      uExperiences: this.userExperiences,
       titles:
         {
           competencias: ["COMPETÊNCIAS", "COMPETENCE"],
@@ -100,10 +99,13 @@ export default {
     // console.log(this.user)
   },
   watch: {
-      user: function(updated) {
+      user: {
+        handler(updated) {
           // console.log("updated", updated);
           this.userData = updated;
           this.imageURL = this.userData.realImg;
+        },
+        deep: true
       },
       language: function(newVal) {
         // console.log("language changed to => "+newVal)

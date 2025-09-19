@@ -23,7 +23,7 @@
                 </div>
                 <div v-if="this.userData?.avatarImg?.length > 10" class="l2"></div>
             </div>
-            <img src="../../icons/header/pencil.png" alt="edit" id="headericon" @click="$emit('add-nome')" />
+            <img src="../../assets/new_edit_icon.png" alt="edit" id="headericon" @click="$emit('add-nome')" />
             <div id="text_header">
                 <h2>{{ this.userData?.name }}</h2>
                 <h3>{{ this.userData?.profession }}</h3>
@@ -35,7 +35,7 @@
 </template>
 <script>
 
-import funcs from "../componentesCompartilhados/utilJS/functions";
+import * as funcs from "../componentesCompartilhados/utilJS/functions";
 import CenterImg from "../../components/utils/centerImg.vue";
 import CenterImgOpenclose from "../../components/utils/centerImgOpenClose.vue";
 import $ from "jquery";

@@ -2,8 +2,7 @@
     <div :class="tstyle">
         <p :style="getStyle()" class="title">{{language == "pt-br" ? titulo[0] : titulo[1]}}
             <showSwitcher :className="tstyle" :startShowing="user.contact.email.length > 0 || user.contact.phone.length > 0 || user.contact.address != ''" />
-            <img style="margin-right: 5px; margin-top: 5px" src="../../icons/editar.png" alt="editar" class="editar-contact editar" @click="$emit('add-info')" />
-            <img src="../../icons/animados/editar.gif" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
+            <img src="../../assets/new_edit_icon.png" alt="editar" class="editar-contact-animado" @click="$emit('add-info')"/>
         </p><br>
         <div v-for="(item, index) in this.user.contact.email" :key="index" class="data-container">
             <img @click="this.$emit('choose-emailIcon')" v-if="item" src="../../icons/envelope.svg" class="email-icon"/>
