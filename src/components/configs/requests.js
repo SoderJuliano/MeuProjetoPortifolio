@@ -570,11 +570,9 @@ export async function improveTextGemini(data) {
     'ngrok-skip-browser-warning': 'true',
   };
 
-  const ip = await getIp();
-
   const body = {
     newPrompt: getGeminiInstructions(data),
-    ip: ip,
+    ip: await getIp(),
     email: data.email,
     agent: false,
     language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"

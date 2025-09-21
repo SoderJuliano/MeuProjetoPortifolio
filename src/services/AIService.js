@@ -15,13 +15,14 @@ class AIService {
     this.loading = true;
 
     try {
-      const instructions = this.getExperienceInstructions();
-      const response = await this.fetchImprovedText(instructions);
+      const response = await this.fetchImprovedText(this.getExperienceInstructions());
 
       this.updateUserExperience(response.data);
       this.loading = false;
     } catch (error) {
       this.handleGenerationError(error);
+    } finally {
+      showAlert("[pt-br] Gerado experiencia extra-curricular | [us-en] Generated extra-curricular experience");
     }
   }
 
@@ -45,6 +46,7 @@ class AIService {
   }
 
   async fetchImprovedText(instructions) {
+    console.log("Chamando IA para :", instructions);
     return await funcs.improveTextGemini({
       text: '',
       email: this.user?.contact?.email?.[0],
@@ -62,6 +64,7 @@ class AIService {
     }
 
     this.user.otherExperiencies.text = text;
+    console.log("Texto atualizado em this.user.otherExperiencies.text, obj interno service", this.user);
   }
 
   handleGenerationError(error) {
@@ -90,8 +93,7 @@ class AIService {
     if (this.shouldGenerateExperience(this.user)) return;
 
     try {
-      const instructions = this.getImproveExperienceInstructions();
-      const response = await this.fetchImprovedText(instructions);
+      const response = await this.fetchImprovedText(this.getImproveExperienceInstructions());
 
       this.updateUserExperience(response.data);
       this.loading = false;
@@ -101,9 +103,9 @@ class AIService {
   }
 
   getImproveExperienceInstructions() {
-    languageIsEN() ? "Improve this text, no comments or explanations, only return the text " +
+    languageIsEN() ? "Improve this text, no comments or explanations, only return the new text improved. Text to be improved: " +
       this.user.otherExperiencies.text
-      : "Melhore esse texto, sem comentarios ou explicações, apenas o texto " +
+      : "Melhore esse texto, e responda sem comentarios ou explicações, retorne apenas o texto melhorado. Texto a ser melhorado: " +
       this.user.otherExperiencies.text;
   }
 }

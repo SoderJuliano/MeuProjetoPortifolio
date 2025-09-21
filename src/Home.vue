@@ -364,6 +364,7 @@ export default {
     },
     async melhorarCurriculo() {
       $("#AIpowerBNT :button").prop("disabled", true);
+      console.log("Iniciaondo loading para melhorar cv através do método melhorarCurriculo()");
       this.loading = true;
 
       if(!authService.hasToken()) {
@@ -399,7 +400,8 @@ export default {
           this.user.resume = response.data;
           updatedFields.push('resume');
         }catch (error) {
-            const status = error?.response?.status || eerrorx?.status || 500;
+            console.log("Erro ao chamar gemini no resumo", error);
+            const status = error?.response?.status || error?.status || 500;
             const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
             showAlert(mensagem);
             if (status === 422) {
@@ -408,16 +410,18 @@ export default {
               this.loading = false; //todo ver aqui so mostro a tela de login de volta
               setTimeout(() => {showAlert(this.languageIsEN() ? "Redo the login and try again." : "Faça login e tente novamente.")});
             }
+        }finally {
+          showAlert(this.languageIsEN ? "Finished improve resume" : "Terminamos de melhorar o resumo");
         }
       } else if (updatedFields.includes('resume')) {
         showAlert(this.languageIsEN() ? 'Resume already improved in this session.' : 'O resumo já foi melhorado nesta sessão.');
       }
 
       // SKILLS
-      if(this.user?.ability && !updatedFields.includes('ability')) {
+      if(this.user?.ability && this.user?.ability.length !== "" && !updatedFields.includes('ability')) {
         const instructions = this.languageIsEN() 
         ? 'Review those skills for a position of ' + this.user.profession + 
-        '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        '. Improve, put at first the one may be more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
         : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
         '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
       
@@ -428,18 +432,66 @@ export default {
                             language: this.configs.language,
                             customPrompt: instructions
                           });
-          this.user.ability = response.data;
-          updatedFields.push('ability');
+
+          console.log("Response ability gemini", response);
+          if (typeof response?.data === 'string' && response.data.includes(',')) {
+            console.log("É uma string separada por vírgulas (array-like)");
+            const array = response.data.split(',').map(item => item.trim());
+            console.log(array);
+            this.user.ability = response.data;
+            updatedFields.push('ability');
+          }else {
+            console.log("Resposta do gemini não foi adequada", response.data);
+          }
+
         }catch (error) {
+          console.log("Erro na chamada ao gemini para skills", error);
           const status = error?.response?.status;
           const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
           showAlert(mensagem);
           if (status === 422) {
             setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
           }
+        }finally {
+          showAlert(this.languageIsEN() ? "Finished of improve the skills" : "Terminei de melhorar as skills");
         }
       } else if (updatedFields.includes('ability')) {
+        console.log("Skipando a atualização das abilidades, elas já foram atualizadas nesta sessão");
         showAlert(this.languageIsEN() ? 'Skills already improved in this session.' : 'As habilidades já foram melhoradas nesta sessão.');
+      } else if (this.user.ability === "" || !this.user.ability) {
+        try {
+          console.log("Habilidades em brancas ou nulas, vamos criar novas");
+          const response = await funcs.improveTextGemini({
+                            text: this.user.ability.trim(),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: this.languageIsEN() ? "Generate a string with skills I need for a position of "
+              + this.user.profession +". I want short keywords skills separeted by comma , Exemple: skill1, skill2, skill3 ...etc, I want a minimum of 5 skills. Return only the text with the skills, no intro, no explanations, only respond with the string I asked for" :
+                            "Gere uma string com habilidades necessárias para uma posição de "+ this.user.profession +". Quero as habilidades curtas em palavras chaves, separadas por virgula, uma string com no minimo 5 habilidades, exemplo: habilidade1, 2, 3, 4 etc... quero que me responda apenas com a string de habilidades que pedi, nenhuma introdução, dicas ou explicação, retorna apenas a string na resposta."
+                          });
+
+          if (typeof response?.data === 'string' && response.data.includes(',')) {
+            console.log("É uma string separada por vírgulas (array-like)");
+            const array = response.data.split(',').map(item => item.trim());
+            console.log(array);
+            this.user.ability = response.data;
+            updatedFields.push('ability');
+          }else {
+            console.log("Resposta do gemini não foi adequada", response.data);
+          }
+
+        }catch (error) {
+          console.log("Erro na chamada ao gemini para skills", erro);
+          const status = error?.response?.status;
+          const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
+          showAlert(mensagem);
+          if (status === 422) {
+            setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
+          }
+        }finally {
+          showAlert(this.languageIsEN() ? "Finished of improve the skills" : "Terminei de melhorar as skills");
+        }
+
       }
 
       // WORK
@@ -466,6 +518,8 @@ export default {
         }
       } else if (updatedFields.includes('experience')) {
         showAlert(this.languageIsEN() ? 'Experiences already improved in this session.' : 'As experiências já foram melhoradas nesta sessão.');
+      } else if (!this.user?.userExperiences || this.user?.userExperiences?.length === 0) {
+        console.log("Experiencias está nulo ou vazio");
       }
 
       this.updateUser(this.user, false);
