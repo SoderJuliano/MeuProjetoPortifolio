@@ -19,7 +19,6 @@
             <Colors :language="language" />
             <p class="multimenu-line"></p>
         </div>
-
         <div
         v-if="template == 1 || template == 2"
         class="option">
@@ -302,6 +301,10 @@ export default {
 };
 </script>
 <style scoped>
+
+p, button, .tside, .option {
+    cursor: pointer;
+}
 
 a {
     text-decoration: none;

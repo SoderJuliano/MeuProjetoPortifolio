@@ -32,8 +32,10 @@ export default {
     methods: {
         select(templateId) {
             this.$emit('change-layout', templateId);
-            $(".closeDiv").click();
-            $(".navbar__toggle").click();
+            if (window.innerWidth < 768) {
+                $(".closeDiv").click();
+                $(".navbar__toggle").click();
+            }
         },
         isSelected(templateId) {
             return this.template === templateId;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DRAGONITE_ENV, DRAGONITE_ENV2, setDragoniteEnv } from '../configs/envs.js';
 
-let apiUrl = DRAGONITE_ENV;
+let apiUrl = DRAGONITE_ENV2;
 
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Accept'] = 'application/json';
@@ -10,7 +10,7 @@ axios.defaults.headers.common['Accept'] = 'application/json';
 export async function getLastEnvUrl() {
   try {
     // Make the API request to get the notifications
-    const response = await axios.get('https://abra-api.top/notifications/retrieve?key=ngrockurl');
+    //const response = await axios.get('https://abra-api.top/notifications/retrieve?key=ngrockurl');
     const data = response.data;
 
     // Check if data is an array and has elements

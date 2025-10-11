@@ -421,7 +421,7 @@ export default {
       if(this.user?.ability && this.user?.ability.length !== "" && !updatedFields.includes('ability')) {
         const instructions = this.languageIsEN() 
         ? 'Review those skills for a position of ' + this.user.profession + 
-        '. Improve, put at first the one may be more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        '. Improve, put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
         : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
         '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
       
@@ -440,8 +440,10 @@ export default {
             console.log(array);
             this.user.ability = response.data;
             updatedFields.push('ability');
+            this.showAlert(this.languageIsEN() ? "Skills ware set with AI!" : "Habilidades foram adicionadas com IA!")
           }else {
             console.log("Resposta do gemini não foi adequada", response.data);
+            this.showAlert(this.languageIsEN()? "An error occurred during setting new skills" : "Ocorreu um erro ao adicionar as skills novas");
           }
 
         }catch (error) {
@@ -517,9 +519,60 @@ export default {
           }
         }
       } else if (updatedFields.includes('experience')) {
-        showAlert(this.languageIsEN() ? 'Experiences already improved in this session.' : 'As experiências já foram melhoradas nesta sessão.');
+        this.showAlert(this.languageIsEN() ? 'Experiences already improved in this session.' : 'As experiências já foram melhoradas nesta sessão.');
       } else if (!this.user?.userExperiences || this.user?.userExperiences?.length === 0) {
         console.log("Experiencias está nulo ou vazio");
+      }
+
+      if(this.user.competence?.length > 0 && !updatedFields.includes("competence")) {
+          const instructions = this.languageIsEN() 
+          ? 'Review those competencens of mine, for a position of ' + this.user.profession + 
+          '. Improve, put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the competences needed for that job position separed by "," exeple: "Teamwork, hardworking, ....". In English' 
+          : 'Revise esse conjunto de competencias para uma profissção de ' + this.user.profession + 
+          '. Coloque primeiro as mais importante e retorne o texto com cada copetencia separadas por "," exemplo: "Trabalho em time, Desenvolvimento ágil, etc...", devolva apenas o texto, sem comentários. Em português';
+      
+        try {
+          const response = await funcs.improveTextGemini({
+                            text: this.user?.competence.join(", "),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+          this.user.competence = response.data.trim().split(",");
+          this.showAlert(this.languageIsEN() ? "The competences has just updated by AI" : "As competencias foram atualizadas por IA");
+        }catch(error) {
+          console.log("Aconteceu um erro ao atualizar as competencias", error);
+          this.showAlert(this.languageIsEN() ? "Is not possible update competences with AI now" : "Atualizar competencias co IA falhou");
+        
+        }finally {
+          updatedFields.push('competence');
+        }
+      }else if(updatedFields.includes("competence")) {
+        console.log("Já foi atualizado as competencias");
+      }else if (!updatedFields.includers("competence") && this.user.compotence?.length === 0) {
+        const instructions = this.languageIsEN() 
+          ? 'Create competencens for a position of ' + this.user.profession + 
+          '. Put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the competences needed for that job position separed by "," exeple: "Teamwork, hardworking, ....". In English' 
+          : 'Crie um conjunto de competencias para uma profissção de ' + this.user.profession + 
+          '. Coloque primeiro as mais importante e retorne o texto com cada copetencia separadas por "," exemplo: "Trabalho em time, Desenvolvimento ágil, etc...", devolva apenas o texto, sem comentários. Em português';
+      
+        try {
+          const response = await funcs.improveTextGemini({
+                            text: this.user?.competence.join(", "),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+          this.user.competence = response.data.trim().split(",");
+          this.showAlert(this.languageIsEN() ? "The competences has just updated by AI" : "As competencias foram atualizadas por IA");
+        }catch(error) {
+          console.log("Aconteceu um erro ao atualizar as competencias", error);
+          this.showAlert(this.languageIsEN() ? "Is not possible update competences with AI now" : "Atualizar competencias co IA falhou");
+        
+        }finally {
+          updatedFields.push('competence');
+        }
+
       }
 
       this.updateUser(this.user, false);
@@ -690,7 +743,7 @@ export default {
       this.showAlertErrorToTrue()
     },
     showLogin() {
-      this.inlogin = true
+      this.inlogin = true;
     },
     showAlertToTrue() {
       if(!this.showAlert) {this.show = true}
