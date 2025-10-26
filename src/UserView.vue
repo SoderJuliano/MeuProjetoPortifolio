@@ -19,6 +19,7 @@ import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
 import CodeCV from "./templates/CodeCV.vue";
 import ClassicInverted from "./templates/ClassicInverted.vue";
+import Professor from "./templates/ProfessorTemplate.vue";
 
 export default {
     name: "userview",
@@ -30,19 +31,23 @@ export default {
         Template4,
         ModernTemplate,
         CodeCV,
-        ClassicInverted
+        ClassicInverted,
+        Professor
     },
     data() {
         return {
             user: {},
             configs: JSON.parse(localStorage.getItem("configs")) || {},
-            templates: [Template1,
-                        Template2,
-                        Template3,
-                        Template4,
-                        ModernTemplate,
-                        CodeCV,
-                        ClassicInverted]
+            templates: [
+        Template1,
+        Template2,
+        Template3,
+        Template4,
+        ModernTemplate,
+        CodeCV,
+        ClassicInverted,
+        Professor
+      ]
         }
     },
     methods: {

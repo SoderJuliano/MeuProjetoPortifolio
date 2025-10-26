@@ -179,6 +179,7 @@ export default {
   position: absolute;
   align-self: center;
   justify-self: center;
+  top: 20%;
   width: 100%;
   z-index: 1;
   padding: 15px;

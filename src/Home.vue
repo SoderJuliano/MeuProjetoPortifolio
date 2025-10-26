@@ -234,6 +234,7 @@ import Template4 from "./templates/Template4.vue";
 import ModernTemplate from "./templates/ModernTemplate.vue";
 import CodeCV from "./templates/CodeCV.vue";
 import ClassicInverted from "./templates/ClassicInverted.vue";
+import ProfessorTemplate from "./templates/ProfessorTemplate.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -290,7 +291,8 @@ export default {
         Template4,
         ModernTemplate,
         CodeCV,
-        ClassicInverted
+        ClassicInverted,
+        ProfessorTemplate
       ],
       // loginTitle, null == default title
       loginTitle: null,
