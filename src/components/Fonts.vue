@@ -99,11 +99,20 @@ export default {
       $(".dropdown-content").css({"display": "none"});
     },
     changeFont(font){
+      // Aplica a fonte imediatamente aos elementos principais
+      const mainElements = $(".main, .side, #template, .template");
+      mainElements.css("font-family", font);
+      
+      // Salva a configuração
       const fontConfig = new PageConfig().recoverConfigs();
       fontConfig.setFont(font);
       fontConfig.save();
-      // console.log("font config updated")
+      
+      // Emite o evento de atualização
       this.$emit("update-configs");
+      
+      // Fecha o dropdown
+      this.closeFontDiv();
     }
   }
 }
