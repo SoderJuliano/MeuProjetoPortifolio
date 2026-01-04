@@ -1,5 +1,11 @@
 <template>
-  <div id="AIpowerBNT" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+  <div id="AIpowerBNT" :style="{ 
+    position: 'fixed', 
+    bottom: '30px', 
+    right: '30px', 
+    zIndex: inlogin ? 5 : 1000,
+    transition: 'z-index 0.2s ease'
+  }">
     <button style="
       background: linear-gradient(135deg, #6e8efb, #a777e3);
       color: white;
@@ -394,7 +400,7 @@ export default {
       // RESUME IMPROVING
       if(this.user?.resume && this.user?.resume != '' && !updatedFields.includes('resume')) {
         try{
-          const response = await funcs.improveTextGemini({
+          const response = await funcs.improveTextLlamaTiny({
                               text: this.user.resume.trim(),
                               email: this.user?.contact?.email[0],
                               language: this.configs.language,
@@ -428,7 +434,7 @@ export default {
         '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
       
         try {
-          const response = await funcs.improveTextGemini({
+          const response = await funcs.improveTextLlamaTiny({
                             text: this.user.ability.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
@@ -465,7 +471,7 @@ export default {
       } else if (this.user.ability === "" || !this.user.ability) {
         try {
           console.log("Habilidades em brancas ou nulas, vamos criar novas");
-          const response = await funcs.improveTextGemini({
+          const response = await funcs.improveTextLlamaTiny({
                             text: this.user.ability.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
@@ -502,7 +508,7 @@ export default {
       if (this.user.userExperiences?.length > 0 && !updatedFields.includes('experience')) {
         try {
           const promises = this.user.userExperiences.map(async (experience, index) => {
-            const response = await funcs.improveTextGemini({
+            const response = await funcs.improveTextLlamaTiny({
               text: experience.description.trim(),
               email: this.user?.contact?.email[0],
               language: this.configs.language
@@ -534,7 +540,7 @@ export default {
           '. Coloque primeiro as mais importante e retorne o texto com cada copetencia separadas por "," exemplo: "Trabalho em time, Desenvolvimento ágil, etc...", devolva apenas o texto, sem comentários. Em português';
       
         try {
-          const response = await funcs.improveTextGemini({
+          const response = await funcs.improveTextLlamaTiny({
                             text: this.user?.competence.join(", "),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
@@ -551,7 +557,7 @@ export default {
         }
       }else if(updatedFields.includes("competence")) {
         console.log("Já foi atualizado as competencias");
-      }else if (!updatedFields.includers("competence") && this.user.compotence?.length === 0) {
+      }else if (!updatedFields.includers("competence") && this.user.competence?.length === 0) {
         const instructions = this.languageIsEN() 
           ? 'Create competencens for a position of ' + this.user.profession + 
           '. Put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the competences needed for that job position separed by "," exeple: "Teamwork, hardworking, ....". In English' 
@@ -559,7 +565,7 @@ export default {
           '. Coloque primeiro as mais importante e retorne o texto com cada copetencia separadas por "," exemplo: "Trabalho em time, Desenvolvimento ágil, etc...", devolva apenas o texto, sem comentários. Em português';
       
         try {
-          const response = await funcs.improveTextGemini({
+          const response = await funcs.improveTextLlamaTiny({
                             text: this.user?.competence.join(", "),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,

@@ -47,7 +47,7 @@ class AIService {
 
   async fetchImprovedText(instructions) {
     console.log("Chamando IA para :", instructions);
-    return await funcs.improveTextGemini({
+    return await funcs.improveTextLlamaTiny({
       text: '',
       email: this.user?.contact?.email?.[0],
       language: this.configs.language,

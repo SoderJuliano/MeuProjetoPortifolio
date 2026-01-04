@@ -444,6 +444,44 @@ export async function improveTextLlama(data) {
   });
 }
 
+export async function improveTextLlamaTiny(data) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  let instructions = null;
+
+  if (!data.customPrompt) {
+    instructions = data?.language?.includes("pt-br")
+      ? "Oi. Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+      : "Hi, Please improve the folowing text, no explanation, no coments, improved text only: ";
+    instructions = instructions + data.text;
+  } else {
+    instructions = data.customPrompt;
+  }
+
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: instructions,
+    ip: ip,
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  const endpoint = `${apiUrl}/llamatiny`;
+
+  return await axios.post(endpoint, body, { headers }).then((response) => {
+    return response;
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
+    throw error;
+  });
+}
+
 function getIp() {
   return fetch('https://api.ipify.org?format=json')
     .then(response => response.json())

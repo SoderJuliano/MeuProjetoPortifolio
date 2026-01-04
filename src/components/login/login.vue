@@ -25,7 +25,8 @@
                 <div class="form-group">
                     <div v-if="!showPassword" class="pass-container">
                         <input @keydown.enter="login()" type="password" class="form-control" :placeholder="this.language === 'pt-br' ? 'Senha' : 'Password'" v-model="password" @input="validatePassword">
-                        <img @click="showPassword = !showPassword" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD9ElEQVR4nO1Ya4hVVRTepb0zzSzoAZUgEtFDQiISbhFzOZz9fevMJbcJUlHkEBEE+UsJbiFUiEH9iSCiIqFfQUQEFvkjH+hQik6YglQYWVMSYVOppcZy1oGN5Ln3zNxXcT44cB/7rLW+vfba6+FchQoVKlSoMACo1WoXisi9JJ8D8B7JMQCHSf4J4G+SvwD4muRGAC8DuB/APDco8N7fA+AtAEdInirzKEEAH3vvH0qS5IK+EABAkqORYSdJfkHyJZLL0jS9vV6vz1VPhRBmeO8v994vEBEP4BkAn6i3IlLfk1zVM0JqjB6PyIAfATS99/PLysqybA6Ax0juiuQdULKum/DeryQ5YQr1/D+pO94J2SQTAHsiD78G4GLXSYyMjJwH4I1IydvDw8NXdOHCmAng6fzIAdjpvb+2YwoAfGgEJkRkuesysiy7heR+0/ldkiRXTluoBiqAcQCHvPd3uB6hXq/PBfApyaMalx0RqkEZQrjU9R7nDA0NXdIHvRUq/KdRq9VmFi7Qa47ktyRfcAMKAA8AOK5F51kXJUlynS06AeAuN2CoT17J45pfvPdLCxdb0adZdY9mdDdAIPm6JcltejUXLg4hzNZsamSabkAAoG4n5bhW1u2+dJ+9dIIkXJ+RZdkNJH82b6wu9TLJteaVX9M0vcn1CUmSXAZgt5HYqCVTKQHNZvNcAO+bgB9I3ux6jGyyX9luG7pPv09JUAjhIgCbjMxPIrLI9QgA5lnHqSS+SdP0+mkJ1LI96kN+F5FHXZdB8m4AB3O9InLntAcLUV99endsh97pxgQkhHA+yTUk/zI9x0znWKPRuGpKQgEszicjAF41Ykt1rGO//Uby2U61ujrMAHDAZOtt+Yp2h1H7+1Wj0bi6lFANbOvJVcAGDfz8Px0ykPwo8s4hAC+KyMKyxusu6+SE5N5I3pcAlpyxZqy0Z0jeaKMZffGDs2V3G8btOGNOtVu9B+BB7SY1QLUhU6/p7pK8lWRGch3JzdHROWU13sP/dr2WJiMi10Tu3dTq2IjIU5FXDk9hQPeHTR/185tFukqRiQJ6h4jMKhKsJCPPwfLOYgvWDQC2RP/nuWhUx6kAntfqwTw13yaOx7RoLUFmtIjIZl3QzqgHwBP5bVZUwOVEWsh617yyvpVeI/O5FY7Tg8aNnWktpxtFa9sh4r2/zUauE92YlxUZN5LfMPGNNlUiti4fw65xvYBNHU8HqA6r2zCwLSIaM5zcnHEtjTpmcIHCR8y4va28UYaIyd5uZB7viLEtlO2z2FjRzvoyREQk5JWu6zYAbNWn3b6gDJEQwgxLsrvcoKEMEUNxL94vWG76rN92VKhQwf0/8A83woH5YgC03QAAAABJRU5ErkJggg==">
+                        <img @click="showPassword = !showPassword" 
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD9ElEQVR4nO1Ya4hVVRTepb0zzSzoAZUgEtFDQiISbhFzOZz9fevMJbcJUlHkEBEE+UsJbiFUiEH9iSCiIqFfQUQEFvkjH+hQik6YglQYWVMSYVOppcZy1oGN5Ln3zNxXcT44cB/7rLW+vfba6+FchQoVKlSoMACo1WoXisi9JJ8D8B7JMQCHSf4J4G+SvwD4muRGAC8DuB/APDco8N7fA+AtAEdInirzKEEAH3vvH0qS5IK+EABAkqORYSdJfkHyJZLL0jS9vV6vz1VPhRBmeO8v994vEBEP4BkAn6i3IlLfk1zVM0JqjB6PyIAfATS99/PLysqybA6Ax0juiuQdULKum/DeryQ5YQr1/D+pO94J2SQTAHsiD78G4GLXSYyMjJwH4I1IydvDw8NXdOHCmAng6fzIAdjpvb+2YwoAfGgEJkRkuesysiy7heR+0/ldkiRXTluoBiqAcQCHvPd3uB6hXq/PBfApyaMalx0RqkEZQrjU9R7nDA0NXdIHvRUq/KdRq9VmFi7Qa47ktyRfcAMKAA8AOK5F51kXJUlynS06AeAuN2CoT17J45pfvPdLCxdb0adZdY9mdDdAIPm6JcltejUXLg4hzNZsamSabkAAoG4n5bhW1u2+dJ+9dIIkXJ+RZdkNJH82b6wu9TLJteaVX9M0vcn1CUmSXAZgt5HYqCVTKQHNZvNcAO+bgB9I3ux6jGyyX9luG7pPv09JUAjhIgCbjMxPIrLI9QgA5lnHqSS+SdP0+mkJ1LI96kN+F5FHXZdB8m4AB3O9InLntAcLUV99endsh97pxgQkhHA+yTUk/zI9x0znWKPRuGpKQgEszicjAF41Ykt1rGO//Uby2U61ujrMAHDAZOtt+Yp2h1H7+1Wj0bi6lFANbOvJVcAGDfz8Px0ykPwo8s4hAC+KyMKyxusu6+SE5N5I3pcAlpyxZqy0Z0jeaKMZffGDs2V3G8btOGNOtVu9B+BB7SY1QLUhU6/p7pK8lWRGch3JzdHROWU13sP/dr2WJiMi10Tu3dTq2IjIU5FXDk9hQPeHTR/185tFukqRiQJ6h4jMKhKsJCPPwfLOYgvWDQC2RP/nuWhUx6kAntfqwTw13yaOx7RoLUFmtIjIZl3QzqgHwBP5bVZUwOVEWsh617yyvpVeI/O5FY7Tg8aNnWktpxtFa9sh4r2/zUauE92YlxUZN5LfMPGNNlUiti4fw65xvYBNHU8HqA6r2zCwLSIaM5zcnHEtjTpmcIHCR8y4va28UYaIyd5uZB7viLEtlO2z2FjRzvoyREQk5JWu6zYAbNWn3b6gDJEQwgxLsrvcoKEMEUNxL94vWG76rN92VKhQwf0/8A83woH5YgC03QAAAABJRU5ErkJggg==">
                         <small v-if="customMessage && password.length > 0 && password.length <= 6">{{ customMessage }}</small>
                         <small v-else-if="password.length > 0 && password.length <= 6" class="text-danger">{{ this.language === 'pt-br' ? 'Sua senha deve ter pelo menos 6 caracteres.' : 'Your password must have at least 6 characters.' }}</small>
                     </div>
@@ -130,6 +131,7 @@ export default {
 <style scoped>
     .pass-container {
         display: flex;
+        position: relative;
     }
     .pass-container img {
         position: absolute;
@@ -138,8 +140,17 @@ export default {
         width: 30px;
         height: 30px;
     }
+    
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        .pass-container img {
+            margin-left: 150px;
+            width: 25px;
+            height: 25px;
+        }
+    }
     .modal-login-template {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         display: flex;
@@ -154,6 +165,8 @@ export default {
             if keep 2 stays under those menus, 4 is ok
         */
         z-index: 11;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
     .inner-login-tempalte {
         flex-direction: column;
@@ -165,7 +178,42 @@ export default {
         justify-content: center;
         align-items: center;
         font-size: 16px;
-        padding: 20px;
+        max-height: 90dvh;
+        overflow-y: auto;
+        margin: 20px;
+    }
+
+    /* iPhone SE e telas pequenas */
+    @media screen and (max-width: 375px) and (max-height: 667px) {
+        .modal-login-template {
+            padding: 10px;
+            justify-content: flex-start;
+            padding-top: 20px;
+        }
+        
+        .inner-login-tempalte {
+            width: 95%;
+            max-width: 350px;
+            padding: 15px;
+            margin: 10px;
+            max-height: 85dvh;
+            min-height: auto;
+        }
+    }
+
+    /* Ajuste específico para iPhone SE quando o teclado está visível */
+    @media screen and (max-width: 375px) and (max-height: 400px) {
+        .modal-login-template {
+            justify-content: flex-start;
+            padding-top: 10px;
+        }
+        
+        .inner-login-tempalte {
+            width: 98%;
+            padding: 10px;
+            margin: 5px;
+            max-height: 95vh;
+        }
     }
 
     .modal-header {
@@ -190,6 +238,20 @@ export default {
         width: 200px;
         align-self: center;
     }
+    
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        .modal-title {
+            font-size: 20px;
+            padding: 15px;
+            width: 180px;
+        }
+        
+        .modal-header a {
+            font-size: 14px;
+            right: 5px;
+        }
+    }
     .modal-footer {
         width: 100%;
     }
@@ -197,6 +259,13 @@ export default {
         width: 100%;
         justify-content: space-around;
         margin-top: 20px;
+    }
+
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        .form-group {
+            margin-top: 15px;
+        }
     }
 
     input {
@@ -208,10 +277,27 @@ export default {
         font-size: 16px;
     }
 
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        input {
+            width: 180px;
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+    }
+
     .modal-footer {
         margin-top: 40px;
         width: 100%;
         text-align: center;
+    }
+
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        .modal-footer {
+            margin-top: 20px;
+        }
     }
 
     button {
@@ -227,6 +313,20 @@ export default {
         margin-right: 10px;
     }
 
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        button {
+            width: 150px;
+            padding: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        button:first-child {
+            margin-right: 5px;
+        }
+    }
+
     .confirm-validation {
         position: absolute;
         margin-top: 50px;
@@ -237,6 +337,20 @@ export default {
         position: absolute;
         margin-top: 50px;
         margin-left: 0px;
+    }
+
+    /* Responsive para iPhone SE */
+    @media screen and (max-width: 375px) {
+        .confirm-validation {
+            margin-top: 40px;
+            margin-left: -180px;
+            font-size: 12px;
+        }
+
+        small {
+            margin-top: 40px;
+            font-size: 12px;
+        }
     }
 
     .loading {
