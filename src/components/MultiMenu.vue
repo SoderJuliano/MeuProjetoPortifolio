@@ -19,7 +19,6 @@
             <Colors :language="language" />
             <p class="multimenu-line"></p>
         </div>
-
         <div
         v-if="template == 1 || template == 2"
         class="option">
@@ -47,10 +46,15 @@
             <Templates
                 :language="language"
                 :template="template"
-                @now-template1="this.$emit('now-template1')"
-                @now-template2="this.$emit('now-template2')" 
-                @now-template3="this.$emit('now-template3')"
-                @now-template4="this.$emit('now-template4')"
+                @change-template="this.$emit('change-template', $event)"
+            />
+            <p class="multimenu-line"></p>
+        </div>
+        <div class="option">
+            <Layouts
+                :language="language"
+                :template="template"
+                @change-layout="this.$emit('change-layout', $event)"
             />
             <p class="multimenu-line"></p>
         </div>
@@ -117,6 +121,7 @@ import pageColor from "./pageColor.vue";
 import Avatares from "./Avatares.vue";
 import PicureShape from "./PictureShape.vue";
 import Templates from "./multimenuComponentes/Templates.vue";
+import Layouts from "./multimenuComponentes/Layouts.vue";
 import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
 import UserModel from "../model/userModel";
 import { showAlert } from 'simple-alerts/dist/showAlert.js';
@@ -131,10 +136,8 @@ export default {
     "changefont",
     "update-configs",
     "update-user",
-    'now-template1',
-    'now-template2',
-    'now-template3',
-    'now-template4',
+    'change-template',
+    'change-layout',
     'login',
     'reset-password',
     'ativationAccount',
@@ -146,6 +149,7 @@ export default {
         Avatares,
         PicureShape,
         Templates,
+        Layouts,
         FontsSize,
         GlobalModal
     },
@@ -297,6 +301,10 @@ export default {
 };
 </script>
 <style scoped>
+
+p, button, .tside, .option {
+    cursor: pointer;
+}
 
 a {
     text-decoration: none;

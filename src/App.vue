@@ -71,7 +71,8 @@ export default {
             this.activeComp = 'UserView';
         }
         else {
-            this.activeComp = 'NotFound';
+            // this.activeComp = 'NotFound';
+            this.activeComp = 'Home';
         }
     }
 }

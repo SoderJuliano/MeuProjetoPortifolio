@@ -57,7 +57,7 @@
             @now-template3="$emit('now-template3')"
             @now-template4="$emit('now-template4')"
             @update-user="updateUser"
-            @login="$emit('login')"
+            @login="clickedLogin"
             @reset-password="$emit('reset-password')"
             @ativationAccount="$emit('ativationAccount')"
             @click="changefontM"
@@ -103,6 +103,10 @@
       };
     },
     methods: {
+      clickedLogin() {
+        this.$emit('login');
+        this.toggleMenu();
+      },
       toggleMenu() {
         this.isMenuOpen = !this.isMenuOpen;
       },
@@ -238,6 +242,10 @@
       background: #888;
       border-radius: 4px;
     }
+  }
+ 
+  p, button, .tside, .option {
+    cursor: pointer;
   }
   
   @media (max-width: 400px) {

@@ -1,5 +1,11 @@
 <template>
-  <div id="AIpowerBNT" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+  <div id="AIpowerBNT" :style="{ 
+    position: 'fixed', 
+    bottom: '30px', 
+    right: '30px', 
+    zIndex: inlogin ? 5 : 1000,
+    transition: 'z-index 0.2s ease'
+  }">
     <button style="
       background: linear-gradient(135deg, #6e8efb, #a777e3);
       color: white;
@@ -71,11 +77,7 @@
     :user="user"
     :language="this.configs.getLanguage()"
     :template="this.configs.getTemplate()"
-    @adicionar-formacao="adicionarNovaFormacao"
-    @adicionar-habilidade="adicionarNovaHabilidade"
-    @update-name="updateName"
-    @add-profissao="editarProfissao"
-    @update-user="updateUser"
+        @update-user="updateUser",
     @login="showLogin"
   />
   <nav-bar
@@ -113,22 +115,20 @@
   ></login>
   <diagrams-modal
     :diagram="diagram"
-    v-if="showDiagramsModal"
+    vif="showDiagramsModal"
     :language="this.configs.getLanguage()"
     @close="this.showDiagramsModalFunction(null)"
   ></diagrams-modal>
   <div :style="getStyle()" class="main">
     <div class="main-left" @click="closeEditarContato">
       <multi-menu
-        :template="this.configs.getTemplate()"
+        :template="Number(this.configs.getTemplate())"
         :user="user"
         :language="this.configs.getLanguage()"
         @update-configs="updateConfigs"
         @update-user="updateUser"
-        @now-template1="change_template(1)"
-        @now-template2="change_template(2)"
-        @now-template3="change_template(3)"
-        @now-template4="change_template(4)"
+        @change-template="change_template"
+        @change-layout="change_layout"
         @login="showLogin"
         class="multi-menu-class"
         @changefont="changefont"
@@ -137,8 +137,7 @@
       />
     </div>
     <div id="template">
-      <template1
-        v-if="configs.getTemplate() == 1"
+      <component :is="templates[configs.getTemplate() - 1]"
         :language="this.configs.getLanguage()"
         @update-user="updateUser"
         @local-update-user="updateUser"
@@ -160,65 +159,12 @@
         @update-experiencias="adicionarExperiencias"
         @update-competences="updateCompetences"
         @update-social="handleUpdateSocial"
-        class="template"
+        :class="{ template: true, t2: configs.getTemplate() == 2 }"
         :style="getStyle()"
         :mainColor="this.configs?.getMainColor()"
         :sideColor="this.configs?.getSideColor()"
         :fontColor="this.configs?.getFontColor()"
         :user="user"
-      />
-      <template2
-        v-if="configs.getTemplate() == 2"
-        :language="this.configs.getLanguage()"
-        @add-info="addInfo"
-        @add-resumo="editarResumo"
-        @adicionar-habilidade="adicionarNovaHabilidade"
-        class="template t2"
-        @add-experiencia="editarExperiencias"
-        @add-competencia="editarCompetencias"
-        @add-nome="editarNome"
-        @choose-skillIcon="editarIcons('skill')"
-        @choose-phoneIcon="editarIcons('phone')"
-        @choose-addressIcon="editarIcons('adress')"
-        @choose-emailIcon="editarIcons('email')"
-        @add-profissao="editarProfissao"
-        @add-formacao="this.showModal('formacao')"
-        @add-habilidade="this.showModal('habilidade')"
-        @add-SocialLink="this.showModal('socialLink')"
-        @choose-educationIcon="editarIcons('education')"
-        @update-competences="updateCompetences"
-        @update-experiences="adicionarExperiencias"
-        @local-update-user="updateUser"
-        @update-user="updateUser"
-        :style="getStyle()"
-        :mainColor="this.configs?.getMainColor()"
-        :sideColor="this.configs?.getSideColor()"
-        :fontColor="this.configs?.getFontColor()"
-        :user="user"
-      />
-      <Template3
-        class="template"
-        v-if="configs.getTemplate() == 3"
-        :user="user"
-        :language="this.configs.getLanguage()"
-        @updateUser="updateUser"
-      />
-      <Template4
-        class="template"
-        v-if="configs.getTemplate() == 4"
-        :user="user"
-        :language="this.configs.getLanguage()"
-        @add-nome="editarNome"
-        @add-info="addInfo"
-        @add-resumo="editarResumo"
-        @add-experiencia="editarExperiencias"
-        @add-formacao="this.showModal('formacao')"
-        @add-habilidade="this.showModal('habilidade')"
-        @delete-from-education="deleteFromEducation"
-        @delete-from-experiences="deleteFromExperiences"
-        @add-profession="editarProfissao"
-        @add-SocialLink="this.showModal('socialLink')"
-        @updateUser="updateUser"
       />
     </div>
     <!-- <div class="footer">
@@ -248,13 +194,10 @@
     <MobileNavbar
       :language="this.configs.getLanguage()"
       @language-update="lupdate"
-      :template="this.configs.getTemplate()"
+      :template="Number(this.configs.getTemplate())"
       @font-changed="setFont"
       :user="user"
-      @now-template1="change_template(1)"
-      @now-template2="change_template(2)"
-      @now-template3="change_template(3)"
-      @now-template4="change_template(4)"
+      @change-template="change_template"
       @change-main-color="changeMainColor"
       @change-font-color="changeFontColor"
       @update-user="updateUser"
@@ -294,6 +237,10 @@ import editorInformacoes from "./components/editorIformacoes.vue";
 import Template2 from "./templates/Template2.vue";
 import Template3 from "./templates/Templete3.vue";
 import Template4 from "./templates/Template4.vue";
+import ModernTemplate from "./templates/ModernTemplate.vue";
+import CodeCV from "./templates/CodeCV.vue";
+import ClassicInverted from "./templates/ClassicInverted.vue";
+import ProfessorTemplate from "./templates/ProfessorTemplate.vue";
 import strings from "./components/configs/strings.json";
 import Tips from "./components/tips/Tips.vue";
 import PageConfig from "./model/configModel.js";
@@ -343,6 +290,16 @@ export default {
       showAlertError: false,
       diagram: null,
       showDiagramsModal: false,
+      templates: [
+        Template1,
+        Template2,
+        Template3,
+        Template4,
+        ModernTemplate,
+        CodeCV,
+        ClassicInverted,
+        ProfessorTemplate
+      ],
       // loginTitle, null == default title
       loginTitle: null,
       inlogin: false,
@@ -390,6 +347,9 @@ export default {
     Template2,
     Template3,
     Template4,
+    ModernTemplate,
+    CodeCV,
+    ClassicInverted,
     Tips,
     login,
     diagramsModal,
@@ -412,6 +372,7 @@ export default {
     },
     async melhorarCurriculo() {
       $("#AIpowerBNT :button").prop("disabled", true);
+      console.log("Iniciaondo loading para melhorar cv através do método melhorarCurriculo()");
       this.loading = true;
 
       if(!authService.hasToken()) {
@@ -433,230 +394,199 @@ export default {
         this.loading = false;
         return;
       }
+
+      const updatedFields = JSON.parse(sessionStorage.getItem('updatedFields')) || [];
       
       // RESUME IMPROVING
-      // Com conteúdo
-      if(this.user?.resume && this.user?.resume != '') {
-        
+      if(this.user?.resume && this.user?.resume != '' && !updatedFields.includes('resume')) {
         try{
-        const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
-                            email: this.user?.contact?.email[0],
-                            language: this.configs.language,
-                          });
-
-
-        // console.log('ia responde', response)
-
-        // alert(response.data)
-
-        this.user.resume = response.data;
-        this.updateUser(this.user, false);
-        this.loading = false;
-        return;
+          const response = await funcs.improveTextLlamaTiny({
+                              text: this.user.resume.trim(),
+                              email: this.user?.contact?.email[0],
+                              language: this.configs.language,
+                            });
+          this.user.resume = response.data;
+          updatedFields.push('resume');
         }catch (error) {
-            const status = error?.response?.status || eerrorx?.status || 500;
+            console.log("Erro ao chamar gemini no resumo", error);
+            const status = error?.response?.status || error?.status || 500;
             const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
             showAlert(mensagem);
-
             if (status === 422) {
               setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
             } else if (status === 401) {
               this.loading = false; //todo ver aqui so mostro a tela de login de volta
               setTimeout(() => {showAlert(this.languageIsEN() ? "Redo the login and try again." : "Faça login e tente novamente.")});
-              return;
             }
+        }finally {
+          showAlert(this.languageIsEN ? "Finished improve resume" : "Terminamos de melhorar o resumo");
         }
+      } else if (updatedFields.includes('resume')) {
+        showAlert(this.languageIsEN() ? 'Resume already improved in this session.' : 'O resumo já foi melhorado nesta sessão.');
       }
 
-      // RESUME IMPROVING
-      // Sem conteúdo 
-      else if (this.user?.resume == 'about you.' 
-      || this.user?.resume == 'sobre você.' ) {
-
-        const instructions = this.languageIsEN() 
-        ? 'Create a good short summary about me as a ' + this.user.profession + 
-        'and return only the texto you got, no comments, no explanations, only the generated text.' 
-        : 'Crie um bom resumo sonbre mim, como um ' + this.user.profession + 
-        '. Faça um texto curo, e retorne apenas o texto, sem explicações ou comentários.';
-
-        try{
-          const response = await funcs.improveTextLlama({
-                              text: this.user.resume.trim(),
-                              email: this.user?.contact?.email[0],
-                              language: this.configs.language,
-                              customPrompt: instructions
-                            });
-
-          this.user.resume = response.data;
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
-        }catch (error) {
-            const status = error?.response?.status;
-            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
-            showAlert(mensagem);
-
-            if (status === 422) {
-              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
-            }
-        }
-      }
-
-
-      // SKILLS - no skill
-      const emptyPlaceholders = ['', 'Digite aqui', 'Type in here'];
-      if (!!this.user.ability || emptyPlaceholders.includes(this.user.ability)) {
-        const instructions = this.languageIsEN() 
-        ? 'Create good skill for a ' + this.user.profession + 
-        'and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
-        : 'Crie um bom conjunto de habilidades para ' + this.user.profession + 
-        '. Faça um texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
-
-        try {
-          const response = await funcs.improveTextLlama({
-                              text: this.user.resume.trim(),
-                              email: this.user?.contact?.email[0],
-                              language: this.configs.language,
-                              customPrompt: instructions
-                            });
-          
-          this.user.ability = response.data;
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
-        }catch (error) {
-            const status = error?.response?.status;
-            const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
-            showAlert(mensagem);
-
-            if (status === 422) {
-              setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
-            }
-          }
-      }
-
-      // Skill - with skills
-      else if(this.user?.ability && !emptyPlaceholders.includes(this.user.ability)) {
+      // SKILLS
+      if(this.user?.ability && this.user?.ability.length !== "" && !updatedFields.includes('ability')) {
         const instructions = this.languageIsEN() 
         ? 'Review those skills for a position of ' + this.user.profession + 
-        '. Improve, put at first the one may be more relevant and return only the texto you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
+        '. Improve, put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the skills separed by "," exeple: "HTML, CSS, ....". In English' 
         : 'Revise esse conjunto de habilidades para ' + this.user.profession + 
         '. Coloque primeiro a mais importante e retorne o texto com cada habilidade separadas por "," exemplo: "HTML, CSS ...", devolva apenas o texto, sem comentários. Em português';
       
         try {
-          const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
+          const response = await funcs.improveTextLlamaTiny({
+                            text: this.user.ability.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
                             customPrompt: instructions
                           });
-        
-          this.user.ability = response.data;
-          this.updateUser(this.user, false);
 
-          this.loading = false;
-          return;
+          console.log("Response ability gemini", response);
+          if (typeof response?.data === 'string' && response.data.includes(',')) {
+            console.log("É uma string separada por vírgulas (array-like)");
+            const array = response.data.split(',').map(item => item.trim());
+            console.log(array);
+            this.user.ability = response.data;
+            updatedFields.push('ability');
+            this.showAlert(this.languageIsEN() ? "Skills ware set with AI!" : "Habilidades foram adicionadas com IA!")
+          }else {
+            console.log("Resposta do gemini não foi adequada", response.data);
+            this.showAlert(this.languageIsEN()? "An error occurred during setting new skills" : "Ocorreu um erro ao adicionar as skills novas");
+          }
+
         }catch (error) {
+          console.log("Erro na chamada ao gemini para skills", error);
           const status = error?.response?.status;
           const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
           showAlert(mensagem);
-
           if (status === 422) {
             setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
           }
+        }finally {
+          showAlert(this.languageIsEN() ? "Finished of improve the skills" : "Terminei de melhorar as skills");
         }
-      }
-
-      // WORK - no-job
-      if(this.user.userExperiences?.length === 0) {
-        const instructions = this.languageIsEN() 
-        ? 'Imageine a job position that match my skills:' +this.user.ability + '. With tille' + this.user.profession + 
-        '. Then I need you return a string containing a json strigify object inside as the exemple: '+
-        ' {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}.'+
-        ' In English'+
-        '. No comments or aditional infos just the string json for response.' 
-        : 'Envente um trabalho que condiz com essas habilidades ' + this.user.profession + 
-        '. Responda com json somente, use esse json do exemplo: {position: "position", company:"anycompany", dateHired:"2022", dateFired:"2023", description: "A nice description"}'+
-        'Sem informações adicionais, apenas responda com a string json. Texto em português, em ingles apenas as palavras que formao o json, position, company,'+
-        'dateHired,dateFired e description, devem permanecer em ingles, porque são chaves json';
-      
+      } else if (updatedFields.includes('ability')) {
+        console.log("Skipando a atualização das abilidades, elas já foram atualizadas nesta sessão");
+        showAlert(this.languageIsEN() ? 'Skills already improved in this session.' : 'As habilidades já foram melhoradas nesta sessão.');
+      } else if (this.user.ability === "" || !this.user.ability) {
         try {
-          const response = await funcs.improveTextLlama({
-                            text: this.user.resume.trim(),
+          console.log("Habilidades em brancas ou nulas, vamos criar novas");
+          const response = await funcs.improveTextLlamaTiny({
+                            text: this.user.ability.trim(),
                             email: this.user?.contact?.email[0],
                             language: this.configs.language,
-                            customPrompt: instructions
+                            customPrompt: this.languageIsEN() ? "Generate a string with skills I need for a position of "
+              + this.user.profession +". I want short keywords skills separeted by comma , Exemple: skill1, skill2, skill3 ...etc, I want a minimum of 5 skills. Return only the text with the skills, no intro, no explanations, only respond with the string I asked for" :
+                            "Gere uma string com habilidades necessárias para uma posição de "+ this.user.profession +". Quero as habilidades curtas em palavras chaves, separadas por virgula, uma string com no minimo 5 habilidades, exemplo: habilidade1, 2, 3, 4 etc... quero que me responda apenas com a string de habilidades que pedi, nenhuma introdução, dicas ou explicação, retorna apenas a string na resposta."
                           });
 
-          console.log(response.data)
-          this.user.userExperiences = [response.data];
-          this.updateUser(this.user, false);
+          if (typeof response?.data === 'string' && response.data.includes(',')) {
+            console.log("É uma string separada por vírgulas (array-like)");
+            const array = response.data.split(',').map(item => item.trim());
+            console.log(array);
+            this.user.ability = response.data;
+            updatedFields.push('ability');
+          }else {
+            console.log("Resposta do gemini não foi adequada", response.data);
+          }
 
-          this.loading = false;
-          return;
-        } catch (error) {
-          // Verifica se é um erro Axios com status 422
+        }catch (error) {
+          console.log("Erro na chamada ao gemini para skills", erro);
           const status = error?.response?.status;
           const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
           showAlert(mensagem);
-
           if (status === 422) {
             setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
           }
+        }finally {
+          showAlert(this.languageIsEN() ? "Finished of improve the skills" : "Terminei de melhorar as skills");
         }
+
       }
 
-      // WORK - with job
-      if (this.user.userExperiences?.length > 0) {
+      // WORK
+      if (this.user.userExperiences?.length > 0 && !updatedFields.includes('experience')) {
         try {
-          // Using map instead of foreach to properly handle async/await
           const promises = this.user.userExperiences.map(async (experience, index) => {
-            const response = await funcs.improveTextLlama({
+            const response = await funcs.improveTextLlamaTiny({
               text: experience.description.trim(),
               email: this.user?.contact?.email[0],
               language: this.configs.language
             });
-            
-            // Option 1: Direct modification
-            //experience.description = response.data;
-            
-            // Option 2: Modification by index
             this.user.userExperiences[index].description = response.data;
           });
-          
-          await Promise.all(promises); // Wait for all improvements to complete
-
-          this.updateUser(this.user, false);
-
-          this.loading = false;
-          return;
+          await Promise.all(promises);
+          updatedFields.push('experience');
         } catch (error) {
           console.error("Error improving experiences:", error);
-          // Handle error as needed
           const status = error?.response?.status;
           const mensagem = error?.response?.data?.message || error?.message || 'Erro inesperado';
-
           showAlert(mensagem);
-
           if (status === 422) {
             setTimeout(() => {window.location.href = '/choose-your-plan';}, 4000);
           }
         }
+      } else if (updatedFields.includes('experience')) {
+        this.showAlert(this.languageIsEN() ? 'Experiences already improved in this session.' : 'As experiências já foram melhoradas nesta sessão.');
+      } else if (!this.user?.userExperiences || this.user?.userExperiences?.length === 0) {
+        console.log("Experiencias está nulo ou vazio");
       }
 
-      // Outars eperiências
-      this.generateExperience();
-
-      $("#AIpowerBNT :input").prop("disabled", false);
+      if(this.user.competence?.length > 0 && !updatedFields.includes("competence")) {
+          const instructions = this.languageIsEN() 
+          ? 'Review those competencens of mine, for a position of ' + this.user.profession + 
+          '. Improve, put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the competences needed for that job position separed by "," exeple: "Teamwork, hardworking, ....". In English' 
+          : 'Revise esse conjunto de competencias para uma profissção de ' + this.user.profession + 
+          '. Coloque primeiro as mais importante e retorne o texto com cada copetencia separadas por "," exemplo: "Trabalho em time, Desenvolvimento ágil, etc...", devolva apenas o texto, sem comentários. Em português';
       
+        try {
+          const response = await funcs.improveTextLlamaTiny({
+                            text: this.user?.competence.join(", "),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+          this.user.competence = response.data.trim().split(",");
+          this.showAlert(this.languageIsEN() ? "The competences has just updated by AI" : "As competencias foram atualizadas por IA");
+        }catch(error) {
+          console.log("Aconteceu um erro ao atualizar as competencias", error);
+          this.showAlert(this.languageIsEN() ? "Is not possible update competences with AI now" : "Atualizar competencias co IA falhou");
+        
+        }finally {
+          updatedFields.push('competence');
+        }
+      }else if(updatedFields.includes("competence")) {
+        console.log("Já foi atualizado as competencias");
+      }else if (!updatedFields.includers("competence") && this.user.competence?.length === 0) {
+        const instructions = this.languageIsEN() 
+          ? 'Create competencens for a position of ' + this.user.profession + 
+          '. Put at first the ones that are more relevant for that position, and return only the text you got, no comments, no explanations, only the text with the competences needed for that job position separed by "," exeple: "Teamwork, hardworking, ....". In English' 
+          : 'Crie um conjunto de competencias para uma profissção de ' + this.user.profession + 
+          '. Coloque primeiro as mais importante e retorne o texto com cada copetencia separadas por "," exemplo: "Trabalho em time, Desenvolvimento ágil, etc...", devolva apenas o texto, sem comentários. Em português';
+      
+        try {
+          const response = await funcs.improveTextLlamaTiny({
+                            text: this.user?.competence.join(", "),
+                            email: this.user?.contact?.email[0],
+                            language: this.configs.language,
+                            customPrompt: instructions
+                          });
+          this.user.competence = response.data.trim().split(",");
+          this.showAlert(this.languageIsEN() ? "The competences has just updated by AI" : "As competencias foram atualizadas por IA");
+        }catch(error) {
+          console.log("Aconteceu um erro ao atualizar as competencias", error);
+          this.showAlert(this.languageIsEN() ? "Is not possible update competences with AI now" : "Atualizar competencias co IA falhou");
+        
+        }finally {
+          updatedFields.push('competence');
+        }
+
+      }
+
+      this.updateUser(this.user, false);
+      sessionStorage.setItem('updatedFields', JSON.stringify(updatedFields));
+      this.loading = false;
+      $("#AIpowerBNT :button").prop("disabled", false);
     },
     async pedirUmTokenNovo() {
       try {
@@ -821,7 +751,7 @@ export default {
       this.showAlertErrorToTrue()
     },
     showLogin() {
-      this.inlogin = true
+      this.inlogin = true;
     },
     showAlertToTrue() {
       if(!this.showAlert) {this.show = true}
@@ -1051,7 +981,8 @@ export default {
       localStorage.setItem("configs", JSON.stringify(this.configs));
     },
     updateUser(userData, notSync) {
-      // console.log('user update', userData.profession);
+      console.log("update user");
+      console.log('user update', userData.profession);
       // console.log("not sync", notSync)
       // console.log("isMobilePortrait() && !notSync", isMobilePortrait() && !notSync)
       this.user = userData;
@@ -1099,6 +1030,18 @@ export default {
       }else {
         $(".footer .close-bnt").css({"right": "30px"})
         // console.log('set t1')
+      }
+    },
+    change_layout(template) {
+      console.log("Changing layout to template ID:", template);
+      this.configs.setTemplate(template);
+      localStorage.setItem("configs", JSON.stringify(this.configs));
+      const newTab = window.open('/user/view', '_blank');
+      if (newTab) {
+        newTab.focus();
+      } else {
+        console.error("Failed to open new tab. Pop-up blocker might be active.");
+        alert("Não foi possível abrir a nova aba. Verifique se o bloqueador de pop-ups está ativo.");
       }
     },
     lupdate(lng) {
@@ -1254,11 +1197,10 @@ export default {
           this.modal.placeholder1 = this.languageIsEN()
             ? "Talk what kind of person you are"
             : "Descreva que tipo de proficional voce e...";
-          this.modal.list = this.user.competence;
+          this.modal.list = [];
 
           this.showDivModal();
 
-          $("#modal-input").val($("#resume").text())
           break;
 
         case "experiencias":
@@ -1601,8 +1543,8 @@ export default {
 
         this.newTipMessege = {
           "id": Math.random(),
-          "title": lng.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
-          "content": lng.includes("en")
+          "title": lng?.includes("en") ? "Tip on sava data" : "Dica ao salvar dados",
+          "content": lang?.includes("en")
               ? "If you are loged in and the togle of syncing data is on the data will auto update based on changes."
               : "Se você estiver logado e o botão de sincronização estiver ativo, os dados serão atualizados automativamente ao serem alterados.",
           "language": this.lang,
@@ -1613,8 +1555,8 @@ export default {
         setTimeout(() => {
           this.newTipMessege = {
             "id": Math.random(),
-            "title": lng.includes("en") ? "Tip of autosave" : "Dica para auto salvar dados",
-            "content": lng.includes("en")
+            "title": lng?.includes("en") ? "Tip of autosave" : "Dica para auto salvar dados",
+            "content": lng?.includes("en")
                 ? "The sync toggle stay under your name, make it visible clicking over your name on the right edge."
                 : "O botão de sincronização está no canto direito abaixo do seu nome, clique no seu nome para ele aparecer.",
             "language": this.lang,
@@ -1642,11 +1584,11 @@ export default {
 
       this.newTipMessege = {
           "id": Math.random(),
-          "title": lng.includes("en") ? "No connection" : "Sem conexão",
-          "content": lng.includes("en")
+          "title": lng?.includes("en") ? "No connection" : "Sem conexão",
+          "content": lng?.includes("en")
               ? `The server is not available at the moment (${formattedDate}). Please try again later.`
               : `O servidor não está disponível no momento (${formattedDate}). Por favor, tente novamente mais tarde.`,
-          "language": this.lang,
+          "language": lng,
           "read": false,
           "local": true
       }
@@ -1676,7 +1618,6 @@ export default {
 @media print {
   .template {
     width: 100vw !important;
-    height: 100vh !important;
     border-radius: 0px !important;
   }
 
@@ -1819,15 +1760,10 @@ export default {
     display: none !important;
   }
   .main {
-    display: flex;
+    display: block; /* Changed from flex to block */
     width: 100% !important;
-    width: 100dvw !important;
-    /* Template style 2 tava ficando com uma margem gigante
-    foi resolvido com margin e left 0 */
-    left: 0px;
-    margin: 0px !important; 
-    position: absolute;
-    top: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     -webkit-print-color-adjust: exact;
   }
 
@@ -1916,11 +1852,9 @@ body{
 .shade3{
   opacity: 0.7;
 }
-
 .shade4{
   opacity: 0.8;
 }
-
 .shade5{
   opacity: 0.9;
 }
@@ -1965,5 +1899,16 @@ body{
   .footer {
     display: flex !important;
   }
+}
+</style>
+<style>
+/* Overrides for ModernTemplate when in Home view to match other templates */
+#template .a4-size {
+  width: 100%;
+  min-height: 1122px; /* Approximately 297mm to avoid layout shifts from content change */
+  height: auto;
+  margin: 0;
+  transform: none;
+  box-shadow: none;
 }
 </style>

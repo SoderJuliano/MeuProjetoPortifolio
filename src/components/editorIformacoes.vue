@@ -18,7 +18,8 @@
                             name="area" id="modal-input"
                             @keydown.enter="pressedShifAndEnter"
                             cols="40" rows="5"
-                            :placeholder="`${this.placeholder}`">
+                            :placeholder="`${this.placeholder}`"
+                            v-model="resumeText">
                         </textarea>
                         <textarea
                             v-if="(mainTitle == 'Habilidade' && title == 'Habilidade') || (title == 'Skill')"
@@ -222,6 +223,7 @@ export default {
             isPageLink: false,
             isEnglish: true,
             loggedIn: false,
+            resumeText: this.user.resume
         }
     },
     components: {
@@ -246,6 +248,7 @@ export default {
         "adicionar-habilidade",
         "update-experiences",
         "update-user",
+        "login",
         "login"
     ],
     methods:{
@@ -408,6 +411,7 @@ export default {
                 // console.log(`$("#input-value-date1").val()`)
                 // console.log($("#input-value-date1").val())
                 this.ptitle3 = this.language == 'pt-br' ? 'Descrição' : 'Description'
+                setTimeout(() => { document.getElementById('modal-input3').value = ''; }, 10);
                 this.ptitle = ''
                 this.ptitle2 = ''
             }
@@ -462,22 +466,24 @@ export default {
                     break;
                 case 'Sobre voce':
                     //document.getElementById('resume').textContent = document.getElementById('modal-input').value
-                    this.userData.resume = document.getElementById('modal-input').value;
+                    this.userData.resume = this.resumeText;
                     this.updateUser();
                     this.cancelar();
                     break;
                 case 'Write about you':
                     //document.getElementById('resume').textContent = document.getElementById('modal-input').value
-                    this.userData.resume = document.getElementById('modal-input').value;
+                    this.userData.resume = this.resumeText;
                     this.updateUser();
                     this.cancelar();
                     break;
                 case 'Descrição':
                     // sobre experiencia de trabalho
+                    console.log("descricao job")
                     this.adicionarJobs()
                     this.cancelar();
                     break;
                 case 'Description':
+                    console.log("description job")
                     this.adicionarJobs()
                     this.cancelar();
                     break;
@@ -534,11 +540,13 @@ export default {
             this.updateUser()
         },
         adicionarJobs(){
-            //! Here I put the last modal text area content, the job desciption
-            this.userData.userExperiences[this.currentJobId].setDescription($("#modal-input3").val())
+            console.log("add job")
+            const newJob = this.userData.userExperiences[this.currentJobId];
+            newJob.setDescription($("#modal-input3").val());
             this.updateUser();
         },
         updateUser(){
+            console.log("update user")
             this.$emit('update-user', this.userData)
         },
         adicionarEndereco(){

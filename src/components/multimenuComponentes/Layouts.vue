@@ -1,15 +1,15 @@
 <template>
 
     <div>
-        <p class="tside" @click="openTemplates">TEMPLATES DE EDIÇÃO</p>
+        <p class="tside" @click="openLayouts">TEMPLATES</p>
     </div>
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
-    <div class="dropdown-templates-edit" v-if="isOpen">
+    <div class="dropdown-templates-layout" v-if="isOpen">
         <div class="closeDiv" style="margin-top: 50px;" @click="closeDiv()">X</div>
-        <h3 class="dropdown-title">{{ this.language.includes("en") ? "Choose a template" : "Escolha um template"}}</h3>
-        <TemplateChooser
+        <h3 class="dropdown-title">{{ this.language.includes("en") ? "Choose a layout" : "Escolha um layout"}}</h3>
+        <LayoutChooser
             :template="template"
-            @change-template="$emit('change-template', $event)"
+            @change-layout="$emit('change-layout', $event)"
         />
     </div>
 
@@ -18,17 +18,17 @@
 <script>
 
 import $ from 'jquery'
-import TemplateChooser from './TemplateChooser.vue'
+import LayoutChooser from './LayoutChooser.vue'
 
 export default {
-    name: 'Templates',
-    emits:['change-template'],
+    name: 'Layouts',
+    emits:['change-layout'],
     props:{
         template: Number,
         language: String
     },
     components: {
-        TemplateChooser
+        LayoutChooser
     },
     data() {
         return {
@@ -44,7 +44,7 @@ export default {
             $(".shapes").css({"display": "none"});
             this.isOpen = false;
         },
-        openTemplates() {
+        openLayouts() {
             this.closeAll();
             this.isOpen = true;
         },
@@ -58,7 +58,7 @@ export default {
 <style scoped>
 @media screen and (max-width: 768px) {
     /* define no modelo mobile o tamanhom da janela de seleção de templetes */
-    .dropdown-templates-edit {
+    .dropdown-templates-layout {
         position: fixed;
         top: 0% !important;
         left: 0 !important;
@@ -96,11 +96,11 @@ export default {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.dropdown-templates-edit {
+.dropdown-templates-layout {
   position: fixed;
-  top: 50%;
+  top: 150px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   /* width: 80%; */
   max-width: 500px;
   max-height: 80vh;
@@ -152,12 +152,6 @@ export default {
   margin-bottom: 20px;
   text-align: center;
   color: #333;
-}
-
-@media screen and (min-width: 1981px) {
-  .dropdown-templates-edit {
-    top: 75%;
-  }
 }
 
 </style>

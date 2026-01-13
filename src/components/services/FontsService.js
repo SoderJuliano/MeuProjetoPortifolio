@@ -68,61 +68,61 @@ export function
     }else{
         switch(p.target.textContent){
             case 'Oswald':
-                $(".main")[0].style.fontFamily = "'Oswald', sans-serif"
+                $(".main, .side, #template, .template").css("font-family", "'Oswald', sans-serif");
                 emit('font-changed', 'Oswald')
                 break
             case 'Zen Loop':
-                $(".main")[0].style.fontFamily = "'Zen Loop', cursive"
-                $(".main")[0].style.fontWeight = "bold";
+                $(".main, .side, #template, .template").css("font-family", "'Zen Loop', cursive");
+                $(".main, .side, #template, .template").css("font-weight", "bold");
                 emit('font-changed', 'Zen Loop')
                 break
             case 'Fuggles':
-                $(".main")[0].style.fontFamily = "'Fuggles', cursive"
-                $(".main")[0].style.fontWeight = "bold";
+                $(".main, .side, #template, .template").css("font-family", "'Fuggles', cursive");
+                $(".main, .side, #template, .template").css("font-weight", "bold");
                 emit('font-changed', 'Fuggles')
                 break
             case 'STIX Two Math':
-                $(".main")[0].style.fontFamily = "'STIX Two Math', serif"
+                $(".main, .side, #template, .template").css("font-family", "'STIX Two Math', serif");
                 emit('font-changed', "'STIX Two Math', serif")
                 break
             case 'Hina Mincho':
-                $(".main")[0].style.fontFamily = "'Hina Mincho', serif"
+                $(".main, .side, #template, .template").css("font-family", "'Hina Mincho', serif");
                 emit('font-changed', 'Hina Mincho')
                 break
             case 'Inconsolata':
-                $(".main")[0].style.fontFamily = "'Inconsolata', monospace"
+                $(".main, .side, #template, .template").css("font-family", "'Inconsolata', monospace");
                 emit('font-changed', 'Inconsolata')
                 break
             case 'Kaisei Decol':
-                $(".main")[0].style.fontFamily = "'Kaisei Decol', serif"
+                $(".main, .side, #template, .template").css("font-family", "'Kaisei Decol', serif");
                 emit('font-changed', 'Kaisei Decol')
                 break
             case 'Teko':
-                $(".main")[0].style.fontFamily = "'Teko', sans-serif"
+                $(".main, .side, #template, .template").css("font-family", "'Teko', sans-serif");
                 emit('font-changed', 'Teko')
                 break
             case 'Crimson':
-                $(".main")[0].style.fontFamily = "'Crimson Text', serif"
+                $(".main, .side, #template, .template").css("font-family", "'Crimson Text', serif");
                 emit('font-changed', 'Crimson Text')
                 break
             case 'Dongle':
-                $(".main")[0].style.fontFamily = "'Dongle', sans-serif"
+                $(".main, .side, #template, .template").css("font-family", "'Dongle', sans-serif");
                 emit('font-changed', 'Dongle')
                 break
             case 'Mochiy':
-                $(".main")[0].style.fontFamily = "'Mochiy Pop One', sans-serif"
+                $(".main, .side, #template, .template").css("font-family", "'Mochiy Pop One', sans-serif");
                 emit('font-changed', 'Mochiy Pop One')
                 break
             case 'Roboto':
-                $(".main")[0].style.fontFamily = "'Roboto Mono', monospace"
+                $(".main, .side, #template, .template").css("font-family", "'Roboto Mono', monospace");
                 emit('font-changed', 'Roboto Mono')
                 break
             case 'verdana':
-                $(".main")[0].style.fontFamily = "verdana"
+                $(".main, .side, #template, .template").css("font-family", "verdana");
                 emit('font-changed', 'verdana')
                 break
             case 'Courier New':
-                $(".main")[0].style.fontFamily = "'Courier New'"
+                $(".main, .side, #template, .template").css("font-family", "'Courier New'");
                 emit('font-changed', 'Courier New')
                 break
         }

@@ -15,26 +15,28 @@
 import $ from 'jquery';
 
 export default {
-    name: "TemplateChooser",
+    name: "LayoutChooser",
     props: {
         template: Number
     },
-    emits: ['change-template'],
+    emits: ['change-layout'],
     data() {
         return {
             templates: [
-                { id: 1, name: 'Style 1', image: require('../../assets/templatesImg/template1.png') },
-                { id: 2, name: 'Style 2', image: require('../../assets/templatesImg/template2.png') },
-                { id: 3, name: 'Normal', image: require('../../assets/templatesImg/templete3.png') },
-                { id: 4, name: 'Normal 2', image: require('../../assets/templatesImg/template4.png') },
-                ]
+                { id: 5, name: 'Modern', image: require('../../../new-template.png') },
+                { id: 6, name: 'Code CV', image: require('../../assets/templatesImg/code_cv.png') },
+                { id: 7, name: 'Classic Inverted', image: require('../../assets/templatesImg/template_estilo_direita.png') },
+                { id: 8, name: 'Professor', image: require('../../assets/templatesImg/canva-currículo-professor-branco-azul-marrom-e-preto-uMRJCzdeup8.png') }
+            ]
         }
     },
     methods: {
         select(templateId) {
-            this.$emit('change-template', templateId);
-            $(".closeDiv").click();
-            $(".navbar__toggle").click();
+            this.$emit('change-layout', templateId);
+            if (window.innerWidth < 768) {
+                $(".closeDiv").click();
+                $(".navbar__toggle").click();
+            }
         },
         isSelected(templateId) {
             return this.template === templateId;

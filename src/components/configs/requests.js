@@ -48,11 +48,11 @@ export function getDragoniteMesseges(key) {
 
 // Criar notificação
 export function setNewNotification(data) {
-    axios.defaults.baseURL = 'https://abra-api.top';
-    return axios.post('/notifications', data).then((response) => {
-        // console.log('chamada POST executada');
-        // console.log(response.data);
-    });
+  axios.defaults.baseURL = 'https://abra-api.top';
+  return axios.post('/notifications', data).then((response) => {
+    // console.log('chamada POST executada');
+    // console.log(response.data);
+  });
 }
 
 // Primeiro login
@@ -60,7 +60,7 @@ export function setNewNotification(data) {
 export function saveLogin(email, password, userId, language) {
   const login = {
     "email": email,
-    "password":  password,
+    "password": password,
     "userId": userId,
     "language": language
   }
@@ -81,7 +81,7 @@ export function saveLogin(email, password, userId, language) {
 export function loginUser(email, userId, password, language) {
   const login = {
     "email": email,
-    "password":  password,
+    "password": password,
     // "userId": userId,
     "language": language
   }
@@ -112,7 +112,7 @@ export function saveUserInfosInDataBase(user, newUser, language) {
     } else if (Array.isArray(user.contact.email)) {
       emails = emails.concat(user.contact.email.filter(email => typeof email === 'string'));
     }
-  }else {
+  } else {
     return;
   }
   if (user.contact && user.contact.phone !== null) {
@@ -123,63 +123,63 @@ export function saveUserInfosInDataBase(user, newUser, language) {
     }
   }
 
-    let data = {
-      "name": user.name,
-      "profession": user.profession,
-      "resume": user.resume,
-      "competence": user.competence,
-      "social": user?.social,
-      "grade": user.grade,
-      "ability": user.ability,
-      "avatarImg": user.avatarImg,
-      "realImg": user.realImg,
-      "contact": {
-        "email": emails,
-        "phone": phoneNumbers,
-        "adressObject": {
-          "country": user?.contact?.adressObject?.country,
-          "state": user?.contact?.adressObject?.state,
-          "city": user?.contact?.adressObject?.city,
-          "street": user?.contact?.adressObject?.street,
-          "number": user?.contact?.adressObject?.number,
-          "district": user?.contact?.adressObject?.district
-        },
-        "address": user?.contact?.address ? user?.contact?.address : null,
+  let data = {
+    "name": user.name,
+    "profession": user.profession,
+    "resume": user.resume,
+    "competence": user.competence,
+    "social": user?.social,
+    "grade": user.grade,
+    "ability": user.ability,
+    "avatarImg": user.avatarImg,
+    "realImg": user.realImg,
+    "contact": {
+      "email": emails,
+      "phone": phoneNumbers,
+      "adressObject": {
+        "country": user?.contact?.adressObject?.country,
+        "state": user?.contact?.adressObject?.state,
+        "city": user?.contact?.adressObject?.city,
+        "street": user?.contact?.adressObject?.street,
+        "number": user?.contact?.adressObject?.number,
+        "district": user?.contact?.adressObject?.district
       },
-      "userExperiences": user?.userExperiences,
-      "language": language,
-      "spokenLanguages": user?.spokenLanguages,
-      "otherInfos": user?.otherInfos,
-      "otherExperiencies": user?.otherExperiencies
-    }
+      "address": user?.contact?.address ? user?.contact?.address : null,
+    },
+    "userExperiences": user?.userExperiences,
+    "language": language,
+    "spokenLanguages": user?.spokenLanguages,
+    "otherInfos": user?.otherInfos,
+    "otherExperiencies": user?.otherExperiencies
+  }
 
-    const headers = {
-      Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
-      'Content-Type': 'application/json',
-    };
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+  };
 
-    if(newUser) {
-      return axios.post(`${apiUrl}/user`, data, { headers }).then((response) => {
-        // console.log('chamada POST executada');
-        // console.log(response.data);
-        return response;
-      }).catch(error => {
-          // console.log('chamada POST executada');
-          // console.log(error);
-          return error.response;
-      });
-    } else {
-      data._id = user.id;
-      return axios.put(`${apiUrl}/user`, data, { headers }).then((response) => {
-        // console.log('chamada PUT executada');
-        // console.log(response.data);
-        return response;
-      }).catch(error => {
-          // console.log('chamada PUT executada');
-          // console.log(error);
-          return error.response;
-      });
-    }
+  if (newUser) {
+    return axios.post(`${apiUrl}/user`, data, { headers }).then((response) => {
+      // console.log('chamada POST executada');
+      // console.log(response.data);
+      return response;
+    }).catch(error => {
+      // console.log('chamada POST executada');
+      // console.log(error);
+      return error.response;
+    });
+  } else {
+    data._id = user.id;
+    return axios.put(`${apiUrl}/user`, data, { headers }).then((response) => {
+      // console.log('chamada PUT executada');
+      // console.log(response.data);
+      return response;
+    }).catch(error => {
+      // console.log('chamada PUT executada');
+      // console.log(error);
+      return error.response;
+    });
+  }
 }
 
 
@@ -205,9 +205,9 @@ export function updateUser(name, email, language) {
     // console.log(response.data);
     return response;
   }).catch(error => {
-      // console.log('chamada PATCH executada');
-      // console.log(error);
-      return error.response;
+    // console.log('chamada PATCH executada');
+    // console.log(error);
+    return error.response;
   });
 }
 
@@ -252,10 +252,10 @@ export function activateAccount(id, token, email, language) {
   };
 
   const data = {
-    "language" : language
+    "language": language
   }
 
-// /activate/{id}/{code}
+  // /activate/{id}/{code}
   return axios.patch(`${apiUrl}/user/activate/${id}/${token}/${email}`, data, { headers }).then((response) => {
     return response;
   }).catch(error => {
@@ -397,13 +397,13 @@ export async function improveText(data) {
   const endpoint = `${apiUrl}/improve-text`;
 
   return await axios.post(endpoint, body, { headers })
-  .then((response) => {
-    console.log('improveText', response);
-    return response;
-  }).catch(error => {
-    console.error('Erro durante chamada IA', error);
-    throw error;
-  });
+    .then((response) => {
+      console.log('improveText', response);
+      return response;
+    }).catch(error => {
+      console.error('Erro durante chamada IA', error);
+      throw error;
+    });
 }
 
 export async function improveTextLlama(data) {
@@ -415,15 +415,15 @@ export async function improveTextLlama(data) {
 
   let instructions = null;
 
-  if(!data.customPrompt) {
-    instructions = data?.language?.includes("pt-br") 
-    ? "Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
-    : "Please improve the folowing text, no explanation, no coments, improved text only: ";
-    instructions = instructions+data.text;
-  }else {
+  if (!data.customPrompt) {
+    instructions = data?.language?.includes("pt-br")
+      ? "Oi. Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+      : "Hi, Please improve the folowing text, no explanation, no coments, improved text only: ";
+    instructions = instructions + data.text;
+  } else {
     instructions = data.customPrompt;
   }
-  
+
   const ip = await getIp();
 
   const body = {
@@ -435,6 +435,44 @@ export async function improveTextLlama(data) {
   }
 
   const endpoint = `${apiUrl}/llama3`;
+
+  return await axios.post(endpoint, body, { headers }).then((response) => {
+    return response;
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
+    throw error;
+  });
+}
+
+export async function improveTextLlamaTiny(data) {
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  let instructions = null;
+
+  if (!data.customPrompt) {
+    instructions = data?.language?.includes("pt-br")
+      ? "Oi. Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+      : "Hi, Please improve the folowing text, no explanation, no coments, improved text only: ";
+    instructions = instructions + data.text;
+  } else {
+    instructions = data.customPrompt;
+  }
+
+  const ip = await getIp();
+
+  const body = {
+    newPrompt: instructions,
+    ip: ip,
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  const endpoint = `${apiUrl}/llamatiny`;
 
   return await axios.post(endpoint, body, { headers }).then((response) => {
     return response;
@@ -522,7 +560,7 @@ export async function resendConfirmationAccEmail(email, language) {
     'Content-Type': 'application/json',
   };
 
-  return axios.post(`${apiUrl}/user/resendConfirmationAccEmail/${encodedEmail}/${language}`, 
+  return axios.post(`${apiUrl}/user/resendConfirmationAccEmail/${encodedEmail}/${language}`,
     null, { headers, timeout: 10000 })
     .then((response) => {
       return response;
@@ -551,11 +589,64 @@ export async function generatePDF(user, configs) {
     timeout: 10000,
     responseType: 'blob', // <-- ESSENCIAL!
   })
-  .then((response) => {
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error('Erro durante geração do pdf no backend: ', error);
+      throw error;
+    });
+}
+
+export async function improveTextGemini(data) {
+
+  console.log("Hit gemini call for backend");
+
+  const headers = {
+    Authorization: 'Bearer Y3VzdG9tY3ZvbmxpbmU=',
+    'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
+  };
+
+  const body = {
+    newPrompt: getGeminiInstructions(data),
+    ip: await getIp(),
+    email: data.email,
+    agent: false,
+    language: data.language.includes("pt-br") ? "PORTUGUESE" : "ENGLISH"
+  }
+
+  const endpoint = `${apiUrl}/gemini`;
+
+  return await axios.post(endpoint, body, { headers }).then((response) => {
     return response;
-  })
-  .catch((error) => {
-    console.error('Erro durante geração do pdf no backend: ', error);
+  }).catch(error => {
+    console.error('Erro durante chamada IA', error);
     throw error;
   });
 }
+
+function getGeminiInstructions(data) {
+
+
+  console.log("Got instructions to IA")
+
+  const shortPhrase = data.text.length < 100;
+
+  if (shortPhrase && !data.customPrompt) {
+    let instruction = data?.language?.includes("pt-br")
+      ? "Olá. Forneça uma frase melhor pra substituir esta frase, que eu possa usar no meu curriculo. Devolva apenas o texto melhorado, sem comentários ou explicações, quero que responda apenas com a frase melhor que esta: "
+      : "Hello. Gimme a better phrase to put on my cv, respond me only with the better version of the following sentence, do not put explanations or comments on the response, gimme a better phrase of this: ";
+    return instruction + data.text;
+  }
+
+  if (!data.customPrompt) {
+    let instruction = data?.language?.includes("pt-br")
+      ? "Oi. Melhore este texto e retorne **exclusivamente** o resultado final, sem nenhum texto adicional: "
+      : "Hi. Please improve the folowing text, no explanation, no coments, improved text only: ";
+    return instruction + data.text;
+  } else {
+    return data.customPrompt;
+  }
+}
+
