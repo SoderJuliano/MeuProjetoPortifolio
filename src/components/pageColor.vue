@@ -1,9 +1,6 @@
 <template>
     <div class="main-color-picker">
         <button class="main-color-trigger" @click="openPanel()">
-            <svg class="main-color-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
-            </svg>
             {{ language.includes("en") ? "MAIN COLOR" : "COR PRINCIPAL" }}
             <span class="color-preview" :style="{backgroundColor: selectedColor ? '#' + selectedColor.replace('#', '') : ''}"></span>
         </button>
@@ -149,37 +146,17 @@ export default {
 .main-color-trigger {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    background-color: transparent;
-    border: none;
+    gap: 10px;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
     color: #333;
-    transition: all 0.3s ease;
-    width: 100%;
-    text-align: left;
-}
-
-.main-color-trigger:hover {
-    background: rgba(110, 142, 251, 0.1);
-    transform: translateX(3px);
-}
-
-.main-color-trigger:active {
-    transform: translateX(3px) scale(0.98);
-}
-
-.main-color-icon {
-    flex-shrink: 0;
-    color: #6e8efb;
-    transition: all 0.3s ease;
-}
-
-.main-color-trigger:hover .main-color-icon {
-    color: #5a7ae8;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .color-preview {

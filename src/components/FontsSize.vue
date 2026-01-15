@@ -1,17 +1,8 @@
 <template>
     <div class="font-size-control">
-        <div class="font-size-trigger" @click="showMenu()">
-            <div class="font-size-trigger__content">
-                <svg class="font-size-trigger__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="4 7 4 4 20 4 20 7"></polyline>
-                    <line x1="9" y1="20" x2="15" y2="20"></line>
-                    <line x1="12" y1="4" x2="12" y2="20"></line>
-                </svg>
-                <p class="tside">
-                    {{ language.includes("en") ? "FONT SIZE" : "TAMANHO DA FONTE" }}
-                </p>
-            </div>
-        </div>
+        <p class="tside" @click="showMenu()">
+            {{ language.includes("en") ? "FONT SIZE" : "TAMANHO DA FONTE" }}
+        </p>
         
         <div class="font-size-panel" v-show="isOpen" @click.self="closeDiv">
             <div class="panel-content">
@@ -103,38 +94,6 @@ export default {
 <style scoped>
 .font-size-control {
     /* position: relative; */
-}
-
-.font-size-trigger {
-    cursor: pointer;
-}
-
-.font-size-trigger__content {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-.font-size-trigger__content:hover {
-    background: rgba(110, 142, 251, 0.1);
-    transform: translateX(3px);
-}
-
-.font-size-trigger__content:active {
-    transform: translateX(3px) scale(0.98);
-}
-
-.font-size-trigger__icon {
-    flex-shrink: 0;
-    color: #6e8efb;
-    transition: all 0.3s ease;
-}
-
-.font-size-trigger__content:hover .font-size-trigger__icon {
-    color: #5a7ae8;
 }
 
 .font-size-toggle {

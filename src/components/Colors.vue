@@ -1,13 +1,6 @@
 <template>
     <div class="color-picker-container">
         <button class="color-picker-trigger" @click="openContainer()">
-            <svg class="color-picker-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="13.5" cy="6.5" r=".5"></circle>
-                <circle cx="17.5" cy="10.5" r=".5"></circle>
-                <circle cx="8.5" cy="7.5" r=".5"></circle>
-                <circle cx="6.5" cy="12.5" r=".5"></circle>
-                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
-            </svg>
             {{ language.includes("en") ? "Secondary Color" : "Cor Lateral" }}
             <span class="color-indicator" :style="{backgroundColor: selectedColor}"></span>
         </button>
@@ -117,36 +110,19 @@ export default {
 .color-picker-trigger {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    background-color: transparent;
-    border: none;
-    border-radius: 8px;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
     color: #333;
-    transition: all 0.3s ease;
-    width: 100%;
-    text-align: left;
+    transition: all 0.2s ease;
 }
 
 .color-picker-trigger:hover {
-    background: rgba(110, 142, 251, 0.1);
-    transform: translateX(3px);
-}
-
-.color-picker-trigger:active {
-    transform: translateX(3px) scale(0.98);
-}
-
-.color-picker-icon {
-    flex-shrink: 0;
-    color: #6e8efb;
-    transition: all 0.3s ease;
-}
-
-.color-picker-trigger:hover .color-picker-icon {
-    color: #5a7ae8;
+    background-color: #e9e9e9;
 }
 
 .color-indicator {

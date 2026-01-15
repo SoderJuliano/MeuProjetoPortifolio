@@ -209,6 +209,9 @@ export default {
   justify-content: center;
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0;
   border-radius: 50%;
   background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
   color: white;
@@ -216,19 +219,20 @@ export default {
   cursor: pointer;
   font-size: 24px;
   font-weight: bold;
+  line-height: 36px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .closeFontsDiv:hover {
-  background: linear-gradient(135deg, #ee5a6f, #ff6b6b);
-  transform: scale(1.1) rotate(90deg);
+  transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
 }
 
 .closeFontsDiv:active {
-  transform: scale(0.95) rotate(90deg);
+  transform: scale(0.95);
 }
 
 .dropdown-scroll {
@@ -469,18 +473,83 @@ export default {
   border-radius: 12px;
 }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  top: 20%;
-  width: 100%;
-  z-index: 1000;
-  padding: 20px;
-  border: 2px solid #e0e0e0;
-  background-color: white;
-  margin-top: -15px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+/* Desktop - Grid de 3 colunas */
+@media screen and (min-width: 769px) {
+  .dropdown-content {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  
+  .dropdown-overlay {
+    display: none !important;
+  }
+  
+  .dropdown-modal {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 600px;
+    max-height: 500px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 2px solid #e0e0e0;
+    z-index: 1000;
+    margin-top: 10px;
+  }
+  
+  .dropdown-header {
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .dropdown-scroll {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 5px;
+  }
+  
+  .row {
+    padding: 16px 12px;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 0;
+    width: 100%;
+  }
+  
+  .row:hover {
+    background-color: #e9ecef;
+    border-color: #6e8efb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(110, 142, 251, 0.2);
+  }
+  
+  .row:active {
+    transform: translateY(0) scale(0.98);
+  }
+  
+  .row p {
+    margin: 0;
+    font-size: 15px;
+    text-align: center;
+    color: #2c3e50;
+  }
 }
 
 /* Animações */
