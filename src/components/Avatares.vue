@@ -1,8 +1,16 @@
 <template>
     <div class="avatares-container">
-        <p class="tside" @click="openContainer()">
-            {{ this.language.includes("en") ? "CHOOSE AN AVATAR" : "ESCOLHA UM AVATAR"}}
-        </p>
+        <div class="avatares-trigger" @click="openContainer()">
+            <div class="avatares-trigger__content">
+                <svg class="avatares-trigger__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <p class="tside">
+                    {{ this.language.includes("en") ? "CHOOSE AN AVATAR" : "ESCOLHA UM AVATAR"}}
+                </p>
+            </div>
+        </div>
         <div class="avatares-subcontainer">
             <div class="closeDiv" @click="closeDiv()">X</div>
             <div class="avatar-line">
@@ -158,6 +166,39 @@ export default {
 }
 </script>
 <style scoped>
+
+.avatares-trigger {
+    cursor: pointer;
+}
+
+.avatares-trigger__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.avatares-trigger__content:hover {
+    background: rgba(110, 142, 251, 0.1);
+    transform: translateX(3px);
+}
+
+.avatares-trigger__content:active {
+    transform: translateX(3px) scale(0.98);
+}
+
+.avatares-trigger__icon {
+    flex-shrink: 0;
+    color: #6e8efb;
+    transition: all 0.3s ease;
+}
+
+.avatares-trigger__content:hover .avatares-trigger__icon {
+    color: #5a7ae8;
+}
+
 .avatar-line{
     display: flex;
     margin: 10px;

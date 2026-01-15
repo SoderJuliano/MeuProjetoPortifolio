@@ -1,11 +1,24 @@
 <template>
 
-    <div>
-        <p class="tside" @click="openLayouts">TEMPLATES</p>
+    <div class="layout-trigger" @click="openLayouts">
+        <div class="layout-trigger__content">
+            <svg class="layout-trigger__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <p class="tside">{{ this.language.includes("en") ? "LAYOUTS" : "TEMPLATES" }}</p>
+        </div>
     </div>
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
     <div class="dropdown-templates-layout" v-if="isOpen">
-        <div class="closeDiv" style="margin-top: 50px;" @click="closeDiv()">X</div>
+        <button class="closeDiv" @click="closeDiv()" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
         <h3 class="dropdown-title">{{ this.language.includes("en") ? "Choose a layout" : "Escolha um layout"}}</h3>
         <LayoutChooser
             :template="template"
@@ -56,6 +69,39 @@ export default {
 </script>
 
 <style scoped>
+
+.layout-trigger {
+    cursor: pointer;
+}
+
+.layout-trigger__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.layout-trigger__content:hover {
+    background: rgba(110, 142, 251, 0.1);
+    transform: translateX(3px);
+}
+
+.layout-trigger__content:active {
+    transform: translateX(3px) scale(0.98);
+}
+
+.layout-trigger__icon {
+    flex-shrink: 0;
+    color: #6e8efb;
+    transition: all 0.3s ease;
+}
+
+.layout-trigger__content:hover .layout-trigger__icon {
+    color: #5a7ae8;
+}
+
 @media screen and (max-width: 768px) {
     /* define no modelo mobile o tamanhom da janela de seleção de templetes */
     .dropdown-templates-layout {
@@ -77,23 +123,34 @@ export default {
 
 .closeDiv {
   position: absolute;
-  top: 0px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   cursor: pointer;
-  font-weight: bold;
-  font-size: 1.2rem;
-  padding: 10px;
+  border: none;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s;
-  width: 30px;
-  height: 20px;
-  text-align: center;
-  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
 }
 
 .closeDiv:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background: rgba(239, 68, 68, 0.2);
+  transform: scale(1.1) rotate(90deg);
+}
+
+.closeDiv:active {
+  transform: scale(0.95) rotate(90deg);
+}
+
+.closeDiv svg {
+  width: 20px;
+  height: 20px;
 }
 
 .dropdown-templates-layout {

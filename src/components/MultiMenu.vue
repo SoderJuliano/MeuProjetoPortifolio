@@ -58,42 +58,92 @@
             />
             <p class="multimenu-line"></p>
         </div>
-        <div @click="update(this.user)" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "SAVE" : "SALVAR" }}</p>
+        <div class="option" @click="update(this.user)" v-if="mobileOptions">
+            <div class="option__content">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "SAVE" : "SALVAR" }}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div id="accDelete" @click="deleteAccount" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "DELETE MY ACCOUNT" : "DELETAR MINHA CONTA"}}</p>
+        <div class="option" id="accDelete" @click="deleteAccount" v-if="mobileOptions">
+            <div class="option__content option__content--danger">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "DELETE MY ACCOUNT" : "DELETAR MINHA CONTA"}}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div @click="insertDeleteToken" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "INSERT DELETE CONFIRMATION TOKEN" : "INSERIR TOKEN DE CONFIRMAÇÃO PARA DELEÇÃO"}}</p>
+        <div class="option" @click="insertDeleteToken" v-if="mobileOptions">
+            <div class="option__content">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "INSERT DELETE TOKEN" : "INSERIR TOKEN DE DELEÇÃO"}}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div v-on:click="(this.$emit('reset-password'), this.menuDown())" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "RECOVER PASSWORD" : "RECUPERAR SENHA" }}</p>
+        <div class="option" v-on:click="(this.$emit('reset-password'), this.menuDown())" v-if="mobileOptions">
+            <div class="option__content">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "RECOVER PASSWORD" : "RECUPERAR SENHA" }}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div v-on:click="this.$emit('ativationAccount')" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "INSERT ACTIVATION TOKEN" : "INSERIR TOKEN DE ATIVAÇÃO DA CONTA" }}</p>
+        <div class="option" v-on:click="this.$emit('ativationAccount')" v-if="mobileOptions">
+            <div class="option__content">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "ACTIVATE ACCOUNT" : "ATIVAR CONTA" }}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div v-on:click="deleteLocalData()" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "DELETE ALL MY DATA FROM THIS BROWSER" : "APAGAR TODOS OS MEUS DADOS DO NAVEGADOR" }}</p>
+        <div class="option" v-on:click="deleteLocalData()" v-if="mobileOptions">
+            <div class="option__content option__content--warning">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                    <line x1="18" y1="9" x2="12" y2="15"></line>
+                    <line x1="12" y1="9" x2="18" y2="15"></line>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "DELETE BROWSER DATA" : "APAGAR DADOS DO NAVEGADOR" }}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div v-on:click="share()" v-if="mobileOptions">
-            <p class="tside">{{ this.isEnglish() ? "SHARE" : "COMPARTILHAR" }}</p>
+        <div class="option" v-on:click="share()" v-if="mobileOptions">
+            <div class="option__content">
+                <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                <p class="tside">{{ this.isEnglish() ? "SHARE" : "COMPARTILHAR" }}</p>
+            </div>
             <p class="multimenu-line"></p>
         </div>
-        <div v-if="!user.premium" class="option">
-            <p class="tside">
-                <a
-                    href="/choose-your-plan"
-                    class="tside">
-                    {{ this.isEnglish() ? "PRMEIUM ACC 🏆" : "CONTA PREMIUM 🏆"  }}
-                </a>
-            </p>
+        <div v-if="!user.premium" class="option option--premium">
+            <a href="/choose-your-plan" class="option__premium-link">
+                <div class="option__content option__content--premium">
+                    <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+                    </svg>
+                    <p class="tside">{{ this.isEnglish() ? "PREMIUM ACCOUNT 🏆" : "CONTA PREMIUM 🏆"  }}</p>
+                </div>
+            </a>
             <p class="multimenu-line"></p>
         </div>
         <GlobalModal
@@ -338,6 +388,139 @@ a {
 /* The first child has a different padding for some reason */
 .multimenu-line.first {
     margin-top: 0px !important;
+}
+
+/* Enhanced option styles with icons */
+.option__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.option__content:hover {
+    background: rgba(110, 142, 251, 0.1);
+    transform: translateX(3px);
+}
+
+.option__content:active {
+    transform: translateX(3px) scale(0.98);
+}
+
+.option__icon {
+    flex-shrink: 0;
+    color: #6e8efb;
+    transition: all 0.3s ease;
+}
+
+.option__content:hover .option__icon {
+    color: #5a7ae8;
+}
+
+/* Danger actions (delete account) */
+.option__content--danger {
+    border-left: 3px solid transparent;
+}
+
+.option__content--danger:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-left-color: #ef4444;
+}
+
+.option__content--danger .option__icon {
+    color: #ef4444;
+}
+
+.option__content--danger:hover .option__icon {
+    color: #dc2626;
+}
+
+/* Warning actions (delete browser data) */
+.option__content--warning {
+    border-left: 3px solid transparent;
+}
+
+.option__content--warning:hover {
+    background: rgba(251, 146, 60, 0.1);
+    border-left-color: #fb923c;
+}
+
+.option__content--warning .option__icon {
+    color: #fb923c;
+}
+
+.option__content--warning:hover .option__icon {
+    color: #f97316;
+}
+
+/* Premium option */
+.option--premium {
+    margin-top: 10px;
+}
+
+.option__premium-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.option__content--premium {
+    background: linear-gradient(135deg, rgba(110, 142, 251, 0.1), rgba(167, 119, 227, 0.1));
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+}
+
+.option__content--premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    padding: 2px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.option__content--premium:hover {
+    background: linear-gradient(135deg, rgba(110, 142, 251, 0.2), rgba(167, 119, 227, 0.2));
+    transform: translateX(5px) scale(1.02);
+}
+
+.option__content--premium .option__icon {
+    color: #a777e3;
+    fill: #a777e3;
+}
+
+.option__content--premium:hover .option__icon {
+    color: #8b5cf6;
+    fill: #8b5cf6;
+    animation: sparkle 0.6s ease;
+}
+
+@keyframes sparkle {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2) rotate(10deg); }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .option__content {
+        padding: 12px;
+    }
+    
+    .option__icon {
+        width: 22px;
+        height: 22px;
+    }
 }
 
 /* The second element */
