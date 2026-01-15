@@ -168,6 +168,15 @@ export default {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     }
+    
+    /* Mobile devices - allow scrolling when keyboard appears */
+    @media screen and (max-width: 768px) {
+        .modal-login-template {
+            justify-content: flex-start;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+    }
     .inner-login-tempalte {
         flex-direction: column;
         display: flex;
@@ -181,38 +190,35 @@ export default {
         max-height: 90dvh;
         overflow-y: auto;
         margin: 20px;
+        flex-shrink: 0;
     }
 
     /* iPhone SE e telas pequenas */
-    @media screen and (max-width: 375px) and (max-height: 667px) {
-        .modal-login-template {
-            padding: 10px;
-            justify-content: flex-start;
-            padding-top: 20px;
+    @media screen and (max-width: 375px) {
+        .inner-login-tempalte {
+            width: 90%;
+            max-width: 340px;
+            padding: 15px;
+            margin: 10px auto;
+            max-height: none;
+            min-height: auto;
         }
         
-        .inner-login-tempalte {
-            width: 95%;
-            max-width: 350px;
-            padding: 15px;
-            margin: 10px;
-            max-height: 85dvh;
-            min-height: auto;
+        .modal-login-template {
+            padding: 20px 10px;
         }
     }
 
-    /* Ajuste específico para iPhone SE quando o teclado está visível */
-    @media screen and (max-width: 375px) and (max-height: 400px) {
-        .modal-login-template {
-            justify-content: flex-start;
-            padding-top: 10px;
+    /* Ajuste quando viewport height é reduzida (teclado visível) */
+    @media screen and (max-width: 375px) and (max-height: 500px) {
+        .inner-login-tempalte {
+            width: 95%;
+            padding: 10px 15px;
+            margin: 5px auto;
         }
         
-        .inner-login-tempalte {
-            width: 98%;
+        .modal-login-template {
             padding: 10px;
-            margin: 5px;
-            max-height: 95vh;
         }
     }
 

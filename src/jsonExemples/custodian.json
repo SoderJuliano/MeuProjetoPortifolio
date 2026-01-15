@@ -1,0 +1,208 @@
+{
+    "pt-br": {
+        "_id": "507f1f77bcf86cd799439011",
+        "name": "Carlos Alberto Santos",
+        "profession": "Auxiliar de Serviços Gerais",
+        "resume": "Profissional dedicado com mais de 8 anos de experiência em serviços de limpeza e manutenção predial. Comprometido com a qualidade do trabalho, pontualidade e organização. Experiência em ambientes corporativos, hospitalares e educacionais. Capacidade de trabalhar em equipe e seguir protocolos de segurança e higiene.",
+        "competence": [
+            "Limpeza e conservação de ambientes",
+            "Manutenção preventiva",
+            "Organização de espaços",
+            "Controle de materiais de limpeza",
+            "Trabalho em equipe",
+            "Pontualidade e comprometimento"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/carlos-santos"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Escola Estadual Dom Pedro II",
+                "course": "Ensino Fundamental Completo",
+                "startDate": "2005",
+                "endDate": "2013",
+                "description": "Conclusão do ensino fundamental com aproveitamento satisfatório."
+            },
+            {
+                "id": "grade2",
+                "institution": "SENAI - Serviço Nacional de Aprendizagem Industrial",
+                "course": "Curso de Segurança no Trabalho",
+                "startDate": "2016",
+                "endDate": "2016",
+                "description": "Curso profissionalizante sobre normas de segurança, uso de EPIs e prevenção de acidentes."
+            }
+        ],
+        "ability": "Expertise em técnicas de limpeza profissional, uso adequado de produtos químicos e equipamentos. Conhecimento em normas de segurança do trabalho e uso de EPIs. Habilidade em organização de estoques e controle de materiais.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["carlos.santos@email.com"],
+            "phone": ["+55 11 98765-4321", "+55 11 3456-7890"],
+            "address": "Rua das Flores, 234 - Vila Mariana - São Paulo/SP - CEP: 04567-890",
+            "adressObject": {
+                "country": "Brasil",
+                "state": "São Paulo",
+                "city": "São Paulo",
+                "street": "Rua das Flores",
+                "number": "234",
+                "district": "Vila Mariana"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Hospital Santa Casa de Misericórdia",
+                "description": "Responsável pela limpeza e higienização de enfermarias, corredores e áreas comuns. Seguimento rigoroso de protocolos de biossegurança hospitalar. Controle e reposição de materiais de higiene. Trabalho em equipe com profissionais da saúde.",
+                "dateHired": "03/2020",
+                "dateFired": "Atual",
+                "position": "Auxiliar de Serviços Gerais"
+            },
+            {
+                "id": "exp2",
+                "company": "Colégio Objetivo - Unidade Paulista",
+                "description": "Manutenção e limpeza de salas de aula, banheiros, pátios e áreas administrativas. Organização e controle de materiais de limpeza. Pequenos reparos e manutenção preventiva. Suporte em eventos escolares.",
+                "dateHired": "01/2017",
+                "dateFired": "02/2020",
+                "position": "Auxiliar de Limpeza"
+            },
+            {
+                "id": "exp3",
+                "company": "Edifício Comercial São Luis",
+                "description": "Limpeza de áreas comuns, garagem, elevadores e fachadas. Recolhimento e descarte adequado de resíduos. Auxílio na mudança de móveis e equipamentos. Controle de entrada e saída de visitantes.",
+                "dateHired": "06/2015",
+                "dateFired": "12/2016",
+                "position": "Zelador"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Nativo",
+                "details": "Português"
+            },
+            {
+                "level": "Básico",
+                "details": "Espanhol"
+            }
+        ],
+        "otherInfos": [
+            "Carteira Nacional de Habilitação categoria B",
+            "Disponibilidade para trabalho em turnos",
+            "Conhecimento em jardinagem básica",
+            "Curso de Primeiros Socorros"
+        ],
+        "otherExperiencies": {
+            "title": "Qualificações Adicionais",
+            "text": "Participação em treinamentos internos sobre gestão de resíduos e sustentabilidade. Experiência com máquinas de limpeza industrial (enceradeiras, lavadoras de piso). Conhecimento básico em pequenos reparos elétricos e hidráulicos."
+        },
+        "language": "pt-br",
+        "premium": false
+    },
+    "en-us": {
+        "_id": "507f1f77bcf86cd799439012",
+        "name": "Michael Johnson",
+        "profession": "Custodian / Maintenance Worker",
+        "resume": "Dedicated professional with over 8 years of experience in cleaning and building maintenance services. Committed to work quality, punctuality, and organization. Experience in corporate, healthcare, and educational environments. Ability to work in teams and follow safety and hygiene protocols.",
+        "competence": [
+            "Cleaning and facility maintenance",
+            "Preventive maintenance",
+            "Space organization",
+            "Cleaning supplies management",
+            "Team collaboration",
+            "Reliability and commitment"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/michael-johnson"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Lincoln High School",
+                "course": "High School Diploma",
+                "startDate": "2010",
+                "endDate": "2014",
+                "description": "Completed high school education with satisfactory performance."
+            },
+            {
+                "id": "grade2",
+                "institution": "Community College of Philadelphia",
+                "course": "Workplace Safety Certificate",
+                "startDate": "2016",
+                "endDate": "2016",
+                "description": "Professional course on safety standards, PPE usage, and accident prevention."
+            }
+        ],
+        "ability": "Expertise in professional cleaning techniques, proper use of chemical products and equipment. Knowledge of workplace safety standards and PPE usage. Skills in inventory organization and materials control.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["michael.johnson@email.com"],
+            "phone": ["+1 215-555-1234", "+1 215-555-5678"],
+            "address": "1234 Market Street, Apt 5B - Philadelphia, PA 19107",
+            "adressObject": {
+                "country": "United States",
+                "state": "Pennsylvania",
+                "city": "Philadelphia",
+                "street": "Market Street",
+                "number": "1234",
+                "district": "Center City"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Jefferson Hospital",
+                "description": "Responsible for cleaning and sanitizing patient rooms, hallways, and common areas. Strict adherence to hospital biosafety protocols. Control and replenishment of hygiene materials. Teamwork with healthcare professionals.",
+                "dateHired": "03/2020",
+                "dateFired": "Present",
+                "position": "Hospital Custodian"
+            },
+            {
+                "id": "exp2",
+                "company": "Philadelphia School District - Washington Elementary",
+                "description": "Maintenance and cleaning of classrooms, restrooms, playgrounds, and administrative areas. Organization and control of cleaning materials. Minor repairs and preventive maintenance. Support for school events.",
+                "dateHired": "01/2017",
+                "dateFired": "02/2020",
+                "position": "School Custodian"
+            },
+            {
+                "id": "exp3",
+                "company": "Liberty Place Office Building",
+                "description": "Cleaning of common areas, parking garage, elevators, and facades. Proper waste collection and disposal. Assistance with moving furniture and equipment. Visitor entry and exit control.",
+                "dateHired": "06/2015",
+                "dateFired": "12/2016",
+                "position": "Building Custodian"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Native",
+                "details": "English"
+            },
+            {
+                "level": "Basic",
+                "details": "Spanish"
+            }
+        ],
+        "otherInfos": [
+            "Valid Driver's License",
+            "Availability for shift work",
+            "Basic landscaping knowledge",
+            "First Aid Certified"
+        ],
+        "otherExperiencies": {
+            "title": "Additional Qualifications",
+            "text": "Participation in internal training on waste management and sustainability. Experience with industrial cleaning machines (floor buffers, scrubbers). Basic knowledge of minor electrical and plumbing repairs."
+        },
+        "language": "en-us",
+        "premium": false
+    }
+}

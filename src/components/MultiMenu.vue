@@ -58,10 +58,6 @@
             />
             <p class="multimenu-line"></p>
         </div>
-        <div v-if="mobileOptions" class="option">
-            <p class="tside" @click="$emit('login')" >LOGIN</p>
-            <p class="multimenu-line"></p>
-        </div>
         <div @click="update(this.user)" v-if="mobileOptions">
             <p class="tside">{{ this.isEnglish() ? "SAVE" : "SALVAR" }}</p>
             <p class="multimenu-line"></p>

@@ -1,0 +1,274 @@
+{
+    "pt-br": {
+        "_id": "507f1f77bcf86cd799439013",
+        "name": "Ana Paula Rodrigues",
+        "profession": "Engenheira de Software",
+        "resume": "Engenheira de Software com 6 anos de experiência no desenvolvimento de aplicações web e mobile escaláveis. Especializada em arquitetura de microsserviços, desenvolvimento full-stack e práticas de DevOps. Histórico comprovado na liderança de projetos técnicos, otimização de performance e entrega de soluções inovadoras. Apaixonada por código limpo, metodologias ágeis e aprendizado contínuo.",
+        "competence": [
+            "JavaScript/TypeScript",
+            "React.js e Next.js",
+            "Node.js e Express",
+            "Python e Django",
+            "AWS e Azure",
+            "Docker e Kubernetes",
+            "PostgreSQL e MongoDB",
+            "Git e CI/CD",
+            "Metodologias Ágeis (Scrum/Kanban)",
+            "Arquitetura de Microsserviços"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/ana-rodrigues-dev"
+            },
+            {
+                "type": "github",
+                "url": "https://github.com/anarodrigues"
+            },
+            {
+                "type": "portfolio",
+                "url": "https://anarodrigues.dev"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Universidade de São Paulo (USP)",
+                "course": "Bacharelado em Ciência da Computação",
+                "startDate": "2014",
+                "endDate": "2018",
+                "description": "Formação com ênfase em Engenharia de Software, Algoritmos e Estruturas de Dados. TCC sobre Otimização de Sistemas Distribuídos."
+            },
+            {
+                "id": "grade2",
+                "institution": "Alura",
+                "course": "Especialização em Arquitetura de Software",
+                "startDate": "2021",
+                "endDate": "2022",
+                "description": "Formação avançada em padrões de arquitetura, microsserviços, event-driven architecture e system design."
+            },
+            {
+                "id": "grade3",
+                "institution": "AWS",
+                "course": "AWS Certified Solutions Architect - Associate",
+                "startDate": "2022",
+                "endDate": "2022",
+                "description": "Certificação oficial da Amazon Web Services para arquitetura de soluções em nuvem."
+            }
+        ],
+        "ability": "Expertise em desenvolvimento full-stack com JavaScript/TypeScript, React e Node.js. Proficiência em design de APIs RESTful e GraphQL. Experiência sólida com bancos de dados relacionais e NoSQL. Conhecimento avançado em containerização, orquestração e práticas de DevOps. Habilidade em mentoria técnica e code review.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["ana.rodrigues@email.com", "ana.dev@gmail.com"],
+            "phone": ["+55 11 99876-5432"],
+            "address": "Rua dos Desenvolvedores, 1024 - Pinheiros - São Paulo/SP - CEP: 05402-001",
+            "adressObject": {
+                "country": "Brasil",
+                "state": "São Paulo",
+                "city": "São Paulo",
+                "street": "Rua dos Desenvolvedores",
+                "number": "1024",
+                "district": "Pinheiros"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Nubank",
+                "description": "Desenvolvimento de microserviços para a plataforma de investimentos utilizando Node.js e Kotlin. Implementação de features críticas que impactaram +2M de usuários. Liderança técnica de squad com 5 engenheiros. Redução de 40% no tempo de resposta das APIs através de otimizações e caching estratégico. Participação ativa em code reviews e definição de padrões de código.",
+                "dateHired": "06/2022",
+                "dateFired": "Atual",
+                "position": "Software Engineer III"
+            },
+            {
+                "id": "exp2",
+                "company": "Mercado Livre",
+                "description": "Desenvolvimento full-stack de funcionalidades para o marketplace usando React, Node.js e Java. Implementação de sistema de recomendações que aumentou conversão em 18%. Migração de monolito para arquitetura de microsserviços. Integração com sistemas legados e APIs de terceiros. Trabalho em equipe multidisciplinar com Product Managers e Designers.",
+                "dateHired": "03/2020",
+                "dateFired": "05/2022",
+                "position": "Software Engineer II"
+            },
+            {
+                "id": "exp3",
+                "company": "Conta Azul",
+                "description": "Desenvolvimento de features para plataforma de gestão empresarial usando React e Python/Django. Criação de componentes reutilizáveis e biblioteca interna de UI. Implementação de testes automatizados (Jest, Pytest) aumentando cobertura para 85%. Otimização de queries SQL que reduziram tempo de carregamento em 60%. Participação em cerimônias ágeis e planejamento de sprints.",
+                "dateHired": "01/2019",
+                "dateFired": "02/2020",
+                "position": "Software Engineer I"
+            },
+            {
+                "id": "exp4",
+                "company": "Startup Loggi",
+                "description": "Desenvolvimento de aplicações web para otimização de rotas de entrega. Stack: React, Redux, Node.js e MongoDB. Integração com APIs de mapas (Google Maps, Mapbox). Implementação de dashboards em tempo real para monitoramento de entregas. Trabalho em ambiente de alta velocidade e autonomia.",
+                "dateHired": "06/2018",
+                "dateFired": "12/2018",
+                "position": "Junior Software Developer"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Nativo",
+                "details": "Português"
+            },
+            {
+                "level": "Avançado",
+                "details": "Inglês - Fluente em leitura, escrita e conversação"
+            },
+            {
+                "level": "Intermediário",
+                "details": "Espanhol"
+            }
+        ],
+        "otherInfos": [
+            "Contribuidora open-source (projetos no GitHub com +500 stars)",
+            "Palestrante em eventos de tecnologia (Campus Party, TDC)",
+            "Mentora voluntária no programa Reprograma",
+            "Certificação AWS Solutions Architect Associate",
+            "Blog técnico com artigos sobre arquitetura e boas práticas"
+        ],
+        "otherExperiencies": {
+            "title": "Projetos e Conquistas",
+            "text": "Desenvolvimento de biblioteca open-source para validação de formulários React com +10k downloads mensais no NPM. Liderança na migração de infraestrutura on-premise para AWS, resultando em economia de 35% em custos. Implementação de pipeline de CI/CD que reduziu tempo de deploy de 2h para 15min. Palestrante no The Developers Conference 2023 sobre 'Microsserviços na Prática'. Certificada em Kubernetes (CKA) e Scrum Master (PSM I)."
+        },
+        "language": "pt-br",
+        "premium": false
+    },
+    "en-us": {
+        "_id": "507f1f77bcf86cd799439014",
+        "name": "Sarah Mitchell",
+        "profession": "Software Engineer",
+        "resume": "Software Engineer with 6 years of experience developing scalable web and mobile applications. Specialized in microservices architecture, full-stack development, and DevOps practices. Proven track record in leading technical projects, performance optimization, and delivering innovative solutions. Passionate about clean code, agile methodologies, and continuous learning.",
+        "competence": [
+            "JavaScript/TypeScript",
+            "React.js and Next.js",
+            "Node.js and Express",
+            "Python and Django",
+            "AWS and Azure",
+            "Docker and Kubernetes",
+            "PostgreSQL and MongoDB",
+            "Git and CI/CD",
+            "Agile Methodologies (Scrum/Kanban)",
+            "Microservices Architecture"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/sarah-mitchell-dev"
+            },
+            {
+                "type": "github",
+                "url": "https://github.com/sarahmitchell"
+            },
+            {
+                "type": "portfolio",
+                "url": "https://sarahmitchell.dev"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Massachusetts Institute of Technology (MIT)",
+                "course": "Bachelor of Science in Computer Science",
+                "startDate": "2014",
+                "endDate": "2018",
+                "description": "Degree with emphasis on Software Engineering, Algorithms, and Data Structures. Thesis on Distributed Systems Optimization."
+            },
+            {
+                "id": "grade2",
+                "institution": "Coursera - Stanford University",
+                "course": "Software Architecture Specialization",
+                "startDate": "2021",
+                "endDate": "2022",
+                "description": "Advanced training in architecture patterns, microservices, event-driven architecture, and system design."
+            },
+            {
+                "id": "grade3",
+                "institution": "AWS",
+                "course": "AWS Certified Solutions Architect - Associate",
+                "startDate": "2022",
+                "endDate": "2022",
+                "description": "Official Amazon Web Services certification for cloud solutions architecture."
+            }
+        ],
+        "ability": "Expertise in full-stack development with JavaScript/TypeScript, React, and Node.js. Proficiency in RESTful and GraphQL API design. Solid experience with relational and NoSQL databases. Advanced knowledge in containerization, orchestration, and DevOps practices. Skills in technical mentoring and code review.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["sarah.mitchell@email.com", "sarah.dev@gmail.com"],
+            "phone": ["+1 415-555-7890"],
+            "address": "1024 Mission Street, Apt 12B - San Francisco, CA 94103",
+            "adressObject": {
+                "country": "United States",
+                "state": "California",
+                "city": "San Francisco",
+                "street": "Mission Street",
+                "number": "1024",
+                "district": "SoMa"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Stripe",
+                "description": "Development of microservices for payment infrastructure using Node.js and Go. Implementation of critical features impacting +2M users. Technical leadership of squad with 5 engineers. 40% reduction in API response time through optimizations and strategic caching. Active participation in code reviews and code standards definition.",
+                "dateHired": "06/2022",
+                "dateFired": "Present",
+                "position": "Software Engineer III"
+            },
+            {
+                "id": "exp2",
+                "company": "Shopify",
+                "description": "Full-stack development of marketplace features using React, Node.js, and Ruby on Rails. Implementation of recommendation system that increased conversion by 18%. Migration from monolith to microservices architecture. Integration with legacy systems and third-party APIs. Work in multidisciplinary team with Product Managers and Designers.",
+                "dateHired": "03/2020",
+                "dateFired": "05/2022",
+                "position": "Software Engineer II"
+            },
+            {
+                "id": "exp3",
+                "company": "Salesforce",
+                "description": "Development of features for enterprise management platform using React and Python/Django. Creation of reusable components and internal UI library. Implementation of automated tests (Jest, Pytest) increasing coverage to 85%. SQL query optimization that reduced loading time by 60%. Participation in agile ceremonies and sprint planning.",
+                "dateHired": "01/2019",
+                "dateFired": "02/2020",
+                "position": "Software Engineer I"
+            },
+            {
+                "id": "exp4",
+                "company": "DoorDash (Startup Phase)",
+                "description": "Development of web applications for delivery route optimization. Stack: React, Redux, Node.js, and MongoDB. Integration with mapping APIs (Google Maps, Mapbox). Implementation of real-time dashboards for delivery monitoring. Work in high-velocity, autonomous environment.",
+                "dateHired": "06/2018",
+                "dateFired": "12/2018",
+                "position": "Junior Software Developer"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Native",
+                "details": "English"
+            },
+            {
+                "level": "Advanced",
+                "details": "Spanish - Fluent in reading, writing, and conversation"
+            },
+            {
+                "level": "Basic",
+                "details": "French"
+            }
+        ],
+        "otherInfos": [
+            "Open-source contributor (GitHub projects with +500 stars)",
+            "Speaker at technology conferences (ReactConf, JSConf)",
+            "Volunteer mentor at Women Who Code",
+            "AWS Solutions Architect Associate Certification",
+            "Technical blog with articles on architecture and best practices"
+        ],
+        "otherExperiencies": {
+            "title": "Projects and Achievements",
+            "text": "Development of open-source library for React form validation with +10k monthly downloads on NPM. Leadership in infrastructure migration from on-premise to AWS, resulting in 35% cost savings. Implementation of CI/CD pipeline that reduced deployment time from 2h to 15min. Speaker at ReactConf 2023 on 'Microservices in Practice'. Certified in Kubernetes (CKA) and Scrum Master (PSM I)."
+        },
+        "language": "en-us",
+        "premium": false
+    }
+}

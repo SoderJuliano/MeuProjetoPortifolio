@@ -333,4 +333,176 @@ export default {
     margin: 0;
   }
 }
+
+/* Mobile Responsive */
+@media screen and (max-width: 768px) {
+  .a4-size {
+    width: 100%;
+    min-height: auto;
+    height: auto;
+    margin: 0;
+    transform: scale(1);
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .new-template-container {
+    padding: 0;
+  }
+
+  /* Ajusta ondas para mobile */
+  .ondas {
+    height: 300px;
+  }
+
+  .onda-escura {
+    left: -100px;
+    width: 80%;
+    height: 150px;
+  }
+
+  .onda-escura-2 {
+    top: 60px;
+    left: -100px;
+    width: 50%;
+    height: 150px;
+  }
+
+  .onda-clara-1 {
+    top: -30px;
+    left: -30px;
+    width: 85%;
+    height: 250px;
+  }
+
+  .onda-clara-2 {
+    top: -30px;
+    left: -30px;
+    width: 50%;
+    height: 320px;
+  }
+
+  /* Header mobile */
+  .header-area {
+    flex-direction: column;
+    padding: 20px 15px;
+    text-align: center;
+  }
+
+  .foto-container {
+    margin: 30px auto 20px;
+    width: 180px;
+    height: 175px;
+  }
+
+  .header-text {
+    padding: 10px;
+  }
+
+  .name {
+    font-size: 2rem;
+  }
+
+  .profession {
+    font-size: 1.3rem;
+  }
+
+  /* Layout mobile - coluna única */
+  .main-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px 15px;
+  }
+
+  /* Ajusta tamanho das fontes */
+  .section-title {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+  .contact-item {
+    font-size: 0.9rem;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .contact-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .summary-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .experience-item h4 {
+    font-size: 1rem;
+  }
+
+  .experience-item h5 {
+    font-size: 0.9rem;
+  }
+
+  .experience-item p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .skills-list {
+    padding-left: 15px;
+    font-size: 0.9rem;
+  }
+
+  .skills-list li {
+    margin-bottom: 6px;
+  }
+
+  .education-item p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+
+  .cv-section {
+    margin-bottom: 15px;
+  }
+}
+
+/* Ajustes para telas muito pequenas */
+@media screen and (max-width: 375px) {
+  .header-area {
+    padding: 15px 10px;
+  }
+
+  .foto-container {
+    width: 150px;
+    height: 145px;
+    margin: 20px auto 15px;
+  }
+
+  .name {
+    font-size: 1.7rem;
+  }
+
+  .profession {
+    font-size: 1.1rem;
+  }
+
+  .main-body {
+    padding: 15px 10px;
+    gap: 15px;
+  }
+
+  .section-title {
+    font-size: 0.95rem;
+  }
+
+  .contact-item,
+  .summary-text,
+  .experience-item p,
+  .skills-list,
+  .education-item p {
+    font-size: 0.85rem;
+  }
+}
 </style>
