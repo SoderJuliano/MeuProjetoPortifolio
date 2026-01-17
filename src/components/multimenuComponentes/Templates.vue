@@ -110,7 +110,7 @@ export default {
 
 .dropdown-templates-edit {
   position: fixed;
-  top: 50%;
+  top: 35dvh !important;
   left: 50%;
   transform: translate(-50%, -50%);
   /* width: 80%; */
@@ -168,7 +168,7 @@ export default {
 
 @media screen and (min-width: 1981px) {
   .dropdown-templates-edit {
-    top: 75%;
+    top: 40vh !important;
   }
 }
 
