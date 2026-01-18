@@ -402,8 +402,12 @@
 
         if (props.user.grade && props.user.grade.length > 0) {
             props.user.grade.forEach((grade, index) => {
-                const ano = extrairDatas(grade);
-                const textoSemDatas = removerDatas(grade);
+                // Build text string from grade object
+                const gradeText = `${grade.course || ''} - ${grade.institution || ''}`.trim();
+                const dateText = `${grade.startDate || ''} - ${grade.endDate || ''}`;
+                
+                const ano = extrairDatas(dateText);
+                const textoSemDatas = removerDatas(gradeText);
                 educationComponents.value.push({
                     id: 2000 + index,
                     text: textoSemDatas.length > 0 ? textoSemDatas : isEnglish ? 'Add education' : 'Adicionar educação',

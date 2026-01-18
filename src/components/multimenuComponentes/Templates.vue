@@ -1,7 +1,13 @@
 <template>
 
-    <div>
-        <p class="tside" @click="openTemplates">TEMPLATES DE EDIÇÃO</p>
+    <div class="templates-trigger" @click="openTemplates">
+        <svg class="templates-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <p class="tside">{{ language.includes('en') ? 'EDIT TEMPLATES' : 'TEMPLATES DE EDIÇÃO' }}</p>
     </div>
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
     <div class="dropdown-templates-edit" v-if="isOpen">
@@ -56,6 +62,32 @@ export default {
 </script>
 
 <style scoped>
+.templates-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.templates-trigger:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateX(5px);
+}
+
+.templates-icon {
+    min-width: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.templates-trigger:hover .templates-icon,
+.templates-trigger:hover .tside {
+    color: #667eea;
+}
+
 .tside {
   cursor: pointer;
   padding: 10px;
@@ -94,14 +126,14 @@ export default {
   cursor: pointer;
   font-weight: bold;
   font-size: 1.2rem;
-  padding: 10px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
-  width: 30px;
-  height: 20px;
-  text-align: center;
-  padding-bottom: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .closeDiv:hover {
@@ -137,7 +169,7 @@ export default {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 997;
 }
 
 .template-option {
@@ -166,9 +198,10 @@ export default {
   color: #333;
 }
 
-@media screen and (min-width: 1981px) {
+@media screen and (min-width: 1601px) {
   .dropdown-templates-edit {
-    top: 40vh !important;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 

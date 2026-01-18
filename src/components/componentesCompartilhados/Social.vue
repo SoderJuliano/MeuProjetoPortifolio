@@ -8,25 +8,25 @@
         </div>
         <div v-for="(item, index) in this.userData.social" :key="index" :class="template == 2 ? templateClassItemContainer : 'social-row'">
             <div :class="templateClassItem" >
-                <div v-if="item.includes('github') || item.includes('youtube') || item.includes('linkedin') || item.includes('stackoverflow') || item.includes('facebook') || item.includes('twitter')">
-                    <img v-if="item.includes('github')" src="../../icons/git.png" class="social-icon"/>
-                    <img v-if="item.includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
-                    <img v-if="item.includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
-                    <img v-if="item.includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
-                    <img v-if="item.includes('facebook')" src="../../icons/face.png" class="social-icon"/>
-                    <img v-if="item.includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
+                <div v-if="getItemUrl(item).includes('github') || getItemUrl(item).includes('youtube') || getItemUrl(item).includes('linkedin') || getItemUrl(item).includes('stackoverflow') || getItemUrl(item).includes('facebook') || getItemUrl(item).includes('twitter')">
+                    <img v-if="getItemUrl(item).includes('github')" src="../../icons/git.png" class="social-icon"/>
+                    <img v-if="getItemUrl(item).includes('youtube')" src="../../icons/youtube.png" class="social-icon"/>
+                    <img v-if="getItemUrl(item).includes('linkedin')" src="../../icons/in.png" class="social-icon"/>
+                    <img v-if="getItemUrl(item).includes('stackoverflow')" src="../../icons/stof.jpeg" class="social-icon"/>
+                    <img v-if="getItemUrl(item).includes('facebook')" src="../../icons/face.png" class="social-icon"/>
+                    <img v-if="getItemUrl(item).includes('twitter')" src="../../icons/twit.png" class="social-icon"/>
                 </div>
                 <img v-else src="../../icons/page.svg" alt="svg" class="social-icon">
-                <a v-if="item.includes('link:')" :href="item.split('link:')[1]">{{ item.split("link:")[1] }}</a>
-                <span v-else>{{item}}</span>
+                <a v-if="getItemUrl(item).includes('link:')" :href="getItemUrl(item).split('link:')[1]">{{ getItemUrl(item).split("link:")[1] }}</a>
+                <span v-else>{{getItemUrl(item)}}</span>
                 <img v-if="item && !viewOnly" :src="editIcon" @click="editar(index)" alt="editar" class="remove-bnt editar">
-                <img @click="remove" :id="`${item}`" v-if="!viewOnly" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
+                <img @click="remove" :id="`${getItemUrl(item)}`" v-if="!viewOnly" class="remove-bnt" src="../../icons/remove.png" alt="remove-bnt"/>
                 <!-- fazer um componente para este botao -->
-                <img @click="remove" :id="`${item}`" v-if="!viewOnly" class="remove-bnt-delete" src="../../assets/new_edit_icon.png" alt="remove-bnt"/>
+                <img @click="remove" :id="`${getItemUrl(item)}`" v-if="!viewOnly" class="remove-bnt-delete" src="../../assets/new_edit_icon.png" alt="remove-bnt"/>
             </div>
             <div v-if="showEditing == index" class="obj-edit">
                     <wrappEditModel
-                        :textItem="item"
+                        :textItem="getItemUrl(item)"
                         :textIndex="index"
                         :language="language"
                         :event="'update-social'"
@@ -70,6 +70,16 @@ export default {
         }
     },
     methods:{
+        getItemUrl(item) {
+            // Handle both string and object formats
+            if (typeof item === 'string') {
+                return item;
+            } else if (typeof item === 'object' && item.url) {
+                // Convert object {type, url} to string format
+                return `link:${item.url}`;
+            }
+            return '';
+        },
         updateSocial(value) {
             this.userData.social[value.index] = value.text;
             this.$emit('update-user', this.userData);

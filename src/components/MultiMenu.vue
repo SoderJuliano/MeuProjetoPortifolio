@@ -58,6 +58,12 @@
             />
             <p class="multimenu-line"></p>
         </div>
+        <div class="option">
+            <ExemplosPreenchidos
+                :language="language"
+            />
+            <p class="multimenu-line"></p>
+        </div>
         <div class="option" @click="update(this.user)" v-if="mobileOptions">
             <div class="option__content">
                 <svg class="option__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -168,6 +174,7 @@ import Avatares from "./Avatares.vue";
 import PicureShape from "./PictureShape.vue";
 import Templates from "./multimenuComponentes/Templates.vue";
 import Layouts from "./multimenuComponentes/Layouts.vue";
+import ExemplosPreenchidos from "./ExemplosPreenchidos.vue";
 import GlobalModal from "./componentesCompartilhados/GlobalModal.vue";
 import UserModel from "../model/userModel";
 import { showAlert } from 'simple-alerts/dist/showAlert.js';
@@ -196,6 +203,7 @@ export default {
         PicureShape,
         Templates,
         Layouts,
+        ExemplosPreenchidos,
         FontsSize,
         GlobalModal
     },
@@ -352,6 +360,10 @@ p, button, .tside, .option {
     cursor: pointer;
 }
 
+.option {
+    margin-bottom: 16px;
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -385,10 +397,7 @@ a {
     margin-top: -15px;
 }
 
-/* The first child has a different padding for some reason */
-.multimenu-line.first {
-    margin-top: 0px !important;
-}
+
 
 /* Enhanced option styles with icons */
 .option__content {
@@ -458,7 +467,8 @@ a {
 
 /* Premium option */
 .option--premium {
-    margin-top: 10px;
+    margin-top: 20px;
+    margin-bottom: 0;
 }
 
 .option__premium-link {
@@ -523,15 +533,7 @@ a {
     }
 }
 
-/* The second element */
-.multimenu-line.second {
-    margin-top: -5px;
-}
 
-/* The second one was to close of the others */
-.option:nth-child(3) {
-    margin-bottom: 20px;
-}
 
 .option:hover .multimenu-line {
     width: 100px;

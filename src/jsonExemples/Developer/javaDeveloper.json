@@ -1,0 +1,270 @@
+{
+    "pt-br": {
+        "_id": "507f1f77bcf86cd799439015",
+        "name": "Carlos Eduardo Santos",
+        "profession": "Desenvolvedor Java Sênior",
+        "resume": "Desenvolvedor Java Sênior com 8 anos de experiência em desenvolvimento de aplicações enterprise robustas e escaláveis. Especializado em Spring Framework, microserviços e arquitetura de software. Expertise em design de APIs RESTful, integração de sistemas e otimização de performance. Histórico sólido na implementação de soluções complexas para grandes volumes de dados e alta disponibilidade. Apaixonado por clean code e padrões de projeto.",
+        "competence": [
+            "Java 11/17/21",
+            "Spring Boot & Spring Cloud",
+            "Hibernate & JPA",
+            "Microserviços",
+            "Apache Kafka",
+            "RESTful APIs & GraphQL",
+            "Oracle & PostgreSQL",
+            "MongoDB & Redis",
+            "Docker & Kubernetes",
+            "Maven & Gradle",
+            "JUnit & Mockito",
+            "AWS & Azure"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/carlos-santos-java"
+            },
+            {
+                "type": "github",
+                "url": "https://github.com/carlossantos"
+            },
+            {
+                "type": "portfolio",
+                "url": "https://carlossantos.dev"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Universidade Federal do Rio de Janeiro (UFRJ)",
+                "course": "Bacharelado em Sistemas de Informação",
+                "startDate": "2012",
+                "endDate": "2016",
+                "description": "Formação com ênfase em Desenvolvimento de Software e Arquitetura de Sistemas. TCC sobre Otimização de Performance em Aplicações Java Enterprise."
+            },
+            {
+                "id": "grade2",
+                "institution": "Oracle University",
+                "course": "Oracle Certified Professional, Java SE 11 Developer",
+                "startDate": "2020",
+                "endDate": "2020",
+                "description": "Certificação oficial Oracle para desenvolvimento Java SE 11, abrangendo APIs modernas, streams e programação funcional."
+            },
+            {
+                "id": "grade3",
+                "institution": "Udemy",
+                "course": "Microservices with Spring Boot and Spring Cloud",
+                "startDate": "2021",
+                "endDate": "2021",
+                "description": "Especialização em arquitetura de microserviços utilizando Spring Boot, Spring Cloud, Service Discovery e Circuit Breakers."
+            }
+        ],
+        "ability": "Domínio avançado em Java e ecossistema Spring. Experiência sólida em design patterns (GoF) e princípios SOLID. Proficiência em desenvolvimento de microserviços e mensageria com Kafka. Expertise em otimização de queries SQL e modelagem de dados. Conhecimento em containerização e orquestração com Docker e Kubernetes.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["carlos.santos@email.com", "carlos.java@gmail.com"],
+            "phone": ["+55 21 98765-4321"],
+            "address": "Avenida Paulista, 2048 - Bela Vista - São Paulo/SP - CEP: 01310-200",
+            "adressObject": {
+                "country": "Brasil",
+                "state": "São Paulo",
+                "city": "São Paulo",
+                "street": "Avenida Paulista",
+                "number": "2048",
+                "district": "Bela Vista"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Itaú Unibanco",
+                "description": "Desenvolvimento de microserviços para plataforma bancária digital usando Spring Boot e Kafka. Implementação de API Gateway com Spring Cloud Gateway. Refatoração de aplicações legadas para arquitetura de microserviços, reduzindo acoplamento e melhorando manutenibilidade. Otimização de performance que reduziu tempo de processamento em 50%. Mentoria de desenvolvedores júnior e pleno. Integração com mainframe e sistemas legados.",
+                "dateHired": "03/2021",
+                "dateFired": "Atual",
+                "position": "Desenvolvedor Java Sênior"
+            },
+            {
+                "id": "exp2",
+                "company": "B3 (Bolsa de Valores)",
+                "description": "Desenvolvimento de sistemas de alta performance para processamento de transações financeiras. Stack: Java 11, Spring Boot, Oracle Database e Redis. Implementação de circuit breakers e retry patterns para garantir resiliência. Trabalho com mensageria assíncrona (Apache Kafka) para processamento de eventos. Code review e definição de padrões de arquitetura. Sistema capaz de processar +10k transações por segundo.",
+                "dateHired": "07/2019",
+                "dateFired": "02/2021",
+                "position": "Desenvolvedor Java Pleno"
+            },
+            {
+                "id": "exp3",
+                "company": "Totvs",
+                "description": "Desenvolvimento de APIs RESTful para ERP corporativo usando Spring Boot e Hibernate. Criação de módulos reutilizáveis e bibliotecas internas. Implementação de testes automatizados (JUnit, Mockito, Integration Tests) com cobertura de 80%. Otimização de queries SQL complexas e procedures. Trabalho com metodologia Scrum e entrega contínua. Integração com múltiplos bancos de dados (Oracle, PostgreSQL, SQL Server).",
+                "dateHired": "02/2018",
+                "dateFired": "06/2019",
+                "position": "Desenvolvedor Java"
+            },
+            {
+                "id": "exp4",
+                "company": "Stefanini",
+                "description": "Desenvolvimento de aplicações web para clientes do setor público. Tecnologias: Java 8, JSF, Primefaces e PostgreSQL. Manutenção e evolução de sistemas legados. Desenvolvimento de relatórios complexos com JasperReports. Trabalho direto com stakeholders para levantamento de requisitos. Suporte técnico e correção de bugs em produção.",
+                "dateHired": "06/2016",
+                "dateFired": "01/2018",
+                "position": "Desenvolvedor Java Júnior"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Nativo",
+                "details": "Português"
+            },
+            {
+                "level": "Intermediário",
+                "details": "Inglês - Leitura técnica fluente, conversação intermediária"
+            }
+        ],
+        "otherInfos": [
+            "Certificação Oracle Certified Professional (OCP) Java SE 11",
+            "Contribuidor em projetos open-source Java (Spring Community)",
+            "Palestrante em meetups de Java User Group (JUG)",
+            "Mentor em programa de formação de desenvolvedores Java",
+            "Artigos técnicos publicados no Medium sobre Spring Boot"
+        ],
+        "otherExperiencies": {
+            "title": "Projetos Destacados",
+            "text": "Liderança técnica na migração de monolito para microserviços em projeto bancário, resultando em 60% de redução no tempo de deploy. Desenvolvimento de framework interno para aceleração de desenvolvimento de APIs REST com Spring Boot, reduzindo em 40% o tempo de setup de novos projetos. Implementação de pipeline de CI/CD com Jenkins, Docker e Kubernetes. Palestrante no TDC (The Developers Conference) sobre 'Reactive Programming com Spring WebFlux'."
+        },
+        "language": "pt-br",
+        "premium": false
+    },
+    "en-us": {
+        "_id": "507f1f77bcf86cd799439016",
+        "name": "Michael Thompson",
+        "profession": "Senior Java Developer",
+        "resume": "Senior Java Developer with 8 years of experience developing robust and scalable enterprise applications. Specialized in Spring Framework, microservices, and software architecture. Expertise in RESTful API design, system integration, and performance optimization. Solid track record implementing complex solutions for high data volumes and high availability. Passionate about clean code and design patterns.",
+        "competence": [
+            "Java 11/17/21",
+            "Spring Boot & Spring Cloud",
+            "Hibernate & JPA",
+            "Microservices",
+            "Apache Kafka",
+            "RESTful APIs & GraphQL",
+            "Oracle & PostgreSQL",
+            "MongoDB & Redis",
+            "Docker & Kubernetes",
+            "Maven & Gradle",
+            "JUnit & Mockito",
+            "AWS & Azure"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/michael-thompson-java"
+            },
+            {
+                "type": "github",
+                "url": "https://github.com/michaelthompson"
+            },
+            {
+                "type": "portfolio",
+                "url": "https://michaelthompson.dev"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "University of California, Berkeley",
+                "course": "Bachelor of Science in Computer Science",
+                "startDate": "2012",
+                "endDate": "2016",
+                "description": "Degree with emphasis on Software Development and System Architecture. Thesis on Performance Optimization in Java Enterprise Applications."
+            },
+            {
+                "id": "grade2",
+                "institution": "Oracle University",
+                "course": "Oracle Certified Professional, Java SE 11 Developer",
+                "startDate": "2020",
+                "endDate": "2020",
+                "description": "Official Oracle certification for Java SE 11 development, covering modern APIs, streams, and functional programming."
+            },
+            {
+                "id": "grade3",
+                "institution": "Udemy",
+                "course": "Microservices with Spring Boot and Spring Cloud",
+                "startDate": "2021",
+                "endDate": "2021",
+                "description": "Specialization in microservices architecture using Spring Boot, Spring Cloud, Service Discovery, and Circuit Breakers."
+            }
+        ],
+        "ability": "Advanced mastery in Java and Spring ecosystem. Solid experience in design patterns (GoF) and SOLID principles. Proficiency in microservices development and messaging with Kafka. Expertise in SQL query optimization and data modeling. Knowledge in containerization and orchestration with Docker and Kubernetes.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["michael.thompson@email.com", "michael.java@gmail.com"],
+            "phone": ["+1 408-555-1234"],
+            "address": "3000 Mission College Blvd - Santa Clara, CA 95054",
+            "adressObject": {
+                "country": "United States",
+                "state": "California",
+                "city": "Santa Clara",
+                "street": "Mission College Blvd",
+                "number": "3000",
+                "district": "Silicon Valley"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Oracle Corporation",
+                "description": "Development of microservices for cloud platform using Spring Boot and Kafka. Implementation of API Gateway with Spring Cloud Gateway. Refactoring legacy applications to microservices architecture, reducing coupling and improving maintainability. Performance optimization that reduced processing time by 50%. Mentoring junior and mid-level developers. Integration with mainframe and legacy systems.",
+                "dateHired": "03/2021",
+                "dateFired": "Present",
+                "position": "Senior Java Developer"
+            },
+            {
+                "id": "exp2",
+                "company": "PayPal",
+                "description": "Development of high-performance systems for financial transaction processing. Stack: Java 11, Spring Boot, Oracle Database, and Redis. Implementation of circuit breakers and retry patterns for resilience. Work with asynchronous messaging (Apache Kafka) for event processing. Code review and architecture pattern definition. System capable of processing +10k transactions per second.",
+                "dateHired": "07/2019",
+                "dateFired": "02/2021",
+                "position": "Java Developer"
+            },
+            {
+                "id": "exp3",
+                "company": "SAP",
+                "description": "Development of RESTful APIs for corporate ERP using Spring Boot and Hibernate. Creation of reusable modules and internal libraries. Implementation of automated tests (JUnit, Mockito, Integration Tests) with 80% coverage. Optimization of complex SQL queries and procedures. Work with Scrum methodology and continuous delivery. Integration with multiple databases (Oracle, PostgreSQL, SQL Server).",
+                "dateHired": "02/2018",
+                "dateFired": "06/2019",
+                "position": "Java Developer"
+            },
+            {
+                "id": "exp4",
+                "company": "Accenture",
+                "description": "Development of web applications for public sector clients. Technologies: Java 8, JSF, Primefaces, and PostgreSQL. Maintenance and evolution of legacy systems. Development of complex reports with JasperReports. Direct work with stakeholders for requirements gathering. Technical support and production bug fixes.",
+                "dateHired": "06/2016",
+                "dateFired": "01/2018",
+                "position": "Junior Java Developer"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Native",
+                "details": "English"
+            },
+            {
+                "level": "Intermediate",
+                "details": "Spanish - Technical reading fluent, intermediate conversation"
+            }
+        ],
+        "otherInfos": [
+            "Oracle Certified Professional (OCP) Java SE 11",
+            "Contributor to Java open-source projects (Spring Community)",
+            "Speaker at Java User Group (JUG) meetups",
+            "Mentor in Java developer training program",
+            "Technical articles published on Medium about Spring Boot"
+        ],
+        "otherExperiencies": {
+            "title": "Featured Projects",
+            "text": "Technical leadership in monolith to microservices migration for banking project, resulting in 60% reduction in deployment time. Development of internal framework for accelerating REST API development with Spring Boot, reducing setup time for new projects by 40%. Implementation of CI/CD pipeline with Jenkins, Docker, and Kubernetes. Speaker at JavaOne Conference about 'Reactive Programming with Spring WebFlux'."
+        },
+        "language": "en-us",
+        "premium": false
+    }
+}
