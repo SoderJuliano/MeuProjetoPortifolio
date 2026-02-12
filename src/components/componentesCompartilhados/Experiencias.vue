@@ -5,8 +5,8 @@
             :className="classToShare"
             :startShowing="jobs?.length > 0"
         />
-        <img src="../../icons/editar.png" id="edit-exp" alt="editar" class="editar" @click="this.$emit('add-experiencia')" />
-        <img v-if="template== 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
+        
+        <img src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-resumo" @click="$emit('add-experiencia')"/>
       </p>
       <div v-for="(item, index) in jobs" :key="index" :class="cstyle">
         <div class="options-div">
@@ -37,8 +37,7 @@
               :textIndex="index"
               :job="getJobModel(item)"
               :language="language"
-              @editar-end="editar"
-              @update-experiencias="updateExperiencias"
+              @editar-end="editar" @update-experiencias="updateExperiencias"
             />
           </div>
         </div>
@@ -52,6 +51,7 @@ import showSwitcher from '../iconComponent/showSwitcher.vue';
 import jobModel from '../../model/jobModel.js';
 import wrappEditModel from "../utils/wrappEditModel.vue";
 
+
 export default {
   name: 'Experiencias',
   emits: ['add-experiencia', 'update-experiencias'],
@@ -62,7 +62,6 @@ export default {
     language: String,
     cor: String,
     sideColor: String,
-    experiences: Array,
     fontColor: String,
     user: Object
   },
@@ -75,9 +74,10 @@ export default {
       lastJobEnd: '',
       classToShare: 'experiencias',
       cstyle: 'template'+this.template+'-experiencias-container',
-      jobs: this.experiences,
+      jobs: this.user?.userExperiences,
       editIcon: svgs.editIcon,
-      showEditing: null
+      showEditing: null,
+      isImproved: false
     }
   },
   methods:{
@@ -91,18 +91,6 @@ export default {
       },
       editar(val) {
         this.showEditing = val
-      },
-      hovert(){
-        let element = document.getElementById("edit-exp");
-        if (element && this.template == 2) {
-          element.style.display = "none";
-        }
-      },
-      leavehovert(){
-        let element = document.getElementById("edit-exp");
-        if (element && this.template == 2) {
-          element.style.display = "block";
-        }
       },
       getStyle(){
           return{
@@ -120,20 +108,21 @@ export default {
       },
   },
   watch: {
-    experiences: {
+    user: {
       deep: true,
-      //handle the change
-      handler() {
-        this.jobs = this.experiences
+      handler(newUser) {
+        this.jobs = newUser.userExperiences;
+        const updatedFields = JSON.parse(sessionStorage.getItem("updatedFields")) || [];
+        this.isImproved = updatedFields.includes('experience');
       }
-    },
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@media print{
+ @media print{
 
   .not-visible {
     display: none;
@@ -234,7 +223,7 @@ export default {
   max-height: 100%;
   word-wrap: break-word;
 }
-@media screen and (max-width: 1000px) {
+ @media screen and (max-width: 1000px) {
   .experiencias {
     min-height: 60px;
     height: calc(100% + 100px);
@@ -255,7 +244,7 @@ export default {
   color: black;
 }
 
-@media screen and (max-width: 400px) {
+ @media screen and (max-width: 400px) {
 /* templete 2 tem um padding que deixa estranho isso, esse margin negativo corrige */
   .experiencias.templete2.template-data {
     margin-left: -5px !important;

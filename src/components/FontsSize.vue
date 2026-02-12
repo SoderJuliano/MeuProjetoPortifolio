@@ -1,8 +1,15 @@
 <template>
     <div class="font-size-control">
-        <p class="tside" @click="showMenu()">
-            {{ language.includes("en") ? "FONT SIZE" : "TAMANHO DA FONTE" }}
-        </p>
+        <div class="fontsize-trigger" @click="showMenu()">
+            <svg class="fontsize-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                <line x1="9" y1="20" x2="15" y2="20"></line>
+                <line x1="12" y1="4" x2="12" y2="20"></line>
+            </svg>
+            <p class="tside">
+                {{ language.includes("en") ? "FONT SIZE" : "TAMANHO DA FONTE" }}
+            </p>
+        </div>
         
         <div class="font-size-panel" v-show="isOpen" @click.self="closeDiv">
             <div class="panel-content">
@@ -94,6 +101,32 @@ export default {
 <style scoped>
 .font-size-control {
     /* position: relative; */
+}
+
+.fontsize-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.fontsize-trigger:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateX(5px);
+}
+
+.fontsize-icon {
+    min-width: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.fontsize-trigger:hover .fontsize-icon,
+.fontsize-trigger:hover .tside {
+    color: #667eea;
 }
 
 .font-size-toggle {

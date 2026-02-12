@@ -1,0 +1,278 @@
+{
+    "pt-br": {
+        "_id": "507f1f77bcf86cd799439017",
+        "name": "Marina Costa Silva",
+        "profession": "Desenvolvedora Front-End Sênior",
+        "resume": "Desenvolvedora Front-End Sênior com 7 anos de experiência criando interfaces web modernas, responsivas e acessíveis. Especializada em React, Vue.js e arquitetura de aplicações front-end escaláveis. Expertise em performance web, animações complexas e design systems. Apaixonada por UX/UI, acessibilidade e entregar experiências de usuário excepcionais. Histórico comprovado em liderar projetos de redesign e otimização de aplicações web.",
+        "competence": [
+            "React.js & Next.js",
+            "Vue.js & Nuxt.js",
+            "TypeScript & JavaScript ES6+",
+            "HTML5 & CSS3/SASS",
+            "Tailwind CSS & Styled Components",
+            "Redux & Zustand",
+            "Webpack & Vite",
+            "Jest & React Testing Library",
+            "Figma & Adobe XD",
+            "Git & CI/CD",
+            "Performance Web",
+            "Acessibilidade (WCAG)"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/marina-costa-frontend"
+            },
+            {
+                "type": "github",
+                "url": "https://github.com/marinacostasilva"
+            },
+            {
+                "type": "portfolio",
+                "url": "https://marinacosta.dev"
+            },
+            {
+                "type": "behance",
+                "url": "https://behance.net/marinacostaui"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Universidade Estadual de Campinas (UNICAMP)",
+                "course": "Bacharelado em Design Digital",
+                "startDate": "2013",
+                "endDate": "2017",
+                "description": "Formação interdisciplinar com foco em Design de Interfaces, Usabilidade e Desenvolvimento Web. TCC sobre Acessibilidade em Aplicações Web Modernas."
+            },
+            {
+                "id": "grade2",
+                "institution": "Rocketseat",
+                "course": "Ignite - Trilha ReactJS",
+                "startDate": "2021",
+                "endDate": "2021",
+                "description": "Formação avançada em React, Next.js, TypeScript, testes automatizados e práticas modernas de desenvolvimento front-end."
+            },
+            {
+                "id": "grade3",
+                "institution": "Google",
+                "course": "Google UX Design Professional Certificate",
+                "startDate": "2022",
+                "endDate": "2022",
+                "description": "Certificação profissional em UX Design cobrindo research, wireframing, prototyping e testes de usabilidade."
+            }
+        ],
+        "ability": "Domínio avançado em React e ecossistema moderno de front-end. Experiência sólida em arquitetura de componentes e design patterns. Proficiência em CSS avançado, animações e responsividade. Expertise em otimização de performance (Lighthouse, Web Vitals). Conhecimento profundo em acessibilidade e padrões WCAG 2.1. Habilidade em traduzir designs Figma para código pixel-perfect.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["marina.costa@email.com", "marina.frontend@gmail.com"],
+            "phone": ["+55 11 97654-3210"],
+            "address": "Rua Augusta, 2690 - Jardins - São Paulo/SP - CEP: 01412-100",
+            "adressObject": {
+                "country": "Brasil",
+                "state": "São Paulo",
+                "city": "São Paulo",
+                "street": "Rua Augusta",
+                "number": "2690",
+                "district": "Jardins"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "QuintoAndar",
+                "description": "Desenvolvimento de interfaces web para plataforma imobiliária usando React, Next.js e TypeScript. Liderança técnica na implementação de Design System baseado em Atomic Design, aumentando velocidade de desenvolvimento em 50%. Otimização de performance que melhorou Core Web Vitals em 40%. Implementação de arquitetura de micro-frontends para melhor escalabilidade. Mentoria de 4 desenvolvedores front-end. Colaboração próxima com designers para garantir implementação fiel dos layouts.",
+                "dateHired": "05/2022",
+                "dateFired": "Atual",
+                "position": "Desenvolvedora Front-End Sênior"
+            },
+            {
+                "id": "exp2",
+                "company": "iFood",
+                "description": "Desenvolvimento de features para marketplace usando React e Vue.js. Redesign completo da interface do restaurante partner, melhorando satisfação em 35%. Implementação de PWA (Progressive Web App) que aumentou engajamento mobile em 45%. Criação de biblioteca de componentes reutilizáveis. Trabalho com A/B tests e análise de métricas (Mixpanel, Google Analytics). Implementação de testes automatizados com Jest e Testing Library.",
+                "dateHired": "08/2020",
+                "dateFired": "04/2022",
+                "position": "Desenvolvedora Front-End Pleno"
+            },
+            {
+                "id": "exp3",
+                "company": "Creditas",
+                "description": "Desenvolvimento de aplicações web para plataforma fintech usando React e Redux. Implementação de formulários complexos com validações e fluxos multi-step. Refatoração de código legado para TypeScript, reduzindo bugs em 30%. Otimização de bundle size e lazy loading, melhorando performance. Participação ativa em code reviews e pareamento com designers. Documentação técnica de componentes com Storybook.",
+                "dateHired": "03/2019",
+                "dateFired": "07/2020",
+                "position": "Desenvolvedora Front-End"
+            },
+            {
+                "id": "exp4",
+                "company": "Resultados Digitais (RD Station)",
+                "description": "Desenvolvimento de interfaces para ferramenta de marketing digital. Stack: JavaScript ES6, React, SASS e Redux. Criação de dashboards interativos com charts (D3.js, Recharts). Implementação de temas customizáveis e suporte a white-label. Trabalho em squad ágil com entregas semanais. Foco em acessibilidade e usabilidade.",
+                "dateHired": "07/2017",
+                "dateFired": "02/2019",
+                "position": "Desenvolvedora Front-End Júnior"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Nativo",
+                "details": "Português"
+            },
+            {
+                "level": "Avançado",
+                "details": "Inglês - Fluente em leitura técnica, escrita e conversação"
+            }
+        ],
+        "otherInfos": [
+            "Contribuidora open-source (React e Vue.js communities)",
+            "Palestrante em eventos de front-end (Front in Sampa, React Conf Brasil)",
+            "Co-organizadora do Women Who Code São Paulo",
+            "Artigos publicados no Dev.to e Medium sobre React e Performance",
+            "Certificação Google UX Design"
+        ],
+        "otherExperiencies": {
+            "title": "Projetos e Conquistas",
+            "text": "Criação de biblioteca de componentes React open-source com +5k downloads no NPM. Liderança na implementação de Design System que se tornou referência na empresa. Palestrante no React Conf Brasil 2023 sobre 'Performance em aplicações React'. Implementação de práticas de acessibilidade que tornaram aplicação 100% WCAG 2.1 AA compliant. Redesign de landing page que aumentou conversão em 60%."
+        },
+        "language": "pt-br",
+        "premium": false
+    },
+    "en-us": {
+        "_id": "507f1f77bcf86cd799439018",
+        "name": "Emily Rodriguez",
+        "profession": "Senior Front-End Developer",
+        "resume": "Senior Front-End Developer with 7 years of experience creating modern, responsive, and accessible web interfaces. Specialized in React, Vue.js, and scalable front-end application architecture. Expertise in web performance, complex animations, and design systems. Passionate about UX/UI, accessibility, and delivering exceptional user experiences. Proven track record leading redesign projects and web application optimization.",
+        "competence": [
+            "React.js & Next.js",
+            "Vue.js & Nuxt.js",
+            "TypeScript & JavaScript ES6+",
+            "HTML5 & CSS3/SASS",
+            "Tailwind CSS & Styled Components",
+            "Redux & Zustand",
+            "Webpack & Vite",
+            "Jest & React Testing Library",
+            "Figma & Adobe XD",
+            "Git & CI/CD",
+            "Web Performance",
+            "Accessibility (WCAG)"
+        ],
+        "social": [
+            {
+                "type": "linkedin",
+                "url": "https://www.linkedin.com/in/emily-rodriguez-frontend"
+            },
+            {
+                "type": "github",
+                "url": "https://github.com/emilyrodriguez"
+            },
+            {
+                "type": "portfolio",
+                "url": "https://emilyrodriguez.dev"
+            },
+            {
+                "type": "behance",
+                "url": "https://behance.net/emilyrodriguezui"
+            }
+        ],
+        "grade": [
+            {
+                "id": "grade1",
+                "institution": "Parsons School of Design",
+                "course": "Bachelor of Fine Arts in Design and Technology",
+                "startDate": "2013",
+                "endDate": "2017",
+                "description": "Interdisciplinary degree focusing on Interface Design, Usability, and Web Development. Thesis on Accessibility in Modern Web Applications."
+            },
+            {
+                "id": "grade2",
+                "institution": "Frontend Masters",
+                "course": "Complete React Path",
+                "startDate": "2021",
+                "endDate": "2021",
+                "description": "Advanced training in React, Next.js, TypeScript, automated testing, and modern front-end development practices."
+            },
+            {
+                "id": "grade3",
+                "institution": "Google",
+                "course": "Google UX Design Professional Certificate",
+                "startDate": "2022",
+                "endDate": "2022",
+                "description": "Professional certification in UX Design covering research, wireframing, prototyping, and usability testing."
+            }
+        ],
+        "ability": "Advanced mastery in React and modern front-end ecosystem. Solid experience in component architecture and design patterns. Proficiency in advanced CSS, animations, and responsiveness. Expertise in performance optimization (Lighthouse, Web Vitals). Deep knowledge of accessibility and WCAG 2.1 standards. Ability to translate Figma designs to pixel-perfect code.",
+        "avatarImg": "",
+        "realImg": "",
+        "contact": {
+            "email": ["emily.rodriguez@email.com", "emily.frontend@gmail.com"],
+            "phone": ["+1 415-555-9876"],
+            "address": "2450 Broadway - New York, NY 10024",
+            "adressObject": {
+                "country": "United States",
+                "state": "New York",
+                "city": "New York",
+                "street": "Broadway",
+                "number": "2450",
+                "district": "Upper West Side"
+            }
+        },
+        "userExperiences": [
+            {
+                "id": "exp1",
+                "company": "Airbnb",
+                "description": "Development of web interfaces for rental platform using React, Next.js, and TypeScript. Technical leadership in Design System implementation based on Atomic Design, increasing development velocity by 50%. Performance optimization that improved Core Web Vitals by 40%. Implementation of micro-frontends architecture for better scalability. Mentoring 4 front-end developers. Close collaboration with designers to ensure faithful layout implementation.",
+                "dateHired": "05/2022",
+                "dateFired": "Present",
+                "position": "Senior Front-End Developer"
+            },
+            {
+                "id": "exp2",
+                "company": "Uber",
+                "description": "Development of features for marketplace using React and Vue.js. Complete redesign of partner driver interface, improving satisfaction by 35%. Implementation of PWA (Progressive Web App) that increased mobile engagement by 45%. Creation of reusable component library. Work with A/B tests and metrics analysis (Mixpanel, Google Analytics). Implementation of automated tests with Jest and Testing Library.",
+                "dateHired": "08/2020",
+                "dateFired": "04/2022",
+                "position": "Front-End Developer"
+            },
+            {
+                "id": "exp3",
+                "company": "Square",
+                "description": "Development of web applications for fintech platform using React and Redux. Implementation of complex forms with validations and multi-step flows. Refactoring legacy code to TypeScript, reducing bugs by 30%. Bundle size optimization and lazy loading, improving performance. Active participation in code reviews and pairing with designers. Technical documentation of components with Storybook.",
+                "dateHired": "03/2019",
+                "dateFired": "07/2020",
+                "position": "Front-End Developer"
+            },
+            {
+                "id": "exp4",
+                "company": "HubSpot",
+                "description": "Development of interfaces for digital marketing tool. Stack: JavaScript ES6, React, SASS, and Redux. Creation of interactive dashboards with charts (D3.js, Recharts). Implementation of customizable themes and white-label support. Work in agile squad with weekly deliveries. Focus on accessibility and usability.",
+                "dateHired": "07/2017",
+                "dateFired": "02/2019",
+                "position": "Junior Front-End Developer"
+            }
+        ],
+        "imgForReal": 0,
+        "spokenLanguages": [
+            {
+                "level": "Native",
+                "details": "English"
+            },
+            {
+                "level": "Advanced",
+                "details": "Spanish - Fluent in technical reading, writing, and conversation"
+            }
+        ],
+        "otherInfos": [
+            "Open-source contributor (React and Vue.js communities)",
+            "Speaker at front-end conferences (ReactConf, VueConf US)",
+            "Co-organizer of Women Who Code NYC",
+            "Articles published on Dev.to and Medium about React and Performance",
+            "Google UX Design Certification"
+        ],
+        "otherExperiencies": {
+            "title": "Projects and Achievements",
+            "text": "Creation of open-source React component library with +5k downloads on NPM. Leadership in Design System implementation that became company reference. Speaker at ReactConf 2023 about 'Performance in React Applications'. Implementation of accessibility practices that made application 100% WCAG 2.1 AA compliant. Landing page redesign that increased conversion by 60%."
+        },
+        "language": "en-us",
+        "premium": false
+    }
+}

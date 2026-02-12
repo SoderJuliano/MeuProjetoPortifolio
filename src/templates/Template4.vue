@@ -137,7 +137,7 @@
 
 <script setup>
     import { defineProps, defineEmits, watch, ref } from 'vue';
-    import { improveTextLlama } from '../components/configs/requests';
+    import { improveTextLlamaTiny } from '../components/configs/requests';
     import authService from '../services/authService';
     import { showAlert } from 'simple-alerts/dist/showAlert.js'
 
@@ -206,7 +206,7 @@
         try {
             loading.value[item.id] = true;
 
-            const response = await improveTextLlama({
+            const response = await improveTextLlamaTiny({
                 text: item.description.trim(),
                 email: props.user?.contact?.email[0],
                 language: props.language

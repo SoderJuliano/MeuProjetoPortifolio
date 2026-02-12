@@ -1,18 +1,21 @@
 <template>
 
-    <div>
-        <p class="tside" @click="openTemplates">TEMPLATES</p>
+    <div class="templates-trigger" @click="openTemplates">
+        <svg class="templates-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <p class="tside">{{ language.includes('en') ? 'EDIT TEMPLATES' : 'TEMPLATES DE EDIÇÃO' }}</p>
     </div>
     <div class="dropdown-overlay" v-if="isOpen" @click="closeDiv()"></div>
-    <div class="dropdown-templates">
+    <div class="dropdown-templates-edit" v-if="isOpen">
         <div class="closeDiv" style="margin-top: 50px;" @click="closeDiv()">X</div>
         <h3 class="dropdown-title">{{ this.language.includes("en") ? "Choose a template" : "Escolha um template"}}</h3>
         <TemplateChooser
             :template="template"
-            @now-template1="this.$emit('now-template1')"
-            @now-template2="this.$emit('now-template2')"
-            @now-template3="this.$emit('now-template3')"
-            @now-template4="this.$emit('now-template4')"
+            @change-template="$emit('change-template', $event)"
         />
     </div>
 
@@ -25,13 +28,18 @@ import TemplateChooser from './TemplateChooser.vue'
 
 export default {
     name: 'Templates',
-    emits:['now-template1', 'now-template2', 'now-template3','now-template4'],
+    emits:['change-template'],
     props:{
         template: Number,
         language: String
     },
     components: {
         TemplateChooser
+    },
+    data() {
+        return {
+            isOpen: false
+        }
     },
     methods: {
         closeAll() {
@@ -40,24 +48,61 @@ export default {
             $(".dropdown-content").css({"display": "none"});
             $(".avatares-subcontainer").css({"display": "none"});
             $(".shapes").css({"display": "none"});
-            $(".dropdown-templates").css({"display": "none"});
+            this.isOpen = false;
         },
         openTemplates() {
             this.closeAll();
-            $(".dropdown-templates").css("display", "block")
+            this.isOpen = true;
         },
         closeDiv() {
-            $(".dropdown-templates").css({"display": "none"});
+            this.isOpen = false;
         }
     }
 }
 </script>
 
 <style scoped>
+.templates-trigger {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.templates-trigger:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateX(5px);
+}
+
+.templates-icon {
+    min-width: 20px;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.templates-trigger:hover .templates-icon,
+.templates-trigger:hover .tside {
+    color: #667eea;
+}
+
+.tside {
+  cursor: pointer;
+  padding: 10px;
+  transition: all 0.2s ease;
+  border-radius: 5px;
+}
+
+.tside:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(3px);
+}
+
 @media screen and (max-width: 768px) {
     /* define no modelo mobile o tamanhom da janela de seleção de templetes */
-    .dropdown-templates {
-        display: none;
+    .dropdown-templates-edit {
         position: fixed;
         top: 0% !important;
         left: 0 !important;
@@ -81,24 +126,23 @@ export default {
   cursor: pointer;
   font-weight: bold;
   font-size: 1.2rem;
-  padding: 10px;
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s;
-  width: 30px;
-  height: 20px;
-  text-align: center;
-  padding-bottom: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .closeDiv:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.dropdown-templates {
-  display: none;
+.dropdown-templates-edit {
   position: fixed;
-  top: 50%;
+  top: 35dvh !important;
   left: 50%;
   transform: translate(-50%, -50%);
   /* width: 80%; */
@@ -125,7 +169,7 @@ export default {
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
+  z-index: 997;
 }
 
 .template-option {
@@ -152,6 +196,13 @@ export default {
   margin-bottom: 20px;
   text-align: center;
   color: #333;
+}
+
+@media screen and (min-width: 1601px) {
+  .dropdown-templates-edit {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 </style>

@@ -42,7 +42,6 @@ export default {
 }
 </script>
 <style scoped>
-
 .shapes-itens {
     display: flex;
     width: 100%;

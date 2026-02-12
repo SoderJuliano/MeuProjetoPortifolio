@@ -1,31 +1,13 @@
 <template>
     <div class="select-template">
         <button 
-            @click="select('now-template3')"
-            :style="template == 3 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
-            <p>Normal</p>
-            <img src="../../assets/templatesImg/templete3.png" alt="templateimg" />
+            v-for="template in templates"
+            :key="template.id"
+            @click="select(template.id)"
+            :style="isSelected(template.id) ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
+            <p>{{ template.name }}</p>
+            <img :src="template.image" :alt="template.name" />
         </button> 
-        <button 
-            @click="select('now-template1')"
-            :style="template == 1 ? 'background-color: blue; color: white' : 'background-color: white; color: black'">
-            <p>Style 1</p>
-            <img src="../../assets/templatesImg/template1.png" alt="templateimg" />
-        </button> 
-        <button 
-            @click="select('now-template2')"
-            :style="template == 2 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
-        >
-            <p>Style 2</p>
-            <img src="../../assets/templatesImg/template2.png" alt="templateimg" />
-        </button>
-        <button
-            @click="select('now-template4')"
-            :style="template == 4 ? 'background-color: blue; color: white' : 'background-color: white; color: black'"
-        >
-            <p>Normal 2</p>
-            <img src="../../assets/templatesImg/template4.png" alt="templateimg" />
-        </button>
     </div>
 </template>
 
@@ -37,42 +19,58 @@ export default {
     props: {
         template: Number
     },
-    emits: [
-        'now-template1',
-         'now-template2',
-        'now-template3',
-        'now-template4',
-        ],
-        methods: {
-            select(val) {
-                this.$emit(val)
-                $(".closeDiv").click();
-                $(".navbar__toggle").click();
-            }
+    emits: ['change-template'],
+    data() {
+        return {
+            templates: [
+                { id: 1, name: 'Style 1', image: require('../../assets/templatesImg/template1.png') },
+                { id: 2, name: 'Style 2', image: require('../../assets/templatesImg/template2.png') },
+                { id: 3, name: 'Normal', image: require('../../assets/templatesImg/templete3.png') },
+                { id: 4, name: 'Normal 2', image: require('../../assets/templatesImg/template4.png') },
+                ]
         }
+    },
+    methods: {
+        select(templateId) {
+            this.$emit('change-template', templateId);
+            $(".closeDiv").click();
+            $(".navbar__toggle").click();
+        },
+        isSelected(templateId) {
+            return this.template === templateId;
+        }
+    }
 }
 </script>
 <style scoped>
+.select-template {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: center; /* Center the items */
+    gap: 15px; /* Add space between items */
+    width: 100%;
+    margin-top: 55px;
+    z-index: 2;
+}
 
 button {
+    flex: 1 1 150px; /* Flex-grow, flex-shrink, flex-basis */
+    max-width: 200px; /* Max width for each card */
     border-radius: 15px;
     color: black;
     background-color: white;
-    margin-left: 10px;
-    width: 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+button p {
+    margin: 0 0 10px 0;
+    font-weight: bold;
 }
 
 button img {
-    width: 40px;
-    height: 80px;
-}
-
-.select-template {
-    display: flex;
     width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin-top: 55px;
-    z-index: 2;
+    height: auto;
+    border-radius: 10px;
 }
 </style>

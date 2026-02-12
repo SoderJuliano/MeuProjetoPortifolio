@@ -4,22 +4,22 @@
       style="border-bottom: 1px solid rgb(176, 196, 222) !important; text-align: start; background-color: white; color: black;"
       :class="tstyle">{{language == 'pt-br' ? titulo[0] : titulo[1]}}
           <showSwitcher
+            v-if="!viewOnly"
             :className="containerstyle"
             :startShowing="user.grade?.length > 0"
             />
-          <img src="../../icons/editar.png" alt="editar" class="editar" @click="$emit('add-formacao')"/>
-          <img v-if="template == 2" src="../../icons/animados/editar.gif" alt="editar" class="editar-animado-formacao" @click="$emit('add-formacao')"/>
+          <img v-if="template == 1" src="../../assets/new_edit_icon.png" alt="editar" class="editar-animado-formacao" @click="$emit('add-formacao')"/>
       </p>
       <div class="formacao-item-list" v-for="(item, index) in mygrade" :key="index">
         <div :class="conteinerdata">
           <img @click="this.$emit('choose-educationIcon')" src="../../icons/livros.png" class="formacao-icon" alt="icon"/>
           <span class="data-container">{{item}}</span>
         </div>
-        <div class="bnt-divs">
+        <div class="bnt-divs" v-if="!viewOnly">
             <img  @click="removeGrade($event)" :id="`${index}`" :class="remove" src="../../icons/remove.png" alt="remove-bnt"/>
             <img v-if="item" :src="editIcon" @click="editar(index)" alt="editar" class="editar-item">
         </div>
-        <div v-if="showEditing == index" class="competence-edit">
+        <div v-if="showEditing == index && !viewOnly" class="competence-edit">
             <wrappEditModel
               :textItem="item"
               :textIndex="index"
@@ -56,7 +56,8 @@ export default {
     }
   },
   props:{
-    template: Number,
+    viewOnly: Boolean,
+    template: String,
     titulo: Array,
     language: String,
     backgroundColor: String,
@@ -150,7 +151,6 @@ export default {
   width: 20px;
   height: 20px;
   float: right;
-  display: none;
 }
 
 .template1-formacao-container {
@@ -232,9 +232,7 @@ export default {
   display: none;
 }
 
-.template2-formacao:hover .editar-animado-formacao {
-  display: block;
-}
+
 
 .template2-formacao-title {
   text-align: start;
@@ -307,6 +305,9 @@ export default {
   }
   
   .editar-item {
+    display: none;
+  }
+  .editar-animado-formacao {
     display: none;
   }
 }
